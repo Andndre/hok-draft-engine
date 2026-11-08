@@ -183,10 +183,13 @@ def publish_artifacts():
     bucket_name = os.getenv("R2_BUCKET_NAME")
 
     if endpoint and access_key and secret_key and bucket_name and "your_" not in access_key:
-        print(f" Uploading artifacts to Cloudflare R2 bucket: {bucket_name} ...")
+        print(f" Uploading artifacts to S3 / RustFS / R2 storage (Bucket: {bucket_name}) ...")
         try:
             import boto3
             from botocore.config import Config
+
+            is_r2 = "r2.cloudflarestorage.com" in endpoint
+            region = "auto" if is_r2 else "us-east-1"
 
             s3 = boto3.client(
                 "s3",
@@ -194,8 +197,14 @@ def publish_artifacts():
                 aws_access_key_id=access_key,
                 aws_secret_access_key=secret_key,
                 config=Config(signature_version="s3v4"),
-                region_name="auto"
+                region_name=region
             )
+
+            # Ensure bucket exists
+            existing_buckets = [b["Name"] for b in s3.list_buckets().get("Buckets", [])]
+            if bucket_name not in existing_buckets:
+                print(f" Creating bucket '{bucket_name}'...")
+                s3.create_bucket(Bucket=bucket_name)
 
             # Upload ONNX model
             s3.upload_file(str(ONNX_OUTPUT_PATH), bucket_name, "hok_jev_student.onnx")
@@ -214,9 +223,9 @@ def publish_artifacts():
                     f"assets/heroes/{img_file.name}", 
                     ExtraArgs={"ContentType": "image/webp"}
                 )
-            print(f" -> Uploaded all hero assets to R2 bucket '{bucket_name}'.")
+            print(f" -> Uploaded all {copied_count} hero assets to bucket '{bucket_name}'.")
         except Exception as e:
-            print(f" R2 upload failed: {e}")
+            print(f" Storage upload failed: {e}")
     else:
         print(" [INFO] Cloudflare R2 credentials not configured or set to placeholder in .env.")
         print("        Artifacts are staged in apps/web/public/ for direct static hosting.")
