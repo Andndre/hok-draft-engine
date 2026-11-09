@@ -234,9 +234,9 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1794262545.5308533,
-    "seen": 1794262556.8727813,
-    "ast_hash": "ed22e3e91a71875d8a664a797d13c005",
+    "mtime": 1794263337.2567825,
+    "seen": 1794263397.6890776,
+    "ast_hash": "a53c0f9380ef665895dafeb53e877cbc",
     "semantic_hash": ""
   },
   "apps/web/index.html": {
@@ -9975,6 +9975,12 @@
     "mtime": 1794240237.2250087,
     "seen": 1794240549.203957,
     "ast_hash": "604718787d87e91a57bd24b8bf0c5d78",
+    "semantic_hash": ""
+  },
+  "notebooks/prepare_nanojev_source_bundle.py": {
+    "mtime": 1794263246.6443756,
+    "seen": 1794263397.6863825,
+    "ast_hash": "8b1a7ec05f2442d09b526e544807dc49",
     "semantic_hash": ""
   },
   "apps/web/package-lock.json": {
