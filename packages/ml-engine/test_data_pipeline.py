@@ -5,7 +5,8 @@ import unittest
 import sqlite3
 from pathlib import Path
 from publish_data import build_package, publish_package, write_package
-from tactical_profiles import TAGS, approved_profiles, create_proposal, validate_proposal
+from dataset_sources import load_source_heroes
+from tactical_profiles import TAGS, approved_profiles, create_proposal, generate_batch_proposals, global_released_heroes, has_source_evidence, source_material, validate_proposal
 from export_draft_benchmark import export, SEQUENCE
 from publish_data import MAPPINGS
 
@@ -53,6 +54,55 @@ class DataPipelineTests(unittest.TestCase):
         updated["hokstats_guide"] = {"skills": [{"name": "New source text"}], "source": {"source_hash": "new"}}
         with self.assertRaises(ValueError):
             validate_proposal(proposal, updated)
+
+    def test_expired_approval_is_ignored_when_source_changes(self):
+        proposal = create_proposal(self.hero, self.response)
+        proposal["review"] = {"status": "approved", "reviewed_by": "Fixture reviewer"}
+        updated = copy.deepcopy(self.hero)
+        updated["abilities"][0]["desc"] = "Changed after review"
+        with tempfile.TemporaryDirectory() as directory:
+            (Path(directory) / "ata-old-source.json").write_text(json.dumps(proposal), encoding="utf-8")
+            self.assertEqual(approved_profiles(Path(directory), [updated]), {})
+
+    def test_batch_proposals_use_only_released_heroes_and_skip_empty_sources(self):
+        hokstats_hero = {
+            "hero_id": 157, "name": "Fixture Support",
+            "hokstats_guide": {"source": {"source_hash": "guide-hash", "url": "https://hokstats.gg/heroes/fixture/"}, "skills": [{"name": "Shield", "description": "Shields an ally."}]},
+        }
+        empty_hero = {"hero_id": 158, "name": "No Evidence"}
+        unreleased_hero = {"hero_id": 159, "name": "Unreleased", "abilities": [{"description": "Dash"}]}
+        heroes = [self.hero, hokstats_hero, empty_hero, unreleased_hero]
+        releases = {"556": {"released": True}, "157": {"released": True}, "158": {"released": True}, "159": {"released": False}}
+        calls = []
+
+        def fixture_response(hero):
+            calls.append(hero["hero_id"])
+            return {"model": "NanoJev:fixture", "answers": {tag: {"choice": "tidak_diketahui", "confidence": None} for tag in TAGS}}
+
+        with tempfile.TemporaryDirectory() as directory:
+            output_dir = Path(directory) / "proposals"
+            report_path = Path(directory) / "coverage.json"
+            report = generate_batch_proposals(heroes, releases, output_dir, fixture_response, report_path)
+            self.assertEqual(report["target_global_released_count"], 3)
+            self.assertEqual(calls, [157, 556])
+            self.assertEqual(report["summary"], {"generated": 2, "already_present": 0, "skipped_no_source": 1, "failed": 0})
+            self.assertEqual([row["hero_id"] for row in report["skipped_no_source"]], [158])
+            generated = next(row for row in report["generated"] if row["hero_id"] == 157)
+            proposal = json.loads((output_dir / generated["file"]).read_text(encoding="utf-8"))
+            self.assertEqual(proposal["review"]["status"], "pending")
+            self.assertIn("HoKStats", [source["source"] for source in proposal["sources"]])
+            self.assertTrue(all(answer["value"] == "tidak_diketahui" for answer in proposal["tags"].values()))
+            second_report = generate_batch_proposals(heroes, releases, output_dir, lambda hero: self.fail("Existing proposal must be preserved"), report_path)
+            self.assertEqual(second_report["summary"]["already_present"], 2)
+
+    def test_current_global_roster_has_source_enriched_profiles_for_all_120_active_heroes(self):
+        heroes = load_source_heroes()
+        releases = json.loads((MAPPINGS / "hero_release_status.json").read_text(encoding="utf-8"))
+        targets = global_released_heroes(heroes, releases)
+        self.assertEqual(len(targets), 120)
+        self.assertEqual(len({hero["hero_id"] for hero in targets}), 120)
+        self.assertTrue(all(has_source_evidence(hero) for hero in targets))
+        self.assertTrue(any("HoKStats" in [source["source"] for source in source_material(hero)] for hero in targets))
 
     def test_manifest_last_and_failed_artifact_never_publishes_pointer(self):
         manifest, texts = build_package([self.hero], {}, self.releases)

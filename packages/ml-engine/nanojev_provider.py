@@ -128,7 +128,7 @@ def normalize_chunks(results, tags, minimum_probability):
     return answers
 
 
-def request_nanojev(payload, checkpoint, source_directory=None, precision="fp32", max_length=None, minimum_probability=0.7, predictor_factory=None):
+def request_nanojev(payload, checkpoint, source_directory=None, precision="fp32", max_length=None, minimum_probability=0.7, predictor_factory=None, checkpoint_sha256=None):
     if not math.isfinite(minimum_probability) or not 0 <= minimum_probability <= 1:
         raise ValueError("Minimum probability harus berada dalam rentang 0..1.")
     predictor = predictor_factory() if predictor_factory else load_predictor(checkpoint, source_directory, precision, max_length)
@@ -136,7 +136,7 @@ def request_nanojev(payload, checkpoint, source_directory=None, precision="fp32"
     results = []
     for index, text in enumerate(chunks):
         results.append(predictor.predict({"states": [{"id": f"hero-{payload['state']['hero_id']}-chunk-{index}", "state": text, "questions": payload["questions"]}]}, batch_questions=1, temperature=1.0))
-    digest = file_sha256(Path(checkpoint) / "best.safetensors")
+    digest = checkpoint_sha256 or file_sha256(Path(checkpoint) / "best.safetensors")
     return {
         "model": f"NanoJev:{digest}",
         "model_info": {"provider": "nanojev", "checkpoint_sha256": digest, "chunks": len(chunks), "minimum_probability": minimum_probability, "probabilities_calibrated_for_hok": False, "network_model_calls": 0},

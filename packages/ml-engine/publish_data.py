@@ -6,6 +6,7 @@ import mimetypes
 import os
 from pathlib import Path
 from tactical_profiles import approved_profiles
+from dataset_sources import attach_hokstats, load_source_heroes
 from hokstats_source import norm
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -19,39 +20,6 @@ def encode(value):
 
 def _load_json(path, default):
     return json.loads(path.read_text(encoding="utf-8")) if path.exists() else default
-
-
-def attach_hokstats(heroes, hokstats_records, reviews=(), guide_reviews=()):
-    review_index = {(int(x["hero_id"]), x["relation"], int(x["target_id"]), x["source_hash"]): x for x in reviews}
-    guide_review_index = {(int(x["hero_id"]), x["source_hash"]): x for x in guide_reviews}
-    by_id = {int(x["hero_id"]): x for x in hokstats_records}
-    result = []
-    for original in heroes:
-        hero = dict(original)
-        record = by_id.get(int(hero["hero_id"]))
-        if record:
-            guide = dict(record.get("guide") or {})
-            guide_source = dict(guide.get("source") or {})
-            guide_review = guide_review_index.get((int(hero["hero_id"]), guide_source.get("source_hash")))
-            guide_source["review_status"] = guide_review["status"] if guide_review else "pending"
-            if guide_review:
-                guide_source["reviewed_by"] = guide_review["reviewed_by"]
-            guide["source"] = guide_source
-            matchups = []
-            for matchup in guide.get("matchups", []):
-                target_id = matchup.get("hero_id")
-                if target_id is None:
-                    continue
-                source = dict(matchup.get("source") or {})
-                review = review_index.get((int(hero["hero_id"]), matchup["relation"], int(target_id), source.get("source_hash")))
-                source["review_status"] = review["status"] if review else "pending"
-                if review:
-                    source["reviewed_by"] = review["reviewed_by"]
-                matchups.append({**matchup, "source": source})
-            guide["matchups"] = matchups
-            hero["hokstats_guide"] = guide
-        result.append(hero)
-    return result
 
 
 def build_catalogs(hokfire_items, hokfire_spells, hokstats_items=(), hokstats_spells=(), catalog_reviews=()):
@@ -155,15 +123,9 @@ def main():
     parser.add_argument("--proposals", type=Path, default=MAPPINGS / "tactical_proposals")
     parser.add_argument("--publish", action="store_true")
     args = parser.parse_args()
-    heroes = json.loads((MAPPINGS / "master_heroes_global.json").read_text(encoding="utf-8"))
     synergy = json.loads((MAPPINGS / "kpl_synergy_matrix.json").read_text(encoding="utf-8"))
     releases = json.loads((MAPPINGS / "hero_release_status.json").read_text(encoding="utf-8"))
-    source_heroes = attach_hokstats(
-        heroes,
-        _load_json(MAPPINGS / "hokstats_heroes.json", []),
-        _load_json(MAPPINGS / "hokstats_matchup_reviews.json", []),
-        _load_json(MAPPINGS / "hokstats_guide_reviews.json", []),
-    )
+    source_heroes = load_source_heroes(MAPPINGS)
     items, spells = build_catalogs(
         _load_json(MAPPINGS / "items_hokfire_full.json", []),
         _load_json(MAPPINGS / "skills_hokfire.json", {}),

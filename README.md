@@ -105,6 +105,9 @@ uv run --no-sync --with huggingface-hub tactical_profiles.py download
 # Pada environment PyTorch CUDA yang sudah disiapkan
 uv run --no-sync --with transformers==5.17.0 --with safetensors==0.8.0 tactical_profiles.py propose --hero-id 156 --output ../../data/mappings/tactical_proposals/liang.json
 
+# Buat proposal pending untuk semua hero Global aktif; model dimuat sekali dan hasil cakupan dicatat.
+uv run --no-sync --with transformers==5.17.0 --with safetensors==0.8.0 tactical_profiles.py propose-batch --output-dir ../../data/mappings/tactical_proposals
+
 # Baca sumber dan proposal; koreksi label bila perlu sebelum menyetujui
 uv run tactical_profiles.py review --proposal ../../data/mappings/tactical_proposals/liang.json --reviewer "Nama reviewer" --status approved
 uv run publish_data.py
@@ -116,11 +119,12 @@ Label mencakup bentuk mobilitas dan crowd control, efek untuk sekutu, frontline,
 
 Proposal menyimpan sumber, hash konten, provider, hash bobot, hasil per chunk, serta status review. Probabilitas NanoJev belum dikalibrasi untuk HoK; pipeline tidak mengubahnya menjadi confidence terkalibrasi. Checkpoint publik dilatih pada tugas game lain, sehingga kemampuan klasifikasi HoK tetap harus dievaluasi. Review pengelola wajib sebelum publikasi.
 
-Publisher hanya memakai proposal approved dengan sumber yang masih cocok. Pilihan yang tidak diketahui tidak menjadi fakta negatif. Status rilis dan counter tidak ditimpa oleh hasil model; hero tanpa profil memakai heuristik role. Matchup HoKStats yang telah direview memberi paling banyak +0,45 per kandidat, trait yang melengkapi draft paling banyak +0,45, dan kedua sinyal tetap di bawah counter langsung/KPL. Radar menambahkan sumbu utilitas tim.
+Publisher hanya memakai proposal approved dengan sumber yang masih cocok; approval lama otomatis kedaluwarsa ketika sumber berubah. Pilihan yang tidak diketahui tidak menjadi fakta negatif. Status rilis dan counter tidak ditimpa oleh hasil model; hero tanpa profil memakai heuristik role. Matchup HoKStats yang telah direview memberi paling banyak +0,45 per kandidat, trait yang melengkapi draft paling banyak +0,45, dan kedua sinyal tetap di bawah counter langsung/KPL. Radar menambahkan sumbu utilitas tim.
 
 **TypeSafe API opsional:** pilih `--provider typesafe` secara eksplisit dan set `TYPESAFE_API_KEY` di environment pipeline atau .env yang diabaikan Git. Jangan memakai nama variabel VITE_ untuk kredensial. Formatnya mengikuti [System One API](https://docs.typesafe.ai/api/system-one).
 
 Pengujian tanpa model memakai `--response-fixture <file.json>`. Fixture ternormalisasi berisi `model` dan `answers`; setiap label memiliki `choice` (ya/tidak/tidak_diketahui) dan `confidence` (null untuk NanoJev). Fixture hanya menguji alur data dan tidak membuktikan akurasi model.
+Untuk batch offline, `--response-fixtures-dir` menerima fixture per hero dengan nama `<hero_id>.json`; batch produksi memakai NanoJev lokal dan tidak memanggil TypeSafe API.
 
 ## Pengujian dan benchmark
 

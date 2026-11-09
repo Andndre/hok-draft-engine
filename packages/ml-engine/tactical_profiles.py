@@ -8,9 +8,10 @@ import time
 from pathlib import Path
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
+from dataset_sources import load_source_heroes
 
 ROOT = Path(__file__).resolve().parents[2]
-MASTER = ROOT / "data/mappings/master_heroes_global.json"
+RELEASES = ROOT / "data/mappings/hero_release_status.json"
 TAGS = {
     "mobility": "Memiliki dash, blink, atau escape aktif yang dapat dipakai bertahan.",
     "dash": "Memiliki skill perpindahan yang secara eksplisit berupa dash.",
@@ -66,6 +67,84 @@ def source_material(hero):
 
 def source_hash(hero):
     return hashlib.sha256(canonical(source_material(hero)).encode("utf-8")).hexdigest()
+
+
+def has_source_evidence(hero):
+    metadata_keys = {"id", "hero_id", "name", "type", "icon", "image", "url", "source", "source_hash", "review_status", "reviewed_by", "fetched_at", "patch_version", "version", "relation"}
+
+    def has_text(value):
+        if isinstance(value, str):
+            return bool(value.strip())
+        if isinstance(value, dict):
+            return any(
+                has_text(item)
+                for key, item in value.items()
+                if isinstance(key, str) and key.casefold() not in metadata_keys and not key.casefold().endswith("_name")
+            )
+        if isinstance(value, list):
+            return any(has_text(item) for item in value)
+        return False
+
+    return any(has_text(source.get("content")) for source in source_material(hero))
+
+
+def global_released_heroes(heroes, releases):
+    return sorted(
+        (hero for hero in heroes if releases.get(str(hero["hero_id"]), {}).get("released") is True),
+        key=lambda hero: hero["hero_id"],
+    )
+
+
+def generate_batch_proposals(heroes, releases, output_dir, response_for_hero, report_path=None, progress_callback=None):
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    targets = global_released_heroes(heroes, releases)
+    report = {
+        "schema_version": 1,
+        "provider": "nanojev",
+        "target_global_released_count": len(targets),
+        "generated": [],
+        "already_present": [],
+        "skipped_no_source": [],
+        "failed": [],
+    }
+
+    for index, hero in enumerate(targets, start=1):
+        if progress_callback:
+            progress_callback(index, len(targets), hero)
+        entry = {"hero_id": hero["hero_id"], "hero_name": hero["name"]}
+        if not has_source_evidence(hero):
+            report["skipped_no_source"].append(entry)
+            continue
+
+        current_hash = source_hash(hero)
+        output_path = output_dir / f"{hero['hero_id']}-{current_hash[:12]}.json"
+        if output_path.exists():
+            try:
+                existing = json.loads(output_path.read_text(encoding="utf-8"))
+                validate_proposal(existing, hero)
+                report["already_present"].append({**entry, "review_status": existing.get("review", {}).get("status", "unknown")})
+            except (json.JSONDecodeError, ValueError) as error:
+                report["failed"].append({**entry, "error": f"Proposal yang ada tidak valid: {error}"})
+            continue
+
+        try:
+            proposal = create_proposal(hero, response_for_hero(hero), "nanojev")
+            output_path.write_text(json.dumps(proposal, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            report["generated"].append({**entry, "file": output_path.name, "source_hash": current_hash})
+        except Exception as error:
+            report["failed"].append({**entry, "error": str(error)})
+
+    report["summary"] = {
+        "generated": len(report["generated"]),
+        "already_present": len(report["already_present"]),
+        "skipped_no_source": len(report["skipped_no_source"]),
+        "failed": len(report["failed"]),
+    }
+    report_path = Path(report_path) if report_path else output_dir / "coverage_report.json"
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return report
 
 
 def make_request(hero, model):
@@ -140,6 +219,9 @@ def approved_profiles(directory, heroes):
         hero = by_id.get(proposal.get("hero_id"))
         if not hero:
             raise ValueError(f"Hero proposal tidak ada di katalog: {path.name}")
+        if proposal.get("source_hash") != source_hash(hero) or proposal.get("sources") != source_material(hero):
+            # A source update expires this approval. The stale proposal stays on disk for audit.
+            continue
         validate_proposal(proposal, hero)
         reviewer = proposal["review"].get("reviewed_by")
         if not isinstance(reviewer, str) or not reviewer.strip():
@@ -168,6 +250,16 @@ def main():
     propose.add_argument("--precision", choices=("fp32", "bf16"), default="fp32")
     propose.add_argument("--max-length", type=int)
     propose.add_argument("--minimum-probability", type=float, default=0.7)
+    batch = sub.add_parser("propose-batch", help="Buat proposal NanoJev pending untuk seluruh hero Global aktif.")
+    batch.add_argument("--output-dir", type=Path, default=ROOT / "data/mappings/tactical_proposals")
+    batch.add_argument("--report", type=Path)
+    batch.add_argument("--response-fixtures-dir", type=Path, help="Fixture offline bernama <hero_id>.json; untuk uji pipeline.")
+    batch.add_argument("--model", default="jev-latest")
+    batch.add_argument("--checkpoint-dir", type=Path, default=ROOT / "data/processed/nanojev")
+    batch.add_argument("--nanojev-source", type=Path)
+    batch.add_argument("--precision", choices=("fp32", "bf16"), default="fp32")
+    batch.add_argument("--max-length", type=int)
+    batch.add_argument("--minimum-probability", type=float, default=0.7)
     download = sub.add_parser("download", help="Download model/source NanoJev satu kali; bukan panggilan inference API.")
     download.add_argument("--checkpoint-dir", type=Path, default=ROOT / "data/processed/nanojev")
     review = sub.add_parser("review")
@@ -180,7 +272,36 @@ def main():
         download_checkpoint(args.checkpoint_dir)
         print(f"Checkpoint lokal diverifikasi: {args.checkpoint_dir}")
         return
-    heroes = json.loads(MASTER.read_text(encoding="utf-8"))
+    heroes = load_source_heroes()
+    if args.command == "propose-batch":
+        if args.response_fixtures_dir:
+            def response_for_hero(hero):
+                fixture_path = args.response_fixtures_dir / f"{hero['hero_id']}.json"
+                if not fixture_path.is_file():
+                    raise FileNotFoundError(f"Fixture respons tidak ditemukan: {fixture_path.name}")
+                return json.loads(fixture_path.read_text(encoding="utf-8"))
+        else:
+            from nanojev_provider import file_sha256, load_predictor, request_nanojev
+            predictor = load_predictor(args.checkpoint_dir, args.nanojev_source, args.precision, args.max_length)
+            checkpoint_sha256 = file_sha256(args.checkpoint_dir / "best.safetensors")
+
+            def response_for_hero(hero):
+                return request_nanojev(
+                    make_request(hero, args.model), args.checkpoint_dir, args.nanojev_source,
+                    args.precision, args.max_length, args.minimum_probability,
+                    predictor_factory=lambda: predictor, checkpoint_sha256=checkpoint_sha256,
+                )
+
+        releases = json.loads(RELEASES.read_text(encoding="utf-8"))
+
+        def report_progress(index, total, hero):
+            print(f"[{index}/{total}] {hero['name']}", flush=True)
+
+        report = generate_batch_proposals(heroes, releases, args.output_dir, response_for_hero, args.report, report_progress)
+        print(json.dumps(report["summary"], ensure_ascii=False))
+        if report["failed"]:
+            raise ValueError(f"Batch selesai sebagian; lihat laporan: {args.report or args.output_dir / 'coverage_report.json'}")
+        return
     if args.command == "propose":
         hero = next((h for h in heroes if h["hero_id"] == args.hero_id), None)
         if not hero:
