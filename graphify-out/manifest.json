@@ -1,8 +1,8 @@
 {
   "apps/web/package.json": {
-    "mtime": 1794210824.3951256,
-    "seen": 1794210867.498705,
-    "ast_hash": "ba93bcd2b72261306e3fd7f0a07ad56a",
+    "mtime": 1794211264.8185606,
+    "seen": 1794211357.244372,
+    "ast_hash": "734170640c864bcf6fb0c78b32c665bb",
     "semantic_hash": ""
   },
   "apps/web/public/arcana_map.json": {
@@ -36,9 +36,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/App.tsx": {
-    "mtime": 1794210762.7722757,
-    "seen": 1794210867.499727,
-    "ast_hash": "663ac8d1c73a369a2f6de3b80842e671",
+    "mtime": 1794211168.9773996,
+    "seen": 1794211357.2453835,
+    "ast_hash": "388e7c1ca5fe3f0e388756a2ed7e9d46",
     "semantic_hash": ""
   },
   "apps/web/src/components/BottomCommandDock.tsx": {
@@ -90,9 +90,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/data/heroReleaseStatus.ts": {
-    "mtime": 1794193786.0491152,
-    "seen": 1794208404.774575,
-    "ast_hash": "76a3543951f1748264547589708916e9",
+    "mtime": 1794210996.7871735,
+    "seen": 1794211357.24655,
+    "ast_hash": "5151bce256cdae783af8970dc9ef252d",
     "semantic_hash": ""
   },
   "apps/web/src/data/itemsMap.ts": {
@@ -114,9 +114,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/types.ts": {
-    "mtime": 1794210677.600031,
-    "seen": 1794210867.5007143,
-    "ast_hash": "7154f7b04211e41e22fa414180c9886a",
+    "mtime": 1794210990.1963792,
+    "seen": 1794211357.24689,
+    "ast_hash": "2756d90a1fe80c70d1d7268575714dfd",
     "semantic_hash": ""
   },
   "apps/web/src/vite-env.d.ts": {
@@ -9474,15 +9474,81 @@
     "semantic_hash": ""
   },
   "apps/web/src/engine/heroDataLoader.ts": {
-    "mtime": 1794210677.5985138,
-    "seen": 1794210867.500482,
-    "ast_hash": "e4507999ed3bf35026096921c57346a5",
+    "mtime": 1794210995.5985065,
+    "seen": 1794211357.2468038,
+    "ast_hash": "5918650fd237b80b8d0a3109f6c71096",
     "semantic_hash": ""
   },
   "apps/web/src/engine/tournamentInference.ts": {
-    "mtime": 1794210762.771281,
-    "seen": 1794210867.5005004,
-    "ast_hash": "2266917176996024596ee095f31e196a",
+    "mtime": 1794211303.5448465,
+    "seen": 1794211357.2468064,
+    "ast_hash": "f82e39ed2a7cb7a64e051c3f750470cd",
+    "semantic_hash": ""
+  },
+  "apps/web/public/data_manifest.json": {
+    "mtime": 1794211183.4858193,
+    "seen": 1794211357.2446492,
+    "ast_hash": "ba831d4f8ff1095ed77ca156893ef67f",
+    "semantic_hash": ""
+  },
+  "apps/web/public/datasets/cd93ce3919397697/hero_metadata.json": {
+    "mtime": 1794211183.4848092,
+    "seen": 1794211357.2446527,
+    "ast_hash": "b861d1516294e2d9198da729df749e6c",
+    "semantic_hash": ""
+  },
+  "apps/web/public/datasets/cd93ce3919397697/hero_release_status.json": {
+    "mtime": 1794211183.4858193,
+    "seen": 1794211357.2446551,
+    "ast_hash": "38f12bfbc30b456d0fa62b21e8dbd83e",
+    "semantic_hash": ""
+  },
+  "apps/web/public/datasets/cd93ce3919397697/kpl_synergy_matrix.json": {
+    "mtime": 1794211183.4858193,
+    "seen": 1794211357.244658,
+    "ast_hash": "0dd6e641131c83ca43338d58d47687da",
+    "semantic_hash": ""
+  },
+  "apps/web/tests/dataset.test.mjs": {
+    "mtime": 1794211262.3579495,
+    "seen": 1794211357.2470543,
+    "ast_hash": "8cdd586def16b5ee965384f6b504fd6c",
+    "semantic_hash": ""
+  },
+  "apps/web/tests/register.mjs": {
+    "mtime": 1794211259.8767326,
+    "seen": 1794211357.2470572,
+    "ast_hash": "0ebc1d6fef877b8732e9147c20996337",
+    "semantic_hash": ""
+  },
+  "apps/web/tests/typescript-loader.mjs": {
+    "mtime": 1794211302.4404225,
+    "seen": 1794211357.2470593,
+    "ast_hash": "6fa8356ec4a32bcc55bc143f2af23f39",
+    "semantic_hash": ""
+  },
+  "data/mappings/hero_release_status.json": {
+    "mtime": 1794211168.997185,
+    "seen": 1794211357.2474298,
+    "ast_hash": "bec5a394277949722df6302c5bc9f333",
+    "semantic_hash": ""
+  },
+  "packages/ml-engine/publish_data.py": {
+    "mtime": 1794211136.535004,
+    "seen": 1794211357.2488635,
+    "ast_hash": "0dad60ebb13311cc6e7c278c89e5d602",
+    "semantic_hash": ""
+  },
+  "packages/ml-engine/tactical_profiles.py": {
+    "mtime": 1794211135.4609165,
+    "seen": 1794211357.2489536,
+    "ast_hash": "2bf87d8068c2fedfa69625271a15366d",
+    "semantic_hash": ""
+  },
+  "packages/ml-engine/test_data_pipeline.py": {
+    "mtime": 1794211263.5637794,
+    "seen": 1794211357.248956,
+    "ast_hash": "5f76aebb58e238cc595ec4c556c479ef",
     "semantic_hash": ""
   },
   "apps/web/package-lock.json": {

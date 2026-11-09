@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { Hero, Lane, ActiveTab, SortMode, ViewMode, TacticalVector, TacticalDelta, GameDraftData } from './types';
-import { loadHeroMetadata } from './engine/heroDataLoader';
+import { Hero, Lane, ActiveTab, SortMode, ViewMode, TacticalVector, TacticalDelta, GameDraftData, TournamentDataset } from './types';
+import { loadTournamentDataset } from './engine/heroDataLoader';
 import { runTournamentInference, TournamentPredictionResult, TournamentPhaseStrategy } from './engine/tournamentInference';
 import { computeTacticalDeltas } from './engine/deltaExplainer';
 import { HeaderSortBar } from './components/HeaderSortBar';
@@ -16,6 +16,8 @@ import { isHeroGlobalReleased } from './data/heroReleaseStatus';
 import { DRAFT_SEQUENCE, getDraftTurn, createInitialGameDraft, applyGameHero } from './engine/draftRules';
 
 export const App: React.FC = () => {
+  const [dataset, setDataset] = useState<TournamentDataset | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [heroes, setHeroes] = useState<Hero[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -76,14 +78,15 @@ export const App: React.FC = () => {
   const [recommendations, setRecommendations] = useState<TournamentPredictionResult['recommendations']>([]);
   const [phaseStrategy, setPhaseStrategy] = useState<TournamentPhaseStrategy | undefined>(undefined);
 
-  // 1. Load Hero Metadata on mount
-  useEffect(() => {
-    Promise.all([loadHeroMetadata(), fetch('/kpl_synergy_matrix.json').then(r => r.ok ? r.json() : {})]).then(([data, synergy]) => {
-      setSynergyData(synergy);
-      setHeroes(data);
-      setLoading(false);
-    });
+  const loadData = useCallback(async () => {
+    setLoading(true); setLoadError(null);
+    try {
+      const data = await loadTournamentDataset();
+      setDataset(data); setHeroes(data.heroes); setSynergyData(data.synergy);
+    } catch (error) { setLoadError(error instanceof Error ? error.message : 'Data belum dapat dimuat.'); }
+    finally { setLoading(false); }
   }, []);
+  useEffect(() => { void loadData(); }, [loadData]);
 
   // Save favorites to localStorage
   const handleToggleFavorite = (id: number) => {
@@ -437,6 +440,9 @@ export const App: React.FC = () => {
 
       {/* Main Container */}
       <main className="max-w-7xl mx-auto px-4 py-4 space-y-5">
+        {loadError && <div role="alert" className="rounded-xl border border-amber-700 bg-[#12161F] p-4 text-sm">
+          <p>{loadError}</p><button onClick={() => void loadData()} className="mt-3 min-h-11 rounded-lg bg-[#B8FF01] px-4 font-bold text-black">Coba lagi</button>
+        </div>}
         {/* View Mode 1: Draft AI Simulator View */}
         {activeTab === 'draft' && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
@@ -539,7 +545,7 @@ export const App: React.FC = () => {
         {loading ? (
           <div className="py-20 flex flex-col items-center justify-center gap-3">
             <div className="w-8 h-8 rounded-full border-2 border-[#B8FF01] border-t-transparent animate-spin" />
-            <p className="text-xs text-slate-400 font-mono">Memuat Database 120 Hero Global...</p>
+            <p className="text-xs text-slate-400 font-mono">Memuat database hero…</p>
           </div>
         ) : filteredAndSortedHeroes.length === 0 ? (
           <div className="py-16 text-center bg-[#12161F] rounded-2xl border border-[#232A38] p-6 space-y-2">

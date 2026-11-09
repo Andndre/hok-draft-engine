@@ -1,117 +1,111 @@
-import { Hero } from '../types';
+import type { DataManifest, Hero, TournamentDataset } from '../types';
 
+// v16 replaces the old hero-only v15 cache with an atomic, checksummed package.
+export const DATA_CACHE_KEY = 'tournament_dataset_v16';
 const DB_NAME = 'HokDraftEngineDB';
-const DB_VERSION = 1;
-const STORE_METADATA = 'metadata_cache';
+const STORE = 'metadata_cache';
+const REMOTE_BASE = (import.meta.env?.VITE_R2_PUBLIC_URL || '').trim().replace(/\/$/, '');
+type ArtifactKind = keyof DataManifest['artifacts'];
+const KINDS: ArtifactKind[] = ['heroes', 'synergy', 'releases'];
+export interface CachedPackage { manifest: DataManifest; texts: Record<ArtifactKind, string> }
+export interface DatasetIO {
+  fetchText: (url: string) => Promise<string>;
+  readCache: () => Promise<CachedPackage | null>;
+  writeCache: (value: CachedPackage) => Promise<void>;
+  remoteBase?: string;
+}
 
-const R2_BASE_URL = (import.meta.env.VITE_R2_PUBLIC_URL || '').trim();
-
-function openIndexedDB(): Promise<IDBDatabase> {
-  return new Promise((resolve, reject) => {
-    if (typeof indexedDB === 'undefined') {
-      return reject(new Error('IndexedDB not supported in this environment'));
-    }
-    const request = indexedDB.open(DB_NAME, DB_VERSION);
-
-    request.onupgradeneeded = (event) => {
-      const db = (event.target as IDBOpenDBRequest).result;
-      if (!db.objectStoreNames.contains(STORE_METADATA)) {
-        db.createObjectStore(STORE_METADATA, { keyPath: 'key' });
-      }
+async function withStore<T>(operation: (store: IDBObjectStore, resolve: (value: T) => void) => void, fallback: T, mode: IDBTransactionMode): Promise<T> {
+  if (typeof indexedDB === 'undefined') return fallback;
+  return new Promise(resolve => {
+    const request = indexedDB.open(DB_NAME, 1);
+    request.onupgradeneeded = () => {
+      if (!request.result.objectStoreNames.contains(STORE)) request.result.createObjectStore(STORE, { keyPath: 'key' });
     };
-
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error);
+    request.onerror = () => resolve(fallback);
+    request.onblocked = () => resolve(fallback);
+    request.onsuccess = () => {
+      const db = request.result;
+      try {
+        const tx = db.transaction(STORE, mode);
+        tx.oncomplete = () => db.close();
+        tx.onabort = () => { db.close(); resolve(fallback); };
+        tx.onerror = () => { db.close(); resolve(fallback); };
+        operation(tx.objectStore(STORE), resolve);
+      } catch { db.close(); resolve(fallback); }
+    };
   });
 }
-
-async function getFromIDB<T>(storeName: string, key: string): Promise<T | null> {
+const readCache = () => withStore<CachedPackage | null>((store, resolve) => {
+  const req = store.get(DATA_CACHE_KEY);
+  req.onsuccess = () => resolve(req.result?.value ?? null);
+  req.onerror = () => resolve(null);
+}, null, 'readonly');
+const writeCache = async (value: CachedPackage) => {
+  await withStore<boolean>((store, resolve) => {
+    store.put({ key: DATA_CACHE_KEY, value });
+    store.transaction.oncomplete = () => { store.transaction.db.close(); resolve(true); };
+  }, false, 'readwrite');
+};
+async function fetchText(url: string): Promise<string> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 5000);
   try {
-    const db = await openIndexedDB();
-    return new Promise((resolve) => {
-      const tx = db.transaction(storeName, 'readonly');
-      const store = tx.objectStore(storeName);
-      const req = store.get(key);
-      req.onsuccess = () => resolve(req.result ? req.result.value : null);
-      req.onerror = () => resolve(null);
-    });
-  } catch (err) {
-    console.warn(`[IDB] Read warning on ${storeName}:`, err);
-    return null;
+    const res = await fetch(url, { signal: controller.signal, cache: url.endsWith('data_manifest.json') ? 'no-store' : 'default' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.text();
+  } finally { clearTimeout(timer); }
+}
+export async function sha256(text: string): Promise<string> {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return [...new Uint8Array(digest)].map(b => b.toString(16).padStart(2, '0')).join('');
+}
+export function validateManifest(value: unknown): DataManifest {
+  const m = value as DataManifest;
+  if (!m || m.schema_version !== 1 || !/^[a-f0-9]{16}$/.test(m.dataset_version) || !Number.isInteger(m.hero_count) || m.hero_count < 1) throw new Error('Manifest data tidak valid');
+  for (const kind of KINDS) {
+    const a = m.artifacts?.[kind];
+    if (!a || !/^[a-f0-9]{64}$/.test(a.sha256) || !new RegExp(`^datasets/${m.dataset_version}/[a-z_]+\\.json$`).test(a.file)) throw new Error('Referensi artefak tidak valid');
   }
+  return m;
+}
+export async function decodePackage(pkg: CachedPackage): Promise<TournamentDataset> {
+  const manifest = validateManifest(pkg.manifest);
+  for (const kind of KINDS) if (await sha256(pkg.texts[kind]) !== manifest.artifacts[kind].sha256) throw new Error(`Checksum ${kind} tidak cocok`);
+  const heroes: Hero[] = JSON.parse(pkg.texts.heroes);
+  const synergy = JSON.parse(pkg.texts.synergy);
+  const releases: Record<string, { released: boolean; alias_of?: number }> = JSON.parse(pkg.texts.releases);
+  if (!Array.isArray(heroes) || heroes.length !== manifest.hero_count || new Set(heroes.map(h => h.hero_id)).size !== heroes.length || !synergy || typeof synergy !== 'object' || Array.isArray(synergy)) throw new Error('Isi dataset tidak valid');
+  for (const h of heroes) {
+    if (!Number.isInteger(h.hero_id) || h.hero_id === 511 || !h.name || !Array.isArray(h.lanes) || !Array.isArray(h.counters) || !Array.isArray(h.countered_by) || !Number.isFinite(h.win_rate) || typeof releases[h.hero_id]?.released !== 'boolean') throw new Error('Metadata hero atau status rilis tidak valid');
+  }
+  if (releases['511']?.released !== false || releases['511']?.alias_of !== 556) throw new Error('Alias Ata tidak valid');
+  return { version: manifest.dataset_version, manifest, synergy, heroes: heroes.map(h => ({ ...h, is_global_released: releases[h.hero_id].released })) };
 }
 
-async function saveToIDB<T>(storeName: string, key: string, value: T): Promise<void> {
-  try {
-    const db = await openIndexedDB();
-    return new Promise((resolve) => {
-      const tx = db.transaction(storeName, 'readwrite');
-      const store = tx.objectStore(storeName);
-      store.put({ key, value });
-      tx.oncomplete = () => resolve();
-      tx.onerror = () => resolve();
-    });
-  } catch (err) {
-    console.warn(`[IDB] Write warning on ${storeName}:`, err);
-  }
-}
-
-/**
- * Robust fetch with automatic local fallback if R2/RustFS is unreachable or blocked
- */
-async function fetchWithFallback(filename: string): Promise<Response> {
-  if (R2_BASE_URL) {
+/** Never combine artifacts from different origins or activate a partial update. */
+export async function loadTournamentDataset(overrides: Partial<DatasetIO> = {}): Promise<TournamentDataset> {
+  const io: DatasetIO = { fetchText, readCache, writeCache, remoteBase: REMOTE_BASE, ...overrides };
+  const cached = await io.readCache().catch(() => null);
+  let validCache: TournamentDataset | null = null;
+  if (cached) try { validCache = await decodePackage(cached); } catch { /* Discard corrupt cache. */ }
+  const origins = [...new Set([io.remoteBase, ''].filter((x): x is string => x !== undefined))];
+  for (const base of origins) {
     try {
-      const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), 2500);
-      const targetUrl = `${R2_BASE_URL}/${filename}`;
-      const res = await fetch(targetUrl, { signal: controller.signal });
-      clearTimeout(timer);
-      if (res.ok) {
-        console.log(`[ModelLoader] Loaded ${filename} from storage: ${targetUrl}`);
-        return res;
-      }
-    } catch (e) {
-      console.warn(`[ModelLoader] Remote fetch failed for ${filename}, falling back to local /${filename}:`, e);
+      const manifest = validateManifest(JSON.parse(await io.fetchText(`${base}/data_manifest.json`)));
+      if (validCache && manifest.dataset_version === validCache.version && JSON.stringify(manifest.artifacts) === JSON.stringify(validCache.manifest.artifacts)) return validCache;
+      const texts = {} as Record<ArtifactKind, string>;
+      await Promise.all(KINDS.map(async kind => { texts[kind] = await io.fetchText(`${base}/${manifest.artifacts[kind].file}`); }));
+      const pkg = { manifest, texts };
+      const dataset = await decodePackage(pkg);
+      await io.writeCache(pkg).catch(() => {});
+      return dataset;
+    } catch (error) {
+      console.warn('[Dataset] Paket tidak tersedia:', base || 'bawaan', error);
+      if (validCache) return validCache;
     }
   }
-
-  // Local fallback
-  const localUrl = `/${filename}`;
-  const localRes = await fetch(localUrl);
-  if (!localRes.ok) {
-    throw new Error(`Failed to load ${filename} (HTTP ${localRes.status})`);
-  }
-  console.log(`[ModelLoader] Loaded ${filename} from local static root`);
-  return localRes;
+  throw new Error('Database hero belum dapat dimuat. Coba lagi.');
 }
 
-export async function loadHeroMetadata(): Promise<Hero[]> {
-  const cacheKey = 'master_hero_metadata_v15_counters_direction_fixed';
-  const cached = await getFromIDB<Hero[]>(STORE_METADATA, cacheKey);
-
-  // Validate that cached heroes contain strict Global release status, Ata merge, KPL synergies, fixed tournament tiers, and correct counter direction
-  const isCacheValid =
-    cached &&
-    cached.length >= 120 &&
-    cached.some((h) => h.hero_id === 556 && h.is_global_released === true && h.kpl_matchup?.synergies && h.kpl_matchup.synergies.length > 0) &&
-    cached.some((h) => h.hero_id === 112 && h.tier === 'B') &&
-    cached.some((h) => h.hero_id === 156 && h.countered_by?.some((cb) => cb.counter_id === 182));
-
-  if (isCacheValid) {
-    return cached;
-  }
-
-  try {
-    const res = await fetchWithFallback('hero_metadata.json');
-    const fresh: Hero[] = await res.json();
-    if (fresh && fresh.length >= 120) {
-      await saveToIDB(STORE_METADATA, cacheKey, fresh);
-    }
-    return fresh;
-  } catch (err) {
-    console.error('[ModelLoader] Failed to load hero metadata:', err);
-    return cached || [];
-  }
-}
-
+export async function loadHeroMetadata(): Promise<Hero[]> { return (await loadTournamentDataset()).heroes; }

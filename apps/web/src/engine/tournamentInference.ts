@@ -1,4 +1,4 @@
-import { Hero, TacticalVector, Lane } from '../types';
+import type { Hero, TacticalVector, Lane } from '../types';
 import { isHeroGlobalReleased } from '../data/heroReleaseStatus';
 import { getTournamentPhase, analyzeLaneOccupancy, IMMOBILE_OPENERS } from './draftRules';
 

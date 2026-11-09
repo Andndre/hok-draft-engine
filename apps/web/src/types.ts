@@ -120,6 +120,7 @@ export interface Hero {
   hokfire_counters?: HokfireCounters | null;
   kpl_matchup?: KplMatchup | null;
   abilities?: HeroAbility[];
+  tactical_profile?: TacticalProfile;
   
   // Dynamic client-side score computed by the tournament engine
   ai_choice_score?: number;
@@ -132,6 +133,27 @@ export interface TacticalVector {
   frontline_durability: number; // 0.0 - 1.0
   enemy_carry_shutdown: number; // 0.0 - 1.0
   draft_flexibility: number;    // 0.0 - 1.0
+}
+
+export const TACTICAL_TAGS = ['mobility', 'suppress', 'engage', 'disengage', 'frontline', 'dive_vulnerable'] as const;
+export type TacticalTag = typeof TACTICAL_TAGS[number];
+export interface TacticalProfile {
+  tags: Partial<Record<TacticalTag, boolean>>;
+  source_hash: string;
+  model: string;
+  reviewed_by: string;
+}
+export interface DataManifest {
+  schema_version: 1;
+  dataset_version: string;
+  hero_count: number;
+  artifacts: Record<'heroes' | 'synergy' | 'releases', { file: string; sha256: string }>;
+}
+export interface TournamentDataset {
+  version: string;
+  heroes: Hero[];
+  synergy: Record<string, any>;
+  manifest: DataManifest;
 }
 
 export interface TacticalDelta {
