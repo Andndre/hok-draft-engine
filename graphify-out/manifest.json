@@ -36,57 +36,57 @@
     "semantic_hash": ""
   },
   "apps/web/src/App.tsx": {
-    "mtime": 1794214287.009717,
-    "seen": 1794214437.9070807,
-    "ast_hash": "57e94d22c273c6d23c3b129e58878d8a",
+    "mtime": 1794215829.5935771,
+    "seen": 1794216800.4417446,
+    "ast_hash": "33bfa67b810906c14d07376fec21e78f",
     "semantic_hash": ""
   },
   "apps/web/src/components/BottomCommandDock.tsx": {
-    "mtime": 1794212889.907436,
-    "seen": 1794214437.9070835,
-    "ast_hash": "959d0e3252fae062308f5d3e654fd13c",
+    "mtime": 1794215227.2847955,
+    "seen": 1794216800.4417496,
+    "ast_hash": "0e6049727730510a36486f006cf5aa17",
     "semantic_hash": ""
   },
   "apps/web/src/components/DraftSimulator.tsx": {
-    "mtime": 1794212889.907436,
-    "seen": 1794214437.907085,
-    "ast_hash": "328009dd28cccd65aaba63828341850e",
+    "mtime": 1794217226.6671474,
+    "seen": 1794217341.89126,
+    "ast_hash": "0d89f7a865084b34d4faf98cb536862f",
     "semantic_hash": ""
   },
   "apps/web/src/components/HeaderSortBar.tsx": {
-    "mtime": 1794212889.907436,
-    "seen": 1794214437.907087,
-    "ast_hash": "511332881519dbd25a78adf64a7e39dd",
+    "mtime": 1794215226.4549346,
+    "seen": 1794216800.441754,
+    "ast_hash": "b25bdd8f0b44110a6a92801b953a344b",
     "semantic_hash": ""
   },
   "apps/web/src/components/HeroCardCompact.tsx": {
-    "mtime": 1794212896.9610896,
-    "seen": 1794214437.9070883,
-    "ast_hash": "c0d1d44026fe117552277424e9a2d87d",
+    "mtime": 1794215228.1086974,
+    "seen": 1794216800.441757,
+    "ast_hash": "63d8367808a9f85cfdd2d2e2c774a467",
     "semantic_hash": ""
   },
   "apps/web/src/components/HeroCardDetailed.tsx": {
-    "mtime": 1794212898.179754,
-    "seen": 1794214437.9070902,
-    "ast_hash": "50602248885c69c72cb199f69fe6bdb8",
+    "mtime": 1794215229.1187208,
+    "seen": 1794216800.4417596,
+    "ast_hash": "b9631e5848022b22bfec979ea43b158d",
     "semantic_hash": ""
   },
   "apps/web/src/components/HeroWikiDrawer.tsx": {
-    "mtime": 1794212894.1052802,
-    "seen": 1794214437.9070916,
-    "ast_hash": "ad48bb0e93d3867af3c5baba843d43a5",
+    "mtime": 1794217226.668864,
+    "seen": 1794217341.8915613,
+    "ast_hash": "b7e707714850332a3bf3b5795cbb5fcf",
     "semantic_hash": ""
   },
   "apps/web/src/components/PlanSelectionModal.tsx": {
-    "mtime": 1794212889.9085448,
-    "seen": 1794214437.9070933,
-    "ast_hash": "2c8f53fbef4bf94be89145f74c6525a0",
+    "mtime": 1794217226.668864,
+    "seen": 1794217341.891564,
+    "ast_hash": "11a77f85aed4df79f2a7dbf15731c828",
     "semantic_hash": ""
   },
   "apps/web/src/components/TacticalRadarPanel.tsx": {
-    "mtime": 1794212889.9096434,
-    "seen": 1794214437.9070969,
-    "ast_hash": "ead4c5f656912799f7c19790830dc43b",
+    "mtime": 1794216834.0176084,
+    "seen": 1794216847.693584,
+    "ast_hash": "4afaa1859964fa6dfe384ffa65620a41",
     "semantic_hash": ""
   },
   "apps/web/src/data/heroReleaseStatus.ts": {
@@ -9576,9 +9576,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/PracticeDraft.tsx": {
-    "mtime": 1794214420.2074325,
-    "seen": 1794214437.907095,
-    "ast_hash": "6956dda81ccca4b77416b4bd97d757b2",
+    "mtime": 1794217226.668864,
+    "seen": 1794217341.8915665,
+    "ast_hash": "c067bc5f45b37860de13786638bb1015",
     "semantic_hash": ""
   },
   "apps/web/src/engine/practiceState.ts": {
@@ -9600,9 +9600,9 @@
     "semantic_hash": ""
   },
   "apps/web/tests/ui.test.mjs": {
-    "mtime": 1794212999.9557328,
-    "seen": 1794214437.9072053,
-    "ast_hash": "976322e56594787bd37268063198a40a",
+    "mtime": 1794217304.0199776,
+    "seen": 1794217341.8940163,
+    "ast_hash": "90214329f3f3183a4605e8f7fcce8d65",
     "semantic_hash": ""
   },
   "apps/web/tests/verify-dist.mjs": {
@@ -9639,6 +9639,42 @@
     "mtime": 1794213746.1490912,
     "seen": 1794214437.908496,
     "ast_hash": "d128a5862e223eaa412a16f164d9a78f",
+    "semantic_hash": ""
+  },
+  "apps/web/src/components/HeroRosterToolbar.tsx": {
+    "mtime": 1794217226.668864,
+    "seen": 1794217341.8915582,
+    "ast_hash": "befd563c58fa1c7a9949203bde789ce0",
+    "semantic_hash": ""
+  },
+  "apps/web/src/components/ui/AssetThumbnail.tsx": {
+    "mtime": 1794215215.0777812,
+    "seen": 1794216800.4417748,
+    "ast_hash": "8b59f5c6936b30919ab821089342467b",
+    "semantic_hash": ""
+  },
+  "apps/web/src/components/ui/navigation.ts": {
+    "mtime": 1794215216.7423174,
+    "seen": 1794216800.441777,
+    "ast_hash": "7cc6dafa511ff0c077ff78a3eafdc25e",
+    "semantic_hash": ""
+  },
+  "apps/web/src/components/ui/presentation.ts": {
+    "mtime": 1794215215.9233024,
+    "seen": 1794216800.4417796,
+    "ast_hash": "7a1f427e3fa57222400bf6b6ac9b6f58",
+    "semantic_hash": ""
+  },
+  "apps/web/src/components/ui/useDialogFocus.ts": {
+    "mtime": 1794215217.5802698,
+    "seen": 1794216800.4417818,
+    "ast_hash": "217df30bd741fb2e0c682a28f91ce395",
+    "semantic_hash": ""
+  },
+  "apps/web/src/components/ui/DropdownSelect.tsx": {
+    "mtime": 1794217302.8157797,
+    "seen": 1794217341.8917623,
+    "ast_hash": "aeaf70f2f56a918b1dd06198963fe1c9",
     "semantic_hash": ""
   },
   "apps/web/package-lock.json": {

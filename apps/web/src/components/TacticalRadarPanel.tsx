@@ -1,9 +1,11 @@
 import React from 'react';
-import { Hero, TacticalVector, TacticalDelta } from '../types';
-import { TournamentPhaseStrategy } from '../engine/tournamentInference';
-import { Sparkles, TrendingUp, TrendingDown, Minus, ShieldAlert, Crosshair, CheckCircle2, SlidersHorizontal, AlertTriangle, ArrowRight } from 'lucide-react';
+import { ArrowRight, BookOpen, ChartColumn, CheckCircle2, ChevronDown, Crosshair, Info, LoaderCircle, ShieldBan, SlidersHorizontal, Sparkles, Swords, Target } from 'lucide-react';
+import type { Hero, TacticalVector, TacticalDelta } from '../types';
+import type { TournamentPhaseStrategy, TournamentPredictionResult } from '../engine/tournamentInference';
+import { HeroThumbnail } from './ui/AssetThumbnail';
+import { plainText } from './ui/presentation';
 
-interface TacticalRadarPanelProps {
+interface Props {
   scores: TacticalVector;
   deltas?: TacticalDelta[];
   primaryInsight?: string;
@@ -12,409 +14,32 @@ interface TacticalRadarPanelProps {
   planBId?: number | null;
   onOpenPlanModal?: () => void;
   onSelectQuickPlanA?: (heroId: number | null) => void;
-  recommendations: Array<{
-    hero: Hero;
-    rankingWeight: number;
-    choiceScore: number;
-    proComboTag?: string;
-    laneTag?: string;
-  }>;
+  recommendations: TournamentPredictionResult['recommendations'];
   onSelectCandidate: (hero: Hero) => void;
+  onInspectHero?: (hero: Hero) => void;
   activeSide: 'blue' | 'red';
   isPickPhase: boolean;
+  isComplete?: boolean;
+  isWaiting?: boolean;
 }
-
-const TACTICAL_AXES: Array<{
-  key: keyof TacticalVector;
-  label: string;
-  color: string;
-  barColor: string;
-}> = [
-  { key: 'draft_advantage', label: 'Keunggulan draft', color: 'text-emerald-400', barColor: 'bg-emerald-500' },
-  { key: 'early_game_pressure', label: 'Early Pressure', color: 'text-amber-400', barColor: 'bg-amber-500' },
-  { key: 'cc_chain_lockdown', label: 'CC Chain Lockdown', color: 'text-indigo-400', barColor: 'bg-indigo-500' },
-  { key: 'frontline_durability', label: 'Frontline Durability', color: 'text-sky-400', barColor: 'bg-sky-500' },
-  { key: 'enemy_carry_shutdown', label: 'Carry Shutdown', color: 'text-rose-400', barColor: 'bg-rose-500' },
-  { key: 'draft_flexibility', label: 'Flexibility', color: 'text-lime-400', barColor: 'bg-lime-500' },
+const axes: Array<{ key: keyof TacticalVector; label: string }> = [
+  { key: 'draft_advantage', label: 'Keunggulan draft' }, { key: 'early_game_pressure', label: 'Tekanan awal' },
+  { key: 'cc_chain_lockdown', label: 'Kontrol tim' }, { key: 'frontline_durability', label: 'Garis depan' },
+  { key: 'enemy_carry_shutdown', label: 'Menahan carry' }, { key: 'draft_flexibility', label: 'Fleksibilitas' },
 ];
-
-export const TacticalRadarPanel: React.FC<TacticalRadarPanelProps> = ({
-  scores,
-  deltas,
-  primaryInsight,
-  phaseStrategy,
-  planAId,
-  planBId,
-  onOpenPlanModal,
-  onSelectQuickPlanA,
-  recommendations,
-  onSelectCandidate,
-  activeSide,
-  isPickPhase,
-}) => {
-  const advantageScore = Math.round(scores.draft_advantage * 100);
-
-  const planAHero = phaseStrategy?.planAHero;
-  const planBHero = phaseStrategy?.planBHero;
-  const isPlanABanned = phaseStrategy?.isPlanABanned || false;
-  const activePlan = phaseStrategy?.activePlan || 'PLAN_A';
-
-  return (
-    <div className="bg-[#12161F] border border-[#232A38] rounded-2xl p-4 flex flex-col gap-4 shadow-xl">
-      {/* Header: Tactical Dimension Gauge */}
-      <div className="flex items-center justify-between pb-3 border-b border-[#232A38]">
-        <div className="flex items-center gap-2">
-          <div className="p-1.5 rounded-lg bg-[#B8FF01]/10 text-[#B8FF01]">
-            <Sparkles className="w-4 h-4" />
-          </div>
-          <div>
-            <h3 className="font-bold text-sm text-white flex items-center gap-2">
-              EVALUASI TAKTIS DRAFT
-              <span
-                className={`text-[10px] font-mono uppercase px-2 py-0.5 rounded font-black ${
-                  activeSide === 'blue'
-                    ? 'bg-blue-950 text-blue-400 border border-blue-800/40'
-                    : 'bg-red-950 text-red-400 border border-red-800/40'
-                }`}
-              >
-                {activeSide.toUpperCase()} SIDE {isPickPhase ? 'PICK' : 'BAN'}
-              </span>
-            </h3>
-            <p className="text-[11px] text-slate-400">
-              Strategi empat fase · Evaluasi heuristik enam dimensi
-            </p>
-          </div>
-        </div>
-
-        {/* Keunggulan draft Dial */}
-        <div className="flex flex-col items-end font-mono-numbers">
-          <span className="text-[10px] uppercase text-slate-400 font-semibold tracking-wider">Skor draft</span>
-          <span
-            className={`text-2xl font-black ${
-              advantageScore >= 52 ? 'text-[#10B981]' : advantageScore >= 48 ? 'text-slate-100' : 'text-[#F43F5E]'
-            }`}
-          >
-            {advantageScore}/100
-          </span>
-        </div>
-      </div>
-
-      {/* 4-Phase Tournament Strategy Box */}
-      {phaseStrategy && (
-        <div className="bg-[#0D111A] border border-[#2A3346] rounded-xl p-3 flex flex-col gap-2.5">
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-1.5">
-              <Crosshair className="w-3.5 h-3.5 text-[#B8FF01]" />
-              <span className="text-[11px] font-extrabold tracking-wide text-[#B8FF01] uppercase">
-                {phaseStrategy.phaseTitle}
-              </span>
-            </div>
-            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#1A202C] text-slate-300 border border-[#232A38]">
-              {phaseStrategy.phaseId.replace(/_/g, ' ')}
-            </span>
-          </div>
-
-          <p className="text-xs text-slate-200 leading-relaxed">
-            {phaseStrategy.phaseObjective}
-          </p>
-
-          {/* Plan A & Plan B Strategic Status Bar (Visible in Phase 1) */}
-          {(phaseStrategy.phaseId === 'BAN_PHASE_1' || phaseStrategy.phaseId === 'PICK_PHASE_1') && (
-            <div className="pt-2 border-t border-[#232A38]/80 flex flex-col gap-2">
-              <div className="flex items-center justify-between text-[10px]">
-                <span className="text-slate-400 font-semibold uppercase tracking-wider flex items-center gap-1.5">
-                  <span>Target First-Pick Strategy</span>
-                  {activePlan === 'PLAN_B' && isPlanABanned && (
-                    <span className="px-1.5 py-0.2 rounded bg-amber-950 text-amber-300 border border-amber-800/50 font-bold">
-                      Pivot ke Plan B
-                    </span>
-                  )}
-                </span>
-                {onOpenPlanModal && (
-                  <button
-                    onClick={onOpenPlanModal}
-                    className="flex items-center gap-1 text-[#B8FF01] hover:underline font-bold text-[11px]"
-                  >
-                    <SlidersHorizontal className="w-3 h-3" />
-                    <span>Atur Plan A / B (120 Hero)</span>
-                  </button>
-                )}
-              </div>
-
-              {/* Dual Mini Plan Cards */}
-              <div className="grid grid-cols-2 gap-2">
-                {/* Plan A Mini Card */}
-                <div
-                  className={`p-2 rounded-xl border flex items-center gap-2 transition-all ${
-                    isPlanABanned
-                      ? 'bg-rose-950/30 border-rose-900/60 opacity-75'
-                      : activePlan === 'PLAN_A'
-                      ? 'bg-[#151D2A] border-[#B8FF01]/80 ring-1 ring-[#B8FF01]/40'
-                      : 'bg-[#12161F] border-[#232A38]'
-                  }`}
-                >
-                  <div className="relative w-8 h-8 rounded-lg overflow-hidden border border-[#232A38] flex-shrink-0">
-                    {planAHero ? (
-                      <img src={planAHero.portrait_asset} alt={planAHero.name} className={`w-full h-full object-cover ${isPlanABanned ? 'grayscale' : ''}`} />
-                    ) : (
-                      <div className="w-full h-full bg-[#1A202C] flex items-center justify-center text-[10px] text-slate-500 font-bold">A</div>
-                    )}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[9px] font-black uppercase text-[#B8FF01]">Plan A</span>
-                      {isPlanABanned ? (
-                        <span className="text-[8px] font-bold px-1 rounded bg-rose-950 text-rose-300 border border-rose-800">DI-BAN</span>
-                      ) : activePlan === 'PLAN_A' ? (
-                        <span className="text-[8px] font-bold px-1 rounded bg-[#B8FF01] text-black">AKTIF</span>
-                      ) : null}
-                    </div>
-                    <div className="font-bold text-xs text-white truncate">{planAHero ? planAHero.name : 'Belum diatur'}</div>
-                  </div>
-                </div>
-
-                {/* Plan B Mini Card */}
-                <div
-                  className={`p-2 rounded-xl border flex items-center gap-2 transition-all ${
-                    phaseStrategy.isPlanBBanned
-                      ? 'bg-rose-950/30 border-rose-900/60 opacity-75'
-                      : activePlan === 'PLAN_B'
-                      ? 'bg-[#1D1B28] border-indigo-400 ring-1 ring-indigo-400/50'
-                      : 'bg-[#12161F] border-[#232A38]'
-                  }`}
-                >
-                  <div className="relative w-8 h-8 rounded-lg overflow-hidden border border-[#232A38] flex-shrink-0">
-                    {planBHero ? (
-                      <img src={planBHero.portrait_asset} alt={planBHero.name} className="w-full h-full object-cover" />
-                    ) : (
-                      <div className="w-full h-full bg-[#1A202C] flex items-center justify-center text-[10px] text-slate-500 font-bold">B</div>
-                    )}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[9px] font-black uppercase text-indigo-400">Plan B (Cadangan)</span>
-                      {activePlan === 'PLAN_B' && (
-                        <span className="text-[8px] font-bold px-1 rounded bg-indigo-500 text-white">AKTIF</span>
-                      )}
-                    </div>
-                    <div className="font-bold text-xs text-white truncate">{planBHero ? planBHero.name : 'Belum diatur'}</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Quick Opener Recommendation Chips */}
-              <div className="pt-1 flex flex-col gap-1">
-                <span className="text-[10px] text-slate-400">Pilihan Cepat Target Plan A:</span>
-                <div className="flex flex-wrap gap-1.5">
-                  {phaseStrategy.candidateOpeners.slice(0, 6).map((op) => {
-                    const isSelected = phaseStrategy.plannedOpener?.hero_id === op.hero_id;
-                    return (
-                      <button
-                        key={op.hero_id}
-                        onClick={() => onSelectQuickPlanA && onSelectQuickPlanA(op.hero_id)}
-                        className={`flex items-center gap-1.5 px-2 py-1 rounded-lg text-[11px] font-bold transition-all border ${
-                          isSelected
-                            ? 'bg-[#B8FF01] text-black border-[#B8FF01] shadow-[0_0_8px_rgba(184,255,1,0.25)]'
-                            : 'bg-[#151A26] text-slate-300 border-[#232A38] hover:border-slate-500'
-                        }`}
-                      >
-                        <img
-                          src={op.portrait_asset}
-                          alt={op.name}
-                          className="w-4 h-4 rounded-full object-cover"
-                        />
-                        <span>{op.name}</span>
-                        <span className={`text-[9px] font-mono ${isSelected ? 'text-black/75' : 'text-slate-400'}`}>
-                          {op.primary_lane}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {phaseStrategy.bannedOpenerCounters.length > 0 && (
-                <div className="flex items-center gap-1.5 text-[10px] text-emerald-400 font-medium pt-0.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" />
-                  <span>
-                    Counter {phaseStrategy.plannedOpener?.name} yang sudah di-ban:{' '}
-                    <strong>{phaseStrategy.bannedOpenerCounters.join(', ')}</strong>
-                  </span>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Phase 2 Lane Vacancy Indicator */}
-          {(phaseStrategy.phaseId === 'BAN_PHASE_2' || phaseStrategy.phaseId === 'PICK_PHASE_2') && (
-            <div className="pt-1.5 border-t border-[#232A38]/80 flex flex-wrap items-center justify-between gap-2 text-[10px] font-mono">
-              <div className="flex items-center gap-1.5">
-                <span className="text-slate-400">Lane Kosong Musuh:</span>
-                {phaseStrategy.enemyVacantLanes.map((l) => (
-                  <span
-                    key={l}
-                    className="px-1.5 py-0.5 rounded bg-rose-950/90 text-rose-300 border border-rose-800/50 font-bold"
-                  >
-                    {l}
-                  </span>
-                ))}
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-slate-400">Lane Kosong Kita:</span>
-                {phaseStrategy.ourVacantLanes.map((l) => (
-                  <span
-                    key={l}
-                    className="px-1.5 py-0.5 rounded bg-emerald-950/90 text-emerald-300 border border-emerald-800/50 font-bold"
-                  >
-                    {l}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Secondary Delta / Last Action Insight Banner */}
-      {primaryInsight && (
-        <div className="bg-[#1A202C] border-l-4 border-[#B8FF01] p-2.5 rounded-r-xl flex items-start gap-2">
-          <ShieldAlert className="w-4 h-4 text-[#B8FF01] mt-0.5 flex-shrink-0" />
-          <p className="text-[11px] text-slate-200 leading-relaxed font-medium">
-            {primaryInsight}
-          </p>
-        </div>
-      )}
-
-      {/* 6-Axis Tactical Dimension Bars */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {TACTICAL_AXES.map((axis) => {
-          const val = scores[axis.key];
-          const percent = Math.round(val * 100);
-          const delta = deltas?.find((d) => d.dimension === axis.key);
-
-          return (
-            <div
-              key={axis.key}
-              className="bg-[#0A0D12] p-2.5 rounded-xl border border-[#232A38]/60 flex flex-col justify-between"
-            >
-              <div className="flex items-center justify-between text-xs mb-1.5 font-medium">
-                <span className="text-slate-300">{axis.label}</span>
-                <div className="flex items-center gap-1.5 font-mono-numbers">
-                  <span className={`font-bold ${axis.color}`}>{percent}%</span>
-                  {delta && delta.deltaPercent !== 0 && (
-                    <span
-                      className={`text-[10px] font-bold flex items-center ${
-                        delta.direction === 'up'
-                          ? 'text-[#10B981]'
-                          : delta.direction === 'down'
-                          ? 'text-[#F43F5E]'
-                          : 'text-slate-400'
-                      }`}
-                    >
-                      {delta.direction === 'up' && <TrendingUp className="w-2.5 h-2.5 mr-0.5" />}
-                      {delta.direction === 'down' && <TrendingDown className="w-2.5 h-2.5 mr-0.5" />}
-                      {delta.direction === 'neutral' && <Minus className="w-2.5 h-2.5 mr-0.5" />}
-                      {delta.deltaPercent > 0 ? `+${delta.deltaPercent}%` : `${delta.deltaPercent}%`}
-                    </span>
-                  )}
-                </div>
-              </div>
-              <div className="w-full h-1.5 bg-[#1A202C] rounded-full overflow-hidden">
-                <div
-                  className={`h-full ${axis.barColor} transition-all duration-300 rounded-full`}
-                  style={{ width: `${Math.min(100, Math.max(5, percent))}%` }}
-                />
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Top 5 AI Candidate Recommendations */}
-      <div className="pt-2">
-        <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2.5 flex items-center justify-between">
-          <span>AI Rekomendasi Prioritas ({isPickPhase ? 'Pick' : 'Ban'})</span>
-          <span className="text-[10px] text-slate-500 font-mono">Peringkat rekomendasi taktis</span>
-        </h4>
-
-        <div className="flex flex-col gap-2">
-          {recommendations.slice(0, 5).map((rec, idx) => {
-            const scoreText = rec.choiceScore.toFixed(2);
-            const isBanPhase = !isPickPhase;
-            return (
-              <div
-                key={rec.hero.hero_id}
-                onClick={() => onSelectCandidate(rec.hero)}
-                className="group flex items-center justify-between p-2 rounded-xl bg-[#0A0D12] hover:bg-[#1A202C] border border-[#232A38] hover:border-[#B8FF01]/60 cursor-pointer transition-all"
-              >
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-6 h-6 rounded-md bg-[#1A202C] flex-shrink-0 flex items-center justify-center font-black text-xs font-mono text-slate-300 group-hover:bg-[#B8FF01] group-hover:text-black transition-colors">
-                    #{idx + 1}
-                  </div>
-                  <img
-                    src={rec.hero.portrait_asset}
-                    alt={rec.hero.name}
-                    className="w-10 h-10 rounded-lg object-cover border border-[#232A38] flex-shrink-0"
-                    onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).src =
-                        `https://hok.kurohiko.id/icons/hero/${rec.hero.hero_id}.webp`;
-                    }}
-                  />
-                  <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-1.5">
-                      <span className="font-bold text-xs sm:text-sm text-slate-100 group-hover:text-[#B8FF01]">
-                        {rec.hero.name}
-                      </span>
-                      <span className="text-[10px] font-mono px-1 py-0.2 rounded bg-slate-800 text-slate-300">
-                        {rec.hero.tier}
-                      </span>
-                      {rec.laneTag && (
-                        <span
-                          className={`text-[9px] font-mono px-1.5 py-0.2 rounded font-semibold ${
-                            rec.laneTag.includes('Isi') || rec.laneTag.includes('Target Utama')
-                              ? 'bg-emerald-950 text-emerald-400 border border-emerald-800/40'
-                              : rec.laneTag.includes('Counter') ||
-                                rec.laneTag.includes('Deny') ||
-                                rec.laneTag.includes('Target')
-                              ? 'bg-rose-950 text-rose-300 border border-rose-800/40'
-                              : 'bg-amber-950 text-amber-400 border border-amber-800/40'
-                          }`}
-                        >
-                          {rec.laneTag}
-                        </span>
-                      )}
-                    </div>
-                    <div className="text-[10px] text-slate-400 truncate">
-                      {rec.hero.primary_role} · {rec.hero.primary_lane} · {(rec.hero.win_rate * 100).toFixed(1)}% WR
-                    </div>
-                    {rec.proComboTag && (
-                      <div className="text-[10px] text-[#B8FF01] font-medium truncate max-w-[290px]">
-                        {rec.proComboTag}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2.5 font-mono-numbers flex-shrink-0 ml-2">
-                  <div className="text-right">
-                    <span className="text-xs font-bold text-[#B8FF01]">{scoreText}</span>
-                    <span className="block text-[9px] text-slate-500 uppercase">Score</span>
-                  </div>
-                  <button
-                    className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-all ${
-                      isBanPhase
-                        ? 'bg-rose-950/80 text-rose-300 border border-rose-800/50 group-hover:bg-rose-600 group-hover:text-white'
-                        : 'bg-[#232A38] text-slate-200 group-hover:bg-[#B8FF01] group-hover:text-black'
-                    }`}
-                  >
-                    {isPickPhase ? 'Pilih' : 'Ban'}
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
-};
+export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseStrategy, onOpenPlanModal, onSelectQuickPlanA, recommendations, onSelectCandidate, onInspectHero, activeSide, isPickPhase, isComplete = false, isWaiting = false }: Props) {
+  const ActionIcon = isPickPhase ? Swords : ShieldBan;
+  const best = recommendations[0];
+  return <section className="tactical-panel surface-panel" aria-label="Rekomendasi dan evaluasi draft">
+    <div className="tactical-panel__header"><div className="section-heading"><span className="section-heading__icon"><Sparkles aria-hidden="true" /></span><div><h2>{isComplete ? 'Evaluasi draft' : 'Rekomendasi giliran'}</h2><p>{isComplete ? 'Komposisi kedua tim sudah lengkap' : 'Prioritas taktis untuk tim aktif'}</p></div></div><span className="side-badge" data-side={activeSide}>{activeSide === 'blue' ? 'Blue' : 'Red'} · {isPickPhase ? 'Pick' : 'Ban'}</span></div>
+    {best && <div className="primary-recommendation"><div className="primary-recommendation__identity"><HeroThumbnail hero={best.hero} /><div><span className="eyebrow">Prioritas pertama</span><h3>{best.hero.name}</h3><p>{best.hero.primary_lane} · Tier {best.hero.tier}</p></div><span className="recommendation-rank">#1</span></div>
+      <p className="recommendation-reason"><Crosshair aria-hidden="true" /><span>{plainText(best.proComboTag || best.laneTag || 'Melengkapi komposisi dan merespons pilihan lawan.')}</span></p>
+      <div className="primary-recommendation__actions">{onInspectHero && <button type="button" className="ui-button ui-button--quiet" onClick={() => onInspectHero(best.hero)}><BookOpen aria-hidden="true" />Detail</button>}<button type="button" className={'ui-button ' + (isPickPhase ? 'ui-button--primary' : 'ui-button--ban')} onClick={() => onSelectCandidate(best.hero)}><ActionIcon aria-hidden="true" />{isPickPhase ? 'Pick ' : 'Ban '}{best.hero.name}<ArrowRight aria-hidden="true" /></button></div>
+    </div>}
+    {!best && <div className="recommendation-empty">{isComplete ? <CheckCircle2 aria-hidden="true" /> : isWaiting ? <Info aria-hidden="true" /> : <LoaderCircle className="is-spinning" aria-hidden="true" />}<p>{isComplete ? 'Draft selesai. Buka evaluasi komposisi di bawah.' : isWaiting ? 'Giliran AI. Rekomendasi tersedia saat giliran Anda.' : 'Menyiapkan rekomendasi untuk giliran ini…'}</p></div>}
+    {recommendations.length > 1 && <details className="panel-disclosure"><summary><Swords aria-hidden="true" /><span>{recommendations.slice(1, 5).length} pilihan alternatif</span><ChevronDown aria-hidden="true" /></summary><div className="alternative-recommendations">{recommendations.slice(1, 5).map((rec, index) => <div key={rec.hero.hero_id}><button type="button" className="alternative-recommendation__profile" onClick={() => onInspectHero?.(rec.hero)} disabled={!onInspectHero}><span className="muted-copy">#{index + 2}</span><HeroThumbnail hero={rec.hero} /><span><strong>{rec.hero.name}</strong><small>{rec.hero.primary_lane}</small></span></button><button type="button" className={'ui-button ui-button--small ' + (isPickPhase ? 'ui-button--quiet' : 'ui-button--ban')} aria-label={(isPickPhase ? 'Pick ' : 'Ban ') + rec.hero.name} onClick={() => onSelectCandidate(rec.hero)}><ActionIcon aria-hidden="true" />{isPickPhase ? 'Pick' : 'Ban'}</button></div>)}</div></details>}
+    {phaseStrategy && !isComplete && <div className="plan-overview"><div className="plan-overview__heading"><h3>Rencana pembuka</h3>{onOpenPlanModal && <button type="button" className="ui-button ui-button--text" onClick={onOpenPlanModal}><SlidersHorizontal aria-hidden="true" />Atur Plan A/B</button>}</div><div className="plan-overview__cards">{[{ label: 'Plan A', hero: phaseStrategy.planAHero, banned: phaseStrategy.isPlanABanned }, { label: 'Plan B', hero: phaseStrategy.planBHero, banned: phaseStrategy.isPlanBBanned }].map(plan => <button type="button" key={plan.label} className={'plan-preview' + (phaseStrategy.plannedOpener?.hero_id === plan.hero?.hero_id ? ' is-active' : '')} onClick={onOpenPlanModal} disabled={!onOpenPlanModal}>{plan.hero ? <HeroThumbnail hero={plan.hero} /> : <Target aria-hidden="true" />}<span><small>{plan.label}{plan.banned ? ' · Terban' : ''}</small><strong>{plan.hero?.name ?? 'Pilih target'}</strong></span>{phaseStrategy.plannedOpener?.hero_id === plan.hero?.hero_id && <CheckCircle2 aria-label="Rencana aktif" />}</button>)}</div></div>}
+    {phaseStrategy && !isComplete && <details className="panel-disclosure"><summary><Target aria-hidden="true" /><span>Tujuan dan target pembuka</span><ChevronDown aria-hidden="true" /></summary><div className="disclosure-content"><p>{plainText(phaseStrategy.phaseObjective)}</p>{onSelectQuickPlanA && <div className="opener-shortlist">{phaseStrategy.candidateOpeners.slice(0, 6).map(hero => <button type="button" key={hero.hero_id} onClick={() => onSelectQuickPlanA(hero.hero_id)}><HeroThumbnail hero={hero} /><span>{hero.name}</span></button>)}</div>}</div></details>}
+    <details className="panel-disclosure" open={isComplete}><summary><ChartColumn aria-hidden="true" /><span>Komposisi · 6 dimensi</span><span className="metric-summary">{Math.round(scores.draft_advantage * 100)}/100</span><ChevronDown aria-hidden="true" /></summary><div className="disclosure-content"><div className="tactical-metrics">{axes.map(({ key, label }) => <div key={key}><div><span>{label}</span><strong>{Math.round(scores[key] * 100)}</strong></div><progress aria-label={label} value={Math.round(scores[key] * 100)} max={100} /></div>)}</div><p className="metric-caption">Indeks heuristik komposisi, bukan probabilitas kemenangan.</p>{primaryInsight && <p className="metric-insight">{plainText(primaryInsight)}</p>}{deltas.length > 0 && <ul className="tactical-deltas">{deltas.map(delta => <li key={delta.dimension}><span>{delta.label}</span><strong>{delta.deltaPercent > 0 ? '+' : ''}{delta.deltaPercent}%</strong></li>)}</ul>}</div></details>
+  </section>;
+}

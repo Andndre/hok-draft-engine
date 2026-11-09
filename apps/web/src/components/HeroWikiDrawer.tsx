@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Hero } from '../types';
-import { X, Star, Swords, Shield, Lightbulb, BookOpen, Zap, Sparkles, ArrowRight, CheckCircle2, AlertCircle, Wrench, Trophy, AlertTriangle } from 'lucide-react';
+import { X, Star, Swords, Shield, Lightbulb, BookOpen, Zap, Sparkles, ArrowRight, CheckCircle2, AlertCircle, Wrench, Trophy, AlertTriangle, ShieldBan, Link2 } from 'lucide-react';
+import { AssetThumbnail } from './ui/AssetThumbnail';
+import { displayCopy } from './ui/presentation';
+import { useDialogFocus } from './ui/useDialogFocus';
 import { getItemMeta } from '../data/itemsMap';
 
 interface HeroWikiDrawerProps {
@@ -10,21 +13,26 @@ interface HeroWikiDrawerProps {
   onToggleFavorite: (heroId: number) => void;
   onPickForDraft?: (hero: Hero) => void;
   draftActionLabel?: string;
+  initialTab?: 'build' | 'counters' | 'abilities' | 'tactics';
   allHeroes: Hero[];
   onSelectRelatedHero: (hero: Hero) => void;
 }
 
 export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
-  hero,
+  hero: sourceHero,
   onClose,
   isFavorite,
   onToggleFavorite,
   onPickForDraft,
   draftActionLabel = 'Pilih di draft',
+  initialTab = 'build',
   allHeroes,
   onSelectRelatedHero,
 }) => {
-  const [activeWikiTab, setActiveWikiTab] = useState<'build' | 'counters' | 'abilities' | 'tactics'>('build');
+  const [activeWikiTab, setActiveWikiTab] = useState<'build' | 'counters' | 'abilities' | 'tactics'>(initialTab);
+  const hero = useMemo(() => displayCopy(sourceHero), [sourceHero]);
+  const dialog = useDialogFocus(!!sourceHero, onClose);
+  useEffect(() => setActiveWikiTab(initialTab), [initialTab]);
 
   if (!hero) return null;
 
@@ -51,60 +59,55 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
   }
 
   return (
-    <div className="fixed inset-0 z-[70] overflow-hidden bg-black/70 backdrop-blur-sm flex justify-end transition-opacity">
-      <div className="w-full max-w-lg bg-[#0E121A] border-l border-[#232A38] h-full flex flex-col shadow-2xl animate-in slide-in-from-right duration-200">
+    <div className="wiki-drawer fixed inset-0 z-[70] overflow-hidden bg-black/70 backdrop-blur-sm flex justify-end transition-opacity">
+      <div ref={dialog} role="dialog" aria-modal="true" aria-labelledby="hero-wiki-title" tabIndex={-1} className="wiki-drawer__panel w-full max-w-lg bg-[#0E121A] border-l border-[#232A38] h-full flex flex-col shadow-2xl animate-in slide-in-from-right duration-200">
         {/* Drawer Header */}
         <div className="relative p-4 border-b border-[#232A38] bg-[#12161F]">
           <button
+            type="button"
+            aria-label="Tutup wiki hero"
+            title="Tutup wiki hero"
             onClick={onClose}
-            className="absolute top-4 right-4 p-1.5 rounded-lg bg-[#1A202C] text-slate-400 hover:text-white border border-[#232A38] transition-all"
+            className="wiki-close absolute top-4 right-4 rounded-lg bg-[#1A202C] text-slate-400 hover:text-white border border-[#232A38] transition-all"
           >
             <X className="w-4 h-4" />
           </button>
 
           <div className="flex items-center gap-4">
             <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-[#0A0D12] border-2 border-[#232A38] flex-shrink-0">
-              <img
-                src={hero.portrait_asset}
-                alt={hero.name}
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src =
-                    `https://hok.kurohiko.id/icons/hero/${hero.hero_id}.webp`;
-                }}
-              />
+              <AssetThumbnail src={hero.portrait_asset} name={hero.name} kind="hero" className="w-full h-full object-cover asset-thumbnail--fill" />
               <div
                 className="absolute top-0 left-0 w-6 h-6 bg-[#EF4444] flex items-start justify-start p-0.5"
                 style={{ clipPath: 'polygon(0 0, 100% 0, 0 100%)' }}
               >
-                <span className="text-[8px] font-black text-black">{hero.tier}</span>
+                <span className="text-xs font-black text-black">{hero.tier}</span>
               </div>
             </div>
 
             <div className="flex-1 min-w-0 pr-8">
               <div className="flex items-center gap-2">
-                <h3 className="text-lg font-extrabold text-white truncate">{hero.name}</h3>
+                <h3 id="hero-wiki-title" className="text-lg font-extrabold text-white truncate">{hero.name}</h3>
                 <span className="text-xs font-mono text-slate-400">({hero.chinese_name})</span>
               </div>
               <p className="text-xs text-slate-400 truncate mt-0.5">{hero.title}</p>
               <div className="flex flex-wrap items-center gap-2 mt-2">
-                <span className="text-[11px] font-semibold px-2 py-0.5 rounded bg-[#1A202C] text-[#B8FF01] border border-[#B8FF01]/30">
+                <span className="text-xs font-semibold px-2 py-0.5 rounded bg-[#1A202C] text-[#B8FF01] border border-[#B8FF01]/30">
                   {hero.primary_role} · {hero.lanes.join(' / ')}
                 </span>
-                <span className="text-[11px] font-mono text-emerald-400 font-bold">
+                <span className="text-xs font-mono text-emerald-400 font-bold">
                   {(hero.win_rate * 100).toFixed(1)}% WR
                 </span>
                 {hGuide && (
-                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#F5C451]/10 text-[#F5C451] border border-[#F5C451]/30 font-bold">
+                  <span className="text-xs font-mono px-1.5 py-0.5 rounded bg-[#F5C451]/10 text-[#F5C451] border border-[#F5C451]/30 font-bold">
                     Diff: {hGuide.difficulty === 1 ? 'Mudah' : hGuide.difficulty === 2 ? 'Sedang' : 'Sulit'}
                   </span>
                 )}
                 {hero.is_global_released === false ? (
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-950/70 text-amber-300 border border-amber-800/60 font-bold">
+                  <span className="text-xs font-mono px-2 py-0.5 rounded bg-amber-950/70 text-amber-300 border border-amber-800/60 font-bold">
                     CN/KPL Only
                   </span>
                 ) : (
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950/70 text-emerald-300 border border-emerald-800/60 font-bold">
+                  <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-950/70 text-emerald-300 border border-emerald-800/60 font-bold">
                     Global Ready
                   </span>
                 )}
@@ -115,6 +118,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
           {/* Action Buttons */}
           <div className="flex items-center gap-2 mt-4 pt-3 border-t border-[#232A38]">
             <button
+              aria-pressed={isFavorite}
               onClick={() => onToggleFavorite(hero.hero_id)}
               className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-bold border transition-all ${
                 isFavorite
@@ -129,7 +133,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
             {onPickForDraft && (
               <button
                 onClick={() => {
-                  onPickForDraft(hero);
+                  onPickForDraft(sourceHero!);
                   onClose();
                 }}
                 className="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-bold bg-[#B8FF01] text-black shadow hover:brightness-110 transition-all"
@@ -142,8 +146,9 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
         </div>
 
         {/* Wiki Subtabs */}
-        <div className="grid grid-cols-4 border-b border-[#232A38] bg-[#0A0D12]">
+        <div aria-label="Bagian wiki hero" className="wiki-sections grid grid-cols-4 border-b border-[#232A38] bg-[#0A0D12]">
           <button
+            aria-pressed={activeWikiTab === 'build'}
             onClick={() => setActiveWikiTab('build')}
             className={`py-2.5 text-xs font-bold border-b-2 transition-all flex items-center justify-center gap-1 ${
               activeWikiTab === 'build'
@@ -156,6 +161,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
           </button>
 
           <button
+            aria-pressed={activeWikiTab === 'counters'}
             onClick={() => setActiveWikiTab('counters')}
             className={`py-2.5 text-xs font-bold border-b-2 transition-all flex items-center justify-center gap-1 ${
               activeWikiTab === 'counters'
@@ -168,6 +174,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
           </button>
 
           <button
+            aria-pressed={activeWikiTab === 'abilities'}
             onClick={() => setActiveWikiTab('abilities')}
             className={`py-2.5 text-xs font-bold border-b-2 transition-all flex items-center justify-center gap-1 ${
               activeWikiTab === 'abilities'
@@ -180,6 +187,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
           </button>
 
           <button
+            aria-pressed={activeWikiTab === 'tactics'}
             onClick={() => setActiveWikiTab('tactics')}
             className={`py-2.5 text-xs font-bold border-b-2 transition-all flex items-center justify-center gap-1 ${
               activeWikiTab === 'tactics'
@@ -208,15 +216,8 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                       </h4>
                       {hGuide.spell && (
                         <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-[#1A202C] border border-amber-900/40">
-                          <img
-                            src={`/assets/skills/${hGuide.spell.toLowerCase().trim()}.png`}
-                            alt={hGuide.spell}
-                            className="w-4 h-4 rounded-full object-cover"
-                            onError={(e) => {
-                              (e.currentTarget as HTMLImageElement).style.display = 'none';
-                            }}
-                          />
-                          <span className="text-[10px] font-mono text-amber-300 font-bold">
+                          <AssetThumbnail src={`/assets/skills/${hGuide.spell.toLowerCase().trim()}.png`} name={hGuide.spell} kind="item" className="w-4 h-4 rounded-full object-cover" />
+                          <span className="text-xs font-mono text-amber-300 font-bold">
                             {hGuide.spell}
                           </span>
                         </div>
@@ -239,30 +240,23 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                           >
                             <div className="relative w-10 h-10 rounded-lg bg-[#12161F] border border-[#232A38] flex-shrink-0 overflow-hidden flex items-center justify-center">
                               {meta ? (
-                                <img
-                                  src={meta.icon}
-                                  alt={item}
-                                  className="w-full h-full object-cover"
-                                  onError={(e) => {
-                                    (e.currentTarget as HTMLImageElement).style.display = 'none';
-                                  }}
-                                />
+                                <AssetThumbnail src={meta.icon} name={item} kind="item" className="w-full h-full object-cover asset-thumbnail--fill" />
                               ) : (
-                                <span className="text-[10px] font-black text-slate-500">
+                                <span className="text-xs font-black text-slate-500">
                                   {item.slice(0, 2).toUpperCase()}
                                 </span>
                               )}
                             </div>
                             <div className="min-w-0 flex-1">
-                              <span className="font-bold text-xs text-white leading-tight block truncate">
+                              <span className="font-semibold text-sm text-white leading-snug block">
                                 {item}
                               </span>
                               <span
-                                className={`text-[9px] font-mono mt-0.5 block ${
+                                className={`text-xs font-mono mt-0.5 block ${
                                   isCore ? 'text-[#B8FF01] font-bold' : 'text-slate-500'
                                 }`}
                               >
-                                {isCore ? '★ Core Item' : `Slot #${idx + 1}`}
+                                {isCore ? 'Item inti' : `Slot #${idx + 1}`}
                               </span>
                             </div>
                           </div>
@@ -278,7 +272,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                         <Shield className="w-3.5 h-3.5 text-[#B8FF01]" />
                         <span>Item Situasional (Swap Khusus)</span>
                       </h4>
-                      <p className="text-[11px] text-slate-400">
+                      <p className="text-xs text-slate-400">
                         Tukar item full build di atas saat menghadapi kondisi spesifik pertandingan:
                       </p>
 
@@ -294,33 +288,19 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                               <div className="flex items-center gap-2 min-w-0 flex-1">
                                 <div className="flex items-center gap-1.5 truncate">
                                   {metaFrom && (
-                                    <img
-                                      src={metaFrom.icon}
-                                      alt={sit.from}
-                                      className="w-5 h-5 rounded object-cover border border-[#232A38] flex-shrink-0"
-                                      onError={(e) => {
-                                        (e.currentTarget as HTMLImageElement).style.display = 'none';
-                                      }}
-                                    />
+                                    <AssetThumbnail src={metaFrom.icon} name={sit.from} kind="item" className="w-5 h-5 rounded object-cover border border-[#232A38] flex-shrink-0" />
                                   )}
                                   <span className="text-slate-300 truncate font-medium">{sit.from}</span>
                                 </div>
                                 <ArrowRight className="w-3.5 h-3.5 text-[#B8FF01] flex-shrink-0" />
                                 <div className="flex items-center gap-1.5 truncate">
                                   {metaTo && (
-                                    <img
-                                      src={metaTo.icon}
-                                      alt={sit.to}
-                                      className="w-5 h-5 rounded object-cover border border-[#B8FF01]/40 flex-shrink-0"
-                                      onError={(e) => {
-                                        (e.currentTarget as HTMLImageElement).style.display = 'none';
-                                      }}
-                                    />
+                                    <AssetThumbnail src={metaTo.icon} name={sit.to} kind="item" className="w-5 h-5 rounded object-cover border border-[#B8FF01]/40 flex-shrink-0" />
                                   )}
                                   <span className="text-[#F5C451] font-bold truncate">{sit.to}</span>
                                 </div>
                               </div>
-                              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-950/80 text-rose-300 border border-rose-800/50 flex-shrink-0 ml-2">
+                              <span className="text-xs font-mono px-2 py-0.5 rounded bg-rose-950/80 text-rose-300 border border-rose-800/50 flex-shrink-0 ml-2">
                                 {sit.vs}
                               </span>
                             </div>
@@ -335,7 +315,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                     <div className="p-3 bg-[#12161F] border border-[#232A38] rounded-xl space-y-2">
                       <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center justify-between">
                         <span>Susunan Arcana Resmi</span>
-                        <span className="text-[10px] text-slate-500 font-mono">30 Sockets</span>
+                        <span className="text-xs text-slate-500 font-mono">30 Sockets</span>
                       </h4>
                       <div className="grid grid-cols-2 gap-2">
                         {hGuide.arcana.map((arc, idx) => {
@@ -355,23 +335,16 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                             >
                               <div className="relative w-8 h-8 rounded-lg bg-[#12161F] border border-[#232A38] overflow-hidden flex items-center justify-center flex-shrink-0">
                                 {iconSrc ? (
-                                  <img
-                                    src={iconSrc}
-                                    alt={arc.name}
-                                    className="w-full h-full object-cover"
-                                    onError={(e) => {
-                                      (e.currentTarget as HTMLImageElement).style.display = 'none';
-                                    }}
-                                  />
+                                  <AssetThumbnail src={iconSrc} name={arc.name} kind="item" className="w-full h-full object-cover asset-thumbnail--fill" />
                                 ) : (
-                                  <span className="text-[10px] font-black">{arc.name.slice(0, 2)}</span>
+                                  <span className="text-xs font-black">{arc.name.slice(0, 2)}</span>
                                 )}
                               </div>
                               <div className="min-w-0 flex-1">
                                 <span className="text-xs font-bold text-slate-200 block truncate leading-tight">
                                   {arc.name}
                                 </span>
-                                <span className="text-[10px] font-mono text-slate-400 block truncate">
+                                <span className="text-xs font-mono text-slate-400 block truncate">
                                   {arc.desc ? arc.desc.slice(0, 24) + '...' : `Arcana Tipe ${arc.color || 'L3'}`}
                                 </span>
                               </div>
@@ -415,7 +388,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                         KPL Pro Tournament Matchups
                       </h4>
                     </div>
-                    <div className="flex items-center gap-1.5 text-[10px] font-mono">
+                    <div className="flex items-center gap-1.5 text-xs font-mono">
                       <span className="px-1.5 py-0.5 rounded bg-[#1A2233] text-slate-300 border border-[#2A3750]">
                         {kpl.total_picks} Picks
                       </span>
@@ -432,10 +405,10 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                   {kpl.worst_matchups.length > 0 && (
                     <div className="space-y-1.5">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-mono text-rose-400 font-bold flex items-center gap-1">
-                          <span>🛑</span> HARD COUNTER DI TURNAMEN KPL:
+                        <span className="text-xs font-mono text-rose-400 font-bold flex items-center gap-1">
+                          <ShieldBan className="w-4 h-4" aria-hidden="true" /> HARD COUNTER DI TURNAMEN KPL:
                         </span>
-                        <span className="text-[9px] font-mono text-slate-500">Winrate Hero Rendah</span>
+                        <span className="text-xs font-mono text-slate-500">Winrate Hero Rendah</span>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                         {kpl.worst_matchups.map((m) => {
@@ -447,24 +420,17 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                               className="p-2 rounded-lg bg-rose-950/30 border border-rose-900/40 hover:border-rose-500/70 flex items-center justify-between text-left transition-all group"
                             >
                               <div className="flex items-center gap-2 min-w-0">
-                                <img
-                                  src={m.opponent_avatar}
-                                  alt={m.opponent_name}
-                                  className="w-7 h-7 rounded-md object-cover border border-rose-800/40 group-hover:scale-105 transition-transform"
-                                  onError={(e) => {
-                                    (e.currentTarget as HTMLImageElement).src = `https://hok.kurohiko.id/icons/hero/${m.opponent_id}.webp`;
-                                  }}
-                                />
+                                <AssetThumbnail src={m.opponent_avatar} name={m.opponent_name} kind="hero" className="w-7 h-7 rounded-md object-cover border border-rose-800/40 group-hover:scale-105 transition-transform" />
                                 <div className="min-w-0">
                                   <span className="text-xs font-bold text-white block truncate">
                                     {m.opponent_name}
                                   </span>
-                                  <span className="text-[9px] font-mono text-slate-400 block">
+                                  <span className="text-xs font-mono text-slate-400 block">
                                     {m.wins}W - {m.losses}L ({m.total_matches} Game)
                                   </span>
                                 </div>
                               </div>
-                              <span className="text-[11px] font-mono font-black text-rose-400 pl-1.5 flex-shrink-0">
+                              <span className="text-xs font-mono font-black text-rose-400 pl-1.5 flex-shrink-0">
                                 {(m.hero_winrate * 100).toFixed(1)}% WR
                               </span>
                             </button>
@@ -478,10 +444,10 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                   {kpl.best_matchups.length > 0 && (
                     <div className="space-y-1.5 pt-1">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-mono text-emerald-400 font-bold flex items-center gap-1">
-                          <span>⚔️</span> TARGET EMPUK DI TURNAMEN KPL:
+                        <span className="text-xs font-mono text-emerald-400 font-bold flex items-center gap-1">
+                          <Swords className="w-4 h-4" aria-hidden="true" /> TARGET EMPUK DI TURNAMEN KPL:
                         </span>
-                        <span className="text-[9px] font-mono text-slate-500">Winrate Hero Tinggi</span>
+                        <span className="text-xs font-mono text-slate-500">Winrate Hero Tinggi</span>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                         {kpl.best_matchups.map((m) => {
@@ -493,24 +459,17 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                               className="p-2 rounded-lg bg-emerald-950/30 border border-emerald-900/40 hover:border-emerald-500/70 flex items-center justify-between text-left transition-all group"
                             >
                               <div className="flex items-center gap-2 min-w-0">
-                                <img
-                                  src={m.opponent_avatar}
-                                  alt={m.opponent_name}
-                                  className="w-7 h-7 rounded-md object-cover border border-emerald-800/40 group-hover:scale-105 transition-transform"
-                                  onError={(e) => {
-                                    (e.currentTarget as HTMLImageElement).src = `https://hok.kurohiko.id/icons/hero/${m.opponent_id}.webp`;
-                                  }}
-                                />
+                                <AssetThumbnail src={m.opponent_avatar} name={m.opponent_name} kind="hero" className="w-7 h-7 rounded-md object-cover border border-emerald-800/40 group-hover:scale-105 transition-transform" />
                                 <div className="min-w-0">
                                   <span className="text-xs font-bold text-white block truncate">
                                     {m.opponent_name}
                                   </span>
-                                  <span className="text-[9px] font-mono text-slate-400 block">
+                                  <span className="text-xs font-mono text-slate-400 block">
                                     {m.wins}W - {m.losses}L ({m.total_matches} Game)
                                   </span>
                                 </div>
                               </div>
-                              <span className="text-[11px] font-mono font-black text-emerald-400 pl-1.5 flex-shrink-0">
+                              <span className="text-xs font-mono font-black text-emerald-400 pl-1.5 flex-shrink-0">
                                 {(m.hero_winrate * 100).toFixed(1)}% WR
                               </span>
                             </button>
@@ -524,10 +483,10 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                   {kpl.synergies && kpl.synergies.length > 0 && (
                     <div className="space-y-1.5 pt-1 border-t border-[#1C2638]">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-mono text-indigo-400 font-bold flex items-center gap-1">
-                          <span>🔗</span> REKAN DUET SINERGI TERBAIK DI TURNAMEN KPL:
+                        <span className="text-xs font-mono text-indigo-400 font-bold flex items-center gap-1">
+                          <Link2 className="w-4 h-4" aria-hidden="true" /> REKAN DUET SINERGI TERBAIK DI TURNAMEN KPL:
                         </span>
-                        <span className="text-[9px] font-mono text-slate-500">Duet Winrate Tinggi</span>
+                        <span className="text-xs font-mono text-slate-500">Duet Winrate Tinggi</span>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                         {kpl.synergies.map((s) => {
@@ -539,24 +498,17 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                               className="p-2 rounded-lg bg-indigo-950/30 border border-indigo-900/40 hover:border-indigo-500/70 flex items-center justify-between text-left transition-all group"
                             >
                               <div className="flex items-center gap-2 min-w-0">
-                                <img
-                                  src={s.partner_avatar}
-                                  alt={s.partner_name}
-                                  className="w-7 h-7 rounded-md object-cover border border-indigo-800/40 group-hover:scale-105 transition-transform"
-                                  onError={(e) => {
-                                    (e.currentTarget as HTMLImageElement).src = `https://hok.kurohiko.id/icons/hero/${s.partner_id}.webp`;
-                                  }}
-                                />
+                                <AssetThumbnail src={s.partner_avatar} name={s.partner_name} kind="hero" className="w-7 h-7 rounded-md object-cover border border-indigo-800/40 group-hover:scale-105 transition-transform" />
                                 <div className="min-w-0">
                                   <span className="text-xs font-bold text-white block truncate">
                                     {s.partner_name}
                                   </span>
-                                  <span className="text-[9px] font-mono text-slate-400 block">
+                                  <span className="text-xs font-mono text-slate-400 block">
                                     {s.wins}W - {s.losses}L ({s.total_matches} Game Bersama)
                                   </span>
                                 </div>
                               </div>
-                              <span className="text-[11px] font-mono font-black text-indigo-400 pl-1.5 flex-shrink-0">
+                              <span className="text-xs font-mono font-black text-indigo-400 pl-1.5 flex-shrink-0">
                                 {(s.duet_winrate * 100).toFixed(1)}% WR
                               </span>
                             </button>
@@ -579,8 +531,8 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                   {/* Weak Against (Hard Counter) */}
                   {hCounters.weak_against.length > 0 && (
                     <div>
-                      <span className="text-[10px] font-mono text-rose-400 font-bold block mb-1">
-                        🚫 LEMAH MELAWAN (Counter Alami HOKFIRE):
+                      <span className="text-xs font-mono text-rose-400 font-bold block mb-1">
+                        <ShieldBan className="w-4 h-4 inline-block mr-1" aria-hidden="true" /> LEMAH MELAWAN (Counter Alami HOKFIRE):
                       </span>
                       <div className="flex flex-wrap gap-1.5">
                         {hCounters.weak_against.map((slug) => {
@@ -591,7 +543,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                               onClick={() => rel && onSelectRelatedHero(rel)}
                               className="flex items-center gap-1 px-2 py-1 rounded-lg bg-rose-950/60 text-rose-200 border border-rose-800/50 text-xs font-bold hover:border-rose-400 transition-all"
                             >
-                              {rel && <img src={rel.portrait_asset} alt={rel.name} className="w-3.5 h-3.5 rounded-full" />}
+                              {rel && <AssetThumbnail src={rel.portrait_asset} name={rel.name} kind="hero" className="w-3.5 h-3.5 rounded-full" />}
                               <span>{rel ? rel.name : slug}</span>
                             </button>
                           );
@@ -603,8 +555,8 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                   {/* Strong Against */}
                   {hCounters.strong_against.length > 0 && (
                     <div>
-                      <span className="text-[10px] font-mono text-emerald-400 font-bold block mb-1">
-                        ⚔️ KUAT MELAWAN (Target Empuk):
+                      <span className="text-xs font-mono text-emerald-400 font-bold block mb-1">
+                        <Swords className="w-4 h-4 inline-block mr-1" aria-hidden="true" /> KUAT MELAWAN (Target Empuk):
                       </span>
                       <div className="flex flex-wrap gap-1.5">
                         {hCounters.strong_against.map((slug) => {
@@ -615,7 +567,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                               onClick={() => rel && onSelectRelatedHero(rel)}
                               className="flex items-center gap-1 px-2 py-1 rounded-lg bg-emerald-950/60 text-emerald-200 border border-emerald-800/50 text-xs font-bold hover:border-emerald-400 transition-all"
                             >
-                              {rel && <img src={rel.portrait_asset} alt={rel.name} className="w-3.5 h-3.5 rounded-full" />}
+                              {rel && <AssetThumbnail src={rel.portrait_asset} name={rel.name} kind="hero" className="w-3.5 h-3.5 rounded-full" />}
                               <span>{rel ? rel.name : slug}</span>
                             </button>
                           );
@@ -627,8 +579,8 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                   {/* Synergizes */}
                   {hCounters.synergizes.length > 0 && (
                     <div>
-                      <span className="text-[10px] font-mono text-indigo-400 font-bold block mb-1">
-                        🔗 REKAN SINERGI TERBAIK (Duet Kombo):
+                      <span className="text-xs font-mono text-indigo-400 font-bold block mb-1">
+                        <Link2 className="w-4 h-4 inline-block mr-1" aria-hidden="true" /> REKAN SINERGI TERBAIK (Duet Kombo):
                       </span>
                       <div className="flex flex-wrap gap-1.5">
                         {hCounters.synergizes.map((slug) => {
@@ -639,7 +591,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                               onClick={() => rel && onSelectRelatedHero(rel)}
                               className="flex items-center gap-1 px-2 py-1 rounded-lg bg-indigo-950/60 text-indigo-200 border border-indigo-800/50 text-xs font-bold hover:border-indigo-400 transition-all"
                             >
-                              {rel && <img src={rel.portrait_asset} alt={rel.name} className="w-3.5 h-3.5 rounded-full" />}
+                              {rel && <AssetThumbnail src={rel.portrait_asset} name={rel.name} kind="hero" className="w-3.5 h-3.5 rounded-full" />}
                               <span>{rel ? rel.name : slug}</span>
                             </button>
                           );
@@ -654,15 +606,15 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
               <div className="space-y-4">
                 <div className="flex items-center justify-between text-xs text-slate-300 font-bold uppercase tracking-wider">
                   <span>Matriks Counter Komunitas (Kurohiko)</span>
-                  <span className="text-[10px] text-slate-500 font-mono">
+                  <span className="text-xs text-slate-500 font-mono">
                     {((hero.countered_by?.length || 0) + (hero.counters?.length || 0))} Matchup
                   </span>
                 </div>
 
                 {/* 3A: Lemah Melawan (Hero yang meng-counter kita) */}
                 <div className="space-y-2.5">
-                  <span className="text-[10px] font-black uppercase text-rose-400 tracking-wider flex items-center gap-1">
-                    <span>🚫 Lemah Melawan (Counter Alami):</span>
+                  <span className="text-xs font-black uppercase text-rose-400 tracking-wider flex items-center gap-1">
+                    <span><ShieldBan className="w-4 h-4 inline-block mr-1" aria-hidden="true" /> Lemah Melawan (Counter Alami):</span>
                   </span>
 
                   {(!hero.countered_by || hero.countered_by.length === 0) ? (
@@ -688,11 +640,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2.5">
                               {predatorHero ? (
-                                <img
-                                  src={predatorHero.portrait_asset}
-                                  alt={predatorHero.name}
-                                  className="w-8 h-8 rounded-lg object-cover"
-                                />
+                                <AssetThumbnail src={predatorHero.portrait_asset} name={predatorHero.name} kind="hero" className="w-8 h-8 rounded-lg object-cover" />
                               ) : (
                                 <div className="w-8 h-8 rounded-lg bg-[#1A202C] flex items-center justify-center text-xs font-bold">
                                   {c.counter_name[0]}
@@ -701,14 +649,14 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                               <div>
                                 <span className="font-bold text-xs text-white block">{c.counter_name}</span>
                                 {isDisputed && (
-                                  <span className="text-[9px] font-mono text-amber-400 font-semibold block">
-                                    ⚠️ Bertentangan dgn Meta KPL / HOKFIRE
+                                  <span className="text-xs font-mono text-amber-400 font-semibold block">
+                                     Bertentangan dgn Meta KPL / HOKFIRE
                                   </span>
                                 )}
                               </div>
                             </div>
                             <span
-                              className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded font-mono flex items-center gap-1 ${
+                              className={`text-xs uppercase font-bold px-2 py-0.5 rounded font-mono flex items-center gap-1 ${
                                 isDisputed
                                   ? 'bg-amber-950/80 text-amber-300 border border-amber-800/60'
                                   : c.severity === 'hard'
@@ -724,8 +672,8 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                           <p className="text-xs text-slate-300 leading-relaxed pl-1">{c.reason}</p>
 
                           {isDisputed && (
-                            <div className="p-2.5 rounded-lg bg-amber-950/30 border border-amber-900/40 text-[11px] text-amber-200/90 leading-relaxed flex items-start gap-2">
-                              <span className="text-amber-400 font-bold flex-shrink-0">💡</span>
+                            <div className="p-2.5 rounded-lg bg-amber-950/30 border border-amber-900/40 text-xs text-amber-200/90 leading-relaxed flex items-start gap-2">
+                              <Lightbulb className="w-4 h-4 text-amber-400 flex-shrink-0" aria-hidden="true" />
                               <div>
                                 <strong className="text-amber-300">Catatan Meta Turnamen:</strong> Data empiris turnamen pro (KPL) dan panduan resmi HOKFIRE mencatat <strong>{hero.name}</strong> justru lebih unggul saat berhadapan dengan <strong>{c.counter_name}</strong> pada patch kompetitif aktif.
                               </div>
@@ -740,8 +688,8 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                 {/* 3B: Kuat Melawan (Target empuk yang di-counter kita) */}
                 {hero.counters && hero.counters.length > 0 && (
                   <div className="space-y-2.5 pt-2 border-t border-[#232A38]/60">
-                    <span className="text-[10px] font-black uppercase text-emerald-400 tracking-wider flex items-center gap-1">
-                      <span>⚔️ Kuat Melawan (Target Empuk):</span>
+                    <span className="text-xs font-black uppercase text-emerald-400 tracking-wider flex items-center gap-1">
+                      <span><Swords className="w-4 h-4 inline-block mr-1" aria-hidden="true" /> Kuat Melawan (Target Empuk):</span>
                     </span>
 
                     {hero.counters.map((c, i) => {
@@ -755,11 +703,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2.5">
                               {targetHero ? (
-                                <img
-                                  src={targetHero.portrait_asset}
-                                  alt={targetHero.name}
-                                  className="w-8 h-8 rounded-lg object-cover"
-                                />
+                                <AssetThumbnail src={targetHero.portrait_asset} name={targetHero.name} kind="hero" className="w-8 h-8 rounded-lg object-cover" />
                               ) : (
                                 <div className="w-8 h-8 rounded-lg bg-[#1A202C] flex items-center justify-center text-xs font-bold">
                                   {c.target_name[0]}
@@ -767,7 +711,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                               )}
                               <span className="font-bold text-xs text-white">{c.target_name}</span>
                             </div>
-                            <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded font-mono bg-emerald-950 text-emerald-400 border border-emerald-800/40">
+                            <span className="text-xs uppercase font-bold px-2 py-0.5 rounded font-mono bg-emerald-950 text-emerald-400 border border-emerald-800/40">
                               {c.severity}
                             </span>
                           </div>
@@ -789,7 +733,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {/* Pros */}
                   <div className="p-3 bg-[#101F18] border border-emerald-900/50 rounded-xl space-y-2">
-                    <span className="text-[10px] font-black uppercase text-emerald-400 flex items-center gap-1">
+                    <span className="text-xs font-black uppercase text-emerald-400 flex items-center gap-1">
                       <CheckCircle2 className="w-3 h-3" />
                       <span>Kelebihan (Pros)</span>
                     </span>
@@ -805,7 +749,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
 
                   {/* Cons */}
                   <div className="p-3 bg-[#241216] border border-rose-900/50 rounded-xl space-y-2">
-                    <span className="text-[10px] font-black uppercase text-rose-400 flex items-center gap-1">
+                    <span className="text-xs font-black uppercase text-rose-400 flex items-center gap-1">
                       <AlertCircle className="w-3 h-3" />
                       <span>Kelemahan (Cons)</span>
                     </span>
@@ -825,7 +769,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
               <div className="space-y-2.5">
                 <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center justify-between">
                   <span>Kemampuan & Skill Hero ({abilities.length})</span>
-                  <span className="text-[10px] text-slate-500 font-mono">HOK Official Abilities</span>
+                  <span className="text-xs text-slate-500 font-mono">HOK Official Abilities</span>
                 </h4>
 
                 {abilities.length === 0 ? (
@@ -851,31 +795,14 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                                 : 'border-[#232A38]'
                             }`}
                           >
-                            <img
-                              src={abilityIconSrc}
-                              alt={ab.name}
-                              className="w-full h-full object-cover"
-                              onError={(e) => {
-                                // fallback to Tencent Game CDN or Camp
-                                const img = e.currentTarget as HTMLImageElement;
-                                if (!img.dataset.triedFallback) {
-                                  img.dataset.triedFallback = '1';
-                                  img.src = `https://game.gtimg.cn/images/yxzj/img201606/heroimg/${hero.hero_id}/${hero.hero_id}${idx}0.png`;
-                                } else {
-                                  img.style.display = 'none';
-                                }
-                              }}
-                            />
-                            <span className="text-xs font-black text-slate-500 select-none">
-                              {idx === 0 ? 'P' : idx}
-                            </span>
+                            <AssetThumbnail src={abilityIconSrc} name={ab.name} kind="item" className="w-full h-full object-cover asset-thumbnail--fill" />
                           </div>
 
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between gap-2">
                               <span className="font-extrabold text-sm text-white truncate">{ab.name}</span>
                               <span
-                                className={`text-[10px] font-mono px-2 py-0.5 rounded font-bold uppercase ${
+                                className={`text-xs font-mono px-2 py-0.5 rounded font-bold uppercase ${
                                   ab.type.toLowerCase().includes('ultimate')
                                     ? 'bg-[#F5C451]/10 text-[#F5C451] border border-[#F5C451]/30'
                                     : ab.type.toLowerCase().includes('passive')
@@ -886,7 +813,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                                 {ab.type}
                               </span>
                             </div>
-                            <span className="text-[10px] font-mono text-slate-500 block mt-0.5">
+                            <span className="text-xs font-mono text-slate-500 block mt-0.5">
                               {idx === 0
                                 ? 'Skill Pasif'
                                 : idx === 3
@@ -918,7 +845,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                     <span>Panduan Bermain Resmi HOKFIRE</span>
                   </h4>
                   <div className="text-xs text-slate-200 leading-relaxed whitespace-pre-line">
-                    {hGuide.gameplay_tips.replace(/## /g, '📌 ')}
+                    {hGuide.gameplay_tips.replace(/## /g, '')}
                   </div>
                 </div>
               ) : null}
@@ -948,7 +875,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                       >
                         <h5 className="font-bold text-xs text-[#F5C451]">{item.name}</h5>
                         {item.description && (
-                          <p className="text-[11px] text-slate-400">{item.description}</p>
+                          <p className="text-xs text-slate-400">{item.description}</p>
                         )}
                       </div>
                     ))}

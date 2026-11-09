@@ -1,12 +1,18 @@
+import { DropdownSelect } from './ui/DropdownSelect';
 import React, { useEffect, useMemo, useState } from 'react';
 import type { Hero, Lane, SortMode, TournamentDataset, ViewMode } from '../types';
-import { applyDraftAction, emptyPosition, getDraftTurn, isLegalHero, oppositeSide } from '../engine/draftRules';
+import { DRAFT_SEQUENCE, applyDraftAction, emptyPosition, getDraftTurn, isLegalHero, oppositeSide } from '../engine/draftRules';
 import type { Side } from '../engine/draftRules';
 import { createPracticeSession, practiceContext, reducePractice } from '../engine/practiceState';
 import type { PracticeEvent, PracticeSession } from '../engine/practiceState';
 import { OpponentClient } from '../engine/opponentClient';
 import { evaluateTacticalScores, runTournamentInference } from '../engine/tournamentInference';
 import { loadTournamentDataset } from '../engine/heroDataLoader';
+import { AlertTriangle, ArrowRight, BookOpen, ChartColumn, CheckCircle2, ChevronDown, FilterX, Gamepad2, History, Info, Layers, Lightbulb, LoaderCircle, Play, RefreshCw, RotateCcw, SearchX, Settings2, Shield, ShieldCheck, SlidersHorizontal, Swords, Undo2 } from 'lucide-react';
+import { HeroRosterToolbar } from './HeroRosterToolbar';
+import { TacticalRadarPanel } from './TacticalRadarPanel';
+import { HeroThumbnail } from './ui/AssetThumbnail';
+import { focusHeroSearch, plainText } from './ui/presentation';
 import { DraftSimulator } from './DraftSimulator';
 import { HeroCardCompact } from './HeroCardCompact';
 import { HeroCardDetailed } from './HeroCardDetailed';
@@ -19,13 +25,17 @@ interface Props {
   assistance: boolean;
   onAssistanceChange: (enabled: boolean) => void;
   selectedLane: Lane | 'All';
+  onLaneChange: (lane: Lane | 'All') => void;
+  onSearchChange: (query: string) => void;
+  onSortChange: (sort: SortMode) => void;
+  onViewChange: (view: ViewMode) => void;
   searchQuery: string;
   sortMode: SortMode;
   viewMode: ViewMode;
   favorites: Set<number>;
   onToggleFavorite: (id: number) => void;
 }
-const button = 'min-h-11 rounded-lg border border-[#334155] px-4 py-2 text-sm font-semibold text-slate-100 hover:bg-[#232A38] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8FF01] disabled:cursor-not-allowed disabled:opacity-40';
+const button = 'ui-button ui-button--quiet';
 const axes = [
   ['draft_advantage', 'Keunggulan draft'],
   ['early_game_pressure', 'Tekanan awal'], ['cc_chain_lockdown', 'Kontrol tim'], ['frontline_durability', 'Garis depan'],
@@ -117,59 +127,54 @@ export function PracticeDraft(props: Props) {
     });
   }, [snapshot, props.searchQuery, props.selectedLane, props.sortMode, assistance, canAct, hints]);
 
-  const assistanceControl = <label className="flex min-h-11 cursor-pointer items-center gap-3 text-sm"><input type="checkbox" checked={assistance} onChange={e => onAssistanceChange(e.target.checked)} className="h-5 w-5 accent-[#B8FF01]" />Tampilkan bantuan taktis</label>;
-  if (!session || !game) return <section aria-label="Pengaturan latihan" className="rounded-2xl border border-[#232A38] bg-[#12161F] p-6 space-y-5">
-    <div><h2 className="text-xl font-bold">Latihan draft melawan AI</h2><p className="mt-2 max-w-2xl text-sm text-slate-400">Pimpin ban dan pick timmu. AI mengendalikan tim lawan langsung di browser. Pilihan sisi berlaku untuk seluruh seri.</p></div>
-    <fieldset className="space-y-3"><legend className="mb-3 text-sm font-semibold">Pilih sisi timmu</legend><div className="flex flex-wrap gap-3">{(['blue', 'red'] as Side[]).map(side => <label key={side} className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm ${setupSide === side ? 'border-[#B8FF01] bg-[#1A2410]' : 'border-[#334155]'}`}><input type="radio" name="practice-side" value={side} checked={setupSide === side} onChange={() => setSetupSide(side)} className="accent-[#B8FF01]" />{side === 'blue' ? 'Blue · first pick' : 'Red · respons & last pick'}</label>)}</div></fieldset>
-    <div className="space-y-2">{assistanceControl}<label className="flex min-h-11 cursor-pointer items-center gap-3 text-sm"><input type="checkbox" checked={setupFearless} onChange={e => setSetupFearless(e.target.checked)} className="h-5 w-5 accent-[#B8FF01]" />Seri Fearless · hero terpakai terkunci per tim</label></div>
-    {error && <p role="alert" className="text-sm text-amber-300">{error}</p>}
-    <button className={`${button} bg-[#B8FF01] text-black! hover:bg-[#d1ff55]`} onClick={() => void start()} disabled={starting}>{starting ? 'Memuat data…' : 'Mulai latihan'}</button>
+  const assistanceControl = <label className="assistance-toggle"><Lightbulb aria-hidden="true" /><span>Bantuan taktis<small>{assistance ? 'Rekomendasi dan komposisi ditampilkan' : 'Uji keputusan tanpa rekomendasi AI'}</small></span><input type="checkbox" checked={assistance} onChange={event => onAssistanceChange(event.target.checked)} /></label>;
+  if (!session || !game) return <section aria-label="Pengaturan latihan" className="practice-setup surface-panel">
+    <div className="practice-setup__intro"><span className="practice-setup__icon"><Gamepad2 aria-hidden="true" /></span><h2>Latihan draft melawan AI</h2><p>Pimpin ban dan pick timmu. Pilih sisi dan bantuan yang kamu perlukan; AI mengendalikan tim lawan.</p><div className="practice-setup__heroes">{snapshot.heroes.filter(hero => hero.is_global_released).slice(0, 5).map(hero => <HeroThumbnail key={hero.hero_id} hero={hero} />)}<span>{snapshot.heroes.filter(hero => hero.is_global_released).length} hero Global</span></div></div>
+    <div className="practice-setup__form"><fieldset><legend>Pilih sisi timmu</legend><div className="setup-side-options">{(['blue', 'red'] as Side[]).map(side => <label key={side} className={setupSide === side ? 'is-selected' : ''}><input type="radio" name="practice-side" value={side} checked={setupSide === side} onChange={() => setSetupSide(side)} />{side === 'blue' ? <Shield aria-hidden="true" /> : <Swords aria-hidden="true" />}<span><strong>{side === 'blue' ? 'Blue side' : 'Red side'}</strong><small>{side === 'blue' ? 'Amankan first pick' : 'Respons & last counter-pick'}</small></span></label>)}</div></fieldset>
+      <div className="setup-options">{assistanceControl}<label className="assistance-toggle"><ShieldCheck aria-hidden="true" /><span>Seri Fearless<small>Hero terpakai terkunci per tim, hingga 5 game</small></span><input type="checkbox" checked={setupFearless} onChange={event => setSetupFearless(event.target.checked)} /></label></div>
+      {error && <p role="alert" className="inline-feedback inline-feedback--error"><AlertTriangle aria-hidden="true" />{error}</p>}
+      <button type="button" className="ui-button ui-button--primary" onClick={() => void start()} disabled={starting}>{starting ? <LoaderCircle className="is-spinning" aria-hidden="true" /> : <Play aria-hidden="true" />}{starting ? 'Memuat data…' : 'Mulai latihan'}<ArrowRight aria-hidden="true" /></button>
+    </div>
   </section>;
 
   const padded = (ids: number[], count: number) => [...heroList(ids), ...Array(Math.max(0, count - ids.length)).fill(null)];
-  const canUndo = latest && game.actions.some(a => a.side === playerSide);
+  const canUndo = latest && game.actions.some(action => action.side === playerSide);
   const playerRadar = evaluateTacticalScores(playerHeroes, enemyHeroes);
   const enemyRadar = evaluateTacticalScores(enemyHeroes, playerHeroes);
   const unavailablePlans = new Set([...position.picks.blue, ...position.picks.red, ...position.bans.blue, ...position.bans.red, ...context.fearless[playerSide]]);
-  return <section aria-label="Latihan draft aktif" className="space-y-5">
-    <div className="rounded-2xl border border-[#232A38] bg-[#12161F] p-4 space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-4"><div><h2 className="text-lg font-bold">Latihan vs AI · Game {session.gameIndex + 1}</h2><p className="mt-1 text-sm text-slate-400">Anda: {playerSide.toUpperCase()} · AI: {oppositeSide(playerSide).toUpperCase()} · {session.config.fearless ? 'Fearless aktif' : 'Draft biasa'}</p></div>{assistanceControl}</div>
-      <div className="flex flex-wrap gap-2">{session.games.map((_, index) => <button key={index} className={button} aria-current={index === session.gameIndex ? 'step' : undefined} onClick={() => send({ type: 'view', index })}>Game {index + 1}{index < session.games.length - 1 ? ' · ulasan' : ''}</button>)}
-        <button className={button} onClick={() => send({ type: 'undo' })} disabled={!canUndo}>Urungkan keputusan</button>
-        <button className={button} onClick={() => send({ type: 'reset' })} disabled={!latest}>Reset game</button>
-        <button className={button} onClick={() => { client.cancel(); setSession(null); setNotice(''); setError(''); }}>Atur seri baru</button>
+  const previewStep = DRAFT_SEQUENCE.findIndex((step, index) => index >= position.step && step.side === playerSide);
+  const previewPosition = canAct ? position : { ...position, step: previewStep < 0 ? 18 : previewStep };
+  const rosterAction = getDraftTurn(previewPosition.step).action;
+  return <section aria-label="Latihan draft aktif" className="practice-session">
+    <div className="practice-session__controls surface-panel"><div className="practice-session__heading"><div className="section-heading"><span className="section-heading__icon"><Gamepad2 aria-hidden="true" /></span><div><h2>Anda: {playerSide === 'blue' ? 'Blue' : 'Red'} · AI: {playerSide === 'blue' ? 'Red' : 'Blue'}</h2><p>Game {session.gameIndex + 1} · {session.config.fearless ? 'Seri Fearless' : 'Draft biasa'}</p></div></div>{assistanceControl}</div>
+      <div className="practice-session__actions"><DropdownSelect label="Pilih game latihan" icon={History} value={session.gameIndex} onChange={index => send({ type: 'view', index })} options={session.games.map((_, index) => ({ value: index, label: `Game ${index + 1}${index < session.games.length - 1 ? ' · ulasan' : ''}` }))} />
+        <button type="button" className={button} onClick={() => send({ type: 'undo' })} disabled={!canUndo}><Undo2 aria-hidden="true" />Urungkan</button>
+        <button type="button" className={button} onClick={() => send({ type: 'reset' })} disabled={!latest}><RotateCcw aria-hidden="true" />Reset game</button>
+        <button type="button" className={button} onClick={() => { client.cancel(); setSession(null); setNotice(''); setError(''); }}><Settings2 aria-hidden="true" />Seri baru</button>
+        {!turn.isComplete && latest && <button type="button" className={button} onClick={() => setPlanOpen(true)}><SlidersHorizontal aria-hidden="true" />Plan A/B</button>}
       </div>
-      <div aria-live="polite" role="status" className="min-h-6 text-sm text-slate-300">{!latest ? 'Ulasan game terdahulu. Kembali ke game terbaru untuk melanjutkan.' : turn.isComplete ? 'Draft selesai. Evaluasi komposisi tersedia di bawah.' : thinking ? 'AI sedang memilih…' : canAct ? `Giliran Anda: ${turn.action === 'ban' ? 'ban' : 'pick'} hero.` : 'Menyiapkan giliran AI…'}</div>
-      {notice && <p className="text-sm text-slate-400">{notice}</p>}
-      {error && <div role="alert" className="space-y-2 text-sm text-amber-300"><p>{error}</p><button className={button} onClick={() => send({ type: 'retry' })}>Coba lagi</button></div>}
+      <div aria-live="polite" role="status" className="practice-status">{thinking ? <LoaderCircle className="is-spinning" aria-hidden="true" /> : turn.isComplete ? <CheckCircle2 aria-hidden="true" /> : <Info aria-hidden="true" />}<span>{!latest ? 'Ulasan game terdahulu. Kembali ke game terbaru untuk melanjutkan.' : turn.isComplete ? 'Draft selesai. Evaluasi komposisi tersedia di bawah.' : thinking ? 'AI sedang memilih… Kamu tetap bisa membaca wiki hero.' : canAct ? 'Giliran Anda: ' + (turn.action === 'ban' ? 'ban' : 'pick') + ' hero.' : 'Menyiapkan giliran AI…'}</span></div>
+      {notice && !thinking && <p className="practice-notice">{notice}</p>}
+      {error && <div role="alert" className="inline-feedback inline-feedback--error"><AlertTriangle aria-hidden="true" /><p>{error}</p><button type="button" className={button} onClick={() => send({ type: 'retry' })}><RefreshCw aria-hidden="true" />Coba lagi</button></div>}
     </div>
-    <DraftSimulator bluePicks={padded(position.picks.blue, 5)} redPicks={padded(position.picks.red, 5)} blueBans={padded(position.bans.blue, 4)} redBans={padded(position.bans.red, 4)} currentTurn={turn}
-      fearlessEnabled={session.config.fearless} gameNumber={session.gameIndex + 1} onToggleFearless={() => {}} onGameNumberChange={() => {}} onResetDraft={() => {}} onUndoStep={() => {}} onSelectSlot={() => {}}
-      blueFearlessUsedHeroes={heroList(context.fearless.blue)} redFearlessUsedHeroes={heroList(context.fearless.red)} hideControls playerSide={playerSide} />
-
-    {!turn.isComplete && latest && <div className="flex flex-wrap items-center gap-3"><button className={button} onClick={() => setPlanOpen(true)}>Atur Plan A/B</button><p className="text-sm text-slate-400">Rencana timmu disimpan terpisah dari AI lawan.</p></div>}
-    {assistance && !turn.isComplete && <aside aria-label="Bantuan taktis" className="rounded-2xl border border-[#232A38] bg-[#12161F] p-4 space-y-4">
-      <h3 className="font-bold">Komposisi tim Anda</h3><div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6">{axes.map(([key, label]) => <div key={key}><span className="text-sm text-slate-400">{label}</span><p className="font-mono text-sm">{Math.round(playerRadar[key] * 100)}/100</p></div>)}</div>
-      {canAct && <><h3 className="font-bold">Rekomendasi {turn.action}</h3><div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">{recommendations.slice(0, 5).map((rec, index) => <button key={rec.hero.hero_id} className={`${button} text-left`} onClick={() => choose(rec.hero)}><span className="block">#{index + 1} {rec.hero.name}</span><span className="mt-1 block text-sm font-normal text-slate-400">{rec.proComboTag || rec.laneTag || 'Prioritas taktis'}</span></button>)}</div></>}
-    </aside>}
-
-    {turn.isComplete && <section aria-label="Evaluasi draft heuristik" className="rounded-2xl border border-[#232A38] bg-[#12161F] p-4 space-y-5">
-      <div><h3 className="text-lg font-bold">Evaluasi draft heuristik</h3><p className="mt-2 text-sm text-slate-400">Penilaian komposisi dan alternatif taktis. Hasil pertandingan tetap bergantung pada permainan kedua tim.</p></div>
-      <div className="grid gap-4 md:grid-cols-2">{[{ title: 'Tim Anda', radar: playerRadar }, { title: 'Tim AI', radar: enemyRadar }].map(({ title, radar }) => <div key={title} className="rounded-xl border border-[#334155] p-4"><h4 className="mb-3 font-semibold">{title}</h4><dl className="space-y-2">{axes.map(([key, label]) => <div key={key} className="flex justify-between gap-3 text-sm"><dt>{label}</dt><dd className="font-mono">{Math.round(radar[key] * 100)}/100{radar[key] < 0.48 ? ' · perlu perhatian' : ''}</dd></div>)}</dl></div>)}</div>
-      <details><summary className="min-h-11 cursor-pointer py-3 font-semibold">Tinjau {game.traces.length} keputusan Anda</summary><ol className="space-y-4">{game.traces.map(trace => <li key={trace.actionIndex} className="rounded-xl border border-[#334155] p-4 text-sm"><p className="font-semibold">Langkah {trace.actionIndex + 1}: {game.actions[trace.actionIndex].action} {byId.get(trace.heroId)?.name}</p><p className="mt-2 text-slate-400">Alternatif pada posisi saat itu:</p><ul className="mt-2 space-y-2">{trace.alternatives.map(alt => <li key={alt.heroId}><button className="min-h-11 text-left underline decoration-slate-600 underline-offset-4" onClick={() => setWikiHero(byId.get(alt.heroId) ?? null)}>{byId.get(alt.heroId)?.name}</button><span className="text-slate-400"> · {alt.reason}</span></li>)}</ul></li>)}</ol></details>
-      {latest && session.games.length < 5 && <button className={`${button} bg-[#B8FF01] text-black!`} onClick={() => send({ type: 'next' })}>Lanjut game {session.games.length + 1}</button>}
+    <DraftSimulator bluePicks={padded(position.picks.blue, 5)} redPicks={padded(position.picks.red, 5)} blueBans={padded(position.bans.blue, 4)} redBans={padded(position.bans.red, 4)} currentTurn={turn} fearlessEnabled={session.config.fearless} gameNumber={session.gameIndex + 1} onToggleFearless={() => {}} onGameNumberChange={() => {}} onResetDraft={() => {}} onUndoStep={() => {}} blueFearlessUsedHeroes={heroList(context.fearless.blue)} redFearlessUsedHeroes={heroList(context.fearless.red)} hideControls playerSide={playerSide} onInspectHero={setWikiHero} onRequestHero={canAct ? focusHeroSearch : undefined} />
+    {turn.isComplete && <section aria-label="Evaluasi draft heuristik" className="practice-review surface-panel"><div className="section-heading"><span className="section-heading__icon"><ChartColumn aria-hidden="true" /></span><div><h2>Evaluasi draft heuristik</h2><p>Komposisi dan alternatif taktis, tanpa menetapkan pemenang pertandingan.</p></div></div>
+      <div className="practice-review__teams">{[{ title: 'Tim Anda', radar: playerRadar }, { title: 'Tim AI', radar: enemyRadar }].map(({ title, radar }) => <div key={title}><h3>{title}</h3><dl>{axes.map(([key, label]) => <div key={key}><dt>{label}</dt><dd>{Math.round(radar[key] * 100)}/100{radar[key] < 0.48 && <span>Perlu perhatian</span>}</dd></div>)}</dl></div>)}</div>
+      <details className="panel-disclosure"><summary><History aria-hidden="true" /><span>Tinjau {game.traces.length} keputusan Anda</span><ChevronDown aria-hidden="true" /></summary><ol className="decision-review">{game.traces.map(trace => <li key={trace.actionIndex}><div><span className="count-badge">{trace.actionIndex + 1}</span>{byId.get(trace.heroId) && <HeroThumbnail hero={byId.get(trace.heroId)!} />}<strong>{game.actions[trace.actionIndex].action === 'ban' ? 'Ban ' : 'Pick '}{byId.get(trace.heroId)?.name}</strong></div><p>Alternatif pada posisi saat itu:</p><ul>{trace.alternatives.map(alternative => <li key={alternative.heroId}><button type="button" onClick={() => setWikiHero(byId.get(alternative.heroId) ?? null)}>{byId.get(alternative.heroId) && <HeroThumbnail hero={byId.get(alternative.heroId)!} />}<span>{byId.get(alternative.heroId)?.name}</span><BookOpen aria-hidden="true" /></button><p>{plainText(alternative.reason)}</p></li>)}</ul></li>)}</ol></details>
+      {latest && session.games.length < 5 && <button type="button" className="ui-button ui-button--primary" onClick={() => send({ type: 'next' })}><Layers aria-hidden="true" />Lanjut game {session.games.length + 1}<ArrowRight aria-hidden="true" /></button>}
     </section>}
-
-    <div className="space-y-3"><div className="flex flex-wrap items-center justify-between gap-3"><h3 className="font-bold">Roster Global · {filtered.length} hero</h3><span className="text-sm text-slate-400">Klik kartu untuk membaca wiki.</span></div>
-      {!filtered.length ? <p className="rounded-xl border border-[#334155] p-6 text-sm text-slate-400">Tidak ada hero yang cocok. Ubah pencarian atau filter lane di bawah.</p> : <div className={`grid gap-3 ${props.viewMode === 'compact' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-2 sm:grid-cols-4 lg:grid-cols-6'}`}>{filtered.map(hero => {
-        const legal = isLegalHero(position, hero.hero_id, context);
-        const index = recommendations.findIndex(r => r.hero.hero_id === hero.hero_id);
-        return <div key={hero.hero_id} className="space-y-2">{props.viewMode === 'compact' ? <HeroCardCompact hero={hero} onClick={setWikiHero} quickBadge={index >= 0 ? `AI #${index + 1}` : undefined} /> : <HeroCardDetailed hero={hero} onClick={setWikiHero} aiRank={index >= 0 ? index + 1 : undefined} />}
-          <button className={`${button} w-full`} onClick={() => choose(hero)} disabled={!canAct || !legal}>{!legal && !turn.isComplete ? 'Tidak tersedia' : `${turn.action === 'ban' ? 'Ban' : 'Pick'} ${hero.name}`}</button></div>;
-      })}</div>}
+    <div className={assistance && !turn.isComplete && latest ? 'draft-workspace' : ''}>
+      <section className="hero-roster" aria-label="Roster latihan Global"><HeroRosterToolbar title="Roster Global" count={filtered.length} searchQuery={props.searchQuery} onSearchChange={props.onSearchChange} selectedLane={props.selectedLane} onLaneChange={props.onLaneChange} sortMode={props.sortMode} onSortChange={props.onSortChange} viewMode={props.viewMode} onViewChange={props.onViewChange} hideAiSort={!assistance} active={active} />
+        {!filtered.length ? <div className="empty-state"><SearchX aria-hidden="true" /><h3>Hero tidak ditemukan</h3><p>Ubah pencarian atau bersihkan filter lane yang aktif.</p><button type="button" className={button} onClick={() => { props.onSearchChange(''); props.onLaneChange('All'); }}><FilterX aria-hidden="true" />Bersihkan filter</button></div> : <div className={'hero-grid' + (props.viewMode === 'detailed' ? ' hero-grid--detailed' : '')}>{filtered.map(hero => {
+          const legal = isLegalHero(previewPosition, hero.hero_id, context);
+          const rank = recommendations.findIndex(rec => rec.hero.hero_id === hero.hero_id) + 1;
+          const shared = { hero, onClick: setWikiHero, onSelect: choose, isUnavailable: !legal && !turn.isComplete, selectionDisabled: !canAct, action: rosterAction };
+          return props.viewMode === 'compact' ? <HeroCardCompact key={hero.hero_id} {...shared} quickBadge={rank > 0 && rank <= 5 ? 'AI #' + rank : undefined} /> : <HeroCardDetailed key={hero.hero_id} {...shared} aiRank={rank > 0 ? rank : undefined} />;
+        })}</div>}
+      </section>
+      {assistance && !turn.isComplete && latest && hints && <aside className="analysis-sidebar"><TacticalRadarPanel scores={playerRadar} phaseStrategy={hints.phaseStrategy} recommendations={recommendations} isWaiting={!canAct} onSelectCandidate={choose} onInspectHero={setWikiHero} activeSide={playerSide} isPickPhase={turn.action === 'pick'} onOpenPlanModal={() => setPlanOpen(true)} onSelectQuickPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} /></aside>}
     </div>
     <HeroWikiDrawer hero={wikiHero} onClose={() => setWikiHero(null)} isFavorite={!!wikiHero && props.favorites.has(wikiHero.hero_id)} onToggleFavorite={props.onToggleFavorite} onPickForDraft={canAct && wikiHero && isLegalHero(position, wikiHero.hero_id, context) ? choose : undefined} draftActionLabel={turn.action === 'ban' ? 'Ban hero ini' : 'Pick hero ini'} allHeroes={snapshot.heroes} onSelectRelatedHero={setWikiHero} />
-    <PlanSelectionModal isOpen={planOpen && latest} onClose={() => setPlanOpen(false)} heroes={snapshot.heroes} currentPlanAId={game.playerPlan.a} currentPlanBId={game.playerPlan.b}
-      onSelectPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} onSelectPlanB={heroId => send({ type: 'plan', plan: 'b', heroId })} activeSide={playerSide} unavailableHeroIds={unavailablePlans} recommendedOpeners={assistance ? hints?.phaseStrategy.candidateOpeners ?? [] : []} onlyGlobalReleased />
+    <PlanSelectionModal isOpen={planOpen && latest} onClose={() => setPlanOpen(false)} heroes={snapshot.heroes} currentPlanAId={game.playerPlan.a} currentPlanBId={game.playerPlan.b} onSelectPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} onSelectPlanB={heroId => send({ type: 'plan', plan: 'b', heroId })} activeSide={playerSide} unavailableHeroIds={unavailablePlans} recommendedOpeners={assistance ? hints?.phaseStrategy.candidateOpeners ?? [] : []} onlyGlobalReleased />
   </section>;
 }
