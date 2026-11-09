@@ -101,7 +101,7 @@ export async function fetchManifest(): Promise<ModelManifest | null> {
 }
 
 export async function loadHeroMetadata(): Promise<Hero[]> {
-  const cacheKey = 'master_hero_metadata_v2';
+  const cacheKey = 'master_hero_metadata_v3';
   const cached = await getFromIDB<Hero[]>(STORE_METADATA, cacheKey);
 
   if (cached && cached.length === 120) {

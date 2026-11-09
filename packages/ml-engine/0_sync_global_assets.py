@@ -118,11 +118,15 @@ def scrape_kurohiko_roster(client: httpx.Client) -> List[Dict[str, Any]]:
     print(f"       Found {len(roster)} heroes on Kurohiko.", flush=True)
     return roster
 
-def fetch_hokfire_data(client: httpx.Client) -> (Dict[int, Dict[str, Any]], Dict[int, Dict[str, Any]]):
-    print(" [2/5] Fetching stats and build guides from https://www.hokfire.com/ ...", flush=True)
+def fetch_hokfire_data(client: httpx.Client):
+    print(" [2/5] Fetching stats, official guides, abilities & builds from https://www.hokfire.com/ ...", flush=True)
     stats_by_id = {}
     builds_by_id = {}
+    supabase_guides_by_slug = {}
+    abilities_by_id = {}
+    fallback_builds_by_id = {}
     
+    # 1. Fetch official stats.js
     try:
         r_stats = client.get("https://www.hokfire.com/assets/stats.js", headers={"User-Agent": USER_AGENT}, timeout=15.0)
         if r_stats.status_code == 200:
@@ -161,6 +165,81 @@ def fetch_hokfire_data(client: httpx.Client) -> (Dict[int, Dict[str, Any]], Dict
     except Exception as e:
         print(f"       Warning: Could not fetch stats.js: {e}", flush=True)
 
+    # 2. Fetch official guides from Supabase REST API (Lady Sun, Ao'yin, Augran, Dolia, etc.)
+    try:
+        supa_url = "https://dvdzmjovcpdofvhspoay.supabase.co/rest/v1/guides?select=hero_slug,lane,data"
+        supa_key = "sb_publishable_NZlXC2llLE1Q8R2ELxB-Yw_S3I4pB9d"
+        headers = {"apikey": supa_key, "Authorization": f"Bearer {supa_key}", "User-Agent": USER_AGENT}
+        r_supa = client.get(supa_url, headers=headers, timeout=15.0)
+        if r_supa.status_code == 200:
+            for g in r_supa.json():
+                slug = g.get("hero_slug")
+                data = g.get("data", {})
+                if slug:
+                    # Clean situational items
+                    raw_sit = data.get("t", [])
+                    situational = []
+                    for s in raw_sit:
+                        if isinstance(s, list) and len(s) >= 3:
+                            situational.append({"from": s[0], "to": s[1], "vs": s[2]})
+                    
+                    # Clean arcana
+                    raw_arcana = data.get("a", [])
+                    raw_arcana_n = data.get("an", [])
+                    arcana_list = []
+                    for i, arc_name in enumerate(raw_arcana):
+                        qty = raw_arcana_n[i] if i < len(raw_arcana_n) else 10
+                        arcana_list.append({"name": arc_name, "count": qty})
+
+                    supabase_guides_by_slug[slug] = {
+                        "lane": g.get("lane"),
+                        "difficulty": data.get("d", 2),
+                        "start_item": data.get("s", ""),
+                        "boots": data.get("b", ""),
+                        "core_items": data.get("c", []),
+                        "full_build": data.get("f", []),
+                        "situational_items": situational,
+                        "arcana": arcana_list,
+                        "spell": data.get("k", "Flash"),
+                        "skill_priority": data.get("so", {}).get("priority", ""),
+                        "pros": [p.strip() for p in data.get("pr", "").split("\n") if p.strip()],
+                        "cons": [c.strip() for c in data.get("wk", "").split("\n") if c.strip()],
+                        "strong_against": data.get("sa", []),
+                        "weak_against": data.get("wa", []),
+                        "synergizes": data.get("syn", []),
+                        "gameplay_breakdown": data.get("bd", "")
+                    }
+            print(f"       Parsed {len(supabase_guides_by_slug)} detailed official guides from HOKFIRE Supabase.", flush=True)
+    except Exception as e:
+        print(f"       Warning: Could not fetch Supabase guides: {e}", flush=True)
+
+    # 3. Fetch hero-abilities.js (114 heroes)
+    try:
+        r_ab = client.get("https://www.hokfire.com/assets/hero-abilities.js", headers={"User-Agent": USER_AGENT}, timeout=15.0)
+        if r_ab.status_code == 200:
+            m_ab = re.search(r'window\.HERO_ABILITIES\s*=\s*(\{.*?\});', r_ab.text, re.DOTALL)
+            if m_ab:
+                raw_abilities = json.loads(m_ab.group(1))
+                for hid_str, abs_list in raw_abilities.items():
+                    abilities_by_id[int(hid_str)] = abs_list
+            print(f"       Parsed {len(abilities_by_id)} hero abilities from HOKFIRE hero-abilities.js.", flush=True)
+    except Exception as e:
+        print(f"       Warning: Could not fetch hero-abilities.js: {e}", flush=True)
+
+    # 4. Fetch hero-builds.js (114 heroes)
+    try:
+        r_hb = client.get("https://www.hokfire.com/assets/hero-builds.js", headers={"User-Agent": USER_AGENT}, timeout=15.0)
+        if r_hb.status_code == 200:
+            m_hb = re.search(r'window\.HERO_BUILDS\s*=\s*(\{.*?\});', r_hb.text, re.DOTALL)
+            if m_hb:
+                raw_builds = json.loads(m_hb.group(1))
+                for hid_str, bdata in raw_builds.items():
+                    fallback_builds_by_id[int(hid_str)] = bdata
+            print(f"       Parsed {len(fallback_builds_by_id)} fallback builds from HOKFIRE hero-builds.js.", flush=True)
+    except Exception as e:
+        print(f"       Warning: Could not fetch hero-builds.js: {e}", flush=True)
+
+    # 5. Fetch data.js
     try:
         r_data = client.get("https://www.hokfire.com/assets/data.js", headers={"User-Agent": USER_AGENT}, timeout=15.0)
         if r_data.status_code == 200:
@@ -174,11 +253,10 @@ def fetch_hokfire_data(client: httpx.Client) -> (Dict[int, Dict[str, Any]], Dict
                     "role": role,
                     "tier": tier,
                 }
-            print(f"       Parsed {len(builds_by_id)} hero guides from HOKFIRE data.js.", flush=True)
     except Exception as e:
         print(f"       Warning: Could not fetch data.js: {e}", flush=True)
 
-    return stats_by_id, builds_by_id
+    return stats_by_id, builds_by_id, supabase_guides_by_slug, abilities_by_id, fallback_builds_by_id
 
 def scrape_kurohiko_hero_counters(client: httpx.Client, slug: str) -> Dict[str, Any]:
     url = f"https://hok.kurohiko.id/hero/{slug}"
@@ -325,7 +403,7 @@ def build_master_database():
     kpl_cn_map = load_kpl_hero_mapping()
     kpl_wr_map = load_kpl_win_rates()
     roster = scrape_kurohiko_roster(client)
-    stats_map, builds_map = fetch_hokfire_data(client)
+    stats_map, builds_map, supa_guides_map, abilities_map, fallback_builds_map = fetch_hokfire_data(client)
     
     print(f" [3/5] Scraping detailed counters & tactics for {len(roster)} heroes...", flush=True)
     hero_details = {}
@@ -340,6 +418,16 @@ def build_master_database():
     print(" [4/5] Standardizing 128x128 .webp portraits in data/assets/heroes/...", flush=True)
     master_heroes = []
     
+    # Helper to lookup Supabase guide with flexible slug
+    def get_supa_guide(slug_val: str):
+        if slug_val in supa_guides_map:
+            return supa_guides_map[slug_val]
+        clean_s = slug_val.replace("-", "").lower()
+        for k, v in supa_guides_map.items():
+            if k.replace("-", "").lower() == clean_s:
+                return v
+        return None
+
     for hero in roster:
         hid = hero["hero_id"]
         name = hero["name"]
@@ -349,6 +437,9 @@ def build_master_database():
         stat = stats_map.get(hid, {})
         build = builds_map.get(hid, {})
         detail = hero_details.get(hid, {})
+        supa_guide = get_supa_guide(slug)
+        abilities = abilities_map.get(hid, [])
+        fb_build = fallback_builds_map.get(hid, {})
         
         cn_name = kpl_cn_map.get(hid, CN_OVERRIDE_MAP.get(hid, name))
         
@@ -369,6 +460,46 @@ def build_master_database():
                 win_rate = 0.5020
         pick_rate = stat.get("pick_rate") or 0.0350
         ban_rate = stat.get("ban_rate") or 0.0100
+
+        # Construct HOKFIRE guide structure
+        hokfire_guide = None
+        if supa_guide:
+            hokfire_guide = {
+                "difficulty": supa_guide.get("difficulty", 2),
+                "pros": supa_guide.get("pros", []),
+                "cons": supa_guide.get("cons", []),
+                "start_item": supa_guide.get("start_item", ""),
+                "boots": supa_guide.get("boots", ""),
+                "core_items": supa_guide.get("core_items", []),
+                "full_build": supa_guide.get("full_build", []),
+                "situational_items": supa_guide.get("situational_items", []),
+                "arcana": supa_guide.get("arcana", []),
+                "spell": supa_guide.get("spell", "Flash"),
+                "skill_priority": supa_guide.get("skill_priority", ""),
+                "gameplay_tips": supa_guide.get("gameplay_breakdown", "")
+            }
+        elif fb_build:
+            # Fallback to official hero-builds.js if detailed Supabase guide is not yet published
+            hokfire_guide = {
+                "difficulty": 2,
+                "pros": [],
+                "cons": [],
+                "start_item": "",
+                "boots": "",
+                "core_items": fb_build.get("build", [])[:3],
+                "full_build": fb_build.get("build", []),
+                "situational_items": [],
+                "arcana": [{"name": f"Arcana #{aid}", "count": 10} for aid in fb_build.get("arcana", [])],
+                "spell": fb_build.get("spell", "Flash"),
+                "skill_priority": "",
+                "gameplay_tips": ""
+            }
+
+        hokfire_counters = {
+            "strong_against": supa_guide.get("strong_against", []) if supa_guide else [],
+            "weak_against": supa_guide.get("weak_against", []) if supa_guide else [],
+            "synergizes": supa_guide.get("synergizes", []) if supa_guide else []
+        }
         
         master_entry = {
             "hero_id": hid,
@@ -388,7 +519,10 @@ def build_master_database():
             "counter_items": detail.get("counter_items", []),
             "portrait_asset": portrait_rel,
             "kpl_id": hid if hid in kpl_cn_map else None,
-            "is_global_exclusive": hid not in kpl_cn_map
+            "is_global_exclusive": hid not in kpl_cn_map,
+            "hokfire_guide": hokfire_guide,
+            "hokfire_counters": hokfire_counters,
+            "abilities": abilities
         }
         master_heroes.append(master_entry)
         

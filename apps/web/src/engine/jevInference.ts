@@ -242,7 +242,7 @@ export async function runJevInference(
     activePlan = 'AI_FALLBACK';
   }
 
-  // Helper: Check if `counterCand` is a counter to `targetHero` (via Kurohiko matrix or KPL Pre-Ban history)
+  // Helper: Check if `counterCand` is a counter to `targetHero` (via Kurohiko matrix, HOKFIRE guide, or KPL Pre-Ban history)
   const getCounterStrengthAgainst = (counterCand: Hero, targetHero: Hero): { isCounter: boolean; kplPrebanCount: number; reason?: string } => {
     const directCounter = counterCand.counters.find((c) => c.target_id === targetHero.hero_id);
     const reverseCountered = targetHero.countered_by?.find((c) => c.counter_id === counterCand.hero_id);
@@ -250,11 +250,27 @@ export async function runJevInference(
     const prebanEntry = kplPrebans.find((p) => p.ban_id === counterCand.hero_id);
     const kplPrebanCount = prebanEntry ? prebanEntry.count : 0;
 
-    const isCounter = Boolean(directCounter || reverseCountered || kplPrebanCount >= 12);
+    // Check HOKFIRE guide official matchups (weak_against / strong_against)
+    const candCleanSlug = counterCand.slug.replace(/-/g, '').toLowerCase();
+    const targetCleanSlug = targetHero.slug.replace(/-/g, '').toLowerCase();
+
+    const isHokfireWeakAgainst = Boolean(
+      targetHero.hokfire_counters?.weak_against?.some((s) => s.replace(/-/g, '').toLowerCase() === candCleanSlug)
+    );
+    const isHokfireStrongAgainst = Boolean(
+      counterCand.hokfire_counters?.strong_against?.some((s) => s.replace(/-/g, '').toLowerCase() === targetCleanSlug)
+    );
+
+    const isCounter = Boolean(directCounter || reverseCountered || isHokfireWeakAgainst || isHokfireStrongAgainst || kplPrebanCount >= 12);
+    let reason = directCounter?.reason || reverseCountered?.reason;
+    if (!reason && (isHokfireWeakAgainst || isHokfireStrongAgainst)) {
+      reason = `HOKFIRE Official Counter: ${counterCand.name} unggul terhadap ${targetHero.name}`;
+    }
+
     return {
       isCounter,
-      kplPrebanCount,
-      reason: directCounter?.reason || reverseCountered?.reason,
+      kplPrebanCount: kplPrebanCount + (isHokfireWeakAgainst || isHokfireStrongAgainst ? 25 : 0),
+      reason,
     };
   };
 
@@ -473,6 +489,15 @@ export async function runJevInference(
           ) {
             score += 0.65;
             proComboTag = '⚡ Chain CC: Hook Kui + Knockup S2 Xiao Qiao tembus Dunshan';
+          }
+        }
+
+        // HOKFIRE Official Synergy Check (e.g. Lady Sun + Zhang Fei / Lapulapu)
+        const teamCleanSlug = teammate.slug.replace(/-/g, '').toLowerCase();
+        if (cand.hokfire_counters?.synergizes?.some((s) => s.replace(/-/g, '').toLowerCase() === teamCleanSlug)) {
+          score += 0.40;
+          if (!proComboTag) {
+            proComboTag = `✨ Sinergi Duet HOKFIRE: Duet ideal bersama ${teammate.name}`;
           }
         }
       }

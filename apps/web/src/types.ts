@@ -21,6 +21,44 @@ export interface CounteredByInfo {
   reason: string;
 }
 
+export interface SituationalSwap {
+  from: string;
+  to: string;
+  vs: string;
+}
+
+export interface ArcanaItem {
+  name: string;
+  count: number;
+}
+
+export interface HeroAbility {
+  type: string;
+  name: string;
+  desc: string;
+}
+
+export interface HokfireGuide {
+  difficulty: number;
+  pros: string[];
+  cons: string[];
+  start_item: string;
+  boots: string;
+  core_items: string[];
+  full_build: string[];
+  situational_items: SituationalSwap[];
+  arcana: ArcanaItem[];
+  spell: string;
+  skill_priority: string;
+  gameplay_tips: string;
+}
+
+export interface HokfireCounters {
+  strong_against: string[];
+  weak_against: string[];
+  synergizes: string[];
+}
+
 export interface Hero {
   hero_id: number;
   name: string;
@@ -41,6 +79,9 @@ export interface Hero {
   portrait_asset: string;
   kpl_id: number | null;
   is_global_exclusive: boolean;
+  hokfire_guide?: HokfireGuide | null;
+  hokfire_counters?: HokfireCounters | null;
+  abilities?: HeroAbility[];
   
   // Dynamic client-side score computed by Jev AI
   ai_choice_score?: number;
