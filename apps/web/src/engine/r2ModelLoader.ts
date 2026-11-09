@@ -101,26 +101,25 @@ export async function fetchManifest(): Promise<ModelManifest | null> {
 }
 
 export async function loadHeroMetadata(): Promise<Hero[]> {
-  const cacheKey = 'master_hero_metadata_v3';
+  const cacheKey = 'master_hero_metadata_v6_hokfire';
   const cached = await getFromIDB<Hero[]>(STORE_METADATA, cacheKey);
 
-  if (cached && cached.length === 120) {
-    // Background validation
-    fetchWithFallback('hero_metadata.json')
-      .then((r) => r.json())
-      .then((fresh) => {
-        if (fresh && fresh.length === 120) {
-          saveToIDB(STORE_METADATA, cacheKey, fresh);
-        }
-      })
-      .catch(() => {});
+  // Validate that cached heroes actually contain the new HOKFIRE guides & abilities
+  const isCacheValid =
+    cached &&
+    cached.length === 120 &&
+    cached.some((h) => h.slug === 'lady-sun' && h.hokfire_guide && h.abilities && h.abilities.length > 0);
+
+  if (isCacheValid) {
     return cached;
   }
 
   try {
     const res = await fetchWithFallback('hero_metadata.json');
     const fresh: Hero[] = await res.json();
-    await saveToIDB(STORE_METADATA, cacheKey, fresh);
+    if (fresh && fresh.length === 120) {
+      await saveToIDB(STORE_METADATA, cacheKey, fresh);
+    }
     return fresh;
   } catch (err) {
     console.error('[ModelLoader] Failed to load hero metadata:', err);
