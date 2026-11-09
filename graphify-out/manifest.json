@@ -234,9 +234,9 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1794240640.3676615,
-    "seen": 1794240719.2812324,
-    "ast_hash": "6229ac35d465e4f44c5f00b1f6965444",
+    "mtime": 1794262545.5308533,
+    "seen": 1794262556.8727813,
+    "ast_hash": "ed22e3e91a71875d8a664a797d13c005",
     "semantic_hash": ""
   },
   "apps/web/index.html": {
@@ -9456,9 +9456,9 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1794231972.2840621,
-    "seen": 1794232200.0495424,
-    "ast_hash": "304b64a00ed85e2ceb10d8e6fe2284c8",
+    "mtime": 1794262545.5321481,
+    "seen": 1794262556.8727777,
+    "ast_hash": "ddc80247adfe260aaf690f2b13ca049e",
     "semantic_hash": ""
   },
   "packages/ml-engine/verify_simulation.py": {
@@ -9540,9 +9540,9 @@
     "semantic_hash": ""
   },
   "packages/ml-engine/tactical_profiles.py": {
-    "mtime": 1794240764.9991028,
-    "seen": 1794240844.5945895,
-    "ast_hash": "afaff69bb6eb2d4c75fafefc5921cad2",
+    "mtime": 1794260270.3850355,
+    "seen": 1794260526.9569175,
+    "ast_hash": "84916dd2fa81173b67c3d492a9625c2d",
     "semantic_hash": ""
   },
   "packages/ml-engine/test_data_pipeline.py": {
@@ -9630,15 +9630,15 @@
     "semantic_hash": ""
   },
   "packages/ml-engine/nanojev_provider.py": {
-    "mtime": 1794240237.2260084,
-    "seen": 1794240549.2045562,
-    "ast_hash": "eea2490643460d2c4a42c213e5f6191a",
+    "mtime": 1794260240.3019085,
+    "seen": 1794260526.9567225,
+    "ast_hash": "eb58c8d890ef9a79d6faaa50194aae08",
     "semantic_hash": ""
   },
   "packages/ml-engine/test_nanojev_provider.py": {
-    "mtime": 1794240478.8927896,
-    "seen": 1794240549.204795,
-    "ast_hash": "319042afad30c26010b0cd820b8a4810",
+    "mtime": 1794260584.8756447,
+    "seen": 1794260609.2907324,
+    "ast_hash": "8d4314d1d95cb19a2ead7e77618c43cd",
     "semantic_hash": ""
   },
   "apps/web/src/components/HeroRosterToolbar.tsx": {
