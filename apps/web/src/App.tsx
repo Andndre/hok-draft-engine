@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Hero, Lane, ActiveTab, SortMode, ViewMode, TacticalVector, TacticalDelta } from './types';
 import { loadHeroMetadata } from './engine/r2ModelLoader';
-import { runJevInference, JevPredictionResult } from './engine/jevInference';
+import { runJevInference, JevPredictionResult, TournamentPhaseStrategy } from './engine/jevInference';
 import { computeTacticalDeltas } from './engine/deltaExplainer';
 import { HeaderSortBar } from './components/HeaderSortBar';
 import { HeroCardCompact } from './components/HeroCardCompact';
@@ -88,6 +88,8 @@ export const App: React.FC = () => {
   const [deltas, setDeltas] = useState<TacticalDelta[]>([]);
   const [primaryInsight, setPrimaryInsight] = useState<string>('');
   const [recommendations, setRecommendations] = useState<JevPredictionResult['recommendations']>([]);
+  const [phaseStrategy, setPhaseStrategy] = useState<TournamentPhaseStrategy | undefined>(undefined);
+  const [targetFirstPickId, setTargetFirstPickId] = useState<number | null>(null);
 
   // 1. Load Hero Metadata on mount
   useEffect(() => {
@@ -158,16 +160,19 @@ export const App: React.FC = () => {
           Array.from(fearlessUnavailable),
           turn.action === 'pick',
           turn.side === 'blue',
-          allH
+          allH,
+          turn.stepIndex,
+          targetFirstPickId
         );
 
         setModelReady(true);
         setModelLatency(result.latencyMs);
         setTacticalScores(result.tacticalScores);
         setRecommendations(result.recommendations);
+        setPhaseStrategy(result.phaseStrategy);
 
         // Compute deltas if we have a previous baseline
-        if (previousScores && ourHeroIds.length > 0) {
+        if (previousScores && ourHeroIds.length > 0 && turn.action === 'pick') {
           const lastPickedHero = ourPicks.filter(Boolean).slice(-1)[0];
           const activeEnemies = enemyPicks.filter(Boolean) as Hero[];
           if (lastPickedHero) {
@@ -182,15 +187,20 @@ export const App: React.FC = () => {
             setPrimaryInsight(explained.primaryInsight);
           }
         } else {
-          setPrimaryInsight(
-            `Fase ${turn.action.toUpperCase()} ${turn.side.toUpperCase()}: AI merekomendasikan prioritas counter & sinergi.`
-          );
+          const topRec = result.recommendations[0];
+          if (topRec) {
+            setPrimaryInsight(
+              `Rekomendasi #1 (${turn.side.toUpperCase()} ${turn.action.toUpperCase()}): ${topRec.hero.name} — ${
+                topRec.proComboTag || topRec.laneTag || 'Prioritas Taktis Tertinggi'
+              }`
+            );
+          }
         }
       } catch (err) {
         console.error('[JevInference] Error during inference:', err);
       }
     },
-    [fearlessUnavailable, previousScores]
+    [fearlessUnavailable, previousScores, targetFirstPickId]
   );
 
   useEffect(() => {
@@ -245,7 +255,8 @@ export const App: React.FC = () => {
     setDraftStep(0);
     setPreviousScores(null);
     setDeltas([]);
-    setPrimaryInsight('Draft di-reset. Giliran Blue Side BAN.');
+    setTargetFirstPickId(null);
+    setPrimaryInsight('Draft di-reset. Giliran Blue Side BAN Fase 1.');
   };
 
   // Undo Step
@@ -393,6 +404,9 @@ export const App: React.FC = () => {
                 scores={tacticalScores}
                 deltas={deltas}
                 primaryInsight={primaryInsight}
+                phaseStrategy={phaseStrategy}
+                targetFirstPickId={targetFirstPickId}
+                onChangeTargetFirstPick={setTargetFirstPickId}
                 recommendations={recommendations}
                 onSelectCandidate={handleSelectHero}
                 activeSide={currentTurn.side}
