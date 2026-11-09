@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/DraftSimulator.tsx": {
-    "mtime": 1794217226.6671474,
-    "seen": 1794217341.89126,
-    "ast_hash": "0d89f7a865084b34d4faf98cb536862f",
+    "mtime": 1794218842.2859929,
+    "seen": 1794218917.0219753,
+    "ast_hash": "e3a14609c23e69d263bd6c8665e9cff3",
     "semantic_hash": ""
   },
   "apps/web/src/components/HeaderSortBar.tsx": {
@@ -60,33 +60,33 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/HeroCardCompact.tsx": {
-    "mtime": 1794215228.1086974,
-    "seen": 1794216800.441757,
-    "ast_hash": "63d8367808a9f85cfdd2d2e2c774a467",
+    "mtime": 1794219398.0925412,
+    "seen": 1794219411.9554625,
+    "ast_hash": "8d394a356b05ae72da06abaaa9c51b24",
     "semantic_hash": ""
   },
   "apps/web/src/components/HeroCardDetailed.tsx": {
-    "mtime": 1794215229.1187208,
-    "seen": 1794216800.4417596,
-    "ast_hash": "b9631e5848022b22bfec979ea43b158d",
+    "mtime": 1794219361.3553536,
+    "seen": 1794219411.955465,
+    "ast_hash": "e7e81c87ba28112501906e2f48711526",
     "semantic_hash": ""
   },
   "apps/web/src/components/HeroWikiDrawer.tsx": {
-    "mtime": 1794217226.668864,
-    "seen": 1794217341.8915613,
-    "ast_hash": "b7e707714850332a3bf3b5795cbb5fcf",
+    "mtime": 1794219173.5601487,
+    "seen": 1794219212.534156,
+    "ast_hash": "01b130edb2c40949c67386dac1e792fe",
     "semantic_hash": ""
   },
   "apps/web/src/components/PlanSelectionModal.tsx": {
-    "mtime": 1794217226.668864,
-    "seen": 1794217341.891564,
-    "ast_hash": "11a77f85aed4df79f2a7dbf15731c828",
+    "mtime": 1794218842.2844787,
+    "seen": 1794218917.0220866,
+    "ast_hash": "d69873bcc83fb7af72d6c82c41840bae",
     "semantic_hash": ""
   },
   "apps/web/src/components/TacticalRadarPanel.tsx": {
-    "mtime": 1794216834.0176084,
-    "seen": 1794216847.693584,
-    "ast_hash": "4afaa1859964fa6dfe384ffa65620a41",
+    "mtime": 1794218842.2854867,
+    "seen": 1794218917.0221844,
+    "ast_hash": "2a3ca6d70e4ac1b1661b71bc9312bffa",
     "semantic_hash": ""
   },
   "apps/web/src/data/heroReleaseStatus.ts": {
@@ -9600,9 +9600,9 @@
     "semantic_hash": ""
   },
   "apps/web/tests/ui.test.mjs": {
-    "mtime": 1794217304.0199776,
-    "seen": 1794217341.8940163,
-    "ast_hash": "90214329f3f3183a4605e8f7fcce8d65",
+    "mtime": 1794218881.7211387,
+    "seen": 1794218917.0252023,
+    "ast_hash": "74c3f4b387e46b7f1a363136a06076ca",
     "semantic_hash": ""
   },
   "apps/web/tests/verify-dist.mjs": {
@@ -9642,9 +9642,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/HeroRosterToolbar.tsx": {
-    "mtime": 1794217226.668864,
-    "seen": 1794217341.8915582,
-    "ast_hash": "befd563c58fa1c7a9949203bde789ce0",
+    "mtime": 1794218836.5119438,
+    "seen": 1794218917.0220819,
+    "ast_hash": "ee8211a0285068f796cd5b8a2fd32a24",
     "semantic_hash": ""
   },
   "apps/web/src/components/ui/AssetThumbnail.tsx": {
@@ -9672,9 +9672,171 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/ui/DropdownSelect.tsx": {
-    "mtime": 1794217302.8157797,
-    "seen": 1794217341.8917623,
-    "ast_hash": "aeaf70f2f56a918b1dd06198963fe1c9",
+    "mtime": 1794218835.176312,
+    "seen": 1794218917.0222867,
+    "ast_hash": "f6bf3d735d91bce318185541f58ac96f",
+    "semantic_hash": ""
+  },
+  "apps/web/src/components/ui/LaneIcon.tsx": {
+    "mtime": 1794218833.971902,
+    "seen": 1794218917.0222905,
+    "ast_hash": "def4b0755af75ae81c248e8f8b07b4e4",
+    "semantic_hash": ""
+  },
+  "data/assets/lanes/sources.json": {
+    "mtime": 1794218842.2864974,
+    "seen": 1794218917.0261216,
+    "ast_hash": "6602e341985b7144bcef74b6a7ed7228",
+    "semantic_hash": ""
+  },
+  "apps/web/public/assets/lanes/clash.webp": {
+    "mtime": 1794218771.7087796,
+    "seen": 1794218917.1460042,
+    "ast_hash": "35fc1963a8f8b4f106a6a19a71eb9d4e",
+    "semantic_hash": ""
+  },
+  "apps/web/public/assets/lanes/farm.webp": {
+    "mtime": 1794218771.7434833,
+    "seen": 1794218917.1460087,
+    "ast_hash": "c96eac165c0af6077e064cf919efd8b5",
+    "semantic_hash": ""
+  },
+  "apps/web/public/assets/lanes/jungle.webp": {
+    "mtime": 1794218771.7144864,
+    "seen": 1794218917.1460123,
+    "ast_hash": "09272d18c12bb6d386a4b5c59313737a",
+    "semantic_hash": ""
+  },
+  "apps/web/public/assets/lanes/mid.webp": {
+    "mtime": 1794218771.736665,
+    "seen": 1794218917.146016,
+    "ast_hash": "cbc41469d5a071c7e91c89739c0fc160",
+    "semantic_hash": ""
+  },
+  "apps/web/public/assets/lanes/roam.webp": {
+    "mtime": 1794218771.7480226,
+    "seen": 1794218917.1460197,
+    "ast_hash": "8c370d89eb0484a33156fbd41cb63fdd",
+    "semantic_hash": ""
+  },
+  "data/assets/lanes/clash.webp": {
+    "mtime": 1794218771.706662,
+    "seen": 1794218917.252358,
+    "ast_hash": "35fc1963a8f8b4f106a6a19a71eb9d4e",
+    "semantic_hash": ""
+  },
+  "data/assets/lanes/farm.webp": {
+    "mtime": 1794218771.7404602,
+    "seen": 1794218917.252362,
+    "ast_hash": "c96eac165c0af6077e064cf919efd8b5",
+    "semantic_hash": ""
+  },
+  "data/assets/lanes/jungle.webp": {
+    "mtime": 1794218771.7124698,
+    "seen": 1794218917.2523644,
+    "ast_hash": "09272d18c12bb6d386a4b5c59313737a",
+    "semantic_hash": ""
+  },
+  "data/assets/lanes/mid.webp": {
+    "mtime": 1794218771.7250125,
+    "seen": 1794218917.2523673,
+    "ast_hash": "cbc41469d5a071c7e91c89739c0fc160",
+    "semantic_hash": ""
+  },
+  "data/assets/lanes/roam.webp": {
+    "mtime": 1794218771.746005,
+    "seen": 1794218917.2523699,
+    "ast_hash": "8c370d89eb0484a33156fbd41cb63fdd",
+    "semantic_hash": ""
+  },
+  "apps/web/src/components/ui/RoleIcon.tsx": {
+    "mtime": 1794219168.5523398,
+    "seen": 1794219212.5349545,
+    "ast_hash": "17978a6fb03901543d67f7c8deef539d",
+    "semantic_hash": ""
+  },
+  "data/assets/roles/sources.json": {
+    "mtime": 1794219128.1570878,
+    "seen": 1794219212.538385,
+    "ast_hash": "9a97d4cca3130fd0464d67edd76ae5dc",
+    "semantic_hash": ""
+  },
+  "apps/web/public/assets/roles/assassin.webp": {
+    "mtime": 1794219128.1444223,
+    "seen": 1794219212.6281724,
+    "ast_hash": "78b8b7b36f22f9fefa6ced5854dec0f4",
+    "semantic_hash": ""
+  },
+  "apps/web/public/assets/roles/fighter.webp": {
+    "mtime": 1794219128.1424227,
+    "seen": 1794219212.6281753,
+    "ast_hash": "530af97a0e8144b51e616ff50588800f",
+    "semantic_hash": ""
+  },
+  "apps/web/public/assets/roles/mage.webp": {
+    "mtime": 1794219128.1484542,
+    "seen": 1794219212.628178,
+    "ast_hash": "e50c17676cd8530faa5bb9283ce03420",
+    "semantic_hash": ""
+  },
+  "apps/web/public/assets/roles/marksman.webp": {
+    "mtime": 1794219128.1510437,
+    "seen": 1794219212.6281803,
+    "ast_hash": "88eb16f76f60c2d79738477b110fbf7e",
+    "semantic_hash": ""
+  },
+  "apps/web/public/assets/roles/support.webp": {
+    "mtime": 1794219128.1570878,
+    "seen": 1794219212.628182,
+    "ast_hash": "3421c6bd3b1c28d2a3622de1169d3709",
+    "semantic_hash": ""
+  },
+  "apps/web/public/assets/roles/tank.webp": {
+    "mtime": 1794219128.1540549,
+    "seen": 1794219212.6281846,
+    "ast_hash": "c5827872453311f9feb6a9cc32fe69c4",
+    "semantic_hash": ""
+  },
+  "data/assets/roles/assassin.webp": {
+    "mtime": 1794219128.1444223,
+    "seen": 1794219212.7219315,
+    "ast_hash": "78b8b7b36f22f9fefa6ced5854dec0f4",
+    "semantic_hash": ""
+  },
+  "data/assets/roles/fighter.webp": {
+    "mtime": 1794219128.1411211,
+    "seen": 1794219212.7219348,
+    "ast_hash": "530af97a0e8144b51e616ff50588800f",
+    "semantic_hash": ""
+  },
+  "data/assets/roles/mage.webp": {
+    "mtime": 1794219128.1459267,
+    "seen": 1794219212.7219372,
+    "ast_hash": "e50c17676cd8530faa5bb9283ce03420",
+    "semantic_hash": ""
+  },
+  "data/assets/roles/marksman.webp": {
+    "mtime": 1794219128.14982,
+    "seen": 1794219212.7219398,
+    "ast_hash": "88eb16f76f60c2d79738477b110fbf7e",
+    "semantic_hash": ""
+  },
+  "data/assets/roles/support.webp": {
+    "mtime": 1794219128.1560793,
+    "seen": 1794219212.7219422,
+    "ast_hash": "3421c6bd3b1c28d2a3622de1169d3709",
+    "semantic_hash": ""
+  },
+  "data/assets/roles/tank.webp": {
+    "mtime": 1794219128.1530564,
+    "seen": 1794219212.7219455,
+    "ast_hash": "c5827872453311f9feb6a9cc32fe69c4",
+    "semantic_hash": ""
+  },
+  "apps/web/src/components/ui/HeroRoleIcons.tsx": {
+    "mtime": 1794219358.6739626,
+    "seen": 1794219411.9559906,
+    "ast_hash": "a81c7bb6900fdf6a85cb02b33f6b1a26",
     "semantic_hash": ""
   },
   "apps/web/package-lock.json": {

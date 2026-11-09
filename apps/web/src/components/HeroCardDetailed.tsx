@@ -1,3 +1,4 @@
+import { HeroRoleIcons } from './ui/HeroRoleIcons';
 import React from 'react';
 import { BookOpen, LockKeyhole, ShieldBan, Sparkles, Swords } from 'lucide-react';
 import type { HeroCardProps } from './HeroCardCompact';
@@ -10,7 +11,7 @@ export function HeroCardDetailed({ hero, isSelected, isUnavailable, onClick, onS
       {aiRank !== undefined && aiRank <= 5 && <span className="ai-badge"><Sparkles aria-hidden="true" />#{aiRank}</span>}
       <span className="hero-card__cover-hint"><BookOpen aria-hidden="true" />Buka wiki</span>
     </button>
-    <div className="hero-card__body"><h3>{hero.name}</h3><p>{hero.primary_lane} · {hero.primary_role}</p><dl><div><dt>Win rate</dt><dd>{(hero.win_rate * 100).toFixed(1)}%</dd></div><div><dt>Pick rate</dt><dd>{(hero.pick_rate * 100).toFixed(1)}%</dd></div></dl>
+    <div className="hero-card__body"><h3>{hero.name}</h3><HeroRoleIcons hero={hero} /><dl><div><dt>Win rate</dt><dd>{(hero.win_rate * 100).toFixed(1)}%</dd></div><div><dt>Pick rate</dt><dd>{(hero.pick_rate * 100).toFixed(1)}%</dd></div></dl>
       {onSelect && <button type="button" className={'ui-button ' + (action === 'ban' ? 'ui-button--ban' : 'ui-button--primary')} disabled={isUnavailable || selectionDisabled} onClick={() => onSelect(hero)} aria-label={(action === 'ban' ? 'Ban ' : 'Pick ') + hero.name}>{isUnavailable ? <LockKeyhole aria-hidden="true" /> : <ActionIcon aria-hidden="true" />}{isUnavailable ? 'Terpakai' : action === 'ban' ? 'Ban hero' : 'Pick hero'}</button>}
     </div>
   </article>;

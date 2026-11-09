@@ -1,3 +1,4 @@
+import { LaneLabel } from './ui/LaneIcon';
 import { DropdownSelect } from './ui/DropdownSelect';
 import React from 'react';
 import { ArrowDown, Check, CheckCircle2, ChevronDown, History, Layers, LockKeyhole, RotateCcw, ShieldBan, ShieldCheck, Swords, Undo2, UserRound } from 'lucide-react';
@@ -63,7 +64,7 @@ export function DraftSimulator({ hideControls = false, playerSide, bluePicks, re
           const slotName = (team.side === 'blue' ? 'B' : 'R') + (index + 1);
           return <button type="button" key={index} className={'pick-slot' + (hero ? ' is-filled' : '') + (active ? ' is-active' : '')} disabled={hero ? !onInspectHero : !active || !onRequestHero} aria-label={hero ? 'Lihat ' + slotName + ': ' + hero.name : slotName + (active ? ': pilih hero sekarang' : ': menunggu giliran')} onClick={() => { if (hero) onInspectHero?.(hero); else { onSelectSlot?.(team.side, 'pick', index); onRequestHero?.(); } }}>
             <span className="pick-slot__portrait">{hero ? <HeroThumbnail hero={hero} /> : <UserRound aria-hidden="true" />}<span className="slot-code">{slotName}</span></span>
-            <span className="pick-slot__info"><strong>{hero?.name ?? (active ? 'Pilih hero' : slotName)}</strong><small>{hero?.primary_lane ?? (active ? 'Giliran saat ini' : 'Menunggu')}</small></span>{active && <ArrowDown className="pick-slot__next" aria-hidden="true" />}
+            <span className="pick-slot__info"><strong>{hero?.name ?? (active ? 'Pilih hero' : slotName)}</strong><small>{hero ? <LaneLabel lane={hero.primary_lane} /> : active ? 'Giliran saat ini' : 'Menunggu'}</small></span>{active && <ArrowDown className="pick-slot__next" aria-hidden="true" />}
           </button>;
         })}</div>
         {fearlessEnabled && team.history.length > 0 && <details className="fearless-history"><summary><LockKeyhole aria-hidden="true" /><span>{team.history.length} hero terkunci</span><ChevronDown aria-hidden="true" /></summary><div>{team.history.map(hero => <button type="button" key={hero.hero_id} aria-label={'Lihat ' + hero.name + ', terkunci Fearless'} title={hero.name} onClick={() => onInspectHero?.(hero)} disabled={!onInspectHero}><HeroThumbnail hero={hero} /></button>)}</div></details>}

@@ -249,6 +249,13 @@ button svg, .ui-button svg { flex-shrink: 0; }
 .lane-filter button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 12px; min-height: 42px; color: #b3bfd1; background: #182231; border: 1px solid #2d3b50; border-radius: 8px; font-size: 13px; font-weight: 600; flex-shrink: 0; }
 .lane-filter button[aria-pressed="true"] { background: #29391c; border-color: #89ac46; color: #d2fca9; }
 .lane-filter svg { width: 16px; height: 16px; }
+.lane-icon { display: inline-block; width: 28px; height: 24px; object-fit: contain; flex-shrink: 0; vertical-align: middle; }
+.lane-label { display: inline-flex; align-items: center; gap: 2px; vertical-align: middle; white-space: nowrap; }
+.lane-label .lane-icon { width: 20px; height: 16px; }
+.role-icon { display: inline-block; width: 16px; height: 16px; object-fit: contain; flex-shrink: 0; vertical-align: middle; }
+.role-label { display: inline-flex; align-items: center; gap: 4px; vertical-align: middle; min-width: 0; }
+.role-label > span { min-width: 0; overflow-wrap: anywhere; }
+.dropdown-option > .lane-icon + span { flex: 1; }
 .filter-reset { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; color: #c1cddd; font-size: 13px; margin-top: 4px; }
 .filter-reset svg { width: 16px; height: 16px; }
 .hero-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); }
@@ -264,7 +271,13 @@ button svg, .ui-button svg { flex-shrink: 0; }
 .hero-card__identity { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .hero-card__name { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; line-height: 1.4; overflow-wrap: anywhere; color: #f1f5f9; }
 .hero-card__name > svg { width: 13px; height: 13px; color: #8d9bb2; flex-shrink: 0; }
-.hero-card__lane { color: #9faec4; font-size: 12px; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden; }
+.hero-role-icons { display: inline-flex; align-items: center; flex-wrap: nowrap; gap: 6px; min-height: 24px; max-width: 100%; vertical-align: middle; }
+.hero-role-icons > span:first-child { display: inline-flex; flex-shrink: 0; }
+.hero-role-icons .role-icon { width: 20px; height: 20px; }
+.hero-role-icons__divider { width: 1px; height: 20px; background: #3b4a61; flex-shrink: 0; }
+.hero-role-icons__lanes { display: inline-flex; align-items: center; gap: 4px; min-width: 0; }
+.hero-role-icons__lanes > span { display: inline-flex; min-width: 0; }
+.hero-role-icons .lane-icon { width: 24px; height: 20px; min-width: 0; flex-shrink: 1; }
 .hero-card__stats { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; font-variant-numeric: tabular-nums; color: #c0cbdc; font-size: 12px; }
 .hero-card__stats > svg { width: 12px; height: 12px; color: #85ccb0; }
 .hero-card__trailing { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 8px; flex-shrink: 0; }
@@ -283,7 +296,7 @@ button svg, .ui-button svg { flex-shrink: 0; }
 .hero-card__cover-hint svg { width: 13px; height: 13px; }
 .hero-card__body { padding: 12px; }
 .hero-card__body h3 { font-size: 14px; font-weight: 700; overflow-wrap: anywhere; color: #f1f5f9; }
-.hero-card__body > p { margin-top: 3px; font-size: 12px; color: #9eacc2; }
+.hero-card__body > .hero-role-icons { margin-top: 4px; }
 .hero-card__body dl { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 10px 0; font-size: 12px; }
 .hero-card__body dt { color: #95a4bc; font-size: 11px; }
 .hero-card__body dd { font-variant-numeric: tabular-nums; color: #d4deec; margin-top: 2px; }

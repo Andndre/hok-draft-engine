@@ -1,7 +1,8 @@
 import { DropdownSelect } from './ui/DropdownSelect';
 import React, { useEffect, useRef } from 'react';
-import { ArrowDownAZ, ChartColumn, Crosshair, FilterX, HeartHandshake, Layers, LayoutGrid, List, Search, Shield, Sparkles, Swords, TrendingUp, Wand2, X } from 'lucide-react';
+import { ArrowDownAZ, ChartColumn, FilterX, LayoutGrid, List, Search, Sparkles, TrendingUp, X } from 'lucide-react';
 import type { Lane, SortMode, ViewMode } from '../types';
+import { LaneIcon } from './ui/LaneIcon';
 
 interface Props {
   title?: string;
@@ -18,9 +19,9 @@ interface Props {
   active?: boolean;
 }
 const lanes = [
-  { id: 'All', name: 'Semua', icon: Layers }, { id: 'Clash', name: 'Clash', icon: Swords },
-  { id: 'Jungle', name: 'Jungle', icon: Crosshair }, { id: 'Mid', name: 'Mid', icon: Wand2 },
-  { id: 'Farm', name: 'Farm', icon: Shield }, { id: 'Roam', name: 'Roam', icon: HeartHandshake },
+  { id: 'All', name: 'Semua' }, { id: 'Clash', name: 'Clash' },
+  { id: 'Jungle', name: 'Jungle' }, { id: 'Mid', name: 'Mid' },
+  { id: 'Farm', name: 'Farm' }, { id: 'Roam', name: 'Roam' },
 ] as const;
 export function HeroRosterToolbar({ title = 'Pilih hero', count, searchQuery, onSearchChange, selectedLane, onLaneChange, sortMode, onSortChange, viewMode, onViewChange, hideAiSort = false, active = true }: Props) {
   const search = useRef<HTMLInputElement>(null);
@@ -53,7 +54,7 @@ export function HeroRosterToolbar({ title = 'Pilih hero', count, searchQuery, on
       <DropdownSelect<SortMode> label="Urutkan hero" value={effectiveSort} onChange={onSortChange} icon={SortIcon}
         options={[...(!hideAiSort ? [{ value: 'ai' as const, label: 'Skor AI' }] : []), { value: 'win', label: 'Win rate' }, { value: 'pick', label: 'Pick rate' }, { value: 'az', label: 'Nama A–Z' }]} />
     </div>
-    <div className="lane-filter" role="group" aria-label="Filter lane">{lanes.map(({ id, name, icon: Icon }) => <button type="button" key={id} aria-pressed={selectedLane === id} onClick={() => onLaneChange(id)}><Icon aria-hidden="true" /><span>{name}</span></button>)}</div>
+    <div className="lane-filter" role="group" aria-label="Filter lane">{lanes.map(({ id, name }) => <button type="button" key={id} aria-pressed={selectedLane === id} onClick={() => onLaneChange(id)}><LaneIcon lane={id} /><span>{name}</span></button>)}</div>
     {(searchQuery || selectedLane !== 'All') && <button type="button" className="filter-reset" onClick={reset}><FilterX aria-hidden="true" />Bersihkan filter</button>}
   </div>;
 }

@@ -77,7 +77,9 @@ test('completed board exposes both compositions and no active draft target', () 
   assert.ok(html.includes('Tim Blue') && html.includes('Tim Red'));
   assert.ok(html.includes('Anda') && html.includes('AI'));
   assert.ok(!html.includes('pilih hero sekarang'));
-  assert.equal((html.match(/<img\b/g) ?? []).length, 18);
+  const images = html.match(/<img\b[^>]*>/g) ?? [];
+  assert.equal(images.filter(image => !image.includes('/assets/lanes/')).length, 18);
+  assert.equal(images.filter(image => image.includes('/assets/lanes/')).length, 10);
 });
 
 test('recommendations use thumbnails and separate detail/action controls without decorative emoji', () => {

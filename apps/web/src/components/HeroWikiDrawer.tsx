@@ -1,3 +1,5 @@
+import { RoleLabel } from './ui/RoleIcon';
+import { LaneLabel } from './ui/LaneIcon';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Hero } from '../types';
 import { X, Star, Swords, Shield, Lightbulb, BookOpen, Zap, Sparkles, ArrowRight, CheckCircle2, AlertCircle, Wrench, Trophy, AlertTriangle, ShieldBan, Link2 } from 'lucide-react';
@@ -92,7 +94,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
               <p className="text-xs text-slate-400 truncate mt-0.5">{hero.title}</p>
               <div className="flex flex-wrap items-center gap-2 mt-2">
                 <span className="text-xs font-semibold px-2 py-0.5 rounded bg-[#1A202C] text-[#B8FF01] border border-[#B8FF01]/30">
-                  {hero.primary_role} · {hero.lanes.join(' / ')}
+                  <RoleLabel role={hero.primary_role} /> · {hero.lanes.map((lane, index) => <React.Fragment key={lane}>{index > 0 && ' / '}<LaneLabel lane={lane} /></React.Fragment>)}
                 </span>
                 <span className="text-xs font-mono text-emerald-400 font-bold">
                   {(hero.win_rate * 100).toFixed(1)}% WR

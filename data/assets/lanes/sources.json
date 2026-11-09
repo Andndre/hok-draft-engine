@@ -1,0 +1,41 @@
+{
+  "source": "https://www.honorofkings.com/id/",
+  "encoding": "Lossless WebP; original RGBA pixels preserved",
+  "assets": [
+    {
+      "lane": "clash",
+      "url": "https://www.honorofkings.com/img/hero_icon1_cur.png",
+      "file": "clash.webp",
+      "width": 68,
+      "height": 53
+    },
+    {
+      "lane": "jungle",
+      "url": "https://www.honorofkings.com/img/hero_icon2_cur.png",
+      "file": "jungle.webp",
+      "width": 68,
+      "height": 53
+    },
+    {
+      "lane": "mid",
+      "url": "https://www.honorofkings.com/img/hero_icon3_cur.png",
+      "file": "mid.webp",
+      "width": 68,
+      "height": 53
+    },
+    {
+      "lane": "farm",
+      "url": "https://www.honorofkings.com/img/hero_icon4_cur.png",
+      "file": "farm.webp",
+      "width": 68,
+      "height": 53
+    },
+    {
+      "lane": "roam",
+      "url": "https://www.honorofkings.com/img/hero_icon5_cur.png",
+      "file": "roam.webp",
+      "width": 68,
+      "height": 53
+    }
+  ]
+}

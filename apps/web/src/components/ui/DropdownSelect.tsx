@@ -5,6 +5,7 @@ import type { LucideIcon } from 'lucide-react';
 export interface DropdownOption<T extends string | number> {
   value: T;
   label: string;
+  icon?: React.ReactNode;
 }
 interface Props<T extends string | number> {
   label: string;
@@ -12,11 +13,12 @@ interface Props<T extends string | number> {
   options: readonly DropdownOption<T>[];
   onChange: (value: T) => void;
   icon?: LucideIcon;
+  leadingIcon?: React.ReactNode;
   disabled?: boolean;
 }
 
 /** Select-only combobox. Focus stays on the trigger while navigating the list. */
-export function DropdownSelect<T extends string | number>({ label, value, options, onChange, icon: Icon, disabled }: Props<T>) {
+export function DropdownSelect<T extends string | number>({ label, value, options, onChange, icon: Icon, leadingIcon, disabled }: Props<T>) {
   const id = useId();
   const trigger = useRef<HTMLButtonElement>(null);
   const menu = useRef<HTMLDivElement>(null);
@@ -111,7 +113,7 @@ export function DropdownSelect<T extends string | number>({ label, value, option
       disabled={disabled || !options.length} popoverTarget={id}
       onClick={event => { event.preventDefault(); if (open) close(); else show(); }} onKeyDown={keydown}
       onBlur={event => { if (!menu.current?.contains(event.relatedTarget as Node | null)) close(); }}>
-      {Icon && <Icon aria-hidden="true" />}<span>{options[selected]?.label ?? 'Pilih opsi'}</span>
+      {leadingIcon ?? (Icon && <Icon aria-hidden="true" />)}<span>{options[selected]?.label ?? 'Pilih opsi'}</span>
       <ChevronDown aria-hidden="true" className="dropdown-chevron" />
     </button>
     <div ref={menu} id={id} role="listbox" aria-label={label} popover="auto" className="dropdown-menu"
@@ -119,7 +121,7 @@ export function DropdownSelect<T extends string | number>({ label, value, option
       {options.map((option, index) => <div key={option.value} id={`${id}-${index}`} role="option"
         aria-selected={value === option.value} data-active={index === active} className="dropdown-option"
         onPointerMove={() => setActive(index)} onMouseDown={event => event.preventDefault()} onClick={() => choose(index)}>
-        <span>{option.label}</span><Check aria-hidden="true" className={value === option.value ? '' : 'is-hidden'} />
+        {option.icon}<span>{option.label}</span><Check aria-hidden="true" className={value === option.value ? '' : 'is-hidden'} />
       </div>)}
     </div>
   </div>;

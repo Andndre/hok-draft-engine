@@ -1,0 +1,48 @@
+{
+  "source": "https://www.hokfire.com/",
+  "assets": [
+    {
+      "role": "fighter",
+      "url": "https://www.hokfire.com/assets/img/roles/fighter.png",
+      "file": "fighter.webp",
+      "width": 38,
+      "height": 38
+    },
+    {
+      "role": "assassin",
+      "url": "https://www.hokfire.com/assets/img/roles/assassin.png",
+      "file": "assassin.webp",
+      "width": 38,
+      "height": 38
+    },
+    {
+      "role": "mage",
+      "url": "https://www.hokfire.com/assets/img/roles/mage.png",
+      "file": "mage.webp",
+      "width": 38,
+      "height": 38
+    },
+    {
+      "role": "marksman",
+      "url": "https://www.hokfire.com/assets/img/roles/marksman.png",
+      "file": "marksman.webp",
+      "width": 38,
+      "height": 38
+    },
+    {
+      "role": "tank",
+      "url": "https://www.hokfire.com/assets/img/roles/tank.png",
+      "file": "tank.webp",
+      "width": 38,
+      "height": 38
+    },
+    {
+      "role": "support",
+      "url": "https://www.hokfire.com/assets/img/roles/support.png",
+      "file": "support.webp",
+      "width": 38,
+      "height": 38
+    }
+  ],
+  "encoding": "Lossless WebP; original RGBA pixels preserved"
+}
