@@ -11,7 +11,7 @@ export async function resolve(specifier, context, next) {
 export async function load(url, context, next) {
   if (/\.ts$/.test(url)) return {
     format: 'module', shortCircuit: true,
-    source: stripTypeScriptTypes(readFileSync(new URL(url), 'utf8'), { mode: 'strip' }),
+    source: stripTypeScriptTypes(readFileSync(new URL(url), 'utf8'), { mode: 'transform' }),
   };
   return next(url, context);
 }

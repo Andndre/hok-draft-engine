@@ -1,3 +1,50 @@
+export function evaluateTacticalScores(ourHeroes: Hero[], enemyHeroes: Hero[]): TacticalVector {
+
+  let early = 0.5;
+  let cc = 0.5;
+  let frontline = 0.5;
+  let shutdown = 0.5;
+  let flex = 0.5;
+  let winProb = 0.5;
+
+  if (ourHeroes.length > 0) {
+    const roleCounts: Record<string, number> = {};
+    let totalWr = 0;
+
+    for (const h of ourHeroes) {
+      roleCounts[h.primary_role] = (roleCounts[h.primary_role] || 0) + 1;
+      totalWr += h.win_rate;
+    }
+
+    const avgWr = totalWr / ourHeroes.length;
+    early = Math.min(0.95, 0.35 + (roleCounts['Assassin'] || 0) * 0.18 + (roleCounts['Fighter'] || 0) * 0.10);
+    cc = Math.min(0.95, 0.30 + (roleCounts['Tank'] || 0) * 0.20 + (roleCounts['Support'] || 0) * 0.18 + (roleCounts['Mage'] || 0) * 0.12);
+    frontline = Math.min(0.95, 0.25 + ourHeroes.reduce((sum, hero) => {
+      const reviewed = hero.tactical_profile?.tags.frontline;
+      return sum + (reviewed === undefined ? (hero.primary_role === 'Tank' ? 0.28 : hero.primary_role === 'Fighter' ? 0.16 : 0) : reviewed ? 0.28 : 0);
+    }, 0));
+    cc = Math.min(0.95, cc + ourHeroes.filter(h => h.tactical_profile?.tags.suppress === true).length * 0.12);
+    early = Math.min(0.95, early + ourHeroes.filter(h => h.tactical_profile?.tags.mobility === true).length * 0.04);
+    flex = Math.min(0.95, 0.40 + ourHeroes.filter((h) => h.lanes.length > 1).length * 0.15);
+
+    let counterAdv = 0;
+    for (const oh of ourHeroes) {
+      for (const eh of enemyHeroes) {
+        if (oh.counters.some((c) => c.target_id === eh.hero_id)) {
+          counterAdv += 0.08;
+        }
+      }
+    }
+    shutdown = Math.min(0.95, 0.45 + (roleCounts['Assassin'] || 0) * 0.15 + counterAdv);
+    winProb = Math.min(0.85, Math.max(0.15, avgWr + counterAdv * 0.5));
+  }
+
+  return {
+    win_probability: winProb, early_game_pressure: early, cc_chain_lockdown: cc,
+    frontline_durability: frontline, enemy_carry_shutdown: shutdown, draft_flexibility: flex,
+  };
+}
+
 import type { Hero, TacticalVector, Lane } from '../types';
 import { isHeroGlobalReleased } from '../data/heroReleaseStatus';
 import { getTournamentPhase, analyzeLaneOccupancy, IMMOBILE_OPENERS } from './draftRules';
@@ -220,40 +267,8 @@ export function runTournamentInference(
     }
   }
 
-  // 5. Base traits & 6-Axis Tactical Dimensions calculation
-  let early = 0.5;
-  let cc = 0.5;
-  let frontline = 0.5;
-  let shutdown = 0.5;
-  let flex = 0.5;
-  let winProb = 0.5;
-
-  if (ourHeroes.length > 0) {
-    const roleCounts: Record<string, number> = {};
-    let totalWr = 0;
-
-    for (const h of ourHeroes) {
-      roleCounts[h.primary_role] = (roleCounts[h.primary_role] || 0) + 1;
-      totalWr += h.win_rate;
-    }
-
-    const avgWr = totalWr / ourHeroes.length;
-    early = Math.min(0.95, 0.35 + (roleCounts['Assassin'] || 0) * 0.18 + (roleCounts['Fighter'] || 0) * 0.10);
-    cc = Math.min(0.95, 0.30 + (roleCounts['Tank'] || 0) * 0.20 + (roleCounts['Support'] || 0) * 0.18 + (roleCounts['Mage'] || 0) * 0.12);
-    frontline = Math.min(0.95, 0.25 + (roleCounts['Tank'] || 0) * 0.28 + (roleCounts['Fighter'] || 0) * 0.16);
-    flex = Math.min(0.95, 0.40 + ourHeroes.filter((h) => h.lanes.length > 1).length * 0.15);
-
-    let counterAdv = 0;
-    for (const oh of ourHeroes) {
-      for (const eh of enemyHeroes) {
-        if (oh.counters.some((c) => c.target_id === eh.hero_id)) {
-          counterAdv += 0.08;
-        }
-      }
-    }
-    shutdown = Math.min(0.95, 0.45 + (roleCounts['Assassin'] || 0) * 0.15 + counterAdv);
-    winProb = Math.min(0.85, Math.max(0.15, avgWr + counterAdv * 0.5));
-  }
+  const tacticalScores = evaluateTacticalScores(ourHeroes, enemyHeroes);
+  const { frontline_durability: frontline, cc_chain_lockdown: cc } = tacticalScores;
 
   // 6. Score every available candidate using 4-Phase Tournament Strategy
   const scoredCandidates: Array<{
@@ -706,14 +721,7 @@ export function runTournamentInference(
   const latencyMs = Math.round((performance.now() - t0) * 10) / 10;
 
   return {
-    tacticalScores: {
-      win_probability: Math.round(winProb * 100) / 100,
-      early_game_pressure: Math.round(early * 100) / 100,
-      cc_chain_lockdown: Math.round(cc * 100) / 100,
-      frontline_durability: Math.round(frontline * 100) / 100,
-      enemy_carry_shutdown: Math.round(shutdown * 100) / 100,
-      draft_flexibility: Math.round(flex * 100) / 100,
-    },
+    tacticalScores,
     recommendations,
     phaseStrategy: {
       phaseId,
