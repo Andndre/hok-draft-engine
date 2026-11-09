@@ -26,6 +26,10 @@ export const HeroCardCompact: React.FC<HeroCardCompactProps> = ({
 
   return (
     <div
+      role="button"
+      tabIndex={isUnavailable ? -1 : 0}
+      aria-disabled={!!isUnavailable}
+      onKeyDown={event => { if (!isUnavailable && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); onClick(hero); } }}
       onClick={() => !isUnavailable && onClick(hero)}
       className={`relative group flex items-center gap-3 p-2 rounded-xl cursor-pointer transition-all border ${
         isUnavailable

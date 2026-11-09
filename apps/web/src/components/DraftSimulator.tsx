@@ -4,6 +4,8 @@ import { TOURNAMENT_PHASES } from '../engine/draftRules';
 import { RotateCcw, ShieldCheck, Flame, Undo2 } from 'lucide-react';
 
 interface DraftSimulatorProps {
+  hideControls?: boolean;
+  playerSide?: 'blue' | 'red';
   bluePicks: Array<Hero | null>;
   redPicks: Array<Hero | null>;
   blueBans: Array<Hero | null>;
@@ -26,6 +28,8 @@ interface DraftSimulatorProps {
 }
 
 export const DraftSimulator: React.FC<DraftSimulatorProps> = ({
+  hideControls = false,
+  playerSide,
   bluePicks,
   redPicks,
   blueBans,
@@ -59,7 +63,7 @@ export const DraftSimulator: React.FC<DraftSimulatorProps> = ({
           </div>
           <div>
             <h3 className="font-extrabold text-sm text-white">
-              TOURNAMENT DRAFT SIMULATOR
+              {playerSide ? 'LATIHAN DRAFT vs AI' : 'TOURNAMENT DRAFT SIMULATOR'}
             </h3>
             <p className="text-[11px] text-slate-400">
               KPL / KIC 4-Phase Global Ban & Pick Sequence (Langkah {Math.min(18, currentTurn.stepIndex + 1)}/18)
@@ -68,7 +72,7 @@ export const DraftSimulator: React.FC<DraftSimulatorProps> = ({
         </div>
 
         {/* Global BP / Fearless Draft Controls */}
-        <div className="flex flex-wrap items-center gap-2">
+        {!hideControls && <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={() => onToggleFearless(!fearlessEnabled)}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${
@@ -113,7 +117,7 @@ export const DraftSimulator: React.FC<DraftSimulatorProps> = ({
           >
             <RotateCcw className="w-4 h-4" />
           </button>
-        </div>
+        </div>}
       </div>
 
       {/* 4-Phase Tournament Progress Stepper */}
@@ -174,7 +178,7 @@ export const DraftSimulator: React.FC<DraftSimulatorProps> = ({
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-[#3B82F6] animate-pulse" />
               <span className="font-extrabold text-xs sm:text-sm text-[#3B82F6] tracking-wide">
-                BLUE SIDE (FIRST PICK)
+                BLUE SIDE (FIRST PICK) {playerSide && (playerSide === 'blue' ? '· Anda' : '· AI')}
               </span>
             </div>
             {/* Bans Bar (Phase 1: B1, B2 | Phase 2: B3, B4) */}
@@ -295,7 +299,7 @@ export const DraftSimulator: React.FC<DraftSimulatorProps> = ({
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-[#EF4444] animate-pulse" />
               <span className="font-extrabold text-xs sm:text-sm text-[#EF4444] tracking-wide">
-                RED SIDE (COUNTER PICK)
+                RED SIDE (COUNTER PICK) {playerSide && (playerSide === 'red' ? '· Anda' : '· AI')}
               </span>
             </div>
             {/* Bans Bar (Phase 1: B1, B2 | Phase 2: B3, B4) */}

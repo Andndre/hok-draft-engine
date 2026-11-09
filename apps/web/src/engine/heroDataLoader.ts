@@ -7,7 +7,7 @@ const STORE = 'metadata_cache';
 const REMOTE_BASE = (import.meta.env?.VITE_R2_PUBLIC_URL || '').trim().replace(/\/$/, '');
 type ArtifactKind = keyof DataManifest['artifacts'];
 const KINDS: ArtifactKind[] = ['heroes', 'synergy', 'releases'];
-export interface CachedPackage { manifest: DataManifest; texts: Record<ArtifactKind, string> }
+export interface CachedPackage { manifest: DataManifest; texts: Record<ArtifactKind, string>; origin?: string }
 export interface DatasetIO {
   fetchText: (url: string) => Promise<string>;
   readCache: () => Promise<CachedPackage | null>;
@@ -77,10 +77,17 @@ export async function decodePackage(pkg: CachedPackage): Promise<TournamentDatas
   const releases: Record<string, { released: boolean; alias_of?: number }> = JSON.parse(pkg.texts.releases);
   if (!Array.isArray(heroes) || heroes.length !== manifest.hero_count || new Set(heroes.map(h => h.hero_id)).size !== heroes.length || !synergy || typeof synergy !== 'object' || Array.isArray(synergy)) throw new Error('Isi dataset tidak valid');
   for (const h of heroes) {
-    if (!Number.isInteger(h.hero_id) || h.hero_id === 511 || !h.name || !Array.isArray(h.lanes) || !Array.isArray(h.counters) || !Array.isArray(h.countered_by) || !Number.isFinite(h.win_rate) || typeof releases[h.hero_id]?.released !== 'boolean') throw new Error('Metadata hero atau status rilis tidak valid');
+    if (!Number.isInteger(h.hero_id) || h.hero_id === 511 || !h.name || typeof h.slug !== 'string' || typeof h.chinese_name !== 'string' || !Array.isArray(h.lanes) || !h.lanes.length || !h.lanes.every(l => ['Clash', 'Jungle', 'Mid', 'Farm', 'Roam'].includes(l)) || !Array.isArray(h.counters) || !Array.isArray(h.countered_by) || !Number.isFinite(h.win_rate) || h.win_rate < 0 || h.win_rate > 1 || !Number.isFinite(h.pick_rate) || typeof releases[h.hero_id]?.released !== 'boolean') throw new Error('Metadata hero atau status rilis tidak valid');
   }
   if (releases['511']?.released !== false || releases['511']?.alias_of !== 556) throw new Error('Alias Ata tidak valid');
-  return { version: manifest.dataset_version, manifest, synergy, heroes: heroes.map(h => ({ ...h, is_global_released: releases[h.hero_id].released })) };
+  const origin = pkg.origin && /^https?:\/\//.test(pkg.origin) ? pkg.origin.replace(/\/$/, '') : '';
+  const resolveAssets = (value: unknown): unknown => {
+    if (typeof value === 'string') return origin && value.startsWith('/assets/') ? origin + value : value;
+    if (Array.isArray(value)) return value.map(resolveAssets);
+    if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveAssets(item)]));
+    return value;
+  };
+  return { version: manifest.dataset_version, manifest, synergy, heroes: heroes.map(h => ({ ...(resolveAssets(h) as Hero), is_global_released: releases[h.hero_id].released })) };
 }
 
 /** Never combine artifacts from different origins or activate a partial update. */
@@ -93,10 +100,16 @@ export async function loadTournamentDataset(overrides: Partial<DatasetIO> = {}):
   for (const base of origins) {
     try {
       const manifest = validateManifest(JSON.parse(await io.fetchText(`${base}/data_manifest.json`)));
-      if (validCache && manifest.dataset_version === validCache.version && JSON.stringify(manifest.artifacts) === JSON.stringify(validCache.manifest.artifacts)) return validCache;
+      if (validCache && cached && manifest.dataset_version === validCache.version && JSON.stringify(manifest.artifacts) === JSON.stringify(validCache.manifest.artifacts)) {
+        if ((cached.origin ?? '') === base) return validCache;
+        const rebased = { ...cached, origin: base };
+        const dataset = await decodePackage(rebased);
+        await io.writeCache(rebased).catch(() => {});
+        return dataset;
+      }
       const texts = {} as Record<ArtifactKind, string>;
       await Promise.all(KINDS.map(async kind => { texts[kind] = await io.fetchText(`${base}/${manifest.artifacts[kind].file}`); }));
-      const pkg = { manifest, texts };
+      const pkg = { manifest, texts, origin: base };
       const dataset = await decodePackage(pkg);
       await io.writeCache(pkg).catch(() => {});
       return dataset;

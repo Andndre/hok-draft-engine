@@ -7,6 +7,7 @@ import { HeaderSortBar } from './components/HeaderSortBar';
 import { HeroCardCompact } from './components/HeroCardCompact';
 import { HeroCardDetailed } from './components/HeroCardDetailed';
 import { BottomCommandDock } from './components/BottomCommandDock';
+import { PracticeDraft } from './components/PracticeDraft';
 import { DraftSimulator } from './components/DraftSimulator';
 import { TacticalRadarPanel } from './components/TacticalRadarPanel';
 import { HeroWikiDrawer } from './components/HeroWikiDrawer';
@@ -23,6 +24,9 @@ export const App: React.FC = () => {
 
   // Navigation & Filtering
   const [activeTab, setActiveTab] = useState<ActiveTab>('draft');
+  const [draftMode, setDraftMode] = useState<'simulator' | 'practice'>('simulator');
+  const [practiceAssistance, setPracticeAssistance] = useState(true);
+  const practiceActive = activeTab === 'draft' && draftMode === 'practice';
   const [selectedLane, setSelectedLane] = useState<Lane | 'All'>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortMode, setSortMode] = useState<SortMode>('ai');
@@ -62,10 +66,10 @@ export const App: React.FC = () => {
   const [synergyData, setSynergyData] = useState<Record<string, any>>({});
 
   // Tournament AI State
-  const [modelReady, setModelReady] = useState(false);
-  const [modelLatency, setModelLatency] = useState<number | null>(null);
+  const [engineReady, setEngineReady] = useState(false);
+  const [engineLatency, setEngineLatency] = useState<number | null>(null);
   const [tacticalScores, setTacticalScores] = useState<TacticalVector>({
-    win_probability: 0.50,
+    draft_advantage: 0.50,
     early_game_pressure: 0.50,
     cc_chain_lockdown: 0.50,
     frontline_durability: 0.50,
@@ -194,11 +198,12 @@ export const App: React.FC = () => {
           planAId,
           planBId,
           onlyGlobalReleased,
-          synergyData
+          synergyData,
+          Array.from(turn.side === 'blue' ? redFearlessSet : blueFearlessSet)
         );
 
-        setModelReady(true);
-        setModelLatency(result.latencyMs);
+        setEngineReady(true);
+        setEngineLatency(result.latencyMs);
         setTacticalScores(result.tacticalScores);
         setRecommendations(result.recommendations);
         setPhaseStrategy(result.phaseStrategy);
@@ -427,14 +432,16 @@ export const App: React.FC = () => {
     <div className="min-h-screen bg-[#0A0D12] text-[#F8FAFC] pb-44 selection:bg-[#B8FF01] selection:text-black">
       {/* Top Header Sort Bar */}
       <HeaderSortBar
-        sortMode={sortMode}
+        sortMode={practiceActive && !practiceAssistance && sortMode === 'ai' ? 'az' : sortMode}
+        hideAiSort={practiceActive && !practiceAssistance}
+        globalLocked={practiceActive}
         onSortChange={setSortMode}
         viewMode={viewMode}
         onViewChange={setViewMode}
-        modelReady={modelReady}
-        modelLatency={modelLatency}
+        engineReady={engineReady}
+        engineLatency={engineLatency}
         totalFiltered={filteredAndSortedHeroes.length}
-        onlyGlobalReleased={onlyGlobalReleased}
+        onlyGlobalReleased={practiceActive || onlyGlobalReleased}
         onToggleGlobalReleased={() => setOnlyGlobalReleased((prev) => !prev)}
       />
 
@@ -443,6 +450,11 @@ export const App: React.FC = () => {
         {loadError && <div role="alert" className="rounded-xl border border-amber-700 bg-[#12161F] p-4 text-sm">
           <p>{loadError}</p><button onClick={() => void loadData()} className="mt-3 min-h-11 rounded-lg bg-[#B8FF01] px-4 font-bold text-black">Coba lagi</button>
         </div>}
+        {activeTab === 'draft' && <nav aria-label="Mode draft" className="flex flex-wrap gap-3">
+          {(['simulator', 'practice'] as const).map(mode => <button key={mode} aria-pressed={draftMode === mode} onClick={() => setDraftMode(mode)} className={'min-h-11 rounded-xl border px-5 py-3 text-sm font-bold focus-visible:outline-2 focus-visible:outline-[#B8FF01] ' + (draftMode === mode ? 'border-[#B8FF01] bg-[#1A2410] text-white' : 'border-[#334155] bg-[#12161F] text-slate-300 hover:bg-[#232A38]')}>{mode === 'simulator' ? 'Simulator' : 'Latihan vs AI'}</button>)}
+        </nav>}
+        {dataset && <div hidden={!practiceActive}><PracticeDraft dataset={dataset} active={practiceActive} assistance={practiceAssistance} onAssistanceChange={setPracticeAssistance} selectedLane={selectedLane} searchQuery={searchQuery} sortMode={sortMode} viewMode={viewMode} favorites={favorites} onToggleFavorite={handleToggleFavorite} /></div>}
+        {!practiceActive && <>
         {/* View Mode 1: Draft AI Simulator View */}
         {activeTab === 'draft' && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
@@ -565,7 +577,7 @@ export const App: React.FC = () => {
         ) : viewMode === 'compact' ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5">
             {filteredAndSortedHeroes.map((hero) => {
-              const isUnavailable = currentDraftUnavailableIds.has(hero.hero_id);
+              const isUnavailable = activeTab === 'draft' && currentDraftUnavailableIds.has(hero.hero_id);
               const rec = recommendations.find((r) => r.hero.hero_id === hero.hero_id);
               return (
                 <HeroCardCompact
@@ -584,7 +596,7 @@ export const App: React.FC = () => {
         ) : (
           <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-9 gap-3">
             {filteredAndSortedHeroes.map((hero) => {
-              const isUnavailable = currentDraftUnavailableIds.has(hero.hero_id);
+              const isUnavailable = activeTab === 'draft' && currentDraftUnavailableIds.has(hero.hero_id);
               const recIndex = recommendations.findIndex((r) => r.hero.hero_id === hero.hero_id);
               return (
                 <HeroCardDetailed
@@ -601,6 +613,7 @@ export const App: React.FC = () => {
             })}
           </div>
         )}
+        </>}
       </main>
 
       {/* Sticky Bottom Command Dock */}
@@ -620,7 +633,7 @@ export const App: React.FC = () => {
         onClose={() => setWikiHero(null)}
         isFavorite={wikiHero ? favorites.has(wikiHero.hero_id) : false}
         onToggleFavorite={handleToggleFavorite}
-        onPickForDraft={handleSelectHero}
+        onPickForDraft={activeTab === 'draft' && draftMode === 'simulator' ? handleSelectHero : undefined}
         allHeroes={heroes}
         onSelectRelatedHero={(h) => setWikiHero(h)}
       />

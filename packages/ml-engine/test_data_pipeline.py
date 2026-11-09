@@ -2,9 +2,12 @@ import copy
 import json
 import tempfile
 import unittest
+import sqlite3
 from pathlib import Path
 from publish_data import build_package, publish_package, write_package
 from tactical_profiles import TAGS, approved_profiles, create_proposal, validate_proposal
+from export_draft_benchmark import export, SEQUENCE
+from publish_data import MAPPINGS
 
 
 class DataPipelineTests(unittest.TestCase):
@@ -66,6 +69,25 @@ class DataPipelineTests(unittest.TestCase):
         self.releases["9000"] = {"released": True}
         manifest, _ = build_package([self.hero, new_hero], {}, self.releases)
         self.assertEqual(manifest["hero_count"], 2)
+
+    def test_historical_priors_do_not_include_holdout_games(self):
+        releases = json.loads((MAPPINGS / "hero_release_status.json").read_text(encoding="utf-8"))
+        ids = [int(key) for key, value in releases.items() if value["released"]][:18]
+        with tempfile.TemporaryDirectory() as directory:
+            database = Path(directory) / "benchmark.db"
+            connection = sqlite3.connect(database)
+            connection.executescript("CREATE TABLE matches(match_id TEXT,date TEXT); CREATE TABLE battles(battle_id TEXT,match_id TEXT,winner_side TEXT,is_complete INTEGER); CREATE TABLE draft_actions(battle_id TEXT,ord INTEGER,side TEXT,action TEXT,global_hero_id INTEGER);")
+            for match_id, date in (("train", "2023-12-01"), ("heldout", "2024-02-01")):
+                connection.execute("INSERT INTO matches VALUES (?,?)", (match_id, date))
+                connection.execute("INSERT INTO battles VALUES (?,?,?,1)", (match_id, match_id, "blue"))
+                connection.executemany("INSERT INTO draft_actions VALUES (?,?,?,?,?)", [(match_id, index, side, action, ids[index]) for index, (side, action) in enumerate(SEQUENCE)])
+            connection.commit()
+            connection.close()
+            result = export(database, "2024-01-01", 10)
+            self.assertEqual(result["training_battles"], 1)
+            self.assertEqual(result["eligible_holdout_battles"], 1)
+            self.assertEqual(result["synergy"]["b1_openers"][str(ids[4])]["b1_picks"], 1)
+            self.assertTrue(all(sample["date"] >= "2024-01-01" for sample in result["positions"]))
 
 
 if __name__ == "__main__":

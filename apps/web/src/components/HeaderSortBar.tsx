@@ -3,24 +3,28 @@ import { SortMode, ViewMode } from '../types';
 import { ArrowUpDown, LayoutGrid, List, Cpu, Sparkles, Globe } from 'lucide-react';
 
 interface HeaderSortBarProps {
+  hideAiSort?: boolean;
+  globalLocked?: boolean;
   sortMode: SortMode;
   onSortChange: (mode: SortMode) => void;
   viewMode: ViewMode;
   onViewChange: (mode: ViewMode) => void;
-  modelReady: boolean;
-  modelLatency: number | null;
+  engineReady: boolean;
+  engineLatency: number | null;
   totalFiltered: number;
   onlyGlobalReleased: boolean;
   onToggleGlobalReleased: () => void;
 }
 
 export const HeaderSortBar: React.FC<HeaderSortBarProps> = ({
+  hideAiSort = false,
+  globalLocked = false,
   sortMode,
   onSortChange,
   viewMode,
   onViewChange,
-  modelReady,
-  modelLatency,
+  engineReady,
+  engineLatency,
   totalFiltered,
   onlyGlobalReleased,
   onToggleGlobalReleased,
@@ -53,10 +57,10 @@ export const HeaderSortBar: React.FC<HeaderSortBarProps> = ({
 
           {/* Model Status Pill */}
           <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#12161F] border border-[#232A38] text-[11px]">
-            <Cpu className={`w-3.5 h-3.5 ${modelReady ? 'text-[#B8FF01]' : 'text-amber-400 animate-pulse'}`} />
+            <Cpu className={`w-3.5 h-3.5 ${engineReady ? 'text-[#B8FF01]' : 'text-amber-400 animate-pulse'}`} />
             <span className="font-mono text-slate-300">
-              {modelReady
-                ? `Mesin lokal ${modelLatency !== null ? `(${modelLatency}ms)` : ''}`
+              {engineReady
+                ? `Mesin lokal ${engineLatency !== null ? `(${engineLatency}ms)` : ''}`
                 : 'Memuat Engine...'}
             </span>
           </div>
@@ -66,6 +70,7 @@ export const HeaderSortBar: React.FC<HeaderSortBarProps> = ({
         <div className="flex items-center gap-2">
           {/* Global Only Server Filter Toggle */}
           <button
+            disabled={globalLocked}
             onClick={onToggleGlobalReleased}
             className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-bold rounded-lg border transition-all ${
               onlyGlobalReleased
@@ -83,7 +88,7 @@ export const HeaderSortBar: React.FC<HeaderSortBarProps> = ({
 
           {/* Sort Buttons */}
           <div className="flex items-center bg-[#12161F] p-0.5 rounded-lg border border-[#232A38]">
-            <button
+            {!hideAiSort && <button
               onClick={() => onSortChange('ai')}
               className={`flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-md transition-all ${
                 sortMode === 'ai'
@@ -94,7 +99,7 @@ export const HeaderSortBar: React.FC<HeaderSortBarProps> = ({
             >
               <Sparkles className="w-3 h-3" />
               <span>AI Score</span>
-            </button>
+            </button>}
 
             <button
               onClick={() => onSortChange('win')}

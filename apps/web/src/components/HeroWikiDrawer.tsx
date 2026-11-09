@@ -9,6 +9,7 @@ interface HeroWikiDrawerProps {
   isFavorite: boolean;
   onToggleFavorite: (heroId: number) => void;
   onPickForDraft?: (hero: Hero) => void;
+  draftActionLabel?: string;
   allHeroes: Hero[];
   onSelectRelatedHero: (hero: Hero) => void;
 }
@@ -19,6 +20,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
   isFavorite,
   onToggleFavorite,
   onPickForDraft,
+  draftActionLabel = 'Pilih di draft',
   allHeroes,
   onSelectRelatedHero,
 }) => {
@@ -133,7 +135,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                 className="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-bold bg-[#B8FF01] text-black shadow hover:brightness-110 transition-all"
               >
                 <Zap className="w-3.5 h-3.5" />
-                <span>Pilih di Draft AI</span>
+                <span>{draftActionLabel}</span>
               </button>
             )}
           </div>

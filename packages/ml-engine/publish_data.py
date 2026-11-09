@@ -49,7 +49,10 @@ def write_package(destination, manifest, texts):
         target.parent.mkdir(parents=True, exist_ok=True)
         if target.exists() and target.read_bytes() != contents:
             raise ValueError("Artefak immutable sudah ada dengan isi berbeda.")
-        target.write_bytes(contents)
+        if not target.exists():
+            temporary_artifact = target.with_suffix(".json.tmp")
+            temporary_artifact.write_bytes(contents)
+            temporary_artifact.replace(target)
     temporary = destination / "data_manifest.json.tmp"
     temporary.write_bytes(encode(manifest))
     temporary.replace(destination / "data_manifest.json")

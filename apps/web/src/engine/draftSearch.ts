@@ -1,5 +1,5 @@
 import type { Hero, TournamentDataset } from '../types';
-import { analyzeLaneOccupancy, applyDraftAction, getDraftTurn, isLegalHero, oppositeSide } from './draftRules';
+import { analyzeLaneOccupancy, applyDraftAction, DRAFT_SEQUENCE, getDraftTurn, isLegalHero, isRiskyOpener, oppositeSide } from './draftRules';
 import type { DraftContext, DraftPosition, DraftAction, Side } from './draftRules';
 import { evaluateTacticalScores, runTournamentInference } from './tournamentInference';
 
@@ -25,7 +25,7 @@ export function rankedCandidates(position: DraftPosition, context: SearchContext
   const result = runTournamentInference(position.picks[turn.side], position.picks[oppositeSide(turn.side)],
     [...position.bans.blue, ...position.bans.red], context.fearless[turn.side], turn.action === 'pick', turn.side === 'blue',
     context.heroes, position.step, turn.side === context.aiSide ? context.aiPlan.a : null,
-    turn.side === context.aiSide ? context.aiPlan.b : null, context.onlyGlobal, context.synergy);
+    turn.side === context.aiSide ? context.aiPlan.b : null, context.onlyGlobal, context.synergy, context.fearless[oppositeSide(turn.side)]);
   const legal = result.recommendations.filter(r => isLegalHero(position, r.hero.hero_id, context));
   if (turn.action === 'ban') return legal;
   const our = context.heroes.filter(h => position.picks[turn.side].includes(h.hero_id));
@@ -60,7 +60,7 @@ export function evaluatePosition(position: DraftPosition, context: SearchContext
     let potential = -2.5;
     for (const h of context.heroes) {
       if (!isLegalHero(projected, h.hero_id, context)) continue;
-      if (position.step <= 4 && [112, 169, 142, 109, 504].includes(h.hero_id)) continue;
+      if (position.step <= 4 && isRiskyOpener(h)) continue;
       if (analyzeLaneOccupancy([...ours, h]).occupiedLanes.size !== ours.length + 1) continue;
       const value = (h.win_rate - 0.48) * 4 + tierWeight(h) + h.pick_rate * 2.8 + counterBonus([h], enemy)
         + ours.reduce((sum, teammate) => sum + pairBonus(h, teammate, context), 0);
@@ -75,7 +75,7 @@ export function searchDraft(position: DraftPosition, context: SearchContext, opt
   const now = options.now ?? (() => performance.now());
   const start = now();
   const deadline = start + Math.min(1500, Math.max(0, options.budgetMs ?? 1500));
-  const maxDepth = Math.min(4, Math.max(1, options.maxDepth ?? 4));
+  const maxDepth = Math.min(4, DRAFT_SEQUENCE.length - position.step, Math.max(1, options.maxDepth ?? 4));
   const width = Math.min(8, Math.max(1, options.width ?? 8));
   const rootSide = getDraftTurn(position.step).side;
   const root = rankedCandidates(position, context).slice(0, width);

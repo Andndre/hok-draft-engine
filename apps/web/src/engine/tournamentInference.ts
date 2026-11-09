@@ -1,3 +1,10 @@
+import type { Hero, TacticalVector, Lane } from '../types';
+import { isHeroGlobalReleased } from '../data/heroReleaseStatus';
+import { getTournamentPhase, analyzeLaneOccupancy, isRiskyOpener } from './draftRules';
+
+export type { TournamentPhaseId } from './draftRules';
+import type { TournamentPhaseId } from './draftRules';
+
 export function evaluateTacticalScores(ourHeroes: Hero[], enemyHeroes: Hero[]): TacticalVector {
 
   let early = 0.5;
@@ -5,7 +12,7 @@ export function evaluateTacticalScores(ourHeroes: Hero[], enemyHeroes: Hero[]): 
   let frontline = 0.5;
   let shutdown = 0.5;
   let flex = 0.5;
-  let winProb = 0.5;
+  let draftAdvantage = 0.5;
 
   if (ourHeroes.length > 0) {
     const roleCounts: Record<string, number> = {};
@@ -23,8 +30,8 @@ export function evaluateTacticalScores(ourHeroes: Hero[], enemyHeroes: Hero[]): 
       const reviewed = hero.tactical_profile?.tags.frontline;
       return sum + (reviewed === undefined ? (hero.primary_role === 'Tank' ? 0.28 : hero.primary_role === 'Fighter' ? 0.16 : 0) : reviewed ? 0.28 : 0);
     }, 0));
-    cc = Math.min(0.95, cc + ourHeroes.filter(h => h.tactical_profile?.tags.suppress === true).length * 0.12);
-    early = Math.min(0.95, early + ourHeroes.filter(h => h.tactical_profile?.tags.mobility === true).length * 0.04);
+    cc = Math.min(0.95, cc + ourHeroes.filter(h => h.tactical_profile?.tags.suppress === true).length * 0.12 + ourHeroes.filter(h => h.tactical_profile?.tags.disengage === true).length * 0.04);
+    early = Math.min(0.95, early + ourHeroes.filter(h => h.tactical_profile?.tags.mobility === true).length * 0.04 + ourHeroes.filter(h => h.tactical_profile?.tags.engage === true).length * 0.03);
     flex = Math.min(0.95, 0.40 + ourHeroes.filter((h) => h.lanes.length > 1).length * 0.15);
 
     let counterAdv = 0;
@@ -36,21 +43,16 @@ export function evaluateTacticalScores(ourHeroes: Hero[], enemyHeroes: Hero[]): 
       }
     }
     shutdown = Math.min(0.95, 0.45 + (roleCounts['Assassin'] || 0) * 0.15 + counterAdv);
-    winProb = Math.min(0.85, Math.max(0.15, avgWr + counterAdv * 0.5));
+    draftAdvantage = Math.min(0.85, Math.max(0.15, avgWr + counterAdv * 0.5));
   }
 
   return {
-    win_probability: winProb, early_game_pressure: early, cc_chain_lockdown: cc,
+    draft_advantage: draftAdvantage, early_game_pressure: early, cc_chain_lockdown: cc,
     frontline_durability: frontline, enemy_carry_shutdown: shutdown, draft_flexibility: flex,
   };
 }
 
-import type { Hero, TacticalVector, Lane } from '../types';
-import { isHeroGlobalReleased } from '../data/heroReleaseStatus';
-import { getTournamentPhase, analyzeLaneOccupancy, IMMOBILE_OPENERS } from './draftRules';
 
-export type { TournamentPhaseId } from './draftRules';
-import type { TournamentPhaseId } from './draftRules';
 
 export interface TournamentPhaseStrategy {
   phaseId: TournamentPhaseId;
@@ -102,7 +104,7 @@ function computeOpenerPriorityScore(
   // Di turnamen kompetitif (khususnya tanpa Master Luban 525 di Global),
   // First-picking hero tanpa mobilitas ini rentan di-dive lawan dan dilarang dijadikan B1 First Pick / Opener.
   let openerPenalty = 0;
-  const isImmobileCarry = IMMOBILE_OPENERS.has(hero.hero_id);
+  const isImmobileCarry = isRiskyOpener(hero);
   if (isImmobileCarry) {
     openerPenalty = -2.5;
   }
@@ -127,7 +129,8 @@ export function runTournamentInference(
   planAId?: number | null,
   planBId?: number | null,
   onlyGlobalReleased: boolean = true,
-  synergyDb: Record<string, any> = {}
+  synergyDb: Record<string, any> = {},
+  enemyFearlessUnavailableIds: number[] = []
 ): TournamentPredictionResult {
   const t0 = performance.now();
 
@@ -180,7 +183,8 @@ export function runTournamentInference(
   const dunshanPairs = synergyDb?.dunshan_pair_counters || {};
 
   // 4. Identify Top Available Meta Openers for Phase 1 Strategy
-  const availableHeroes = heroes.filter((_, idx) => maskArr[idx] === 0);
+  const openerUnavailable = new Set([...unavailableSet, ...fearlessUnavailableIds]);
+  const availableHeroes = heroes.filter(h => !openerUnavailable.has(h.hero_id));
   const rankedOpeners = [...availableHeroes].sort(
     (a, b) =>
       computeOpenerPriorityScore(b, b1Openers, isBlueSide, onlyGlobalReleased) -
@@ -188,7 +192,7 @@ export function runTournamentInference(
   );
 
   // Top candidate openers for recommendation / quick selection
-  const candidateOpeners = rankedOpeners.slice(0, 8);
+  const candidateOpeners = rankedOpeners.filter(h => !isRiskyOpener(h)).slice(0, 8);
 
   // Determine Plan A and Plan B:
   let planAHero: Hero | null = planAId ? idMap.get(planAId) || null : null;
@@ -213,10 +217,10 @@ export function runTournamentInference(
   let plannedOpener: Hero | null = null;
   let activePlan: 'PLAN_A' | 'PLAN_B' | 'AI_FALLBACK' = 'PLAN_A';
 
-  if (planAHero && !unavailableSet.has(planAHero.hero_id)) {
+  if (planAHero && !openerUnavailable.has(planAHero.hero_id) && (draftStep > 4 || !isRiskyOpener(planAHero))) {
     plannedOpener = planAHero;
     activePlan = 'PLAN_A';
-  } else if (planBHero && !unavailableSet.has(planBHero.hero_id)) {
+  } else if (planBHero && !openerUnavailable.has(planBHero.hero_id) && (draftStep > 4 || !isRiskyOpener(planBHero))) {
     plannedOpener = planBHero;
     activePlan = 'PLAN_B';
   } else if (rankedOpeners.length > 0) {
@@ -284,10 +288,11 @@ export function runTournamentInference(
 
   for (let i = 0; i < heroes.length; i++) {
     if (maskArr[i] === 1 || phaseId === 'DRAFT_COMPLETE') continue;
-    if ((draftStep < 4 || draftStep === 4) && IMMOBILE_OPENERS.has(heroes[i].hero_id)) continue;
+    if (!isPickPhase && enemyFearlessUnavailableIds.includes(heroes[i].hero_id)) continue;
+    if ((draftStep < 4 || draftStep === 4) && isRiskyOpener(heroes[i])) continue;
 
     const cand = heroes[i];
-    const isImmobileCarry = IMMOBILE_OPENERS.has(cand.hero_id);
+    const isImmobileCarry = isRiskyOpener(cand);
     const tierBonus = { S: 0.35, A: 0.20, B: 0.05, C: -0.10, D: -0.25 }[cand.tier] || 0.0;
     let score = (cand.win_rate - 0.48) * 4.0 + tierBonus + cand.pick_rate * 2.8;
     let laneTag: string | undefined = undefined;

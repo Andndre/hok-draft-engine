@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "test": "node --import ./tests/register.mjs --test tests/*.test.mjs",
+    "benchmark": "node --import ./tests/register.mjs ./tests/benchmark.mjs",
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && node tests/verify-dist.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

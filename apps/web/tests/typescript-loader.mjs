@@ -1,5 +1,6 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { stripTypeScriptTypes } from 'node:module';
+import { fileURLToPath } from 'node:url';
 
 export async function resolve(specifier, context, next) {
   if (specifier.startsWith('.') && context.parentURL) {
@@ -9,6 +10,11 @@ export async function resolve(specifier, context, next) {
   return next(specifier, context);
 }
 export async function load(url, context, next) {
+  if (url.endsWith('.tsx')) {
+    const { transformWithOxc } = await import('vite');
+    const result = await transformWithOxc(readFileSync(new URL(url), 'utf8'), fileURLToPath(url));
+    return { format: 'module', shortCircuit: true, source: result.code };
+  }
   if (/\.ts$/.test(url)) return {
     format: 'module', shortCircuit: true,
     source: stripTypeScriptTypes(readFileSync(new URL(url), 'utf8'), { mode: 'transform' }),

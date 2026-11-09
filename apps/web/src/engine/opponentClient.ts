@@ -6,7 +6,7 @@ import type { SearchContext, SearchDecision } from './draftSearch';
 export interface DecisionTag { sessionId: string; revision: number }
 export function matchesDecisionTag(a: DecisionTag, b: DecisionTag) { return a.sessionId === b.sessionId && a.revision === b.revision; }
 
-/** One worker per active session; cancel terminates computation, not just its callback. */
+/** One worker at a time; cancel terminates computation, not just its callback. */
 export class OpponentClient {
   private worker: Worker | null = null;
   private abortPending: (() => void) | null = null;

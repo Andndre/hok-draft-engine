@@ -181,6 +181,8 @@ def publish_artifacts():
     access_key = os.getenv("R2_ACCESS_KEY_ID")
     secret_key = os.getenv("R2_SECRET_ACCESS_KEY")
     bucket_name = os.getenv("EXPERIMENTAL_MODEL_BUCKET")
+    if bucket_name and bucket_name == os.getenv("R2_BUCKET_NAME"):
+        raise ValueError("EXPERIMENTAL_MODEL_BUCKET harus berbeda dari bucket data produksi.")
 
     if endpoint and access_key and secret_key and bucket_name and "your_" not in access_key:
         print(f" Uploading artifacts to S3 / RustFS / R2 storage (Bucket: {bucket_name}) ...")

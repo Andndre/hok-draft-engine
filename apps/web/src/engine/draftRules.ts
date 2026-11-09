@@ -5,6 +5,10 @@ export type Side = 'blue' | 'red';
 export type ActionKind = 'ban' | 'pick';
 export type TournamentPhaseId = 'BAN_PHASE_1' | 'PICK_PHASE_1' | 'BAN_PHASE_2' | 'PICK_PHASE_2' | 'DRAFT_COMPLETE';
 export const IMMOBILE_OPENERS = new Set([112, 169, 142, 109, 504]);
+export function isRiskyOpener(hero: Hero): boolean {
+  const tags = hero.tactical_profile?.tags;
+  return IMMOBILE_OPENERS.has(hero.hero_id) || (tags?.dive_vulnerable === true && tags.mobility === false && ['Mage', 'Marksman'].includes(hero.primary_role));
+}
 export const ALL_LANES: Lane[] = ['Clash', 'Jungle', 'Mid', 'Farm', 'Roam'];
 export const DRAFT_SEQUENCE: ReadonlyArray<{ side: Side; action: ActionKind }> = [
   { side: 'blue', action: 'ban' }, { side: 'red', action: 'ban' },

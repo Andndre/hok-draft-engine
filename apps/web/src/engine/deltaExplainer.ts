@@ -12,7 +12,7 @@ export function computeTacticalDeltas(
   bulletReasons: string[];
 } {
   const dimensions: Array<{ key: keyof TacticalVector; label: string; desc: string }> = [
-    { key: 'win_probability', label: 'Keunggulan draft', desc: 'Skor heuristik komposisi draft' },
+    { key: 'draft_advantage', label: 'Keunggulan draft', desc: 'Skor heuristik komposisi draft' },
     { key: 'early_game_pressure', label: 'Early Game Pressure', desc: 'Tekanan dominasi lane & invasi jungle menit awal' },
     { key: 'cc_chain_lockdown', label: 'CC Chain Lockdown', desc: 'Rantai stun, knockup & suppression teamfight' },
     { key: 'frontline_durability', label: 'Frontline Durability', desc: 'Ketahanan badan & penahan burst damage musuh' },
@@ -75,7 +75,7 @@ export function computeTacticalDeltas(
 
   // Find biggest delta
   const significantPositive = deltas
-    .filter((d) => d.dimension !== 'win_probability' && d.deltaPercent > 0)
+    .filter((d) => d.dimension !== 'draft_advantage' && d.deltaPercent > 0)
     .sort((a, b) => b.deltaPercent - a.deltaPercent);
 
   let primaryInsight = '';

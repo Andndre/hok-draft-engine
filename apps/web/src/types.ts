@@ -127,7 +127,7 @@ export interface Hero {
 }
 
 export interface TacticalVector {
-  win_probability: number;      // 0.0 - 1.0
+  draft_advantage: number;      // Heuristic index, not a calibrated win probability
   early_game_pressure: number;  // 0.0 - 1.0
   cc_chain_lockdown: number;    // 0.0 - 1.0
   frontline_durability: number; // 0.0 - 1.0
@@ -142,6 +142,7 @@ export interface TacticalProfile {
   source_hash: string;
   model: string;
   reviewed_by: string;
+  provider?: 'nanojev' | 'typesafe';
 }
 export interface DataManifest {
   schema_version: 1;
@@ -182,17 +183,6 @@ export interface GameDraftData {
   bluePlanBId: number | null;
   redPlanAId: number | null;
   redPlanBId: number | null;
-}
-
-export interface ModelManifest {
-  model_version: string;
-  model_name: string;
-  model_file: string;
-  model_size_bytes: number;
-  sha256: string;
-  updated_at: string;
-  hero_count: number;
-  tactical_dimensions: string[];
 }
 
 export type SortMode = 'az' | 'win' | 'pick' | 'ai';

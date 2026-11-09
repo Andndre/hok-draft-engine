@@ -30,7 +30,7 @@ const TACTICAL_AXES: Array<{
   color: string;
   barColor: string;
 }> = [
-  { key: 'win_probability', label: 'Keunggulan draft', color: 'text-emerald-400', barColor: 'bg-emerald-500' },
+  { key: 'draft_advantage', label: 'Keunggulan draft', color: 'text-emerald-400', barColor: 'bg-emerald-500' },
   { key: 'early_game_pressure', label: 'Early Pressure', color: 'text-amber-400', barColor: 'bg-amber-500' },
   { key: 'cc_chain_lockdown', label: 'CC Chain Lockdown', color: 'text-indigo-400', barColor: 'bg-indigo-500' },
   { key: 'frontline_durability', label: 'Frontline Durability', color: 'text-sky-400', barColor: 'bg-sky-500' },
@@ -52,7 +52,7 @@ export const TacticalRadarPanel: React.FC<TacticalRadarPanelProps> = ({
   activeSide,
   isPickPhase,
 }) => {
-  const winRatePercent = Math.round(scores.win_probability * 100);
+  const advantageScore = Math.round(scores.draft_advantage * 100);
 
   const planAHero = phaseStrategy?.planAHero;
   const planBHero = phaseStrategy?.planBHero;
@@ -91,10 +91,10 @@ export const TacticalRadarPanel: React.FC<TacticalRadarPanelProps> = ({
           <span className="text-[10px] uppercase text-slate-400 font-semibold tracking-wider">Skor draft</span>
           <span
             className={`text-2xl font-black ${
-              winRatePercent >= 52 ? 'text-[#10B981]' : winRatePercent >= 48 ? 'text-slate-100' : 'text-[#F43F5E]'
+              advantageScore >= 52 ? 'text-[#10B981]' : advantageScore >= 48 ? 'text-slate-100' : 'text-[#F43F5E]'
             }`}
           >
-            {winRatePercent}%
+            {advantageScore}/100
           </span>
         </div>
       </div>
@@ -339,7 +339,7 @@ export const TacticalRadarPanel: React.FC<TacticalRadarPanelProps> = ({
 
         <div className="flex flex-col gap-2">
           {recommendations.slice(0, 5).map((rec, idx) => {
-            const probPct = (rec.rankingWeight * 100).toFixed(1);
+            const scoreText = rec.choiceScore.toFixed(2);
             const isBanPhase = !isPickPhase;
             return (
               <div
@@ -397,7 +397,7 @@ export const TacticalRadarPanel: React.FC<TacticalRadarPanelProps> = ({
 
                 <div className="flex items-center gap-2.5 font-mono-numbers flex-shrink-0 ml-2">
                   <div className="text-right">
-                    <span className="text-xs font-bold text-[#B8FF01]">{probPct}%</span>
+                    <span className="text-xs font-bold text-[#B8FF01]">{scoreText}</span>
                     <span className="block text-[9px] text-slate-500 uppercase">Score</span>
                   </div>
                   <button

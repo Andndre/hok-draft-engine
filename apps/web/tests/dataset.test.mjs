@@ -37,6 +37,7 @@ test('new hero and changed Global release become usable without a model rebuild'
   const dataset = await loadTournamentDataset({ remoteBase: 'https://storage.example', readCache: async () => original, fetchText: source(update), writeCache: async pkg => { saved = pkg; } });
   assert.ok(isHeroGlobalReleased(dataset.heroes.find(h => h.hero_id === 9999)));
   assert.ok(isHeroGlobalReleased(dataset.heroes.find(h => h.hero_id === 194)));
+  assert.ok(dataset.heroes[0].portrait_asset.startsWith('https://storage.example/assets/'));
   assert.equal(saved.manifest.dataset_version, dataset.version);
 });
 test('partial or corrupt remote update retains the complete prior snapshot', async () => {
@@ -64,4 +65,9 @@ test('unknown release and active alias cannot enter the package', async () => {
   await assert.rejects(decodePackage(missing));
   const alias = await changed(data => { data.heroes.push({ ...data.heroes[0], hero_id: 511 }); });
   await assert.rejects(decodePackage(alias));
+});
+test('a storage domain change rebases cached asset URLs even if the data version stays the same', async () => {
+  const old = { ...structuredClone(original), origin: 'https://old-storage.example' };
+  const dataset = await loadTournamentDataset({ remoteBase: 'https://new-storage.example', readCache: async () => old, fetchText: source(original), writeCache: async () => {} });
+  assert.ok(dataset.heroes[0].portrait_asset.startsWith('https://new-storage.example/assets/'));
 });
