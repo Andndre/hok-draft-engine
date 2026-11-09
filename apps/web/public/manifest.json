@@ -4,7 +4,7 @@
   "model_file": "hok_jev_student.onnx",
   "model_size_bytes": 74881,
   "sha256": "dcc0651e1231e7d1ed5bd24b5d584847bb2c93fa97c546d0c3fa6353a4c96d8c",
-  "updated_at": "2026-11-08T23:39:14.860634+00:00",
+  "updated_at": "2026-11-09T00:05:17.862890+00:00",
   "hero_count": 120,
   "tactical_dimensions": [
     "win_probability",

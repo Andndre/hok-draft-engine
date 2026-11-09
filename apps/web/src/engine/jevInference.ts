@@ -198,7 +198,8 @@ export async function runJevInference(
     if (maskArr[i] === 1) continue;
 
     const cand = heroes[i];
-    let score = (cand.win_rate - 0.48) * 2.5;
+    const tierBonus = { S: 0.35, A: 0.20, B: 0.05, C: -0.10, D: -0.25 }[cand.tier] || 0.0;
+    let score = (cand.win_rate - 0.48) * 4.0 + tierBonus + (cand.pick_rate * 3.0);
 
     // A. Direct Counter Bonus
     for (const eh of enemyHeroes) {
@@ -303,7 +304,7 @@ export async function runJevInference(
       enemy_carry_shutdown: Math.round(shutdown * 100) / 100,
       draft_flexibility: Math.round(flex * 100) / 100,
     },
-    recommendations: recommendations.slice(0, 10),
+    recommendations: recommendations,
     latencyMs,
     isNeural: false,
   };

@@ -126,30 +126,36 @@ def fetch_hokfire_data(client: httpx.Client) -> (Dict[int, Dict[str, Any]], Dict
     try:
         r_stats = client.get("https://www.hokfire.com/assets/stats.js", headers={"User-Agent": USER_AGENT}, timeout=15.0)
         if r_stats.status_code == 200:
-            pattern = re.compile(
-                r'\{\s*id:\s*(\d+),\s*name:\s*"([^"]+)".*?(?:position:\s*(\d+))?.*?(?:tRank:\s*(\d+))?.*?(?:winRate:\s*([0-9.]+))?.*?(?:showRate:\s*([0-9.]+))?.*?(?:banRate:\s*([0-9.]+))?.*?\}',
-                re.DOTALL
-            )
-            for m in pattern.finditer(r_stats.text):
-                hid = int(m.group(1))
-                name = m.group(2)
-                pos = int(m.group(3)) if m.group(3) else None
-                trank = int(m.group(4)) if m.group(4) else None
-                win_rate = float(m.group(5)) if m.group(5) else 0.50
-                show_rate = float(m.group(6)) if m.group(6) else 0.05
-                ban_rate = float(m.group(7)) if m.group(7) else 0.01
-                
-                tier_letters = ["S", "A", "B", "C", "D"]
+            tier_letters = ["S", "A", "B", "C", "D"]
+            blocks = re.findall(r'\{([^{}]+)\}', r_stats.text)
+            for b in blocks:
+                id_m = re.search(r'\bid:\s*(\d+)', b)
+                if not id_m:
+                    continue
+                hid = int(id_m.group(1))
+                name_m = re.search(r'\bname:\s*"([^"]+)"', b)
+                name = name_m.group(1) if name_m else ""
+                pos_m = re.search(r'\bposition:\s*(\d+)', b)
+                pos = int(pos_m.group(1)) if pos_m else None
+                trank_m = re.search(r'\btRank:\s*(\d+)', b)
+                trank = int(trank_m.group(1)) if trank_m else None
+                wr_m = re.search(r'\bwinRate:\s*([0-9.]+)', b)
+                win_rate = float(wr_m.group(1)) if wr_m else None
+                sr_m = re.search(r'\bshowRate:\s*([0-9.]+)', b)
+                show_rate = float(sr_m.group(1)) if sr_m else None
+                br_m = re.search(r'\bbanRate:\s*([0-9.]+)', b)
+                ban_rate = float(br_m.group(1)) if br_m else None
+
                 tier_str = tier_letters[trank] if trank is not None and trank < len(tier_letters) else "B"
-                
+
                 stats_by_id[hid] = {
                     "name": name,
                     "position": pos,
                     "lane": LANE_MAP.get(pos, "Mid"),
                     "tier": tier_str,
-                    "win_rate": round(win_rate, 4),
-                    "pick_rate": round(show_rate, 4),
-                    "ban_rate": round(ban_rate, 4)
+                    "win_rate": round(win_rate, 4) if win_rate is not None else None,
+                    "pick_rate": round(show_rate, 4) if show_rate is not None else 0.035,
+                    "ban_rate": round(ban_rate, 4) if ban_rate is not None else 0.010
                 }
             print(f"       Parsed {len(stats_by_id)} hero stats from HOKFIRE stats.js.", flush=True)
     except Exception as e:
@@ -290,11 +296,34 @@ def download_and_process_portrait(client: httpx.Client, img_url: str, hero_id: i
     fallback_img.save(target_path, "WEBP", quality=85)
     return rel_path
 
+def load_kpl_win_rates() -> Dict[int, Dict[str, Any]]:
+    stats = {}
+    db_path = ROOT_DIR / "data" / "processed" / "hok_drafts.db"
+    if db_path.exists():
+        import sqlite3
+        conn = sqlite3.connect(db_path)
+        cur = conn.cursor()
+        cur.execute("""
+        SELECT da.global_hero_id, b.winner_side, da.side
+        FROM battles b
+        JOIN draft_actions da ON b.battle_id = da.battle_id
+        WHERE da.action = 'pick' AND b.is_complete = 1
+        """)
+        for hid, w_side, side in cur.fetchall():
+            if hid not in stats:
+                stats[hid] = {"matches": 0, "wins": 0}
+            stats[hid]["matches"] += 1
+            if w_side == side:
+                stats[hid]["wins"] += 1
+        conn.close()
+    return stats
+
 def build_master_database():
     print("\n=== STARTING HOK GLOBAL ASSET & METADATA SYNCHRONIZATION ===", flush=True)
     client = httpx.Client(follow_redirects=True)
     
     kpl_cn_map = load_kpl_hero_mapping()
+    kpl_wr_map = load_kpl_win_rates()
     roster = scrape_kurohiko_roster(client)
     stats_map, builds_map = fetch_hokfire_data(client)
     
@@ -331,9 +360,15 @@ def build_master_database():
         portrait_rel = download_and_process_portrait(client, hero["img_url"], hid)
         
         tier = stat.get("tier") or build.get("tier") or "A"
-        win_rate = stat.get("win_rate", 0.5050)
-        pick_rate = stat.get("pick_rate", 0.0450)
-        ban_rate = stat.get("ban_rate", 0.0120)
+        win_rate = stat.get("win_rate")
+        if win_rate is None or win_rate == 0.5:
+            kpl_data = kpl_wr_map.get(hid)
+            if kpl_data and kpl_data["matches"] > 0:
+                win_rate = round(kpl_data["wins"] / kpl_data["matches"], 4)
+            else:
+                win_rate = 0.5020
+        pick_rate = stat.get("pick_rate") or 0.0350
+        ban_rate = stat.get("ban_rate") or 0.0100
         
         master_entry = {
             "hero_id": hid,
