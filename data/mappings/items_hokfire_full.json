@@ -1,0 +1,644 @@
+[
+  {
+    "name": "Iron Sword",
+    "id": 1111,
+    "type": "Attack",
+    "desc": "Basic physical attack component for early builds."
+  },
+  {
+    "name": "Master Sword",
+    "id": 1134,
+    "type": "Attack",
+    "desc": "High physical attack and cooldown reduction; enhances basic attacks."
+  },
+  {
+    "name": "Eternity Blade",
+    "id": 1133,
+    "type": "Attack",
+    "desc": "Physical attack and lifesteal; revives you once after dying."
+  },
+  {
+    "name": "Starbreaker",
+    "id": 1131,
+    "type": "Attack",
+    "desc": "Physical attack and crit with bonus damage after using a skill."
+  },
+  {
+    "name": "Shadow Ripper",
+    "id": 1136,
+    "type": "Attack",
+    "desc": "Physical attack and cooldown that shreds the target's armor."
+  },
+  {
+    "name": "Sparkforged Dagger",
+    "id": 1135,
+    "type": "Attack",
+    "desc": "Physical attack and attack speed with on-hit bonus damage."
+  },
+  {
+    "name": "Demonsbane",
+    "id": 1125,
+    "type": "Attack",
+    "desc": "Physical attack that deals extra damage to high-health targets."
+  },
+  {
+    "name": "Destiny",
+    "id": 1127,
+    "type": "Attack",
+    "desc": "Physical attack and cooldown reduction for ability fighters."
+  },
+  {
+    "name": "Sunchaser",
+    "id": 1141,
+    "type": "Attack",
+    "desc": "Physical attack and movement that slows enemies you damage."
+  },
+  {
+    "name": "Golden Blade",
+    "id": 1728,
+    "type": "Magic",
+    "desc": "Attack speed, crit and lifesteal - a marksman staple."
+  },
+  {
+    "name": "Mortal Punisher",
+    "id": 11210,
+    "type": "Attack",
+    "desc": "Crit and attack speed that reduces enemy healing."
+  },
+  {
+    "name": "Pure Sky",
+    "id": 11311,
+    "type": "Attack",
+    "desc": "Physical attack and crit with a periodic burst passive."
+  },
+  {
+    "name": "Tempest",
+    "id": 1159,
+    "type": "Attack",
+    "desc": "Attack speed and physical pierce that chains damage between enemies."
+  },
+  {
+    "name": "Spell Tome",
+    "id": 1211,
+    "type": "Magic",
+    "desc": "Early magic power and mana component."
+  },
+  {
+    "name": "Void Staff",
+    "id": 1231,
+    "type": "Magic",
+    "desc": "Magic penetration to cut through magic resistance."
+  },
+  {
+    "name": "Savant's Wrath",
+    "id": 1232,
+    "type": "Magic",
+    "desc": "High magic attack with cooldown reduction."
+  },
+  {
+    "name": "Scepter of Reverberation",
+    "id": 1233,
+    "type": "Magic",
+    "desc": "Magic attack and cooldown that amplifies ability damage."
+  },
+  {
+    "name": "Holy Grail",
+    "id": 1226,
+    "type": "Magic",
+    "desc": "Magic attack, cooldown and spell vamp for sustain."
+  },
+  {
+    "name": "Mask of Agony",
+    "id": 1235,
+    "type": "Magic",
+    "desc": "Magic attack that burns nearby enemies over time."
+  },
+  {
+    "name": "Staves of Sorcery",
+    "id": 1236,
+    "type": "Magic",
+    "desc": "Stacking magic attack that grows as you fight."
+  },
+  {
+    "name": "Sage's Tome",
+    "id": 1238,
+    "type": "Magic",
+    "desc": "Large magic attack and mana for burst mages."
+  },
+  {
+    "name": "Enigma - Moon Goddess",
+    "id": 1242,
+    "type": "Magic",
+    "desc": "High magic attack with a strong shield passive."
+  },
+  {
+    "name": "Ominous Premonition",
+    "id": 1333,
+    "type": "Defense",
+    "desc": "Magic defense that blocks a burst of magic damage."
+  },
+  {
+    "name": "Overlord's Platemail",
+    "id": 1332,
+    "type": "Defense",
+    "desc": "Large health pool with steady health regen."
+  },
+  {
+    "name": "Spikemail",
+    "id": 1327,
+    "type": "Defense",
+    "desc": "Armor that reflects damage and slows nearby attack speed."
+  },
+  {
+    "name": "Cuirass of Savagery",
+    "id": 1338,
+    "type": "Defense",
+    "desc": "Health and armor with a counter-attack passive."
+  },
+  {
+    "name": "Sage's Sanctuary",
+    "id": 1337,
+    "type": "Defense",
+    "desc": "Health and cooldown that shields you when low."
+  },
+  {
+    "name": "Frostscar's Embrace",
+    "id": 13310,
+    "type": "Defense",
+    "desc": "Health and resistances that slow nearby attackers."
+  },
+  {
+    "name": "Eye of the Phoenix",
+    "id": 1334,
+    "type": "Defense",
+    "desc": "Health and defense with team-fight utility."
+  },
+  {
+    "name": "Boots of Resistance",
+    "id": 1422,
+    "type": "Movement",
+    "desc": "Movement speed and magic resistance."
+  },
+  {
+    "name": "Boots of the Arcane",
+    "id": 1424,
+    "type": "Movement",
+    "desc": "Movement speed and magic penetration."
+  },
+  {
+    "name": "Boots of Tranquility",
+    "id": 1423,
+    "type": "Movement",
+    "desc": "Movement speed and cooldown reduction."
+  },
+  {
+    "name": "Boots of Fortitude",
+    "id": 1421,
+    "type": "Movement",
+    "desc": "Movement speed and physical armor."
+  },
+  {
+    "name": "Boots of Dexterity",
+    "id": 1425,
+    "type": "Movement",
+    "desc": "Movement speed and attack speed."
+  },
+  {
+    "name": "Hunting Knife",
+    "id": 1511,
+    "type": "Jungle",
+    "desc": "Jungle starter that lets you damage and clear monsters."
+  },
+  {
+    "name": "Dragon's Rage",
+    "id": 1534,
+    "type": "Defense",
+    "desc": "Defensive item with bonus physical attack and burst."
+  },
+  {
+    "name": "Rapacious Bite",
+    "id": 1533,
+    "type": "Jungle",
+    "desc": "Jungle enchant with lifesteal and sustained damage."
+  },
+  {
+    "name": "Guardian",
+    "id": 1714,
+    "type": "Support",
+    "desc": "Support item that shields and heals nearby allies."
+  },
+  {
+    "name": "Knowledge Gem",
+    "id": 1701,
+    "type": "Support",
+    "desc": "Support starter that grants extra gold and experience."
+  },
+  {
+    "name": "Amble - Winter",
+    "id": 1351,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Ardent Dominion",
+    "id": 1227,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Augur's Word",
+    "id": 1237,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Axe of Torment",
+    "id": 1137,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Belt of Might",
+    "id": 1321,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Blazing Cape",
+    "id": 1331,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Blood Clan's Grimoire",
+    "id": 1222,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Blood Rage",
+    "id": 1328,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Bloodsoul",
+    "id": 1158,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Bloodweeper",
+    "id": 1132,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Boots of Deftness",
+    "id": 1426,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Breakthrough Robe",
+    "id": 1244,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Clandestine Cape",
+    "id": 1323,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Cloth Jerkin",
+    "id": 1312,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Cloud Piercer",
+    "id": 1154,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Crimson Shadow",
+    "id": 1711,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Crimson Shadow - Howl",
+    "id": 1723,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Crimson Shadow - Radiance",
+    "id": 1737,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Crimson Shadow - Redemption",
+    "id": 1721,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Crimson Shadow - Starspring",
+    "id": 1747,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Cuirass of Swiftness",
+    "id": 1317,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Dagger",
+    "id": 1112,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Dawnlight",
+    "id": 1353,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Daybreaker's Virtue",
+    "id": 1155,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Deepfrost Siege",
+    "id": 1128,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Doomsday",
+    "id": 1126,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Frigid Charge",
+    "id": 1341,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Frosthold Targe",
+    "id": 1324,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Frozen Breath",
+    "id": 1234,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Giant's Grip",
+    "id": 1532,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Glacial Buckler",
+    "id": 1336,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Grand Staff",
+    "id": 1221,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Guardian - Radiance",
+    "id": 1754,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Guardian - Redemption",
+    "id": 1724,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Guardian - Starspring",
+    "id": 1725,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Guerrilla Machete",
+    "id": 1521,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Haste - Sunpool",
+    "id": 1156,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Immovable - Sky Dome",
+    "id": 1157,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Insatiable Tome",
+    "id": 1240,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Lightfoot Shoes",
+    "id": 1411,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Longnight Guardian",
+    "id": 1347,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Meteor",
+    "id": 1124,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Mirror of Radiance",
+    "id": 13211,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Mystic Page",
+    "id": 1217,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Nebulon Wood",
+    "id": 1243,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Nettle Gauntlet",
+    "id": 1345,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Overlord's Might",
+    "id": 1138,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Patrol Axe",
+    "id": 1522,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Plume of Enchantment",
+    "id": 11110,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Primordial Crystal",
+    "id": 1218,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Protector's Cuirass",
+    "id": 1325,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Pugilist's Gauntlet",
+    "id": 1113,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Ravage - Phantom",
+    "id": 1350,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Relentless Blade",
+    "id": 1523,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Resilient Agate",
+    "id": 1311,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Runeblade",
+    "id": 1531,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Sage's Codex",
+    "id": 1214,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Splendor",
+    "id": 1239,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Stone of Sorcery",
+    "id": 1224,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Storm Sword",
+    "id": 1121,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Succubus Cloak",
+    "id": 1335,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Sunglow Striker",
+    "id": 1122,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Swiftstrike Lance",
+    "id": 1129,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Thunderclap Brand",
+    "id": 1116,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Twilight Stream",
+    "id": 1727,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Twinblades of Destruction",
+    "id": 1123,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Vampiric Scythe",
+    "id": 1114,
+    "type": "",
+    "desc": ""
+  },
+  {
+    "name": "Venomous Staff",
+    "id": 12211,
+    "type": "",
+    "desc": ""
+  }
+]

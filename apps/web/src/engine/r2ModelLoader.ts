@@ -101,14 +101,16 @@ export async function fetchManifest(): Promise<ModelManifest | null> {
 }
 
 export async function loadHeroMetadata(): Promise<Hero[]> {
-  const cacheKey = 'master_hero_metadata_v6_hokfire';
+  const cacheKey = 'master_hero_metadata_v15_counters_direction_fixed';
   const cached = await getFromIDB<Hero[]>(STORE_METADATA, cacheKey);
 
-  // Validate that cached heroes actually contain the new HOKFIRE guides & abilities
+  // Validate that cached heroes contain strict Global release status, Ata merge, KPL synergies, fixed tournament tiers, and correct counter direction
   const isCacheValid =
     cached &&
-    cached.length === 120 &&
-    cached.some((h) => h.slug === 'lady-sun' && h.hokfire_guide && h.abilities && h.abilities.length > 0);
+    cached.length >= 120 &&
+    cached.some((h) => h.hero_id === 556 && h.is_global_released === true && h.kpl_matchup?.synergies && h.kpl_matchup.synergies.length > 0) &&
+    cached.some((h) => h.hero_id === 112 && h.tier === 'B') &&
+    cached.some((h) => h.hero_id === 156 && h.countered_by?.some((cb) => cb.counter_id === 182));
 
   if (isCacheValid) {
     return cached;
@@ -117,7 +119,7 @@ export async function loadHeroMetadata(): Promise<Hero[]> {
   try {
     const res = await fetchWithFallback('hero_metadata.json');
     const fresh: Hero[] = await res.json();
-    if (fresh && fresh.length === 120) {
+    if (fresh && fresh.length >= 120) {
       await saveToIDB(STORE_METADATA, cacheKey, fresh);
     }
     return fresh;

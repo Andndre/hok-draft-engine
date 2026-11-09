@@ -1,6 +1,7 @@
 import * as ort from 'onnxruntime-web';
 import { Hero, TacticalVector, Lane } from '../types';
 import { loadOnnxModelBuffer } from './r2ModelLoader';
+import { isHeroGlobalReleased } from '../data/heroReleaseStatus';
 
 // Configure ONNX Runtime Web WASM paths
 try {
@@ -118,7 +119,8 @@ function analyzeLaneOccupancy(pickedHeroes: Hero[]): {
 function computeOpenerPriorityScore(
   hero: Hero,
   b1Openers: Record<string, any>,
-  forBlueSide: boolean
+  forBlueSide: boolean,
+  onlyGlobal: boolean = true
 ): number {
   const tierWeight = { S: 0.65, A: 0.25, B: 0.0, C: -0.25, D: -0.5 }[hero.tier] ?? 0;
   const kplStat = b1Openers[String(hero.hero_id)];
@@ -126,12 +128,22 @@ function computeOpenerPriorityScore(
   const r1Count = kplStat?.r1_r2_picks || 0;
   const p1Bans = kplStat?.p1_bans || 0;
 
+  // Immobile carry penalty:
+  // Luban No.7 (112), Hou Yi (169), Angela (142), Daji (109), Milady (504)
+  // Di turnamen kompetitif (khususnya tanpa Master Luban 525 di Global),
+  // First-picking hero tanpa mobilitas ini rentan di-dive lawan dan dilarang dijadikan B1 First Pick / Opener.
+  let openerPenalty = 0;
+  const isImmobileCarry = [112, 169, 142, 109, 504].includes(hero.hero_id);
+  if (isImmobileCarry) {
+    openerPenalty = -2.5;
+  }
+
   const kplOpenerBonus = forBlueSide
     ? Math.min(0.85, b1Count / 400 + p1Bans / 1200)
     : Math.min(0.85, r1Count / 500 + b1Count / 600 + p1Bans / 1200);
 
-  const flexBonus = hero.lanes.length > 1 ? 0.12 : 0;
-  return (hero.win_rate - 0.48) * 4.5 + hero.pick_rate * 3.5 + tierWeight + kplOpenerBonus + flexBonus;
+  const flexBonus = hero.lanes.length > 1 ? 0.15 : 0;
+  return (hero.win_rate - 0.48) * 4.5 + hero.pick_rate * 3.5 + tierWeight + kplOpenerBonus + flexBonus + openerPenalty;
 }
 
 export async function runJevInference(
@@ -144,7 +156,8 @@ export async function runJevInference(
   heroes: Hero[],
   draftStep: number = 0,
   planAId?: number | null,
-  planBId?: number | null
+  planBId?: number | null,
+  onlyGlobalReleased: boolean = true
 ): Promise<JevPredictionResult> {
   const t0 = performance.now();
   const synergyDb = await loadKplSynergyData();
@@ -172,6 +185,16 @@ export async function runJevInference(
     ...bannedHeroIds,
     ...fearlessUnavailableIds,
   ]);
+
+  // When onlyGlobalReleased is true, exclude CN-only unreleased heroes from recommendation & picks
+  if (onlyGlobalReleased) {
+    heroes.forEach((h) => {
+      if (!isHeroGlobalReleased(h)) {
+        unavailableSet.add(h.hero_id);
+      }
+    });
+  }
+
   unavailableSet.forEach((hid) => {
     const idx = idToIndex.get(hid);
     if (idx !== undefined && idx < heroes.length) {
@@ -202,7 +225,9 @@ export async function runJevInference(
   // 4. Identify Top Available Meta Openers for Phase 1 Strategy
   const availableHeroes = heroes.filter((_, idx) => maskArr[idx] === 0);
   const rankedOpeners = [...availableHeroes].sort(
-    (a, b) => computeOpenerPriorityScore(b, b1Openers, isBlueSide) - computeOpenerPriorityScore(a, b1Openers, isBlueSide)
+    (a, b) =>
+      computeOpenerPriorityScore(b, b1Openers, isBlueSide, onlyGlobalReleased) -
+      computeOpenerPriorityScore(a, b1Openers, isBlueSide, onlyGlobalReleased)
   );
 
   // Top candidate openers for recommendation / quick selection
@@ -336,6 +361,7 @@ export async function runJevInference(
     if (maskArr[i] === 1) continue;
 
     const cand = heroes[i];
+    const isImmobileCarry = [112, 169, 142, 109, 504].includes(cand.hero_id);
     const tierBonus = { S: 0.35, A: 0.20, B: 0.05, C: -0.10, D: -0.25 }[cand.tier] || 0.0;
     let score = (cand.win_rate - 0.48) * 4.0 + tierBonus + cand.pick_rate * 2.8;
     let laneTag: string | undefined = undefined;
@@ -345,6 +371,10 @@ export async function runJevInference(
     // PHASE 1: BAN PHASE 1 (Steps 0..3) — Pre-Ban Counters to Planned Meta Opener
     // =========================================================================
     if (phaseId === 'BAN_PHASE_1') {
+      if (isImmobileCarry) {
+        // Immobile carries are never banned in Phase 1 tournament draft
+        score -= 2.2;
+      }
       const kplOpenerInfo = b1Openers[String(cand.hero_id)];
       const p1BansCount = kplOpenerInfo?.p1_bans || 0;
 
@@ -439,13 +469,17 @@ export async function runJevInference(
           bannedOpenerCounters.length > 0
             ? `👑 Eksekusi First-Pick B1! Counter (${bannedOpenerCounters.join(', ')}) sudah di-ban`
             : `👑 First-Pick Meta Prioritas #1 (B1 Opener)`;
-      } else if (draftStep <= 6 && (cand.tier === 'S' || (kplOpenerInfo?.b1_picks || 0) >= 100)) {
+      } else if (draftStep <= 6 && !isImmobileCarry && (cand.tier === 'S' || (kplOpenerInfo?.b1_picks || 0) >= 100)) {
         // Early Phase 1 (B1 / R1+R2) Meta Priority Bonus
-        const openerBoost = computeOpenerPriorityScore(cand, b1Openers, isBlueSide) * 0.45;
+        const openerBoost = computeOpenerPriorityScore(cand, b1Openers, isBlueSide, onlyGlobalReleased) * 0.45;
         score += openerBoost;
         if (!proComboTag && kplOpenerInfo?.b1_picks >= 80) {
           proComboTag = `👑 Prioritas Pembuka Turnamen (${kplOpenerInfo.b1_picks}x B1 / ${kplOpenerInfo.r1_r2_picks}x R1-R2 KPL)`;
         }
+      } else if (draftStep === 4 && isImmobileCarry && cand.hero_id !== plannedOpener?.hero_id) {
+        // Heavy penalty for blind first-picking immobile carry at Step 4 B1
+        score -= 2.0;
+        laneTag = 'Rentan Di-Dive Musuh';
       }
 
       // Direct Counter to Enemy Phase 1 Picks (e.g. Red R1+R2 responding to Blue B1, or Blue B2+B3 responding to Red R1+R2)

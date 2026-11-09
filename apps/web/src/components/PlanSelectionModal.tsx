@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Hero, Lane } from '../types';
 import { X, Check, Search, Sparkles, Shield, AlertTriangle } from 'lucide-react';
+import { isHeroGlobalReleased } from '../data/heroReleaseStatus';
 
 interface PlanSelectionModalProps {
   isOpen: boolean;
@@ -13,6 +14,7 @@ interface PlanSelectionModalProps {
   activeSide: 'blue' | 'red';
   unavailableHeroIds: Set<number>;
   recommendedOpeners: Hero[];
+  onlyGlobalReleased?: boolean;
 }
 
 const LANES: Array<Lane | 'All'> = ['All', 'Clash', 'Jungle', 'Mid', 'Farm', 'Roam'];
@@ -28,6 +30,7 @@ export const PlanSelectionModal: React.FC<PlanSelectionModalProps> = ({
   activeSide,
   unavailableHeroIds,
   recommendedOpeners,
+  onlyGlobalReleased = true,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLane, setSelectedLane] = useState<Lane | 'All'>('All');
@@ -38,6 +41,10 @@ export const PlanSelectionModal: React.FC<PlanSelectionModalProps> = ({
 
   const filteredHeroes = useMemo(() => {
     let list = [...heroes];
+
+    if (onlyGlobalReleased) {
+      list = list.filter((h) => isHeroGlobalReleased(h));
+    }
 
     if (selectedLane !== 'All') {
       list = list.filter((h) => h.primary_lane === selectedLane || h.lanes.includes(selectedLane));
@@ -87,7 +94,7 @@ export const PlanSelectionModal: React.FC<PlanSelectionModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-[80] flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
       <div className="bg-[#12161F] border border-[#232A38] rounded-2xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
         {/* Header */}
         <div className="p-4 border-b border-[#232A38] flex items-center justify-between gap-3 bg-[#0D1017]">

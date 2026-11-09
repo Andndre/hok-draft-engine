@@ -10,7 +10,7 @@ import json
 from collections import defaultdict
 from pathlib import Path
 
-ROOT_DIR = Path("D:/hok-draft-engine")
+ROOT_DIR = Path(__file__).resolve().parents[2]
 DB_PATH = ROOT_DIR / "data" / "processed" / "hok_drafts.db"
 MAPPINGS_FILE = ROOT_DIR / "data" / "mappings" / "master_heroes_global.json"
 OUTPUT_FILE = ROOT_DIR / "data" / "mappings" / "kpl_synergy_matrix.json"

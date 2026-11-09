@@ -69,9 +69,16 @@ export const HeroCardCompact: React.FC<HeroCardCompactProps> = ({
       {/* Info Column */}
       <div className="flex-1 min-w-0 pr-1">
         <div className="flex items-center justify-between gap-1">
-          <h4 className="font-semibold text-xs sm:text-sm text-slate-100 truncate group-hover:text-white">
-            {hero.name}
-          </h4>
+          <div className="flex items-center gap-1.5 min-w-0">
+            <h4 className="font-semibold text-xs sm:text-sm text-slate-100 truncate group-hover:text-white">
+              {hero.name}
+            </h4>
+            {hero.is_global_released === false && (
+              <span className="text-[8px] font-mono px-1 py-0.2 rounded bg-amber-950/80 text-amber-300 border border-amber-800/50 flex-shrink-0">
+                CN
+              </span>
+            )}
+          </div>
           {hero.tier && (
             <span
               className={`text-[10px] font-mono font-bold px-1 py-0.2 rounded ${

@@ -1,0 +1,236 @@
+[
+  {
+    "name": "Iron Sword",
+    "id": 1111,
+    "type": "Attack",
+    "desc": "Basic physical attack component for early builds."
+  },
+  {
+    "name": "Master Sword",
+    "id": 1134,
+    "type": "Attack",
+    "desc": "High physical attack and cooldown reduction; enhances basic attacks."
+  },
+  {
+    "name": "Eternity Blade",
+    "id": 1133,
+    "type": "Attack",
+    "desc": "Physical attack and lifesteal; revives you once after dying."
+  },
+  {
+    "name": "Starbreaker",
+    "id": 1131,
+    "type": "Attack",
+    "desc": "Physical attack and crit with bonus damage after using a skill."
+  },
+  {
+    "name": "Shadow Ripper",
+    "id": 1136,
+    "type": "Attack",
+    "desc": "Physical attack and cooldown that shreds the target's armor."
+  },
+  {
+    "name": "Sparkforged Dagger",
+    "id": 1135,
+    "type": "Attack",
+    "desc": "Physical attack and attack speed with on-hit bonus damage."
+  },
+  {
+    "name": "Demonsbane",
+    "id": 1125,
+    "type": "Attack",
+    "desc": "Physical attack that deals extra damage to high-health targets."
+  },
+  {
+    "name": "Destiny",
+    "id": 1127,
+    "type": "Attack",
+    "desc": "Physical attack and cooldown reduction for ability fighters."
+  },
+  {
+    "name": "Sunchaser",
+    "id": 1141,
+    "type": "Attack",
+    "desc": "Physical attack and movement that slows enemies you damage."
+  },
+  {
+    "name": "Golden Blade",
+    "id": 1728,
+    "type": "Magic",
+    "desc": "Attack speed, crit and lifesteal - a marksman staple."
+  },
+  {
+    "name": "Mortal Punisher",
+    "id": 11210,
+    "type": "Attack",
+    "desc": "Crit and attack speed that reduces enemy healing."
+  },
+  {
+    "name": "Pure Sky",
+    "id": 11311,
+    "type": "Attack",
+    "desc": "Physical attack and crit with a periodic burst passive."
+  },
+  {
+    "name": "Tempest",
+    "id": 1159,
+    "type": "Attack",
+    "desc": "Attack speed and physical pierce that chains damage between enemies."
+  },
+  {
+    "name": "Spell Tome",
+    "id": 1211,
+    "type": "Magic",
+    "desc": "Early magic power and mana component."
+  },
+  {
+    "name": "Void Staff",
+    "id": 1231,
+    "type": "Magic",
+    "desc": "Magic penetration to cut through magic resistance."
+  },
+  {
+    "name": "Savant's Wrath",
+    "id": 1232,
+    "type": "Magic",
+    "desc": "High magic attack with cooldown reduction."
+  },
+  {
+    "name": "Scepter of Reverberation",
+    "id": 1233,
+    "type": "Magic",
+    "desc": "Magic attack and cooldown that amplifies ability damage."
+  },
+  {
+    "name": "Holy Grail",
+    "id": 1226,
+    "type": "Magic",
+    "desc": "Magic attack, cooldown and spell vamp for sustain."
+  },
+  {
+    "name": "Mask of Agony",
+    "id": 1235,
+    "type": "Magic",
+    "desc": "Magic attack that burns nearby enemies over time."
+  },
+  {
+    "name": "Staves of Sorcery",
+    "id": 1236,
+    "type": "Magic",
+    "desc": "Stacking magic attack that grows as you fight."
+  },
+  {
+    "name": "Sage's Tome",
+    "id": 1238,
+    "type": "Magic",
+    "desc": "Large magic attack and mana for burst mages."
+  },
+  {
+    "name": "Enigma - Moon Goddess",
+    "id": 1242,
+    "type": "Magic",
+    "desc": "High magic attack with a strong shield passive."
+  },
+  {
+    "name": "Ominous Premonition",
+    "id": 1333,
+    "type": "Defense",
+    "desc": "Magic defense that blocks a burst of magic damage."
+  },
+  {
+    "name": "Overlord's Platemail",
+    "id": 1332,
+    "type": "Defense",
+    "desc": "Large health pool with steady health regen."
+  },
+  {
+    "name": "Spikemail",
+    "id": 1327,
+    "type": "Defense",
+    "desc": "Armor that reflects damage and slows nearby attack speed."
+  },
+  {
+    "name": "Cuirass of Savagery",
+    "id": 1338,
+    "type": "Defense",
+    "desc": "Health and armor with a counter-attack passive."
+  },
+  {
+    "name": "Sage's Sanctuary",
+    "id": 1337,
+    "type": "Defense",
+    "desc": "Health and cooldown that shields you when low."
+  },
+  {
+    "name": "Frostscar's Embrace",
+    "id": 13310,
+    "type": "Defense",
+    "desc": "Health and resistances that slow nearby attackers."
+  },
+  {
+    "name": "Eye of the Phoenix",
+    "id": 1334,
+    "type": "Defense",
+    "desc": "Health and defense with team-fight utility."
+  },
+  {
+    "name": "Boots of Resistance",
+    "id": 1422,
+    "type": "Movement",
+    "desc": "Movement speed and magic resistance."
+  },
+  {
+    "name": "Boots of the Arcane",
+    "id": 1424,
+    "type": "Movement",
+    "desc": "Movement speed and magic penetration."
+  },
+  {
+    "name": "Boots of Tranquility",
+    "id": 1423,
+    "type": "Movement",
+    "desc": "Movement speed and cooldown reduction."
+  },
+  {
+    "name": "Boots of Fortitude",
+    "id": 1421,
+    "type": "Movement",
+    "desc": "Movement speed and physical armor."
+  },
+  {
+    "name": "Boots of Dexterity",
+    "id": 1425,
+    "type": "Movement",
+    "desc": "Movement speed and attack speed."
+  },
+  {
+    "name": "Hunting Knife",
+    "id": 1511,
+    "type": "Jungle",
+    "desc": "Jungle starter that lets you damage and clear monsters."
+  },
+  {
+    "name": "Dragon's Rage",
+    "id": 1534,
+    "type": "Defense",
+    "desc": "Defensive item with bonus physical attack and burst."
+  },
+  {
+    "name": "Rapacious Bite",
+    "id": 1533,
+    "type": "Jungle",
+    "desc": "Jungle enchant with lifesteal and sustained damage."
+  },
+  {
+    "name": "Guardian",
+    "id": 1714,
+    "type": "Support",
+    "desc": "Support item that shields and heals nearby allies."
+  },
+  {
+    "name": "Knowledge Gem",
+    "id": 1701,
+    "type": "Support",
+    "desc": "Support starter that grants extra gold and experience."
+  }
+]

@@ -80,6 +80,13 @@ export const HeroCardDetailed: React.FC<HeroCardDetailedProps> = ({
 
         {/* Bottom subtle gradient */}
         <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#12161F] to-transparent" />
+
+        {/* CN-Only Unreleased Indicator */}
+        {hero.is_global_released === false && (
+          <div className="absolute bottom-1.5 left-1.5 bg-amber-500/90 text-black font-extrabold text-[8px] px-1 py-0.2 rounded shadow">
+            CN Only
+          </div>
+        )}
       </div>
 
       {/* Hero Name & Identity */}

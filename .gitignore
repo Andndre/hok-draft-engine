@@ -35,3 +35,9 @@ apps/web/.vite/
 Thumbs.db
 .vscode/
 .idea/
+.codex/
+scratch/
+graphify-out/cache/
+graphify-out/.graphify_build_state.json
+graphify-out/.graphify_labels.pending.json
+graphify-out/.graphify_labels.json.sig

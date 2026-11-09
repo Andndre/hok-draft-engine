@@ -1,0 +1,13 @@
+{
+  "Flash": "Blink a short distance in the aimed direction. The near-universal pick for repositioning, dodging skillshots, engaging or escaping.",
+  "Sprint": "A burst of bonus movement speed, great for chasing or kiting on mobile carries.",
+  "Execute": "Deal a chunk of true damage to a target - good for finishing tanks you can't fully burst.",
+  "Heal": "Restore health to yourself and a nearby ally and gain a short speed boost.",
+  "Disrupt": "Reduce a nearby enemy's damage output during the key fight window.",
+  "Purify": "Cleanse crowd control from yourself and gain brief tenacity.",
+  "Smite": "Deal heavy damage to monsters - the jungle clearing and objective tool.",
+  "Teleport": "Teleport across the map to a chosen point after a short channel - used for rotations and split-push pressure.",
+  "Intimidate": "Summon a guardian sentry that attacks nearby enemies for a few seconds.",
+  "Stun": "Briefly stun a targeted enemy to lock them down.",
+  "Frenzy": "Gain a burst of bonus attack speed for a short duration."
+}

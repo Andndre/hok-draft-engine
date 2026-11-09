@@ -11,6 +11,7 @@ import { DraftSimulator } from './components/DraftSimulator';
 import { TacticalRadarPanel } from './components/TacticalRadarPanel';
 import { HeroWikiDrawer } from './components/HeroWikiDrawer';
 import { PlanSelectionModal } from './components/PlanSelectionModal';
+import { isHeroGlobalReleased } from './data/heroReleaseStatus';
 
 // Standard 20-step competitive ban/pick sequence
 const DRAFT_SEQUENCE: Array<{ side: 'blue' | 'red'; action: 'ban' | 'pick' }> = [
@@ -48,6 +49,7 @@ export const App: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortMode, setSortMode] = useState<SortMode>('ai');
   const [viewMode, setViewMode] = useState<ViewMode>('compact');
+  const [onlyGlobalReleased, setOnlyGlobalReleased] = useState<boolean>(true);
 
   // Favorites (persisted in localStorage)
   const [favorites, setFavorites] = useState<Set<number>>(() => {
@@ -225,7 +227,8 @@ export const App: React.FC = () => {
           allH,
           turn.stepIndex,
           planAId,
-          planBId
+          planBId,
+          onlyGlobalReleased
         );
 
         setModelReady(true);
@@ -292,6 +295,7 @@ export const App: React.FC = () => {
     activeSidePlanBId,
     blueFearlessUnavailableIds,
     redFearlessUnavailableIds,
+    onlyGlobalReleased,
     updateAiPredictions,
   ]);
 
@@ -433,6 +437,11 @@ export const App: React.FC = () => {
   const filteredAndSortedHeroes = useMemo(() => {
     let result = [...heroes];
 
+    // Filter by Global Released status
+    if (onlyGlobalReleased) {
+      result = result.filter((h) => isHeroGlobalReleased(h));
+    }
+
     // Filter by Lane
     if (selectedLane !== 'All') {
       result = result.filter(
@@ -478,7 +487,7 @@ export const App: React.FC = () => {
     }
 
     return result;
-  }, [heroes, selectedLane, searchQuery, activeTab, favorites, recommendations, sortMode]);
+  }, [heroes, selectedLane, searchQuery, activeTab, favorites, recommendations, sortMode, onlyGlobalReleased]);
 
   return (
     <div className="min-h-screen bg-[#0A0D12] text-[#F8FAFC] pb-44 selection:bg-[#B8FF01] selection:text-black">
@@ -491,6 +500,8 @@ export const App: React.FC = () => {
         modelReady={modelReady}
         modelLatency={modelLatency}
         totalFiltered={filteredAndSortedHeroes.length}
+        onlyGlobalReleased={onlyGlobalReleased}
+        onToggleGlobalReleased={() => setOnlyGlobalReleased((prev) => !prev)}
       />
 
       {/* Main Container */}
@@ -655,7 +666,18 @@ export const App: React.FC = () => {
         )}
       </main>
 
-      {/* Slide-over Wiki & Counter Drawer */}
+      {/* Sticky Bottom Command Dock */}
+      <BottomCommandDock
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        selectedLane={selectedLane}
+        onLaneChange={setSelectedLane}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        favoriteCount={favorites.size}
+      />
+
+      {/* Slide-over Wiki & Counter Drawer (High Priority Overlay) */}
       <HeroWikiDrawer
         hero={wikiHero}
         onClose={() => setWikiHero(null)}
@@ -666,7 +688,7 @@ export const App: React.FC = () => {
         onSelectRelatedHero={(h) => setWikiHero(h)}
       />
 
-      {/* Strategic Setup Plan A & Plan B Modal (Access to all 120 Heroes) */}
+      {/* Strategic Setup Plan A & Plan B Modal (Highest Priority Modal) */}
       <PlanSelectionModal
         isOpen={isPlanModalOpen}
         onClose={() => setIsPlanModalOpen(false)}
@@ -678,17 +700,7 @@ export const App: React.FC = () => {
         activeSide={currentTurn.side}
         unavailableHeroIds={currentDraftUnavailableIds}
         recommendedOpeners={phaseStrategy?.candidateOpeners || []}
-      />
-
-      {/* Sticky Bottom Command Dock */}
-      <BottomCommandDock
-        activeTab={activeTab}
-        onTabChange={setActiveTab}
-        selectedLane={selectedLane}
-        onLaneChange={setSelectedLane}
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        favoriteCount={favorites.size}
+        onlyGlobalReleased={onlyGlobalReleased}
       />
     </div>
   );

@@ -1,0 +1,751 @@
+{
+  "iron sword": {
+    "id": 1111,
+    "name": "Iron Sword",
+    "type": "Attack",
+    "desc": "Basic physical attack component for early builds.",
+    "icon_url": "/assets/items/1111.png"
+  },
+  "master sword": {
+    "id": 1134,
+    "name": "Master Sword",
+    "type": "Attack",
+    "desc": "High physical attack and cooldown reduction; enhances basic attacks.",
+    "icon_url": "/assets/items/1134.png"
+  },
+  "eternity blade": {
+    "id": 1133,
+    "name": "Eternity Blade",
+    "type": "Attack",
+    "desc": "Physical attack and lifesteal; revives you once after dying.",
+    "icon_url": "/assets/items/1133.png"
+  },
+  "starbreaker": {
+    "id": 1131,
+    "name": "Starbreaker",
+    "type": "Attack",
+    "desc": "Physical attack and crit with bonus damage after using a skill.",
+    "icon_url": "/assets/items/1131.png"
+  },
+  "shadow ripper": {
+    "id": 1136,
+    "name": "Shadow Ripper",
+    "type": "Attack",
+    "desc": "Physical attack and cooldown that shreds the target's armor.",
+    "icon_url": "/assets/items/1136.png"
+  },
+  "sparkforged dagger": {
+    "id": 1135,
+    "name": "Sparkforged Dagger",
+    "type": "Attack",
+    "desc": "Physical attack and attack speed with on-hit bonus damage.",
+    "icon_url": "/assets/items/1135.png"
+  },
+  "demonsbane": {
+    "id": 1125,
+    "name": "Demonsbane",
+    "type": "Attack",
+    "desc": "Physical attack that deals extra damage to high-health targets.",
+    "icon_url": "/assets/items/1125.png"
+  },
+  "destiny": {
+    "id": 1127,
+    "name": "Destiny",
+    "type": "Attack",
+    "desc": "Physical attack and cooldown reduction for ability fighters.",
+    "icon_url": "/assets/items/1127.png"
+  },
+  "sunchaser": {
+    "id": 1141,
+    "name": "Sunchaser",
+    "type": "Attack",
+    "desc": "Physical attack and movement that slows enemies you damage.",
+    "icon_url": "/assets/items/1141.png"
+  },
+  "golden blade": {
+    "id": 1728,
+    "name": "Golden Blade",
+    "type": "Magic",
+    "desc": "Attack speed, crit and lifesteal - a marksman staple.",
+    "icon_url": "/assets/items/1728.png"
+  },
+  "mortal punisher": {
+    "id": 11210,
+    "name": "Mortal Punisher",
+    "type": "Attack",
+    "desc": "Crit and attack speed that reduces enemy healing.",
+    "icon_url": "/assets/items/11210.png"
+  },
+  "pure sky": {
+    "id": 11311,
+    "name": "Pure Sky",
+    "type": "Attack",
+    "desc": "Physical attack and crit with a periodic burst passive.",
+    "icon_url": "/assets/items/11311.png"
+  },
+  "tempest": {
+    "id": 1159,
+    "name": "Tempest",
+    "type": "Attack",
+    "desc": "Attack speed and physical pierce that chains damage between enemies.",
+    "icon_url": "/assets/items/1159.png"
+  },
+  "spell tome": {
+    "id": 1211,
+    "name": "Spell Tome",
+    "type": "Magic",
+    "desc": "Early magic power and mana component.",
+    "icon_url": "/assets/items/1211.png"
+  },
+  "void staff": {
+    "id": 1231,
+    "name": "Void Staff",
+    "type": "Magic",
+    "desc": "Magic penetration to cut through magic resistance.",
+    "icon_url": "/assets/items/1231.png"
+  },
+  "savant's wrath": {
+    "id": 1232,
+    "name": "Savant's Wrath",
+    "type": "Magic",
+    "desc": "High magic attack with cooldown reduction.",
+    "icon_url": "/assets/items/1232.png"
+  },
+  "scepter of reverberation": {
+    "id": 1233,
+    "name": "Scepter of Reverberation",
+    "type": "Magic",
+    "desc": "Magic attack and cooldown that amplifies ability damage.",
+    "icon_url": "/assets/items/1233.png"
+  },
+  "holy grail": {
+    "id": 1226,
+    "name": "Holy Grail",
+    "type": "Magic",
+    "desc": "Magic attack, cooldown and spell vamp for sustain.",
+    "icon_url": "/assets/items/1226.png"
+  },
+  "mask of agony": {
+    "id": 1235,
+    "name": "Mask of Agony",
+    "type": "Magic",
+    "desc": "Magic attack that burns nearby enemies over time.",
+    "icon_url": "/assets/items/1235.png"
+  },
+  "staves of sorcery": {
+    "id": 1236,
+    "name": "Staves of Sorcery",
+    "type": "Magic",
+    "desc": "Stacking magic attack that grows as you fight.",
+    "icon_url": "/assets/items/1236.png"
+  },
+  "sage's tome": {
+    "id": 1238,
+    "name": "Sage's Tome",
+    "type": "Magic",
+    "desc": "Large magic attack and mana for burst mages.",
+    "icon_url": "/assets/items/1238.png"
+  },
+  "enigma - moon goddess": {
+    "id": 1242,
+    "name": "Enigma - Moon Goddess",
+    "type": "Magic",
+    "desc": "High magic attack with a strong shield passive.",
+    "icon_url": "/assets/items/1242.png"
+  },
+  "ominous premonition": {
+    "id": 1333,
+    "name": "Ominous Premonition",
+    "type": "Defense",
+    "desc": "Magic defense that blocks a burst of magic damage.",
+    "icon_url": "/assets/items/1333.png"
+  },
+  "overlord's platemail": {
+    "id": 1332,
+    "name": "Overlord's Platemail",
+    "type": "Defense",
+    "desc": "Large health pool with steady health regen.",
+    "icon_url": "/assets/items/1332.png"
+  },
+  "spikemail": {
+    "id": 1327,
+    "name": "Spikemail",
+    "type": "Defense",
+    "desc": "Armor that reflects damage and slows nearby attack speed.",
+    "icon_url": "/assets/items/1327.png"
+  },
+  "cuirass of savagery": {
+    "id": 1338,
+    "name": "Cuirass of Savagery",
+    "type": "Defense",
+    "desc": "Health and armor with a counter-attack passive.",
+    "icon_url": "/assets/items/1338.png"
+  },
+  "sage's sanctuary": {
+    "id": 1337,
+    "name": "Sage's Sanctuary",
+    "type": "Defense",
+    "desc": "Health and cooldown that shields you when low.",
+    "icon_url": "/assets/items/1337.png"
+  },
+  "frostscar's embrace": {
+    "id": 13310,
+    "name": "Frostscar's Embrace",
+    "type": "Defense",
+    "desc": "Health and resistances that slow nearby attackers.",
+    "icon_url": "/assets/items/13310.png"
+  },
+  "eye of the phoenix": {
+    "id": 1334,
+    "name": "Eye of the Phoenix",
+    "type": "Defense",
+    "desc": "Health and defense with team-fight utility.",
+    "icon_url": "/assets/items/1334.png"
+  },
+  "boots of resistance": {
+    "id": 1422,
+    "name": "Boots of Resistance",
+    "type": "Movement",
+    "desc": "Movement speed and magic resistance.",
+    "icon_url": "/assets/items/1422.png"
+  },
+  "boots of the arcane": {
+    "id": 1424,
+    "name": "Boots of the Arcane",
+    "type": "Movement",
+    "desc": "Movement speed and magic penetration.",
+    "icon_url": "/assets/items/1424.png"
+  },
+  "boots of tranquility": {
+    "id": 1423,
+    "name": "Boots of Tranquility",
+    "type": "Movement",
+    "desc": "Movement speed and cooldown reduction.",
+    "icon_url": "/assets/items/1423.png"
+  },
+  "boots of fortitude": {
+    "id": 1421,
+    "name": "Boots of Fortitude",
+    "type": "Movement",
+    "desc": "Movement speed and physical armor.",
+    "icon_url": "/assets/items/1421.png"
+  },
+  "boots of dexterity": {
+    "id": 1425,
+    "name": "Boots of Dexterity",
+    "type": "Movement",
+    "desc": "Movement speed and attack speed.",
+    "icon_url": "/assets/items/1425.png"
+  },
+  "hunting knife": {
+    "id": 1511,
+    "name": "Hunting Knife",
+    "type": "Jungle",
+    "desc": "Jungle starter that lets you damage and clear monsters.",
+    "icon_url": "/assets/items/1511.png"
+  },
+  "dragon's rage": {
+    "id": 1534,
+    "name": "Dragon's Rage",
+    "type": "Defense",
+    "desc": "Defensive item with bonus physical attack and burst.",
+    "icon_url": "/assets/items/1534.png"
+  },
+  "rapacious bite": {
+    "id": 1533,
+    "name": "Rapacious Bite",
+    "type": "Jungle",
+    "desc": "Jungle enchant with lifesteal and sustained damage.",
+    "icon_url": "/assets/items/1533.png"
+  },
+  "guardian": {
+    "id": 1714,
+    "name": "Guardian",
+    "type": "Support",
+    "desc": "Support item that shields and heals nearby allies.",
+    "icon_url": "/assets/items/1714.png"
+  },
+  "knowledge gem": {
+    "id": 1701,
+    "name": "Knowledge Gem",
+    "type": "Support",
+    "desc": "Support starter that grants extra gold and experience.",
+    "icon_url": "/assets/items/1701.png"
+  },
+  "amble - winter": {
+    "id": 1351,
+    "name": "Amble - Winter",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1351.png"
+  },
+  "ardent dominion": {
+    "id": 1227,
+    "name": "Ardent Dominion",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1227.png"
+  },
+  "augur's word": {
+    "id": 1237,
+    "name": "Augur's Word",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1237.png"
+  },
+  "axe of torment": {
+    "id": 1137,
+    "name": "Axe of Torment",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1137.png"
+  },
+  "belt of might": {
+    "id": 1321,
+    "name": "Belt of Might",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1321.png"
+  },
+  "blazing cape": {
+    "id": 1331,
+    "name": "Blazing Cape",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1331.png"
+  },
+  "blood clan's grimoire": {
+    "id": 1222,
+    "name": "Blood Clan's Grimoire",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1222.png"
+  },
+  "blood rage": {
+    "id": 1328,
+    "name": "Blood Rage",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1328.png"
+  },
+  "bloodsoul": {
+    "id": 1158,
+    "name": "Bloodsoul",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1158.png"
+  },
+  "bloodweeper": {
+    "id": 1132,
+    "name": "Bloodweeper",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1132.png"
+  },
+  "boots of deftness": {
+    "id": 1426,
+    "name": "Boots of Deftness",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1426.png"
+  },
+  "breakthrough robe": {
+    "id": 1244,
+    "name": "Breakthrough Robe",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1244.png"
+  },
+  "clandestine cape": {
+    "id": 1323,
+    "name": "Clandestine Cape",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1323.png"
+  },
+  "cloth jerkin": {
+    "id": 1312,
+    "name": "Cloth Jerkin",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1312.png"
+  },
+  "cloud piercer": {
+    "id": 1154,
+    "name": "Cloud Piercer",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1154.png"
+  },
+  "crimson shadow": {
+    "id": 1711,
+    "name": "Crimson Shadow",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1711.png"
+  },
+  "crimson shadow - howl": {
+    "id": 1723,
+    "name": "Crimson Shadow - Howl",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1723.png"
+  },
+  "crimson shadow - radiance": {
+    "id": 1737,
+    "name": "Crimson Shadow - Radiance",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1737.png"
+  },
+  "crimson shadow - redemption": {
+    "id": 1721,
+    "name": "Crimson Shadow - Redemption",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1721.png"
+  },
+  "crimson shadow - starspring": {
+    "id": 1747,
+    "name": "Crimson Shadow - Starspring",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1747.png"
+  },
+  "cuirass of swiftness": {
+    "id": 1317,
+    "name": "Cuirass of Swiftness",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1317.png"
+  },
+  "dagger": {
+    "id": 1112,
+    "name": "Dagger",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1112.png"
+  },
+  "dawnlight": {
+    "id": 1353,
+    "name": "Dawnlight",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1353.png"
+  },
+  "daybreaker's virtue": {
+    "id": 1155,
+    "name": "Daybreaker's Virtue",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1155.png"
+  },
+  "deepfrost siege": {
+    "id": 1128,
+    "name": "Deepfrost Siege",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1128.png"
+  },
+  "doomsday": {
+    "id": 1126,
+    "name": "Doomsday",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1126.png"
+  },
+  "frigid charge": {
+    "id": 1341,
+    "name": "Frigid Charge",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1341.png"
+  },
+  "frosthold targe": {
+    "id": 1324,
+    "name": "Frosthold Targe",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1324.png"
+  },
+  "frozen breath": {
+    "id": 1234,
+    "name": "Frozen Breath",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1234.png"
+  },
+  "giant's grip": {
+    "id": 1532,
+    "name": "Giant's Grip",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1532.png"
+  },
+  "glacial buckler": {
+    "id": 1336,
+    "name": "Glacial Buckler",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1336.png"
+  },
+  "grand staff": {
+    "id": 1221,
+    "name": "Grand Staff",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1221.png"
+  },
+  "guardian - radiance": {
+    "id": 1754,
+    "name": "Guardian - Radiance",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1754.png"
+  },
+  "guardian - redemption": {
+    "id": 1724,
+    "name": "Guardian - Redemption",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1724.png"
+  },
+  "guardian - starspring": {
+    "id": 1725,
+    "name": "Guardian - Starspring",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1725.png"
+  },
+  "guerrilla machete": {
+    "id": 1521,
+    "name": "Guerrilla Machete",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1521.png"
+  },
+  "haste - sunpool": {
+    "id": 1156,
+    "name": "Haste - Sunpool",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1156.png"
+  },
+  "immovable - sky dome": {
+    "id": 1157,
+    "name": "Immovable - Sky Dome",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1157.png"
+  },
+  "insatiable tome": {
+    "id": 1240,
+    "name": "Insatiable Tome",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1240.png"
+  },
+  "lightfoot shoes": {
+    "id": 1411,
+    "name": "Lightfoot Shoes",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1411.png"
+  },
+  "longnight guardian": {
+    "id": 1347,
+    "name": "Longnight Guardian",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1347.png"
+  },
+  "meteor": {
+    "id": 1124,
+    "name": "Meteor",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1124.png"
+  },
+  "mirror of radiance": {
+    "id": 13211,
+    "name": "Mirror of Radiance",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/13211.png"
+  },
+  "mystic page": {
+    "id": 1217,
+    "name": "Mystic Page",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1217.png"
+  },
+  "nebulon wood": {
+    "id": 1243,
+    "name": "Nebulon Wood",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1243.png"
+  },
+  "nettle gauntlet": {
+    "id": 1345,
+    "name": "Nettle Gauntlet",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1345.png"
+  },
+  "overlord's might": {
+    "id": 1138,
+    "name": "Overlord's Might",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1138.png"
+  },
+  "patrol axe": {
+    "id": 1522,
+    "name": "Patrol Axe",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1522.png"
+  },
+  "plume of enchantment": {
+    "id": 11110,
+    "name": "Plume of Enchantment",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/11110.png"
+  },
+  "primordial crystal": {
+    "id": 1218,
+    "name": "Primordial Crystal",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1218.png"
+  },
+  "protector's cuirass": {
+    "id": 1325,
+    "name": "Protector's Cuirass",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1325.png"
+  },
+  "pugilist's gauntlet": {
+    "id": 1113,
+    "name": "Pugilist's Gauntlet",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1113.png"
+  },
+  "ravage - phantom": {
+    "id": 1350,
+    "name": "Ravage - Phantom",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1350.png"
+  },
+  "relentless blade": {
+    "id": 1523,
+    "name": "Relentless Blade",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1523.png"
+  },
+  "resilient agate": {
+    "id": 1311,
+    "name": "Resilient Agate",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1311.png"
+  },
+  "runeblade": {
+    "id": 1531,
+    "name": "Runeblade",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1531.png"
+  },
+  "sage's codex": {
+    "id": 1214,
+    "name": "Sage's Codex",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1214.png"
+  },
+  "splendor": {
+    "id": 1239,
+    "name": "Splendor",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1239.png"
+  },
+  "stone of sorcery": {
+    "id": 1224,
+    "name": "Stone of Sorcery",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1224.png"
+  },
+  "storm sword": {
+    "id": 1121,
+    "name": "Storm Sword",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1121.png"
+  },
+  "succubus cloak": {
+    "id": 1335,
+    "name": "Succubus Cloak",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1335.png"
+  },
+  "sunglow striker": {
+    "id": 1122,
+    "name": "Sunglow Striker",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1122.png"
+  },
+  "swiftstrike lance": {
+    "id": 1129,
+    "name": "Swiftstrike Lance",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1129.png"
+  },
+  "thunderclap brand": {
+    "id": 1116,
+    "name": "Thunderclap Brand",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1116.png"
+  },
+  "twilight stream": {
+    "id": 1727,
+    "name": "Twilight Stream",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1727.png"
+  },
+  "twinblades of destruction": {
+    "id": 1123,
+    "name": "Twinblades of Destruction",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1123.png"
+  },
+  "vampiric scythe": {
+    "id": 1114,
+    "name": "Vampiric Scythe",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/1114.png"
+  },
+  "venomous staff": {
+    "id": 12211,
+    "name": "Venomous Staff",
+    "type": "",
+    "desc": "",
+    "icon_url": "/assets/items/12211.png"
+  }
+}

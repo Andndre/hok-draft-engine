@@ -1,6 +1,6 @@
 import React from 'react';
 import { SortMode, ViewMode } from '../types';
-import { ArrowUpDown, LayoutGrid, List, Cpu, Sparkles } from 'lucide-react';
+import { ArrowUpDown, LayoutGrid, List, Cpu, Sparkles, Globe } from 'lucide-react';
 
 interface HeaderSortBarProps {
   sortMode: SortMode;
@@ -10,6 +10,8 @@ interface HeaderSortBarProps {
   modelReady: boolean;
   modelLatency: number | null;
   totalFiltered: number;
+  onlyGlobalReleased: boolean;
+  onToggleGlobalReleased: () => void;
 }
 
 export const HeaderSortBar: React.FC<HeaderSortBarProps> = ({
@@ -20,6 +22,8 @@ export const HeaderSortBar: React.FC<HeaderSortBarProps> = ({
   modelReady,
   modelLatency,
   totalFiltered,
+  onlyGlobalReleased,
+  onToggleGlobalReleased,
 }) => {
   return (
     <header className="sticky top-0 z-40 bg-[#0A0D12]/90 backdrop-blur-md border-b border-[#232A38] px-4 py-3">
@@ -60,6 +64,23 @@ export const HeaderSortBar: React.FC<HeaderSortBarProps> = ({
 
         {/* Sorting & View Mode Controls */}
         <div className="flex items-center gap-2">
+          {/* Global Only Server Filter Toggle */}
+          <button
+            onClick={onToggleGlobalReleased}
+            className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-bold rounded-lg border transition-all ${
+              onlyGlobalReleased
+                ? 'bg-emerald-950/70 border-emerald-500/60 text-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.15)]'
+                : 'bg-[#12161F] border-[#232A38] text-slate-400 hover:text-white'
+            }`}
+            title="Saring hero rilis server Global (matikan untuk memasukkan hero eksklusif CN/KPL)"
+          >
+            <Globe className={`w-3.5 h-3.5 ${onlyGlobalReleased ? 'text-emerald-400' : 'text-slate-400'}`} />
+            <span className="hidden sm:inline">
+              {onlyGlobalReleased ? 'Rilis Global (Aktif)' : 'Semua Hero (+CN)'}
+            </span>
+            <span className="sm:hidden">{onlyGlobalReleased ? 'Global' : 'All'}</span>
+          </button>
+
           {/* Sort Buttons */}
           <div className="flex items-center bg-[#12161F] p-0.5 rounded-lg border border-[#232A38]">
             <button

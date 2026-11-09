@@ -1,0 +1,170 @@
+[
+  {
+    "name": "Calamity",
+    "id": 1519,
+    "c": "R",
+    "desc": "Critical rate to spike your DPS scaling."
+  },
+  {
+    "name": "Conflict",
+    "id": 1505,
+    "c": "R",
+    "desc": "Physical attack + physical lifesteal."
+  },
+  {
+    "name": "Fate",
+    "id": 1512,
+    "c": "R",
+    "desc": "Attack speed + health + physical defense."
+  },
+  {
+    "name": "Inheritance",
+    "id": 1503,
+    "c": "R",
+    "desc": "Flat physical attack."
+  },
+  {
+    "name": "Mutation",
+    "id": 1504,
+    "c": "R",
+    "desc": "Physical attack + physical pierce."
+  },
+  {
+    "name": "Nightmare",
+    "id": 1514,
+    "c": "R",
+    "desc": "Magic attack + magic pierce."
+  },
+  {
+    "name": "Omen",
+    "id": 1517,
+    "c": "R",
+    "desc": "Magic attack + attack speed."
+  },
+  {
+    "name": "Red Moon",
+    "id": 1520,
+    "c": "R",
+    "desc": "Attack speed + critical rate."
+  },
+  {
+    "name": "Saint",
+    "id": 1501,
+    "c": "R",
+    "desc": "High flat magic attack."
+  },
+  {
+    "name": "Unparalleled",
+    "id": 1510,
+    "c": "R",
+    "desc": "Critical rate + critical damage."
+  },
+  {
+    "name": "Avarice",
+    "id": 2503,
+    "c": "B",
+    "desc": "Magic lifesteal."
+  },
+  {
+    "name": "Beast Scar",
+    "id": 2506,
+    "c": "B",
+    "desc": "Critical rate + max health."
+  },
+  {
+    "name": "Harmony",
+    "id": 2515,
+    "c": "B",
+    "desc": "Max health + health recovery + movement speed."
+  },
+  {
+    "name": "Hunt",
+    "id": 2520,
+    "c": "B",
+    "desc": "Attack speed + movement speed."
+  },
+  {
+    "name": "Longevity",
+    "id": 2501,
+    "c": "B",
+    "desc": "Large max health."
+  },
+  {
+    "name": "Meditation",
+    "id": 2510,
+    "c": "B",
+    "desc": "Max health + health recovery."
+  },
+  {
+    "name": "Prosperity",
+    "id": 2511,
+    "c": "B",
+    "desc": "Physical lifesteal + magic defense."
+  },
+  {
+    "name": "Reaver",
+    "id": 2504,
+    "c": "B",
+    "desc": "High physical lifesteal."
+  },
+  {
+    "name": "Reincarnation",
+    "id": 2512,
+    "c": "B",
+    "desc": "Magic attack + magic lifesteal."
+  },
+  {
+    "name": "Stealth",
+    "id": 2517,
+    "c": "B",
+    "desc": "Physical attack + movement speed."
+  },
+  {
+    "name": "Bulwark",
+    "id": 3517,
+    "c": "G",
+    "desc": "Physical defense."
+  },
+  {
+    "name": "Compassion",
+    "id": 3516,
+    "c": "G",
+    "desc": "Cooldown reduction."
+  },
+  {
+    "name": "Eagle Eye",
+    "id": 3514,
+    "c": "G",
+    "desc": "Physical attack + physical pierce."
+  },
+  {
+    "name": "Fortify",
+    "id": 3503,
+    "c": "G",
+    "desc": "Physical defense + magic defense."
+  },
+  {
+    "name": "Mind's Eye",
+    "id": 3515,
+    "c": "G",
+    "desc": "Attack speed + magic pierce."
+  },
+  {
+    "name": "Reverberation",
+    "id": 3518,
+    "c": "G",
+    "desc": "Defenses + cooldown reduction."
+  },
+  {
+    "name": "Tribute",
+    "id": 3511,
+    "c": "G",
+    "desc": "Magic attack + cooldown reduction."
+  },
+  {
+    "name": "Void",
+    "id": 3509,
+    "c": "G",
+    "desc": "Max health + cooldown reduction."
+  }
+]

@@ -1,0 +1,198 @@
+{
+  "calamity": {
+    "id": 1519,
+    "name": "Calamity",
+    "color": "R",
+    "desc": "Critical rate to spike your DPS scaling.",
+    "icon_url": "/assets/arcana/1519.png"
+  },
+  "conflict": {
+    "id": 1505,
+    "name": "Conflict",
+    "color": "R",
+    "desc": "Physical attack + pierce + lifesteal for aggressive trades.",
+    "icon_url": "/assets/arcana/1505.png"
+  },
+  "fate": {
+    "id": 1512,
+    "name": "Fate",
+    "color": "R",
+    "desc": "Health + defense to survive dives.",
+    "icon_url": "/assets/arcana/1512.png"
+  },
+  "inheritance": {
+    "id": 1503,
+    "name": "Inheritance",
+    "color": "R",
+    "desc": "Flat physical attack.",
+    "icon_url": "/assets/arcana/1503.png"
+  },
+  "mutation": {
+    "id": 1504,
+    "name": "Mutation",
+    "color": "R",
+    "desc": "Physical attack + pierce for one-shot burst.",
+    "icon_url": "/assets/arcana/1504.png"
+  },
+  "nightmare": {
+    "id": 1514,
+    "name": "Nightmare",
+    "color": "R",
+    "desc": "Magic attack + magic pierce for heavier burst.",
+    "icon_url": "/assets/arcana/1514.png"
+  },
+  "omen": {
+    "id": 1517,
+    "name": "Omen",
+    "color": "R",
+    "desc": "Magic attack + attack speed.",
+    "icon_url": "/assets/arcana/1517.png"
+  },
+  "red moon": {
+    "id": 1520,
+    "name": "Red Moon",
+    "color": "R",
+    "desc": "Attack speed + critical rate.",
+    "icon_url": "/assets/arcana/1520.png"
+  },
+  "saint": {
+    "id": 1501,
+    "name": "Saint",
+    "color": "R",
+    "desc": "High flat magic attack.",
+    "icon_url": "/assets/arcana/1501.png"
+  },
+  "unparalleled": {
+    "id": 1510,
+    "name": "Unparalleled",
+    "color": "R",
+    "desc": "Critical rate + critical damage.",
+    "icon_url": "/assets/arcana/1510.png"
+  },
+  "avarice": {
+    "id": 2503,
+    "name": "Avarice",
+    "color": "B",
+    "desc": "Magic lifesteal.",
+    "icon_url": "/assets/arcana/2503.png"
+  },
+  "beast scar": {
+    "id": 2506,
+    "name": "Beast Scar",
+    "color": "B",
+    "desc": "Critical rate + max health.",
+    "icon_url": "/assets/arcana/2506.png"
+  },
+  "harmony": {
+    "id": 2515,
+    "name": "Harmony",
+    "color": "G",
+    "desc": "Health + regen + movement speed for roaming.",
+    "icon_url": "/assets/arcana/2515.png"
+  },
+  "hunt": {
+    "id": 2520,
+    "name": "Hunt",
+    "color": "G",
+    "desc": "Attack speed + movement speed for kiting.",
+    "icon_url": "/assets/arcana/2520.png"
+  },
+  "longevity": {
+    "id": 2501,
+    "name": "Longevity",
+    "color": "B",
+    "desc": "Large max health.",
+    "icon_url": "/assets/arcana/2501.png"
+  },
+  "meditation": {
+    "id": 2510,
+    "name": "Meditation",
+    "color": "B",
+    "desc": "Max health + health recovery.",
+    "icon_url": "/assets/arcana/2510.png"
+  },
+  "prosperity": {
+    "id": 2511,
+    "name": "Prosperity",
+    "color": "B",
+    "desc": "Physical lifesteal + magic defense.",
+    "icon_url": "/assets/arcana/2511.png"
+  },
+  "reaver": {
+    "id": 2504,
+    "name": "Reaver",
+    "color": "G",
+    "desc": "Physical lifesteal to sustain through extended fights.",
+    "icon_url": "/assets/arcana/2504.png"
+  },
+  "reincarnation": {
+    "id": 2512,
+    "name": "Reincarnation",
+    "color": "G",
+    "desc": "Magic attack + lifesteal for safer laning.",
+    "icon_url": "/assets/arcana/2512.png"
+  },
+  "stealth": {
+    "id": 2517,
+    "name": "Stealth",
+    "color": "B",
+    "desc": "Physical attack + movement speed.",
+    "icon_url": "/assets/arcana/2517.png"
+  },
+  "bulwark": {
+    "id": 3517,
+    "name": "Bulwark",
+    "color": "G",
+    "desc": "Physical defense.",
+    "icon_url": "/assets/arcana/3517.png"
+  },
+  "compassion": {
+    "id": 3516,
+    "name": "Compassion",
+    "color": "B",
+    "desc": "Cooldown reduction to keep portals and heals up.",
+    "icon_url": "/assets/arcana/3516.png"
+  },
+  "eagle eye": {
+    "id": 3514,
+    "name": "Eagle Eye",
+    "color": "B",
+    "desc": "Physical pierce to shred tanks with your passive.",
+    "icon_url": "/assets/arcana/3514.png"
+  },
+  "fortify": {
+    "id": 3503,
+    "name": "Fortify",
+    "color": "B",
+    "desc": "Armor + magic resist for repeated engages.",
+    "icon_url": "/assets/arcana/3503.png"
+  },
+  "mind's eye": {
+    "id": 3515,
+    "name": "Mind's Eye",
+    "color": "G",
+    "desc": "Attack speed + magic pierce.",
+    "icon_url": "/assets/arcana/3515.png"
+  },
+  "reverberation": {
+    "id": 3518,
+    "name": "Reverberation",
+    "color": "G",
+    "desc": "Defenses + cooldown reduction.",
+    "icon_url": "/assets/arcana/3518.png"
+  },
+  "tribute": {
+    "id": 3511,
+    "name": "Tribute",
+    "color": "G",
+    "desc": "Magic attack + cooldown reduction.",
+    "icon_url": "/assets/arcana/3511.png"
+  },
+  "void": {
+    "id": 3509,
+    "name": "Void",
+    "color": "G",
+    "desc": "Max health + cooldown reduction.",
+    "icon_url": "/assets/arcana/3509.png"
+  }
+}

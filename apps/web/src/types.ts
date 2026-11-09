@@ -30,12 +30,18 @@ export interface SituationalSwap {
 export interface ArcanaItem {
   name: string;
   count: number;
+  id?: number;
+  color?: string;
+  desc?: string;
+  icon_url?: string;
 }
 
 export interface HeroAbility {
   type: string;
   name: string;
   desc: string;
+  idx?: number;
+  icon_url?: string;
 }
 
 export interface HokfireGuide {
@@ -49,6 +55,7 @@ export interface HokfireGuide {
   situational_items: SituationalSwap[];
   arcana: ArcanaItem[];
   spell: string;
+  spell_icon?: string;
   skill_priority: string;
   gameplay_tips: string;
 }
@@ -57,6 +64,35 @@ export interface HokfireCounters {
   strong_against: string[];
   weak_against: string[];
   synergizes: string[];
+}
+
+export interface KplMatchupEntry {
+  opponent_id: number;
+  opponent_name: string;
+  opponent_avatar: string;
+  hero_winrate: number;
+  wins: number;
+  losses: number;
+  total_matches: number;
+}
+
+export interface KplSynergyEntry {
+  partner_id: number;
+  partner_name: string;
+  partner_avatar: string;
+  duet_winrate: number;
+  wins: number;
+  losses: number;
+  total_matches: number;
+}
+
+export interface KplMatchup {
+  total_picks: number;
+  total_bans: number;
+  overall_winrate: number;
+  worst_matchups: KplMatchupEntry[];
+  best_matchups: KplMatchupEntry[];
+  synergies?: KplSynergyEntry[];
 }
 
 export interface Hero {
@@ -79,8 +115,10 @@ export interface Hero {
   portrait_asset: string;
   kpl_id: number | null;
   is_global_exclusive: boolean;
+  is_global_released?: boolean;
   hokfire_guide?: HokfireGuide | null;
   hokfire_counters?: HokfireCounters | null;
+  kpl_matchup?: KplMatchup | null;
   abilities?: HeroAbility[];
   
   // Dynamic client-side score computed by Jev AI
