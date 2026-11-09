@@ -20,6 +20,8 @@ interface DraftSimulatorProps {
   onResetDraft: () => void;
   onUndoStep: () => void;
   onSelectSlot: (side: 'blue' | 'red', action: 'pick' | 'ban', index: number) => void;
+  blueFearlessUsedHeroes?: Hero[];
+  redFearlessUsedHeroes?: Hero[];
 }
 
 const TOURNAMENT_PHASES = [
@@ -41,6 +43,8 @@ export const DraftSimulator: React.FC<DraftSimulatorProps> = ({
   onGameNumberChange,
   onResetDraft,
   onUndoStep,
+  blueFearlessUsedHeroes = [],
+  redFearlessUsedHeroes = [],
 }) => {
   const activeBlueBanIdx =
     !currentTurn.isComplete && currentTurn.side === 'blue' && currentTurn.action === 'ban'
@@ -267,6 +271,28 @@ export const DraftSimulator: React.FC<DraftSimulatorProps> = ({
               );
             })}
           </div>
+
+          {/* Fearless Locked Heroes for Blue */}
+          {fearlessEnabled && blueFearlessUsedHeroes.length > 0 && (
+            <div className="pt-2 border-t border-[#232A38]/70 flex flex-col gap-1">
+              <span className="text-[10px] text-slate-400 font-mono flex items-center justify-between">
+                <span>Terkunci Fearless Blue ({blueFearlessUsedHeroes.length} hero):</span>
+                <span className="text-[9px] text-slate-500">Game sebelumnya</span>
+              </span>
+              <div className="flex flex-wrap gap-1">
+                {blueFearlessUsedHeroes.map((h) => (
+                  <div key={h.hero_id} className="relative group">
+                    <img
+                      src={h.portrait_asset}
+                      alt={h.name}
+                      title={`${h.name} (Terkunci untuk Blue - sudah dipakai di game sebelumnya)`}
+                      className="w-6 h-6 rounded-md object-cover grayscale border border-blue-900/60 opacity-60 hover:opacity-100 hover:scale-110 transition-all"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Red Side */}
@@ -368,6 +394,28 @@ export const DraftSimulator: React.FC<DraftSimulatorProps> = ({
               );
             })}
           </div>
+
+          {/* Fearless Locked Heroes for Red */}
+          {fearlessEnabled && redFearlessUsedHeroes.length > 0 && (
+            <div className="pt-2 border-t border-[#232A38]/70 flex flex-col gap-1">
+              <span className="text-[10px] text-slate-400 font-mono flex items-center justify-between">
+                <span>Terkunci Fearless Red ({redFearlessUsedHeroes.length} hero):</span>
+                <span className="text-[9px] text-slate-500">Game sebelumnya</span>
+              </span>
+              <div className="flex flex-wrap gap-1">
+                {redFearlessUsedHeroes.map((h) => (
+                  <div key={h.hero_id} className="relative group">
+                    <img
+                      src={h.portrait_asset}
+                      alt={h.name}
+                      title={`${h.name} (Terkunci untuk Red - sudah dipakai di game sebelumnya)`}
+                      className="w-6 h-6 rounded-md object-cover grayscale border border-rose-900/60 opacity-60 hover:opacity-100 hover:scale-110 transition-all"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

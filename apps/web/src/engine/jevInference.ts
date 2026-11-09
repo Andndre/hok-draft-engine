@@ -62,6 +62,11 @@ export interface TournamentPhaseStrategy {
   phaseTitle: string;
   phaseObjective: string;
   plannedOpener: Hero | null;
+  activePlan: 'PLAN_A' | 'PLAN_B' | 'AI_FALLBACK';
+  planAHero: Hero | null;
+  planBHero: Hero | null;
+  isPlanABanned: boolean;
+  isPlanBBanned: boolean;
   candidateOpeners: Hero[];
   bannedOpenerCounters: string[];
   ourVacantLanes: Lane[];
@@ -138,7 +143,8 @@ export async function runJevInference(
   isBlueSide: boolean,
   heroes: Hero[],
   draftStep: number = 0,
-  targetFirstPickId?: number | null
+  planAId?: number | null,
+  planBId?: number | null
 ): Promise<JevPredictionResult> {
   const t0 = performance.now();
   const synergyDb = await loadKplSynergyData();
@@ -199,24 +205,41 @@ export async function runJevInference(
     (a, b) => computeOpenerPriorityScore(b, b1Openers, isBlueSide) - computeOpenerPriorityScore(a, b1Openers, isBlueSide)
   );
 
-  // Top 5 candidate openers for UI selector
-  const candidateOpeners = rankedOpeners.slice(0, 5);
+  // Top candidate openers for recommendation / quick selection
+  const candidateOpeners = rankedOpeners.slice(0, 8);
 
-  // Determine our Planned First-Pick Hero:
-  // - If user explicitly selected a target opener that is still available, use it.
-  // - Otherwise, for Blue Side use #1 ranked opener; for Red Side in Ban Phase 1, since Blue gets B1 (#1 threat),
-  //   Red plans to ban #1 threat and pick #2 opener (or if user locked one, use that).
-  let plannedOpener: Hero | null = null;
-  if (targetFirstPickId && !unavailableSet.has(targetFirstPickId)) {
-    plannedOpener = idMap.get(targetFirstPickId) || null;
+  // Determine Plan A and Plan B:
+  let planAHero: Hero | null = planAId ? idMap.get(planAId) || null : null;
+  let planBHero: Hero | null = planBId ? idMap.get(planBId) || null : null;
+
+  // Auto-suggest Plan A if not specified
+  if (!planAHero && rankedOpeners.length > 0) {
+    planAHero = rankedOpeners[0];
   }
-  if (!plannedOpener && rankedOpeners.length > 0) {
-    if (isBlueSide) {
-      plannedOpener = rankedOpeners[0];
-    } else {
-      // On Red Side during Ban Phase 1, #0 is usually Blue's B1 threat that Red wants to ban, so Red's own R1 target is #1
-      plannedOpener = phaseId === 'BAN_PHASE_1' && rankedOpeners.length > 1 ? rankedOpeners[1] : rankedOpeners[0];
-    }
+  // Auto-suggest Plan B if not specified (pick hero with different role or primary lane)
+  if (!planBHero && rankedOpeners.length > 1) {
+    const fallbackOp = rankedOpeners.find((h) => h.hero_id !== planAHero?.hero_id && h.primary_lane !== planAHero?.primary_lane);
+    planBHero = fallbackOp || rankedOpeners[1];
+  }
+
+  const isPlanABanned = Boolean(planAHero && bannedHeroIds.includes(planAHero.hero_id));
+  const isPlanAPicked = Boolean(planAHero && (ourHeroIds.includes(planAHero.hero_id) || enemyHeroIds.includes(planAHero.hero_id)));
+  const isPlanBBanned = Boolean(planBHero && bannedHeroIds.includes(planBHero.hero_id));
+  const isPlanBPicked = Boolean(planBHero && (ourHeroIds.includes(planBHero.hero_id) || enemyHeroIds.includes(planBHero.hero_id)));
+
+  // Resolve Active Planned Opener:
+  let plannedOpener: Hero | null = null;
+  let activePlan: 'PLAN_A' | 'PLAN_B' | 'AI_FALLBACK' = 'PLAN_A';
+
+  if (planAHero && !unavailableSet.has(planAHero.hero_id)) {
+    plannedOpener = planAHero;
+    activePlan = 'PLAN_A';
+  } else if (planBHero && !unavailableSet.has(planBHero.hero_id)) {
+    plannedOpener = planBHero;
+    activePlan = 'PLAN_B';
+  } else if (rankedOpeners.length > 0) {
+    plannedOpener = rankedOpeners[0];
+    activePlan = 'AI_FALLBACK';
   }
 
   // Helper: Check if `counterCand` is a counter to `targetHero` (via Kurohiko matrix or KPL Pre-Ban history)
@@ -665,23 +688,31 @@ export async function runJevInference(
   if (phaseId === 'BAN_PHASE_1') {
     if (isBlueSide) {
       phaseTitle = 'FASE BAN 1 (BLUE FIRST-PICK PREP)';
-      phaseObjective = plannedOpener
-        ? `Target B1 kita adalah ${plannedOpener.name} (${plannedOpener.primary_lane}). Jangan ban ${plannedOpener.name} — fokus ban hard counter-nya agar aman diambil di B1!`
-        : 'Amankan jalur untuk First-Pick S-Tier kita dengan mem-ban counter alaminya.';
+      if (activePlan === 'PLAN_B' && isPlanABanned) {
+        phaseObjective = `⚠️ Plan A (${planAHero?.name}) DI-BAN lawan! AI otomatis pivot ke Plan B: ${planBHero?.name} (${planBHero?.primary_lane}). Fokus ban counter ${planBHero?.name} sekarang!`;
+      } else if (plannedOpener) {
+        phaseObjective = `Target First-Pick ${activePlan === 'PLAN_A' ? 'Plan A' : 'Opener'}: ${plannedOpener.name} (${plannedOpener.primary_lane}). Jangan ban hero ini — fokus ban hard counter-nya agar aman di B1! (Cadangan Plan B: ${planBHero?.name || 'Tersedia'})`;
+      } else {
+        phaseObjective = 'Amankan jalur untuk First-Pick S-Tier kita dengan mem-ban counter alaminya.';
+      }
     } else {
       phaseTitle = 'FASE BAN 1 (RED COUNTER-OPENING)';
-      phaseObjective = blueB1ThreatHero
-        ? `Blue punya First-Pick B1! Wajib ban hero S-Tier terkuat (${blueB1ThreatHero.name}) atau ban counter dari rencana R1+R2 kita (${plannedOpener?.name || 'Core'}).`
-        : 'Cegah Blue mendapatkan S-Tier Opener gratis di B1 dan amankan kombo R1+R2 kita.';
+      if (activePlan === 'PLAN_B' && isPlanABanned) {
+        phaseObjective = `⚠️ Plan A Red (${planAHero?.name}) di-ban! AI pivot ke Plan B: ${planBHero?.name}. Deny B1 Blue (${blueB1ThreatHero?.name || 'S-Tier'}) & amankan ${planBHero?.name}.`;
+      } else if (blueB1ThreatHero) {
+        phaseObjective = `Blue punya First-Pick B1! Wajib ban hero S-Tier terkuat (${blueB1ThreatHero.name}) atau ban counter dari rencana R1+R2 kita (${plannedOpener?.name || 'Core'}).`;
+      } else {
+        phaseObjective = 'Cegah Blue mendapatkan S-Tier Opener gratis di B1 dan amankan kombo R1+R2 kita.';
+      }
     }
   } else if (phaseId === 'PICK_PHASE_1') {
     if (draftStep === 4) {
       phaseTitle = 'FASE PICK 1 — BLUE FIRST PICK (B1)';
       phaseObjective = plannedOpener
-        ? `Ambil ${plannedOpener.name} sekarang! ${
+        ? `Ambil ${plannedOpener.name} sekarang (${activePlan === 'PLAN_B' ? 'Eksekusi Plan B' : 'Eksekusi Plan A'})! ${
             bannedOpenerCounters.length > 0
               ? `Counter utamanya (${bannedOpenerCounters.join(', ')}) sudah berhasil dibersihkan di Fase Ban 1.`
-              : 'Hero pembuka S-Tier dengan prioritas tertinggi.'
+              : 'Hero pembuka prioritas tertinggi.'
           }`
         : 'Amankan hero Meta S-Tier paling fleksibel untuk membuka formasi.';
     } else {
@@ -719,6 +750,11 @@ export async function runJevInference(
       phaseTitle,
       phaseObjective,
       plannedOpener,
+      activePlan,
+      planAHero,
+      planBHero,
+      isPlanABanned,
+      isPlanBBanned,
       candidateOpeners,
       bannedOpenerCounters,
       ourVacantLanes: ourVacantArr,

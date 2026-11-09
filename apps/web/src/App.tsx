@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { Hero, Lane, ActiveTab, SortMode, ViewMode, TacticalVector, TacticalDelta } from './types';
+import { Hero, Lane, ActiveTab, SortMode, ViewMode, TacticalVector, TacticalDelta, GameDraftData } from './types';
 import { loadHeroMetadata } from './engine/r2ModelLoader';
 import { runJevInference, JevPredictionResult, TournamentPhaseStrategy } from './engine/jevInference';
 import { computeTacticalDeltas } from './engine/deltaExplainer';
@@ -10,6 +10,7 @@ import { BottomCommandDock } from './components/BottomCommandDock';
 import { DraftSimulator } from './components/DraftSimulator';
 import { TacticalRadarPanel } from './components/TacticalRadarPanel';
 import { HeroWikiDrawer } from './components/HeroWikiDrawer';
+import { PlanSelectionModal } from './components/PlanSelectionModal';
 
 // Standard 20-step competitive ban/pick sequence
 const DRAFT_SEQUENCE: Array<{ side: 'blue' | 'red'; action: 'ban' | 'pick' }> = [
@@ -58,20 +59,36 @@ export const App: React.FC = () => {
     }
   });
 
-  // Drawer modal
+  // Drawer modal & Strategic Plan Modal
   const [wikiHero, setWikiHero] = useState<Hero | null>(null);
+  const [isPlanModalOpen, setIsPlanModalOpen] = useState(false);
 
-  // Draft State
-  const [bluePicks, setBluePicks] = useState<Array<Hero | null>>([null, null, null, null, null]);
-  const [redPicks, setRedPicks] = useState<Array<Hero | null>>([null, null, null, null, null]);
-  const [blueBans, setBlueBans] = useState<Array<Hero | null>>([null, null, null, null]);
-  const [redBans, setRedBans] = useState<Array<Hero | null>>([null, null, null, null]);
-  const [draftStep, setDraftStep] = useState(0);
-
-  // Fearless Draft (Global BP) State
+  // Fearless Draft (Global BP) State & Multi-Game Match Storage
   const [fearlessEnabled, setFearlessEnabled] = useState(true);
   const [gameNumber, setGameNumber] = useState(1);
-  const [fearlessUnavailable, setFearlessUnavailable] = useState<Set<number>>(new Set());
+
+  const createInitialGameDraft = (): GameDraftData => ({
+    bluePicks: [null, null, null, null, null],
+    redPicks: [null, null, null, null, null],
+    blueBans: [null, null, null, null],
+    redBans: [null, null, null, null],
+    draftStep: 0,
+    bluePlanAId: null,
+    bluePlanBId: null,
+    redPlanAId: null,
+    redPlanBId: null,
+  });
+
+  const [gamesData, setGamesData] = useState<Record<number, GameDraftData>>({
+    1: createInitialGameDraft(),
+    2: createInitialGameDraft(),
+    3: createInitialGameDraft(),
+    4: createInitialGameDraft(),
+    5: createInitialGameDraft(),
+  });
+
+  const currentGame = gamesData[gameNumber] || createInitialGameDraft();
+  const { bluePicks, redPicks, blueBans, redBans, draftStep, bluePlanAId, bluePlanBId, redPlanAId, redPlanBId } = currentGame;
 
   // Jev AI State
   const [modelReady, setModelReady] = useState(false);
@@ -89,7 +106,6 @@ export const App: React.FC = () => {
   const [primaryInsight, setPrimaryInsight] = useState<string>('');
   const [recommendations, setRecommendations] = useState<JevPredictionResult['recommendations']>([]);
   const [phaseStrategy, setPhaseStrategy] = useState<TournamentPhaseStrategy | undefined>(undefined);
-  const [targetFirstPickId, setTargetFirstPickId] = useState<number | null>(null);
 
   // 1. Load Hero Metadata on mount
   useEffect(() => {
@@ -121,18 +137,59 @@ export const App: React.FC = () => {
     return { ...step, stepIndex: draftStep, isComplete: false };
   }, [draftStep]);
 
-  // Unavailable heroes in current draft (already picked or banned)
+  // Fearless Draft: Accumulate heroes picked by each team in prior games (Game < gameNumber)
+  const blueFearlessUnavailableIds = useMemo(() => {
+    if (!fearlessEnabled) return new Set<number>();
+    const set = new Set<number>();
+    for (let g = 1; g < gameNumber; g++) {
+      const pastGame = gamesData[g];
+      if (pastGame) {
+        pastGame.bluePicks.forEach((h) => h && set.add(h.hero_id));
+      }
+    }
+    return set;
+  }, [gamesData, gameNumber, fearlessEnabled]);
+
+  const redFearlessUnavailableIds = useMemo(() => {
+    if (!fearlessEnabled) return new Set<number>();
+    const set = new Set<number>();
+    for (let g = 1; g < gameNumber; g++) {
+      const pastGame = gamesData[g];
+      if (pastGame) {
+        pastGame.redPicks.forEach((h) => h && set.add(h.hero_id));
+      }
+    }
+    return set;
+  }, [gamesData, gameNumber, fearlessEnabled]);
+
+  const blueFearlessUsedHeroes = useMemo(() => {
+    return heroes.filter((h) => blueFearlessUnavailableIds.has(h.hero_id));
+  }, [heroes, blueFearlessUnavailableIds]);
+
+  const redFearlessUsedHeroes = useMemo(() => {
+    return heroes.filter((h) => redFearlessUnavailableIds.has(h.hero_id));
+  }, [heroes, redFearlessUnavailableIds]);
+
+  // Unavailable heroes in current draft for the ACTIVE TEAM:
+  // - Already picked or banned in current match
+  // - PLUS heroes that the ACTIVE side already picked in previous games of this Fearless series!
   const currentDraftUnavailableIds = useMemo(() => {
     const ids = new Set<number>();
     bluePicks.forEach((h) => h && ids.add(h.hero_id));
     redPicks.forEach((h) => h && ids.add(h.hero_id));
     blueBans.forEach((h) => h && ids.add(h.hero_id));
     redBans.forEach((h) => h && ids.add(h.hero_id));
-    if (fearlessEnabled) {
-      fearlessUnavailable.forEach((id) => ids.add(id));
+
+    if (fearlessEnabled && currentTurn.action === 'pick') {
+      const teamFearlessSet = currentTurn.side === 'blue' ? blueFearlessUnavailableIds : redFearlessUnavailableIds;
+      teamFearlessSet.forEach((id) => ids.add(id));
     }
     return ids;
-  }, [bluePicks, redPicks, blueBans, redBans, fearlessEnabled, fearlessUnavailable]);
+  }, [bluePicks, redPicks, blueBans, redBans, fearlessEnabled, currentTurn, blueFearlessUnavailableIds, redFearlessUnavailableIds]);
+
+  // Active plan IDs for the side whose turn it is
+  const activeSidePlanAId = currentTurn.side === 'blue' ? bluePlanAId : redPlanAId;
+  const activeSidePlanBId = currentTurn.side === 'blue' ? bluePlanBId : redPlanBId;
 
   // 2. Trigger Jev AI Model Inference on draft updates
   const updateAiPredictions = useCallback(
@@ -142,7 +199,11 @@ export const App: React.FC = () => {
       bBans: Array<Hero | null>,
       rBans: Array<Hero | null>,
       turn: typeof currentTurn,
-      allH: Hero[]
+      allH: Hero[],
+      planAId: number | null,
+      planBId: number | null,
+      blueFearlessSet: Set<number>,
+      redFearlessSet: Set<number>
     ) => {
       if (allH.length === 0) return;
 
@@ -151,18 +212,20 @@ export const App: React.FC = () => {
       const ourHeroIds = ourPicks.filter(Boolean).map((h) => h!.hero_id);
       const enemyHeroIds = enemyPicks.filter(Boolean).map((h) => h!.hero_id);
       const bannedIds = [...bBans, ...rBans].filter(Boolean).map((h) => h!.hero_id);
+      const teamFearlessIds = turn.side === 'blue' ? Array.from(blueFearlessSet) : Array.from(redFearlessSet);
 
       try {
         const result = await runJevInference(
           ourHeroIds,
           enemyHeroIds,
           bannedIds,
-          Array.from(fearlessUnavailable),
+          teamFearlessIds,
           turn.action === 'pick',
           turn.side === 'blue',
           allH,
           turn.stepIndex,
-          targetFirstPickId
+          planAId,
+          planBId
         );
 
         setModelReady(true);
@@ -200,14 +263,48 @@ export const App: React.FC = () => {
         console.error('[JevInference] Error during inference:', err);
       }
     },
-    [fearlessUnavailable, previousScores, targetFirstPickId]
+    [previousScores]
   );
 
   useEffect(() => {
     if (heroes.length > 0) {
-      updateAiPredictions(bluePicks, redPicks, blueBans, redBans, currentTurn, heroes);
+      updateAiPredictions(
+        bluePicks,
+        redPicks,
+        blueBans,
+        redBans,
+        currentTurn,
+        heroes,
+        activeSidePlanAId,
+        activeSidePlanBId,
+        blueFearlessUnavailableIds,
+        redFearlessUnavailableIds
+      );
     }
-  }, [bluePicks, redPicks, blueBans, redBans, currentTurn, heroes, updateAiPredictions]);
+  }, [
+    bluePicks,
+    redPicks,
+    blueBans,
+    redBans,
+    currentTurn,
+    heroes,
+    activeSidePlanAId,
+    activeSidePlanBId,
+    blueFearlessUnavailableIds,
+    redFearlessUnavailableIds,
+    updateAiPredictions,
+  ]);
+
+  // Helper to mutate current game draft
+  const updateCurrentDraft = useCallback(
+    (updater: (prev: GameDraftData) => GameDraftData) => {
+      setGamesData((prev) => ({
+        ...prev,
+        [gameNumber]: updater(prev[gameNumber] || createInitialGameDraft()),
+      }));
+    },
+    [gameNumber]
+  );
 
   // Handle hero pick / ban selection
   const handleSelectHero = (hero: Hero) => {
@@ -215,51 +312,50 @@ export const App: React.FC = () => {
 
     setPreviousScores(tacticalScores);
 
-    const { side, action } = currentTurn;
+    updateCurrentDraft((prev) => {
+      const { side, action } = currentTurn;
+      const next = { ...prev };
 
-    if (action === 'ban') {
-      if (side === 'blue') {
-        const nextBans = [...blueBans];
-        const emptyIdx = nextBans.findIndex((b) => b === null);
-        if (emptyIdx !== -1) nextBans[emptyIdx] = hero;
-        setBlueBans(nextBans);
+      if (action === 'ban') {
+        if (side === 'blue') {
+          const bans = [...next.blueBans];
+          const emptyIdx = bans.findIndex((b) => b === null);
+          if (emptyIdx !== -1) bans[emptyIdx] = hero;
+          next.blueBans = bans;
+        } else {
+          const bans = [...next.redBans];
+          const emptyIdx = bans.findIndex((b) => b === null);
+          if (emptyIdx !== -1) bans[emptyIdx] = hero;
+          next.redBans = bans;
+        }
       } else {
-        const nextBans = [...redBans];
-        const emptyIdx = nextBans.findIndex((b) => b === null);
-        if (emptyIdx !== -1) nextBans[emptyIdx] = hero;
-        setRedBans(nextBans);
+        if (side === 'blue') {
+          const picks = [...next.bluePicks];
+          const emptyIdx = picks.findIndex((p) => p === null);
+          if (emptyIdx !== -1) picks[emptyIdx] = hero;
+          next.bluePicks = picks;
+        } else {
+          const picks = [...next.redPicks];
+          const emptyIdx = picks.findIndex((p) => p === null);
+          if (emptyIdx !== -1) picks[emptyIdx] = hero;
+          next.redPicks = picks;
+        }
       }
-    } else {
-      if (side === 'blue') {
-        const nextPicks = [...bluePicks];
-        const emptyIdx = nextPicks.findIndex((p) => p === null);
-        if (emptyIdx !== -1) nextPicks[emptyIdx] = hero;
-        setBluePicks(nextPicks);
-      } else {
-        const nextPicks = [...redPicks];
-        const emptyIdx = nextPicks.findIndex((p) => p === null);
-        if (emptyIdx !== -1) nextPicks[emptyIdx] = hero;
-        setRedPicks(nextPicks);
-      }
-    }
 
-    setDraftStep((prev) => Math.min(DRAFT_SEQUENCE.length, prev + 1));
+      next.draftStep = Math.min(DRAFT_SEQUENCE.length, next.draftStep + 1);
+      return next;
+    });
   };
 
-  // Reset Draft
+  // Reset Current Game Draft ONLY (preserves other games!)
   const handleResetDraft = () => {
-    setBluePicks([null, null, null, null, null]);
-    setRedPicks([null, null, null, null, null]);
-    setBlueBans([null, null, null, null]);
-    setRedBans([null, null, null, null]);
-    setDraftStep(0);
+    updateCurrentDraft(() => createInitialGameDraft());
     setPreviousScores(null);
     setDeltas([]);
-    setTargetFirstPickId(null);
-    setPrimaryInsight('Draft di-reset. Giliran Blue Side BAN Fase 1.');
+    setPrimaryInsight(`Draft Game ${gameNumber} di-reset. Giliran Blue Side BAN Fase 1.`);
   };
 
-  // Undo Step
+  // Undo Step in Current Game
   const handleUndoStep = () => {
     if (draftStep === 0) return;
     const prevStepIndex = draftStep - 1;
@@ -272,43 +368,65 @@ export const App: React.FC = () => {
       return -1;
     };
 
-    if (prevTurn.action === 'ban') {
-      if (prevTurn.side === 'blue') {
-        const next = [...blueBans];
-        const lastIdx = findLastOccupied(next);
-        if (lastIdx !== -1) next[lastIdx] = null;
-        setBlueBans(next);
+    updateCurrentDraft((prev) => {
+      const next = { ...prev };
+      if (prevTurn.action === 'ban') {
+        if (prevTurn.side === 'blue') {
+          const bans = [...next.blueBans];
+          const lastIdx = findLastOccupied(bans);
+          if (lastIdx !== -1) bans[lastIdx] = null;
+          next.blueBans = bans;
+        } else {
+          const bans = [...next.redBans];
+          const lastIdx = findLastOccupied(bans);
+          if (lastIdx !== -1) bans[lastIdx] = null;
+          next.redBans = bans;
+        }
       } else {
-        const next = [...redBans];
-        const lastIdx = findLastOccupied(next);
-        if (lastIdx !== -1) next[lastIdx] = null;
-        setRedBans(next);
+        if (prevTurn.side === 'blue') {
+          const picks = [...next.bluePicks];
+          const lastIdx = findLastOccupied(picks);
+          if (lastIdx !== -1) picks[lastIdx] = null;
+          next.bluePicks = picks;
+        } else {
+          const picks = [...next.redPicks];
+          const lastIdx = findLastOccupied(picks);
+          if (lastIdx !== -1) picks[lastIdx] = null;
+          next.redPicks = picks;
+        }
       }
-    } else {
-      if (prevTurn.side === 'blue') {
-        const next = [...bluePicks];
-        const lastIdx = findLastOccupied(next);
-        if (lastIdx !== -1) next[lastIdx] = null;
-        setBluePicks(next);
-      } else {
-        const next = [...redPicks];
-        const lastIdx = findLastOccupied(next);
-        if (lastIdx !== -1) next[lastIdx] = null;
-        setRedPicks(next);
-      }
-    }
-
-    setDraftStep(prevStepIndex);
+      next.draftStep = prevStepIndex;
+      return next;
+    });
   };
 
-  // Switch Game in Fearless Mode
+  // Switch Game in Fearless Mode: Just switch active gameNumber without resetting data!
   const handleGameChange = (game: number) => {
     setGameNumber(game);
-    // When game changes in Fearless, simulate accumulated unavailable picks from past games
-    const accumulated = new Set<number>();
-    // For demo purposes, pick random prior matches if advancing game
-    setFearlessUnavailable(accumulated);
-    handleResetDraft();
+    setPreviousScores(null);
+    setDeltas([]);
+    setPrimaryInsight(`Beralih ke Game ${game} dalam Seri Fearless Draft.`);
+  };
+
+  // Update Plan A and Plan B for the active side
+  const handleSetPlanA = (heroId: number | null) => {
+    updateCurrentDraft((prev) => {
+      if (currentTurn.side === 'blue') {
+        return { ...prev, bluePlanAId: heroId };
+      } else {
+        return { ...prev, redPlanAId: heroId };
+      }
+    });
+  };
+
+  const handleSetPlanB = (heroId: number | null) => {
+    updateCurrentDraft((prev) => {
+      if (currentTurn.side === 'blue') {
+        return { ...prev, bluePlanBId: heroId };
+      } else {
+        return { ...prev, redPlanBId: heroId };
+      }
+    });
   };
 
   // Filter & Sort Heroes for the main grid
@@ -395,6 +513,8 @@ export const App: React.FC = () => {
                 onResetDraft={handleResetDraft}
                 onUndoStep={handleUndoStep}
                 onSelectSlot={() => {}}
+                blueFearlessUsedHeroes={blueFearlessUsedHeroes}
+                redFearlessUsedHeroes={redFearlessUsedHeroes}
               />
             </div>
 
@@ -405,8 +525,10 @@ export const App: React.FC = () => {
                 deltas={deltas}
                 primaryInsight={primaryInsight}
                 phaseStrategy={phaseStrategy}
-                targetFirstPickId={targetFirstPickId}
-                onChangeTargetFirstPick={setTargetFirstPickId}
+                planAId={activeSidePlanAId}
+                planBId={activeSidePlanBId}
+                onOpenPlanModal={() => setIsPlanModalOpen(true)}
+                onSelectQuickPlanA={handleSetPlanA}
                 recommendations={recommendations}
                 onSelectCandidate={handleSelectHero}
                 activeSide={currentTurn.side}
@@ -542,6 +664,20 @@ export const App: React.FC = () => {
         onPickForDraft={handleSelectHero}
         allHeroes={heroes}
         onSelectRelatedHero={(h) => setWikiHero(h)}
+      />
+
+      {/* Strategic Setup Plan A & Plan B Modal (Access to all 120 Heroes) */}
+      <PlanSelectionModal
+        isOpen={isPlanModalOpen}
+        onClose={() => setIsPlanModalOpen(false)}
+        heroes={heroes}
+        currentPlanAId={activeSidePlanAId}
+        currentPlanBId={activeSidePlanBId}
+        onSelectPlanA={handleSetPlanA}
+        onSelectPlanB={handleSetPlanB}
+        activeSide={currentTurn.side}
+        unavailableHeroIds={currentDraftUnavailableIds}
+        recommendedOpeners={phaseStrategy?.candidateOpeners || []}
       />
 
       {/* Sticky Bottom Command Dock */}

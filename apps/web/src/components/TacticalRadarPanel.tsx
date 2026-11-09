@@ -1,15 +1,17 @@
 import React from 'react';
 import { Hero, TacticalVector, TacticalDelta } from '../types';
 import { TournamentPhaseStrategy } from '../engine/jevInference';
-import { Sparkles, TrendingUp, TrendingDown, Minus, ShieldAlert, Crosshair, CheckCircle2 } from 'lucide-react';
+import { Sparkles, TrendingUp, TrendingDown, Minus, ShieldAlert, Crosshair, CheckCircle2, SlidersHorizontal, AlertTriangle, ArrowRight } from 'lucide-react';
 
 interface TacticalRadarPanelProps {
   scores: TacticalVector;
   deltas?: TacticalDelta[];
   primaryInsight?: string;
   phaseStrategy?: TournamentPhaseStrategy;
-  targetFirstPickId?: number | null;
-  onChangeTargetFirstPick?: (heroId: number | null) => void;
+  planAId?: number | null;
+  planBId?: number | null;
+  onOpenPlanModal?: () => void;
+  onSelectQuickPlanA?: (heroId: number | null) => void;
   recommendations: Array<{
     hero: Hero;
     probability: number;
@@ -41,14 +43,21 @@ export const TacticalRadarPanel: React.FC<TacticalRadarPanelProps> = ({
   deltas,
   primaryInsight,
   phaseStrategy,
-  targetFirstPickId,
-  onChangeTargetFirstPick,
+  planAId,
+  planBId,
+  onOpenPlanModal,
+  onSelectQuickPlanA,
   recommendations,
   onSelectCandidate,
   activeSide,
   isPickPhase,
 }) => {
   const winRatePercent = Math.round(scores.win_probability * 100);
+
+  const planAHero = phaseStrategy?.planAHero;
+  const planBHero = phaseStrategy?.planBHero;
+  const isPlanABanned = phaseStrategy?.isPlanABanned || false;
+  const activePlan = phaseStrategy?.activePlan || 'PLAN_A';
 
   return (
     <div className="bg-[#12161F] border border-[#232A38] rounded-2xl p-4 flex flex-col gap-4 shadow-xl">
@@ -109,31 +118,100 @@ export const TacticalRadarPanel: React.FC<TacticalRadarPanelProps> = ({
             {phaseStrategy.phaseObjective}
           </p>
 
-          {/* Phase 1 Target First-Pick Opener Selector */}
-          {(phaseStrategy.phaseId === 'BAN_PHASE_1' || phaseStrategy.phaseId === 'PICK_PHASE_1') &&
-            phaseStrategy.candidateOpeners.length > 0 && (
-              <div className="pt-1.5 border-t border-[#232A38]/80 flex flex-col gap-1.5">
-                <div className="flex items-center justify-between text-[10px] text-slate-400">
-                  <span className="font-semibold uppercase tracking-wider">
-                    🎯 Rencana First-Pick Kita (Klik utk ganti target ban counter):
-                  </span>
-                  {targetFirstPickId && onChangeTargetFirstPick && (
-                    <button
-                      onClick={() => onChangeTargetFirstPick(null)}
-                      className="text-[#B8FF01] hover:underline font-mono"
-                    >
-                      Auto AI
-                    </button>
+          {/* Plan A & Plan B Strategic Status Bar (Visible in Phase 1) */}
+          {(phaseStrategy.phaseId === 'BAN_PHASE_1' || phaseStrategy.phaseId === 'PICK_PHASE_1') && (
+            <div className="pt-2 border-t border-[#232A38]/80 flex flex-col gap-2">
+              <div className="flex items-center justify-between text-[10px]">
+                <span className="text-slate-400 font-semibold uppercase tracking-wider flex items-center gap-1.5">
+                  <span>Target First-Pick Strategy</span>
+                  {activePlan === 'PLAN_B' && isPlanABanned && (
+                    <span className="px-1.5 py-0.2 rounded bg-amber-950 text-amber-300 border border-amber-800/50 font-bold">
+                      Pivot ke Plan B
+                    </span>
                   )}
+                </span>
+                {onOpenPlanModal && (
+                  <button
+                    onClick={onOpenPlanModal}
+                    className="flex items-center gap-1 text-[#B8FF01] hover:underline font-bold text-[11px]"
+                  >
+                    <SlidersHorizontal className="w-3 h-3" />
+                    <span>Atur Plan A / B (120 Hero)</span>
+                  </button>
+                )}
+              </div>
+
+              {/* Dual Mini Plan Cards */}
+              <div className="grid grid-cols-2 gap-2">
+                {/* Plan A Mini Card */}
+                <div
+                  className={`p-2 rounded-xl border flex items-center gap-2 transition-all ${
+                    isPlanABanned
+                      ? 'bg-rose-950/30 border-rose-900/60 opacity-75'
+                      : activePlan === 'PLAN_A'
+                      ? 'bg-[#151D2A] border-[#B8FF01]/80 ring-1 ring-[#B8FF01]/40'
+                      : 'bg-[#12161F] border-[#232A38]'
+                  }`}
+                >
+                  <div className="relative w-8 h-8 rounded-lg overflow-hidden border border-[#232A38] flex-shrink-0">
+                    {planAHero ? (
+                      <img src={planAHero.portrait_asset} alt={planAHero.name} className={`w-full h-full object-cover ${isPlanABanned ? 'grayscale' : ''}`} />
+                    ) : (
+                      <div className="w-full h-full bg-[#1A202C] flex items-center justify-center text-[10px] text-slate-500 font-bold">A</div>
+                    )}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[9px] font-black uppercase text-[#B8FF01]">Plan A</span>
+                      {isPlanABanned ? (
+                        <span className="text-[8px] font-bold px-1 rounded bg-rose-950 text-rose-300 border border-rose-800">DI-BAN</span>
+                      ) : activePlan === 'PLAN_A' ? (
+                        <span className="text-[8px] font-bold px-1 rounded bg-[#B8FF01] text-black">AKTIF</span>
+                      ) : null}
+                    </div>
+                    <div className="font-bold text-xs text-white truncate">{planAHero ? planAHero.name : 'Belum diatur'}</div>
+                  </div>
                 </div>
 
+                {/* Plan B Mini Card */}
+                <div
+                  className={`p-2 rounded-xl border flex items-center gap-2 transition-all ${
+                    phaseStrategy.isPlanBBanned
+                      ? 'bg-rose-950/30 border-rose-900/60 opacity-75'
+                      : activePlan === 'PLAN_B'
+                      ? 'bg-[#1D1B28] border-indigo-400 ring-1 ring-indigo-400/50'
+                      : 'bg-[#12161F] border-[#232A38]'
+                  }`}
+                >
+                  <div className="relative w-8 h-8 rounded-lg overflow-hidden border border-[#232A38] flex-shrink-0">
+                    {planBHero ? (
+                      <img src={planBHero.portrait_asset} alt={planBHero.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full bg-[#1A202C] flex items-center justify-center text-[10px] text-slate-500 font-bold">B</div>
+                    )}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[9px] font-black uppercase text-indigo-400">Plan B (Cadangan)</span>
+                      {activePlan === 'PLAN_B' && (
+                        <span className="text-[8px] font-bold px-1 rounded bg-indigo-500 text-white">AKTIF</span>
+                      )}
+                    </div>
+                    <div className="font-bold text-xs text-white truncate">{planBHero ? planBHero.name : 'Belum diatur'}</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Quick Opener Recommendation Chips */}
+              <div className="pt-1 flex flex-col gap-1">
+                <span className="text-[10px] text-slate-400">Pilihan Cepat Target Plan A:</span>
                 <div className="flex flex-wrap gap-1.5">
-                  {phaseStrategy.candidateOpeners.map((op) => {
+                  {phaseStrategy.candidateOpeners.slice(0, 6).map((op) => {
                     const isSelected = phaseStrategy.plannedOpener?.hero_id === op.hero_id;
                     return (
                       <button
                         key={op.hero_id}
-                        onClick={() => onChangeTargetFirstPick && onChangeTargetFirstPick(op.hero_id)}
+                        onClick={() => onSelectQuickPlanA && onSelectQuickPlanA(op.hero_id)}
                         className={`flex items-center gap-1.5 px-2 py-1 rounded-lg text-[11px] font-bold transition-all border ${
                           isSelected
                             ? 'bg-[#B8FF01] text-black border-[#B8FF01] shadow-[0_0_8px_rgba(184,255,1,0.25)]'
@@ -153,18 +231,19 @@ export const TacticalRadarPanel: React.FC<TacticalRadarPanelProps> = ({
                     );
                   })}
                 </div>
-
-                {phaseStrategy.bannedOpenerCounters.length > 0 && (
-                  <div className="flex items-center gap-1.5 text-[10px] text-emerald-400 font-medium pt-0.5">
-                    <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" />
-                    <span>
-                      Counter {phaseStrategy.plannedOpener?.name} yang sudah di-ban:{' '}
-                      <strong>{phaseStrategy.bannedOpenerCounters.join(', ')}</strong>
-                    </span>
-                  </div>
-                )}
               </div>
-            )}
+
+              {phaseStrategy.bannedOpenerCounters.length > 0 && (
+                <div className="flex items-center gap-1.5 text-[10px] text-emerald-400 font-medium pt-0.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span>
+                    Counter {phaseStrategy.plannedOpener?.name} yang sudah di-ban:{' '}
+                    <strong>{phaseStrategy.bannedOpenerCounters.join(', ')}</strong>
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Phase 2 Lane Vacancy Indicator */}
           {(phaseStrategy.phaseId === 'BAN_PHASE_2' || phaseStrategy.phaseId === 'PICK_PHASE_2') && (

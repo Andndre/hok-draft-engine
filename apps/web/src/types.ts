@@ -71,6 +71,18 @@ export interface DraftSlot {
   hero: Hero | null;
 }
 
+export interface GameDraftData {
+  bluePicks: Array<Hero | null>;
+  redPicks: Array<Hero | null>;
+  blueBans: Array<Hero | null>;
+  redBans: Array<Hero | null>;
+  draftStep: number;
+  bluePlanAId: number | null;
+  bluePlanBId: number | null;
+  redPlanAId: number | null;
+  redPlanBId: number | null;
+}
+
 export interface ModelManifest {
   model_version: string;
   model_name: string;
