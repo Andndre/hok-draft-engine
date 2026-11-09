@@ -33,7 +33,7 @@ export const HeaderSortBar: React.FC<HeaderSortBarProps> = ({
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#B8FF01] to-[#F5C451] p-[1.5px] flex items-center justify-center">
               <div className="w-full h-full bg-[#0A0D12] rounded-[6px] flex items-center justify-center font-extrabold text-[#B8FF01] text-xs">
-                JEV
+                HOK
               </div>
             </div>
             <div>
@@ -42,11 +42,11 @@ export const HeaderSortBar: React.FC<HeaderSortBarProps> = ({
                   HOK DRAFT ENGINE
                 </span>
                 <span className="text-[10px] font-mono uppercase bg-[#1A202C] text-[#B8FF01] px-1.5 py-0.5 rounded border border-[#B8FF01]/30">
-                  Global 120
+                  Global
                 </span>
               </div>
               <p className="text-[11px] text-slate-400">
-                System One Decision Core · {totalFiltered} Hero
+                Mesin taktis lokal · {totalFiltered} Hero
               </p>
             </div>
           </div>
@@ -56,7 +56,7 @@ export const HeaderSortBar: React.FC<HeaderSortBarProps> = ({
             <Cpu className={`w-3.5 h-3.5 ${modelReady ? 'text-[#B8FF01]' : 'text-amber-400 animate-pulse'}`} />
             <span className="font-mono text-slate-300">
               {modelReady
-                ? `WASM JEV ${modelLatency !== null ? `(${modelLatency}ms)` : '<10ms'}`
+                ? `Mesin lokal ${modelLatency !== null ? `(${modelLatency}ms)` : ''}`
                 : 'Memuat Engine...'}
             </span>
           </div>
@@ -90,7 +90,7 @@ export const HeaderSortBar: React.FC<HeaderSortBarProps> = ({
                   ? 'bg-[#B8FF01] text-[#0A0D12] shadow-sm'
                   : 'text-slate-400 hover:text-white'
               }`}
-              title="Urutkan berdasarkan Rekomendasi Jev AI"
+              title="Urutkan berdasarkan rekomendasi taktis"
             >
               <Sparkles className="w-3 h-3" />
               <span>AI Score</span>

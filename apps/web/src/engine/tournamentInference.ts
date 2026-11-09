@@ -1,62 +1,9 @@
-import * as ort from 'onnxruntime-web';
 import { Hero, TacticalVector, Lane } from '../types';
-import { loadOnnxModelBuffer } from './r2ModelLoader';
 import { isHeroGlobalReleased } from '../data/heroReleaseStatus';
+import { getTournamentPhase, analyzeLaneOccupancy, IMMOBILE_OPENERS } from './draftRules';
 
-// Configure ONNX Runtime Web WASM paths
-try {
-  ort.env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.21.0/dist/';
-  ort.env.wasm.numThreads = 1;
-} catch (e) {
-  console.warn('[JevEngine] WASM config warning:', e);
-}
-
-let inferenceSession: ort.InferenceSession | null = null;
-let sessionInitPromise: Promise<ort.InferenceSession | null> | null = null;
-let kplSynergyData: Record<string, any> | null = null;
-
-async function loadKplSynergyData(): Promise<Record<string, any> | null> {
-  if (kplSynergyData) return kplSynergyData;
-  try {
-    const res = await fetch('/kpl_synergy_matrix.json');
-    if (res.ok) {
-      kplSynergyData = await res.json();
-      console.log(`[JevEngine] Loaded ${kplSynergyData?.total_pro_pairs || 0} empirical KPL pro synergy pairs`);
-    }
-  } catch (err) {
-    console.warn('[JevEngine] Could not load kpl_synergy_matrix.json:', err);
-  }
-  return kplSynergyData;
-}
-
-export async function getInferenceSession(): Promise<ort.InferenceSession | null> {
-  if (inferenceSession) return inferenceSession;
-  if (sessionInitPromise) return sessionInitPromise;
-
-  sessionInitPromise = (async () => {
-    try {
-      const buffer = await loadOnnxModelBuffer();
-      const session = await ort.InferenceSession.create(buffer, {
-        executionProviders: ['wasm'],
-        graphOptimizationLevel: 'basic',
-      });
-      inferenceSession = session;
-      return session;
-    } catch (err) {
-      console.warn('[JevEngine] ONNX session creation fallback to calibrated empirical engine:', err);
-      return null;
-    }
-  })();
-
-  return sessionInitPromise;
-}
-
-export type TournamentPhaseId =
-  | 'BAN_PHASE_1'
-  | 'PICK_PHASE_1'
-  | 'BAN_PHASE_2'
-  | 'PICK_PHASE_2'
-  | 'DRAFT_COMPLETE';
+export type { TournamentPhaseId } from './draftRules';
+import type { TournamentPhaseId } from './draftRules';
 
 export interface TournamentPhaseStrategy {
   phaseId: TournamentPhaseId;
@@ -74,43 +21,18 @@ export interface TournamentPhaseStrategy {
   enemyVacantLanes: Lane[];
 }
 
-export interface JevPredictionResult {
+export interface TournamentPredictionResult {
   tacticalScores: TacticalVector;
   recommendations: Array<{
     hero: Hero;
-    probability: number;
+    rankingWeight: number;
     choiceScore: number;
     proComboTag?: string;
     laneTag?: string;
   }>;
   phaseStrategy: TournamentPhaseStrategy;
   latencyMs: number;
-  isNeural: boolean;
-}
-
-/**
- * Calculates occupied and vacant lanes for a given set of picked heroes.
- * Ensures a greedy 1-to-1 assignment for flex heroes so all 5 lanes are tracked accurately.
- */
-function analyzeLaneOccupancy(pickedHeroes: Hero[]): {
-  occupiedLanes: Set<Lane>;
-  vacantLanes: Set<Lane>;
-} {
-  const ALL_LANES: Lane[] = ['Clash', 'Jungle', 'Mid', 'Farm', 'Roam'];
-  const occupiedLanes = new Set<Lane>();
-
-  for (const h of pickedHeroes) {
-    if (h.primary_lane && !occupiedLanes.has(h.primary_lane)) {
-      occupiedLanes.add(h.primary_lane);
-    } else {
-      const altLane = h.lanes?.find((l) => !occupiedLanes.has(l));
-      if (altLane) occupiedLanes.add(altLane);
-      else if (h.primary_lane) occupiedLanes.add(h.primary_lane);
-    }
-  }
-
-  const vacantLanes = new Set<Lane>(ALL_LANES.filter((l) => !occupiedLanes.has(l)));
-  return { occupiedLanes, vacantLanes };
+  engineKind: 'deterministic' | 'search';
 }
 
 /**
@@ -133,7 +55,7 @@ function computeOpenerPriorityScore(
   // Di turnamen kompetitif (khususnya tanpa Master Luban 525 di Global),
   // First-picking hero tanpa mobilitas ini rentan di-dive lawan dan dilarang dijadikan B1 First Pick / Opener.
   let openerPenalty = 0;
-  const isImmobileCarry = [112, 169, 142, 109, 504].includes(hero.hero_id);
+  const isImmobileCarry = IMMOBILE_OPENERS.has(hero.hero_id);
   if (isImmobileCarry) {
     openerPenalty = -2.5;
   }
@@ -146,7 +68,7 @@ function computeOpenerPriorityScore(
   return (hero.win_rate - 0.48) * 4.5 + hero.pick_rate * 3.5 + tierWeight + kplOpenerBonus + flexBonus + openerPenalty;
 }
 
-export async function runJevInference(
+export function runTournamentInference(
   ourHeroIds: number[],
   enemyHeroIds: number[],
   bannedHeroIds: number[],
@@ -157,10 +79,10 @@ export async function runJevInference(
   draftStep: number = 0,
   planAId?: number | null,
   planBId?: number | null,
-  onlyGlobalReleased: boolean = true
-): Promise<JevPredictionResult> {
+  onlyGlobalReleased: boolean = true,
+  synergyDb: Record<string, any> = {}
+): TournamentPredictionResult {
   const t0 = performance.now();
-  const synergyDb = await loadKplSynergyData();
 
   const idMap = new Map<number, Hero>();
   const idToIndex = new Map<number, number>();
@@ -183,7 +105,7 @@ export async function runJevInference(
     ...ourHeroIds,
     ...enemyHeroIds,
     ...bannedHeroIds,
-    ...fearlessUnavailableIds,
+    ...(isPickPhase ? fearlessUnavailableIds : []),
   ]);
 
   // When onlyGlobalReleased is true, exclude CN-only unreleased heroes from recommendation & picks
@@ -202,19 +124,7 @@ export async function runJevInference(
     }
   });
 
-  // 3. Determine Tournament Phase (0..3 Ban1, 4..9 Pick1, 10..13 Ban2, 14..17 Pick2)
-  let phaseId: TournamentPhaseId = 'BAN_PHASE_1';
-  if (draftStep >= 18) {
-    phaseId = 'DRAFT_COMPLETE';
-  } else if (draftStep < 4) {
-    phaseId = 'BAN_PHASE_1';
-  } else if (draftStep < 10) {
-    phaseId = 'PICK_PHASE_1';
-  } else if (draftStep < 14) {
-    phaseId = 'BAN_PHASE_2';
-  } else {
-    phaseId = 'PICK_PHASE_2';
-  }
+  const phaseId = getTournamentPhase(draftStep);
 
   const proPairs = synergyDb?.pairs || {};
   const b1Openers = synergyDb?.b1_openers || {};
@@ -358,10 +268,11 @@ export async function runJevInference(
   const blueB1ThreatHero = rankedOpeners[0] || null;
 
   for (let i = 0; i < heroes.length; i++) {
-    if (maskArr[i] === 1) continue;
+    if (maskArr[i] === 1 || phaseId === 'DRAFT_COMPLETE') continue;
+    if ((draftStep < 4 || draftStep === 4) && IMMOBILE_OPENERS.has(heroes[i].hero_id)) continue;
 
     const cand = heroes[i];
-    const isImmobileCarry = [112, 169, 142, 109, 504].includes(cand.hero_id);
+    const isImmobileCarry = IMMOBILE_OPENERS.has(cand.hero_id);
     const tierBonus = { S: 0.35, A: 0.20, B: 0.05, C: -0.10, D: -0.25 }[cand.tier] || 0.0;
     let score = (cand.win_rate - 0.48) * 4.0 + tierBonus + cand.pick_rate * 2.8;
     let laneTag: string | undefined = undefined;
@@ -729,13 +640,13 @@ export async function runJevInference(
 
   const recommendations = scoredCandidates.map((c, idx) => ({
     hero: c.hero,
-    probability: expSum > 0 ? expScores[idx] / expSum : 1 / scoredCandidates.length,
+    rankingWeight: expSum > 0 ? expScores[idx] / expSum : 1 / scoredCandidates.length,
     choiceScore: c.finalScore,
     proComboTag: c.proComboTag,
     laneTag: c.laneTag,
   }));
 
-  recommendations.sort((a, b) => b.probability - a.probability);
+  recommendations.sort((a, b) => b.rankingWeight - a.rankingWeight);
 
   // 7. Build Human-Readable Phase Strategy Summary for UI
   const ourVacantArr = Array.from(ourVacantLanes);
@@ -820,6 +731,6 @@ export async function runJevInference(
       enemyVacantLanes: enemyVacantArr,
     },
     latencyMs,
-    isNeural: false,
+    engineKind: 'deterministic',
   };
 }

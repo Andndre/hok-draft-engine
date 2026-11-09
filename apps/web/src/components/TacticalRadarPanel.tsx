@@ -1,6 +1,6 @@
 import React from 'react';
 import { Hero, TacticalVector, TacticalDelta } from '../types';
-import { TournamentPhaseStrategy } from '../engine/jevInference';
+import { TournamentPhaseStrategy } from '../engine/tournamentInference';
 import { Sparkles, TrendingUp, TrendingDown, Minus, ShieldAlert, Crosshair, CheckCircle2, SlidersHorizontal, AlertTriangle, ArrowRight } from 'lucide-react';
 
 interface TacticalRadarPanelProps {
@@ -14,7 +14,7 @@ interface TacticalRadarPanelProps {
   onSelectQuickPlanA?: (heroId: number | null) => void;
   recommendations: Array<{
     hero: Hero;
-    probability: number;
+    rankingWeight: number;
     choiceScore: number;
     proComboTag?: string;
     laneTag?: string;
@@ -30,7 +30,7 @@ const TACTICAL_AXES: Array<{
   color: string;
   barColor: string;
 }> = [
-  { key: 'win_probability', label: 'Win Probability', color: 'text-emerald-400', barColor: 'bg-emerald-500' },
+  { key: 'win_probability', label: 'Keunggulan draft', color: 'text-emerald-400', barColor: 'bg-emerald-500' },
   { key: 'early_game_pressure', label: 'Early Pressure', color: 'text-amber-400', barColor: 'bg-amber-500' },
   { key: 'cc_chain_lockdown', label: 'CC Chain Lockdown', color: 'text-indigo-400', barColor: 'bg-indigo-500' },
   { key: 'frontline_durability', label: 'Frontline Durability', color: 'text-sky-400', barColor: 'bg-sky-500' },
@@ -69,7 +69,7 @@ export const TacticalRadarPanel: React.FC<TacticalRadarPanelProps> = ({
           </div>
           <div>
             <h3 className="font-bold text-sm text-white flex items-center gap-2">
-              JEV SYSTEM ONE EVALUATOR
+              EVALUASI TAKTIS DRAFT
               <span
                 className={`text-[10px] font-mono uppercase px-2 py-0.5 rounded font-black ${
                   activeSide === 'blue'
@@ -81,14 +81,14 @@ export const TacticalRadarPanel: React.FC<TacticalRadarPanelProps> = ({
               </span>
             </h3>
             <p className="text-[11px] text-slate-400">
-              4-Phase Pro Tournament BP Strategy & 6-Axis Neural Matrix
+              Strategi empat fase · Evaluasi heuristik enam dimensi
             </p>
           </div>
         </div>
 
-        {/* Win Probability Dial */}
+        {/* Keunggulan draft Dial */}
         <div className="flex flex-col items-end font-mono-numbers">
-          <span className="text-[10px] uppercase text-slate-400 font-semibold tracking-wider">Win Prob</span>
+          <span className="text-[10px] uppercase text-slate-400 font-semibold tracking-wider">Skor draft</span>
           <span
             className={`text-2xl font-black ${
               winRatePercent >= 52 ? 'text-[#10B981]' : winRatePercent >= 48 ? 'text-slate-100' : 'text-[#F43F5E]'
@@ -334,12 +334,12 @@ export const TacticalRadarPanel: React.FC<TacticalRadarPanelProps> = ({
       <div className="pt-2">
         <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2.5 flex items-center justify-between">
           <span>AI Rekomendasi Prioritas ({isPickPhase ? 'Pick' : 'Ban'})</span>
-          <span className="text-[10px] text-slate-500 font-mono">Top Choices by Jev Choice Head</span>
+          <span className="text-[10px] text-slate-500 font-mono">Peringkat rekomendasi taktis</span>
         </h4>
 
         <div className="flex flex-col gap-2">
           {recommendations.slice(0, 5).map((rec, idx) => {
-            const probPct = (rec.probability * 100).toFixed(1);
+            const probPct = (rec.rankingWeight * 100).toFixed(1);
             const isBanPhase = !isPickPhase;
             return (
               <div

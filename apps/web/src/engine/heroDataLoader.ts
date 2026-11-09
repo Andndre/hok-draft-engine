@@ -1,8 +1,7 @@
-import { ModelManifest, Hero } from '../types';
+import { Hero } from '../types';
 
 const DB_NAME = 'HokDraftEngineDB';
 const DB_VERSION = 1;
-const STORE_MODELS = 'models_cache';
 const STORE_METADATA = 'metadata_cache';
 
 const R2_BASE_URL = (import.meta.env.VITE_R2_PUBLIC_URL || '').trim();
@@ -16,9 +15,6 @@ function openIndexedDB(): Promise<IDBDatabase> {
 
     request.onupgradeneeded = (event) => {
       const db = (event.target as IDBOpenDBRequest).result;
-      if (!db.objectStoreNames.contains(STORE_MODELS)) {
-        db.createObjectStore(STORE_MODELS, { keyPath: 'key' });
-      }
       if (!db.objectStoreNames.contains(STORE_METADATA)) {
         db.createObjectStore(STORE_METADATA, { keyPath: 'key' });
       }
@@ -90,16 +86,6 @@ async function fetchWithFallback(filename: string): Promise<Response> {
   return localRes;
 }
 
-export async function fetchManifest(): Promise<ModelManifest | null> {
-  try {
-    const res = await fetchWithFallback('manifest.json');
-    return await res.json();
-  } catch (err) {
-    console.warn('[ModelLoader] Could not load manifest:', err);
-    return null;
-  }
-}
-
 export async function loadHeroMetadata(): Promise<Hero[]> {
   const cacheKey = 'master_hero_metadata_v15_counters_direction_fixed';
   const cached = await getFromIDB<Hero[]>(STORE_METADATA, cacheKey);
@@ -129,21 +115,3 @@ export async function loadHeroMetadata(): Promise<Hero[]> {
   }
 }
 
-export async function loadOnnxModelBuffer(): Promise<ArrayBuffer> {
-  const manifest = await fetchManifest();
-  const modelHash = manifest ? manifest.sha256 : 'latest';
-  const cacheKey = `onnx_model_${modelHash}`;
-
-  const cachedBuffer = await getFromIDB<ArrayBuffer>(STORE_MODELS, cacheKey);
-  if (cachedBuffer) {
-    console.log(`[IndexedDB] Loaded ONNX model from instant cache (${(cachedBuffer.byteLength / 1024).toFixed(1)} KB)`);
-    return cachedBuffer;
-  }
-
-  const modelFile = manifest ? manifest.model_file : 'hok_jev_student.onnx';
-  const res = await fetchWithFallback(modelFile);
-  const arrayBuffer = await res.arrayBuffer();
-  await saveToIDB(STORE_MODELS, cacheKey, arrayBuffer);
-  console.log(`[IndexedDB] Cached ONNX model (${(arrayBuffer.byteLength / 1024).toFixed(1)} KB)`);
-  return arrayBuffer;
-}

@@ -29,7 +29,7 @@ ONNX_OUTPUT_PATH = PROCESSED_DIR / "hok_jev_student.onnx"
 MANIFEST_PATH = PROCESSED_DIR / "manifest.json"
 HERO_METADATA_PATH = PROCESSED_DIR / "hero_metadata.json"
 
-WEB_PUBLIC_DIR = ROOT_DIR / "apps" / "web" / "public"
+WEB_PUBLIC_DIR = PROCESSED_DIR / "experimental-model"
 WEB_HERO_ASSETS = WEB_PUBLIC_DIR / "assets" / "heroes"
 
 load_dotenv()
@@ -180,7 +180,7 @@ def publish_artifacts():
     endpoint = os.getenv("R2_ENDPOINT_URL")
     access_key = os.getenv("R2_ACCESS_KEY_ID")
     secret_key = os.getenv("R2_SECRET_ACCESS_KEY")
-    bucket_name = os.getenv("R2_BUCKET_NAME")
+    bucket_name = os.getenv("EXPERIMENTAL_MODEL_BUCKET")
 
     if endpoint and access_key and secret_key and bucket_name and "your_" not in access_key:
         print(f" Uploading artifacts to S3 / RustFS / R2 storage (Bucket: {bucket_name}) ...")

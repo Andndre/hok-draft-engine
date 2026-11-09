@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Hero, Lane, ActiveTab, SortMode, ViewMode, TacticalVector, TacticalDelta, GameDraftData } from './types';
-import { loadHeroMetadata } from './engine/r2ModelLoader';
-import { runJevInference, JevPredictionResult, TournamentPhaseStrategy } from './engine/jevInference';
+import { loadHeroMetadata } from './engine/heroDataLoader';
+import { runTournamentInference, TournamentPredictionResult, TournamentPhaseStrategy } from './engine/tournamentInference';
 import { computeTacticalDeltas } from './engine/deltaExplainer';
 import { HeaderSortBar } from './components/HeaderSortBar';
 import { HeroCardCompact } from './components/HeroCardCompact';
@@ -13,31 +13,7 @@ import { HeroWikiDrawer } from './components/HeroWikiDrawer';
 import { PlanSelectionModal } from './components/PlanSelectionModal';
 import { isHeroGlobalReleased } from './data/heroReleaseStatus';
 
-// Standard 20-step competitive ban/pick sequence
-const DRAFT_SEQUENCE: Array<{ side: 'blue' | 'red'; action: 'ban' | 'pick' }> = [
-  // Ban Phase 1 (4 bans)
-  { side: 'blue', action: 'ban' },
-  { side: 'red', action: 'ban' },
-  { side: 'blue', action: 'ban' },
-  { side: 'red', action: 'ban' },
-  // Pick Phase 1 (6 picks)
-  { side: 'blue', action: 'pick' },
-  { side: 'red', action: 'pick' },
-  { side: 'red', action: 'pick' },
-  { side: 'blue', action: 'pick' },
-  { side: 'blue', action: 'pick' },
-  { side: 'red', action: 'pick' },
-  // Ban Phase 2 (4 bans)
-  { side: 'red', action: 'ban' },
-  { side: 'blue', action: 'ban' },
-  { side: 'red', action: 'ban' },
-  { side: 'blue', action: 'ban' },
-  // Pick Phase 2 (4 picks)
-  { side: 'red', action: 'pick' },
-  { side: 'blue', action: 'pick' },
-  { side: 'blue', action: 'pick' },
-  { side: 'red', action: 'pick' },
-];
+import { DRAFT_SEQUENCE, getDraftTurn, createInitialGameDraft, applyGameHero } from './engine/draftRules';
 
 export const App: React.FC = () => {
   const [heroes, setHeroes] = useState<Hero[]>([]);
@@ -69,17 +45,6 @@ export const App: React.FC = () => {
   const [fearlessEnabled, setFearlessEnabled] = useState(true);
   const [gameNumber, setGameNumber] = useState(1);
 
-  const createInitialGameDraft = (): GameDraftData => ({
-    bluePicks: [null, null, null, null, null],
-    redPicks: [null, null, null, null, null],
-    blueBans: [null, null, null, null],
-    redBans: [null, null, null, null],
-    draftStep: 0,
-    bluePlanAId: null,
-    bluePlanBId: null,
-    redPlanAId: null,
-    redPlanBId: null,
-  });
 
   const [gamesData, setGamesData] = useState<Record<number, GameDraftData>>({
     1: createInitialGameDraft(),
@@ -92,7 +57,9 @@ export const App: React.FC = () => {
   const currentGame = gamesData[gameNumber] || createInitialGameDraft();
   const { bluePicks, redPicks, blueBans, redBans, draftStep, bluePlanAId, bluePlanBId, redPlanAId, redPlanBId } = currentGame;
 
-  // Jev AI State
+  const [synergyData, setSynergyData] = useState<Record<string, any>>({});
+
+  // Tournament AI State
   const [modelReady, setModelReady] = useState(false);
   const [modelLatency, setModelLatency] = useState<number | null>(null);
   const [tacticalScores, setTacticalScores] = useState<TacticalVector>({
@@ -106,12 +73,13 @@ export const App: React.FC = () => {
   const [previousScores, setPreviousScores] = useState<TacticalVector | null>(null);
   const [deltas, setDeltas] = useState<TacticalDelta[]>([]);
   const [primaryInsight, setPrimaryInsight] = useState<string>('');
-  const [recommendations, setRecommendations] = useState<JevPredictionResult['recommendations']>([]);
+  const [recommendations, setRecommendations] = useState<TournamentPredictionResult['recommendations']>([]);
   const [phaseStrategy, setPhaseStrategy] = useState<TournamentPhaseStrategy | undefined>(undefined);
 
   // 1. Load Hero Metadata on mount
   useEffect(() => {
-    loadHeroMetadata().then((data) => {
+    Promise.all([loadHeroMetadata(), fetch('/kpl_synergy_matrix.json').then(r => r.ok ? r.json() : {})]).then(([data, synergy]) => {
+      setSynergyData(synergy);
       setHeroes(data);
       setLoading(false);
     });
@@ -131,13 +99,7 @@ export const App: React.FC = () => {
   };
 
   // Determine current turn in sequence
-  const currentTurn = useMemo(() => {
-    if (draftStep >= DRAFT_SEQUENCE.length) {
-      return { side: 'blue' as const, action: 'pick' as const, stepIndex: draftStep, isComplete: true };
-    }
-    const step = DRAFT_SEQUENCE[draftStep];
-    return { ...step, stepIndex: draftStep, isComplete: false };
-  }, [draftStep]);
+  const currentTurn = useMemo(() => getDraftTurn(draftStep), [draftStep]);
 
   // Fearless Draft: Accumulate heroes picked by each team in prior games (Game < gameNumber)
   const blueFearlessUnavailableIds = useMemo(() => {
@@ -193,7 +155,7 @@ export const App: React.FC = () => {
   const activeSidePlanAId = currentTurn.side === 'blue' ? bluePlanAId : redPlanAId;
   const activeSidePlanBId = currentTurn.side === 'blue' ? bluePlanBId : redPlanBId;
 
-  // 2. Trigger Jev AI Model Inference on draft updates
+  // 2. Trigger Tournament AI Model Inference on draft updates
   const updateAiPredictions = useCallback(
     async (
       bPicks: Array<Hero | null>,
@@ -217,7 +179,7 @@ export const App: React.FC = () => {
       const teamFearlessIds = turn.side === 'blue' ? Array.from(blueFearlessSet) : Array.from(redFearlessSet);
 
       try {
-        const result = await runJevInference(
+        const result = await runTournamentInference(
           ourHeroIds,
           enemyHeroIds,
           bannedIds,
@@ -228,7 +190,8 @@ export const App: React.FC = () => {
           turn.stepIndex,
           planAId,
           planBId,
-          onlyGlobalReleased
+          onlyGlobalReleased,
+          synergyData
         );
 
         setModelReady(true);
@@ -266,7 +229,7 @@ export const App: React.FC = () => {
         console.error('[JevInference] Error during inference:', err);
       }
     },
-    [previousScores]
+    [previousScores, onlyGlobalReleased, synergyData]
   );
 
   useEffect(() => {
@@ -312,43 +275,11 @@ export const App: React.FC = () => {
 
   // Handle hero pick / ban selection
   const handleSelectHero = (hero: Hero) => {
-    if (currentDraftUnavailableIds.has(hero.hero_id)) return;
+    if (currentTurn.isComplete || currentDraftUnavailableIds.has(hero.hero_id) || (onlyGlobalReleased && !isHeroGlobalReleased(hero))) return;
 
     setPreviousScores(tacticalScores);
 
-    updateCurrentDraft((prev) => {
-      const { side, action } = currentTurn;
-      const next = { ...prev };
-
-      if (action === 'ban') {
-        if (side === 'blue') {
-          const bans = [...next.blueBans];
-          const emptyIdx = bans.findIndex((b) => b === null);
-          if (emptyIdx !== -1) bans[emptyIdx] = hero;
-          next.blueBans = bans;
-        } else {
-          const bans = [...next.redBans];
-          const emptyIdx = bans.findIndex((b) => b === null);
-          if (emptyIdx !== -1) bans[emptyIdx] = hero;
-          next.redBans = bans;
-        }
-      } else {
-        if (side === 'blue') {
-          const picks = [...next.bluePicks];
-          const emptyIdx = picks.findIndex((p) => p === null);
-          if (emptyIdx !== -1) picks[emptyIdx] = hero;
-          next.bluePicks = picks;
-        } else {
-          const picks = [...next.redPicks];
-          const emptyIdx = picks.findIndex((p) => p === null);
-          if (emptyIdx !== -1) picks[emptyIdx] = hero;
-          next.redPicks = picks;
-        }
-      }
-
-      next.draftStep = Math.min(DRAFT_SEQUENCE.length, next.draftStep + 1);
-      return next;
-    });
+    updateCurrentDraft((prev) => applyGameHero(prev, hero, { heroes, onlyGlobal: onlyGlobalReleased, fearless: { blue: [...blueFearlessUnavailableIds], red: [...redFearlessUnavailableIds] } }));
   };
 
   // Reset Current Game Draft ONLY (preserves other games!)
@@ -529,7 +460,7 @@ export const App: React.FC = () => {
               />
             </div>
 
-            {/* Right Column: Jev 6-Axis Radar & Top AI Recommendations (5 Cols) */}
+            {/* Right Column: Tactical 6-Axis Radar & Top AI Recommendations (5 Cols) */}
             <div className="lg:col-span-5">
               <TacticalRadarPanel
                 scores={tacticalScores}

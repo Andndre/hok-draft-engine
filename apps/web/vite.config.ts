@@ -16,9 +16,6 @@ export default defineConfig({
       'Cross-Origin-Embedder-Policy': 'credentialless',
     },
   },
-  optimizeDeps: {
-    exclude: ['onnxruntime-web'],
-  },
   build: {
     target: 'esnext',
     outDir: 'dist',

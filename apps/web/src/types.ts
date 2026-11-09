@@ -121,7 +121,7 @@ export interface Hero {
   kpl_matchup?: KplMatchup | null;
   abilities?: HeroAbility[];
   
-  // Dynamic client-side score computed by Jev AI
+  // Dynamic client-side score computed by the tournament engine
   ai_choice_score?: number;
 }
 

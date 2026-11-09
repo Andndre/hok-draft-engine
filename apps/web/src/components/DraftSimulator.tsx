@@ -1,5 +1,6 @@
 import React from 'react';
 import { Hero } from '../types';
+import { TOURNAMENT_PHASES } from '../engine/draftRules';
 import { RotateCcw, ShieldCheck, Flame, Undo2 } from 'lucide-react';
 
 interface DraftSimulatorProps {
@@ -23,13 +24,6 @@ interface DraftSimulatorProps {
   blueFearlessUsedHeroes?: Hero[];
   redFearlessUsedHeroes?: Hero[];
 }
-
-const TOURNAMENT_PHASES = [
-  { id: 'BAN_1', label: '1. Ban Fase 1', sub: 'Ban Counter Meta Opener', start: 0, end: 3, isBan: true },
-  { id: 'PICK_1', label: '2. Pick Fase 1', sub: 'Amankan Opener & Core (3v3)', start: 4, end: 9, isBan: false },
-  { id: 'BAN_2', label: '3. Ban Fase 2', sub: 'Putus Kombo di Lane Kosong', start: 10, end: 13, isBan: true },
-  { id: 'PICK_2', label: '4. Pick Fase 2', sub: 'Counter & Tutup Lane (2v2)', start: 14, end: 17, isBan: false },
-];
 
 export const DraftSimulator: React.FC<DraftSimulatorProps> = ({
   bluePicks,
