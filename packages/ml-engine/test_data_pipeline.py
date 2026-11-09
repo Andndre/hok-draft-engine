@@ -32,6 +32,10 @@ class DataPipelineTests(unittest.TestCase):
             self.assertEqual(result["counters"], self.hero["counters"])
             self.assertTrue(result["is_global_released"])
             self.assertEqual(manifest["hero_count"], 1)
+            self.assertEqual(manifest["schema_version"], 2)
+            self.assertEqual(set(manifest["artifacts"]), {"heroes", "synergy", "releases", "items", "spells"})
+            self.assertEqual(json.loads(texts["items"]), [])
+            self.assertEqual(json.loads(texts["spells"]), [])
 
     def test_changed_sources_and_invalid_answers_reject_review(self):
         proposal = create_proposal(self.hero, self.response)
@@ -42,6 +46,13 @@ class DataPipelineTests(unittest.TestCase):
         self.response["answers"]["mobility"]["choice"] = "maybe"
         with self.assertRaises(ValueError):
             create_proposal(self.hero, self.response)
+
+    def test_hokstats_source_changes_expire_nanojev_approval(self):
+        proposal = create_proposal(self.hero, self.response)
+        updated = copy.deepcopy(self.hero)
+        updated["hokstats_guide"] = {"skills": [{"name": "New source text"}], "source": {"source_hash": "new"}}
+        with self.assertRaises(ValueError):
+            validate_proposal(proposal, updated)
 
     def test_manifest_last_and_failed_artifact_never_publishes_pointer(self):
         manifest, texts = build_package([self.hero], {}, self.releases)

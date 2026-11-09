@@ -17,6 +17,7 @@ Dokumen ini disusun sebagai panduan operasional komprehensif agar setiap autonom
 3. **Multi-Source Data Ingestion:**
    - Data 120 hero Global dari `https://hok.kurohiko.id/` (alasan taktis lokal & counter matrix).
    - Data statistik tier Diamond+ dari `https://www.hokfire.com/` (builds, arcana, tier resmi S/A/B/C/D).
+   - Panduan skill, preset build alternatif, detail item/spell, dan matchup editorial dari HoKStats melalui importer offline. Sumber ini tetap terpisah, beratribusi, dan memerlukan review untuk memengaruhi scorer.
    - Data empiris 11.141+ pertandingan turnamen profesional (KPL / KIC 2019–2026) dari dataset Fire-Phoenixs (frekuensi pick B1/R1, ban fase 1/2, dan duet winrate).
 
 ---
@@ -78,7 +79,7 @@ Repositori ini telah dipetakan secara terstruktur menggunakan **`graphify`** ke 
 | `runTournamentInference()` | 7 edges | [`apps/web/src/engine/tournamentInference.ts`](apps/web/src/engine/tournamentInference.ts) | Decision core kalkulasi 4-fase turnamen & skor rekomendasi. |
 | `loadTournamentDataset()` | — | [`apps/web/src/engine/heroDataLoader.ts`](apps/web/src/engine/heroDataLoader.ts) | Loader paket berversi, checksum, fallback, dan cache IndexedDB atomik. |
 | `isHeroGlobalReleased()` | 7 edges | [`apps/web/src/data/heroReleaseStatus.ts`](apps/web/src/data/heroReleaseStatus.ts) | Filter integritas server Global vs hero eksklusif CN/KPL. |
-| `TacticalVector` | 7 edges | [`apps/web/src/types.ts`](apps/web/src/types.ts) | Vektor 6 sumbu radar taktis (Early, CC, Frontline, Carry Shutdown, Flex, Draft Advantage). |
+| `TacticalVector` | 7 edges | [`apps/web/src/types.ts`](apps/web/src/types.ts) | Vektor 7 sumbu radar taktis, termasuk team utility. |
 
 ---
 
@@ -109,7 +110,8 @@ Di masa lalu terjadi bug inversi 180 derajat karena salah menginterpretasikan ar
 
 ### D. Paket Data dan Cache
 - Loader memeriksa `data_manifest.json` saat aplikasi dibuka dan memvalidasi SHA-256 seluruh artefak sebelum mengaktifkan paket.
-- Cache `tournament_dataset_v16` menyimpan satu paket lengkap; versi dataset berubah otomatis ketika isi hero, sinergi, status rilis, atau profil taktis berubah.
+- Manifest schema v2 dan cache `tournament_dataset_v17` menyimpan paket hero, sinergi, status rilis, item, dan spell; versi dataset berubah otomatis ketika isi artefak berubah.
+- Jalankan `uv run hokstats_source.py sync` dari `packages/ml-engine` untuk mengimpor HoKStats. Matchup, hero guide, item, dan spell tetap berstatus pending sampai sumbernya direview; hash yang berubah membatalkan review lama.
 - Jangan mengedit JSON di folder datasets secara manual. Perbarui sumber di data/mappings lalu jalankan `uv run publish_data.py`. Byte artefak dilindungi oleh .gitattributes.
 - Seri latihan memakai snapshot tetap. Data baru hanya berlaku saat memulai seri berikutnya.
 - Default CLI proposal memakai NanoJev lokal. Upstream memerlukan PyTorch CUDA; mesin CPU-only harus berhenti dengan pesan jelas, tanpa fallback ke API. Download model adalah subcommand eksplisit dan bobot tidak boleh masuk public/dist.
@@ -151,7 +153,7 @@ uv run publish_data.py --publish
 Untuk memverifikasi bahwa rekomendasi Fase Ban dan Pick AI berjalan sesuai kaidah kompetitif:
 ```powershell
 cd packages/ml-engine
-uv run python -m unittest test_data_pipeline.py test_nanojev_provider.py
+uv run python -m unittest test_data_pipeline.py test_nanojev_provider.py test_hokstats_source.py
 # Dari apps/web: npm.cmd test dan npm.cmd run benchmark
 ```
 
@@ -179,6 +181,7 @@ hok-draft-engine/
 ├── packages/
 │   └── ml-engine/                    # Pipeline ekstraksi & Machine Learning (uv)
 │       ├── 0_sync_global_assets.py   # Scraper Kurohiko & HOKFIRE
+│       ├── hokstats_source.py        # Importer offline hero/item/spell/matchup HoKStats
 │       ├── 1_ingest_kpl.py           # Ingestion database KPL
 │       ├── 2_jev_teacher_scorer.py   # Komputasi sinergi duet & 6-axis vectors
 │       ├── 3_train_student_net.py    # Training PyTorch model

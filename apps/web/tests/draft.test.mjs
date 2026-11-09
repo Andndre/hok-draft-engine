@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { DRAFT_SEQUENCE, emptyPosition, getDraftTurn, applyDraftAction, isLegalHero, analyzeLaneOccupancy, IMMOBILE_OPENERS } from '../src/engine/draftRules.ts';
 import { rankedCandidates, searchDraft, evaluatePosition } from '../src/engine/draftSearch.ts';
-import { evaluateTacticalScores, runTournamentInference } from '../src/engine/tournamentInference.ts';
+import { evaluateTacticalScores, reviewedHoKStatsBonuses, runTournamentInference } from '../src/engine/tournamentInference.ts';
 import { matchesDecisionTag, OpponentClient } from '../src/engine/opponentClient.ts';
 
 const read = p => JSON.parse(readFileSync(new URL('../public/' + p, import.meta.url), 'utf8'));
@@ -109,6 +109,28 @@ test('approved tactical tags improve role-only assessment without requiring ever
   const enriched = evaluateTacticalScores([reviewed], []);
   assert.ok(enriched.frontline_durability > baseline.frontline_durability);
   assert.ok(enriched.cc_chain_lockdown > baseline.cc_chain_lockdown);
+});
+test('HoKStats matchup and trait bonuses require Global release and review, and obey their caps', () => {
+  const global = heroes.filter(h => h.is_global_released === true);
+  const candidateBase = global.find(h => h.primary_role === 'Mage');
+  const enemies = global.filter(h => h.hero_id !== candidateBase.hero_id).slice(0, 6);
+  const approvedSource = { source: 'HoKStats', url: 'https://hokstats.gg/heroes/test/', fetched_at: '2026-11-09', patch_version: null, review_status: 'approved' };
+  const pendingSource = { ...approvedSource, review_status: 'pending' };
+  const allTags = { frontline: true, engage: true, peel: true, ally_shield: true, ally_heal: true, ally_move_speed_buff: true, ally_attack_speed_buff: true, ally_damage_buff: true, ally_cleanse: true, ally_cc_immunity: true };
+  const matchups = enemies.map(enemy => ({ relation: 'strong_against', hero_id: enemy.hero_id, hero_name: enemy.name, evidence: 'editorial', source: approvedSource }));
+  const candidate = { ...candidateBase, tactical_profile: { tags: allTags }, hokstats_guide: { matchups } };
+  const bonuses = reviewedHoKStatsBonuses(candidate, [], enemies);
+  assert.equal(bonuses.matchupBonus, 0.45);
+  assert.equal(bonuses.traitBonus, 0.45);
+  assert.equal(bonuses.totalBonus, 0.45, 'combined secondary signal stays below a direct +0.55 counter');
+  assert.deepEqual(reviewedHoKStatsBonuses({ ...candidate, is_global_released: false }, [], enemies), { matchupBonus: 0, traitBonus: 0, totalBonus: 0 });
+  const pending = { ...candidate, hokstats_guide: { matchups: matchups.map(m => ({ ...m, source: pendingSource })) } };
+  assert.equal(reviewedHoKStatsBonuses(pending, [], enemies).matchupBonus, 0);
+  const reverse = { ...candidate, hokstats_guide: { matchups: [] } };
+  const counteredBy = enemies.map(enemy => ({ ...enemy, hokstats_guide: { matchups: [{ relation: 'countered_by', hero_id: candidate.hero_id, hero_name: candidate.name, evidence: 'editorial', source: approvedSource }] } }));
+  assert.equal(reviewedHoKStatsBonuses(reverse, [], counteredBy).matchupBonus, 0.45);
+  assert.deepEqual(reviewedHoKStatsBonuses({ ...candidateBase, hokstats_guide: { pros: ['Extremely durable tank'], cons: ['Can be kited'] } }, [], enemies), { matchupBonus: 0, traitBonus: 0, totalBonus: 0 });
+  assert.ok(evaluateTacticalScores([candidate], []).team_utility >= 0 && evaluateTacticalScores([candidate], []).team_utility <= 1);
 });
 test('stale worker responses cannot match another revision or session', () => {
   const tag = { sessionId: 'session-a', revision: 7 };

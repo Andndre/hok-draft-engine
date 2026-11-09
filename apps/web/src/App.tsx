@@ -77,6 +77,7 @@ export const App: React.FC = () => {
     frontline_durability: 0.50,
     enemy_carry_shutdown: 0.50,
     draft_flexibility: 0.50,
+    team_utility: 0.50,
   });
   const [previousScores, setPreviousScores] = useState<TacticalVector | null>(null);
   const [deltas, setDeltas] = useState<TacticalDelta[]>([]);
@@ -458,7 +459,7 @@ export const App: React.FC = () => {
         </>}
       </main>
       <BottomCommandDock activeTab={activeTab} onTabChange={setActiveTab} favoriteCount={favorites.size} />
-      <HeroWikiDrawer hero={wikiHero} onClose={() => setWikiHero(null)} isFavorite={wikiHero ? favorites.has(wikiHero.hero_id) : false} onToggleFavorite={handleToggleFavorite} onPickForDraft={activeTab === 'draft' && draftMode === 'simulator' && wikiHero && !currentTurn.isComplete && !currentDraftUnavailableIds.has(wikiHero.hero_id) ? handleSelectHero : undefined} draftActionLabel={currentTurn.action === 'ban' ? 'Ban hero ini' : 'Pick hero ini'} initialTab={activeTab === 'counter' ? 'counters' : 'build'} allHeroes={heroes} onSelectRelatedHero={setWikiHero} />
+      <HeroWikiDrawer hero={wikiHero} onClose={() => setWikiHero(null)} isFavorite={wikiHero ? favorites.has(wikiHero.hero_id) : false} onToggleFavorite={handleToggleFavorite} onPickForDraft={activeTab === 'draft' && draftMode === 'simulator' && wikiHero && !currentTurn.isComplete && !currentDraftUnavailableIds.has(wikiHero.hero_id) ? handleSelectHero : undefined} draftActionLabel={currentTurn.action === 'ban' ? 'Ban hero ini' : 'Pick hero ini'} initialTab={activeTab === 'counter' ? 'counters' : 'build'} allHeroes={heroes} onSelectRelatedHero={setWikiHero} itemCatalog={dataset?.items} spellCatalog={dataset?.spells} />
       <PlanSelectionModal isOpen={isPlanModalOpen} onClose={() => setIsPlanModalOpen(false)} heroes={heroes} currentPlanAId={activeSidePlanAId} currentPlanBId={activeSidePlanBId} onSelectPlanA={handleSetPlanA} onSelectPlanB={handleSetPlanB} activeSide={currentTurn.side} unavailableHeroIds={currentDraftUnavailableIds} recommendedOpeners={phaseStrategy?.candidateOpeners || []} onlyGlobalReleased={onlyGlobalReleased} />
     </div>
   );

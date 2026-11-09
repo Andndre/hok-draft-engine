@@ -1,8 +1,8 @@
 import { RoleLabel } from './ui/RoleIcon';
 import { LaneLabel } from './ui/LaneIcon';
 import React, { useEffect, useMemo, useState } from 'react';
-import { Hero } from '../types';
-import { X, Star, Swords, Shield, Lightbulb, BookOpen, Zap, Sparkles, ArrowRight, CheckCircle2, AlertCircle, Wrench, Trophy, AlertTriangle, ShieldBan, Link2 } from 'lucide-react';
+import { Hero, ItemCatalogEntry, SpellCatalogEntry } from '../types';
+import { X, Star, Swords, Shield, Lightbulb, BookOpen, Zap, Sparkles, ArrowRight, CheckCircle2, AlertCircle, Wrench, ShieldBan, Link2 } from 'lucide-react';
 import { AssetThumbnail } from './ui/AssetThumbnail';
 import { displayCopy } from './ui/presentation';
 import { useDialogFocus } from './ui/useDialogFocus';
@@ -18,7 +18,188 @@ interface HeroWikiDrawerProps {
   initialTab?: 'build' | 'counters' | 'abilities' | 'tactics';
   allHeroes: Hero[];
   onSelectRelatedHero: (hero: Hero) => void;
+  itemCatalog?: ItemCatalogEntry[];
+  spellCatalog?: SpellCatalogEntry[];
 }
+
+type MatchupSourceLabel = 'KPL' | 'HOKFIRE' | 'HoKStats' | 'Kurohiko';
+
+interface MatchupEvidenceLine {
+  source: MatchupSourceLabel;
+  url?: string;
+  detail?: string;
+  meta?: string;
+  metric?: string;
+}
+
+interface MatchupCardData {
+  heroId: number | null;
+  name: string;
+  avatar?: string;
+  evidence: MatchupEvidenceLine[];
+  hasSourceConflict?: boolean;
+}
+
+interface MatchupPanelProps {
+  hero: Hero;
+  allHeroes: Hero[];
+  onSelectRelatedHero: (hero: Hero) => void;
+}
+
+const MatchupPanel: React.FC<MatchupPanelProps> = ({ hero, allHeroes, onSelectRelatedHero }) => {
+  const normalizeName = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const idMap = new Map(allHeroes.map((item) => [item.hero_id, item]));
+  const nameMap = new Map<string, Hero>();
+  allHeroes.forEach((item) => {
+    nameMap.set(normalizeName(item.name), item);
+    nameMap.set(normalizeName(item.slug), item);
+  });
+  const kpl = hero.kpl_matchup;
+  const hokfire = hero.hokfire_counters;
+  const guide = hero.hokstats_guide;
+  const danger = new Map<string, MatchupCardData>();
+  const favorable = new Map<string, MatchupCardData>();
+  const partners = new Map<string, MatchupCardData>();
+
+  const add = (group: Map<string, MatchupCardData>, heroId: number | null | undefined, name: string, line: MatchupEvidenceLine, avatar?: string) => {
+    const related = heroId == null ? nameMap.get(normalizeName(name)) : idMap.get(heroId);
+    const resolvedId = heroId ?? related?.hero_id ?? null;
+    const resolvedName = related?.name || name;
+    const key = resolvedId == null ? `name:${normalizeName(resolvedName)}` : `hero:${resolvedId}`;
+    const current = group.get(key) || { heroId: resolvedId, name: resolvedName, avatar: related?.portrait_asset || avatar, evidence: [] };
+    if (!current.avatar) current.avatar = avatar;
+    const signature = [line.source, line.url, line.detail, line.meta, line.metric].join('|');
+    if (!current.evidence.some((item) => [item.source, item.url, item.detail, item.meta, item.metric].join('|') === signature)) current.evidence.push(line);
+    group.set(key, current);
+  };
+
+  kpl?.worst_matchups.forEach((item) => add(danger, item.opponent_id, item.opponent_name, {
+    source: 'KPL', detail: `${item.wins}W · ${item.losses}L · ${item.total_matches} game`, metric: `${(item.hero_winrate * 100).toFixed(1)}% WR`,
+  }, item.opponent_avatar));
+  hokfire?.weak_against.forEach((slug) => {
+    const related = nameMap.get(normalizeName(slug));
+    add(danger, related?.hero_id, related?.name || slug, { source: 'HOKFIRE', url: 'https://www.hokfire.com/' }, related?.portrait_asset);
+  });
+  guide?.matchups.filter((item) => item.relation === 'countered_by').forEach((item) => add(danger, item.hero_id, item.hero_name, {
+    source: 'HoKStats', url: item.source.url, detail: item.evidence,
+  }));
+  hero.countered_by.forEach((item) => add(danger, item.counter_id, item.counter_name, {
+    source: 'Kurohiko', url: 'https://hok.kurohiko.id/', detail: item.reason, meta: `${item.severity} counter`,
+  }));
+
+  kpl?.best_matchups.forEach((item) => add(favorable, item.opponent_id, item.opponent_name, {
+    source: 'KPL', detail: `${item.wins}W · ${item.losses}L · ${item.total_matches} game`, metric: `${(item.hero_winrate * 100).toFixed(1)}% WR`,
+  }, item.opponent_avatar));
+  hokfire?.strong_against.forEach((slug) => {
+    const related = nameMap.get(normalizeName(slug));
+    add(favorable, related?.hero_id, related?.name || slug, { source: 'HOKFIRE', url: 'https://www.hokfire.com/' }, related?.portrait_asset);
+  });
+  guide?.matchups.filter((item) => item.relation === 'strong_against').forEach((item) => add(favorable, item.hero_id, item.hero_name, {
+    source: 'HoKStats', url: item.source.url, detail: item.evidence,
+  }));
+  hero.counters.forEach((item) => add(favorable, item.target_id, item.target_name, {
+    source: 'Kurohiko', url: 'https://hok.kurohiko.id/', detail: item.reason, meta: `${item.severity} target`,
+  }));
+
+  for (const key of danger.keys()) {
+    if (!favorable.has(key)) continue;
+    const dangerEntry = danger.get(key);
+    const favorableEntry = favorable.get(key);
+    if (dangerEntry) dangerEntry.hasSourceConflict = true;
+    if (favorableEntry) favorableEntry.hasSourceConflict = true;
+  }
+
+  kpl?.synergies?.forEach((item) => add(partners, item.partner_id, item.partner_name, {
+    source: 'KPL', detail: `${item.wins}W · ${item.losses}L · ${item.total_matches} game bersama`, metric: `${(item.duet_winrate * 100).toFixed(1)}% WR`,
+  }, item.partner_avatar));
+  hokfire?.synergizes.forEach((slug) => {
+    const related = nameMap.get(normalizeName(slug));
+    add(partners, related?.hero_id, related?.name || slug, { source: 'HOKFIRE', url: 'https://www.hokfire.com/' }, related?.portrait_asset);
+  });
+  guide?.partners.forEach((item) => add(partners, item.hero_id, item.hero_name, {
+    source: 'HoKStats', url: item.source.url,
+  }));
+
+  const groups = [
+    { title: 'Lemah melawan', hint: 'Ancaman yang perlu diwaspadai', rows: danger, tone: 'text-rose-300', icon: <ShieldBan className="h-4 w-4" aria-hidden="true" /> },
+    { title: 'Kuat melawan', hint: 'Target yang menguntungkan', rows: favorable, tone: 'text-emerald-300', icon: <Swords className="h-4 w-4" aria-hidden="true" /> },
+    { title: 'Rekan sinergi', hint: 'Hero dengan kombinasi yang disarankan', rows: partners, tone: 'text-indigo-300', icon: <Link2 className="h-4 w-4" aria-hidden="true" /> },
+  ];
+  const hasRows = groups.some((group) => group.rows.size > 0);
+
+  return (
+    <section className="rounded-xl border border-[#263142] bg-[#121824] p-4 space-y-4">
+      <header className="flex flex-wrap items-center justify-between gap-3 border-b border-[#263142] pb-3">
+        <div className="flex items-center gap-2">
+          <Swords className="h-4 w-4 text-[#B8FF01]" aria-hidden="true" />
+          <div>
+            <h4 className="text-sm font-bold text-white">Counter & matchup</h4>
+            <p className="text-xs text-slate-500">Semua sumber dalam format yang sama; label sumber ada di tiap hero.</p>
+          </div>
+        </div>
+        {kpl && (kpl.total_picks > 0 || kpl.total_bans > 0) && (
+          <div className="flex flex-wrap gap-1.5 text-xs font-mono tabular-nums">
+            <span className="rounded-md border border-[#2A3750] bg-[#1A2233] px-2 py-1 text-slate-300">{kpl.total_picks} picks KPL</span>
+            <span className="rounded-md border border-[#2A3750] bg-[#1A2233] px-2 py-1 text-amber-300">{kpl.total_bans} bans</span>
+            <span className="rounded-md border border-[#2A3750] bg-[#1A2233] px-2 py-1 text-emerald-300">{(kpl.overall_winrate * 100).toFixed(1)}% WR</span>
+          </div>
+        )}
+      </header>
+
+      {hasRows ? groups.map((group) => {
+        if (!group.rows.size) return null;
+        return (
+          <section key={group.title} className="space-y-2.5">
+            <div className="flex items-center justify-between gap-3">
+              <div className={`flex items-center gap-2 ${group.tone}`}>
+                {group.icon}
+                <h5 className="text-xs font-bold uppercase tracking-wide">{group.title}</h5>
+                <span className="rounded-full bg-[#1A202C] px-2 py-0.5 text-[11px] font-mono text-slate-400">{group.rows.size}</span>
+              </div>
+              <span className="hidden text-xs text-slate-500 sm:block">{group.hint}</span>
+            </div>
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+              {[...group.rows.values()].map((entry) => {
+                const related = entry.heroId == null ? nameMap.get(normalizeName(entry.name)) : idMap.get(entry.heroId);
+                const uniqueSources = [...new Map(entry.evidence.map((item) => [`${item.source}|${item.url || ''}`, item])).values()];
+                return (
+                  <article key={`${group.title}-${entry.heroId ?? entry.name}`} className="flex min-w-0 gap-3 rounded-xl border border-[#263142] bg-[#0F151F] p-3 transition-colors hover:border-[#3A485C]">
+                    <button type="button" disabled={!related} onClick={() => related && onSelectRelatedHero(related)} aria-label={`Buka wiki ${related?.name || entry.name}`} className="h-11 w-11 shrink-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8FF01] disabled:cursor-default">
+                      <AssetThumbnail src={related?.portrait_asset || entry.avatar} name={related?.name || entry.name} kind="hero" className="h-11 w-11 rounded-lg border border-[#30394A] object-cover" />
+                    </button>
+                    <div className="min-w-0 flex-1 space-y-1.5">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <button type="button" disabled={!related} onClick={() => related && onSelectRelatedHero(related)} className="truncate text-left text-sm font-semibold text-white hover:text-[#B8FF01] focus-visible:outline-none focus-visible:underline disabled:cursor-default disabled:hover:text-white">
+                          {related?.name || entry.name}
+                        </button>
+                        {entry.evidence.filter((item) => item.metric).map((item, index) => <span key={`${item.source}-metric-${index}`} className={`shrink-0 rounded-md px-2 py-1 text-xs font-mono font-bold tabular-nums ${group.title === 'Lemah melawan' ? 'bg-rose-950/40 text-rose-300' : group.title === 'Kuat melawan' ? 'bg-emerald-950/40 text-emerald-300' : 'bg-indigo-950/40 text-indigo-300'}`}>{item.metric}</span>)}
+                      </div>
+                      <div className="flex flex-wrap gap-1">
+                        {entry.hasSourceConflict && <span className="rounded border border-amber-800/50 bg-amber-950/30 px-1.5 py-0.5 text-[10px] font-medium text-amber-300">Sumber berbeda</span>}
+                        {uniqueSources.map((item) => item.url ? (
+                          <a key={`${item.source}-${item.url}`} href={item.url} target="_blank" rel="noreferrer" className="rounded border border-[#30394A] bg-[#171F2B] px-1.5 py-0.5 text-[10px] font-medium text-slate-400 hover:text-slate-200">{item.source}</a>
+                        ) : (
+                          <span key={item.source} className="rounded border border-[#30394A] bg-[#171F2B] px-1.5 py-0.5 text-[10px] font-medium text-slate-400">{item.source}</span>
+                        ))}
+                      </div>
+                      {entry.evidence.filter((item) => item.detail || item.meta).map((item, index) => (
+                        <p key={`${item.source}-detail-${index}`} className="text-xs leading-relaxed text-slate-400">
+                          {item.meta && <span className="font-medium text-slate-300">{item.meta} · </span>}{item.detail}
+                        </p>
+                      ))}
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        );
+      }) : (
+        <p className="rounded-lg border border-dashed border-[#30394A] bg-[#0F151F] p-4 text-sm text-slate-400">Belum ada data counter atau matchup untuk hero ini.</p>
+      )}
+    </section>
+  );
+};
 
 export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
   hero: sourceHero,
@@ -30,35 +211,33 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
   initialTab = 'build',
   allHeroes,
   onSelectRelatedHero,
+  itemCatalog = [],
+  spellCatalog = [],
 }) => {
   const [activeWikiTab, setActiveWikiTab] = useState<'build' | 'counters' | 'abilities' | 'tactics'>(initialTab);
+  const [selectedBuild, setSelectedBuild] = useState(() => sourceHero?.hokfire_guide?.full_build?.length ? 'hokfire' : sourceHero?.hokstats_guide?.build_variants?.[0] ? `hokstats:${sourceHero.hokstats_guide.build_variants[0].id}` : 'hokfire');
   const hero = useMemo(() => displayCopy(sourceHero), [sourceHero]);
   const dialog = useDialogFocus(!!sourceHero, onClose);
   useEffect(() => setActiveWikiTab(initialTab), [initialTab]);
+  useEffect(() => {
+    const hasHokfire = Boolean(sourceHero?.hokfire_guide?.full_build?.length);
+    const firstVariant = sourceHero?.hokstats_guide?.build_variants?.[0];
+    setSelectedBuild(hasHokfire ? 'hokfire' : firstVariant ? `hokstats:${firstVariant.id}` : 'hokfire');
+  }, [sourceHero?.hero_id]);
 
   if (!hero) return null;
 
-  const idMap = new Map<number, Hero>();
-  const slugMap = new Map<string, Hero>();
-  allHeroes.forEach((h) => {
-    idMap.set(h.hero_id, h);
-    slugMap.set(h.slug, h);
-    slugMap.set(h.slug.replace(/-/g, '').toLowerCase(), h);
-  });
+  const idMap = new Map<number, Hero>(allHeroes.map((h) => [h.hero_id, h]));
 
   const hGuide = hero.hokfire_guide;
-  const hCounters = hero.hokfire_counters;
-  const kpl = hero.kpl_matchup;
   const abilities = hero.abilities || [];
-
-  // Set of opponents that this hero actually beats (favorable according to HOKFIRE or KPL pro stats)
-  const favorableAgainstSet = new Set<string>();
-  if (hCounters?.strong_against) {
-    hCounters.strong_against.forEach((s) => favorableAgainstSet.add(s.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()));
-  }
-  if (kpl?.best_matchups) {
-    kpl.best_matchups.forEach((m) => favorableAgainstSet.add(m.opponent_name.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()));
-  }
+  const buildVariants = hero.hokstats_guide?.build_variants || [];
+  const selectedVariant = selectedBuild.startsWith('hokstats:') ? buildVariants.find(build => `hokstats:${build.id}` === selectedBuild) : undefined;
+  const activeBuildItems = selectedVariant?.items || hGuide?.full_build || [];
+  const activeBuildLabel = selectedVariant ? `HoKStats · ${selectedVariant.name}` : 'HOKFIRE';
+  const selectedSpellName = hGuide?.spell || '';
+  const selectedSpell = selectedSpellName ? spellCatalog.find(spell => spell.name.toLowerCase() === selectedSpellName.toLowerCase()) : undefined;
+  const findItem = (name: string) => itemCatalog.find(item => item.name.toLowerCase() === name.toLowerCase()) || getItemMeta(name);
 
   return (
     <div className="wiki-drawer fixed inset-0 z-[70] overflow-hidden bg-black/70 backdrop-blur-sm flex justify-end transition-opacity">
@@ -159,7 +338,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
             }`}
           >
             <Wrench className="w-3.5 h-3.5" />
-            <span>Build HOKFIRE</span>
+            <span>Build & Item</span>
           </button>
 
           <button
@@ -208,28 +387,45 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
           {activeWikiTab === 'build' && (
             <div className="space-y-4">
               {/* Core & Full Build */}
-              {hGuide && hGuide.full_build.length > 0 ? (
+              {buildVariants.length > 0 && (
+                <label className="block space-y-1.5">
+                  <span className="text-xs font-bold text-slate-400">Pilih preset build</span>
+                  <select aria-label="Preset build" value={selectedBuild} onChange={event => setSelectedBuild(event.target.value)} className="w-full rounded-lg border border-[#30394A] bg-[#10151E] px-3 py-2 text-sm text-white">
+                    {hGuide?.full_build.length ? <option value="hokfire">HOKFIRE · Build utama</option> : null}
+                    {buildVariants.map(build => <option key={build.id} value={`hokstats:${build.id}`}>HoKStats · {build.name}{build.use_case ? ` — ${build.use_case}` : ''}</option>)}
+                  </select>
+                </label>
+              )}
+              {selectedVariant && hero.hokstats_guide && <div className="flex items-center justify-between rounded-lg border border-[#263142] bg-[#121824] px-3 py-2 text-xs"><span className="text-slate-300">Build HoKStats · {selectedVariant.name}</span><a className="text-slate-400 underline underline-offset-2 hover:text-white" href={hero.hokstats_guide.source.url} target="_blank" rel="noreferrer">Sumber</a></div>}
+              {activeBuildItems.length > 0 ? (
                 <>
                   <div className="p-3 bg-[#12161F] border border-[#232A38] rounded-xl space-y-2.5">
                     <div className="flex items-center justify-between">
                       <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
                         <Sparkles className="w-3.5 h-3.5 text-[#F5C451]" />
-                        <span>Rekomendasi Full Build HOKFIRE</span>
+                        <span>Rekomendasi Full Build {activeBuildLabel}</span>
                       </h4>
-                      {hGuide.spell && (
-                        <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-[#1A202C] border border-amber-900/40">
-                          <AssetThumbnail src={`/assets/skills/${hGuide.spell.toLowerCase().trim()}.png`} name={hGuide.spell} kind="item" className="w-4 h-4 rounded-full object-cover" />
-                          <span className="text-xs font-mono text-amber-300 font-bold">
-                            {hGuide.spell}
-                          </span>
-                        </div>
+                      {selectedSpellName && (
+                        <details className="relative rounded-lg bg-[#1A202C] border border-amber-900/40 px-2 py-1">
+                          <summary className="flex cursor-pointer list-none items-center gap-1.5 text-xs font-mono text-amber-300 font-bold">
+                            <AssetThumbnail src={selectedSpell?.icon || `/assets/skills/${selectedSpellName.toLowerCase().trim()}.png`} name={selectedSpellName} kind="item" className="w-4 h-4 rounded-full object-cover" />
+                            {selectedSpellName} · detail spell
+                          </summary>
+                          <div className="absolute right-0 z-10 mt-2 w-64 rounded-xl border border-[#30394A] bg-[#10151E] p-3 shadow-xl space-y-2">
+                            {selectedSpell?.sources.hokfire?.effect && <p className="text-xs text-slate-200"><strong className="text-amber-300">HOKFIRE:</strong> {selectedSpell.sources.hokfire.effect}</p>}
+                            {selectedSpell?.sources.hokstats && <div className="text-xs text-slate-200 space-y-1"><p><strong className="text-emerald-300">HoKStats:</strong> {selectedSpell.sources.hokstats.effect}</p>{selectedSpell.sources.hokstats.cooldown && <p>Cooldown: {selectedSpell.sources.hokstats.cooldown}</p>}{selectedSpell.sources.hokstats.best_for.length > 0 && <p>Disarankan untuk: {selectedSpell.sources.hokstats.best_for.join(', ')}</p>}</div>}
+                            {selectedSpell?.sources.hokstats?.source && <a className="text-xs text-slate-500 underline underline-offset-2 hover:text-slate-300" href={selectedSpell.sources.hokstats.source.url} target="_blank" rel="noreferrer">Sumber HoKStats</a>}
+                            {!selectedSpell && <p className="text-xs text-slate-400">{selectedSpellName}</p>}
+                          </div>
+                        </details>
                       )}
                     </div>
 
                     <div className="grid grid-cols-2 gap-2">
-                      {hGuide.full_build.map((item, idx) => {
-                        const isCore = hGuide.core_items.includes(item);
-                        const meta = getItemMeta(item);
+                      {activeBuildItems.map((item, idx) => {
+                        const isCore = !selectedVariant && Boolean(hGuide?.core_items.includes(item));
+                        const catalogMeta = findItem(item) && 'sources' in (findItem(item) as object) ? findItem(item) as ItemCatalogEntry : undefined;
+                        const meta = catalogMeta || getItemMeta(item);
                         return (
                           <div
                             key={idx}
@@ -260,6 +456,13 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                               >
                                 {isCore ? 'Item inti' : `Slot #${idx + 1}`}
                               </span>
+                              {(meta?.desc || catalogMeta?.sources.hokstats) && <details className="mt-1.5">
+                                <summary className="cursor-pointer text-xs text-sky-300">Detail item</summary>
+                                <div className="mt-1.5 space-y-1 text-xs text-slate-300">
+                                  {meta?.desc && <p><strong className="text-amber-300">HOKFIRE:</strong> {meta.desc}</p>}
+                                  {catalogMeta?.sources.hokstats && <div><strong className="text-slate-200">HoKStats:</strong>{Object.entries(catalogMeta.sources.hokstats.stats).map(([key, value]) => <p key={key}>{key}: {value}</p>)}{catalogMeta.sources.hokstats.passive && <p>Passive: {catalogMeta.sources.hokstats.passive}</p>}{catalogMeta.sources.hokstats.active && <p>Active: {catalogMeta.sources.hokstats.active}</p>}{catalogMeta.sources.hokstats.build_path.length > 0 && <p>Build path: {catalogMeta.sources.hokstats.build_path.join(' → ')}</p>}<a href={catalogMeta.sources.hokstats.source.url} target="_blank" rel="noreferrer" className="text-slate-500 underline underline-offset-2 hover:text-slate-300">Sumber HoKStats</a></div>}
+                                </div>
+                              </details>}
                             </div>
                           </div>
                         );
@@ -268,7 +471,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                   </div>
 
                   {/* Situational Item Swaps */}
-                  {hGuide.situational_items.length > 0 && (
+                  {hGuide && hGuide.situational_items.length > 0 && (
                     <div className="p-3 bg-[#12161F] border border-[#232A38] rounded-xl space-y-2">
                       <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
                         <Shield className="w-3.5 h-3.5 text-[#B8FF01]" />
@@ -313,7 +516,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                   )}
 
                   {/* Arcana Setup */}
-                  {hGuide.arcana.length > 0 && (
+                  {hGuide && hGuide.arcana.length > 0 && (
                     <div className="p-3 bg-[#12161F] border border-[#232A38] rounded-xl space-y-2">
                       <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center justify-between">
                         <span>Susunan Arcana Resmi</span>
@@ -361,10 +564,10 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                   )}
 
                   {/* Skill Priority */}
-                  {hGuide.skill_priority && (
+                  {hGuide?.skill_priority && (
                     <div className="p-2.5 bg-[#12161F] border border-[#232A38] rounded-xl flex items-center justify-between">
                       <span className="text-xs text-slate-400">Prioritas Leveling Skill:</span>
-                      <span className="text-xs font-bold text-[#B8FF01] font-mono">{hGuide.skill_priority}</span>
+                      <span className="text-xs font-bold text-[#B8FF01] font-mono">{hGuide?.skill_priority}</span>
                     </div>
                   )}
                 </>
@@ -379,354 +582,8 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
 
           {/* TAB 2: COUNTERS & MATCHUPS */}
           {activeWikiTab === 'counters' && (
-            <div className="space-y-4">
-              {/* SECTION 1: KPL OFFICIAL PRO TOURNAMENT MATCHUPS (11,141 Matches Data) */}
-              {kpl && (kpl.total_picks > 0 || kpl.worst_matchups.length > 0 || kpl.best_matchups.length > 0) && (
-                <div className="p-3.5 bg-[#121824] border border-[#23334D] rounded-xl space-y-3 shadow-lg">
-                  <div className="flex items-center justify-between border-b border-[#23334D] pb-2">
-                    <div className="flex items-center gap-2">
-                      <Trophy className="w-4 h-4 text-[#F5C451]" />
-                      <h4 className="text-xs font-black text-white uppercase tracking-wider">
-                        KPL Pro Tournament Matchups
-                      </h4>
-                    </div>
-                    <div className="flex items-center gap-1.5 text-xs font-mono">
-                      <span className="px-1.5 py-0.5 rounded bg-[#1A2233] text-slate-300 border border-[#2A3750]">
-                        {kpl.total_picks} Picks
-                      </span>
-                      <span className="px-1.5 py-0.5 rounded bg-[#1A2233] text-amber-300 border border-[#2A3750]">
-                        {kpl.total_bans} Bans
-                      </span>
-                      <span className="px-1.5 py-0.5 rounded bg-[#1A2233] text-emerald-400 font-bold border border-[#2A3750]">
-                        {(kpl.overall_winrate * 100).toFixed(1)}% WR
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* KPL Hard Counters (Worst Matchups) */}
-                  {kpl.worst_matchups.length > 0 && (
-                    <div className="space-y-1.5">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-mono text-rose-400 font-bold flex items-center gap-1">
-                          <ShieldBan className="w-4 h-4" aria-hidden="true" /> HARD COUNTER DI TURNAMEN KPL:
-                        </span>
-                        <span className="text-xs font-mono text-slate-500">Winrate Hero Rendah</span>
-                      </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-                        {kpl.worst_matchups.map((m) => {
-                          const rel = idMap.get(m.opponent_id);
-                          return (
-                            <button
-                              key={m.opponent_id}
-                              onClick={() => rel && onSelectRelatedHero(rel)}
-                              className="p-2 rounded-lg bg-rose-950/30 border border-rose-900/40 hover:border-rose-500/70 flex items-center justify-between text-left transition-all group"
-                            >
-                              <div className="flex items-center gap-2 min-w-0">
-                                <AssetThumbnail src={m.opponent_avatar} name={m.opponent_name} kind="hero" className="w-7 h-7 rounded-md object-cover border border-rose-800/40 group-hover:scale-105 transition-transform" />
-                                <div className="min-w-0">
-                                  <span className="text-xs font-bold text-white block truncate">
-                                    {m.opponent_name}
-                                  </span>
-                                  <span className="text-xs font-mono text-slate-400 block">
-                                    {m.wins}W - {m.losses}L ({m.total_matches} Game)
-                                  </span>
-                                </div>
-                              </div>
-                              <span className="text-xs font-mono font-black text-rose-400 pl-1.5 flex-shrink-0">
-                                {(m.hero_winrate * 100).toFixed(1)}% WR
-                              </span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* KPL Favorable Targets (Best Matchups) */}
-                  {kpl.best_matchups.length > 0 && (
-                    <div className="space-y-1.5 pt-1">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-mono text-emerald-400 font-bold flex items-center gap-1">
-                          <Swords className="w-4 h-4" aria-hidden="true" /> TARGET EMPUK DI TURNAMEN KPL:
-                        </span>
-                        <span className="text-xs font-mono text-slate-500">Winrate Hero Tinggi</span>
-                      </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-                        {kpl.best_matchups.map((m) => {
-                          const rel = idMap.get(m.opponent_id);
-                          return (
-                            <button
-                              key={m.opponent_id}
-                              onClick={() => rel && onSelectRelatedHero(rel)}
-                              className="p-2 rounded-lg bg-emerald-950/30 border border-emerald-900/40 hover:border-emerald-500/70 flex items-center justify-between text-left transition-all group"
-                            >
-                              <div className="flex items-center gap-2 min-w-0">
-                                <AssetThumbnail src={m.opponent_avatar} name={m.opponent_name} kind="hero" className="w-7 h-7 rounded-md object-cover border border-emerald-800/40 group-hover:scale-105 transition-transform" />
-                                <div className="min-w-0">
-                                  <span className="text-xs font-bold text-white block truncate">
-                                    {m.opponent_name}
-                                  </span>
-                                  <span className="text-xs font-mono text-slate-400 block">
-                                    {m.wins}W - {m.losses}L ({m.total_matches} Game)
-                                  </span>
-                                </div>
-                              </div>
-                              <span className="text-xs font-mono font-black text-emerald-400 pl-1.5 flex-shrink-0">
-                                {(m.hero_winrate * 100).toFixed(1)}% WR
-                              </span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* KPL Duet Synergies (Best Team Combos) */}
-                  {kpl.synergies && kpl.synergies.length > 0 && (
-                    <div className="space-y-1.5 pt-1 border-t border-[#1C2638]">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-mono text-indigo-400 font-bold flex items-center gap-1">
-                          <Link2 className="w-4 h-4" aria-hidden="true" /> REKAN DUET SINERGI TERBAIK DI TURNAMEN KPL:
-                        </span>
-                        <span className="text-xs font-mono text-slate-500">Duet Winrate Tinggi</span>
-                      </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-                        {kpl.synergies.map((s) => {
-                          const rel = idMap.get(s.partner_id);
-                          return (
-                            <button
-                              key={s.partner_id}
-                              onClick={() => rel && onSelectRelatedHero(rel)}
-                              className="p-2 rounded-lg bg-indigo-950/30 border border-indigo-900/40 hover:border-indigo-500/70 flex items-center justify-between text-left transition-all group"
-                            >
-                              <div className="flex items-center gap-2 min-w-0">
-                                <AssetThumbnail src={s.partner_avatar} name={s.partner_name} kind="hero" className="w-7 h-7 rounded-md object-cover border border-indigo-800/40 group-hover:scale-105 transition-transform" />
-                                <div className="min-w-0">
-                                  <span className="text-xs font-bold text-white block truncate">
-                                    {s.partner_name}
-                                  </span>
-                                  <span className="text-xs font-mono text-slate-400 block">
-                                    {s.wins}W - {s.losses}L ({s.total_matches} Game Bersama)
-                                  </span>
-                                </div>
-                              </div>
-                              <span className="text-xs font-mono font-black text-indigo-400 pl-1.5 flex-shrink-0">
-                                {(s.duet_winrate * 100).toFixed(1)}% WR
-                              </span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* SECTION 2: HOKFIRE Verified Matchups */}
-              {hCounters && (hCounters.weak_against.length > 0 || hCounters.strong_against.length > 0 || hCounters.synergizes.length > 0) && (
-                <div className="p-3 bg-[#151A24] border border-[#2A3446] rounded-xl space-y-3">
-                  <h4 className="text-xs font-extrabold text-[#F5C451] uppercase tracking-wider flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>HOKFIRE Official Matchups</span>
-                  </h4>
-
-                  {/* Weak Against (Hard Counter) */}
-                  {hCounters.weak_against.length > 0 && (
-                    <div>
-                      <span className="text-xs font-mono text-rose-400 font-bold block mb-1">
-                        <ShieldBan className="w-4 h-4 inline-block mr-1" aria-hidden="true" /> LEMAH MELAWAN (Counter Alami HOKFIRE):
-                      </span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {hCounters.weak_against.map((slug) => {
-                          const rel = slugMap.get(slug.replace(/-/g, '').toLowerCase());
-                          return (
-                            <button
-                              key={slug}
-                              onClick={() => rel && onSelectRelatedHero(rel)}
-                              className="flex items-center gap-1 px-2 py-1 rounded-lg bg-rose-950/60 text-rose-200 border border-rose-800/50 text-xs font-bold hover:border-rose-400 transition-all"
-                            >
-                              {rel && <AssetThumbnail src={rel.portrait_asset} name={rel.name} kind="hero" className="w-3.5 h-3.5 rounded-full" />}
-                              <span>{rel ? rel.name : slug}</span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Strong Against */}
-                  {hCounters.strong_against.length > 0 && (
-                    <div>
-                      <span className="text-xs font-mono text-emerald-400 font-bold block mb-1">
-                        <Swords className="w-4 h-4 inline-block mr-1" aria-hidden="true" /> KUAT MELAWAN (Target Empuk):
-                      </span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {hCounters.strong_against.map((slug) => {
-                          const rel = slugMap.get(slug.replace(/-/g, '').toLowerCase());
-                          return (
-                            <button
-                              key={slug}
-                              onClick={() => rel && onSelectRelatedHero(rel)}
-                              className="flex items-center gap-1 px-2 py-1 rounded-lg bg-emerald-950/60 text-emerald-200 border border-emerald-800/50 text-xs font-bold hover:border-emerald-400 transition-all"
-                            >
-                              {rel && <AssetThumbnail src={rel.portrait_asset} name={rel.name} kind="hero" className="w-3.5 h-3.5 rounded-full" />}
-                              <span>{rel ? rel.name : slug}</span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Synergizes */}
-                  {hCounters.synergizes.length > 0 && (
-                    <div>
-                      <span className="text-xs font-mono text-indigo-400 font-bold block mb-1">
-                        <Link2 className="w-4 h-4 inline-block mr-1" aria-hidden="true" /> REKAN SINERGI TERBAIK (Duet Kombo):
-                      </span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {hCounters.synergizes.map((slug) => {
-                          const rel = slugMap.get(slug.replace(/-/g, '').toLowerCase());
-                          return (
-                            <button
-                              key={slug}
-                              onClick={() => rel && onSelectRelatedHero(rel)}
-                              className="flex items-center gap-1 px-2 py-1 rounded-lg bg-indigo-950/60 text-indigo-200 border border-indigo-800/50 text-xs font-bold hover:border-indigo-400 transition-all"
-                            >
-                              {rel && <AssetThumbnail src={rel.portrait_asset} name={rel.name} kind="hero" className="w-3.5 h-3.5 rounded-full" />}
-                              <span>{rel ? rel.name : slug}</span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* SECTION 3: Kurohiko Community Counters with Smart Conflict Resolution */}
-              <div className="space-y-4">
-                <div className="flex items-center justify-between text-xs text-slate-300 font-bold uppercase tracking-wider">
-                  <span>Matriks Counter Komunitas (Kurohiko)</span>
-                  <span className="text-xs text-slate-500 font-mono">
-                    {((hero.countered_by?.length || 0) + (hero.counters?.length || 0))} Matchup
-                  </span>
-                </div>
-
-                {/* 3A: Lemah Melawan (Hero yang meng-counter kita) */}
-                <div className="space-y-2.5">
-                  <span className="text-xs font-black uppercase text-rose-400 tracking-wider flex items-center gap-1">
-                    <span><ShieldBan className="w-4 h-4 inline-block mr-1" aria-hidden="true" /> Lemah Melawan (Counter Alami):</span>
-                  </span>
-
-                  {(!hero.countered_by || hero.countered_by.length === 0) ? (
-                    <p className="text-xs text-slate-500 italic p-2.5 bg-[#12161F] rounded-xl border border-[#232A38]">
-                      Belum ada counter alami spesifik yang tercatat.
-                    </p>
-                  ) : (
-                    hero.countered_by.map((c, i) => {
-                      const predatorHero = c.counter_id ? idMap.get(c.counter_id) : null;
-                      const cleanCounterName = c.counter_name.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-                      const isDisputed = favorableAgainstSet.has(cleanCounterName);
-
-                      return (
-                        <div
-                          key={i}
-                          onClick={() => predatorHero && onSelectRelatedHero(predatorHero)}
-                          className={`p-3 rounded-xl border transition-all space-y-2 cursor-pointer ${
-                            isDisputed
-                              ? 'bg-[#181512] border-amber-800/50 hover:border-amber-600'
-                              : 'bg-[#12161F] border-[#232A38] hover:border-[#334155]'
-                          }`}
-                        >
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2.5">
-                              {predatorHero ? (
-                                <AssetThumbnail src={predatorHero.portrait_asset} name={predatorHero.name} kind="hero" className="w-8 h-8 rounded-lg object-cover" />
-                              ) : (
-                                <div className="w-8 h-8 rounded-lg bg-[#1A202C] flex items-center justify-center text-xs font-bold">
-                                  {c.counter_name[0]}
-                                </div>
-                              )}
-                              <div>
-                                <span className="font-bold text-xs text-white block">{c.counter_name}</span>
-                                {isDisputed && (
-                                  <span className="text-xs font-mono text-amber-400 font-semibold block">
-                                     Bertentangan dgn Meta KPL / HOKFIRE
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                            <span
-                              className={`text-xs uppercase font-bold px-2 py-0.5 rounded font-mono flex items-center gap-1 ${
-                                isDisputed
-                                  ? 'bg-amber-950/80 text-amber-300 border border-amber-800/60'
-                                  : c.severity === 'hard'
-                                  ? 'bg-rose-950 text-rose-400 border border-rose-800/40'
-                                  : 'bg-amber-950 text-amber-400 border border-amber-800/40'
-                              }`}
-                            >
-                              {isDisputed && <AlertTriangle className="w-2.5 h-2.5" />}
-                              <span>{isDisputed ? 'DISPUTED' : c.severity}</span>
-                            </span>
-                          </div>
-
-                          <p className="text-xs text-slate-300 leading-relaxed pl-1">{c.reason}</p>
-
-                          {isDisputed && (
-                            <div className="p-2.5 rounded-lg bg-amber-950/30 border border-amber-900/40 text-xs text-amber-200/90 leading-relaxed flex items-start gap-2">
-                              <Lightbulb className="w-4 h-4 text-amber-400 flex-shrink-0" aria-hidden="true" />
-                              <div>
-                                <strong className="text-amber-300">Catatan Meta Turnamen:</strong> Data empiris turnamen pro (KPL) dan panduan resmi HOKFIRE mencatat <strong>{hero.name}</strong> justru lebih unggul saat berhadapan dengan <strong>{c.counter_name}</strong> pada patch kompetitif aktif.
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })
-                  )}
-                </div>
-
-                {/* 3B: Kuat Melawan (Target empuk yang di-counter kita) */}
-                {hero.counters && hero.counters.length > 0 && (
-                  <div className="space-y-2.5 pt-2 border-t border-[#232A38]/60">
-                    <span className="text-xs font-black uppercase text-emerald-400 tracking-wider flex items-center gap-1">
-                      <span><Swords className="w-4 h-4 inline-block mr-1" aria-hidden="true" /> Kuat Melawan (Target Empuk):</span>
-                    </span>
-
-                    {hero.counters.map((c, i) => {
-                      const targetHero = c.target_id ? idMap.get(c.target_id) : null;
-                      return (
-                        <div
-                          key={i}
-                          onClick={() => targetHero && onSelectRelatedHero(targetHero)}
-                          className="p-3 rounded-xl border border-[#232A38] bg-[#12161F] hover:border-[#334155] transition-all space-y-1.5 cursor-pointer"
-                        >
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2.5">
-                              {targetHero ? (
-                                <AssetThumbnail src={targetHero.portrait_asset} name={targetHero.name} kind="hero" className="w-8 h-8 rounded-lg object-cover" />
-                              ) : (
-                                <div className="w-8 h-8 rounded-lg bg-[#1A202C] flex items-center justify-center text-xs font-bold">
-                                  {c.target_name[0]}
-                                </div>
-                              )}
-                              <span className="font-bold text-xs text-white">{c.target_name}</span>
-                            </div>
-                            <span className="text-xs uppercase font-bold px-2 py-0.5 rounded font-mono bg-emerald-950 text-emerald-400 border border-emerald-800/40">
-                              {c.severity}
-                            </span>
-                          </div>
-                          <p className="text-xs text-slate-300 leading-relaxed pl-1">{c.reason}</p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            </div>
+            <MatchupPanel hero={hero} allHeroes={allHeroes} onSelectRelatedHero={onSelectRelatedHero} />
           )}
-
           {/* TAB 3: ABILITIES & PROS / CONS */}
           {activeWikiTab === 'abilities' && (
             <div className="space-y-4">
@@ -766,6 +623,15 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                   </div>
                 </div>
               )}
+
+              {hero.hokstats_guide && (hero.hokstats_guide.pros.length > 0 || hero.hokstats_guide.cons.length > 0) && <div className="rounded-xl border border-[#263142] bg-[#121824] p-3 space-y-2">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200">Panduan HoKStats</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {hero.hokstats_guide.pros.length > 0 && <div><span className="text-xs font-bold text-emerald-300">Kelebihan</span><ul className="mt-1 space-y-1">{hero.hokstats_guide.pros.map((item, index) => <li key={index} className="text-xs text-slate-200">• {item}</li>)}</ul></div>}
+                  {hero.hokstats_guide.cons.length > 0 && <div><span className="text-xs font-bold text-rose-300">Kelemahan</span><ul className="mt-1 space-y-1">{hero.hokstats_guide.cons.map((item, index) => <li key={index} className="text-xs text-slate-200">• {item}</li>)}</ul></div>}
+                </div>
+                <a className="text-xs text-slate-500 underline underline-offset-2 hover:text-slate-300" href={hero.hokstats_guide.source.url} target="_blank" rel="noreferrer">Sumber HoKStats · {hero.hokstats_guide.source.fetched_at.slice(0, 10)}</a>
+              </div>}
 
               {/* Ability Descriptions */}
               <div className="space-y-2.5">
@@ -833,6 +699,11 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                   })
                 )}
               </div>
+              {hero.hokstats_guide && hero.hokstats_guide.skills.length > 0 && <div className="space-y-2.5">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300">Detail skill HoKStats</h4>
+                {hero.hokstats_guide.skills.map((skill, index) => <div key={`${skill.name}-${index}`} className="rounded-xl border border-[#232A38] bg-[#12161F] p-3 space-y-1"><div className="flex items-center gap-2"><h5 className="text-sm font-bold text-white">{skill.name || `Skill ${index + 1}`}</h5>{skill.type && <span className="rounded border border-slate-700 px-1.5 py-0.5 text-[10px] uppercase text-slate-400">{skill.type}</span>}</div><p className="text-xs leading-relaxed text-slate-300">{skill.description}</p></div>)}
+                <a className="text-xs text-slate-500 underline" href={hero.hokstats_guide.source.url} target="_blank" rel="noreferrer">Sumber HoKStats</a>
+              </div>}
             </div>
           )}
 
@@ -851,6 +722,13 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                   </div>
                 </div>
               ) : null}
+
+              {hero.hokstats_guide && (hero.hokstats_guide.pick_when.length || hero.hokstats_guide.avoid_when.length || hero.hokstats_guide.power_spikes.length || hero.hokstats_guide.common_mistakes.length || hero.hokstats_guide.partners.length) > 0 && <div className="p-3.5 bg-[#121824] border border-[#263142] rounded-xl space-y-3">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200">Panduan draft & permainan HoKStats</h4>
+                {([['Pilih saat', hero.hokstats_guide.pick_when], ['Hindari saat', hero.hokstats_guide.avoid_when], ['Power spike', hero.hokstats_guide.power_spikes], ['Kesalahan umum', hero.hokstats_guide.common_mistakes]] as const).filter(([, values]) => values.length > 0).map(([label, values]) => <div key={label}><h5 className="text-xs font-bold text-slate-200">{label}</h5><ul className="mt-1 space-y-1">{values.map((value, index) => <li key={index} className="text-xs leading-relaxed text-slate-300">• {value}</li>)}</ul></div>)}
+                {hero.hokstats_guide.partners.length > 0 && <div><h5 className="text-xs font-bold text-slate-200">Partner yang disarankan</h5><div className="mt-1 flex flex-wrap gap-1.5">{hero.hokstats_guide.partners.map((partner, index) => { const related = partner.hero_id ? idMap.get(partner.hero_id) : undefined; return <button key={`${partner.hero_id}-${index}`} type="button" disabled={!related} onClick={() => related && onSelectRelatedHero(related)} className="rounded-lg border border-indigo-800/50 bg-indigo-950/30 px-2 py-1 text-xs text-indigo-200">{related?.name || partner.hero_name}</button>; })}</div></div>}
+                <a className="text-xs text-slate-500 underline underline-offset-2 hover:text-slate-300" href={hero.hokstats_guide.source.url} target="_blank" rel="noreferrer">Sumber HoKStats · {hero.hokstats_guide.source.fetched_at.slice(0, 10)}</a>
+              </div>}
 
               {/* Cara Melawan / Menghadapi dari Kurohiko */}
               <div>

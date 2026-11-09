@@ -18,6 +18,7 @@ export function computeTacticalDeltas(
     { key: 'frontline_durability', label: 'Frontline Durability', desc: 'Ketahanan badan & penahan burst damage musuh' },
     { key: 'enemy_carry_shutdown', label: 'Carry Shutdown', desc: 'Kemampuan mengunci dan melumpuhkan damage dealer musuh' },
     { key: 'draft_flexibility', label: 'Draft Flexibility', desc: 'Fleksibilitas rotasi lane & penyesuaian strategi' },
+    { key: 'team_utility', label: 'Utilitas tim', desc: 'Shield, heal, buff, cleanse, dan imunitas crowd control' },
   ];
 
   const deltas: TacticalDelta[] = [];

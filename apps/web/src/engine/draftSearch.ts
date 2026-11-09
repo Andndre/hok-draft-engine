@@ -51,7 +51,7 @@ export function evaluatePosition(position: DraftPosition, context: SearchContext
     const radar = evaluateTacticalScores(ours, enemy);
     const coverage = analyzeLaneOccupancy(ours).occupiedLanes.size;
     let score = ours.reduce((sum, h) => sum + (h.win_rate - 0.48) * 4 + tierWeight(h) + h.pick_rate * 2.8, 0);
-    score += radar.early_game_pressure + radar.cc_chain_lockdown + radar.frontline_durability + radar.enemy_carry_shutdown + radar.draft_flexibility;
+    score += radar.early_game_pressure + radar.cc_chain_lockdown + radar.frontline_durability + radar.enemy_carry_shutdown + radar.draft_flexibility + radar.team_utility;
     score += counterBonus(ours, enemy) - (ours.length - coverage) * 2.5;
     for (let i = 0; i < ours.length; i++) for (let j = i + 1; j < ours.length; j++) score += pairBonus(ours[i], ours[j], context);
     if (ours.length === 5) return score;

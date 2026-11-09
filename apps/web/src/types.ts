@@ -66,6 +66,61 @@ export interface HokfireCounters {
   synergizes: string[];
 }
 
+export interface SourceAttribution {
+  source: string;
+  url: string;
+  fetched_at: string;
+  patch_version: string | null;
+  review_status: 'pending' | 'approved' | 'rejected';
+  source_hash?: string;
+  reviewed_by?: string;
+}
+
+export interface HoKStatsMatchup {
+  relation: 'strong_against' | 'countered_by';
+  hero_id: number;
+  hero_name: string;
+  evidence: string;
+  source: SourceAttribution;
+}
+
+export interface HoKStatsGuide {
+  skills: Array<{ name: string; description: string; type?: string }>;
+  pick_when: string[];
+  avoid_when: string[];
+  power_spikes: string[];
+  common_mistakes: string[];
+  pros: string[];
+  cons: string[];
+  matchups: HoKStatsMatchup[];
+  partners: Array<{ hero_id: number | null; hero_name: string; source: SourceAttribution }>;
+  build_variants: Array<{ id: string; name: string; use_case: string; items: string[] }>;
+  source: SourceAttribution;
+}
+
+export interface ItemCatalogEntry {
+  id: number | string | null;
+  name: string;
+  type: string;
+  desc: string;
+  icon: string;
+  sources: {
+    hokfire?: { description: string; source: { source: string; url: string } };
+    hokstats?: { stats: Record<string, string>; passive: string; active?: string; build_path: string[]; source: SourceAttribution };
+  };
+}
+
+export interface SpellCatalogEntry {
+  id: string;
+  name: string;
+  effect: string;
+  icon: string;
+  sources: {
+    hokfire?: { effect: string; source: { source: string; url: string } };
+    hokstats?: { effect: string; cooldown: string; best_for: string[]; source: SourceAttribution };
+  };
+}
+
 export interface KplMatchupEntry {
   opponent_id: number;
   opponent_name: string;
@@ -118,6 +173,7 @@ export interface Hero {
   is_global_released?: boolean;
   hokfire_guide?: HokfireGuide | null;
   hokfire_counters?: HokfireCounters | null;
+  hokstats_guide?: HoKStatsGuide;
   kpl_matchup?: KplMatchup | null;
   abilities?: HeroAbility[];
   tactical_profile?: TacticalProfile;
@@ -133,9 +189,15 @@ export interface TacticalVector {
   frontline_durability: number; // 0.0 - 1.0
   enemy_carry_shutdown: number; // 0.0 - 1.0
   draft_flexibility: number;    // 0.0 - 1.0
+  team_utility: number;         // 0.0 - 1.0, reviewed ally effects
 }
 
-export const TACTICAL_TAGS = ['mobility', 'suppress', 'engage', 'disengage', 'frontline', 'dive_vulnerable'] as const;
+export const TACTICAL_TAGS = [
+  'mobility', 'suppress', 'engage', 'disengage', 'frontline', 'dive_vulnerable',
+  'dash', 'blink', 'leap', 'teleport', 'cc_knockup', 'cc_knockback', 'cc_pull', 'cc_stun', 'cc_root', 'cc_silence', 'cc_slow',
+  'ally_shield', 'ally_heal', 'ally_move_speed_buff', 'ally_attack_speed_buff', 'ally_damage_buff', 'ally_cleanse', 'ally_cc_immunity',
+  'peel', 'kite_vulnerable', 'low_damage', 'weak_early',
+] as const;
 export type TacticalTag = typeof TACTICAL_TAGS[number];
 export interface TacticalProfile {
   tags: Partial<Record<TacticalTag, boolean>>;
@@ -145,15 +207,17 @@ export interface TacticalProfile {
   provider?: 'nanojev' | 'typesafe';
 }
 export interface DataManifest {
-  schema_version: 1;
+  schema_version: 2;
   dataset_version: string;
   hero_count: number;
-  artifacts: Record<'heroes' | 'synergy' | 'releases', { file: string; sha256: string }>;
+  artifacts: Record<'heroes' | 'synergy' | 'releases' | 'items' | 'spells', { file: string; sha256: string }>;
 }
 export interface TournamentDataset {
   version: string;
   heroes: Hero[];
   synergy: Record<string, any>;
+  items: ItemCatalogEntry[];
+  spells: SpellCatalogEntry[];
   manifest: DataManifest;
 }
 

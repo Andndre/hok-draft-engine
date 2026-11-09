@@ -1,0 +1,722 @@
+[
+  {
+    "hero_id": 533,
+    "source_hash": "ed44cf0f54968be9b14765c581d4ad362f6ea1378b19cdb54701d0dd67805d6d",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 545,
+    "source_hash": "90760c8159116e33166fe0cd228045726ba5dca5fac8356f3e7d4d090cd2a37e",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 514,
+    "source_hash": "bec52cfc76a1d4549982ba6b8c75c90e6ea77345aac55886072667262052b8b2",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 142,
+    "source_hash": "c4684d09fd4ad11167d3a62cded18b53234c3545f8737a8645ee32fd2b2e5ecb",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 640,
+    "source_hash": "96f0a8da268c2a5b3e36d2230afcc8d2df5d703f3b36cddc300b1695c9078638",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 519,
+    "source_hash": "fb387add13a89a925e02541cf089c0df87d6708efe121144562da32d48bd43bd",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 116,
+    "source_hash": "fddbcab7e2335cc1bb2dce55d22be633093689620a3e4a925e215d9a26679531",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 199,
+    "source_hash": "f9f1b16c38137a47bc3b4698563b092d44b6703d8838034a222b554eaf56a63f",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 166,
+    "source_hash": "3d1379535b3fc84947a7d8c65d55fc3221b11f00ca35f7608d572183adfad1bb",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 556,
+    "source_hash": "e096a8168a7173308761a1b33608384fd17eccc00a67c316fff18d557560c14b",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 183,
+    "source_hash": "e674e9567afeef1bd2d91d7226f18ce894dda1e69fbf2cb610edbdfbe5e75ed2",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 517,
+    "source_hash": "8cf34c09af481eb4ae69c09a6fb40b367bdf83ff5f442c1207fd5d0d92993d6d",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 120,
+    "source_hash": "6a810c886a8e2fe12ce17da6ba5f269e0754e1357171080357cfa89188a86c35",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 503,
+    "source_hash": "a1ca53cc61fb3f998c1ff033df6056dac30f5df26f49485aed3bcf2fd597b69d",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 646,
+    "source_hash": "eb6c101b7a7c43ef687105aee44d17d2e264a18a5a5c6893ad29cbbd509e5678",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 184,
+    "source_hash": "1778676d323d841d99e2e0ac0c7b7aa94d0d461b15dd53ca76f41270b7763dfb",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 177,
+    "source_hash": "75c1f02407ad99c8a0fa0295bc06f33a5b8eb3a083fd14e991b834511ddd6f31",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 536,
+    "source_hash": "067e977674cd63375f13369510fff2f3992cfdca2e093bf09d1b3ac3f3bede4e",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 172,
+    "source_hash": "7756dc5b3a21b419a02a4fbce470eeba53faa6c2a24ebae54445d9a666a91085",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 506,
+    "source_hash": "f6a5b58d78361903586abb4559265525b79b73a0731ea2fc6626ce30a923f40a",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 174,
+    "source_hash": "53f4f525445ba61c1aaedd6e43d3791379bcb230b23bb1650d185d706cbeeda3",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 191,
+    "source_hash": "8315c28132b6664d42cb1371bc305fed97790e3dbabdb2d142c7a39666b2abca",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 109,
+    "source_hash": "2c3e6a4d557eedad58d818b0ef8102ba517969ea59a517b05441978e1c996b75",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 537,
+    "source_hash": "5cef63db406b4031f0ce48ad07a71052ebef16569656593bd049440b0ee6688d",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 134,
+    "source_hash": "4644714c8f28eb5603b43d0bf19c3730854f5a1e2395a184004be68f0760ec85",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 133,
+    "source_hash": "5932887c4a44581122ed8f60d4eb0b90b09d8635ed383ff320e7aeeb4211552f",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 129,
+    "source_hash": "3911bef2f8ca5e7e3a9344cc6d8b3c3d488a7dd858c71f11ce91c2cbb9e8ec59",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 141,
+    "source_hash": "e6d942c831c3a3337d76b8d038819eb8c354c06f8801a4a4a20b06523fb714ad",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 159,
+    "source_hash": "513f350780044993f73f05ed8076bf2f2872fb20b0886f09bfd0b57be9f21c0e",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 187,
+    "source_hash": "7b06f9e8c03b4e6b814b56aa2d76718e7a0000225cfd5e0e885b42feb58294ad",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 119,
+    "source_hash": "319065a298603a82035ec5dffb04826cd643b53799ebc221e461dc89261826d2",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 126,
+    "source_hash": "d87ab956d95fcb99e08da6a8e850f522a557263316da9b71733d6e440f2682fe",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 509,
+    "source_hash": "e941218023e55301fcbb13a51b0c989cc345b76a2bca813ebd736845ce500ad9",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 577,
+    "source_hash": "381550de7826794bd027e260611c540865c2ea6daf8b82cf8d469d7f3af89d34",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 155,
+    "source_hash": "5e91ffc2c680d67402e6005ba5ff73cbdb4ee1fadaa5606083f1d5fd6b0f75e3",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 173,
+    "source_hash": "c247826d2d15740fd4ecb380d47b750b26565e0628109f22312306ea8068f8f9",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 128,
+    "source_hash": "fa420af770e149bf26942d66f934038627235a4b212a8901efc4a688d52d6e04",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 542,
+    "source_hash": "70c91b8443094297aaf99e5f16ba6a32601ef8715cdc6b7171c46623fed5b3d2",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 631,
+    "source_hash": "927783d3a9ed19b3c72bbafe044539158f8c6036627029bcee6c1f54859fdc06",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 583,
+    "source_hash": "2d709e5b43e045cf3a7bc7f90ec4a582a9c117d747b134decf4595bfe8b69262",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 582,
+    "source_hash": "4728e75e62079d9d0f7e2ec340e8551b93bc7163c399dc32122091210245fd10",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 584,
+    "source_hash": "d70a077010270bc766bb84854a5868235d8fc332f0f46bc735aaaf5d65a405ac",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 585,
+    "source_hash": "eef00613b9acd24137a98aa0ef6068e8899abd49ebaa6fb992987141d56a4bf2",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 581,
+    "source_hash": "286602d4e91a5d512dcc02c519f3f2215ad91424a4018d06358c7f148a133886",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 139,
+    "source_hash": "61479e8597c71372b94b347c06e1b348f0a438bf79b3b43fc020e1ef3212ebd0",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 182,
+    "source_hash": "527024f889837bb2d6040e029c4b63cf22a40042692bf71cfa3726bac3a8a172",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 115,
+    "source_hash": "42dc584511f7b430ba4cef02623fa50f4e357ea30c84cf72fda443f34023c908",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 153,
+    "source_hash": "e276c4d74e076e35120c1f0400f104f48f8f5f6d16f315c423091028f89906be",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 508,
+    "source_hash": "1c58dc66a61814e4297244a28dd01ab750e0503888760239bc75269c6bdddf5c",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 110,
+    "source_hash": "5c4f253eeae1385516653aa53772379ba7d56d7aa32ebd87e9edd509c77c37cd",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 140,
+    "source_hash": "4963925ded755be08fff3a04211ddaa66a54369db434debbbb17048be1881314",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 189,
+    "source_hash": "fe9ab8325190247759e60aef433e8dc050c7237ea75f18a64756dfb8561fb0e2",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 150,
+    "source_hash": "48d1976c9388196c2aef3eaebeb9a430a201ab686460261f9fe6435f965333eb",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 521,
+    "source_hash": "4479a532b947cdeb37f12b765ab485034063a18547ac924282371d77cf3c50ca",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 563,
+    "source_hash": "d28eb0169290b3e42a27435e74aa403836deb98e00c52a47ed88df1720476b09",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 169,
+    "source_hash": "3c9288c02f4a2ec54e5f3b6602568177a6194f4eaee632f6e39bbb8e76960ba9",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 192,
+    "source_hash": "4f65d9c2b2f1afb9777c2dbad300cc19704bd9304c8dc9ca373def52c1224a6b",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 531,
+    "source_hash": "78b49a0306ad2134a5681fdaf84a3ef4783303b9fb51cbebb944cae9eaf2f790",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 193,
+    "source_hash": "2a0a01e689e258e43cb6906406ac91a96d92d9fa9deed0338bf4f1ad9b392fc7",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 190,
+    "source_hash": "27524163b3b151e69d8ebd78c0c7824026f6e8d746460cce4301fd8b14aaf9c7",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 175,
+    "source_hash": "d5b4d6e653ba1b95f3b2c5e241c062608cbdd9862e24fc7f149fb9d8a831b423",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 111,
+    "source_hash": "a2c5a7b843d30372541cd42e91ed36980c6702aaf66afd636f9cb32e02c6727d",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 127,
+    "source_hash": "d76274945e8865aa08f182d5e7c4a752cd6ce6137a42644c9a33d8887d37b817",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 528,
+    "source_hash": "9970ee52367f2764f227f0a816a7fa3faaea79421aca243aed9fa9fd07774bba",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 168,
+    "source_hash": "47487c8e769250413d259c54c56d745ef63d7f77994ec039c882e31854159f14",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 131,
+    "source_hash": "7b8b0e304181c4ca9277d1ae0d088ace023cf1347ccae536a8a9645097d6e8cb",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 507,
+    "source_hash": "0d31d84ffc8701bed9038e8dce3e2bbe06b16f3cb1b875581862bb1bdb129573",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 105,
+    "source_hash": "8a556136d479bd1a57f1e1939bdb30b0c502aa87a382d8d78960ab2afc25bec4",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 156,
+    "source_hash": "183d4a06f483bc23d9d0feb96c2a6dd6c8955ede92a8a059708b90ac98f10fc8",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 149,
+    "source_hash": "d506eb4403a0f305cdd41a048680ff0a106bd69c92bd06d1f1706c8427add2ca",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 170,
+    "source_hash": "5e1e06e9a299534fd77c0a7f5cff1db129f08a6934aaaee68fcb6a11fe6c6572",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 114,
+    "source_hash": "3a2c8a6932c5816198b05dd568ef0f005574247a44011347506c86706800b486",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 635,
+    "source_hash": "ee16b84daa64c4913dbac4a8d12752213b5217df5e8f7ead9352a1af8da53238",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 123,
+    "source_hash": "c83958d0b9d1f70cbbb296a477beef60e8bb19656c4a0894477c08b59429817d",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 547,
+    "source_hash": "d39cf20c985ddd12a94a390a1c7224e147d618875ac06a6634e53a5ad0277680",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 112,
+    "source_hash": "ede00d14cb12319c59cd54ba0ccdddab6b085b414875d79ca8c23d531d381e7a",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 146,
+    "source_hash": "127fd8f2c65219afb7c4332176103051c5bf172d38b797fac966133100d7dee5",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 157,
+    "source_hash": "c02401972311eae3f33c6287fb1a73b38d5bbc7bf5fcd2cbe9dd84d50ec57957",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 132,
+    "source_hash": "725e7c74399ba2cda3d4ce5708e071f5836b269c03251ca390a0b6e980c98029",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 564,
+    "source_hash": "b0ff969f864880d878e08db38dd6ff03b178b19d795fb8b655cd41c74ef2f23e",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 524,
+    "source_hash": "4cd6e0afc65e9ee1427ca9b95e2ef4c118ea32718d6e8941b496ff4af30e332a",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 198,
+    "source_hash": "1d17240a4c4f2e7f70352ad5f28949a97e0ed2662ca128147af0b36edfdebaab",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 121,
+    "source_hash": "d90c82a3993b86ae43fe3edd06e7e52d4041586763056f999d8cb6562f7286e2",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 504,
+    "source_hash": "fd21a82ffbcfbf1b5782e3aeb8087f042d1901f49d371bf6199ca81766d9d75f",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 501,
+    "source_hash": "6ee83f0a5257a29e34ead4cd3bb2c40e6b0fffab87acc191a583cdd4440653e3",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 108,
+    "source_hash": "56330c87c921cdb0e9844201d0f3210e183f870f9fe90f1018354f7be2a4d252",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 154,
+    "source_hash": "6b4391870f938fbfcdd4671faf7e6b78b0470e552efc8ceec659e33ffec070bb",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 130,
+    "source_hash": "737ffa9684c0bf746cd171b803a1042e2a10a0c3d258196191d90adf79e80751",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 162,
+    "source_hash": "24e9de63aac84f860d272d9c02dbeb17a24a3e0ea27e69eadc42f556a1c81f44",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 180,
+    "source_hash": "792dd9bb18ab4cc7fc2ace82665eb50e85f533da3f729d55871f3a57382cbfe7",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 179,
+    "source_hash": "6426fbae01d734e2695c38cc7b4ecff50e1fa93341dacbd4b241b41cc353e8fe",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 502,
+    "source_hash": "66a402cb6144a93078e9ec0d3cfcf5634d434357fefcb6877fcabf918d38461c",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 534,
+    "source_hash": "f0649802bc67dc247a771f2ce34ec3c7b04e88ffc732b1064fcf3e053714125d",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 513,
+    "source_hash": "5781d71bd3bfeef0076bfc62cad38e4d1e58fa575dd8c4f3f8ca7a7338f60bf7",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 523,
+    "source_hash": "8f67c50d8283b0e79200e1228885420fe872d15c7ce9369a1eb3d67987654c26",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 196,
+    "source_hash": "4f9f963d89f8a85efd6ab8a6d8096e675b18df0f1545268a409b926c0f22185c",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 137,
+    "source_hash": "dd80d87fa240ed608234379d22ac666b0fda51e27f4cae5129ca32ed70483c30",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 118,
+    "source_hash": "0806fe9a0c3c84a61767ef62e51ffd24f0b44cf324174ba09be82f9b8e68fe1b",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 510,
+    "source_hash": "45948f76119dda4caa85b3a184ea78a96498ebc89d9b50e02b3356c075b72963",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 163,
+    "source_hash": "92f31fc8aa21f6c817a6c226cbf57b38bae3c0befb1978c4015df04d7a9e322e",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 558,
+    "source_hash": "85f0148e1b178aee04d67b4d675e2336f4eae5b4b7c8a83680ef635ac057c2d1",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 138,
+    "source_hash": "0e350330e9f121cfc5e82275a2669e1b627f93e244d48027622d6696c5280b66",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 152,
+    "source_hash": "bc7f20c19e5048528d34b9e12a8c88e2b053588c965ecf6b84f12f0d32e6818c",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 167,
+    "source_hash": "9df62be60bc8cf02eb44b98e81d819f24982a4b256d88ea523e120c093321b31",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 117,
+    "source_hash": "99b91a15ffe44fc43d3f4fc92164ac911c214719b13fb2fd8caf09fd708c1bc5",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 135,
+    "source_hash": "dbda410d53d05fce49806890dd30856b6361ab4d3aba2ca9f14ce5c915805da6",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 106,
+    "source_hash": "f2b793771afd60a74f649c37295b137ea1f104b5d6dd8451af17315f92777abb",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 195,
+    "source_hash": "2456302f48d01dcc00617897899b2a479b0b386e6059e55d663e10176787cbe1",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 178,
+    "source_hash": "2a5b243945ff0b91e298d33f37826c24e036b3d3d968e948e9267ba0ed82b2b1",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 125,
+    "source_hash": "cb75ef15e10e79f94d55aacc61a0331648a0b44c0b70bcfec8135aee67b136d6",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 522,
+    "source_hash": "6da209589715d615b64f2f42a785fc74e0e26eef602e54d99d50d581441a6922",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 505,
+    "source_hash": "a408e840441bc6431c59825434f01735669ef72ffb02aa9f6f4fe220b89afdf7",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 538,
+    "source_hash": "c8d2d7fa5ef18dc8a1e227c7573731978fbaba6326ef96ba739b255b748da9e1",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 197,
+    "source_hash": "2418c337e14806191ba5973f5407438721f2c494d70994283db2812367f4d4b2",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 176,
+    "source_hash": "d60ad4861cf15474a5787d808736aa3c7bc2bc3c3592ae77b3392459a35f2e90",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 171,
+    "source_hash": "7b55e88be295b3cf202581ca37724ed1dc93b388457e85c5606ed013634dc70d",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 124,
+    "source_hash": "f3c45bf6254bb3073a0e7f3adaf96c6c33cdc9fd5d3e93f83bd1ac39a06b3d79",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 113,
+    "source_hash": "33e911865001ac327e683db008a83501bc4a4008afd6972abc8ce8e09e03c2c1",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 107,
+    "source_hash": "93d4df5b8c29c4946dbb7ba7ed54c89567a5ef60116da8d241b850569561cc38",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "hero_id": 148,
+    "source_hash": "fa14566592fc62d1cb2dd9485a71657ca1cdead50dff431c0e1b3b1e80856a22",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  }
+]

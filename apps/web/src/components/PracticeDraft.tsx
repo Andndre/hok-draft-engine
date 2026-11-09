@@ -39,7 +39,7 @@ const button = 'ui-button ui-button--quiet';
 const axes = [
   ['draft_advantage', 'Keunggulan draft'],
   ['early_game_pressure', 'Tekanan awal'], ['cc_chain_lockdown', 'Kontrol tim'], ['frontline_durability', 'Garis depan'],
-  ['enemy_carry_shutdown', 'Menahan carry'], ['draft_flexibility', 'Fleksibilitas'],
+  ['enemy_carry_shutdown', 'Menahan carry'], ['draft_flexibility', 'Fleksibilitas'], ['team_utility', 'Utilitas tim'],
 ] as const;
 
 export function PracticeDraft(props: Props) {
@@ -174,7 +174,7 @@ export function PracticeDraft(props: Props) {
       </section>
       {assistance && !turn.isComplete && latest && hints && <aside className="analysis-sidebar"><TacticalRadarPanel scores={playerRadar} phaseStrategy={hints.phaseStrategy} recommendations={recommendations} isWaiting={!canAct} onSelectCandidate={choose} onInspectHero={setWikiHero} activeSide={playerSide} isPickPhase={turn.action === 'pick'} onOpenPlanModal={() => setPlanOpen(true)} onSelectQuickPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} /></aside>}
     </div>
-    <HeroWikiDrawer hero={wikiHero} onClose={() => setWikiHero(null)} isFavorite={!!wikiHero && props.favorites.has(wikiHero.hero_id)} onToggleFavorite={props.onToggleFavorite} onPickForDraft={canAct && wikiHero && isLegalHero(position, wikiHero.hero_id, context) ? choose : undefined} draftActionLabel={turn.action === 'ban' ? 'Ban hero ini' : 'Pick hero ini'} allHeroes={snapshot.heroes} onSelectRelatedHero={setWikiHero} />
+    <HeroWikiDrawer hero={wikiHero} onClose={() => setWikiHero(null)} isFavorite={!!wikiHero && props.favorites.has(wikiHero.hero_id)} onToggleFavorite={props.onToggleFavorite} onPickForDraft={canAct && wikiHero && isLegalHero(position, wikiHero.hero_id, context) ? choose : undefined} draftActionLabel={turn.action === 'ban' ? 'Ban hero ini' : 'Pick hero ini'} allHeroes={snapshot.heroes} onSelectRelatedHero={setWikiHero} itemCatalog={snapshot.items} spellCatalog={snapshot.spells} />
     <PlanSelectionModal isOpen={planOpen && latest} onClose={() => setPlanOpen(false)} heroes={snapshot.heroes} currentPlanAId={game.playerPlan.a} currentPlanBId={game.playerPlan.b} onSelectPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} onSelectPlanB={heroId => send({ type: 'plan', plan: 'b', heroId })} activeSide={playerSide} unavailableHeroIds={unavailablePlans} recommendedOpeners={assistance ? hints?.phaseStrategy.candidateOpeners ?? [] : []} onlyGlobalReleased />
   </section>;
 }

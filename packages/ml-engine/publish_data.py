@@ -6,6 +6,7 @@ import mimetypes
 import os
 from pathlib import Path
 from tactical_profiles import approved_profiles
+from hokstats_source import norm
 
 ROOT = Path(__file__).resolve().parents[2]
 MAPPINGS = ROOT / "data/mappings"
@@ -16,7 +17,86 @@ def encode(value):
     return (json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n").encode("utf-8")
 
 
-def build_package(heroes, synergy, releases, profiles=None):
+def _load_json(path, default):
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else default
+
+
+def attach_hokstats(heroes, hokstats_records, reviews=(), guide_reviews=()):
+    review_index = {(int(x["hero_id"]), x["relation"], int(x["target_id"]), x["source_hash"]): x for x in reviews}
+    guide_review_index = {(int(x["hero_id"]), x["source_hash"]): x for x in guide_reviews}
+    by_id = {int(x["hero_id"]): x for x in hokstats_records}
+    result = []
+    for original in heroes:
+        hero = dict(original)
+        record = by_id.get(int(hero["hero_id"]))
+        if record:
+            guide = dict(record.get("guide") or {})
+            guide_source = dict(guide.get("source") or {})
+            guide_review = guide_review_index.get((int(hero["hero_id"]), guide_source.get("source_hash")))
+            guide_source["review_status"] = guide_review["status"] if guide_review else "pending"
+            if guide_review:
+                guide_source["reviewed_by"] = guide_review["reviewed_by"]
+            guide["source"] = guide_source
+            matchups = []
+            for matchup in guide.get("matchups", []):
+                target_id = matchup.get("hero_id")
+                if target_id is None:
+                    continue
+                source = dict(matchup.get("source") or {})
+                review = review_index.get((int(hero["hero_id"]), matchup["relation"], int(target_id), source.get("source_hash")))
+                source["review_status"] = review["status"] if review else "pending"
+                if review:
+                    source["reviewed_by"] = review["reviewed_by"]
+                matchups.append({**matchup, "source": source})
+            guide["matchups"] = matchups
+            hero["hokstats_guide"] = guide
+        result.append(hero)
+    return result
+
+
+def build_catalogs(hokfire_items, hokfire_spells, hokstats_items=(), hokstats_spells=(), catalog_reviews=()):
+    review_index = {(x["kind"], str(x["record_id"]), x["source_hash"]): x for x in catalog_reviews}
+
+    def reviewed_source(kind, record, record_id):
+        source = dict(record.get("source") or {})
+        review = review_index.get((kind, str(record_id), source.get("source_hash")))
+        source["review_status"] = review["status"] if review else "pending"
+        if review:
+            source["reviewed_by"] = review["reviewed_by"]
+        return source
+
+    items = {}
+    for raw in hokfire_items:
+        name = raw.get("name", "")
+        key = str(raw.get("id") or norm(name))
+        items[key] = {"id": raw.get("id"), "name": name, "type": raw.get("type", ""), "desc": raw.get("desc", ""), "icon": f"/assets/items/{raw.get('id')}.png" if raw.get("id") else "", "sources": {"hokfire": {"description": raw.get("desc", ""), "source": {"source": "HOKFIRE", "url": "https://www.hokfire.com/"}}}}
+    name_index = {norm(item["name"]): key for key, item in items.items()}
+    for raw in hokstats_items:
+        key = str(raw.get("local_id") or raw.get("id") or name_index.get(norm(raw.get("name")), norm(raw.get("name"))))
+        item = items.get(key) or items.get(name_index.get(norm(raw.get("name"))))
+        if not item:
+            item = {"id": raw.get("local_id") or raw.get("id"), "name": raw.get("name", ""), "type": "", "desc": "", "icon": f"/assets/items/{raw.get('local_id') or raw.get('id')}.png" if raw.get("local_id") or raw.get("id") else "", "sources": {}}
+            items[key] = item
+        details = {k: v for k, v in raw.items() if k not in ("id", "local_id", "name")}
+        details["source"] = reviewed_source("item", raw, raw.get("local_id") or raw.get("id") or norm(raw.get("name")))
+        item.setdefault("sources", {})["hokstats"] = details
+        if raw.get("local_id") and not item.get("id"):
+            item["id"] = raw["local_id"]
+
+    spells = {}
+    for name, description in hokfire_spells.items():
+        spells[norm(name)] = {"id": norm(name), "name": name, "effect": description, "icon": f"/assets/skills/{name.lower().strip()}.png", "sources": {"hokfire": {"effect": description, "source": {"source": "HOKFIRE", "url": "https://www.hokfire.com/"}}}}
+    for raw in hokstats_spells:
+        key = norm(raw.get("name"))
+        spell = spells.get(key) or {"id": raw.get("id", key), "name": raw.get("name", ""), "effect": "", "icon": f"/assets/skills/{key}.png", "sources": {}}
+        details = {k: v for k, v in raw.items() if k not in ("id", "name")}
+        details["source"] = reviewed_source("spell", raw, raw.get("id") or key)
+        spell["sources"]["hokstats"] = details
+        spells[key] = spell
+    return list(items.values()), list(spells.values())
+
+
+def build_package(heroes, synergy, releases, profiles=None, items=None, spells=None):
     if releases.get("511") != {"released": False, "alias_of": 556}:
         raise ValueError("511 harus tetap menjadi alias tidak aktif untuk Ata 556.")
     seen = set()
@@ -34,11 +114,11 @@ def build_package(heroes, synergy, releases, profiles=None):
         if profiles and hero_id in profiles:
             hero["tactical_profile"] = profiles[hero_id]
         output.append(hero)
-    texts = {"heroes": encode(output), "synergy": encode(synergy), "releases": encode(releases)}
+    texts = {"heroes": encode(output), "synergy": encode(synergy), "releases": encode(releases), "items": encode(items or []), "spells": encode(spells or [])}
     hashes = {key: hashlib.sha256(value).hexdigest() for key, value in texts.items()}
     version = hashlib.sha256(encode(hashes)).hexdigest()[:16]
-    names = {"heroes": "hero_metadata.json", "synergy": "kpl_synergy_matrix.json", "releases": "hero_release_status.json"}
-    manifest = {"schema_version": 1, "dataset_version": version, "hero_count": len(output), "artifacts": {key: {"file": f"datasets/{version}/{names[key]}", "sha256": hashes[key]} for key in texts}}
+    names = {"heroes": "hero_metadata.json", "synergy": "kpl_synergy_matrix.json", "releases": "hero_release_status.json", "items": "item_catalog.json", "spells": "spell_catalog.json"}
+    manifest = {"schema_version": 2, "dataset_version": version, "hero_count": len(output), "artifacts": {key: {"file": f"datasets/{version}/{names[key]}", "sha256": hashes[key]} for key in texts}}
     return manifest, texts
 
 
@@ -78,7 +158,20 @@ def main():
     heroes = json.loads((MAPPINGS / "master_heroes_global.json").read_text(encoding="utf-8"))
     synergy = json.loads((MAPPINGS / "kpl_synergy_matrix.json").read_text(encoding="utf-8"))
     releases = json.loads((MAPPINGS / "hero_release_status.json").read_text(encoding="utf-8"))
-    manifest, texts = build_package(heroes, synergy, releases, approved_profiles(args.proposals, heroes))
+    source_heroes = attach_hokstats(
+        heroes,
+        _load_json(MAPPINGS / "hokstats_heroes.json", []),
+        _load_json(MAPPINGS / "hokstats_matchup_reviews.json", []),
+        _load_json(MAPPINGS / "hokstats_guide_reviews.json", []),
+    )
+    items, spells = build_catalogs(
+        _load_json(MAPPINGS / "items_hokfire_full.json", []),
+        _load_json(MAPPINGS / "skills_hokfire.json", {}),
+        _load_json(MAPPINGS / "hokstats_items.json", []),
+        _load_json(MAPPINGS / "hokstats_spells.json", []),
+        _load_json(MAPPINGS / "hokstats_catalog_reviews.json", []),
+    )
+    manifest, texts = build_package(source_heroes, synergy, releases, approved_profiles(args.proposals, source_heroes), items, spells)
     write_package(args.output, manifest, texts)
     print(f"Dataset {manifest['dataset_version']}: {manifest['hero_count']} heroes, artifacts verified by SHA-256")
     if args.publish:

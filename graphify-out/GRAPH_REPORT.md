@@ -1,17 +1,17 @@
 # Graph Report - hok-draft-engine  (2026-11-09)
 
 ## Corpus Check
-- 85 files · ~499,514 words
+- 110 files · ~931,525 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 7 file(s) not represented in the graph (top: (none) 3, .example 2, .css 1)
 
 ## Summary
-- 486 nodes · 1225 edges · 16 communities (10 shown, 6 thin omitted)
+- 556 nodes · 1472 edges · 17 communities (11 shown, 6 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 24 edges (avg confidence: 0.88)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `da2be71d`
+- Built from commit: `1ff43b04`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -24,44 +24,45 @@
 - compilerOptions
 - heroDataLoader.ts
 - verify-dist.mjs
-- tactical_profiles.py
+- json
+- json
 - BrowserWorkerAdapter
 - AGENTS.md — Developer & Agent Field Manual
 - vite-env.d.ts
 - ml-engine
 
 ## God Nodes (most connected - your core abstractions)
-1. `PracticeDraft()` - 26 edges
-2. `Hero` - 25 edges
-3. `react` - 21 edges
-4. `App()` - 20 edges
-5. `getDraftTurn()` - 19 edges
-6. `runTournamentInference()` - 17 edges
-7. `lucide-react` - 17 edges
-8. `compilerOptions` - 17 edges
-9. `rankedCandidates()` - 16 edges
-10. `HeroThumbnail()` - 14 edges
+1. `Hero` - 26 edges
+2. `PracticeDraft()` - 26 edges
+3. `parse_hero_page()` - 25 edges
+4. `react` - 21 edges
+5. `App()` - 20 edges
+6. `norm()` - 20 edges
+7. `getDraftTurn()` - 19 edges
+8. `runTournamentInference()` - 18 edges
+9. `_clean()` - 17 edges
+10. `lucide-react` - 17 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `C. Hero Rilis Global vs Eksklusif CN` --references--> `isHeroGlobalReleased()`  [INFERRED]
   AGENTS.md → apps/web/src/data/heroReleaseStatus.ts
+- `God Nodes (Abstraksi Paling Kritis):` --references--> `loadTournamentDataset()`  [INFERRED]
+  AGENTS.md → apps/web/src/engine/heroDataLoader.ts
 - `God Nodes (Abstraksi Paling Kritis):` --references--> `Hero`  [INFERRED]
   AGENTS.md → apps/web/src/types.ts
 - `God Nodes (Abstraksi Paling Kritis):` --references--> `TacticalVector`  [INFERRED]
   AGENTS.md → apps/web/src/types.ts
-- `God Nodes (Abstraksi Paling Kritis):` --references--> `loadTournamentDataset()`  [INFERRED]
-  AGENTS.md → apps/web/src/engine/heroDataLoader.ts
 - `God Nodes (Abstraksi Paling Kritis):` --references--> `App()`  [INFERRED]
   AGENTS.md → apps/web/src/App.tsx
 
 ## Import Cycles
 - None detected.
 
-## Communities (16 total, 6 thin omitted)
+## Communities (17 total, 6 thin omitted)
 
 ### Community 0 - "types.ts"
-Cohesion: 0.06
-Nodes (60): DraftSimulatorProps, Props, HeroCardProps, lanes, Props, HeroWikiDrawer(), HeroWikiDrawerProps, Props (+52 more)
+Cohesion: 0.05
+Nodes (96): God Nodes (Abstraksi Paling Kritis):, App(), BottomCommandDock(), DraftSimulator(), DraftSimulatorProps, HeaderSortBar(), Props, HeroCardCompact() (+88 more)
 
 ### Community 1 - "json"
 Cohesion: 0.15
@@ -73,7 +74,7 @@ Nodes (35): dependencies, clsx@^2.1.1, lucide-react@^1.70.0, react@^19.3.1, reac
 
 ### Community 3 - "draftRules.ts"
 Cohesion: 0.07
-Nodes (73): God Nodes (Abstraksi Paling Kritis):, App(), BottomCommandDock(), DraftSimulator(), HeaderSortBar(), HeroCardCompact(), HeroCardDetailed(), HeroRosterToolbar() (+65 more)
+Nodes (57): ActionKind, ALL_LANES, analyzeLaneOccupancy(), applyDraftAction(), applyGameHero(), DRAFT_SEQUENCE, DraftAction, DraftContext (+49 more)
 
 ### Community 4 - "4_export_and_publish_r2.py"
 Cohesion: 0.07
@@ -84,16 +85,20 @@ Cohesion: 0.11
 Nodes (18): compilerOptions, allowImportingTsExtensions, isolatedModules, jsx, lib, module, moduleDetection, moduleResolution (+10 more)
 
 ### Community 6 - "heroDataLoader.ts"
-Cohesion: 0.14
+Cohesion: 0.15
 Nodes (19): ArtifactKind, CachedPackage, DATA_CACHE_KEY, DatasetIO, decodePackage(), fetchText(), KINDS, loadHeroMetadata() (+11 more)
 
 ### Community 8 - "verify-dist.mjs"
-Cohesion: 0.08
-Nodes (14): IMMOBILE_OPENERS, baseContext(), fixtures, heroes, limit, manifest, options, summary (+6 more)
+Cohesion: 0.14
+Nodes (5): files, manifest, root, scripts, walk()
 
-### Community 10 - "tactical_profiles.py"
+### Community 9 - "json"
 Cohesion: 0.05
-Nodes (35): ingest_kpl_data(), init_db(), load_global_mapping(), export(), main(), main(), extract_synergy(), normalize_hid() (+27 more)
+Nodes (37): ingest_kpl_data(), init_db(), load_global_mapping(), export(), main(), main(), extract_synergy(), normalize_hid() (+29 more)
+
+### Community 10 - "json"
+Cohesion: 0.12
+Nodes (36): _alias_maps(), _build_variants(), canonical(), _cards(), _clean(), fetch_page(), _heading_list(), _hero_label_id() (+28 more)
 
 ### Community 14 - "AGENTS.md — Developer & Agent Field Manual"
 Cohesion: 0.07
@@ -101,23 +106,23 @@ Nodes (27): 1. Misi & Arsitektur Utama, 2. Standar Lingkungan & Perkakas (Wajib 
 
 ## Knowledge Gaps
 - **1 isolated node(s):** `ml-engine`
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 179 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 188 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `God Nodes (Abstraksi Paling Kritis):` connect `draftRules.ts` to `types.ts`, `AGENTS.md — Developer & Agent Field Manual`, `heroDataLoader.ts`?**
-  _High betweenness centrality (0.049) - this node is a cross-community bridge._
+- **Why does `God Nodes (Abstraksi Paling Kritis):` connect `types.ts` to `AGENTS.md — Developer & Agent Field Manual`, `heroDataLoader.ts`?**
+  _High betweenness centrality (0.039) - this node is a cross-community bridge._
 - **What connects `ml-engine` to the rest of the system?**
   _1 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `types.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.05995410212277682 - nodes in this community are weakly interconnected._
-- **Why does `3. Navigasi Knowledge Graph (`graphify`)` connect `AGENTS.md — Developer & Agent Field Manual` to `draftRules.ts`?**
-  _High betweenness centrality (0.047) - this node is a cross-community bridge._
-- **Should `json` be split into smaller, more focused modules?**
-  _Cohesion score 0.14666666666666667 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05384126984126984 - nodes in this community are weakly interconnected._
+- **Why does `3. Navigasi Knowledge Graph (`graphify`)` connect `AGENTS.md — Developer & Agent Field Manual` to `types.ts`?**
+  _High betweenness centrality (0.037) - this node is a cross-community bridge._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.07207207207207207 - nodes in this community are weakly interconnected._
 - **Should `draftRules.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.07006101409636019 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06574074074074074 - nodes in this community are weakly interconnected._
+- **Should `4_export_and_publish_r2.py` be split into smaller, more focused modules?**
+  _Cohesion score 0.06538461538461539 - nodes in this community are weakly interconnected._

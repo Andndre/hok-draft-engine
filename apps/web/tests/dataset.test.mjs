@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { decodePackage, loadTournamentDataset, sha256 } from '../src/engine/heroDataLoader.ts';
+import { DATA_CACHE_KEY, decodePackage, loadTournamentDataset, sha256 } from '../src/engine/heroDataLoader.ts';
 import { isHeroGlobalReleased } from '../src/data/heroReleaseStatus.ts';
 
 const read = file => readFileSync(new URL('../public/' + file, import.meta.url), 'utf8');
@@ -27,6 +27,15 @@ const source = pkg => async url => {
   if (!key) throw new Error('Missing artifact');
   return pkg.texts[key];
 };
+test('schema v2 validates item and spell catalogs in the v17 atomic cache package', async () => {
+  const dataset = await decodePackage(original);
+  assert.equal(manifest.schema_version, 2);
+  assert.equal(DATA_CACHE_KEY, 'tournament_dataset_v17');
+  assert.ok(Array.isArray(dataset.items) && dataset.items.length > 0);
+  assert.ok(Array.isArray(dataset.spells) && dataset.spells.length > 0);
+  assert.ok(manifest.artifacts.items.sha256 && manifest.artifacts.spells.sha256);
+  assert.equal(dataset.items[0].sources.hokfire.source.source, 'HOKFIRE');
+});
 test('new hero and changed Global release become usable without a model rebuild', async () => {
   const update = await changed(data => {
     data.heroes.push({ ...data.heroes[0], hero_id: 9999, name: 'New fixture hero' });

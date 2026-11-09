@@ -12,6 +12,7 @@ export function evaluateTacticalScores(ourHeroes: Hero[], enemyHeroes: Hero[]): 
   let frontline = 0.5;
   let shutdown = 0.5;
   let flex = 0.5;
+  let teamUtility = 0.5;
   let draftAdvantage = 0.5;
 
   if (ourHeroes.length > 0) {
@@ -34,6 +35,14 @@ export function evaluateTacticalScores(ourHeroes: Hero[], enemyHeroes: Hero[]): 
     early = Math.min(0.95, early + ourHeroes.filter(h => h.tactical_profile?.tags.mobility === true).length * 0.04 + ourHeroes.filter(h => h.tactical_profile?.tags.engage === true).length * 0.03);
     flex = Math.min(0.95, 0.40 + ourHeroes.filter((h) => h.lanes.length > 1).length * 0.15);
 
+    const utilityTags = ['ally_shield', 'ally_heal', 'ally_move_speed_buff', 'ally_attack_speed_buff', 'ally_damage_buff', 'ally_cleanse', 'ally_cc_immunity'] as const;
+    const reviewedUtility = new Set<string>();
+    for (const hero of ourHeroes) {
+      if (hero.is_global_released !== true) continue;
+      for (const tag of utilityTags) if (hero.tactical_profile?.tags[tag] === true) reviewedUtility.add(tag);
+    }
+    teamUtility = Math.min(0.95, 0.35 + reviewedUtility.size * 0.12);
+
     let counterAdv = 0;
     for (const oh of ourHeroes) {
       for (const eh of enemyHeroes) {
@@ -48,8 +57,38 @@ export function evaluateTacticalScores(ourHeroes: Hero[], enemyHeroes: Hero[]): 
 
   return {
     draft_advantage: draftAdvantage, early_game_pressure: early, cc_chain_lockdown: cc,
-    frontline_durability: frontline, enemy_carry_shutdown: shutdown, draft_flexibility: flex,
+    frontline_durability: frontline, enemy_carry_shutdown: shutdown, draft_flexibility: flex, team_utility: teamUtility,
   };
+}
+
+export function reviewedHoKStatsBonuses(candidate: Hero, ourHeroes: Hero[], enemyHeroes: Hero[]): { matchupBonus: number; traitBonus: number; totalBonus: number } {
+  if (candidate.is_global_released !== true) return { matchupBonus: 0, traitBonus: 0, totalBonus: 0 };
+  const reviewedEnemies = new Set<number>();
+  for (const enemy of enemyHeroes) {
+    if (enemy.is_global_released !== true) continue;
+    const candidateEvidence = candidate.hokstats_guide?.matchups?.some(matchup =>
+      matchup.relation === 'strong_against' && matchup.hero_id === enemy.hero_id && matchup.source.review_status === 'approved'
+    ) ?? false;
+    const enemyEvidence = enemy.hokstats_guide?.matchups?.some(matchup =>
+      matchup.relation === 'countered_by' && matchup.hero_id === candidate.hero_id && matchup.source.review_status === 'approved'
+    ) ?? false;
+    if (candidateEvidence || enemyEvidence) reviewedEnemies.add(enemy.hero_id);
+  }
+  const matchupBonus = Math.min(0.45, reviewedEnemies.size * 0.15);
+  const tags = candidate.tactical_profile?.tags;
+  if (!tags) return { matchupBonus, traitBonus: 0, totalBonus: matchupBonus };
+  const globalTeam = ourHeroes.filter(hero => hero.is_global_released === true);
+  const alreadyHas = (tag: keyof typeof tags) => globalTeam.some(hero => hero.tactical_profile?.tags[tag] === true);
+  const gaps: Array<[keyof typeof tags, boolean]> = [
+    ['frontline', !globalTeam.some(hero => hero.primary_role === 'Tank' || hero.tactical_profile?.tags.frontline === true)],
+    ['engage', !globalTeam.some(hero => hero.tactical_profile?.tags.engage === true)],
+    ['peel', !globalTeam.some(hero => hero.tactical_profile?.tags.peel === true || hero.tactical_profile?.tags.disengage === true)],
+    ['ally_shield', !alreadyHas('ally_shield')], ['ally_heal', !alreadyHas('ally_heal')],
+    ['ally_move_speed_buff', !alreadyHas('ally_move_speed_buff')], ['ally_attack_speed_buff', !alreadyHas('ally_attack_speed_buff')],
+    ['ally_damage_buff', !alreadyHas('ally_damage_buff')], ['ally_cleanse', !alreadyHas('ally_cleanse')], ['ally_cc_immunity', !alreadyHas('ally_cc_immunity')],
+  ];
+  const traitBonus = Math.min(0.45, gaps.reduce((sum, [tag, gap]) => sum + (gap && tags[tag] === true ? 0.15 : 0), 0));
+  return { matchupBonus, traitBonus, totalBonus: Math.min(0.45, matchupBonus + traitBonus) };
 }
 
 
@@ -640,6 +679,12 @@ export function runTournamentInference(
       }
     }
 
+    if (phaseId === 'PICK_PHASE_1' || phaseId === 'PICK_PHASE_2') {
+      // One HoKStats bonus per verified enemy; combined source-derived bonus stays below a direct counter.
+      const sourceBonuses = reviewedHoKStatsBonuses(cand, ourHeroes, enemyHeroes);
+      score += sourceBonuses.totalBonus;
+    }
+
     scoredCandidates.push({
       hero: cand,
       baseScore: cand.win_rate,
@@ -720,7 +765,7 @@ export function runTournamentInference(
     phaseObjective = `Wajib isi sisa lane kosong kita [${ourVacantArr.join(' & ')}] sambil meng-counter formasi musuh (${enemyHeroes.map((e) => e.name).join(', ')}).`;
   } else {
     phaseTitle = 'DRAFT SELESAI — ANALISIS KOMPOSISI FINAL';
-    phaseObjective = 'Seluruh 10 hero telah dipilih. Evaluasi kekuatan 6 dimensi taktis di bawah.';
+    phaseObjective = 'Seluruh 10 hero telah dipilih. Evaluasi kekuatan 7 dimensi taktis di bawah.';
   }
 
   const latencyMs = Math.round((performance.now() - t0) * 10) / 10;

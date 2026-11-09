@@ -90,6 +90,7 @@ test('recommendations use thumbnails and separate detail/action controls without
   assert.ok(html.includes('Detail') && html.includes('Ban ' + hero.name));
   assert.ok(html.includes(hero.portrait_asset));
   assert.ok(html.includes('bukan probabilitas kemenangan'));
+  assert.ok(html.includes('Komposisi · 7 dimensi') && html.includes('Utilitas tim'));
   const waiting = render(TacticalRadarPanel, { ...base, recommendations: [], isWaiting: true });
   assert.ok(waiting.includes('Giliran AI. Rekomendasi tersedia saat giliran Anda.'));
   assert.ok(!waiting.includes('is-spinning'));
@@ -105,6 +106,28 @@ test('plan and wiki dialogs expose names, native controls and counter-first navi
   assert.ok(wiki.includes('Tutup wiki hero'));
   assert.match(wiki, /<button aria-pressed="true"[^>]*>[\s\S]*?<span>Counter<\/span>/);
   assert.ok(!/\p{Extended_Pictographic}/u.test(wiki.replace(/<[^>]+>/g, '')));
+});
+
+test('wiki exposes HoKStats build alternatives and source-attributed item, spell, skill and matchup details', () => {
+  const source = { source: 'HoKStats', url: 'https://hokstats.gg/heroes/annette/', fetched_at: '2026-11-09T00:00:00Z', patch_version: '1.10', review_status: 'pending', source_hash: 'fixture' };
+  const enriched = {
+    ...hero,
+    hokfire_guide: { full_build: [], core_items: [], situational_items: [], arcana: [], spell: 'Flash', skill_priority: '', pros: [], cons: [], gameplay_tips: '' },
+    hokstats_guide: { source, skills: [{ name: 'Whirlwind', description: 'Pushes enemies back.' }], pick_when: ['Your team needs peel.'], avoid_when: [], power_spikes: [], common_mistakes: [], pros: [], cons: [], matchups: [{ relation: 'strong_against', hero_id: 126, hero_name: 'Dun', evidence: 'Stops engage.', source }], partners: [], build_variants: [{ id: 'peel', name: 'Peel build', use_case: 'Against dive', items: ['Guardian Armor'] }] },
+  };
+  const catalogSource = { ...source, source: 'HoKStats' };
+  const itemCatalog = [{ id: 1127, name: 'Guardian Armor', type: 'Defense', desc: 'HOKFIRE item description', icon: '/assets/items/1127.png', sources: { hokfire: { description: 'HOKFIRE item description', source: { source: 'HOKFIRE', url: 'https://www.hokfire.com/' } }, hokstats: { stats: { Defense: '+240' }, passive: 'Reduces damage.', build_path: ['Iron Sword'], source: catalogSource } } }];
+  const spellCatalog = [{ id: 'flash', name: 'Flash', effect: 'Move a short distance.', icon: '/assets/skills/flash.png', sources: { hokfire: { effect: 'Reposition quickly.', source: { source: 'HOKFIRE', url: 'https://www.hokfire.com/' } }, hokstats: { effect: 'Blink in a direction.', cooldown: '120s', best_for: ['disengage'], source: catalogSource } } }];
+  const build = render(HeroWikiDrawer, { hero: enriched, onClose: noop, isFavorite: false, onToggleFavorite: noop, allHeroes: dataset.heroes, onSelectRelatedHero: noop, itemCatalog, spellCatalog });
+  assert.ok(build.includes('HoKStats · Peel build'));
+  assert.ok(build.includes('Guardian Armor'));
+  assert.ok(build.includes('HOKFIRE item description') && build.includes('Reduces damage.'));
+  assert.ok(build.includes('120s') && build.includes('Reposition quickly.'));
+  const abilities = render(HeroWikiDrawer, { hero: enriched, onClose: noop, isFavorite: false, onToggleFavorite: noop, allHeroes: dataset.heroes, onSelectRelatedHero: noop, itemCatalog, spellCatalog, initialTab: 'abilities' });
+  assert.ok(abilities.includes('Whirlwind') && abilities.includes('Pushes enemies back.'));
+  const counters = render(HeroWikiDrawer, { hero: enriched, onClose: noop, isFavorite: false, onToggleFavorite: noop, allHeroes: dataset.heroes, onSelectRelatedHero: noop, initialTab: 'counters' });
+  assert.ok(counters.includes('Kuat melawan') && counters.includes('Dun') && counters.includes('HoKStats'));
+  assert.ok(!counters.includes('Pending review') && !counters.includes('DITINJAU'));
 });
 
 test('presentation cleanup preserves canonical tactical source data and image paths', () => {

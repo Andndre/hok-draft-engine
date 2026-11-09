@@ -1,0 +1,821 @@
+[
+  {
+    "kind": "item",
+    "record_id": "1351",
+    "source_hash": "1efeba250963ee9a3fce4f9e703c72b27c78d7c4e025d55a351db1560ecf78f1",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1227",
+    "source_hash": "ea3d21e412cbce5e0aca9d32f82abf65541324019673ac18be65de5f5c64918f",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1237",
+    "source_hash": "b61d8c4cb1e7727fcc16753e5abbd32fcec69337230bd5893d4fcda09a1ee16f",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1137",
+    "source_hash": "9070356a84b9ff87ac4c7db86a29cfa3e71c139c5e3ee507ecc55d961ee500b6",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1321",
+    "source_hash": "3e723c9a9a8830e647679683dfe149ffdf5c5712cd1a663cd0c8c35756817686",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1331",
+    "source_hash": "fb0bb3a628ac8f580a1cd133dd0fb31835aa0398aa5becc6ee8f76853092e85a",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1222",
+    "source_hash": "6a33cb5cf481ca1ec5819d24556863d71d6c91eba2d1c6b18ab69f7eed57d459",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1328",
+    "source_hash": "a82aec29d2c8341c2282163ec9e0f6becfc813f4b11e5c37222fcc2e333b34e0",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1158",
+    "source_hash": "9614ef6b677d9089b34fd32f385ed3ed8a8cab8678367791fbd9b2ffe3c60496",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1132",
+    "source_hash": "2baa5bfb83588345c5e4107d6897e5f72cd1e395b688c0b9fd3abaf26c2ffc04",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1426",
+    "source_hash": "c783f18a14e94e1bd6ebd7aa7870a3b04a0544af9fad061ed291e9a11058788b",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1425",
+    "source_hash": "cee5a5a9019acc21445dd63911fdce32018e81af9770f72a13da83088c33b80e",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1421",
+    "source_hash": "4125dd00e1c076ff3cc7a2565ee3b7a014d0673540e04a2e7b45b2c1d2bdb73c",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1422",
+    "source_hash": "e8078f94cde8fd2449184d3bca4c7f14d3ed57b28e50596c1214a6ec0bc6f3c3",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1424",
+    "source_hash": "dccf59492b79258a1bea7935935769d9e8790496b35c65fd80432709ad46d387",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1423",
+    "source_hash": "9ad15c30b994aebe91daf88023b652f3a42a0c7dcdd9e01a2d2b70ce6e19e2c6",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1244",
+    "source_hash": "097b2d8164bc920638e2aebdfbb0e911387a97cfb224f44dabb06ce317f54ea8",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1323",
+    "source_hash": "941b0370ccce89b3d2371244b8488d7754425f949b31781d77b0525b7aa8bc21",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1312",
+    "source_hash": "942a5771482c4cf6124334bde27ff35726ba49f7862a3a39b23d7e7cd46c3673",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1154",
+    "source_hash": "327d13a175b29f69fd846999498794219c0ad3dded22b3df4e27b3b3af4ccc68",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1711",
+    "source_hash": "9c7d035d9a47dd431c7dfc4ed24e8b08dbb3c710a937ca37d1da52af24bb9640",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1723",
+    "source_hash": "7822f5d7e5bf639010ece3ffd4c231935389ee7d3ed6bddbc9ec55b3ac0b2972",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1737",
+    "source_hash": "897bc0667663eed9eae7eeb4a2b822f749c9dfef29102911e2d3f75584f276f6",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1721",
+    "source_hash": "235345b4f59dc0000c5f3070505c8a3b97e063e09a6266e74172b4fb7a118116",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1747",
+    "source_hash": "79f37d46e2946c008bcb40587b105da8e7da4e171b37d01a20b4df08fc9df9de",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1338",
+    "source_hash": "4cbddf59172c24101c78fb76ace0fcb3802ecda9012af125aa94a9ad09a225a6",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1317",
+    "source_hash": "ccee161e77715207ae99a66506f6d92f64413c9cf6cc193b59fe531a4b5b7eb1",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1112",
+    "source_hash": "9ee7d7f56e97ff79338bc5434fdfaeed01104e93cfe6ee6e9cd15612ef099da3",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1353",
+    "source_hash": "e97dae0bc343f62949a153f1012e97a6d198d347483197d0ef1fd78a1ce68497",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1155",
+    "source_hash": "13bf4f450a52f4ed05788c671f6527d3a1f3d40eb35c6e5fa29f01340a2c7220",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1128",
+    "source_hash": "d2a58acb75609df9b25f38133f5b77b3bb3ef7b146ff8cd0fb50889748414660",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1125",
+    "source_hash": "7dd4e57fe185db3b6143a6cde1fba04eee864d8d669f14c9205470117adb6568",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1127",
+    "source_hash": "ce7d7924a8b396636b59af6087ffe877c0faac21e967799f7e870584f8840763",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1126",
+    "source_hash": "d14a87c659694d2b087979d1802a9f19b795a0e685c1f31a2deaaeafe28fffb3",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1534",
+    "source_hash": "7210f998d4648c71eda5c2202f293837d698e3a355b182ad5df659a52241a6a6",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1242",
+    "source_hash": "c46a9e8710ddcd7e6ab532669bf066403a1562b53ba9a1172bccd26205d1836e",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1133",
+    "source_hash": "c7bfc29088417e77ff46aa1d21c58ba56622692192d50bb9422eb17285acd9e7",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1334",
+    "source_hash": "85e167804bcc0b2976984a4c92268d538b7c9356fd2afa898f730e01d8ca918d",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1341",
+    "source_hash": "3249ce5a87b0a4764ea7dfcd04c38ae9db351b005a2931be7114455cb38d141b",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1324",
+    "source_hash": "aa7862e76c7745dba5d0ab547c5f2c42f684949834cee3c92c00e74a1b6acf44",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "13310",
+    "source_hash": "3c93d28cacc79d38d57b48c494310a4f4aa2db2c52bc24af484aa10cbd381e49",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1234",
+    "source_hash": "6907660a07ebc198bf5ecfff842f2f376ed3becbf50a11a6bdd1e8b46f5357cd",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1532",
+    "source_hash": "ad8ce468a16d05cf2b4383974973bcf7c0bdafb5d0671311510e6ec70962fbfb",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1336",
+    "source_hash": "49dc291349a7dc839bdfa8d83c0f80f56eb857a053e5a6e6f3d8dc9fb1d27d38",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1728",
+    "source_hash": "db4023d49fcbb374ac60cc22824ba5d6cf88537e53e58f557fd8f3eba5e5bb35",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1221",
+    "source_hash": "6b2d153dc433b1b8931d856939be1c370b8eab49df6b939f52c50143d0eabd97",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1714",
+    "source_hash": "7efe7f9e63b0d4a5b6fbeee5a9c62ffe569811864df8eee70b8a4bf1fff65836",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1754",
+    "source_hash": "d92f931f64b801721a58b9fd68c9510c9ef504a279eae458ae814bc081350549",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1724",
+    "source_hash": "6d0461419919650c22335d400dffffc79a0f984837be78c0a8f074af3caa04ff",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1725",
+    "source_hash": "2166279ecf7a5c924f8bff6b5b579d42ae0837178a4f6c1c37d5260103f0bbb5",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1521",
+    "source_hash": "d782610e0503eaf87ce298b3637188f99884869e2d02e223ee4d19d0cb7da093",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1156",
+    "source_hash": "bdbb50aca1e8d09b017081eee77f6e9c392f3c3366eaaf0db9e3ad33a32c612e",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1226",
+    "source_hash": "7746e5d414e6276fbedee265c1c9f069787b026f251c94e37817691cfdf2d9d6",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1511",
+    "source_hash": "e99a8bcf1c1c2b49c5aed715c32ccaea0b0b5031189e71520b4a0a60b9ca439e",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1157",
+    "source_hash": "fbdcdec2a006742a43cc8213329bcdb96a571ae59271db325130c3376f7a7d76",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1240",
+    "source_hash": "d17d70a987d634006ad89a13d241d22690545b902c06205ffff8dd1259f62f18",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1111",
+    "source_hash": "885bb016af6fcf36574f8e3410625732b47bafa35d3ac3c8729734d3312fbded",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1701",
+    "source_hash": "a82bcfebee5d063491a054e907a542b74bcaa0220d52e3e3a2abd72eb5a78353",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1411",
+    "source_hash": "f146b652f2d548bc268d16950676e1fb71c5c6a0fe211b77118e6a77b1807872",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1347",
+    "source_hash": "07b2c172c873e3ed0c4ee4afa80c5e718f4a87ac7b80e58468cf649f196d881e",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1235",
+    "source_hash": "d6224aae9fb96ab14f858eac39a836ea8853e868898d9f10538ed337bb276adf",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1134",
+    "source_hash": "c9103dde147b29fc40939d951aa72f4826d6ddbe862ad481c1c9f116768cbe44",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1124",
+    "source_hash": "e828352348a4df0542bf4dcec5fc994935f703451fcc096454a0d55e81306995",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "13211",
+    "source_hash": "13c9993cce9b3eb51ee9b0ca005c629f110c2aacd1dd0cbd86860e56e6b41566",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "11210",
+    "source_hash": "83eccaaabdbb1afd6f8d7bdf02c40645d8f88b60ed29d3374a99854284e31eb4",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1217",
+    "source_hash": "53134a3867bd838f20bda1bd10ca6ccbf581dcd137a30df5c7182afb60a9167a",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1243",
+    "source_hash": "e7272b5494b7d0491aa116f029106b587c6e40bba2078b873a47eee62248f393",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1345",
+    "source_hash": "fedb9d6f3fd0df1b25a27f5d39fdfb43085429ad79c651451a15e86d8c028e82",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1333",
+    "source_hash": "eb162d121caf50b3be96d151124252e01494451f0f5c300e084cbff03d0217ad",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1138",
+    "source_hash": "a693aa61198c2d38b8fb4de112f1b4af24e74488c1c0fd8e2cf5ab52280140b3",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1332",
+    "source_hash": "1a1305df27b32502a980a2c0df617709111012fe1fa0bf6314d9a2283ad79f9b",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1522",
+    "source_hash": "6eba464eff9abf9658e34ed5052d76b652226a767f0c9b8898ea9008c303ab01",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "11110",
+    "source_hash": "98abbbcc0bcd4af7e9fb39819a263cb6519cb4ac153ccf973e9c0043a2305186",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1218",
+    "source_hash": "a60f7e1a6638bb1d3bc8df186df06671b6442829aed5ba46786ea02e8e7b1fd8",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1325",
+    "source_hash": "2debbb8652ab6f5a5faa2c16b3c1204b818ce093e98de3c81c70a302a825ea93",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1113",
+    "source_hash": "0443c265f02383846ff4d737cc5c46a1dcd3ace1f4ccfc0bb9b07d7c582f8e0f",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "11311",
+    "source_hash": "1846e6a21495d87f2de72e3e74d7962ce6c6da9e59c40cf55e9f500c0dc75ca9",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1533",
+    "source_hash": "0f97ca3e03dd1fa99a9f3014bc7a350bddb1b678b694a54865e37602c7e012c1",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1350",
+    "source_hash": "9822d67d7c1ece2d988f4e9d24943286e8e489a372e88cebe262dde1e02f99f5",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1523",
+    "source_hash": "70652f9cf7df5de675940e917956c193d902ab24ba8f04e8fe8bf5e0cc9e2702",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1311",
+    "source_hash": "bfc594094f8f142424040776382f8d49da42fbe5de24762afbc2c895e86346c4",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1531",
+    "source_hash": "29d5c12c738f2dc09a19e90912dc4c67138629451dc54f6b8204576ed000b244",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1214",
+    "source_hash": "af762c0e54f50bb669ceddc891e8b1545de09571b82d9e9015edc0292ea8fea3",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1337",
+    "source_hash": "eeb2a076f93f332e9e780ac0af959b838241a0124108126588e407e887d4bf8c",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1238",
+    "source_hash": "c922c4aabbb2b5ca252dfb00f27db43fb8e0215b056d0d10947d7172f500a7ce",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1232",
+    "source_hash": "85738db68f021bd48a0b29738f1e6fde1b33f83487ae16b314a829753171f9df",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1233",
+    "source_hash": "ed817a8f489bd4eabcf9f994f0b2a2f55ab367263e5aff162709e889e7b3f039",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1136",
+    "source_hash": "4915beebd94fa16604f6fec51a62eb38a9e3213e8c2cbad007e2616a9546016f",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1135",
+    "source_hash": "f8c91647ee933dd75a16e87555e592f63978f099855f1cc401677f294676f7fa",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1211",
+    "source_hash": "bab73d3415693d071c9d510a1a6725aef18f59577305505812311fa8fa41f27f",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1327",
+    "source_hash": "8ce3cbe8a069a9b9bf213fbf139f259198b8b9f1b4b028c0379f44c559dca693",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1239",
+    "source_hash": "67099854f18be2cba54f69f08ad174439c5e57a7f3adcebfbd97784b3104cefe",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1131",
+    "source_hash": "f21c310f9dc5f7ccf013051742e1c742eafd82a37e78e4889e8e5be3fe1a8a71",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1236",
+    "source_hash": "0a4d42de9893a8ee46edf49696d3ef5bb4e46a247ef6287dabd887365a93b16e",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1224",
+    "source_hash": "5b0bc75ad835669abfc1ebbd7ee9eb103a70ad56304e18f3d38f9c01e54aa8b6",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1121",
+    "source_hash": "f8747122cad7c9a7bd8387b32fdaaf64fff1353a6f748fef4a83a90fe7d82341",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1335",
+    "source_hash": "1cd450b7d9ba1824495e4f823fdf44c94cefa3f7869f2d80d221a967dd8cbcbf",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1141",
+    "source_hash": "de9fe3a59a2016c233b286dd87a68063cef28cde7df4dabcb671869a20a576b7",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1122",
+    "source_hash": "f5c57efee85c4ed5572825824d878a04cf1ba9ae79ada09c3e98bd6d0dfc835c",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1129",
+    "source_hash": "0768e430c0744a5515dc29e712b19a7b3fdcf28d10e1c8526a7d055c6fb3e805",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1159",
+    "source_hash": "f3de73163b845165e064f612d15917dbe35f4954fd4ccd128ab0f46a6eeaa1aa",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1116",
+    "source_hash": "a7e2ceb7f17dce2afd65e347d050a806db88ff7a0e236501a9b0ce06573c44a3",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1727",
+    "source_hash": "7f084f9df2ca4fc5478b6cacdc2b24f488033ed2f6a595d254233a30f02d34da",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1123",
+    "source_hash": "e65b62878b8c5119541f78a073979c877310a1718e8459bfcf7aa86ba7dbc790",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1114",
+    "source_hash": "29a90d9e13d9d0d8bbe60261252fb1176e670337093bd46e8218179bbaa9aa7b",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "12211",
+    "source_hash": "48954f2300420de33d2f9a7c03059ef12b3c105e94b4dfb2c83cc4328b024709",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "item",
+    "record_id": "1231",
+    "source_hash": "028d6ed1de2e6bc5eefb129cb3ea6b136325108f6988dc7cbe6c0d15febb9036",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "spell",
+    "record_id": "execute",
+    "source_hash": "6746302a19b5226c329ac1032f06086738fc01d2acbe97b867efb220cc3fe7f5",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "spell",
+    "record_id": "flash",
+    "source_hash": "80586df1480f3709dca6e182b69373eea783b200a9a0baf7947224dc07ac9d61",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "spell",
+    "record_id": "frenzy",
+    "source_hash": "47519e78223da5e7a38974f300292e2a012792a8f33c2e4a69fbc71971f464fe",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "spell",
+    "record_id": "heal",
+    "source_hash": "f1afecad4487511560244ac02b253e00dd0a252cedb800472d4b8bfcc49ccb5b",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "spell",
+    "record_id": "intimidate",
+    "source_hash": "fc366fa14e103fe53fc0b9c8c5c3cad4a9669b73604652d0b91d86e592601f63",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "spell",
+    "record_id": "purify",
+    "source_hash": "dcd6c53eec1f58f46c9c877be7e7b1ed2891643f13fd24457fb8ca7cce4dd55b",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "spell",
+    "record_id": "smite",
+    "source_hash": "129a8b6846a33403e5a9573880a10a6c5e7c1743f3f328a49850b3a31600674c",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "spell",
+    "record_id": "sprint",
+    "source_hash": "310dd20e35b56474108824dcf3c6d382882cf7f89bb5e9c4219ef18aa7709b88",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "spell",
+    "record_id": "stun",
+    "source_hash": "a0a12cf23d9b0e6bfb8d838ea743340a437fdfc17f4da4cf5d3bd1e55bfa54b6",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  },
+  {
+    "kind": "spell",
+    "record_id": "teleport",
+    "source_hash": "9f8078da25c37d3701b6dc5438b897e89f58e9cac22da66d202b00522654d9eb",
+    "status": "approved",
+    "reviewed_by": "Project owner"
+  }
+]

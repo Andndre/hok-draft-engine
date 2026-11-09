@@ -1,0 +1,83 @@
+{
+  "source": "HoKStats",
+  "fetched_at": "2026-11-09T15:10:35+00:00",
+  "heroes_expected": 137,
+  "heroes_listed_in_source": 120,
+  "heroes_matched_to_catalog": 120,
+  "heroes_not_listed": [
+    {
+      "hero_id": 515,
+      "name": "Chang'e"
+    },
+    {
+      "hero_id": 144,
+      "name": "Cheng Yaojin"
+    },
+    {
+      "hero_id": 188,
+      "name": "Da Yu"
+    },
+    {
+      "hero_id": 548,
+      "name": "Geya"
+    },
+    {
+      "hero_id": 540,
+      "name": "Jin Chan"
+    },
+    {
+      "hero_id": 550,
+      "name": "Kongkong'er"
+    },
+    {
+      "hero_id": 525,
+      "name": "Luban Master"
+    },
+    {
+      "hero_id": 518,
+      "name": "Ma Chao"
+    },
+    {
+      "hero_id": 549,
+      "name": "Macaque"
+    },
+    {
+      "hero_id": 527,
+      "name": "Meng Tian"
+    },
+    {
+      "hero_id": 529,
+      "name": "Pangu"
+    },
+    {
+      "hero_id": 312,
+      "name": "Shen Mengxi"
+    },
+    {
+      "hero_id": 194,
+      "name": "Su Lie"
+    },
+    {
+      "hero_id": 151,
+      "name": "Sun Quan"
+    },
+    {
+      "hero_id": 186,
+      "name": "Taiyi Zhenren"
+    },
+    {
+      "hero_id": 136,
+      "name": "Wu Zetian"
+    },
+    {
+      "hero_id": 544,
+      "name": "Zhao Huaizhen"
+    }
+  ],
+  "heroes_imported": 120,
+  "items_imported": 107,
+  "spells_imported": 10,
+  "unmatched_heroes_or_matchups": [],
+  "unmatched_items": [],
+  "fetch_errors": []
+}

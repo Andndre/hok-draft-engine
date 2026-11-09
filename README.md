@@ -30,6 +30,7 @@ Aturan bersama berada di `apps/web/src/engine/draftRules.ts`. Format aplikasi sa
 
 - **Kurohiko:** katalog hero, relasi counter, dan alasan taktis komunitas.
 - **HOKFIRE:** statistik, build, arcana, skill, dan referensi matchup.
+- **HoKStats:** panduan skill/draft, preset build alternatif, detail item/spell, dan matchup editorial. Data disimpan terpisah dari HOKFIRE/KPL dan tidak otomatis menjadi sinyal ranking sebelum ditinjau.
 - **Dataset KPL/KIC:** frekuensi opener, ban, serta sinergi empiris. Data historis CN tidak otomatis mewakili meta Global saat ini.
 
 `hero.counters` berisi hero **yang di-counter oleh hero tersebut**. `hero.countered_by` berisi hero **yang meng-counter hero tersebut**. Arah ini tidak boleh dibalik.
@@ -55,9 +56,25 @@ Deploy isi `apps/web/dist/` ke static hosting. Distribusi produksi tidak memuat 
 ## Memperbarui hero dan metadata
 
 1. Perbarui sumber hero/statistik/counter dan sinergi di `data/mappings/` melalui pipeline scraper/ekstraktor atau koreksi yang ditinjau.
-2. Tambahkan atau perbarui status rilis setiap hero pada `hero_release_status.json`. Tinjau kemampuan lane, arah counter, dan mapping Global; pertahankan alias Ata.
-3. Bila perlu, buat dan review proposal label NanoJev seperti contoh di bawah.
-4. Bangun paket data:
+2. Untuk memperbarui data HoKStats, jalankan importer lokal. Ia membuat coverage report, mencatat sumber/tanggal/patch, dan mengabaikan matchup yang tidak bisa dicocokkan ke katalog hero.
+
+```powershell
+cd packages/ml-engine
+uv run hokstats_source.py sync
+
+# Tinjau sumber hero, matchup, item, atau spell sebelum dipakai scorer
+uv run hokstats_source.py review-guide --hero-id 640 --reviewer "Nama reviewer" --status approved
+uv run hokstats_source.py review-matchup --hero-id 640 --relation strong_against --target-id 126 --reviewer "Nama reviewer" --status approved
+uv run hokstats_source.py review-catalog --kind item --record-id 1127 --reviewer "Nama reviewer" --status approved
+
+uv run publish_data.py
+```
+
+Importer mempertahankan review hanya selama hash sumber cocok. Relasi `strong_against` berarti hero tersebut meng-counter target; `countered_by` berarti hero itu terancam oleh target. Record tanpa bukti tidak dianggap sebagai relasi negatif.
+
+3. Tambahkan atau perbarui status rilis setiap hero pada `hero_release_status.json`. Tinjau kemampuan lane, arah counter, dan mapping Global; pertahankan alias Ata.
+4. Bila perlu, buat dan review proposal label NanoJev seperti contoh di bawah.
+5. Bangun paket data:
 
 ```powershell
 cd packages/ml-engine
@@ -67,9 +84,9 @@ uv run publish_data.py
 uv run publish_data.py --publish
 ```
 
-`publish_data.py` menghasilkan `data_manifest.json` dan folder `datasets/<versi>/` di public. Paket berisi metadata hero, sinergi, dan status rilis beserta SHA-256. Artefak berversi diunggah terlebih dahulu; manifest menjadi pointer yang diunggah terakhir. Aset hero juga disinkronkan sebelum manifest.
+`publish_data.py` menghasilkan manifest schema v2 dan folder `datasets/<versi>/` di public. Paket berisi metadata hero, sinergi, status rilis, katalog item, dan katalog spell; semua artefak divalidasi dengan SHA-256. Artefak berversi diunggah terlebih dahulu; manifest menjadi pointer yang diunggah terakhir. Aset hero juga disinkronkan sebelum manifest.
 
-Browser memeriksa manifest saat aplikasi dibuka, memvalidasi seluruh artefak, lalu menyimpan satu paket lengkap pada cache IndexedDB `tournament_dataset_v16`. Jika pembaruan gagal, browser memakai paket valid terakhir atau paket bawaan. Jangan mengedit artefak hasil publikasi secara manual karena checksum akan berubah.
+Browser memeriksa manifest saat aplikasi dibuka, memvalidasi seluruh artefak, lalu menyimpan satu paket lengkap pada cache IndexedDB `tournament_dataset_v17`. Tidak ada fetch HoKStats atau inferensi NanoJev saat runtime. Jika pembaruan gagal, browser memakai paket valid terakhir atau paket bawaan. Jangan mengedit artefak hasil publikasi secara manual karena checksum akan berubah.
 
 Seri latihan mempertahankan snapshot dataset sampai selesai. Saat memulai seri baru, aplikasi memeriksa pembaruan lagi. Penambahan hero dan perubahan status rilis tidak memerlukan training model atau perubahan whitelist TypeScript.
 
@@ -95,11 +112,11 @@ uv run publish_data.py
 
 Bobot unduhan diverifikasi terhadap SHA-256 rilis. Lokasi default adalah `data/processed/nanojev/`; gunakan `--checkpoint-dir` untuk checkpoint lokal lain dan `--nanojev-source` bila source inferensi tersimpan terpisah. Dependency model dipasang melalui uv, bukan installer Python global.
 
-Label meliputi mobilitas, suppress, engage, disengage, frontline, dan kerentanan dive. Semua sumber diproses dalam chunk sesuai batas token model tanpa pemotongan diam-diam. Bukti yang bertentangan atau memiliki probabilitas pilihan di bawah 0,7 menjadi `tidak_diketahui`; batas ini dapat diatur melalui `--minimum-probability`.
+Label mencakup bentuk mobilitas dan crowd control, efek untuk sekutu, frontline, engage, peel, disengage, serta kerentanan dive/kite. Nilai yang tidak didukung sumber tetap `tidak_diketahui`; pros/cons hanya menjadi panduan dan tidak masuk skor. Semua sumber diproses dalam chunk sesuai batas token model tanpa pemotongan diam-diam. Bukti yang bertentangan atau memiliki probabilitas pilihan di bawah 0,7 menjadi `tidak_diketahui`; batas ini dapat diatur melalui `--minimum-probability`.
 
 Proposal menyimpan sumber, hash konten, provider, hash bobot, hasil per chunk, serta status review. Probabilitas NanoJev belum dikalibrasi untuk HoK; pipeline tidak mengubahnya menjadi confidence terkalibrasi. Checkpoint publik dilatih pada tugas game lain, sehingga kemampuan klasifikasi HoK tetap harus dievaluasi. Review pengelola wajib sebelum publikasi.
 
-Publisher hanya memakai proposal approved dengan sumber yang masih cocok. Pilihan yang tidak diketahui tidak menjadi fakta negatif. Status rilis dan counter tidak ditimpa oleh hasil model; hero tanpa profil memakai heuristik role.
+Publisher hanya memakai proposal approved dengan sumber yang masih cocok. Pilihan yang tidak diketahui tidak menjadi fakta negatif. Status rilis dan counter tidak ditimpa oleh hasil model; hero tanpa profil memakai heuristik role. Matchup HoKStats yang telah direview memberi paling banyak +0,45 per kandidat, trait yang melengkapi draft paling banyak +0,45, dan kedua sinyal tetap di bawah counter langsung/KPL. Radar menambahkan sumbu utilitas tim.
 
 **TypeSafe API opsional:** pilih `--provider typesafe` secara eksplisit dan set `TYPESAFE_API_KEY` di environment pipeline atau .env yang diabaikan Git. Jangan memakai nama variabel VITE_ untuk kredensial. Formatnya mengikuti [System One API](https://docs.typesafe.ai/api/system-one).
 
@@ -118,7 +135,7 @@ Pengujian mencakup validasi Global/Fearless, lima game tanpa pengulangan pick pe
 
 ```powershell
 cd packages/ml-engine
-uv run python -m unittest test_data_pipeline.py test_nanojev_provider.py
+uv run python -m unittest test_data_pipeline.py test_nanojev_provider.py test_hokstats_source.py
 uv run export_draft_benchmark.py --cutoff 2024-01-01 --limit 24
 
 cd ../../apps/web

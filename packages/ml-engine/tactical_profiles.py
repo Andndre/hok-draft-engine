@@ -13,11 +13,33 @@ ROOT = Path(__file__).resolve().parents[2]
 MASTER = ROOT / "data/mappings/master_heroes_global.json"
 TAGS = {
     "mobility": "Memiliki dash, blink, atau escape aktif yang dapat dipakai bertahan.",
+    "dash": "Memiliki skill perpindahan yang secara eksplisit berupa dash.",
+    "blink": "Memiliki perpindahan instan seperti blink/teleport jarak pendek.",
+    "leap": "Memiliki lompatan atau lunge yang dinyatakan pada sumber.",
+    "teleport": "Memiliki teleport jarak jauh atau lintas peta.",
     "suppress": "Memiliki efek suppress yang dinyatakan eksplisit pada skill.",
+    "cc_knockup": "Memiliki crowd control knock-up/airborne.",
+    "cc_knockback": "Memiliki crowd control knock-back/push.",
+    "cc_pull": "Memiliki crowd control pull/hook.",
+    "cc_stun": "Memiliki crowd control stun.",
+    "cc_root": "Memiliki crowd control root/immobilize.",
+    "cc_silence": "Memiliki crowd control silence.",
+    "cc_slow": "Memiliki crowd control slow.",
     "engage": "Dapat memulai teamfight dengan gap closer atau crowd control yang andal.",
     "disengage": "Dapat menghentikan engage lawan atau membantu tim mundur.",
     "frontline": "Mampu menyerap damage sebagai garis depan tim.",
+    "peel": "Dapat melindungi sekutu dari dive melalui CC, displacement, atau zona penghalang.",
+    "ally_shield": "Memberi shield kepada satu atau lebih sekutu.",
+    "ally_heal": "Memulihkan HP sekutu.",
+    "ally_move_speed_buff": "Memberi bonus movement speed kepada sekutu.",
+    "ally_attack_speed_buff": "Memberi bonus attack speed kepada sekutu.",
+    "ally_damage_buff": "Memberi bonus damage kepada sekutu.",
+    "ally_cleanse": "Menghapus atau mengurangi crowd control pada sekutu.",
+    "ally_cc_immunity": "Memberi sekutu imunitas crowd control.",
     "dive_vulnerable": "Rentan terhadap dive karena mobilitas atau pertahanan diri terbatas.",
+    "kite_vulnerable": "Mudah di-kite berdasarkan keterbatasan engage atau mobilitas.",
+    "low_damage": "Sumber menyatakan output damage rendah.",
+    "weak_early": "Sumber menyatakan hero lemah pada fase awal.",
 }
 
 
@@ -26,11 +48,20 @@ def canonical(value):
 
 
 def source_material(hero):
-    return [
+    sources = [
         {"source": "HOKFIRE", "url": "https://www.hokfire.com/", "field": "abilities", "content": hero.get("abilities", [])},
         {"source": "HOKFIRE", "url": "https://www.hokfire.com/", "field": "guide", "content": {key: (hero.get("hokfire_guide") or {}).get(key) for key in ("pros", "cons", "gameplay_tips")}},
         {"source": "Kurohiko", "url": "https://hok.kurohiko.id/", "field": "tactical_tips", "content": hero.get("tactical_tips", "")},
     ]
+    guide = hero.get("hokstats_guide")
+    if guide:
+        # Review status is intentionally excluded: changing source content invalidates approval,
+        # while a reviewer changing metadata alone does not alter the evidence hash.
+        content = {key: guide.get(key) for key in ("skills", "pick_when", "avoid_when", "power_spikes", "common_mistakes", "pros", "cons")}
+        content["matchups"] = [{key: matchup.get(key) for key in ("relation", "hero_id", "hero_name", "evidence")} | {"source_hash": matchup.get("source", {}).get("source_hash")} for matchup in guide.get("matchups", [])]
+        content["partners"] = [{"hero_id": partner.get("hero_id"), "hero_name": partner.get("hero_name"), "source_hash": partner.get("source", {}).get("source_hash")} for partner in guide.get("partners", [])]
+        sources.append({"source": "HoKStats", "url": guide.get("source", {}).get("url", "https://hokstats.gg/"), "field": "guide", "content": content})
+    return sources
 
 
 def source_hash(hero):
@@ -67,7 +98,7 @@ def request_jev(payload):
 
 
 def validate_proposal(proposal, hero):
-    if proposal.get("schema_version") != 1 or proposal.get("hero_id") != hero["hero_id"] or proposal.get("source_hash") != source_hash(hero) or proposal.get("sources") != source_material(hero):
+    if proposal.get("schema_version") != 2 or proposal.get("hero_id") != hero["hero_id"] or proposal.get("source_hash") != source_hash(hero) or proposal.get("sources") != source_material(hero):
         raise ValueError("Identitas/sumber proposal berubah atau sudah kedaluwarsa; buat proposal baru.")
     if not isinstance(proposal.get("model"), str) or not proposal["model"]:
         raise ValueError("Versi model wajib dicatat.")
@@ -87,7 +118,7 @@ def validate_proposal(proposal, hero):
 
 def create_proposal(hero, response, provider="typesafe"):
     proposal = {
-        "schema_version": 1, "hero_id": hero["hero_id"], "source_hash": source_hash(hero),
+        "schema_version": 2, "hero_id": hero["hero_id"], "source_hash": source_hash(hero),
         "sources": source_material(hero), "model": response.get("model"), "provider": provider,
         "model_info": response.get("model_info", {}),
         "tags": {tag: {"value": response.get("answers", {}).get(tag, {}).get("choice"), "confidence": response.get("answers", {}).get(tag, {}).get("confidence"), "chunk_votes": response.get("answers", {}).get(tag, {}).get("chunk_votes", [])} for tag in TAGS},

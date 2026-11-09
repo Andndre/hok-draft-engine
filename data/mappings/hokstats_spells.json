@@ -1,0 +1,189 @@
+[
+  {
+    "id": "execute",
+    "name": "Execute",
+    "effect": "Deals true damage to nearby enemy heroes equal to 16% of their lost Health. A finishing blow reduces the remaining cooldown by 90%.",
+    "cooldown": "60 seconds",
+    "best_for": [
+      "Close-range kill pressure and finishing low-Health targets."
+    ],
+    "source": {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/spells/",
+      "fetched_at": "2026-11-09T15:10:35+00:00",
+      "patch_version": null,
+      "review_status": "pending",
+      "source_hash": "6746302a19b5226c329ac1032f06086738fc01d2acbe97b867efb220cc3fe7f5"
+    }
+  },
+  {
+    "id": "flash",
+    "name": "Flash",
+    "effect": "Teleports the hero a short distance in the chosen direction.",
+    "cooldown": "120 seconds",
+    "best_for": [
+      "Universal engage",
+      "escape",
+      "wall crossing",
+      "and repositioning."
+    ],
+    "source": {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/spells/",
+      "fetched_at": "2026-11-09T15:10:35+00:00",
+      "patch_version": null,
+      "review_status": "pending",
+      "source_hash": "80586df1480f3709dca6e182b69373eea783b200a9a0baf7947224dc07ac9d61"
+    }
+  },
+  {
+    "id": "frenzy",
+    "name": "Frenzy",
+    "effect": "For 7 seconds, increases damage by 10%, Resistance by 15%, Physical Lifesteal by 20%, and Magical Lifesteal by 30%.",
+    "cooldown": "60 seconds",
+    "best_for": [
+      "Extended all-in fights and heroes that convert sustain into pressure."
+    ],
+    "source": {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/spells/",
+      "fetched_at": "2026-11-09T15:10:35+00:00",
+      "patch_version": null,
+      "review_status": "pending",
+      "source_hash": "47519e78223da5e7a38974f300292e2a012792a8f33c2e4a69fbc71971f464fe"
+    }
+  },
+  {
+    "id": "heal",
+    "name": "Heal",
+    "effect": "Restores 15% Health to the user and nearby teammates, then grants nearby teammates 15% Movement Speed for 2 seconds.",
+    "cooldown": "120 seconds",
+    "best_for": [
+      "Team sustain",
+      "duo-lane protection",
+      "and surviving burst together."
+    ],
+    "source": {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/spells/",
+      "fetched_at": "2026-11-09T15:10:35+00:00",
+      "patch_version": null,
+      "review_status": "pending",
+      "source_hash": "f1afecad4487511560244ac02b253e00dd0a252cedb800472d4b8bfcc49ccb5b"
+    }
+  },
+  {
+    "id": "intimidate",
+    "name": "Intimidate",
+    "effect": "For 4 seconds, reduces nearby enemies’ damage output by 25% and increases the user’s damage reduction by 20%. Repeated team uses have reduced debuff value.",
+    "cooldown": "90 seconds",
+    "best_for": [
+      "Frontliners",
+      "peel",
+      "and disrupting high-DPS enemies."
+    ],
+    "source": {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/spells/",
+      "fetched_at": "2026-11-09T15:10:35+00:00",
+      "patch_version": null,
+      "review_status": "pending",
+      "source_hash": "fc366fa14e103fe53fc0b9c8c5c3cad4a9669b73604652d0b91d86e592601f63"
+    }
+  },
+  {
+    "id": "purify",
+    "name": "Purify",
+    "effect": "Removes debuffs and crowd-control effects except suppression, then grants crowd-control immunity for 1.5 seconds.",
+    "cooldown": "120 seconds",
+    "best_for": [
+      "Carries and divers facing dangerous crowd-control chains."
+    ],
+    "source": {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/spells/",
+      "fetched_at": "2026-11-09T15:10:35+00:00",
+      "patch_version": null,
+      "review_status": "pending",
+      "source_hash": "dcd6c53eec1f58f46c9c877be7e7b1ed2891643f13fd24457fb8ca7cce4dd55b"
+    }
+  },
+  {
+    "id": "smite",
+    "name": "Smite",
+    "effect": "Deals 1,500 true damage to a nearby monster or minion and stuns it for 1 second. Jungle equipment can upgrade its behavior.",
+    "cooldown": "30 seconds",
+    "best_for": [
+      "Jungle clearing and securing Tyrant",
+      "Overlord",
+      "buffs",
+      "and contested camps."
+    ],
+    "source": {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/spells/",
+      "fetched_at": "2026-11-09T15:10:35+00:00",
+      "patch_version": null,
+      "review_status": "pending",
+      "source_hash": "129a8b6846a33403e5a9573880a10a6c5e7c1743f3f328a49850b3a31600674c"
+    }
+  },
+  {
+    "id": "sprint",
+    "name": "Sprint",
+    "effect": "Removes slows and grants 30% Movement Speed for 10 seconds. Incoming slows are halved while active, with extra out-of-combat speed.",
+    "cooldown": "90 seconds",
+    "best_for": [
+      "Long chases",
+      "kiting",
+      "rotations",
+      "and heroes that need sustained mobility."
+    ],
+    "source": {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/spells/",
+      "fetched_at": "2026-11-09T15:10:35+00:00",
+      "patch_version": null,
+      "review_status": "pending",
+      "source_hash": "310dd20e35b56474108824dcf3c6d382882cf7f89bb5e9c4219ef18aa7709b88"
+    }
+  },
+  {
+    "id": "stun",
+    "name": "Stun",
+    "effect": "Stuns nearby enemies for 0.75 seconds and slows them for 1 second.",
+    "cooldown": "90 seconds",
+    "best_for": [
+      "Point-blank engage",
+      "peel",
+      "and interrupting mobile enemies."
+    ],
+    "source": {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/spells/",
+      "fetched_at": "2026-11-09T15:10:35+00:00",
+      "patch_version": null,
+      "review_status": "pending",
+      "source_hash": "a0a12cf23d9b0e6bfb8d838ea743340a437fdfc17f4da4cf5d3bd1e55bfa54b6"
+    }
+  },
+  {
+    "id": "teleport",
+    "name": "Teleport",
+    "effect": "After a 2-second channel, teleports next to an allied structure or minion. Canceling it, or using it soon after the Teleportation Portal, shortens the cooldown.",
+    "cooldown": "75 seconds",
+    "best_for": [
+      "Split-push pressure",
+      "cross-map rotations",
+      "and rejoining objective fights."
+    ],
+    "source": {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/spells/",
+      "fetched_at": "2026-11-09T15:10:35+00:00",
+      "patch_version": null,
+      "review_status": "pending",
+      "source_hash": "9f8078da25c37d3701b6dc5438b897e89f58e9cac22da66d202b00522654d9eb"
+    }
+  }
+]
