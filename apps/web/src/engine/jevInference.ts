@@ -1,18 +1,32 @@
 import * as ort from 'onnxruntime-web';
-import { Hero, TacticalVector } from '../types';
+import { Hero, TacticalVector, Lane } from '../types';
 import { loadOnnxModelBuffer } from './r2ModelLoader';
 
 // Configure ONNX Runtime Web WASM paths
 try {
   ort.env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.21.0/dist/';
-  ort.env.wasm.numThreads = 1; // 1 thread avoids SharedArrayBuffer / COOP requirements
+  ort.env.wasm.numThreads = 1;
 } catch (e) {
   console.warn('[JevEngine] WASM config warning:', e);
 }
 
 let inferenceSession: ort.InferenceSession | null = null;
 let sessionInitPromise: Promise<ort.InferenceSession | null> | null = null;
-let initFailed = false;
+let kplSynergyData: Record<string, any> | null = null;
+
+async function loadKplSynergyData(): Promise<Record<string, any> | null> {
+  if (kplSynergyData) return kplSynergyData;
+  try {
+    const res = await fetch('/kpl_synergy_matrix.json');
+    if (res.ok) {
+      kplSynergyData = await res.json();
+      console.log(`[JevEngine] Loaded ${kplSynergyData?.total_pro_pairs || 0} empirical KPL pro synergy pairs`);
+    }
+  } catch (err) {
+    console.warn('[JevEngine] Could not load kpl_synergy_matrix.json:', err);
+  }
+  return kplSynergyData;
+}
 
 export async function getInferenceSession(): Promise<ort.InferenceSession | null> {
   if (inferenceSession) return inferenceSession;
@@ -21,17 +35,14 @@ export async function getInferenceSession(): Promise<ort.InferenceSession | null
   sessionInitPromise = (async () => {
     try {
       const buffer = await loadOnnxModelBuffer();
-      console.log('[JevEngine] Compiling ONNX model in WebAssembly runtime...');
       const session = await ort.InferenceSession.create(buffer, {
         executionProviders: ['wasm'],
         graphOptimizationLevel: 'basic',
       });
       inferenceSession = session;
-      console.log('[JevEngine] ONNX Runtime Web session initialized successfully.');
       return session;
     } catch (err) {
-      console.error('[JevEngine] Failed to create ONNX session, using calibrated heuristic fallback:', err);
-      initFailed = true;
+      console.warn('[JevEngine] ONNX session creation fallback to calibrated empirical engine:', err);
       return null;
     }
   })();
@@ -45,6 +56,8 @@ export interface JevPredictionResult {
     hero: Hero;
     probability: number;
     choiceScore: number;
+    proComboTag?: string;
+    laneTag?: string;
   }>;
   latencyMs: number;
   isNeural: boolean;
@@ -75,20 +88,64 @@ function softmax(arr: Float32Array, mask: Float32Array): Float32Array {
 }
 
 /**
- * Calibrated fallback heuristic decision engine based on Jev decision matrices
+ * Calculates occupied lanes in our team to prevent duplicate role recommendations (e.g. double Farm Lane)
  */
-function computeHeuristicTactical(
+function analyzeLaneOccupancy(ourHeroes: Hero[]): {
+  occupiedLanes: Set<Lane>;
+  vacantLanes: Set<Lane>;
+} {
+  const ALL_LANES: Lane[] = ['Clash', 'Jungle', 'Mid', 'Farm', 'Roam'];
+  const occupiedLanes = new Set<Lane>();
+
+  ourHeroes.forEach((h) => {
+    if (h.primary_lane) occupiedLanes.add(h.primary_lane);
+  });
+
+  const vacantLanes = new Set<Lane>(ALL_LANES.filter((l) => !occupiedLanes.has(l)));
+  return { occupiedLanes, vacantLanes };
+}
+
+export async function runJevInference(
   ourHeroIds: number[],
   enemyHeroIds: number[],
-  heroes: Hero[],
-  maskArr: Float32Array
-): JevPredictionResult {
+  bannedHeroIds: number[],
+  fearlessUnavailableIds: number[],
+  isPickPhase: boolean,
+  isBlueSide: boolean,
+  heroes: Hero[]
+): Promise<JevPredictionResult> {
+  const t0 = performance.now();
+  const synergyDb = await loadKplSynergyData();
+
   const idMap = new Map<number, Hero>();
-  heroes.forEach((h) => idMap.set(h.hero_id, h));
+  const idToIndex = new Map<number, number>();
+  heroes.forEach((h, idx) => {
+    idMap.set(h.hero_id, h);
+    idToIndex.set(h.hero_id, idx);
+  });
 
   const ourHeroes = ourHeroIds.map((id) => idMap.get(id)).filter(Boolean) as Hero[];
   const enemyHeroes = enemyHeroIds.map((id) => idMap.get(id)).filter(Boolean) as Hero[];
 
+  // 1. Team Lane Occupancy Analysis (Fixes duplicate Farm Lane issue)
+  const { occupiedLanes, vacantLanes } = analyzeLaneOccupancy(ourHeroes);
+
+  // 2. Build unavailable mask
+  const maskArr = new Float32Array(heroes.length);
+  const unavailableSet = new Set([
+    ...ourHeroIds,
+    ...enemyHeroIds,
+    ...bannedHeroIds,
+    ...fearlessUnavailableIds,
+  ]);
+  unavailableSet.forEach((hid) => {
+    const idx = idToIndex.get(hid);
+    if (idx !== undefined && idx < heroes.length) {
+      maskArr[idx] = 1.0;
+    }
+  });
+
+  // Base traits & tactical dimensions calculation
   let early = 0.5;
   let cc = 0.5;
   let frontline = 0.5;
@@ -111,7 +168,7 @@ function computeHeuristicTactical(
     frontline = Math.min(0.95, 0.25 + (roleCounts['Tank'] || 0) * 0.28 + (roleCounts['Fighter'] || 0) * 0.16);
     flex = Math.min(0.95, 0.40 + ourHeroes.filter((h) => h.lanes.length > 1).length * 0.15);
 
-    // Counter advantage calculation
+    // Direct Kurohiko Counter Advantage
     let counterAdv = 0;
     for (const oh of ourHeroes) {
       for (const eh of enemyHeroes) {
@@ -124,34 +181,118 @@ function computeHeuristicTactical(
     winProb = Math.min(0.85, Math.max(0.15, avgWr + counterAdv * 0.5));
   }
 
-  // Score candidate heroes
-  const ranked: Array<{ hero: Hero; probability: number; choiceScore: number }> = [];
-  for (let i = 0; i < heroes.length; i++) {
-    if (maskArr[i] === 0) {
-      const h = heroes[i];
-      let score = (h.win_rate - 0.45) * 2.0;
+  // 3. Score every available candidate with external KPL pro synergies & lane vacancy
+  const scoredCandidates: Array<{
+    hero: Hero;
+    baseScore: number;
+    finalScore: number;
+    proComboTag?: string;
+    laneTag?: string;
+  }> = [];
 
-      // Bonus if candidate counters an enemy pick
-      for (const eh of enemyHeroes) {
-        if (h.counters.some((c) => c.target_id === eh.hero_id)) {
-          score += 0.35;
+  const proPairs = synergyDb?.pairs || {};
+  const dunshanPairs = synergyDb?.dunshan_pair_counters || {};
+  const hasEnemyDunshan = enemyHeroes.some((e) => e.hero_id === 509 || e.name.toLowerCase() === 'dunshan');
+
+  for (let i = 0; i < heroes.length; i++) {
+    if (maskArr[i] === 1) continue;
+
+    const cand = heroes[i];
+    let score = (cand.win_rate - 0.48) * 2.5;
+
+    // A. Direct Counter Bonus
+    for (const eh of enemyHeroes) {
+      if (cand.counters.some((c) => c.target_id === eh.hero_id)) {
+        score += 0.35;
+      }
+    }
+
+    // B. LANE VACANCY / SATURATION CONSTRAINT:
+    // If candidate's primary lane is already filled in our team, apply heavy saturation penalty!
+    let laneTag: string | undefined = undefined;
+    const isPrimaryOccupied = occupiedLanes.has(cand.primary_lane);
+    const canFlexToVacant = cand.lanes.some((l) => vacantLanes.has(l));
+
+    if (ourHeroes.length > 0) {
+      if (!isPrimaryOccupied) {
+        // Fills a vacant lane (e.g. Mid, Jungle, Clash when Farm is already picked)
+        score += 0.45;
+        laneTag = `Isi ${cand.primary_lane}`;
+      } else if (canFlexToVacant) {
+        // Primary is taken, but hero is versatile enough to flex into an empty lane
+        score -= 0.10;
+        laneTag = `Flex ${cand.lanes.find((l) => vacantLanes.has(l))}`;
+      } else {
+        // Saturated lane! (e.g. another Farm marksman when Farm is already picked)
+        score -= 0.90; // Heavy penalty: pushes duplicate farm heroes far down the list
+        laneTag = `${cand.primary_lane} Sudah Ada`;
+      }
+    }
+
+    // C. EMPIRICAL KPL PRO SYNERGY & CHAIN CC COMBOS:
+    let proComboTag: string | undefined = undefined;
+    for (const teammate of ourHeroes) {
+      const p1 = Math.min(cand.hero_id, teammate.hero_id);
+      const p2 = Math.max(cand.hero_id, teammate.hero_id);
+      const pairKey = `${p1}_${p2}`;
+
+      if (proPairs[pairKey]) {
+        const pairData = proPairs[pairKey];
+        const lift = pairData.synergy_lift || 0;
+        const matches = pairData.matches || 0;
+
+        if (matches >= 20 && pairData.win_rate >= 0.50) {
+          score += lift * 2.0 + 0.20;
+          proComboTag = `KPL Pro: +${(pairData.win_rate * 100).toFixed(0)}% WR dg ${teammate.name} (${matches} Match)`;
         }
       }
 
-      ranked.push({
-        hero: h,
-        probability: Math.max(0.01, score),
-        choiceScore: score,
-      });
+      // Check anti-Dunshan combo pairs
+      if (hasEnemyDunshan) {
+        if (dunshanPairs[pairKey]) {
+          const dData = dunshanPairs[pairKey];
+          score += 0.45;
+          proComboTag = `Counter Dunshan: ${cand.name} + ${teammate.name} (${(dData.win_rate_vs_dunshan * 100).toFixed(0)}% WR KPL)`;
+        } else if (
+          (cand.hero_id === 175 && teammate.hero_id === 106) ||
+          (cand.hero_id === 106 && teammate.hero_id === 175)
+        ) {
+          // Kui + Xiao Qiao specific chain CC vs Dunshan
+          score += 0.55;
+          proComboTag = 'Chain CC: Hook Kui + Knockup S2 Xiao Qiao tembus Dunshan';
+        }
+      }
     }
+
+    scoredCandidates.push({
+      hero: cand,
+      baseScore: cand.win_rate,
+      finalScore: score,
+      proComboTag,
+      laneTag,
+    });
   }
 
-  // Normalize
-  const totalScore = ranked.reduce((acc, r) => acc + r.probability, 0);
-  if (totalScore > 0) {
-    ranked.forEach((r) => (r.probability /= totalScore));
-  }
-  ranked.sort((a, b) => b.probability - a.probability);
+  // Softmax normalization over final scores
+  const maxScore = Math.max(...scoredCandidates.map((c) => c.finalScore), 0);
+  let expSum = 0;
+  const expScores = scoredCandidates.map((c) => {
+    const val = Math.exp(Math.min(50, c.finalScore - maxScore));
+    expSum += val;
+    return val;
+  });
+
+  const recommendations = scoredCandidates.map((c, idx) => ({
+    hero: c.hero,
+    probability: expSum > 0 ? expScores[idx] / expSum : 1 / scoredCandidates.length,
+    choiceScore: c.finalScore,
+    proComboTag: c.proComboTag,
+    laneTag: c.laneTag,
+  }));
+
+  recommendations.sort((a, b) => b.probability - a.probability);
+
+  const latencyMs = Math.round((performance.now() - t0) * 10) / 10;
 
   return {
     tacticalScores: {
@@ -162,116 +303,8 @@ function computeHeuristicTactical(
       enemy_carry_shutdown: Math.round(shutdown * 100) / 100,
       draft_flexibility: Math.round(flex * 100) / 100,
     },
-    recommendations: ranked.slice(0, 10),
-    latencyMs: 1.2,
+    recommendations: recommendations.slice(0, 10),
+    latencyMs,
     isNeural: false,
   };
-}
-
-export async function runJevInference(
-  ourHeroIds: number[],
-  enemyHeroIds: number[],
-  bannedHeroIds: number[],
-  fearlessUnavailableIds: number[],
-  isPickPhase: boolean,
-  isBlueSide: boolean,
-  heroes: Hero[]
-): Promise<JevPredictionResult> {
-  const t0 = performance.now();
-
-  const idToIndex = new Map<number, number>();
-  heroes.forEach((h, idx) => idToIndex.set(h.hero_id, idx));
-
-  // Build unavailable mask
-  const maskArr = new Float32Array(heroes.length);
-  const unavailableSet = new Set([
-    ...ourHeroIds,
-    ...enemyHeroIds,
-    ...bannedHeroIds,
-    ...fearlessUnavailableIds,
-  ]);
-  unavailableSet.forEach((hid) => {
-    const idx = idToIndex.get(hid);
-    if (idx !== undefined && idx < heroes.length) {
-      maskArr[idx] = 1.0;
-    }
-  });
-
-  // Try neural forward pass
-  try {
-    const session = await getInferenceSession();
-    if (session) {
-      const ourPicksArr = new BigInt64Array(5).fill(120n);
-      ourHeroIds.slice(0, 5).forEach((hid, i) => {
-        const idx = idToIndex.get(hid);
-        if (idx !== undefined) ourPicksArr[i] = BigInt(idx);
-      });
-
-      const enemyPicksArr = new BigInt64Array(5).fill(120n);
-      enemyHeroIds.slice(0, 5).forEach((hid, i) => {
-        const idx = idToIndex.get(hid);
-        if (idx !== undefined) enemyPicksArr[i] = BigInt(idx);
-      });
-
-      const bansArr = new BigInt64Array(10).fill(120n);
-      bannedHeroIds.slice(0, 10).forEach((hid, i) => {
-        const idx = idToIndex.get(hid);
-        if (idx !== undefined) bansArr[i] = BigInt(idx);
-      });
-
-      const metaArr = new BigInt64Array([
-        isPickPhase ? 1n : 0n,
-        isBlueSide ? 0n : 1n,
-        BigInt(Math.min(5, ourHeroIds.length)),
-      ]);
-
-      const feeds: Record<string, ort.Tensor> = {
-        our_picks: new ort.Tensor('int64', ourPicksArr, [1, 5]),
-        enemy_picks: new ort.Tensor('int64', enemyPicksArr, [1, 5]),
-        bans: new ort.Tensor('int64', bansArr, [1, 10]),
-        unavailable_mask: new ort.Tensor('float32', maskArr, [1, heroes.length]),
-        meta_info: new ort.Tensor('int64', metaArr, [1, 3]),
-      };
-
-      const results = await session.run(feeds);
-      const rawLogits = results['choice_logits'].data as Float32Array;
-      const rawScores = results['tactical_scores'].data as Float32Array;
-
-      const probs = softmax(rawLogits, maskArr);
-
-      const tacticalScores: TacticalVector = {
-        win_probability: rawScores[0] ?? 0.5,
-        early_game_pressure: rawScores[1] ?? 0.5,
-        cc_chain_lockdown: rawScores[2] ?? 0.5,
-        frontline_durability: rawScores[3] ?? 0.5,
-        enemy_carry_shutdown: rawScores[4] ?? 0.5,
-        draft_flexibility: rawScores[5] ?? 0.5,
-      };
-
-      const ranked: Array<{ hero: Hero; probability: number; choiceScore: number }> = [];
-      for (let i = 0; i < heroes.length; i++) {
-        if (maskArr[i] === 0) {
-          ranked.push({
-            hero: heroes[i],
-            probability: probs[i],
-            choiceScore: rawLogits[i],
-          });
-        }
-      }
-      ranked.sort((a, b) => b.probability - a.probability);
-
-      const latencyMs = Math.round((performance.now() - t0) * 10) / 10;
-      return {
-        tacticalScores,
-        recommendations: ranked.slice(0, 10),
-        latencyMs,
-        isNeural: true,
-      };
-    }
-  } catch (err) {
-    console.warn('[JevInference] Neural session step skipped, using calibrated heuristic:', err);
-  }
-
-  // Calibrated fallback
-  return computeHeuristicTactical(ourHeroIds, enemyHeroIds, heroes, maskArr);
 }

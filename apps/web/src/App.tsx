@@ -175,7 +175,8 @@ export const App: React.FC = () => {
               previousScores,
               result.tacticalScores,
               lastPickedHero,
-              activeEnemies
+              activeEnemies,
+              ourPicks.filter(Boolean) as Hero[]
             );
             setDeltas(explained.deltas);
             setPrimaryInsight(explained.primaryInsight);

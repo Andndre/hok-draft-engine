@@ -4,7 +4,8 @@ export function computeTacticalDeltas(
   before: TacticalVector,
   after: TacticalVector,
   pickedHero: Hero,
-  enemyHeroes: Hero[]
+  enemyHeroes: Hero[],
+  teammateHeroes: Hero[] = []
 ): {
   deltas: TacticalDelta[];
   primaryInsight: string;
@@ -58,25 +59,44 @@ export function computeTacticalDeltas(
     }
   }
 
+  // Check Pro Tournament chain CC combos
+  const hasEnemyDunshan = enemyHeroes.some((e) => e.hero_id === 509 || e.name.toLowerCase() === 'dunshan');
+  const hasTeammateKui = teammateHeroes.some((t) => t.hero_id === 175 || t.name.toLowerCase() === 'kui');
+  const hasTeammateXiaoQiao = teammateHeroes.some((t) => t.hero_id === 106 || t.name.toLowerCase() === 'xiao qiao');
+
+  let proComboNote = '';
+  if ((pickedHero.hero_id === 106 && hasTeammateKui) || (pickedHero.hero_id === 175 && hasTeammateXiaoQiao)) {
+    if (hasEnemyDunshan) {
+      proComboNote = 'KPL Chain CC Combo: Hook Kui membongkar shield Dunshan, langsung dilanjutkan Knockup S2 Xiao Qiao untuk mengunci hero musuh yang menempel di belakangnya!';
+    } else {
+      proComboNote = 'KPL Chain CC Combo: Hook Kui di-follow up Knockup Skill 2 Xiao Qiao menghasilkan lockdown multi-target instan (112 Match KPL, 54.5% WR).';
+    }
+  }
+
   // Find biggest delta
   const significantPositive = deltas
     .filter((d) => d.dimension !== 'win_probability' && d.deltaPercent > 0)
     .sort((a, b) => b.deltaPercent - a.deltaPercent);
 
   let primaryInsight = '';
-  if (significantPositive.length > 0) {
+  if (proComboNote) {
+    primaryInsight = proComboNote;
+  } else if (significantPositive.length > 0) {
     const top = significantPositive[0];
     primaryInsight = `Memilih ${pickedHero.name} mendongkrak ${top.label} sebesar +${top.deltaPercent}%`;
     if (counteredEnemies.length > 0) {
       primaryInsight += ` serta mengunci ancaman core musuh (${counteredEnemies.join(', ')}).`;
     } else {
-      primaryInsight += ` untuk mengamankan keunggulan tempo draft.`;
+      primaryInsight += ` untuk mengamankan tempo formasi tim.`;
     }
   } else {
     primaryInsight = `Pilihan taktis stabil ${pickedHero.name} untuk menyempurnakan komposisi tim.`;
   }
 
-  // Detailed bullet points
+  if (proComboNote) {
+    reasons.push(proComboNote);
+  }
+
   if (counteredEnemies.length > 0) {
     reasons.push(`Direct Counter: Menetralisir efektivitas ${counteredEnemies.join(', ')}.`);
   }

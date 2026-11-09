@@ -10,6 +10,8 @@ interface TacticalRadarPanelProps {
     hero: Hero;
     probability: number;
     choiceScore: number;
+    proComboTag?: string;
+    laneTag?: string;
   }>;
   onSelectCandidate: (hero: Hero) => void;
   activeSide: 'blue' | 'red';
@@ -164,10 +166,24 @@ export const TacticalRadarPanel: React.FC<TacticalRadarPanelProps> = ({
                       <span className="text-[10px] font-mono px-1 py-0.2 rounded bg-slate-800 text-slate-300">
                         {rec.hero.tier}
                       </span>
+                      {rec.laneTag && (
+                        <span className={`text-[9px] font-mono px-1.5 py-0.2 rounded ${
+                          rec.laneTag.includes('Isi')
+                            ? 'bg-emerald-950 text-emerald-400 border border-emerald-800/40'
+                            : 'bg-amber-950 text-amber-400 border border-amber-800/40'
+                        }`}>
+                          {rec.laneTag}
+                        </span>
+                      )}
                     </div>
-                    <span className="text-[10px] text-slate-400">
+                    <div className="text-[10px] text-slate-400 truncate">
                       {rec.hero.primary_role} · {rec.hero.primary_lane}
-                    </span>
+                    </div>
+                    {rec.proComboTag && (
+                      <div className="text-[10px] text-[#B8FF01] font-medium truncate max-w-[280px]">
+                        ⚡ {rec.proComboTag}
+                      </div>
+                    )}
                   </div>
                 </div>
 
