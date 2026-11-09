@@ -94,7 +94,9 @@ Seri latihan mempertahankan snapshot dataset sampai selesai. Saat memulai seri b
 
 Default pipeline adalah **NanoJev lokal**, tanpa API key atau panggilan inference cloud. Adapter memakai [TianyuCodings/NanoJev dan checkpoint C-Tianyu/NanoJev](https://huggingface.co/C-Tianyu/NanoJev). Model 0,6B ini dijalankan pada komputer pengelola; bobotnya tidak masuk ke web public/dist.
 
-Jalur inferensi upstream saat ini membutuhkan **PyTorch CUDA dan GPU NVIDIA**. Siapkan environment CUDA terlebih dahulu. Pada mesin CPU-only, CLI berhenti dengan pesan yang jelas; tidak ada fallback cloud otomatis. Latihan browser dan pembaruan data yang ditinjau secara manual tetap dapat digunakan.
+Jalur upstream menggunakan **PyTorch CUDA** secara default. Mesin tanpa NVIDIA dapat memilih adapter CPU FP32 dengan `--device cpu`; model tetap lokal dan tidak ada fallback API. CPU sangat lambat untuk model 0,6B, jadi gunakan hanya untuk uji terbatas. Radeon 660M tidak dipakai oleh adapter ini; untuk batch, gunakan notebook GPU di bawah.
+
+Untuk menjalankan pembuatan proposal dengan GPU NVIDIA tanpa memasangnya di laptop, gunakan notebook [NanoJev Colab/Kaggle](notebooks/nanojev_proposals_colab_kaggle.ipynb). Notebook mengunduh checkpoint yang dipatok dan memverifikasi checksum, lalu menjalankan inference di GPU notebook untuk membuat proposal `pending`. Ini bukan fine-tuning model; tidak ada proposal yang disetujui atau dipublikasikan otomatis. Unduh ZIP hasilnya dan salin proposal ke `data/mappings/tactical_proposals/` pada checkout lokal yang sumber datanya sama, lalu tinjau satu per satu.
 
 Unduh rilis model/source sekali melalui Hugging Face. Unduhan membutuhkan internet, sedangkan inferensi berikutnya membaca file lokal:
 
@@ -102,11 +104,14 @@ Unduh rilis model/source sekali melalui Hugging Face. Unduhan membutuhkan intern
 cd packages/ml-engine
 uv run --no-sync --with huggingface-hub tactical_profiles.py download
 
-# Pada environment PyTorch CUDA yang sudah disiapkan
-uv run --no-sync --with transformers==5.17.0 --with safetensors==0.8.0 tactical_profiles.py propose --hero-id 156 --output ../../data/mappings/tactical_proposals/liang.json
+# Satu hero dengan CPU lokal (pastikan RAM cukup; hasil tetap pending)
+uv run --no-sync --with transformers==5.17.0 --with safetensors==0.8.0 tactical_profiles.py propose --hero-id 105 --output ../../data/mappings/tactical_proposals/105.json --device cpu --cpu-threads 6
 
-# Buat proposal pending untuk semua hero Global aktif; model dimuat sekali dan hasil cakupan dicatat.
-uv run --no-sync --with transformers==5.17.0 --with safetensors==0.8.0 tactical_profiles.py propose-batch --output-dir ../../data/mappings/tactical_proposals
+# Batch CPU lokal setelah uji satu hero berhasil
+uv run --no-sync --with transformers==5.17.0 --with safetensors==0.8.0 tactical_profiles.py propose-batch --output-dir ../../data/mappings/tactical_proposals --device cpu --cpu-threads 6
+
+# Alternatif pada environment PyTorch CUDA yang sudah disiapkan
+uv run --no-sync --with transformers==5.17.0 --with safetensors==0.8.0 tactical_profiles.py propose --hero-id 156 --output ../../data/mappings/tactical_proposals/liang.json
 
 # Baca sumber dan proposal; koreksi label bila perlu sebelum menyetujui
 uv run tactical_profiles.py review --proposal ../../data/mappings/tactical_proposals/liang.json --reviewer "Nama reviewer" --status approved
@@ -124,7 +129,7 @@ Publisher hanya memakai proposal approved dengan sumber yang masih cocok; approv
 **TypeSafe API opsional:** pilih `--provider typesafe` secara eksplisit dan set `TYPESAFE_API_KEY` di environment pipeline atau .env yang diabaikan Git. Jangan memakai nama variabel VITE_ untuk kredensial. Formatnya mengikuti [System One API](https://docs.typesafe.ai/api/system-one).
 
 Pengujian tanpa model memakai `--response-fixture <file.json>`. Fixture ternormalisasi berisi `model` dan `answers`; setiap label memiliki `choice` (ya/tidak/tidak_diketahui) dan `confidence` (null untuk NanoJev). Fixture hanya menguji alur data dan tidak membuktikan akurasi model.
-Untuk batch offline, `--response-fixtures-dir` menerima fixture per hero dengan nama `<hero_id>.json`; batch produksi memakai NanoJev lokal dan tidak memanggil TypeSafe API.
+Untuk batch offline, `--response-fixtures-dir` menerima fixture per hero dengan nama `<hero_id>.json`; batch produksi memakai NanoJev lokal dan tidak memanggil TypeSafe API. Mode CPU memuat bobot FP32 bertahap agar tidak membuat salinan penuh kedua di RAM.
 
 ## Pengujian dan benchmark
 

@@ -114,7 +114,7 @@ Di masa lalu terjadi bug inversi 180 derajat karena salah menginterpretasikan ar
 - Jalankan `uv run hokstats_source.py sync` dari `packages/ml-engine` untuk mengimpor HoKStats. Matchup, hero guide, item, dan spell tetap berstatus pending sampai sumbernya direview; hash yang berubah membatalkan review lama.
 - Jangan mengedit JSON di folder datasets secara manual. Perbarui sumber di data/mappings lalu jalankan `uv run publish_data.py`. Byte artefak dilindungi oleh .gitattributes.
 - Seri latihan memakai snapshot tetap. Data baru hanya berlaku saat memulai seri berikutnya.
-- Default CLI proposal memakai NanoJev lokal. Upstream memerlukan PyTorch CUDA; mesin CPU-only harus berhenti dengan pesan jelas, tanpa fallback ke API. Download model adalah subcommand eksplisit dan bobot tidak boleh masuk public/dist.
+- CLI proposal memakai NanoJev lokal. CUDA tetap default; `--device cpu` mengaktifkan adapter CPU FP32 secara eksplisit untuk mesin tanpa NVIDIA. CPU sangat lambat untuk model 0,6B dan cocoknya untuk uji terbatas; gunakan notebook GPU untuk batch. Tidak ada fallback API. Download model adalah subcommand eksplisit dan bobot tidak boleh masuk public/dist.
 - NanoJev belum dikalibrasi untuk HoK. Simpan probabilitas per chunk dan hash bobot; jangan membuat confidence terkalibrasi dari probabilitas maksimum.
 - Proposal NanoJev/TypeSafe harus direview; status pending/rejected tidak dipublikasikan. Sumber yang berubah membatalkan proposal approved lama.
 

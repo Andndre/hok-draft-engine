@@ -32,6 +32,7 @@ class NanoJevTests(unittest.TestCase):
         class Predictor:
             tokenizer = WordTokenizer()
             limit = 256
+            device = "cpu"
             def predict(self, payload, **kwargs):
                 requests.append(payload)
                 self_test.assertEqual(kwargs["batch_questions"], 1)
@@ -41,7 +42,7 @@ class NanoJevTests(unittest.TestCase):
             checkpoint = Path(directory)
             (checkpoint / "best.safetensors").write_bytes(b"fixture weights, not a real model")
             with patch("urllib.request.urlopen", side_effect=AssertionError("No HTTP calls allowed")):
-                result = request_nanojev(make_request(hero, "ignored"), checkpoint, predictor_factory=Predictor)
+                result = request_nanojev(make_request(hero, "ignored"), checkpoint, predictor_factory=Predictor, device="cpu")
             self.assertGreater(len(requests), 1)
             all_chunks = " ".join(request["states"][0]["state"] for request in requests)
             for index in range(1000):
@@ -53,6 +54,7 @@ class NanoJevTests(unittest.TestCase):
             self.assertFalse(proposal["model_info"]["probabilities_calibrated_for_hok"])
             self.assertEqual(proposal["model_info"]["network_model_calls"], 0)
             self.assertEqual(proposal["model_info"]["checkpoint_sha256"], hashlib.sha256((checkpoint / "best.safetensors").read_bytes()).hexdigest())
+            self.assertEqual(proposal["model_info"]["device"], "cpu")
 
     def test_conflicting_or_weak_local_evidence_stays_unknown(self):
         answers = normalize_chunks([response(TAGS, "ya"), response(TAGS, "tidak")], TAGS, 0.7)
@@ -73,8 +75,27 @@ class NanoJevTests(unittest.TestCase):
     def test_cpu_only_environment_does_not_fall_back_to_the_cloud(self):
         from nanojev_provider import load_predictor
         with patch("torch.cuda.is_available", return_value=False), patch("urllib.request.urlopen", side_effect=AssertionError("No cloud fallback")):
-            with self.assertRaisesRegex(ValueError, "hanya CPU"):
+            with self.assertRaisesRegex(ValueError, "CUDA diminta"):
                 load_predictor(Path("nonexistent-checkpoint"))
+
+    def test_cpu_device_selects_local_adapter_without_checking_cuda(self):
+        from nanojev_provider import CpuDecisionPredictor, load_predictor
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "best.safetensors").write_bytes(b"fixture")
+            (root / "config.json").write_text("{}", encoding="utf-8")
+            (root / "backbone_config").mkdir()
+            (root / "tokenizer").mkdir()
+            scripts = root / "source" / "scripts"
+            scripts.mkdir(parents=True)
+            (scripts / "predict_toy_decisions.py").write_text("", encoding="utf-8")
+            (scripts / "train_toy_decisions.py").write_text("", encoding="utf-8")
+            sentinel = object()
+            with patch("nanojev_provider.CpuDecisionPredictor", return_value=sentinel) as cpu_adapter, patch("torch.cuda.is_available", side_effect=AssertionError("CPU mode must not query CUDA")):
+                result = load_predictor(root, device="cpu", cpu_threads=4)
+            self.assertIs(result, sentinel)
+            self.assertEqual(cpu_adapter.call_args.args[1], root.resolve())
+            self.assertEqual(cpu_adapter.call_args.args[4], 4)
 
     def test_unicode_sources_are_preserved_exactly_between_chunks(self):
         payload = {"state": {"hero_id": 556, "description": "抑制 機動性 éfek " * 100}, "questions": make_request({"hero_id": 556, "name": "Ata"}, "ignored")["questions"]}
@@ -91,7 +112,7 @@ class NanoJevTests(unittest.TestCase):
             fixture = Path(directory) / "response.json"
             output = Path(directory) / "proposal.json"
             fixture.write_text(json.dumps({"model": "NanoJev:fixture-only", "answers": {tag: {"choice": "tidak_diketahui", "confidence": None} for tag in TAGS}}), encoding="utf-8")
-            result = subprocess.run([sys.executable, str(script), "propose", "--hero-id", "156", "--output", str(output), "--response-fixture", str(fixture)], capture_output=True, text=True)
+            result = subprocess.run([sys.executable, str(script), "propose", "--hero-id", "156", "--output", str(output), "--response-fixture", str(fixture), "--device", "cpu", "--cpu-threads", "6"], capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stderr)
             proposal = json.loads(output.read_text(encoding="utf-8"))
             self.assertEqual(proposal["provider"], "nanojev")
@@ -113,7 +134,7 @@ class NanoJevTests(unittest.TestCase):
             for hero in targets:
                 (fixture_dir / f"{hero['hero_id']}.json").write_text(json.dumps(fixture), encoding="utf-8")
             result = subprocess.run(
-                [sys.executable, str(script), "propose-batch", "--response-fixtures-dir", str(fixture_dir), "--output-dir", str(output_dir), "--report", str(report_path)],
+                [sys.executable, str(script), "propose-batch", "--response-fixtures-dir", str(fixture_dir), "--output-dir", str(output_dir), "--report", str(report_path), "--device", "cpu", "--cpu-threads", "6"],
                 capture_output=True, text=True,
             )
             self.assertEqual(result.returncode, 0, result.stderr)

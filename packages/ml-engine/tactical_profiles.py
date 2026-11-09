@@ -250,6 +250,8 @@ def main():
     propose.add_argument("--precision", choices=("fp32", "bf16"), default="fp32")
     propose.add_argument("--max-length", type=int)
     propose.add_argument("--minimum-probability", type=float, default=0.7)
+    propose.add_argument("--device", choices=("cuda", "cpu"), default="cuda")
+    propose.add_argument("--cpu-threads", type=int, default=6)
     batch = sub.add_parser("propose-batch", help="Buat proposal NanoJev pending untuk seluruh hero Global aktif.")
     batch.add_argument("--output-dir", type=Path, default=ROOT / "data/mappings/tactical_proposals")
     batch.add_argument("--report", type=Path)
@@ -260,6 +262,8 @@ def main():
     batch.add_argument("--precision", choices=("fp32", "bf16"), default="fp32")
     batch.add_argument("--max-length", type=int)
     batch.add_argument("--minimum-probability", type=float, default=0.7)
+    batch.add_argument("--device", choices=("cuda", "cpu"), default="cuda")
+    batch.add_argument("--cpu-threads", type=int, default=6)
     download = sub.add_parser("download", help="Download model/source NanoJev satu kali; bukan panggilan inference API.")
     download.add_argument("--checkpoint-dir", type=Path, default=ROOT / "data/processed/nanojev")
     review = sub.add_parser("review")
@@ -282,7 +286,7 @@ def main():
                 return json.loads(fixture_path.read_text(encoding="utf-8"))
         else:
             from nanojev_provider import file_sha256, load_predictor, request_nanojev
-            predictor = load_predictor(args.checkpoint_dir, args.nanojev_source, args.precision, args.max_length)
+            predictor = load_predictor(args.checkpoint_dir, args.nanojev_source, args.precision, args.max_length, args.device, args.cpu_threads)
             checkpoint_sha256 = file_sha256(args.checkpoint_dir / "best.safetensors")
 
             def response_for_hero(hero):
@@ -290,6 +294,7 @@ def main():
                     make_request(hero, args.model), args.checkpoint_dir, args.nanojev_source,
                     args.precision, args.max_length, args.minimum_probability,
                     predictor_factory=lambda: predictor, checkpoint_sha256=checkpoint_sha256,
+                    device=args.device, cpu_threads=args.cpu_threads,
                 )
 
         releases = json.loads(RELEASES.read_text(encoding="utf-8"))
@@ -312,7 +317,11 @@ def main():
             response = json.loads(args.response_fixture.read_text(encoding="utf-8"))
         elif args.provider == "nanojev":
             from nanojev_provider import request_nanojev
-            response = request_nanojev(make_request(hero, args.model), args.checkpoint_dir, args.nanojev_source, args.precision, args.max_length, args.minimum_probability)
+            response = request_nanojev(
+                make_request(hero, args.model), args.checkpoint_dir, args.nanojev_source,
+                args.precision, args.max_length, args.minimum_probability,
+                device=args.device, cpu_threads=args.cpu_threads,
+            )
         else:
             response = request_jev(make_request(hero, args.model))
         proposal = create_proposal(hero, response, args.provider)
