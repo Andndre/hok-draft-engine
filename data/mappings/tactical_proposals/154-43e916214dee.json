@@ -1,0 +1,666 @@
+{
+  "schema_version": 2,
+  "hero_id": 154,
+  "source_hash": "43e916214dee4b37ed1109942282e5e041610e4ff2378738539ad904b68ec796",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Great Wall Guardian (Dual Swords Form)",
+          "desc": "Gains Movement Speed when using dual swords. Skills and Basic Attacks apply marks to enemies. At 5 stacks, the marks disappear, dealing damage and inflicting silence and slow on the enemy."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Snaking Strike",
+          "desc": "Dashes twice in the target direction, and the direction of the 2nd dash can be controlled. Deals damage to enemies in her path. lf the skill hits an enemy, she can use it again before it enters cooldown."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Dagger Waltz",
+          "desc": "Throws a light sword in the target direction, slowing and dealing damage to enemies in range when it reaches max range. When Hua Mulan reaches the light sword, she puts it away, reducing thecooldown of Dagger Waltz."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Blooming Blade (Dual Swords Form)",
+          "desc": "Deals damage to enemies within range, gaining damage reduction during this time. Enhances herself, gaining Physical Attack during the enhancement. Switches to Heavy Sword Form."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Mulan mode pedang ganda itu tipis, bunuh cepet. Mode pedang berat lebih lambat, hindarin skill-nya pakai dash."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/mulan/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Great Wall Guardian",
+            "description": "Gains Movement Speed when using dual swords. Skills and Basic Attacks apply marks to enemies. At 5 stacks, the marks detonate, dealing damage and inflicting silence and slow on the enemy. September 10 update: Dual Swords Mode, Passive - Great Wall Guardian: at full stacks, gain 80–160 (+1% extra Health). The official sentence does not specify what is gained. Marks can now stack on non-hero units; at full stacks, damage and healing effects against them are halved.",
+            "type": "passive"
+          },
+          {
+            "name": "Great Wall Guardian",
+            "description": "Gains Movement Speed when using dual swords. Skills and Basic Attacks apply marks to enemies. At 5 stacks, the marks detonate, dealing damage and inflicting silence and slow on the enemy. September 10 update: Dual Swords Mode, Passive - Great Wall Guardian: at full stacks, gain 80–160 (+1% extra Health). The official sentence does not specify what is gained. Marks can now stack on non-hero units; at full stacks, damage and healing effects against them are halved.",
+            "type": "passive"
+          },
+          {
+            "name": "Snaking Strike",
+            "description": "Dashes twice in the target direction, with the ability to change the direction of the 2nd dash. Deals damage to enemies in her path. If the skill hits an enemy, it can be used again before it enters cooldown. September 10 update: Skill 1 - Snaking Strike (Dual Swords) and Sundering Slash (Heavy Sword): cooldown 8s (-0.4s per skill level) → 7.5s (-0.3s per skill level).",
+            "type": "skill1"
+          },
+          {
+            "name": "Sundering Slash",
+            "description": "Deals damage and slows enemies within range. The longer the charge, the greater the damage and slow effect. After a certain duration, launches enemies. Hitting an enemy allows the skill to be used again. September 10 update: Skill 1 - Snaking Strike (Dual Swords) and Sundering Slash (Heavy Sword): cooldown 8s (-0.4s per skill level) → 7.5s (-0.3s per skill level).",
+            "type": "skill1"
+          },
+          {
+            "name": "Dagger Waltz",
+            "description": "Throws a sword in the target direction that slows and deals damage to enemies within range when it reaches its max range. If Mulan touches the sword, she retrieves it, reducing the cooldown of Skill 2. September 10 update: Dual Swords Mode, Skill 2 - Dagger Waltz: the spin at the endpoint now applies 1 balance mark on every damage instance, instead of every two instances.",
+            "type": "skill2"
+          },
+          {
+            "name": "Blade Flurry",
+            "description": "Slashes up to 4 times in the target direction, with each slash damaging, slowing, and knocking back enemies.",
+            "type": "skill2"
+          },
+          {
+            "name": "Blooming Blade",
+            "description": "Deals damage to enemies within range, gaining damage reduction during this time. Enhances herself, gaining Physical Attack for a period of time. Switches to heavy sword form. September 10 update: Heavy Sword Mode, Ultimate - Blooming Blade: Attack Boost 60 (+120 per skill level) → 90 (+90 per skill level).",
+            "type": "ultimate"
+          },
+          {
+            "name": "Blooming Blade",
+            "description": "Deals damage to enemies in range. Enhances herself, gaining Attack Speed for a period of time. Switches to dual swords.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The map shape favors gank routes, where mobility translates directly into kills",
+          "The enemy team relies on long-cooldown engage skills that leave them vulnerable post-fight",
+          "The enemy draft includes Liang, Mi Yue, and Nuwa, who appear in counter data as matchups Mulan can pressure."
+        ],
+        "avoid_when": [
+          "The enemy stacks crowd control that interrupts the engage before damage goes out",
+          "The enemy team disengages well, so cleanup windows never open",
+          "The enemy already drafted Diaochan, Heino, and Hou Yi, who counter data identifies as direct answers to Mulan."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Mulan's mid-game tools come online.",
+          "Mid game: with cooldown reduction online, gap-close skills come back fast enough to chain into multiple fights",
+          "Late game: cooldowns become short enough that Dagger Waltz influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Diving while enemy hard control is still up, which directly counters Mulan's engage.",
+          "Engaging first instead of second — cleanup picks lose their value as primary engagers.",
+          "Ignoring Diaochan and Heino on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Forcing solo engages instead of waiting for ally commit — Mulan's value compounds when the team follows up on engages."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 156,
+            "hero_name": "Liang",
+            "evidence": "Liang",
+            "source_hash": "e4f19e5bf9c82e8404e9bb60c7a9f8ee6193fd8c9a44a07d9e9fd4a59d236bbe"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 121,
+            "hero_name": "Mi Yue",
+            "evidence": "Mi Yue",
+            "source_hash": "670640aff1e3f1175fd40c9d56cc6f5fb99040e41fb04204ed3e4624c97ecab8"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 179,
+            "hero_name": "Nuwa",
+            "evidence": "Nuwa",
+            "source_hash": "01ac5d4fae1c7c7600c12e546ce85688bf65a57b327a15970b69f5234f7e43b5"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 141,
+            "hero_name": "Diaochan",
+            "evidence": "Diaochan",
+            "source_hash": "f768ded5b58258ebf25193a7c0d4e6b688e5645f65d792d313d0caf412baf523"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 563,
+            "hero_name": "Heino",
+            "evidence": "Heino",
+            "source_hash": "4e99daeb7a6fe25c9315d5e3d92b9b76e2fe006edf87ff489ea2f500b8998b6c"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 169,
+            "hero_name": "Hou Yi",
+            "evidence": "Hou Yi",
+            "source_hash": "9844f96c70b825dd03d7e5eb1a29d1ca7de4a3272ec5c8b1c9800870ade40406"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 156,
+            "hero_name": "Liang",
+            "evidence": "Liang",
+            "source_hash": "1e523a705c0c66912c1947cf5bccc5d8865f29aa25a0fd430b22242ee1c039da"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 547,
+            "hero_name": "Luara",
+            "evidence": "Luara",
+            "source_hash": "8855d399c20030079c030cf01d56fb599873a45c9998a310b22ce162d302ce60"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 179,
+            "hero_name": "Nuwa",
+            "evidence": "Nuwa",
+            "source_hash": "7314aad5a8640f8f23d553aa61d2829ab7ce74bab69d897a163be66f7e2d4593"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 513,
+            "hero_name": "Shangguan",
+            "evidence": "Shangguan",
+            "source_hash": "d60c6b85b22ce5d65489deba4fc582c7673599f999f6af94dd4541ec1590d141"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 152,
+            "hero_name": "Wang Zhaojun",
+            "evidence": "Frigid Prison and Winter Is Here punish Mulan's short-range dashes.",
+            "source_hash": "c275ac082fc1e3496a2570c041d2653fca1250966aa90dc6a544d7d82fc0eed4"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 110,
+            "hero_name": "Garuda",
+            "evidence": "Arrows of Gold slows Mulan and punishes her short-range dashes.",
+            "source_hash": "abf8326dab78bc4f785b7837f05ff9673225b1737e6f9933cfa42ee4fa2638e3"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 146,
+            "hero_name": "Luna",
+            "source_hash": "6b4391870f938fbfcdd4671faf7e6b78b0470e552efc8ceec659e33ffec070bb"
+          },
+          {
+            "hero_id": 505,
+            "hero_name": "Yaria",
+            "source_hash": "6b4391870f938fbfcdd4671faf7e6b78b0470e552efc8ceec659e33ffec070bb"
+          },
+          {
+            "hero_id": 523,
+            "hero_name": "Shi",
+            "source_hash": "6b4391870f938fbfcdd4671faf7e6b78b0470e552efc8ceec659e33ffec070bb"
+          },
+          {
+            "hero_id": 137,
+            "hero_name": "Sima Yi",
+            "source_hash": "6b4391870f938fbfcdd4671faf7e6b78b0470e552efc8ceec659e33ffec070bb"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.91,
+            "tidak": 0.0585,
+            "tidak_diketahui": 0.0315
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

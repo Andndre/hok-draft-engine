@@ -1,0 +1,581 @@
+{
+  "schema_version": 2,
+  "hero_id": 635,
+  "source_hash": "ccb88797c30e3b554f8b1511cbaa8f9a08c5270690e3f8fa6268ba80fc3c176a",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Eternal",
+          "desc": "While his Dark Orb is deployed, landing Skill 2 or his Ultimate on an enemy makes the Orb pulse, dealing extra magic damage to foes around it."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Here's What I Think",
+          "desc": "Fires his Dark Orb forward, damaging enemies in its path and leaving it in place. Recast to send it onward, where it bursts at the second point for damage and a slow."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Abyssal Pact",
+          "desc": "Releases a wave of dark energy around him for area damage, holding up to two charges. If his Dark Orb is out, he blinks to it first, then unleashes the wave."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Starry Night",
+          "desc": "Launches a projectile that detonates after a short delay, dealing heavy magic damage and knocking enemies up. Casting it grants a Skill 1 charge, and missing every hero refunds half its cooldown."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": ""
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/lorion/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Eternal",
+            "description": "Skill 2 or Ultimate hits also damage units near the target.",
+            "type": "passive"
+          },
+          {
+            "name": "Here's What I Think",
+            "description": "Lorion moves his orb around to damage units in its path.",
+            "type": "active"
+          },
+          {
+            "name": "Abyssal Pact",
+            "description": "Retrieves the projectile.",
+            "type": "active"
+          },
+          {
+            "name": "Starry Night",
+            "description": "After a short delay, the orb damages and levitates nearby enemies.",
+            "type": "active"
+          },
+          {
+            "name": "Darkness Falls",
+            "description": "Flies toward the projectile.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Pick Lorion when your team needs a Mid Mage with area damage and crowd control for clustered objective fights."
+        ],
+        "avoid_when": [
+          "Avoid Lorion when the enemy has fast divers who can reach him while his orb and movement options are out of position."
+        ],
+        "power_spikes": [
+          "Lorion's strongest teamfight window begins when Starry Night is available and the orb is already positioned where enemies must contest an objective."
+        ],
+        "common_mistakes": [
+          "Do not move the orb without planning Lorion's next position; poor orb placement lowers his damage and can make his movement skills unsafe."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 123,
+            "hero_name": "Lu Bu",
+            "evidence": "Lorion's orb hits from range and Darkness Falls flies him away from Lu Bu.",
+            "source_hash": "1df579464529cf397c231fc2abe21d12b7f2fd329287e79076b90f143d93a50f"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 126,
+            "hero_name": "Dun",
+            "evidence": "Darkness Falls repositions Lorion away from slow divers like Dun while the orb keeps hitting.",
+            "source_hash": "079ef5abeb488ac4bd2a7f23e97d84ed1d5bcccc4bea15fa5a753ab329a2af72"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 153,
+            "hero_name": "Gao Changgong",
+            "evidence": "Gao Changgong approaches unseen and bursts Lorion.",
+            "source_hash": "8f394b0eb219cc16a6338633456d5d81229812ab3ab7dc0822ead50701ea1a1c"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 131,
+            "hero_name": "Li Bai",
+            "evidence": "Li Bai's dashes reach Lorion faster than Darkness Falls can reposition him.",
+            "source_hash": "5f3a0ff0318a1959e8286e305a3bf3a23a235e54b3d7949f468a2e46ae9d8c8f"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 159,
+            "hero_name": "Dolia",
+            "source_hash": "ee16b84daa64c4913dbac4a8d12752213b5217df5e8f7ead9352a1af8da53238"
+          },
+          {
+            "hero_id": 107,
+            "hero_name": "Zilong",
+            "source_hash": "ee16b84daa64c4913dbac4a8d12752213b5217df5e8f7ead9352a1af8da53238"
+          },
+          {
+            "hero_id": 581,
+            "hero_name": "Flowborn (Tank)",
+            "source_hash": "ee16b84daa64c4913dbac4a8d12752213b5217df5e8f7ead9352a1af8da53238"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

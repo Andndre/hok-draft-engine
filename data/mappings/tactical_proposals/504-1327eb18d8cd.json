@@ -1,0 +1,621 @@
+{
+  "schema_version": 2,
+  "hero_id": 504,
+  "source_hash": "1327eb18d8cd4ff7b5537263e766e87a92436a1384b61c461fa47b69d0f3f1d7",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Mechanical Minions",
+          "desc": "Summons minions upon killing a unit. Minions attack automatically, then merge into an advanced bot or explode at the end of their duration, dealing damage to nearby enemies."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Air Superiority",
+          "desc": "Commands her aircraft to move in the target direction, dealing damage to enemies in its path. Using the skill again splits the aircraft in two, dealing damage and inflicting slow."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Forced Invasion",
+          "desc": "Summons mechanical minions in the target area, dealing area damage before automatically attacking nearby enemies."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Chaos Field",
+          "desc": "Marks a target enemy or structure, damaging them over time. Non-structures are also stunned and slowed. Nearby mechanical minions are enhanced while marks are active. Marks explode upon expiry, dealing damage proportional to the damage taken while marked."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Fast wave clear",
+          "Strong siege potential with robots",
+          "Good poke damage"
+        ],
+        "cons": [
+          "Low Mobility",
+          "Useless without robots",
+          "Falls off late game"
+        ],
+        "gameplay_tips": "## Early Game\nMilady has no reliable wave clear early on. You will need to sit under the tower for the first few levels and wait until you have a few robots to help you out. It's vital that you last-hit minions to spawn robots thanks to your passive. After pushing the wave, look for roams to help your jungle or by going into another lane.\n\n## Teamfights\nIn teamfights, summon your robots early so they can deal damage throughout the fight. Stay behind your backline and use your skills and Ultimate on the first enemy in front of you.\n\n## Tips & Tricks\nUse your robots to tank tower shots and help you push towers faster\nMake sure to use Skill 1 Air Superiority a 2nd time to split the aircraft for more damage and to slow the enemies\nYour robots can tank enemy jungle camps, making it easier for you to take them away"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Minion mekanik cuma hidup 8 detik, jadi tarik fight ke tempat jauh dan bunuh Milady pas dia lagi nyiapin minion. 2) Pakai tank yang punya dash buat nahan ult dan damage-nya, biar ult dan minion gak ngunci carry tim. Ancaman teamfight-nya langsung turun."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/milady/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Mechanical Minions",
+            "description": "Summons minions upon killing a unit. Minions attack automatically, then merge into an advanced bot or explode at the end of their duration, dealing damage to nearby enemies.",
+            "type": "passive"
+          },
+          {
+            "name": "Air Superiority",
+            "description": "Commands her aircraft to move in the target direction, dealing damage to enemies in its path. Using the skill again splits the aircraft in two, damaging and slowing enemies.",
+            "type": "skill1"
+          },
+          {
+            "name": "Forced Invasion",
+            "description": "Summons mechanical minions in the target area, dealing area damage before automatically attacking nearby enemies.",
+            "type": "skill2"
+          },
+          {
+            "name": "Chaos Field",
+            "description": "Marks a target enemy or structure, damaging them over time. Non-structures are also stunned and slowed. Nearby mechanical minions are enhanced while the mark is active. The mark explodes upon expiry, dealing damage proportional to the damage taken while marked.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy lacks reliable healing reduction, leaving sustain unchecked",
+          "Your team has the structure to use her ability to farm safely and rotate to side lanes when the wave allows, since Milady delivers consistent damage output and timely roams.",
+          "The enemy draft includes Nakoruru, Pei, and Mai Shiranui, who appear in counter data as matchups Milady can pressure."
+        ],
+        "avoid_when": [
+          "The game state demands burst rather than slow attrition",
+          "Your team needs a jungle pick more than Milady's specialty, leaving the role unfilled if you commit here.",
+          "The enemy already drafted Allain, Fuzi, and Haya, who counter data identifies as direct answers to Milady."
+        ],
+        "power_spikes": [
+          "Early game: Milady is listed as an early-game threat in public guide data — convert the early window into objectives before scaling picks come online.",
+          "Lifesteal item online: trade patterns flip from neutral to favorable once sustain stacks with damage",
+          "Late game: cooldowns become short enough that Forced Invasion influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Forcing all-ins against opponents already wearing anti-heal — your healing barely activates.",
+          "Ignoring Allain and Fuzi on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Greeding farm in mid lane while side lanes get camped — rotation timing matters more than CS lead in most matchups."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 162,
+            "hero_name": "Nakoruru",
+            "evidence": "Nakoruru",
+            "source_hash": "0c696fd5ac5858d172212ae5b3650cb78231f42db7d9e1a49c6e7349315a1654"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 502,
+            "hero_name": "Pei",
+            "evidence": "Pei",
+            "source_hash": "ec88e37ea990f733b84832c123e4edc81c3b1ea5fd46e8379e28f3986dc5f2bc"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 157,
+            "hero_name": "Mai Shiranui",
+            "evidence": "Mai Shiranui",
+            "source_hash": "3218224ae218573ad78b151c24148dbc0f172b44dfc17c7d8d97feed0b574c8e"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 514,
+            "hero_name": "Allain",
+            "evidence": "Allain",
+            "source_hash": "2c761694d612a2b9b68b31abcb4c3d22d5e710f629490c2cffba6be3d6289689"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 139,
+            "hero_name": "Fuzi",
+            "evidence": "Fuzi",
+            "source_hash": "156656182257afd95fb17fe432e2a32402f4b9e47c9c5c8b27f13a75232da1c5"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 521,
+            "hero_name": "Haya",
+            "evidence": "Haya",
+            "source_hash": "4378c043580c37721b5ab841226cb574e2348838265ed5020e1a7995893675dc"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 173,
+            "hero_name": "Fang",
+            "source_hash": "fd21a82ffbcfbf1b5782e3aeb8087f042d1901f49d371bf6199ca81766d9d75f"
+          },
+          {
+            "hero_id": 114,
+            "hero_name": "Liu Shan",
+            "source_hash": "fd21a82ffbcfbf1b5782e3aeb8087f042d1901f49d371bf6199ca81766d9d75f"
+          },
+          {
+            "hero_id": 174,
+            "hero_name": "Consort Yu",
+            "source_hash": "fd21a82ffbcfbf1b5782e3aeb8087f042d1901f49d371bf6199ca81766d9d75f"
+          },
+          {
+            "hero_id": 155,
+            "hero_name": "Erin",
+            "source_hash": "fd21a82ffbcfbf1b5782e3aeb8087f042d1901f49d371bf6199ca81766d9d75f"
+          },
+          {
+            "hero_id": 163,
+            "hero_name": "Ukyo Tachibana",
+            "source_hash": "fd21a82ffbcfbf1b5782e3aeb8087f042d1901f49d371bf6199ca81766d9d75f"
+          },
+          {
+            "hero_id": 135,
+            "hero_name": "Xiang Yu",
+            "source_hash": "fd21a82ffbcfbf1b5782e3aeb8087f042d1901f49d371bf6199ca81766d9d75f"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.92,
+            "tidak": 0.052,
+            "tidak_diketahui": 0.028
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

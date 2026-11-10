@@ -1,0 +1,600 @@
+{
+  "schema_version": 2,
+  "hero_id": 542,
+  "source_hash": "f81aaea42c4a805e7170637041d1cb4c053a0f1d35079e44de0845c4f79e688f",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Jade Carriage - View from Above",
+          "desc": "Can jump onto and walk on natural walls while gaining Movement Speed. Basic Attack becomes ranged while on a wall."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Jade Chase - Returning Strike",
+          "desc": "Dashes, dealing damage to enemies in his path and launching them. Enhances his next 2 Basic Attacks. Enhanced Basic Attacks deal extra damage and restore Health."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Stepping on Jade",
+          "desc": "Jumps onto the target wall."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Hardened Jade Seal",
+          "desc": "Deals damage and marks nearby enemies. Using the skill again unleashes 4 strikes of damage and restores his Health. If a marked enemy's Health is below a certain threshold, the last strike deals grievous damage. When on a wall, he can use this skill to jump down."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Feyd itu jungler super lincah, cepet bantu tim, dan jago ngabisin musuh, tapi lemah di level 1. Ganggu jungle-nya di awal buat ngacak ritmenya. Setelah level 4 backline jauhin tembok biar dia gak bisa ngabisin. Tekan dia di awal pakai jungler kuat kayak Pei, Cirrus, Wukong, tanpa gold di awal dia susah bangkit. Juga efektif: Chang'e/Diaochan/Jin Chan (mage), Zhang Fei/Liu Shan/Donghuang (support), Consort Yu/Di Renjie/Fang (marksman), Menki/Biron/Li Xin/Charlotte (clash)."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/feyd/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Jade Carriage - View from Above",
+            "description": "Can jump onto and walk on natural walls. Basic Attack becomes ranged while on a wall.",
+            "type": "passive"
+          },
+          {
+            "name": "Jade Chase - Returning Strike",
+            "description": "Dashes, dealing damage to enemies in his path and launching them. Enhances his next 3 Basic Attacks. Enhanced Basic Attacks deal extra damage and restore Health.",
+            "type": "skill1"
+          },
+          {
+            "name": "Stepping on Jade",
+            "description": "Jumps onto the target wall.",
+            "type": "skill2"
+          },
+          {
+            "name": "Hardened Jade Seal",
+            "description": "Damages and marks nearby enemies. Using the skill again unleashes 4 strikes of damage. The last strike will defeat marked enemies with low health. Can use to jump down from walls.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The map shape favors gank routes, where mobility translates directly into kills",
+          "Your team can engage first, letting Feyd second-wave into low-health targets",
+          "The enemy composition leaves room for Feyd to reach the targets his kit punishes."
+        ],
+        "avoid_when": [
+          "The enemy stacks crowd control that interrupts the engage before damage goes out",
+          "Your team has no primary engage, leaving the cleanup pick with nothing to follow up on",
+          "The enemy team is built around answers to Gap-Close, removing the windows Feyd's kit needs to perform."
+        ],
+        "power_spikes": [
+          "Early game: jungle clear into level-4 ganks is the first window where Feyd can translate routes into kills.",
+          "Ultimate unlocked: Hardened Jade Seal converts mobility into burst, the moment Feyd starts threatening picks across the map",
+          "Late game: cooldowns become short enough that Stepping on Jade influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Engaging without follow-up — gap-close gets you to the target, but a solo dive without ally damage trades 1-for-1.",
+          "Engaging first instead of second — cleanup picks lose their value as primary engagers.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Feyd's commit reaches the target alive.",
+          "Pathing predictably and getting tracked by the enemy jungler — vary first clear and rotate based on ward placement rather than muscle memory."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 124,
+            "hero_name": "Zhou Yu",
+            "evidence": "Feyd walks on walls and strikes Zhou Yu from angles his zones cannot cover.",
+            "source_hash": "c04e8b5b180cdd24a52b54d4d0e8cc7325373dd1a0747761f1bdf9494131e096"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 182,
+            "hero_name": "Gan & Mo",
+            "evidence": "Wall-walking lets Feyd reach Gan Mo, a long-range mage with no escape.",
+            "source_hash": "01688aa56e86fc18fd0278e762278ca729d01b769f36bcaaa465603607ec6436"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 175,
+            "hero_name": "Kui",
+            "evidence": "Join Me hooks Feyd off his wall and Into the Void stuns him.",
+            "source_hash": "c9a41137f48045ceb913fc277928ee994c33d77c3e5d8a182f7f2ba257e87dc9"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 152,
+            "hero_name": "Wang Zhaojun",
+            "evidence": "Frigid Prison freezes Feyd when he drops off a wall to strike.",
+            "source_hash": "9d0cfda41df772244466d27c5b87fac666db86ccb6cd63cfea0c3c70648b0608"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 584,
+            "hero_name": "Flowborn (Marksman)",
+            "source_hash": "70c91b8443094297aaf99e5f16ba6a32601ef8715cdc6b7171c46623fed5b3d2"
+          },
+          {
+            "hero_id": 171,
+            "hero_name": "Zhang Fei",
+            "source_hash": "70c91b8443094297aaf99e5f16ba6a32601ef8715cdc6b7171c46623fed5b3d2"
+          },
+          {
+            "hero_id": 184,
+            "hero_name": "Cai Yan",
+            "source_hash": "70c91b8443094297aaf99e5f16ba6a32601ef8715cdc6b7171c46623fed5b3d2"
+          },
+          {
+            "hero_id": 133,
+            "hero_name": "Di Renjie",
+            "source_hash": "70c91b8443094297aaf99e5f16ba6a32601ef8715cdc6b7171c46623fed5b3d2"
+          },
+          {
+            "hero_id": 577,
+            "hero_name": "Dyadia",
+            "source_hash": "70c91b8443094297aaf99e5f16ba6a32601ef8715cdc6b7171c46623fed5b3d2"
+          },
+          {
+            "hero_id": 197,
+            "hero_name": "Yixing",
+            "source_hash": "70c91b8443094297aaf99e5f16ba6a32601ef8715cdc6b7171c46623fed5b3d2"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

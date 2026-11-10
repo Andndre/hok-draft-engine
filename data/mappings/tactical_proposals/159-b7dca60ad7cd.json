@@ -1,0 +1,614 @@
+{
+  "schema_version": 2,
+  "hero_id": 159,
+  "source_hash": "b7dca60ad7cdfe23f6fdbab9debb189f7817181bfa90ac2a4a379cedf3acc4c6",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Mermaid's Gift",
+          "desc": "Dolia takes on mermaid form when in water (rivers are also considered water), reducing the slows taken by 50% and returning life and mana every second. The mermaid form's Basic Attacks will shoot water arrows for ranged damage. Dolia's [Recovery] is replaced with [Mermaid's Gift], which allows her to create a pact with a selected teammate, and prioritizes her pacted teammate when using [Celestial Melody]."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Ode",
+          "desc": "Dolia chants 4 sound waves that spread outward, the first 3 dealing spell damage and 10% slow. The 4th deals more spell damage and 50% slow for 1 second. The sound waves also echo when they hit an enemy, dealing spell damage to those they touch and, if released in water, sending waves of water knocking back nearby enemies (knockback of enemies around you has a stun effect). Non-heroic units provoke a much smaller echo, dealing only 50% of the damage."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Wavemaker",
+          "desc": "Lam enters “Submerged” state, greatly increasing his Movement Speed for 3 seconds. When the duration ends, Lam leaps out of the water, immediately restoring 50% of this skill’s cooldown. While in Submerged state, casting the skill again will cause Lam to surface early, dealing 300 (+120% Bonus Physical Attack) Physical Damage to nearby enemies and slowing their Movement Speed by 50% for 1.5 seconds. Passive: While in river terrain, the Submerged state has no time limit. If an enemy hero with below 30% Health appears within 1500 range, Lam gains 450 Movement Speed."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Celestial Melody",
+          "desc": "After Dolia briefly chants, refresh the skill with the longest current cooldown of a friendly within range, taking more cooldown from yourself. If a teammate's skill is not used after being refreshed, [Celestial Melody]'s cooldown recovery speed can be accelerated by 20/30/40%. Teammates do not consume Mana or Energy when using the skill for 5 seconds after the skill is refreshed, and the beatdown benefit caused by the skill is split equally with Dolia. Refreshing skills for contracted teammates is prioritized, followed by non-contracted teammates, or refreshing your own skills if there are no teammates nearby. Failure to refresh a skill returns most of the cooldown of [Celestial Melody]."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Strong healing",
+          "Decent crowd control",
+          "Surprisingly tanky"
+        ],
+        "cons": [
+          "Low damage output",
+          "Relies on teammates",
+          "Vulnerable to crowd control"
+        ],
+        "gameplay_tips": "## Early Game\nStart in the mid lane and use Skill 1 to help clear the wave. Then rotate to farm lane to protect and heal your marksman. Hide in bushes to get vision and threaten your poke. Always fight near the river so you can knock back with Skill 1 and deal more damage with your auto attacks.\n\n## Teamfights\nBefore a teamfight starts, stay with your carrys in the backline and keep track of which ally has the most impactful ultimate. Keep your Skill 2 healing on teammates that are taking damage and use your crowd control to peel for your marksman or mage.\n\n## Tips & Tricks\nAlways position near pools or in the river to enhance your auto attacks and Skill 1 Ode\nSave your Ultimate Celestial Melody for teammates' Ultimates to give them more impact in fights\nDolia can dash forward with Skill 2 Wavemaker whilst Skill 1 is active making it easier for you to hit the 4th soundwave\n"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": ""
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/dolia/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Mermaid's Gift",
+            "description": "Transforms into a mermaid while in water, reducing slow effects, recovering Health and Mana over time, and dealing area damage with Basic Attacks. Her Recovery skill changes to let her form a covenant with a teammate. Her Ultimate prioritizes resetting this teammate's skill cooldowns.",
+            "type": "passive"
+          },
+          {
+            "name": "Ode",
+            "description": "Unleashes soundwaves that deal damage and inflict slow. When in water, the last soundwave knocks back enemies.",
+            "type": "skill1"
+          },
+          {
+            "name": "Wavemaker",
+            "description": "Creates a pool in the target direction, restoring Health and Mana to herself and teammates within. The pool disappears after she leaves it.",
+            "type": "skill2"
+          },
+          {
+            "name": "Celestial Melody",
+            "description": "Resets the longest current skill cooldown of a teammate within range, transferring the cooldown to herself. Prioritizes covenant teammates.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has burst threats that need to be absorbed by reliable shields",
+          "Your team has the structure to use her ability to protect the marksman, set vision, and engage on cooldown windows, since Dolia delivers utility, vision, and timely peel for the carries.",
+          "The enemy draft includes Dun and Yaria, who appear in counter data as matchups Dolia can pressure."
+        ],
+        "avoid_when": [
+          "The enemy plays sustained damage rather than burst, which shields cannot absorb in single windows",
+          "Your team needs a damage pick more than Dolia's specialty, leaving the role unfilled if you commit here.",
+          "The enemy already drafted Sima Yi and Guiguzi, who counter data identifies as direct answers to Dolia."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Dolia's mid-game tools come online.",
+          "Defensive item online: shield strength scales with magic power or HP, so Dolia's value grows after the first item spike",
+          "Late game: full build online, Dolia reaches the spike public guides describe — extended fights favor her once items are completed."
+        ],
+        "common_mistakes": [
+          "Pre-shielding before the engage actually starts, wasting the absorb window before damage lands.",
+          "Ignoring Sima Yi and Guiguzi on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Forgetting vision while looking for picks — losing the marksman because the support roamed without setting wards is a recurring mistake."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 134,
+            "hero_name": "Dharma",
+            "evidence": "Dharma",
+            "source_hash": "e3d67b07fc08cd6629a5cae0b203ec2f04c68693619654d3957429060332ff11"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 517,
+            "hero_name": "Augran",
+            "evidence": "Augran",
+            "source_hash": "abb7405b050414dbe9ead2719b2f1dd1ea15d51b092faa1ce3b0c9194f7e385b"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 108,
+            "hero_name": "Mozi",
+            "evidence": "Mozi",
+            "source_hash": "3cda910c6db433e91059f7dad908f25e7bc12c0ae892838effce84722bac9933"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 180,
+            "hero_name": "Nezha",
+            "evidence": "Fire-tipped Spear reduces the recovery from Wavemaker's pool.",
+            "source_hash": "73aebf4e2686e5338953e616be6ce9e54985fa858134d6359779cb6b88320f97"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 116,
+            "hero_name": "Arke",
+            "evidence": "Arke's stealth backstabs Dolia, who has little crowd control to peel.",
+            "source_hash": "c96ddc1c01e0860c9eb8bbfc6a2d7b1c50893d5375fa9f784cbfb8e690601c7f"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 115,
+            "hero_name": "Gao",
+            "source_hash": "513f350780044993f73f05ed8076bf2f2872fb20b0886f09bfd0b57be9f21c0e"
+          },
+          {
+            "hero_id": 123,
+            "hero_name": "Lu Bu",
+            "source_hash": "513f350780044993f73f05ed8076bf2f2872fb20b0886f09bfd0b57be9f21c0e"
+          },
+          {
+            "hero_id": 197,
+            "hero_name": "Yixing",
+            "source_hash": "513f350780044993f73f05ed8076bf2f2872fb20b0886f09bfd0b57be9f21c0e"
+          },
+          {
+            "hero_id": 513,
+            "hero_name": "Shangguan",
+            "source_hash": "513f350780044993f73f05ed8076bf2f2872fb20b0886f09bfd0b57be9f21c0e"
+          },
+          {
+            "hero_id": 110,
+            "hero_name": "Garuda",
+            "source_hash": "513f350780044993f73f05ed8076bf2f2872fb20b0886f09bfd0b57be9f21c0e"
+          },
+          {
+            "hero_id": 133,
+            "hero_name": "Di Renjie",
+            "source_hash": "513f350780044993f73f05ed8076bf2f2872fb20b0886f09bfd0b57be9f21c0e"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.91,
+            "tidak": 0.0585,
+            "tidak_diketahui": 0.0315
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

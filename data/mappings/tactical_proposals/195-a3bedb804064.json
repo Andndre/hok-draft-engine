@@ -1,0 +1,646 @@
+{
+  "schema_version": 2,
+  "hero_id": 195,
+  "source_hash": "a3bedb80406498f887d4176c3bc9463bdab1751c09d78a0e4061362a37d6685c",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Crazed Prelude",
+          "desc": "Deals extra damage to enemies at long range and slows them, while gaining a Movement Speed boost."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Flailing Sickles",
+          "desc": "Dashes in the target direction, pulling enemies marked by his sickle a certain distance. Also enhances his next Basic Attack."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Nightmare Hooks",
+          "desc": "Charges up and gains Movement Speed. After charging, he throws the sickle to immobilize enemies and deal damage, marking the first enemy hit. Using the skill again will pull back and damage the marked enemy."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Crimson Blur",
+          "desc": "Dashes behind a target marked by his sickle, dealing damage. Beyond a certain range, he moves toward the target instead. If he has not marked a target, the hook latches onto one, dealing damage. Takes 50% less damage during the dash. Passive: Kills and assists grant Movement Speed and Attack Speed, up to 3 stacks."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Xuance damage-nya tinggi dan punya control, jungler kuat di early-mid. Selain ngindarin sabitnya, bisa dilawan pakai Liu Bei/Arthur/Pangu/Musashi (jungle), Kongming/Diaochan/Mozi/Liang/Gao (mage), Fuzi/Guan Yu/Meng Tian/Sun Ce (fighter), Arli/Di Renjie (marksman), Lian Po/Donghuang (support)."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/xuance/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Crazed Prelude",
+            "description": "Deals extra damage to enemies at long range and slows them, while gaining a Movement Speed boost.",
+            "type": "passive"
+          },
+          {
+            "name": "Flailing Sickles",
+            "description": "Dashes in the target direction, pulling enemies marked by his sickle a certain distance. Also enhances his next Basic Attack.",
+            "type": "skill1"
+          },
+          {
+            "name": "Nightmare Hooks",
+            "description": "Charges up and gains Movement Speed. After charging, he throws the sickle to immobilize enemies and deal damage, marking the first enemy hit. Using the skill again will pull back and damage the marked enemy.",
+            "type": "skill2"
+          },
+          {
+            "name": "Crimson Blur",
+            "description": "Dashes behind a target marked by his sickle, dealing damage. Beyond a certain range, he moves toward the target instead. If he has not marked a target, the hook latches onto one, dealing damage. Takes 50% less damage during the dash. Passive: Kills and assists grant Movement Speed and Attack Speed, up to 3 stacks.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has carries with limited self-peel that Xuance can reach before the team can react",
+          "Your team can engage first, letting Xuance second-wave into low-health targets",
+          "The enemy composition leaves room for Xuance to reach the targets his kit punishes."
+        ],
+        "avoid_when": [
+          "The enemy stacks crowd control that interrupts the engage before damage goes out",
+          "Your team has no primary engage, leaving the cleanup pick with nothing to follow up on",
+          "The enemy already drafted Daji, Diaochan, and Gao, who counter data identifies as direct answers to Xuance."
+        ],
+        "power_spikes": [
+          "Early game: jungle clear into level-4 ganks is the first window where Xuance can translate routes into kills.",
+          "Ultimate unlocked: Crimson Blur converts mobility into burst, the moment Xuance starts threatening picks across the map",
+          "Late game: cooldowns become short enough that Nightmare Hooks influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Engaging without follow-up — gap-close gets you to the target, but a solo dive without ally damage trades 1-for-1.",
+          "Engaging first instead of second — cleanup picks lose their value as primary engagers.",
+          "Ignoring Daji and Diaochan on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Pathing predictably and getting tracked by the enemy jungler — vary first clear and rotate based on ward placement rather than muscle memory."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 545,
+            "hero_name": "Alessio",
+            "evidence": "Nightmare Hooks immobilize Alessio from range, and Crimson Blur reaches him before his smoke bomb.",
+            "source_hash": "2b792c36ca84eb935a17f678682f2d579f697cd07a16ee21d88237bcd9193ec2"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 112,
+            "hero_name": "Luban No.7",
+            "evidence": "Nightmare Hooks immobilize Luban No.7 from range, and Crimson Blur follows up.",
+            "source_hash": "622b177fd32f0537a462d91d3d3429ddec4b6a67bc13a39e0c6e540dc326426b"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 547,
+            "hero_name": "Luara",
+            "evidence": "Nightmare Hooks pin Luara before she can scale a wall to escape.",
+            "source_hash": "dfbef740dcd47f561e2cb193e410f90a70b697cfbb231fb1a39d3bdc1b058122"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 133,
+            "hero_name": "Di Renjie",
+            "evidence": "Nightmare Hooks immobilize Di Renjie from range, and Crimson Blur dives him.",
+            "source_hash": "a1dd003534dccdefe42b37a1de30adcf96591c8f69422db3f32ba9c031e605ce"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 109,
+            "hero_name": "Daji",
+            "evidence": "Daji",
+            "source_hash": "2a28829ed5362718c38dc99cc9fbabbe890da5035d96d3cde876fc11bcb316a2"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 141,
+            "hero_name": "Diaochan",
+            "evidence": "Diaochan",
+            "source_hash": "4a488fa0bfffadb2bfea49b2329cabe34414997088d0670a2419edd101acb02a"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 115,
+            "hero_name": "Gao",
+            "evidence": "Gao",
+            "source_hash": "074c71291f0b3f527a532fed5de70849324f49985300fcd1fc8d9deb60ef4a16"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 508,
+            "hero_name": "Garo",
+            "evidence": "Garo",
+            "source_hash": "41b72fe07186c407072d9a0f5f1b6ffe9587d512c1a1eeed8ba7acc73695be49"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 169,
+            "hero_name": "Hou Yi",
+            "evidence": "Hou Yi",
+            "source_hash": "045297bb55b155e2d534155cde9d0a7b6a47315b3e6c8adf1ae7eb4aad32cc82"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 192,
+            "hero_name": "Huang Zhong",
+            "evidence": "Huang Zhong",
+            "source_hash": "e138dcb906ea62748b5f46bd0848d2b1d368bf1fe215a9cff8c9ff306911ff9b"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 124,
+            "hero_name": "Zhou Yu",
+            "evidence": "Zhou Yu",
+            "source_hash": "ee1bbd16e8d3faafbfff498763d64005b759d080dc7303c20a73730f828f5486"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 640,
+            "hero_name": "Annette",
+            "evidence": "Hurricane Wall knocks back and stuns Xuance as he dives in with Crimson Blur.",
+            "source_hash": "6c0f4d28d2a211d1cff0ca256d83658986a2b25fa0be8620523cecc838975e85"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 199,
+            "hero_name": "Arli",
+            "source_hash": "2456302f48d01dcc00617897899b2a479b0b386e6059e55d663e10176787cbe1"
+          },
+          {
+            "hero_id": 505,
+            "hero_name": "Yaria",
+            "source_hash": "2456302f48d01dcc00617897899b2a479b0b386e6059e55d663e10176787cbe1"
+          },
+          {
+            "hero_id": 111,
+            "hero_name": "Lady Sun",
+            "source_hash": "2456302f48d01dcc00617897899b2a479b0b386e6059e55d663e10176787cbe1"
+          },
+          {
+            "hero_id": 501,
+            "hero_name": "Ming",
+            "source_hash": "2456302f48d01dcc00617897899b2a479b0b386e6059e55d663e10176787cbe1"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

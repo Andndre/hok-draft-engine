@@ -1,0 +1,599 @@
+{
+  "schema_version": 2,
+  "hero_id": 523,
+  "source_hash": "bd79da0f910c7d4397a15b4c1cd146bafca5130f0c7d3e07652cbdf49ff1d1e1",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Maiden's Trick",
+          "desc": "The farther away the enemy is, the more damage skills deal."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Silk Imprint",
+          "desc": "Throws her artifact, damaging enemies and pulling them toward it. Can be used again to pull the enemy in the target direction."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Silky Beauty",
+          "desc": "Releases an energy orb that continuously deals damage to enemies within range for a short time, and then explodes to deal additional damage. Enemies are slowed the first time the orb hits them."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Sole Focus",
+          "desc": "Resets Skill 2's cooldown and enhances herself. While enhanced, gains Movement Speed and reduces Skill 2's cooldown by half. Skill 1 can pull the enemy twice."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Shi itu mage control dengan burst rendah dan ngandelin banget tim, sering jadi hero utility. Hero lincah berjangkauan jauh gampang counter dia. Saran: Jin Chan/Diaochan/Shangguan/Sima Yi/Shen Mengxi/Nuwa/Mozi (mid), Lam/Gao Changgong/Arke (jungle), Lian Po/Zhuangzi (support)."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/shi/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Maiden's Trick",
+            "description": "The farther away the enemy is, the more damage skills deal.",
+            "type": "passive"
+          },
+          {
+            "name": "Silk Imprint",
+            "description": "Throws her artifact, damaging enemies and pulling them toward it. Can be used again to pull the enemy in the target direction.",
+            "type": "skill1"
+          },
+          {
+            "name": "Silky Beauty",
+            "description": "Releases an energy orb that continuously deals damage to enemies within range for a short time, and then explodes to deal additional damage. Enemies are slowed the first time the orb hits them.",
+            "type": "skill2"
+          },
+          {
+            "name": "Sole Focus",
+            "description": "Resets Skill 2's cooldown and enhances herself. While enhanced, gains Movement Speed and reduces Skill 2's cooldown by half. Skill 1 can pull the enemy twice.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has multiple high-mobility threats that need to be locked down before they reach your backline",
+          "Your team has the structure to use her ability to farm safely and rotate to side lanes when the wave allows, since Shi delivers consistent damage output and timely roams.",
+          "The enemy draft includes Li Bai, Wukong, and Ukyo Tachibana, who appear in counter data as matchups Shi can pressure."
+        ],
+        "avoid_when": [
+          "Your team lacks the follow-up damage to convert your control windows into kills",
+          "Your team needs a jungle pick more than Shi's specialty, leaving the role unfilled if you commit here.",
+          "The enemy already drafted Athena, who counter data identifies as direct answers to Shi."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Shi's mid-game tools come online.",
+          "Ultimate online: Sole Focus extends control duration, making team fights snowball off a single hit",
+          "Late game: cooldowns become short enough that Silky Beauty influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Throwing Silky Beauty on the front-line tank instead of saving it for backline carries.",
+          "Ignoring Athena on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Greeding farm in mid lane while side lanes get camped — rotation timing matters more than CS lead in most matchups."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 131,
+            "hero_name": "Li Bai",
+            "evidence": "Li Bai",
+            "source_hash": "9032f1a56228698ce17a830d08e96134940758dd938405d55c4f48800567622a"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 167,
+            "hero_name": "Wukong",
+            "evidence": "Wukong",
+            "source_hash": "921a0685abb9d0f1a8d5b356e36f93f0596bf0a7371c4d6c637b9b42146f578b"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 163,
+            "hero_name": "Ukyo Tachibana",
+            "evidence": "Ukyo Tachibana",
+            "source_hash": "e7f6a1e515b52a96c07459d1ae47cd2d51aa8d6407ca10bfba3593cfba4f3f04"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 183,
+            "hero_name": "Athena",
+            "evidence": "Athena",
+            "source_hash": "8848d2f536ec11bf1e494614b2076d744493ee7e63d770dc783d06eb2b69564b"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 199,
+            "hero_name": "Arli",
+            "source_hash": "8f67c50d8283b0e79200e1228885420fe872d15c7ce9369a1eb3d67987654c26"
+          },
+          {
+            "hero_id": 505,
+            "hero_name": "Yaria",
+            "source_hash": "8f67c50d8283b0e79200e1228885420fe872d15c7ce9369a1eb3d67987654c26"
+          },
+          {
+            "hero_id": 531,
+            "hero_name": "Jing",
+            "source_hash": "8f67c50d8283b0e79200e1228885420fe872d15c7ce9369a1eb3d67987654c26"
+          },
+          {
+            "hero_id": 172,
+            "hero_name": "Chicha",
+            "source_hash": "8f67c50d8283b0e79200e1228885420fe872d15c7ce9369a1eb3d67987654c26"
+          },
+          {
+            "hero_id": 171,
+            "hero_name": "Zhang Fei",
+            "source_hash": "8f67c50d8283b0e79200e1228885420fe872d15c7ce9369a1eb3d67987654c26"
+          },
+          {
+            "hero_id": 537,
+            "hero_name": "Devara",
+            "source_hash": "8f67c50d8283b0e79200e1228885420fe872d15c7ce9369a1eb3d67987654c26"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.07,
+            "tidak": 0.8,
+            "tidak_diketahui": 0.13
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.84,
+            "tidak": 0.104,
+            "tidak_diketahui": 0.056
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

@@ -1,0 +1,601 @@
+{
+  "schema_version": 2,
+  "hero_id": 556,
+  "source_hash": "dae7b0fd95c504f0a1bea8fad7e0e5cb8de6d00e85258ce9c08566a73f9a1b99",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Child of the Sea",
+          "desc": "Loss of life is temporarily stored in a gray shield form, during which 40%/15% of the equivalent gray shield of damage dealt to heroes/non-heroes is converted into blood, scaling up based on extra life. Basic attacks come with additional physical damage."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Wavewalking",
+          "desc": "Endeavor to jump up and deal physical damage to smashed enemies when you land. Afterwards, bounce up again, dealing the same damage as well as a 0.5 second knockback effect when you land. Immunity to control during the jump. When attacking multiple enemies at once, damage decays by 20% for each additional enemy, down to 60%. Increases damage to minions by an additional 30%."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Sea Anchor",
+          "desc": "Throw the anchor straight out to hit enemies in front of you, dealing physical damage and 60% slow for 1.5 seconds. If the anchor is embedded in a wall, Ata will use the force to dash himself and the enemy to that spot. When it hits the wall, it deals Physical damage and stuns for 0.5 seconds. [Passive]: after using [Anchor], the next basic attack within 3 seconds will pull the enemy back with the anchor."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Ghost Ship",
+          "desc": "Ata builds temporary terrain along the outer border of a fan-shaped targetarea, dealing damage to enemies within it.Gains crowd control immunity while using the skill.He can use the skill again to make the temporary terrain disappear early."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Absorbs a lot of damage for the team",
+          "Brings reliable crowd control to open fights",
+          "Very hard to bring down once built"
+        ],
+        "cons": [
+          "Deals limited personal damage",
+          "Needs the team to follow up on engages",
+          "Can be kited by mobile enemies"
+        ],
+        "gameplay_tips": "Ata is a Tank who plays the Clash Lane. Your aim is to soak damage, start fights and peel for your carries. Pick your moment to use Ghost Ship, then follow up with Wavewalking and Sea Anchor. Manage the wave, respect ganks, and look to roam once you have a lead."
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Adaptasi Global dari Zhu Bajie di KPL. Memiliki pasif regenerasi grey-health tebal dan tembok kurungan penahan musuh."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/ata/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Child of the Sea",
+            "description": "His lost Health is preserved in a temporary Health buffer. Dealing damage converts buffered Health into actual Health. After a while, the buffered Health will begin to gradually diminish. His Basic Attacks deal extra damage.",
+            "type": "passive"
+          },
+          {
+            "name": "Wavewalking",
+            "description": "Leaps into the air and slams down twice, dealing damage with each slam. The second slam launches enemies. Gains crowd control immunity while using the skill.",
+            "type": "skill1"
+          },
+          {
+            "name": "Sea Anchor",
+            "description": "Hurls an anchor in the target direction, dealing damage and slowing enemies. If the anchor hits terrain, he will be dragged to the contact point, dealing damage and knocking back enemies. His next Basic Attack will be enhanced with a pulling effect.",
+            "type": "skill2"
+          },
+          {
+            "name": "Ghost Ship",
+            "description": "Builds temporary terrain along the outer edge of a cone-shaped area, dealing damage to enemies within it. Gains crowd control immunity while using the skill. He can use the skill again to make the temporary terrain disappear early.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team needs a Clash Lane tank who can control space, build walls, and isolate enemies during objective fights.",
+          "Your allies can follow up when Ata uses Skill 1 into Ghost Ship and Skill 2 to split the enemy formation.",
+          "The fight is likely to happen around walls, jungle entrances, or objective pits where Anchor and Ghost Ship are easier to use."
+        ],
+        "avoid_when": [
+          "The enemy has mobile heroes who can dodge Ghost Ship or kite Ata, which public counter guides identify as a strong answer.",
+          "The enemy composition can poke safely from range and buy armor-penetration items before Ata reaches them.",
+          "Your team needs immediate long-range engage or burst damage rather than a tank who wins by controlling space over time."
+        ],
+        "power_spikes": [
+          "Early lane: build references emphasize defensive starts such as Scale Blade or Resilient Agate before moving into tank items.",
+          "Ultimate unlocked: Ghost Ship gives Ata the formation-splitting tool that public guides highlight for late-game fights.",
+          "Core durability online: Blazing Cape, Eye of the Phoenix, and Overlord's Platemail are listed as core items that let him stay in fights longer."
+        ],
+        "common_mistakes": [
+          "Fighting in open space when Ata gets more value from walls, corridors, and small areas.",
+          "Using Ghost Ship without allied follow-up, turning a formation split into only a short delay.",
+          "Ignoring ranged poke and armor penetration, both listed as counter approaches against Ata.",
+          "Building too much damage when public item guidance points toward durability and tank utility."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 132,
+            "hero_name": "Marco Polo",
+            "evidence": "Ghost Ship's terrain cages Marco Polo and cuts off his dashes.",
+            "source_hash": "9c954c56491eb3a2bb1910fc8df0f3743a4a00486bd49fc9509369a8c07a820d"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 169,
+            "hero_name": "Hou Yi",
+            "evidence": "Ghost Ship walls trap Hou Yi, who has no dash to escape.",
+            "source_hash": "8fd749c2ccb91a48a9a323eebd61cbcbc07b30d33c1869b7d265293e82b49ab0"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 531,
+            "hero_name": "Jing",
+            "evidence": "Jing",
+            "source_hash": "7d85a2d284d8cc8f53e948b2db0c03fd24e7de8f2fe5c693fdce55a6f7588b76"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 111,
+            "hero_name": "Lady Sun",
+            "source_hash": "e096a8168a7173308761a1b33608384fd17eccc00a67c316fff18d557560c14b"
+          },
+          {
+            "hero_id": 501,
+            "hero_name": "Ming",
+            "source_hash": "e096a8168a7173308761a1b33608384fd17eccc00a67c316fff18d557560c14b"
+          },
+          {
+            "hero_id": 119,
+            "hero_name": "Dr Bian",
+            "source_hash": "e096a8168a7173308761a1b33608384fd17eccc00a67c316fff18d557560c14b"
+          },
+          {
+            "hero_id": 118,
+            "hero_name": "Sun Bin",
+            "source_hash": "e096a8168a7173308761a1b33608384fd17eccc00a67c316fff18d557560c14b"
+          },
+          {
+            "hero_id": 177,
+            "hero_name": "Chano",
+            "source_hash": "e096a8168a7173308761a1b33608384fd17eccc00a67c316fff18d557560c14b"
+          },
+          {
+            "hero_id": 157,
+            "hero_name": "Mai Shiranui",
+            "source_hash": "e096a8168a7173308761a1b33608384fd17eccc00a67c316fff18d557560c14b"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.85,
+            "tidak": 0.0975,
+            "tidak_diketahui": 0.0525
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

@@ -1,0 +1,607 @@
+{
+  "schema_version": 2,
+  "hero_id": 577,
+  "source_hash": "f435cf201db6f3b0f207d8b5700b99853229aac12a7869c954562d5b13045744",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Melodic Swing",
+          "desc": "Enhances her next Basic Attack periodically to swing toward the enemy, dealing damage and knocking them back, then jumping back. When any hero receives Blessing of Fate or Bitter Reconciliation, she earns Gold and reduces the preparation time of her enhanced Basic Attack."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Heartlink",
+          "desc": "Blesses a teammate and restores Health. When two blessed teammates come close, they recover Health and gain Movement Speed. If she blesses an already blessed teammate, she will dash to them, and both recover Health and gain Movement Speed. Can use this skill again within 5s."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Bitter Farewell",
+          "desc": "Marks an enemy, exposes them and deals continuous damage. When two marked enemies come close, they stop taking damage. If she uses the skill on a marked enemy, she will dash to them, immobilizing them and dealing continuous damage. Can use this skill again within 5s."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Destined Encounter",
+          "desc": "Commands a swarm of wisps to fly forward, blessing and granting Health recovery to teammates, while marking and damaging enemies."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": ""
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/dyadia/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Melodic Swing",
+            "description": "Enhances her next Basic Attack periodically to swing toward the enemy, dealing damage and knocking them back, then jumping back. When any hero receives Blessing of Fate or Bitter Reconciliation, she earns Gold and reduces the preparation time of her enhanced Basic Attack.",
+            "type": "passive"
+          },
+          {
+            "name": "Heartlink",
+            "description": "Blesses a teammate and restores Health. When two blessed teammates come close, they recover Health and gain Movement Speed. If she blesses an already blessed teammate, she will dash to them, and both recover Health and gain Movement Speed. Can use this skill again within 5s.",
+            "type": "skill1"
+          },
+          {
+            "name": "Bitter Farewell",
+            "description": "Marks an enemy, exposes them and deals continuous damage. When two marked enemies come close, they stop taking damage. If she uses the skill on a marked enemy, she will dash to them, immobilizing them and dealing continuous damage. Can use this skill again within 5s.",
+            "type": "skill2"
+          },
+          {
+            "name": "Destined Encounter",
+            "description": "Commands a swarm of wisps to fly forward, blessing and granting Health recovery to teammates, while marking and damaging enemies.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy lacks reliable healing reduction, leaving sustain unchecked",
+          "The enemy team relies on hard engage that you can read and recover from",
+          "The enemy draft includes Dian Wei, Liu Bei, and Musashi, who appear in counter data as matchups Dyadia can pressure."
+        ],
+        "avoid_when": [
+          "The game state demands burst rather than slow attrition",
+          "The enemy chains crowd control faster than recovery cooldowns refresh",
+          "The enemy team is built around answers to Team Buffs, removing the windows Dyadia's kit needs to perform."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Dyadia's mid-game tools come online.",
+          "Lifesteal item online: trade patterns flip from neutral to favorable once sustain stacks with damage",
+          "Late game: cooldowns become short enough that Bitter Farewell influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Forcing all-ins against opponents already wearing anti-heal — your healing barely activates.",
+          "Using the recovery skill on the first crowd control, then dying to the follow-up chain.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Dyadia's commit reaches the target alive.",
+          "Forgetting vision while looking for picks — losing the marksman because the support roamed without setting wards is a recurring mistake."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 129,
+            "hero_name": "Dian Wei",
+            "evidence": "Dian Wei",
+            "source_hash": "ea66cc30d4e0e2ca1242a35ee4544f9ce51da86139fe9c01aff85d0506894df7"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 170,
+            "hero_name": "Liu Bei",
+            "evidence": "Liu Bei",
+            "source_hash": "45768d6666122a274525cd90848fc4b4f5251a40120ad26b5b1d46d2730eaf9e"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 130,
+            "hero_name": "Musashi",
+            "evidence": "Musashi",
+            "source_hash": "44a419bac116327f23c70d9a7c2c02dcc4317ba5aa5d827d9af5b9bb83279abe"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 180,
+            "hero_name": "Nezha",
+            "evidence": "Fire-tipped Spear reduces Dyadia's healing on her team.",
+            "source_hash": "31d568f4be00d1bc05bac5205050fa819f7ecaccf1645c550342e6e6a7dcf2cd"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 168,
+            "hero_name": "Lapulapu",
+            "evidence": "Island's Blessing dashes onto Dyadia, who has little escape.",
+            "source_hash": "723fd08a22d302eb12ffa012938cc63da08d47e2936946cbaf69cd008872e35d"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 519,
+            "hero_name": "Ao'yin",
+            "source_hash": "381550de7826794bd027e260611c540865c2ea6daf8b82cf8d469d7f3af89d34"
+          },
+          {
+            "hero_id": 146,
+            "hero_name": "Luna",
+            "source_hash": "381550de7826794bd027e260611c540865c2ea6daf8b82cf8d469d7f3af89d34"
+          },
+          {
+            "hero_id": 111,
+            "hero_name": "Lady Sun",
+            "source_hash": "381550de7826794bd027e260611c540865c2ea6daf8b82cf8d469d7f3af89d34"
+          },
+          {
+            "hero_id": 130,
+            "hero_name": "Musashi",
+            "source_hash": "381550de7826794bd027e260611c540865c2ea6daf8b82cf8d469d7f3af89d34"
+          },
+          {
+            "hero_id": 542,
+            "hero_name": "Feyd",
+            "source_hash": "381550de7826794bd027e260611c540865c2ea6daf8b82cf8d469d7f3af89d34"
+          },
+          {
+            "hero_id": 197,
+            "hero_name": "Yixing",
+            "source_hash": "381550de7826794bd027e260611c540865c2ea6daf8b82cf8d469d7f3af89d34"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.91,
+            "tidak": 0.0585,
+            "tidak_diketahui": 0.0315
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

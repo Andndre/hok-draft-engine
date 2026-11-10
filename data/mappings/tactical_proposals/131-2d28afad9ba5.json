@@ -1,0 +1,639 @@
+{
+  "schema_version": 2,
+  "hero_id": 131,
+  "source_hash": "2d28afad9ba54a37e9af2fab8792e591a66e15c56d09a64ab67194380cd160de",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Way of the Sword",
+          "desc": "Basic Attack hits grant stacks. At 4 stacks, increases Physical Attack and unlocks the Ultimate."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Stupor Slash",
+          "desc": "Dashes and leaves an after image at the start point while stunning and damaging enemies in his path.Can dash again before cooldown starts, and a third time to return to the after image."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Stroke of Genius",
+          "desc": "Removes crowd control effects from self and becomes untargetable. Damages enemies in range, leaving behind a sword formation. Enemies that touch the edge of the formation are damaged, slowed, andsundered."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Flickering Flurry",
+          "desc": "Transforms into a phantom, continuously slashing at the specified area. Li Bai is untargetable while the skill is active, and all debuffs are removed Deals AoE damage, but damage is diminished upon hitting multiple enemy heroes."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Pas Li Bai maju poke pakai skill 1, jangan diladenin. 2) Pas ult aktif Li Bai ngindarin semua skill, jangan cast ke dia. 3) Jangan nyentuh lingkaran pedang skill 2, armor lu turun banyak."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/li-bai/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Way of the Sword",
+            "description": "Basic Attack hits grant stacks. At 4 stacks, increases Physical Attack and unlocks the Ultimate.",
+            "type": "passive"
+          },
+          {
+            "name": "Stupor Slash",
+            "description": "Dashes and leaves an afterimage at the start point while stunning and damaging enemies in his path. Can dash again before cooldown starts, and a third time to return to the afterimage.",
+            "type": "skill1"
+          },
+          {
+            "name": "Stroke of Genius",
+            "description": "Removes all debuffs from self and becomes untargetable. Damages enemies in range, leaving behind a sword formation. Enemies that touch the edge of the formation are damaged, slowed, and sundered.",
+            "type": "skill2"
+          },
+          {
+            "name": "Flickering Flurry",
+            "description": "Transforms into a phantom, continuously slashing at the specified area. Removes all debuffs and becomes untargetable while the skill is active. Deals area damage, but damage is diminished upon hitting multiple enemy heroes.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has carries with limited self-peel that Li Bai can reach before the team can react",
+          "Your team can engage first, letting Li Bai second-wave into low-health targets",
+          "The enemy draft includes Dun, Lian Po, and Liu Shan, who appear in counter data as matchups Li Bai can pressure."
+        ],
+        "avoid_when": [
+          "Enemy peel is strong and Li Bai cannot reach the backline without dying first",
+          "Your team has no primary engage, leaving the cleanup pick with nothing to follow up on",
+          "The enemy already drafted Garo, Mozi, and Shi, who counter data identifies as direct answers to Li Bai."
+        ],
+        "power_spikes": [
+          "Early game: jungle clear into level-4 ganks is the first window where Li Bai can translate routes into kills.",
+          "Ultimate unlocked: Flickering Flurry converts mobility into burst, the moment Li Bai starts threatening picks across the map",
+          "Late game: full build online, Li Bai reaches the spike public guides describe — extended fights favor him once items are completed."
+        ],
+        "common_mistakes": [
+          "Engaging without follow-up — gap-close gets you to the target, but a solo dive without ally damage trades 1-for-1.",
+          "Engaging first instead of second — cleanup picks lose their value as primary engagers.",
+          "Ignoring Garo and Mozi on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Pathing predictably and getting tracked by the enemy jungler — vary first clear and rotate based on ward placement rather than muscle memory."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 126,
+            "hero_name": "Dun",
+            "evidence": "Dun",
+            "source_hash": "e93bf123b8104467cd0a3330df5a4211889ba28b2f55799b24161bfaee45c758"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 105,
+            "hero_name": "Lian Po",
+            "evidence": "Lian Po",
+            "source_hash": "b5744138836fc93b7866064f811003c061afd26f0b6e2e8ce99603cecee095f6"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 114,
+            "hero_name": "Liu Shan",
+            "evidence": "Liu Shan",
+            "source_hash": "01953e3c78210d5a1a9c809faf5fb52ed1d5b58ca925e22e3a23ba43eecae330"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 635,
+            "hero_name": "Lorion",
+            "evidence": "Li Bai's dashes reach Lorion faster than Darkness Falls can reposition him.",
+            "source_hash": "a65c7802c53bb3d97f7dd1de9dd535577c997eb6c79e9e2014fe67401d29d797"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 508,
+            "hero_name": "Garo",
+            "evidence": "Garo",
+            "source_hash": "2e0f7f09a4e5509a4fbe1a62d7fccce0289835c73b7f975d035b2d7f29390a41"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 108,
+            "hero_name": "Mozi",
+            "evidence": "Mozi",
+            "source_hash": "955265a6867a3f10a056c413e341af6ca4a764100773de2b9942d66a23f60388"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 523,
+            "hero_name": "Shi",
+            "evidence": "Shi",
+            "source_hash": "aff280d8afc53767afe431990b069587eb56915f5ec4ae499e7364cb4529c1db"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 640,
+            "hero_name": "Annette",
+            "evidence": "The barrier knocks back and stuns Li Bai as he dashes in, breaking his combo.",
+            "source_hash": "859b35437acc51a63f212675ecc2f89edad0b68cc0b6791e4e009060b9977e4f"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 120,
+            "hero_name": "Bai Qi",
+            "evidence": "Lay Waste taunts Li Bai mid-combo and drags him into Bai Qi's team.",
+            "source_hash": "e8a0df82f64f3011ba9f71cce75456c2d5c8391bf33c05add1bf5c2ffc617e36"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 174,
+            "hero_name": "Consort Yu",
+            "evidence": "Protecting Winds blocks Li Bai's physical burst, letting her shoot back safely.",
+            "source_hash": "b71278d4639bb35c6941603bd4f0a610b724f0756a7370b1d598ab0d8d6d6026"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 584,
+            "hero_name": "Flowborn (Marksman)",
+            "evidence": "Convergence knocks Li Bai back as he dashes in.",
+            "source_hash": "0b1b83190e2b406a4835007f84e74da627134ff58f8e6d8641f2ff3debe252a7"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 132,
+            "hero_name": "Marco Polo",
+            "source_hash": "7b8b0e304181c4ca9277d1ae0d088ace023cf1347ccae536a8a9645097d6e8cb"
+          },
+          {
+            "hero_id": 505,
+            "hero_name": "Yaria",
+            "source_hash": "7b8b0e304181c4ca9277d1ae0d088ace023cf1347ccae536a8a9645097d6e8cb"
+          },
+          {
+            "hero_id": 184,
+            "hero_name": "Cai Yan",
+            "source_hash": "7b8b0e304181c4ca9277d1ae0d088ace023cf1347ccae536a8a9645097d6e8cb"
+          },
+          {
+            "hero_id": 192,
+            "hero_name": "Huang Zhong",
+            "source_hash": "7b8b0e304181c4ca9277d1ae0d088ace023cf1347ccae536a8a9645097d6e8cb"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

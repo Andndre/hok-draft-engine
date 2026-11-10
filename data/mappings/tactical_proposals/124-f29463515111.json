@@ -1,0 +1,617 @@
+{
+  "schema_version": 2,
+  "hero_id": 124,
+  "source_hash": "f29463515111ec08b5d49c6fe90786bf6172e159567ac5c65110c0eaee9af580",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Blaze",
+          "desc": "Damage from Basic Attacks and skills apply marks to enemy units andstructures. At 4 stacks, targets are slowed and suffer damage over time."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Wildfire",
+          "desc": "Invokes a wind domain in the target direction, slowing and knocking back enemies in range. Nearby teammates gain Move Speed, and his nearby fires will spread in the direction of the wind."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Scorching Bolt",
+          "desc": "Creates a fire domain at the target location that deals burning damage toenemies in it. There can be up to 5 fire domains at a time. He recovers Health over time while in a fire domain. Can stock up to 3 charges of this skill."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Flames of War",
+          "desc": "Deals damage to enemies in range. lf there's a fire zone in range, any enemies within it will be stunned and take extra damage."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Zhou Yu gak punya dash, assassin bisa ngincer dia. 2) Perhatiin area api dan arah angin, hindarin api yang nyebar."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/zhou-yu/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Blaze",
+            "description": "Damage from Basic Attacks and skills apply marks to enemy units and structures. At 4 stacks, targets are slowed and suffer damage over time.",
+            "type": "passive"
+          },
+          {
+            "name": "Wildfire",
+            "description": "Invokes a wind domain in the target direction, slowing and knocking back enemies in range. Nearby teammates gain Movement Speed, and his nearby fires will spread in the direction of the wind.",
+            "type": "skill1"
+          },
+          {
+            "name": "Scorching Bolt",
+            "description": "Creates a fire domain at the target location that deals burning damage to enemies within it. Up to 6 fire domains can exist at a time. Recovers Health over time while in a fire domain. Can stock up to 3 charges of this skill.",
+            "type": "skill2"
+          },
+          {
+            "name": "Flames of War",
+            "description": "Deals damage to enemies in range. If there's a fire domain in range, any enemies within it will be stunned and take extra damage.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The team draft favors extended team fights where healing scales",
+          "Your team has the structure to use his ability to farm safely and rotate to side lanes when the wave allows, since Zhou Yu delivers consistent damage output and timely roams.",
+          "The enemy draft includes Cirrus, Nakoruru, and Xuance, who appear in counter data as matchups Zhou Yu can pressure."
+        ],
+        "avoid_when": [
+          "The enemy already builds anti-heal items, neutralizing your sustain plan",
+          "Your team needs a jungle pick more than Zhou Yu's specialty, leaving the role unfilled if you commit here.",
+          "The enemy already drafted Augran and Dian Wei, who counter data identifies as direct answers to Zhou Yu."
+        ],
+        "power_spikes": [
+          "Early game: Zhou Yu is listed as an early-game threat in public guide data — convert the early window into objectives before scaling picks come online.",
+          "Lifesteal item online: trade patterns flip from neutral to favorable once sustain stacks with damage",
+          "Late game: cooldowns become short enough that Scorching Bolt influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Forcing all-ins against opponents already wearing anti-heal — your healing barely activates.",
+          "Ignoring Augran on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Greeding farm in mid lane while side lanes get camped — rotation timing matters more than CS lead in most matchups."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 506,
+            "hero_name": "Cirrus",
+            "evidence": "Cirrus",
+            "source_hash": "e70235f320bc5c866f85554eb932096678472d0f2835fc8eaec9c970251cd15d"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 162,
+            "hero_name": "Nakoruru",
+            "evidence": "Nakoruru",
+            "source_hash": "f5fb348f4cd216f2ddfd7366cf328cc8dc2cf15ac02b76b550c2b5d1f3ba6a13"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 195,
+            "hero_name": "Xuance",
+            "evidence": "Xuance",
+            "source_hash": "ba58990781b45c6eb1b9bb5d73704603c16b08ae1fa1b325dcde7be8bb25059a"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 517,
+            "hero_name": "Augran",
+            "evidence": "Augran",
+            "source_hash": "3b57df8e097bb658c6238939c16cefb4b993a49127ca0cf6bef6c97ddedd6f0a"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 129,
+            "hero_name": "Dian Wei",
+            "evidence": "Dian Wei",
+            "source_hash": "353c3c92c30dcc5befc14d52727cc1c82f39a6bd921c986a3abfbf725836fecc"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 172,
+            "hero_name": "Chicha",
+            "evidence": "Peak-Crushing Polearm reaches Zhou Yu, who relies on zones rather than mobility.",
+            "source_hash": "8cd4c44db4caa92afb6348d367918cb05769bcdb7a0c930046b952ffb4d7ea42"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 542,
+            "hero_name": "Feyd",
+            "evidence": "Feyd walks on walls and strikes Zhou Yu from angles his zones cannot cover.",
+            "source_hash": "c21e4d177c0488c402968fcb5aca9bf85b1b14818d4c64074e55db0edc505f0f"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 166,
+            "hero_name": "Arthur",
+            "evidence": "Valiant Charge silences Zhou Yu before he can set up his zones.",
+            "source_hash": "04dbcc951365a5713b5a57d386c5ccd88be48385f7ba4f5dacf69a7564d7b086"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 533,
+            "hero_name": "Agudo",
+            "source_hash": "f3c45bf6254bb3073a0e7f3adaf96c6c33cdc9fd5d3e93f83bd1ac39a06b3d79"
+          },
+          {
+            "hero_id": 140,
+            "hero_name": "Guan Yu",
+            "source_hash": "f3c45bf6254bb3073a0e7f3adaf96c6c33cdc9fd5d3e93f83bd1ac39a06b3d79"
+          },
+          {
+            "hero_id": 153,
+            "hero_name": "Gao Changgong",
+            "source_hash": "f3c45bf6254bb3073a0e7f3adaf96c6c33cdc9fd5d3e93f83bd1ac39a06b3d79"
+          },
+          {
+            "hero_id": 196,
+            "hero_name": "Shouyue",
+            "source_hash": "f3c45bf6254bb3073a0e7f3adaf96c6c33cdc9fd5d3e93f83bd1ac39a06b3d79"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

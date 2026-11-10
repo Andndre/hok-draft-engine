@@ -1,0 +1,610 @@
+{
+  "schema_version": 2,
+  "hero_id": 178,
+  "source_hash": "c4c75f1c3b67f72085bff580117fccf97751fa6a4ce810ac603d9b55f966a337",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Mind Games",
+          "desc": "Yang Jian's Resistance increases for each nearby enemy hero."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Unleash the Hound",
+          "desc": "Yang Jian commands a Heaven Hound to dash in the target direction, marking and dealing damage to the first enemy hit. Upon using again, Yang Jian dashes to the marked enemy and deals damage to them."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Vain Disillusionment",
+          "desc": "Yang Jian deals damage to enemies in front of him and stuns them while reducing their Movement Speed. if an enemy is hit, his Basic Attack is enhanced to deal extra damage."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Sight of Origin",
+          "desc": "Yang Jian unleashes a beam of light in the target direction, dealing damage and recovering Health."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Strong duelist with good sustained damage",
+          "Healthy mix of damage and durability",
+          "Can split-push and skirmish across the map"
+        ],
+        "cons": [
+          "Vulnerable before key items come online",
+          "Struggles into heavy ranged poke",
+          "Can be peeled and kited by control"
+        ],
+        "gameplay_tips": "Yang Jian is a Fighter who plays the Clash Lane. Your aim is to trade in your lane, then bully your way onto the enemy backline. Pick your moment to use Sight of Origin, then follow up with Unleash the Hound and Vain Disillusionment. Manage the wave, respect ganks, and look to roam once you have a lead."
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Hindarin skill 1 dan 3 Yang Jian pakai gerakan lincah. 2) Kalau kena skill 1-nya, jangan langsung dash. Tunggu dia pakai tahap kedua, baru dash menjauh. 3) Pas teamfight jangan pakai control kunci ke dia."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/yang-jian/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Mind Games",
+            "description": "Yang Jian's Basic Attack and skills can stack Resistance. After attaining max stacks, he gains crowd control immunity. If Yang Jian enters battle with a hero, he will enter the Heaven-Earth Form.",
+            "type": "passive"
+          },
+          {
+            "name": "Unleash the Hound",
+            "description": "Commands Heaven Hound to pounce in the target direction, marking the first enemy hit and damaging them. Upon using the skill again, he charges to the target and deals damage.",
+            "type": "skill1"
+          },
+          {
+            "name": "Vain Disillusionment",
+            "description": "Deals damage to enemies in front, stunning and slowing them. If he hits an enemy, he gains an enhanced Basic Attack that deals extra damage.",
+            "type": "skill2"
+          },
+          {
+            "name": "Sight of Origin",
+            "description": "Unleashes beams of light that deal damage and restore his Health.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has carries with limited self-peel that Yang Jian can reach before the team can react",
+          "Your team can engage first, letting Yang Jian second-wave into low-health targets",
+          "The enemy draft includes Diaochan, Luna, and Dr Bian, who appear in counter data as matchups Yang Jian can pressure."
+        ],
+        "avoid_when": [
+          "The team needs sustained team-fight damage rather than a single-target diver",
+          "Your team has no primary engage, leaving the cleanup pick with nothing to follow up on",
+          "A stronger pick in the same role is open and the matchup does not specifically reward Yang Jian's Gap-Close."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Yang Jian's mid-game tools come online.",
+          "Ultimate unlocked: Sight of Origin converts mobility into burst, the moment Yang Jian starts threatening picks across the map",
+          "Late game: cooldowns become short enough that Vain Disillusionment influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Engaging without follow-up — gap-close gets you to the target, but a solo dive without ally damage trades 1-for-1.",
+          "Engaging first instead of second — cleanup picks lose their value as primary engagers.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Yang Jian's commit reaches the target alive.",
+          "Forcing solo engages instead of waiting for ally commit — Yang Jian's value compounds when the team follows up on engages."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 141,
+            "hero_name": "Diaochan",
+            "evidence": "Diaochan",
+            "source_hash": "369666aae65b765a942fea43c3451595b24151702bd7495856aff9a270bfdbd7"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 146,
+            "hero_name": "Luna",
+            "evidence": "Luna",
+            "source_hash": "05d6a4fdf490ecfcb0c4434ea96c9d0723656b68d1a12a39918033628075aaa7"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 119,
+            "hero_name": "Dr Bian",
+            "evidence": "Dr Bian",
+            "source_hash": "1fb2950c71ffcd8026f09f4d3bcba60e28e48f864fde466e2e00f42f673a4df1"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 180,
+            "hero_name": "Nezha",
+            "evidence": "Fire-tipped Spear cuts the healing from Sight of Origin.",
+            "source_hash": "5c4ecc0795006dfef7f01f28e9f0b9a5d958464aa079c5ee333850363d4ba1a5"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 174,
+            "hero_name": "Consort Yu",
+            "evidence": "Protecting Winds makes Consort Yu invulnerable to Yang Jian's physical damage.",
+            "source_hash": "3bf3c8cb2abc8409ba7312f323da1497317f65c8e2bbfbcbc1b8f16c36e1ec5c"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 159,
+            "hero_name": "Dolia",
+            "source_hash": "2a5b243945ff0b91e298d33f37826c24e036b3d3d968e948e9267ba0ed82b2b1"
+          },
+          {
+            "hero_id": 521,
+            "hero_name": "Haya",
+            "source_hash": "2a5b243945ff0b91e298d33f37826c24e036b3d3d968e948e9267ba0ed82b2b1"
+          },
+          {
+            "hero_id": 109,
+            "hero_name": "Daji",
+            "source_hash": "2a5b243945ff0b91e298d33f37826c24e036b3d3d968e948e9267ba0ed82b2b1"
+          },
+          {
+            "hero_id": 175,
+            "hero_name": "Kui",
+            "source_hash": "2a5b243945ff0b91e298d33f37826c24e036b3d3d968e948e9267ba0ed82b2b1"
+          },
+          {
+            "hero_id": 107,
+            "hero_name": "Zilong",
+            "source_hash": "2a5b243945ff0b91e298d33f37826c24e036b3d3d968e948e9267ba0ed82b2b1"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.85,
+            "tidak": 0.0975,
+            "tidak_diketahui": 0.0525
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

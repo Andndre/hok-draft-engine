@@ -1,0 +1,622 @@
+{
+  "schema_version": 2,
+  "hero_id": 111,
+  "source_hash": "7fa4e58363cfa3ee2364cf9aa6904e2cf3556e646d09be700e540f31fba4cb39",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Energy Burst",
+          "desc": "Basic Attacks reduce the cooldown of Skill 1."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Rolling Raid",
+          "desc": "Rolls in the target direction, granting extra range and a piercing effect to the next Basic Attack. Gains increased Movement Speed if there are enemy heroes nearby after rolling."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Frag Grenade",
+          "desc": "Throws a grenade at the target location, damaging, marking, and sundering hit enemies. Her Basic Attack deals extra damage to marked targets."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Ultimate Shell",
+          "desc": "Fires a shell in the target direction, dealing AoE damage when enemies are hit or when exploding at max range."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Great mobility",
+          "Insane late-game",
+          "Quick burst damage"
+        ],
+        "cons": [
+          "Squishy",
+          "Vulnerable to burst and crowd control",
+          "Weak mid-game"
+        ],
+        "gameplay_tips": "## Early Game\nIn the early game, you want to farm safely before hitting your item spikes. The only time you should look to trade is when Skill 1 Rolling Raid is available. Learning the range of your empowered auto attack and where to roll will help you win every trade. You can also use Skill 1 defensively to escape ganks and dodge enemy skill shots. Try to hit Skill 2 Frag Grenade before going in, helping you land your empowered basic attack and deal more damage.\n\n## Teamfights\nAs a marksman, make sure to stay behind your frontline. Be careful when using Skill 1. If you roll forward and get caught, you will have no mobility to escape. Remember you can roll over walls to reposition in fights. With your increased range from Skill 1, try to burst high-priority targets like the enemy's marksman or mage. \n\n## Tips & Tricks\nSkill 1 can be used to roll over walls to chase enemies or escape danger\nUse Skill 2 before your burst, the slow makes it harder for enemies to escape\n\n"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Assassin masuk pas Lady Sun salah posisi atau udah pakai dash. 2) Dia lincah banget, tunggu momen buat control baru bunuh."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/lady-sun/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Energy Burst",
+            "description": "Basic Attacks reduce the cooldown of Skill 1.",
+            "type": "passive"
+          },
+          {
+            "name": "Rolling Raid",
+            "description": "Rolls in the target direction, gaining an enhanced Basic Attack that has extra range and pierces through enemies. Gains Movement Speed if there are enemy heroes nearby after rolling.",
+            "type": "skill1"
+          },
+          {
+            "name": "Frag Grenade",
+            "description": "Throws a grenade at the target location, damaging and marking enemies hit, reducing their Physical Defense by 10%. Her Basic Attack deals extra damage to marked targets.",
+            "type": "skill2"
+          },
+          {
+            "name": "Ultimate Shell",
+            "description": "Fires a shot in the target direction, dealing area damage when enemies are hit or when exploding at max range.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your draft can capitalize on early picks and snowball lane leads",
+          "The enemy team relies on long-cooldown engage skills that leave them vulnerable post-fight",
+          "The enemy draft includes Diaochan, Nakoruru, and Ying, who appear in counter data as matchups Lady Sun can pressure."
+        ],
+        "avoid_when": [
+          "Enemy peel is strong and Lady Sun cannot reach the backline without dying first",
+          "The enemy team disengages well, so cleanup windows never open",
+          "The enemy team is built around answers to Gap-Close, removing the windows Lady Sun's kit needs to perform."
+        ],
+        "power_spikes": [
+          "Early game: farm safely behind the support, surviving lane phase to reach the marksman scaling window.",
+          "Mid game: with cooldown reduction online, gap-close skills come back fast enough to chain into multiple fights",
+          "Late game: full build online, Lady Sun reaches the spike public guides describe — extended fights favor her once items are completed."
+        ],
+        "common_mistakes": [
+          "Diving while enemy hard control is still up, which directly counters Lady Sun's engage.",
+          "Engaging first instead of second — cleanup picks lose their value as primary engagers.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Lady Sun's commit reaches the target alive.",
+          "Auto-attacking through enemy dive instead of repositioning — losing the marksman in early fights collapses the late-game win condition."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 141,
+            "hero_name": "Diaochan",
+            "evidence": "Diaochan",
+            "source_hash": "47f5f79b5b326fc03d2586b50efaffeac5fa80820e3fe26031c13f5d76f68e6c"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 162,
+            "hero_name": "Nakoruru",
+            "evidence": "Nakoruru",
+            "source_hash": "0336336520d6ef122321f109d51a8ef8de903cc44d5eded23e63e43ee625838d"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 538,
+            "hero_name": "Ying",
+            "evidence": "Ying",
+            "source_hash": "ad2af6cc09d8bdc2f2b9ba1b3f945e4d99604c8041b06090713fba3abf9d42aa"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 113,
+            "hero_name": "Zhuangzi",
+            "evidence": "Frag Grenade lowers Zhuangzi's Physical Defense, and Lady Sun's range keeps her out of Kaleidoscope.",
+            "source_hash": "704d1555584fdd29fe96747144b0c83410cb9c24521f1bd440d9fddb87644f96"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 153,
+            "hero_name": "Gao Changgong",
+            "evidence": "Gao Changgong approaches unseen and bursts Lady Sun.",
+            "source_hash": "8633dfcf388f41e4a948c66bcdfe62635c74b37a63388bc8582c49897933d6d0"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 168,
+            "hero_name": "Lapulapu",
+            "evidence": "Island's Blessing dashes onto Lady Sun and launches her before she can Rolling Raid away.",
+            "source_hash": "c9fefd2a4a6ea0f739316671acd67ca4d751b675c361567a30b349d5b368f37b"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 149,
+            "hero_name": "Liu Bang",
+            "source_hash": "a2c5a7b843d30372541cd42e91ed36980c6702aaf66afd636f9cb32e02c6727d"
+          },
+          {
+            "hero_id": 501,
+            "hero_name": "Ming",
+            "source_hash": "a2c5a7b843d30372541cd42e91ed36980c6702aaf66afd636f9cb32e02c6727d"
+          },
+          {
+            "hero_id": 190,
+            "hero_name": "Kongming",
+            "source_hash": "a2c5a7b843d30372541cd42e91ed36980c6702aaf66afd636f9cb32e02c6727d"
+          },
+          {
+            "hero_id": 162,
+            "hero_name": "Nakoruru",
+            "source_hash": "a2c5a7b843d30372541cd42e91ed36980c6702aaf66afd636f9cb32e02c6727d"
+          },
+          {
+            "hero_id": 556,
+            "hero_name": "Ata",
+            "source_hash": "a2c5a7b843d30372541cd42e91ed36980c6702aaf66afd636f9cb32e02c6727d"
+          },
+          {
+            "hero_id": 195,
+            "hero_name": "Xuance",
+            "source_hash": "a2c5a7b843d30372541cd42e91ed36980c6702aaf66afd636f9cb32e02c6727d"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

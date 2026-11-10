@@ -1,0 +1,625 @@
+{
+  "schema_version": 2,
+  "hero_id": 519,
+  "source_hash": "4665c498530d1a256bbebc5fcf7040117cd3994e0be9ec6f33069c6d8e59b411",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Hidden Dragon",
+          "desc": "The Dragon Souls from his last 2 skill uses grant effects to his Basic Attacks, which deal physical damage to up to two enemies. He gains 1 mark upon using skills, for up to 3 marks. Basic Attacks expend all marks for various effects, striking once per mark."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Flaming Palm",
+          "desc": "Deals physical damage and true damage. Attaches a Fire Dragon Soul to his sword. Basic Attacks deal more damage when this Soul is attached. Enhanced Basic Attacks will deal both physical damage and true damage."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Downpour",
+          "desc": "Deals physical damage and recovers Health upon hit. Attaches a Water Dragon Soul to his sword. Basic Attacks restore Health and Mana when this Soul is attached. Enhanced Basic Attacks will deal physical damage and restore Health, but restore less for hits on non-hero units."
+        },
+        {
+          "type": "Skill 3",
+          "name": "Riding the Wind",
+          "desc": "Gains Movement Speed that diminishes over time, deals physical damage, and knocks back enemies. Attaches a Wind Dragon Soul to his sword. Gains Movement Speed while this Soul is attached, 50% extra if on both swords. Enhanced Basic Attacks will deal physical damage and knock back enemies."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Infinite Vastness",
+          "desc": "Soars into the sky for up to 4.5s, then dives forward to damage and slow enemies. Landing deals equal damage and applies Dread. Gains Attack Speed and Attack Range. Basic Attacks hit 2 more enemies. Can switch Dragon Souls mid-flight."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Incredible late-game scaling",
+          "Long attack range",
+          "Great escape tool with Ultimate"
+        ],
+        "cons": [
+          "Vulnerable to high mobility",
+          "Needs items to impact the game",
+          "Predictable damage output"
+        ],
+        "gameplay_tips": "## Early Game\nIn the early game, you want to prioritze farming and last-hitting minions, contesting around neutral objectives, and looking to use your range to poke enemies when they step up to last hit. Play around your cooldowns. If you have Skill 1 and either Skill 2/3 up, you can look to use these on the enemy hero and use Ao'Yin's long-range auto attack to deal a lot of poke damage.\n\n## Teamfights\nYour goal is to stay behind your frontline and watch out for enemy threats. Save your Ultimate Infinity Vastness for when you are about to die so you can reposition to safety. With Ao'Yin's long range, you can look to flash in with your Skills to finish off low-health enemies.\n\n## Tips & Tricks\nHaving 2 of the same soul will increase the effectiveness. For example, 2 Fire souls means your auto attacks will deal more damage\nIf you have mixed souls and want 2 of the same soul, tap the soul you want double of\nYou can change souls whilst in the air with your Ultimate"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": ""
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/aoyin/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Hidden Dragon",
+            "description": "The Dragon Souls from his last 2 skill uses grant effects to his Basic Attacks, which damages one extra enemy. He gains marks when using skills, enhancing his next Basic Attack. When a target is attacked by more than 1 Dragon Soul, subsequent hits deal only 1% damage. When switching between Dragon Souls, souls of the same element are prioritized.",
+            "type": "passive"
+          },
+          {
+            "name": "Flaming Palm",
+            "description": "Unleashes sword energy, dealing physical damage and true damage to enemies within range. Subsequent Basic Attacks deal extra damage.",
+            "type": "skill1"
+          },
+          {
+            "name": "Downpour",
+            "description": "Unleashes sword energy, dealing physical damage to enemies within range and recovering Health on hit. Subsequent Basic Attacks restore Health and Mana.",
+            "type": "skill2"
+          },
+          {
+            "name": "Riding the Wind",
+            "description": "Unleashes sword energy, immediately gaining Movement Speed while damaging and knocking back enemies within range. The Movement Speed increase persists after the skill ends.",
+            "type": "ultimate"
+          },
+          {
+            "name": "Infinite Vastness",
+            "description": "Soars into the sky, then dives forward to damage and slow enemies in his path. Landing deals equal damage and applies Dread. Enhances himself, allowing his Basic Attacks to hit up to 2 more enemies.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has multiple high-mobility threats that need to be locked down before they reach your backline",
+          "The team draft favors extended team fights where healing scales",
+          "The enemy draft includes Guan Yu, who appear in counter data as matchups Ao'yin can pressure."
+        ],
+        "avoid_when": [
+          "Your team lacks the follow-up damage to convert your control windows into kills",
+          "The enemy already builds anti-heal items, neutralizing your sustain plan",
+          "The enemy already drafted Garo, who counter data identifies as direct answers to Ao'yin."
+        ],
+        "power_spikes": [
+          "Early game: farm safely behind the support, surviving lane phase to reach the marksman scaling window.",
+          "Ultimate online: Riding the Wind extends control duration, making team fights snowball off a single hit",
+          "Late game: full build online, Ao'yin reaches the spike public guides describe — extended fights favor him once items are completed."
+        ],
+        "common_mistakes": [
+          "Throwing Downpour on the front-line tank instead of saving it for backline carries.",
+          "Forcing all-ins against opponents already wearing anti-heal — your healing barely activates.",
+          "Ignoring Garo on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Auto-attacking through enemy dive instead of repositioning — losing the marksman in early fights collapses the late-game win condition."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 105,
+            "hero_name": "Lian Po",
+            "evidence": "True damage from Flaming Palm cuts through Lian Po's high defenses.",
+            "source_hash": "7def250ef0b564b329d112f174b4c8377310965505b808bcb93dd7cf05b91a51"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 126,
+            "hero_name": "Dun",
+            "evidence": "True damage from Flaming Palm ignores much of Dun's armor.",
+            "source_hash": "eb1f24f1de7ec8d23a2c1e87fc8dcf7b9566c79cf5c0a348f83d4a618f60a568"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 581,
+            "hero_name": "Flowborn (Tank)",
+            "evidence": "Flaming Palm's true damage cuts through the tank form's bonus defenses.",
+            "source_hash": "4fa5ac96c59ccf6dc72f61f6e2717888d4167251b7aefbe381b7b62eebc5e938"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 175,
+            "hero_name": "Kui",
+            "evidence": "Join Me pulls Aoyin out of position, and he has little escape beyond Riding the Wind.",
+            "source_hash": "87234f163daefac0894ee87f859e72e6bb0a12238c1e7c7019ac890c8a75dd03"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 187,
+            "hero_name": "Donghuang",
+            "evidence": "Forsaken Contract suppresses Aoyin and shuts off his damage.",
+            "source_hash": "443d125ed23081ef6df68e4b0328f547372be76b65bc874097d7b0801221a97f"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 159,
+            "hero_name": "Dolia",
+            "source_hash": "fb387add13a89a925e02541cf089c0df87d6708efe121144562da32d48bd43bd"
+          },
+          {
+            "hero_id": 531,
+            "hero_name": "Jing",
+            "source_hash": "fb387add13a89a925e02541cf089c0df87d6708efe121144562da32d48bd43bd"
+          },
+          {
+            "hero_id": 123,
+            "hero_name": "Lu Bu",
+            "source_hash": "fb387add13a89a925e02541cf089c0df87d6708efe121144562da32d48bd43bd"
+          },
+          {
+            "hero_id": 577,
+            "hero_name": "Dyadia",
+            "source_hash": "fb387add13a89a925e02541cf089c0df87d6708efe121144562da32d48bd43bd"
+          },
+          {
+            "hero_id": 146,
+            "hero_name": "Luna",
+            "source_hash": "fb387add13a89a925e02541cf089c0df87d6708efe121144562da32d48bd43bd"
+          },
+          {
+            "hero_id": 517,
+            "hero_name": "Augran",
+            "source_hash": "fb387add13a89a925e02541cf089c0df87d6708efe121144562da32d48bd43bd"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

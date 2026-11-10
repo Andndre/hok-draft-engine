@@ -1,0 +1,641 @@
+{
+  "schema_version": 2,
+  "hero_id": 502,
+  "source_hash": "c5336f631d1f2f6bb54a2fa3c8c48ed0149830553c34a339c27ee67cd4ccbf4e",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Blast",
+          "desc": "In human form, Basic Attacks have increased range and deal extra magical damage while recovering Energy. Consecutive hits on the same target will stack damage."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Striker Stance",
+          "desc": "Fires Inner Energy in the target direction, dealing damage to enemies in its path and slowing them. Recovers Energy upon hit."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Guarding Stance",
+          "desc": "Grants shield points and increases Attack SpeedDeals damage to enemies in range, and continuously deals damage for aperiod of time."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Tiger Form",
+          "desc": "Switches to tiger form, gaining Movement Speed and enhancing the next 2 Basic Attacks. The 1st Basic Attack lets him dash toward a locked-on target, damaging and slowing them. The 2nd Basic Attack deals magical damage."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Pei itu jungler dengan invade awal paling kuat, gampang neken jungler farming kayak Li Bai dan Han Xin."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/pei/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Blast",
+            "description": "In human form, Basic Attacks have increased range and deal extra magical damage while recovering Energy. Consecutive hits on the same target will stack damage.",
+            "type": "passive"
+          },
+          {
+            "name": "Striker Stance",
+            "description": "Fires Inner Energy in the target direction, dealing damage to enemies in its path and slowing them. Recovers Energy upon hit.",
+            "type": "skill1"
+          },
+          {
+            "name": "Guarding Stance",
+            "description": "Gains a shield and Attack Speed. Deals damage to enemies within range and continues to deal damage over time.",
+            "type": "skill2"
+          },
+          {
+            "name": "Tiger Form",
+            "description": "Switches to tiger form, gaining Movement Speed and enhancing the next 2 Basic Attacks. The 1st Basic Attack lets him dash toward a locked-on target, damaging and slowing them. The 2nd Basic Attack deals magical damage.",
+            "type": "ultimate"
+          },
+          {
+            "name": "Beastly Instincts",
+            "description": "Gains extra Physical Attack, Physical Defense, Magical Defense, and Movement Speed while in tiger form.",
+            "type": "ultimate"
+          },
+          {
+            "name": "Roaring Tiger Stance",
+            "description": "Bites enemies, dealing damage. Restores Energy when this attack defeats an enemy.",
+            "type": "ultimate"
+          },
+          {
+            "name": "Leaping Tiger Stance",
+            "description": "Pounces in the target direction. If runs into terrain, latches onto it briefly and can pounce again. If the pounce hits an enemy, he deals damage, recovers Energy, and reduces this skill's cooldown.",
+            "type": "ultimate"
+          },
+          {
+            "name": "Human Form",
+            "description": "Switches to human form, gains Movement Speed and enhances the next Basic Attack. Deals damage to the target and enemies in a cone-shaped area behind them.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team wants to siege objectives where ranged poke whittles down defenders",
+          "Your team can engage first, letting Pei second-wave into low-health targets",
+          "The enemy draft includes Arthur, Lu Bu, and Wuyan, who appear in counter data as matchups Pei can pressure."
+        ],
+        "avoid_when": [
+          "The team fight will happen in cramped jungle spaces where poke ranges are minimized",
+          "Your team has no primary engage, leaving the cleanup pick with nothing to follow up on",
+          "The enemy already drafted Gan & Mo, Meng Ya, and Milady, who counter data identifies as direct answers to Pei."
+        ],
+        "power_spikes": [
+          "Early game: Pei is listed as an early-game threat in public guide data — convert the early window into objectives before scaling picks come online.",
+          "Mana sustain online: poke patterns become repeatable once cooldown reduction and mana regen items come online",
+          "Late game: cooldowns become short enough that Guarding Stance influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Spending mana on poke that does not threaten kills, leaving you empty for the actual fight.",
+          "Engaging first instead of second — cleanup picks lose their value as primary engagers.",
+          "Ignoring Gan & Mo and Meng Ya on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Pathing predictably and getting tracked by the enemy jungler — vary first clear and rotate based on ward placement rather than muscle memory."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 166,
+            "hero_name": "Arthur",
+            "evidence": "Arthur",
+            "source_hash": "75df6a53cec9cd4ee5c2e4eaae2bec08c2ac6b30f4885be98789ba37993f1af2"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 123,
+            "hero_name": "Lu Bu",
+            "evidence": "Lu Bu",
+            "source_hash": "bc73bf2801484aebf7f42c649417aacc3c1aa3d7e158cf9d5fc835440e6e043e"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 117,
+            "hero_name": "Wuyan",
+            "evidence": "Wuyan",
+            "source_hash": "c610dc06c9e79f3a6857785b80970cc704a363c96e73fc42be3d3f13aaab3fe1"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 182,
+            "hero_name": "Gan & Mo",
+            "evidence": "Gan & Mo",
+            "source_hash": "f62335aa30d134e62432f348a8af43cee9bb8964c498acf6b3fa0759b6630de8"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 524,
+            "hero_name": "Meng Ya",
+            "evidence": "Meng Ya",
+            "source_hash": "bc1ed6dd698353027cd56fa6155cec553e110c721ebefa041c903b8ee5cd121e"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 504,
+            "hero_name": "Milady",
+            "evidence": "Milady",
+            "source_hash": "19a4bb10c73f2fb223b7e53c97ff2a4e51d576384305a9c7138fc82c3cb8fc78"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 179,
+            "hero_name": "Nuwa",
+            "evidence": "Nuwa",
+            "source_hash": "b01decbe3f52d90626253a7f4f4c4177a5e859a6af826309329ccae14abe54fa"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 191,
+            "hero_name": "Da Qiao",
+            "source_hash": "66a402cb6144a93078e9ec0d3cfcf5634d434357fefcb6877fcabf918d38461c"
+          },
+          {
+            "hero_id": 139,
+            "hero_name": "Fuzi",
+            "source_hash": "66a402cb6144a93078e9ec0d3cfcf5634d434357fefcb6877fcabf918d38461c"
+          },
+          {
+            "hero_id": 120,
+            "hero_name": "Bai Qi",
+            "source_hash": "66a402cb6144a93078e9ec0d3cfcf5634d434357fefcb6877fcabf918d38461c"
+          },
+          {
+            "hero_id": 176,
+            "hero_name": "Yuhuan",
+            "source_hash": "66a402cb6144a93078e9ec0d3cfcf5634d434357fefcb6877fcabf918d38461c"
+          },
+          {
+            "hero_id": 577,
+            "hero_name": "Dyadia",
+            "source_hash": "66a402cb6144a93078e9ec0d3cfcf5634d434357fefcb6877fcabf918d38461c"
+          },
+          {
+            "hero_id": 125,
+            "hero_name": "Yango",
+            "source_hash": "66a402cb6144a93078e9ec0d3cfcf5634d434357fefcb6877fcabf918d38461c"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

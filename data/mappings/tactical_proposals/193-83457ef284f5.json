@@ -1,0 +1,621 @@
+{
+  "schema_version": 2,
+  "hero_id": 193,
+  "source_hash": "83457ef284f5581d12ad1dc10a46d09d36caa0dc149aff76dd4712085b3876a6",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Demon Soul",
+          "desc": "Basic Attacks and Skill 2 deal extra damage to single targets"
+        },
+        {
+          "type": "Skill 1",
+          "name": "Vortex Brand",
+          "desc": "Throws a ricocheting blade in the target direction, damaging and slowing enemies hit. The blade returns on hit, restoring Health and granting Move and Attack Speed."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Blade Tempest",
+          "desc": "Slashes twice, dealing damage. The second slash launches enemies and increases the damage of the next Basic Attack. Gains increased Health recovery, Mana recovery, and Movement Speed when out of combat."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Invincible Warrior",
+          "desc": "Becomes enhanced, gaining Movement Speed, max Health, Physical AttackBlock, and damaging nearby enemies over time."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Very strong duelling potential",
+          "Great sustain",
+          "In-built tankiness and damage"
+        ],
+        "cons": [
+          "Easy to kite",
+          "Relies on Ultimate in fights",
+          "Struggles to reach backline"
+        ],
+        "gameplay_tips": "## Early Game\nKaizer is weak before he reaches Level 4 and gets access to his Ultimate Invincible Warrior, so you want to focus on full clearing your jungle and going to lanes to share gold and experience. Once you reach Level 4, you can start to look for ganks and isolated enemies since Kaizer's passive gives his basic attacks and Skill 2 more damage when hitting a single enemy. \n\n## Teamfights\nIn teamfights, be patient with your Ultimate. If you use it too early, the enemy will just back off, then look to engage after your Ultimate ends. Landing Skill 1 Vortex Brand is the most important part of Kaizer's kit, slowing enemy heroes and allowing you to follow up with Skill 2 and basic attacks. Be sure to prioritze the right target in fights. If an enemy hero has too much mobility for you to chase down, then don't waste your skills on them; instead, look for an easier target.\n\n## Tips & Tricks\nSkill 2's empowered auto attack can be used to dash over walls\nAlways auto attack after using Skill 2 Blade Tempest\nDon't waste Skill 1. Not only does it do damage but its important to hit for the sustain and movement speed"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Skill 1 Kaizer bisa dihindarin. 2) Waspadain dash-nya, hero tipis jaga jarak biar gak di-engage."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/kaizer/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Demon Soul",
+            "description": "Basic Attacks and Skill 2 deal extra damage to single targets.",
+            "type": "passive"
+          },
+          {
+            "name": "Vortex Brand",
+            "description": "Throws a ricocheting blade in the target direction, damaging and slowing enemies hit. The blade returns on hit, recovering Health and granting Movement Speed and Attack Speed.",
+            "type": "skill1"
+          },
+          {
+            "name": "Blade Tempest",
+            "description": "Slashes twice, dealing damage. The second slash launches enemies and increases the damage of the next Basic Attack. Gains increased Health and Mana recovery, and Movement Speed when out of combat.",
+            "type": "skill2"
+          },
+          {
+            "name": "Invincible Warrior",
+            "description": "Becomes enhanced, gaining max Health, Physical Attack, and Movement Speed, while blocking incoming damage and dealing damage over time to nearby enemies.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has high physical or magic burst that demands a dedicated tank to absorb",
+          "Your team has the structure to use his ability to soak pressure in lane and threaten side objectives, since Kaizer delivers a durable front-line presence with steady wave control.",
+          "The enemy draft includes Da Qiao, Diaochan, and Daji, who appear in counter data as matchups Kaizer can pressure."
+        ],
+        "avoid_when": [
+          "Your team comp lacks damage and adding another non-damage pick collapses the win condition",
+          "Your team needs a mid pick more than Kaizer's specialty, leaving the role unfilled if you commit here.",
+          "The enemy already drafted Donghuang, Kui, and Sun Bin, who counter data identifies as direct answers to Kaizer."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Kaizer's mid-game tools come online.",
+          "Core durability online: defensive items like Meteor let Kaizer stay in fights longer instead of getting blown up",
+          "Late game: full build online, Kaizer reaches the spike public guides describe — extended fights favor him once items are completed."
+        ],
+        "common_mistakes": [
+          "Building damage items hoping to deal kills, when the team needs the durability that makes you a tank in the first place.",
+          "Ignoring Donghuang and Kui on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Forcing solo engages instead of waiting for ally commit — Kaizer's value compounds when the team follows up on engages."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 191,
+            "hero_name": "Da Qiao",
+            "evidence": "Da Qiao",
+            "source_hash": "d04e92716b6eb55375890d2e0759e1aa76b748d6fd2e677ad850568efc23f70f"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 141,
+            "hero_name": "Diaochan",
+            "evidence": "Diaochan",
+            "source_hash": "b8354a825353574a6ea593eace199d1fb39c2a42b821a84a015adbe82e57bb01"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 109,
+            "hero_name": "Daji",
+            "evidence": "Daji",
+            "source_hash": "deb98a197f70e30192943bb74ba72abd5eedf5c573410f03d62421f6f108b57b"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 187,
+            "hero_name": "Donghuang",
+            "evidence": "Donghuang",
+            "source_hash": "34d750548940d6a3966917507ad539825ed8848a33e7c2ddb550341804b8a1ea"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 175,
+            "hero_name": "Kui",
+            "evidence": "Kui",
+            "source_hash": "1f72ae7856df897768105074eff5020b0612fd82b01f30554db93d621ed853ef"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 118,
+            "hero_name": "Sun Bin",
+            "evidence": "Sun Bin",
+            "source_hash": "ce26461fe51d78285183d62dfed0d43e62569290a86828a0b385ffdb5e5743da"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 537,
+            "hero_name": "Devara",
+            "source_hash": "2a0a01e689e258e43cb6906406ac91a96d92d9fa9deed0338bf4f1ad9b392fc7"
+          },
+          {
+            "hero_id": 523,
+            "hero_name": "Shi",
+            "source_hash": "2a0a01e689e258e43cb6906406ac91a96d92d9fa9deed0338bf4f1ad9b392fc7"
+          },
+          {
+            "hero_id": 119,
+            "hero_name": "Dr Bian",
+            "source_hash": "2a0a01e689e258e43cb6906406ac91a96d92d9fa9deed0338bf4f1ad9b392fc7"
+          },
+          {
+            "hero_id": 118,
+            "hero_name": "Sun Bin",
+            "source_hash": "2a0a01e689e258e43cb6906406ac91a96d92d9fa9deed0338bf4f1ad9b392fc7"
+          },
+          {
+            "hero_id": 159,
+            "hero_name": "Dolia",
+            "source_hash": "2a0a01e689e258e43cb6906406ac91a96d92d9fa9deed0338bf4f1ad9b392fc7"
+          },
+          {
+            "hero_id": 563,
+            "hero_name": "Heino",
+            "source_hash": "2a0a01e689e258e43cb6906406ac91a96d92d9fa9deed0338bf4f1ad9b392fc7"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.85,
+            "tidak": 0.0975,
+            "tidak_diketahui": 0.0525
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

@@ -1,0 +1,651 @@
+{
+  "schema_version": 2,
+  "hero_id": 168,
+  "source_hash": "73fba08bf38b9ef8c0407a34c6cf7f149e58e5ea357ea963573d9e80c8d163b0",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Sea Beast's Favor",
+          "desc": "Enhance Increases the Physical and Magical Defense of himself and the teammate with the lowest Health nearby."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Torrential Blade",
+          "desc": "Damage Imperil Damages and slows enemies within range."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Island's Blessing",
+          "desc": "Crowd Control Damage Movement Dashes in the target direction, dealing damage to enemies in his path and launching them."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Raging Sea",
+          "desc": "Crowd Control Damage Slow Splits the earth, damaging enemies within range and launching them. The fractured earth damages and slows enemies."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Control Lapulapu itu skill shot, hindarin tinggal gerak. 2) Pas teamfight jangan abisin skill ke tank tebel ini. 3) Pas ult-nya ready jangan ngejar dia, balasan ult-nya gampang banget kena."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/lapulapu/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Sea Beast's Favor",
+            "description": "Increases the Physical and Magical Defense of himself and the teammate with the lowest Health nearby.",
+            "type": "passive"
+          },
+          {
+            "name": "Torrential Blade",
+            "description": "Damages and slows enemies within range. September 10 update: Skill 1 - Torrential Blade: base damage and weapon flying damage each change from 320 (+64 per skill level) (+110% Physical Attack) → 300 (+60 per skill level) (+100% Physical Attack). Ground damage over time: 75 (+15 per skill level) (+15% Physical Attack) → 50 (+10 per skill level) (+12% Physical Attack).",
+            "type": "skill1"
+          },
+          {
+            "name": "Island's Blessing",
+            "description": "Dashes in the target direction, dealing damage to enemies in his path and launching them.",
+            "type": "skill2"
+          },
+          {
+            "name": "Raging Sea",
+            "description": "Splits the earth, damaging enemies within range and launching them. The fractured earth damages and slows enemies.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team needs a durable roamer who can protect carries while starting fights with knockup control.",
+          "Your allies can follow Island's Blessing and Raging Sea, turning Lapulapu's crowd control into kills or objective pressure.",
+          "The match rewards early rotations, lane assistance, and defensive body-blocking around the Farm Laner."
+        ],
+        "avoid_when": [
+          "Your team already lacks damage and needs a carry threat rather than another low-damage tank/support.",
+          "The enemy can ignore Lapulapu and dive around him unless your backline stays within peel range.",
+          "Your team cannot follow engages, because Lapulapu's control creates windows rather than solo burst kills."
+        ],
+        "power_spikes": [
+          "Early game: public guide data highlights his passive defensive stats and roamer rotations as early strengths.",
+          "First coordinated engage: Island's Blessing into Torrential Blade gives knockup, slow, sustain, and armor pressure for allies.",
+          "Ultimate available: Raging Sea adds another launch and fractured-ground slow for objective or team-fight disruption."
+        ],
+        "common_mistakes": [
+          "Diving beyond ally range and losing the passive protection value for your lowest-health teammate.",
+          "Starting fights without follow-up damage, which wastes Lapulapu's knockup and slow windows.",
+          "Playing him like a damage carry instead of a protector who enables teammates through control.",
+          "Saving Raging Sea too long during objective fights where its launch and slow can split the enemy formation."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 109,
+            "hero_name": "Daji",
+            "evidence": "Raging Sea launches Daji before she can finish her combo.",
+            "source_hash": "1448f7da2fff21b017c6137a9430a74014348ffeba75dbd43113c1fe251bf0f2"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 184,
+            "hero_name": "Cai Yan",
+            "evidence": "Island's Blessing dashes onto Cai Yan and launches her.",
+            "source_hash": "c19f1f2dca41601c71fc86abe553921050dd5ad4114cee7ca68c00c809cafe57"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 133,
+            "hero_name": "Di Renjie",
+            "evidence": "Island's Blessing and Raging Sea launch Di Renjie, who has no dash.",
+            "source_hash": "9bcb121edf71269af9e5eb370901fc684b7de39491345561cf7f5655e3c30cf2"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 577,
+            "hero_name": "Dyadia",
+            "evidence": "Island's Blessing dashes onto Dyadia, who has little escape.",
+            "source_hash": "2fde06acaac13d7f3f6e0ec38c2ea4b3e5b1fbf00d19772038ce41a669aa28c0"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 584,
+            "hero_name": "Flowborn (Marksman)",
+            "evidence": "Island's Blessing dashes onto the marksman form and launches it.",
+            "source_hash": "47f9de9082534f0d6f6ff1f5d8f16ad425f6268677a30612b39c5b398a9982d9"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 508,
+            "hero_name": "Garo",
+            "evidence": "Island's Blessing dashes onto Garo and launches her.",
+            "source_hash": "b59831fc55517f17437f849cfec7b081486517c3f949eb1349ed6bb80831e4f0"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 547,
+            "hero_name": "Luara",
+            "evidence": "Island's Blessing dashes onto Luara and launches her.",
+            "source_hash": "e0fd6bacdcecc85e07fb3e53bcd44fc9935a8d0d3f2719b96385db402c6a9afa"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 118,
+            "hero_name": "Sun Bin",
+            "evidence": "Island's Blessing dashes onto Sun Bin and launches him.",
+            "source_hash": "c337cb4eff6cc0131ef528ea017ce58135aeee4f18cc6ff21e98daa9680f47c1"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 106,
+            "hero_name": "Xiao Qiao",
+            "evidence": "Island's Blessing dashes onto Xiao Qiao and launches her.",
+            "source_hash": "376ae118b4734f8949ec53780b587e7030cd57437727dc249a7b90c594c22dab"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 111,
+            "hero_name": "Lady Sun",
+            "evidence": "Island's Blessing dashes onto Lady Sun and launches her before she can Rolling Raid away.",
+            "source_hash": "9101885a3d5f121de0e70a10d3ef6e937ad0965844272dd62b6139eac3ee3260"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 174,
+            "hero_name": "Consort Yu",
+            "evidence": "Protecting Winds makes Consort Yu invulnerable to Lapulapu's physical damage.",
+            "source_hash": "a8b5d545926d428761288c23d9b22125aa8d6104257ca76709dd81b769b8e665"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 152,
+            "hero_name": "Wang Zhaojun",
+            "evidence": "Frigid Prison freezes Lapulapu as he dashes in.",
+            "source_hash": "d6fc3054ef3299f3e88d0c7019b475982d033adcbd3d314fc93c3fc0829b644f"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 112,
+            "hero_name": "Luban No.7",
+            "source_hash": "47487c8e769250413d259c54c56d745ef63d7f77994ec039c882e31854159f14"
+          },
+          {
+            "hero_id": 121,
+            "hero_name": "Mi Yue",
+            "source_hash": "47487c8e769250413d259c54c56d745ef63d7f77994ec039c882e31854159f14"
+          },
+          {
+            "hero_id": 192,
+            "hero_name": "Huang Zhong",
+            "source_hash": "47487c8e769250413d259c54c56d745ef63d7f77994ec039c882e31854159f14"
+          },
+          {
+            "hero_id": 107,
+            "hero_name": "Zilong",
+            "source_hash": "47487c8e769250413d259c54c56d745ef63d7f77994ec039c882e31854159f14"
+          },
+          {
+            "hero_id": 173,
+            "hero_name": "Fang",
+            "source_hash": "47487c8e769250413d259c54c56d745ef63d7f77994ec039c882e31854159f14"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

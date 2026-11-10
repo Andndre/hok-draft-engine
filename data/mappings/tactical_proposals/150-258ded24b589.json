@@ -1,0 +1,690 @@
+{
+  "schema_version": 2,
+  "hero_id": 150,
+  "source_hash": "258ded24b58969d2912841a14a313749c28aab5d0794190865a641fd8b3bd267",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Killing Spear",
+          "desc": "Han Xin's every 4th Basic Attack launches the target. Hits from skills andenhanced Basic Attacks grant increased Attack Speed."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Ruthless Assault",
+          "desc": "Charges to the target location to deal damage and launch the enemy. The 2nd charge will not launch the enemy."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Fight or Die!",
+          "desc": "Shifts backward and enhances the next Basic Attack, causing it to deal extra damage."
+        },
+        {
+          "type": "Ultimate",
+          "name": "The Unrivaled Spear",
+          "desc": "Swings spear 4 times, gaining immunity to damage and crowd control. Deals damage each time and launches enemies the 4th time."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Han Xin takut control, kunci terus bunuh begitu dia masuk. 2) Dia tipis pas skill-nya abis, serang di situ. 3) Dia lincah banget cuy, jangan ngejar kejauhan, nanti timnya dateng ngebalikin keadaan."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/han-xin/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Killing Spear",
+            "description": "Every 4th Basic Attack launches the target. Hits from skills and enhanced Basic Attacks grant increased Attack Speed.",
+            "type": "passive"
+          },
+          {
+            "name": "Ruthless Assault",
+            "description": "Leaps to the target location to deal damage and launch the enemy. The second charge will not launch the enemy.",
+            "type": "skill1"
+          },
+          {
+            "name": "Fight or Die!",
+            "description": "Dashes backward and enhances the next Basic Attack to deal extra damage. If the Fight or Die! sweep is his 4th Basic Attack, it will include the 4th Basic Attack's extra effects.",
+            "type": "skill2"
+          },
+          {
+            "name": "The Unrivaled Spear",
+            "description": "Swings spear 4 times, gaining damage reduction and crowd control immunity. Deals damage each time and launches enemies the 4th time.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The map shape favors gank routes, where mobility translates directly into kills",
+          "Your team has the structure to use his ability to clear camps efficiently and convert pressure into ganks, since Han Xin delivers tempo from objectives and cross-map kill threats.",
+          "The enemy draft includes Lu Bu, Dun, and Xiang Yu, who appear in counter data as matchups Han Xin can pressure."
+        ],
+        "avoid_when": [
+          "Enemy peel is strong and Han Xin cannot reach the backline without dying first",
+          "Your team needs a tank pick more than Han Xin's specialty, leaving the role unfilled if you commit here.",
+          "The enemy already drafted Agudo, Alessio, and Erin, who counter data identifies as direct answers to Han Xin."
+        ],
+        "power_spikes": [
+          "Early game: jungle clear into level-4 ganks is the first window where Han Xin can translate routes into kills.",
+          "Mid game: with cooldown reduction online, gap-close skills come back fast enough to chain into multiple fights",
+          "Late game: cooldowns become short enough that Fight or Die! influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Diving while enemy hard control is still up, which directly counters Han Xin's engage.",
+          "Ignoring Agudo and Alessio on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Pathing predictably and getting tracked by the enemy jungler — vary first clear and rotate based on ward placement rather than muscle memory."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 123,
+            "hero_name": "Lu Bu",
+            "evidence": "Lu Bu",
+            "source_hash": "67f5deb371ca9262614d8689c8517926037867bd2bac350c2dba7ea736cb8a2e"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 126,
+            "hero_name": "Dun",
+            "evidence": "Dun",
+            "source_hash": "c04026fa47cc2d1c3bd8de2a71c46fdbd930daff07f2537fb53818401a7f383d"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 135,
+            "hero_name": "Xiang Yu",
+            "evidence": "Xiang Yu",
+            "source_hash": "35654472c204692a9a5b891db9b1d2779aac8b51ba0f5a6b51934833626adb97"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 582,
+            "hero_name": "Flowborn (Mage)",
+            "evidence": "Han Xin's mobility reaches Flowborn's mage form while it channels Arcane Arts.",
+            "source_hash": "4f9fbe9f30ea6d6e07b8cd5a23f198c41054326c1192dc1c83abf10deb0bfca3"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 110,
+            "hero_name": "Garuda",
+            "evidence": "Han Xin dashes past Arrows of Gold and bursts Garuda.",
+            "source_hash": "9c3725fbff0a4b1c1038c3d6d8e3336090d283a52e2b16c724d49cb8dd4a86e8"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 521,
+            "hero_name": "Haya",
+            "evidence": "Han Xin's dashes reach Haya before Moonscape Mirage takes effect.",
+            "source_hash": "0e98a0664727d9642d0d45a594385bded6fef6ec9e063590de5cafaeb7c920b7"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 192,
+            "hero_name": "Huang Zhong",
+            "evidence": "Han Xin's mobility reaches Huang Zhong while he is immobile in Turret Mode.",
+            "source_hash": "93ccaa4f723b9627a83dab63ff10a18877cca8077e2d78d0a5e267a2c0ef3e2a"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 533,
+            "hero_name": "Agudo",
+            "evidence": "Agudo",
+            "source_hash": "986b75c7ecc03c24cbdbd4684285148cdec7abf153f0b80b626f0cd9997e338f"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 545,
+            "hero_name": "Alessio",
+            "evidence": "Alessio",
+            "source_hash": "7799cb3bba771bafa387b27d03fdb9d4bf94a0ee10cc8960c1f389898434ae5b"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 155,
+            "hero_name": "Erin",
+            "evidence": "Erin",
+            "source_hash": "d7d06497e437a592d23aafbfd182a2b657277083a7048b44b87ade45e58aaf7d"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 190,
+            "hero_name": "Kongming",
+            "evidence": "Kongming",
+            "source_hash": "6cea67aa3b62c1ecaaed0c8569595f12ef53c9a6f2700bd0a1deaa840b063bec"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 156,
+            "hero_name": "Liang",
+            "evidence": "Liang",
+            "source_hash": "eca964680d410fd73d59d6f098f833864b653148171162e2f8adef3b30d02a33"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 106,
+            "hero_name": "Xiao Qiao",
+            "evidence": "Xiao Qiao",
+            "source_hash": "49ca090db35135f5e0e5f14f00ba54658a5e6df24dfe946075eac59d91423111"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 640,
+            "hero_name": "Annette",
+            "evidence": "Hurricane Wall stuns Han Xin when he dives a backline teammate.",
+            "source_hash": "597830e0d616078938b146be5200062b5028731ee056f8cd35ed9a9ff341c196"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 120,
+            "hero_name": "Bai Qi",
+            "evidence": "Deathscythe pulls Han Xin back as he tries to dash out.",
+            "source_hash": "0ebf01d2081336f2626028a73808c791030f84bafb8d2fd0ef0eefc0bba7c744"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 584,
+            "hero_name": "Flowborn (Marksman)",
+            "evidence": "Convergence knocks back divers like Han Xin and buys time to reposition.",
+            "source_hash": "72e4a51c9add981f0b91e48e9c91eedc9f282950a102f44a0526151fa0294899"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 138,
+            "hero_name": "Wang Wei",
+            "evidence": "Shifting Mists dodges Han Xin's burst and Endless River pushes him away.",
+            "source_hash": "63b816c30a4e0a4444af6a202aa36ce05f61c27e396698530acb045bbae0dc0e"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 132,
+            "hero_name": "Marco Polo",
+            "source_hash": "48d1976c9388196c2aef3eaebeb9a430a201ab686460261f9fe6435f965333eb"
+          },
+          {
+            "hero_id": 505,
+            "hero_name": "Yaria",
+            "source_hash": "48d1976c9388196c2aef3eaebeb9a430a201ab686460261f9fe6435f965333eb"
+          },
+          {
+            "hero_id": 109,
+            "hero_name": "Daji",
+            "source_hash": "48d1976c9388196c2aef3eaebeb9a430a201ab686460261f9fe6435f965333eb"
+          },
+          {
+            "hero_id": 105,
+            "hero_name": "Lian Po",
+            "source_hash": "48d1976c9388196c2aef3eaebeb9a430a201ab686460261f9fe6435f965333eb"
+          },
+          {
+            "hero_id": 127,
+            "hero_name": "Lady Zhen",
+            "source_hash": "48d1976c9388196c2aef3eaebeb9a430a201ab686460261f9fe6435f965333eb"
+          },
+          {
+            "hero_id": 174,
+            "hero_name": "Consort Yu",
+            "source_hash": "48d1976c9388196c2aef3eaebeb9a430a201ab686460261f9fe6435f965333eb"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

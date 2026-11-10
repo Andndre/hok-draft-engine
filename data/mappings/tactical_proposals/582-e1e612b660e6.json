@@ -1,0 +1,590 @@
+{
+  "schema_version": 2,
+  "hero_id": 582,
+  "source_hash": "e1e612b660e6b4f12bccc3e33b5e78c51f29ddfc5e30fdaf7d36bd38b4864b1d",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Flow of the World",
+          "desc": "Can change Flow states at the Base to enhance stats. Spends 1 stack of Flow to perform an enhanced Basic Attack that deals area damage."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Convergence",
+          "desc": "Channels the Flow, reducing the cooldown of other skills by 50%. Also gains 5-9 stacks of Flow based on the number of nearby heroes and minions and recovers Health based on Flow stacks. Damages and knocks back nearby enemies (without applying crowd control)."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Flow Formation",
+          "desc": "Deals damage and slows enemies within range, then deals damage over time. Using the skill repeatedly within a short time enhances it, dealing damage and launching or stunning enemies. When new magic circles overlap with the initial one, they increase its damage and refresh its duration. Can spend 4 stacks of Flow to use the skill without triggering cooldown."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Arcane Arts",
+          "desc": "Continuously channels a beam to deal damage over time. While the beam is linked with a hero, continuously throws Energy Bombs that deal area damage. Can spend 5 stacks of Flow to stop the skill from entering cooldown after this use."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": ""
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/flowborn-mage/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Flow of the World",
+            "description": "Can change Flow states at the Base to enhance stats. Spends 1 stack of Flow to perform an enhanced Basic Attack that deals area damage.",
+            "type": "passive"
+          },
+          {
+            "name": "Convergence",
+            "description": "Channels the Flow, reducing the cooldown of other skills by 50%. Also gains 5–9 stacks of Flow based on the number of nearby heroes and minions and recovers Health based on Flow stacks. Damages and knocks back nearby enemies (without applying crowd control).",
+            "type": "skill1"
+          },
+          {
+            "name": "Flow Formation",
+            "description": "Deals damage and slows enemies within range, then deals damage over time. Using the skill repeatedly within a short time enhances it, dealing damage and launching or stunning enemies. When new magic circles overlap with the initial one, they increase its damage and refresh its duration. Can spend 4 stacks of Flow to use the skill without triggering cooldown.",
+            "type": "skill2"
+          },
+          {
+            "name": "Arcane Arts",
+            "description": "Continuously channels a beam to deal damage over time. While the beam is linked with a hero, continuously throws Energy Bombs that deal area damage. Can spend 5 stacks of Flow to stop the skill from entering cooldown after this use.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team lacks reliable burst on isolated picks and needs single-target finishing damage",
+          "Your team needs a setup hero whose Flow Formation creates kill windows for the carry",
+          "The enemy back line is squishy and predictable, giving Arcane Arts an obvious target every fight."
+        ],
+        "avoid_when": [
+          "The enemy already invested in magic resist and shields that absorb committed burst windows",
+          "The enemy team is loaded with cleanse, dashes, and immunity that bypass crowd control",
+          "A stronger pick in the same role is open and the matchup does not specifically reward Flowborn (Mage)'s Burst."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Flowborn (Mage)'s mid-game tools come online.",
+          "Ultimate unlocked: Arcane Arts is the threshold where Flowborn (Mage) starts deleting low-resist targets in one rotation",
+          "Late game: full build online, Flowborn (Mage) reaches the spike public guides describe — extended fights favor them once items are completed."
+        ],
+        "common_mistakes": [
+          "Opening fights when the enemy still has full crowd control, getting deleted before damage lands.",
+          "Throwing Flow Formation on the front-line tank instead of saving it for backline carries.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Flowborn (Mage)'s commit reaches the target alive.",
+          "Greeding farm in mid lane while side lanes get camped — rotation timing matters more than CS lead in most matchups."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 123,
+            "hero_name": "Lu Bu",
+            "evidence": "Flow Formation's slow and lingering damage keep Lu Bu from closing in.",
+            "source_hash": "d62746a6145d9d938f258aa3641feab38bb9f564c1e322797e400e9dc8ed2646"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 503,
+            "hero_name": "Biron",
+            "evidence": "Arcane Arts' sustained beam wears down slow frontliners like Biron.",
+            "source_hash": "da4e17fde053bbfc785b61cfab1d580e8a2504c78e7e29e887faf929f163436f"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 150,
+            "hero_name": "Han Xin",
+            "evidence": "Han Xin's mobility reaches Flowborn's mage form while it channels Arcane Arts.",
+            "source_hash": "9dd1d8cd528abf68d4591b1e2ea4485f71ba24d0c678646a9e1ea8e3f2014893"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 116,
+            "hero_name": "Arke",
+            "evidence": "Arke's stealth lets her backstab the mage form for guaranteed crits.",
+            "source_hash": "42ed5608ceb6c5703df9e0299ad39e3945d0244fece5d338e9f712d7e374d13e"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 173,
+            "hero_name": "Fang",
+            "source_hash": "4728e75e62079d9d0f7e2ec340e8551b93bc7163c399dc32122091210245fd10"
+          },
+          {
+            "hero_id": 105,
+            "hero_name": "Lian Po",
+            "source_hash": "4728e75e62079d9d0f7e2ec340e8551b93bc7163c399dc32122091210245fd10"
+          },
+          {
+            "hero_id": 192,
+            "hero_name": "Huang Zhong",
+            "source_hash": "4728e75e62079d9d0f7e2ec340e8551b93bc7163c399dc32122091210245fd10"
+          },
+          {
+            "hero_id": 545,
+            "hero_name": "Alessio",
+            "source_hash": "4728e75e62079d9d0f7e2ec340e8551b93bc7163c399dc32122091210245fd10"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.84,
+            "tidak": 0.104,
+            "tidak_diketahui": 0.056
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

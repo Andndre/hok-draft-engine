@@ -1,0 +1,650 @@
+{
+  "schema_version": 2,
+  "hero_id": 126,
+  "source_hash": "f0b69612f170cc0e440fef103392babf49081d1eb4401b9b20e0f356fae56be3",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Unyielding Might",
+          "desc": "Periodic Passive Effect: When Health drops too low, taking damage will enhance Dun. While enhanced, hits from skills and Basic Attacks recover Health."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Wind Slash",
+          "desc": "Slashes in the target direction, dealing damage to enemies within range and slowing them. If the skill hits an enemy hero, it can be used again before going into cooldown, dealing damage to enemies in range and launching them."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Gale's Benediction",
+          "desc": "Deals damage to enemies in range and grants shieldEnhances the next 3 Basic Attacks, dealing extra true damageEvery enhanced Basic Attack reduces the cooldown of Unruly Blade"
+        },
+        {
+          "type": "Ultimate",
+          "name": "Unruly Blade",
+          "desc": "Tosses his chain blade in the target location, stunning and dealing damageto enemies hit.When max range is reached or an enemy is hit, the chain blade will pullXiahou Dun to its location, dealing damage to nearby enemies"
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Extremely durable tank",
+          "Reliable crowd control",
+          "Strong in teamfights"
+        ],
+        "cons": [
+          "Low damage output",
+          "Can be kited easily",
+          "Weak when behind early"
+        ],
+        "gameplay_tips": "## Early Game\nSince Dun is a tank, your early game should be focused on full clearing the jungle to quickly reach level 4. Once you have your Ultimate Unruly Blade, you can start looking for ganks with your incredible crowd control. When ganking, use your skills to stun and knockup the enemy, then follow up with your basic attacks.\n\n## Teamfights\nDun's primary goal is to start fights with his Ultimate to close the gap and stun enemy heroes. When possible, try to target the backline, so your team can follow up with their damage. Stay in the front line and protect your carrys when possible. If they get jumped on you can turn around and use your crowd control to peel for them to keep them alive.\n\n## Tips & Tricks\nTo guarantee the knockup from Skill 1 Wind Slash, use your Ultimate Unruly Blade to stun the enemy first\nDun's Ultimate doesn't need to hit an enemy for you to travel so that you can use it as an escape tool\nUse skill 2, Gale's Benediction, at the start of the fight to get a shield and increase your damage with your basic attacks"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Hindarin control Dun tinggal gerak. 2) Hero lincah bisa nge-kite dia. 3) Pas sekarat jangan adu sama Dun yang juga sekarat, waspadain pasif regen-nya."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/dun/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Unyielding Might",
+            "description": "Periodic Passive effect: When Health drops beyond a certain threshold, taking damage will enhance him. While enhanced, he recovers Health when hitting enemies with skills and Basic Attacks.",
+            "type": "passive"
+          },
+          {
+            "name": "Wind Slash",
+            "description": "Slashes in the target direction, dealing damage to enemies within range and slowing them. If the skill lands a hit, it can be used again before going into cooldown, dealing damage to enemies in range and launching them.",
+            "type": "skill1"
+          },
+          {
+            "name": "Gale's Benediction",
+            "description": "Deals damage to enemies in range and grants a shield. Enhances the next 3 Basic Attacks to deal extra true damage. Every enhanced Basic Attack hit reduces his Ultimate's cooldown.",
+            "type": "skill2"
+          },
+          {
+            "name": "Unruly Blade",
+            "description": "Throws his chain blade to the target location, stunning and dealing damage to enemies hit. When max range is reached or an enemy is hit, the chain blade will pull him to its location, dealing damage to nearby enemies.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has carries with limited self-peel that Dun can reach before the team can react",
+          "The enemy team has multiple high-mobility threats that need to be locked down before they reach your backline",
+          "The enemy draft includes Diaochan, Fang, and Erin, who appear in counter data as matchups Dun can pressure."
+        ],
+        "avoid_when": [
+          "The enemy stacks crowd control that interrupts the engage before damage goes out",
+          "Your team lacks the follow-up damage to convert your control windows into kills",
+          "The enemy already drafted Han Xin, Li Bai, and Wukong, who counter data identifies as direct answers to Dun."
+        ],
+        "power_spikes": [
+          "Early game: Dun is listed as an early-game threat in public guide data — convert the early window into objectives before scaling picks come online.",
+          "Mid game: with cooldown reduction online, gap-close skills come back fast enough to chain into multiple fights",
+          "Late game: Eye of the Phoenix, Frigid Charge, and Glacial Buckler on the bar means Dun can soak commits in 5v5 team fights for his carries."
+        ],
+        "common_mistakes": [
+          "Diving while enemy hard control is still up, which directly counters Dun's engage.",
+          "Throwing Gale's Benediction on the front-line tank instead of saving it for backline carries.",
+          "Ignoring Han Xin and Li Bai on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Forcing solo engages instead of waiting for ally commit — Dun's value compounds when the team follows up on engages."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 141,
+            "hero_name": "Diaochan",
+            "evidence": "Diaochan",
+            "source_hash": "f68a8fec11a1e149e29b5669f6c5d9d09023e759c5c5aea047ec78e60bf5a4d9"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 173,
+            "hero_name": "Fang",
+            "evidence": "Fang",
+            "source_hash": "3c88b8bc50391b5d9dead6c73dc78e04e3607845c4dd5ea8301e35345f15ed57"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 155,
+            "hero_name": "Erin",
+            "evidence": "Erin",
+            "source_hash": "3bbb79d23cdd6ad9bfe2dc7b8d33493d6e4c1d07ec04313969c5019b18bcc946"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 150,
+            "hero_name": "Han Xin",
+            "evidence": "Han Xin",
+            "source_hash": "e10476680ac1daa10d7605b4027a283c2075d82f25bad7049b445b26c4d91e44"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 131,
+            "hero_name": "Li Bai",
+            "evidence": "Li Bai",
+            "source_hash": "c080bf2b10223946c182ca0362d8e3be3e82a4da0d5bd147f494f18c7cfc27ab"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 167,
+            "hero_name": "Wukong",
+            "evidence": "Wukong",
+            "source_hash": "75de15ba6158b031512c9a96c6703ee95456ba2bf426a3f3f80a5fe555d1adea"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 505,
+            "hero_name": "Yaria",
+            "evidence": "Yaria",
+            "source_hash": "61c7a4f7d0144afcb8cda0f4a73e8c3f127eeeac3dd12749448be326d9c56b58"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 519,
+            "hero_name": "Ao'yin",
+            "evidence": "True damage from Flaming Palm ignores much of Dun's armor.",
+            "source_hash": "ec5734521a51efed82187119f941e7cecbf81353fe2b9833797e8451462d7bf3"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 635,
+            "hero_name": "Lorion",
+            "evidence": "Darkness Falls repositions Lorion away from slow divers like Dun while the orb keeps hitting.",
+            "source_hash": "701245cfdfdc5bd03aec071a3a9f3be23f973633ed0e10bbf88c532beb53f020"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 121,
+            "hero_name": "Mi Yue",
+            "evidence": "Ravenous Tether keeps draining and healing Mi Yue through a long fight with a slow frontliner like Dun.",
+            "source_hash": "804c2f221570a9c3b02d22ccee0b610ab592ea307edcd970f22fdc8e9c9d41bc"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 169,
+            "hero_name": "Hou Yi",
+            "source_hash": "d87ab956d95fcb99e08da6a8e850f522a557263316da9b71733d6e440f2682fe"
+          },
+          {
+            "hero_id": 501,
+            "hero_name": "Ming",
+            "source_hash": "d87ab956d95fcb99e08da6a8e850f522a557263316da9b71733d6e440f2682fe"
+          },
+          {
+            "hero_id": 190,
+            "hero_name": "Kongming",
+            "source_hash": "d87ab956d95fcb99e08da6a8e850f522a557263316da9b71733d6e440f2682fe"
+          },
+          {
+            "hero_id": 148,
+            "hero_name": "Ziya",
+            "source_hash": "d87ab956d95fcb99e08da6a8e850f522a557263316da9b71733d6e440f2682fe"
+          },
+          {
+            "hero_id": 504,
+            "hero_name": "Milady",
+            "source_hash": "d87ab956d95fcb99e08da6a8e850f522a557263316da9b71733d6e440f2682fe"
+          },
+          {
+            "hero_id": 110,
+            "hero_name": "Garuda",
+            "source_hash": "d87ab956d95fcb99e08da6a8e850f522a557263316da9b71733d6e440f2682fe"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.85,
+            "tidak": 0.0975,
+            "tidak_diketahui": 0.0525
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

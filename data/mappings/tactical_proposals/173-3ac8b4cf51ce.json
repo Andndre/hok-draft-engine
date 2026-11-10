@@ -1,0 +1,600 @@
+{
+  "schema_version": 2,
+  "hero_id": 173,
+  "source_hash": "3ac8b4cf51ceb115b5b7288499ba6e45cfa876b663d68776b835009fcef3c1be",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Going Undercover",
+          "desc": "Periodically reveals a random enemy hero within range.Attacks on monsters deal extra true damage."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Target Sighted",
+          "desc": "Marks the target enemy while gaining attack speed and range. Attacks on marked targets stack more marks, increasing mark damage. When marks expire or reach max stacks, they explode, dealing area damage."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Wheel Away",
+          "desc": "Dashes in the target direction, slowing and dealing damage to enemies in his path. He is untargetable while dashing. Scorches the ground along the way, slowing and dealing damage to enemies in range."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Bladestorm",
+          "desc": "Throws his blade to the target location,dealing damage over time and slowing enemies wihin range."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Itung damage ledakan tanda Fang. 2) Abis dash-nya kepake, cari momen buat nahan damage-nya."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/fang/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Going Undercover",
+            "description": "Periodically reveals enemy heroes within range. Deals extra physical damage against monsters and minions.",
+            "type": "passive"
+          },
+          {
+            "name": "Target Sighted",
+            "description": "Marks the target enemy while increasing his own Attack Speed and Attack Range. Attacking the marked target adds stacks, increasing the marks' damage. Upon reaching max stacks or when the marks expire, the marks explode, dealing area damage.",
+            "type": "skill1"
+          },
+          {
+            "name": "Wheel Away",
+            "description": "Dashes in the target direction, slowing and dealing damage to enemies in his path. He is untargetable while dashing. Scorches the ground in his path, slowing and dealing damage to enemies within range.",
+            "type": "skill2"
+          },
+          {
+            "name": "Bladestorm",
+            "description": "Throws his blade to the target location, dealing damage over time and slowing enemies within range.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The map shape favors gank routes, where mobility translates directly into kills",
+          "Your team can engage first, letting Fang second-wave into low-health targets",
+          "The enemy draft includes Mai Shiranui, Nakoruru, and Zilong, who appear in counter data as matchups Fang can pressure."
+        ],
+        "avoid_when": [
+          "Enemy peel is strong and Fang cannot reach the backline without dying first",
+          "Your team has no primary engage, leaving the cleanup pick with nothing to follow up on",
+          "The enemy already drafted Dun, who counter data identifies as direct answers to Fang."
+        ],
+        "power_spikes": [
+          "Early game: Fang is listed as an early-game threat in public guide data — convert the early window into objectives before scaling picks come online.",
+          "Ultimate unlocked: Bladestorm converts mobility into burst, the moment Fang starts threatening picks across the map",
+          "Late game: with full damage online, sustained DPS outpaces enemy healing in extended fights."
+        ],
+        "common_mistakes": [
+          "Engaging without follow-up — gap-close gets you to the target, but a solo dive without ally damage trades 1-for-1.",
+          "Engaging first instead of second — cleanup picks lose their value as primary engagers.",
+          "Ignoring Dun on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Auto-attacking through enemy dive instead of repositioning — losing the marksman in early fights collapses the late-game win condition."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 157,
+            "hero_name": "Mai Shiranui",
+            "evidence": "Mai Shiranui",
+            "source_hash": "6dc3f1b50690beda724e6919da06c79dd9c695745ba4219ca55f4261c6f07845"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 162,
+            "hero_name": "Nakoruru",
+            "evidence": "Nakoruru",
+            "source_hash": "f8294bb77ba7b0a2be96e0f01cbc0dd45c1efbf4cde6a34bb1979f0889179edf"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 107,
+            "hero_name": "Zilong",
+            "evidence": "Zilong",
+            "source_hash": "a8ef98a1ce1b58b1bfa4c2bdb51e5cbc177f986491a2315cd62d8be66f6015e0"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 126,
+            "hero_name": "Dun",
+            "evidence": "Dun",
+            "source_hash": "5e4425a3a2ea04bd702ebde1a3ac546f29e8fbe38a2572531000f937e2bcbd07"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 114,
+            "hero_name": "Liu Shan",
+            "source_hash": "c247826d2d15740fd4ecb380d47b750b26565e0628109f22312306ea8068f8f9"
+          },
+          {
+            "hero_id": 504,
+            "hero_name": "Milady",
+            "source_hash": "c247826d2d15740fd4ecb380d47b750b26565e0628109f22312306ea8068f8f9"
+          },
+          {
+            "hero_id": 582,
+            "hero_name": "Flowborn (Mage)",
+            "source_hash": "c247826d2d15740fd4ecb380d47b750b26565e0628109f22312306ea8068f8f9"
+          },
+          {
+            "hero_id": 105,
+            "hero_name": "Lian Po",
+            "source_hash": "c247826d2d15740fd4ecb380d47b750b26565e0628109f22312306ea8068f8f9"
+          },
+          {
+            "hero_id": 168,
+            "hero_name": "Lapulapu",
+            "source_hash": "c247826d2d15740fd4ecb380d47b750b26565e0628109f22312306ea8068f8f9"
+          },
+          {
+            "hero_id": 118,
+            "hero_name": "Sun Bin",
+            "source_hash": "c247826d2d15740fd4ecb380d47b750b26565e0628109f22312306ea8068f8f9"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

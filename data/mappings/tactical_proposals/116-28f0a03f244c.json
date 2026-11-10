@@ -1,0 +1,651 @@
+{
+  "schema_version": 2,
+  "hero_id": 116,
+  "source_hash": "28f0a03f244cebfbe9f6486a6568168c601d686ac12a6dc039b485ab8aec6650",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Kiss of Death",
+          "desc": "Attacks launched from the front of the target will not crit, but backstabs are guaranteed to crit."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Arclight",
+          "desc": "Arke attacks twice in a row, dealing physical damage."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Untouchable",
+          "desc": "Arke dashes forward and attacks, marking an enemy while dealing physical damage and gaining Attack Speed. Attacking marked targets slows them and reduces this skill's cooldown. She takes less damage from marked targets."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Phantom Dance",
+          "desc": "Enters stealth, gaining a Movement Speed boost and Health recovery. Enhances attack after exiting stealth, granting extra Movement Speed boost when dealing damage, and refreshes all skill cooldowns with defeats and assists."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Jangan munggungin Arke, terus atur posisi. Arke roaming-nya efisien banget, jadi pas laning jangan adu sama musuh kalau lu gak tahu Arke lagi di mana."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/arke/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Kiss of Death",
+            "description": "Attacks launched from the front of the target will not crit, but backstabs are guaranteed to crit.",
+            "type": "passive"
+          },
+          {
+            "name": "Arclight",
+            "description": "Attacks twice in a row, dealing physical damage.",
+            "type": "skill1"
+          },
+          {
+            "name": "Untouchable",
+            "description": "Dashes forward and attacks, marking an enemy while dealing physical damage and gaining Attack Speed. Attacking marked targets slows them and reduces this skill's cooldown. She takes less damage from marked targets.",
+            "type": "skill2"
+          },
+          {
+            "name": "Phantom Dance",
+            "description": "Enters stealth, gaining a Movement Speed boost and Health recovery. She enhances her attacks after exiting stealth, gains extra Movement Speed upon dealing damage, and refreshes all skill cooldowns with defeats and assists.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has carries with limited self-peel that Arke can reach before the team can react",
+          "The enemy team relies on long-cooldown engage skills that leave them vulnerable post-fight",
+          "The enemy draft includes Wang Zhaojun and Luban No.7, who appear in counter data as matchups Arke can pressure."
+        ],
+        "avoid_when": [
+          "The team needs sustained team-fight damage rather than a single-target diver",
+          "The enemy team disengages well, so cleanup windows never open",
+          "The enemy team is built around answers to Gap-Close, removing the windows Arke's kit needs to perform."
+        ],
+        "power_spikes": [
+          "Early game: jungle clear into level-4 ganks is the first window where Arke can translate routes into kills.",
+          "Mid game: with cooldown reduction online, gap-close skills come back fast enough to chain into multiple fights",
+          "Late game: full build online, Arke reaches the spike public guides describe — extended fights favor her once items are completed."
+        ],
+        "common_mistakes": [
+          "Diving while enemy hard control is still up, which directly counters Arke's engage.",
+          "Engaging first instead of second — cleanup picks lose their value as primary engagers.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Arke's commit reaches the target alive.",
+          "Pathing predictably and getting tracked by the enemy jungler — vary first clear and rotate based on ward placement rather than muscle memory."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 152,
+            "hero_name": "Wang Zhaojun",
+            "evidence": "Phantom Dance stealth lets Arke backstab immobile mages like Wang Zhaojun for guaranteed crits.",
+            "source_hash": "27cc8de5a0d6d63c37b1b62c79d95d0bdea7cb1953ea070187b1b90b2c9d057b"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 169,
+            "hero_name": "Hou Yi",
+            "evidence": "Stealth lets Arke reach Hou Yi from behind, where her crits are guaranteed.",
+            "source_hash": "85cb126c08b694bf6201c749033dc430f256135ff7b474b412effec219c71b09"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 545,
+            "hero_name": "Alessio",
+            "evidence": "Arke's stealth lets her backstab Alessio for guaranteed crits.",
+            "source_hash": "057801a97849cd878e47971745ac68c24e5877c836591ddf408e30dd6c59875f"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 159,
+            "hero_name": "Dolia",
+            "evidence": "Arke's stealth backstabs Dolia, who has little crowd control to peel.",
+            "source_hash": "293e2465af8aa9e56924a8d3c07abd7202b20dae35e0abf3da0a5e7f99f46ac2"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 582,
+            "hero_name": "Flowborn (Mage)",
+            "evidence": "Arke's stealth lets her backstab the mage form for guaranteed crits.",
+            "source_hash": "2448c597ff199193ffecd9b227b89b33009a20daf3fadb4d17f962a209224ff3"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 508,
+            "hero_name": "Garo",
+            "evidence": "Arke's stealth lets her backstab Garo for guaranteed crits.",
+            "source_hash": "2933dc250ac231ddcb5836557ae0b763959ee4c71f43942d01006604e3d25f7c"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 521,
+            "hero_name": "Haya",
+            "evidence": "Arke's stealth lets her backstab Haya for guaranteed crits.",
+            "source_hash": "6f649eea736da6ad79411de63253bfcac979466aa7154bb0f14ae77499746620"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 118,
+            "hero_name": "Sun Bin",
+            "evidence": "Arke's stealth lets her backstab Sun Bin, who has little crowd control to peel.",
+            "source_hash": "0cb75bd3a3270d2d3de90f61a1907d5187e38b2d503b9750957c8eb5a569407b"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 138,
+            "hero_name": "Wang Wei",
+            "evidence": "Arke's stealth gets close before Wang Wei can use Endless River.",
+            "source_hash": "1cc7ae32f1086bdc8c1e8430b54aa47b13c619b23504e4d71f7067300085100c"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 505,
+            "hero_name": "Yaria",
+            "evidence": "Arke's stealth lets her backstab Yaria before she attaches to a teammate.",
+            "source_hash": "49c0b60bf5d6bd3d4601e37f951801d650931f3986b5c8a3ea5fc3a4849736d5"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 189,
+            "hero_name": "Guiguzi",
+            "evidence": "Out of Sight tracks the nearest enemy hero, making it harder for Arke to ambush.",
+            "source_hash": "e93dcefbcdcc54f59cc992387e68ad76cc6673e804453c448417117669c863e8"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 187,
+            "hero_name": "Donghuang",
+            "evidence": "Forsaken Contract suppresses Arke as she exits stealth.",
+            "source_hash": "aa909e4577267c1258b2b87a32ab75fc49f945762462100246694b319a08a696"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 192,
+            "hero_name": "Huang Zhong",
+            "source_hash": "fddbcab7e2335cc1bb2dce55d22be633093689620a3e4a925e215d9a26679531"
+          },
+          {
+            "hero_id": 105,
+            "hero_name": "Lian Po",
+            "source_hash": "fddbcab7e2335cc1bb2dce55d22be633093689620a3e4a925e215d9a26679531"
+          },
+          {
+            "hero_id": 175,
+            "hero_name": "Kui",
+            "source_hash": "fddbcab7e2335cc1bb2dce55d22be633093689620a3e4a925e215d9a26679531"
+          },
+          {
+            "hero_id": 112,
+            "hero_name": "Luban No.7",
+            "source_hash": "fddbcab7e2335cc1bb2dce55d22be633093689620a3e4a925e215d9a26679531"
+          },
+          {
+            "hero_id": 563,
+            "hero_name": "Heino",
+            "source_hash": "fddbcab7e2335cc1bb2dce55d22be633093689620a3e4a925e215d9a26679531"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

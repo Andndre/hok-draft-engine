@@ -1,0 +1,635 @@
+{
+  "schema_version": 2,
+  "hero_id": 109,
+  "source_hash": "35ff884af29b416102cc2826949df5be543e20f944e39c8e004f0a2e4ea9eb44",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Captivate",
+          "desc": "Skill hits reduce the enemy's Magical Defense (up to 3 stacks)."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Soul Impact",
+          "desc": "Unleashes a shockwave in the target direction, dealing damage."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Strike a Pose",
+          "desc": "Casts a love spell at the target, dealing damage and stunning them."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Heartbreaker",
+          "desc": "Deals damage to random enemies within range 5 times."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Easy to pick up",
+          "Reliable crowd control",
+          "High burst damage"
+        ],
+        "cons": [
+          "Single-target crowd control",
+          "No Mobility without flash",
+          "Cooldown dependent"
+        ],
+        "gameplay_tips": "## Early Game\nDaji is weak early since she won't have her full combo. Try to clear minion waves, but if the enemy has priority, stay under the tower and last-hit minions. Avoid trading before reaching level 4 and instead try to roam with your jungle to set them up for success.\n\n## Teamfights\nSince Daji's crowd control is single target you'll need to be patient and pick the right target to stun. Do not start fights and stay behind your tank at all times. Play around bushes to catch enemies off guard, and after using your combo, make sure to back off and reposition until your skills become available again.\n\n## Tips & Tricks\nWhen hiding in a bush its best to start your combo with your Ultimate to reduce the enemy's magic resist before stunning.\n"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Assassin masuk abis Daji pakai control. 2) Hindarin skill poke-nya. 3) Di late hero tipis jangan deket pas skill Daji ready, gampang mati instan."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/daji/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Captivate",
+            "description": "Skill hits reduce the enemy's Magical Defense (up to 3 stacks).",
+            "type": "passive"
+          },
+          {
+            "name": "Soul Impact",
+            "description": "Unleashes a shockwave in the target direction, dealing damage.",
+            "type": "skill1"
+          },
+          {
+            "name": "Strike a Pose",
+            "description": "Casts a love spell at the target, dealing damage and stunning them.",
+            "type": "skill2"
+          },
+          {
+            "name": "Heartbreaker",
+            "description": "Deals damage to random enemies within range 5 times.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team needs a damage threat that can finish a fight when Heartbreaker comes back up",
+          "Your team has the structure to use her ability to farm safely and rotate to side lanes when the wave allows, since Daji delivers consistent damage output and timely roams.",
+          "The enemy draft includes Luna and Diaochan, who appear in counter data as matchups Daji can pressure."
+        ],
+        "avoid_when": [
+          "You need sustained damage rather than one-shot windows tied to Heartbreaker's cooldown",
+          "Your team needs a jungle pick more than Daji's specialty, leaving the role unfilled if you commit here.",
+          "The enemy already drafted Gao Changgong and Mulan, who counter data identifies as direct answers to Daji."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Daji's mid-game tools come online.",
+          "Ultimate unlocked: Heartbreaker is the threshold where Daji starts deleting low-resist targets in one rotation",
+          "Late game: full build online, Daji reaches the spike public guides describe — extended fights favor her once items are completed."
+        ],
+        "common_mistakes": [
+          "Opening fights when the enemy still has full crowd control, getting deleted before damage lands.",
+          "Ignoring Gao Changgong and Mulan on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Greeding farm in mid lane while side lanes get camped — rotation timing matters more than CS lead in most matchups."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 517,
+            "hero_name": "Augran",
+            "evidence": "Augran",
+            "source_hash": "78764460cc6a9d9ee979cb7012515c87e79c06cfbd6e7ee5bc2834c36f1973ef"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 531,
+            "hero_name": "Jing",
+            "evidence": "Jing",
+            "source_hash": "eae1806ce58b20af40b3503a86b5f9fe96fc7d7a25f15d78bda58d029e291870"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 195,
+            "hero_name": "Xuance",
+            "evidence": "Xuance",
+            "source_hash": "ddded9ec3675a1b458325ac9ee3ffc9426af3d5c92508330b647c503d591d603"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 139,
+            "hero_name": "Fuzi",
+            "evidence": "Daji's skill burst bypasses Intuition, which only reflects Basic Attacks.",
+            "source_hash": "5ff86f6f1484c499638b487ccfe12e7e60cc785a329df2aaa3a63c284e1c1383"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 140,
+            "hero_name": "Guan Yu",
+            "evidence": "Guan Yu",
+            "source_hash": "005af6f0c9973a11c2423cd96d55a6b16390bdd44d4816f0d60315bca44ddb70"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 193,
+            "hero_name": "Kaizer",
+            "evidence": "Kaizer",
+            "source_hash": "68f4526d33477d1260a85082be16bb74d2de5aa406a134be7aa5b7c400dad7b7"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 123,
+            "hero_name": "Lu Bu",
+            "evidence": "Lu Bu",
+            "source_hash": "4050774f46ec124df381052aba80cf675f87bfc42ff8db27ab43153c7bc99188"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 168,
+            "hero_name": "Lapulapu",
+            "evidence": "Raging Sea launches Daji before she can finish her combo.",
+            "source_hash": "01b99d402d2298aef45d19996965a1f32ba21b959b1c601540ee400b702e7ca3"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 169,
+            "hero_name": "Hou Yi",
+            "source_hash": "2c3e6a4d557eedad58d818b0ef8102ba517969ea59a517b05441978e1c996b75"
+          },
+          {
+            "hero_id": 501,
+            "hero_name": "Ming",
+            "source_hash": "2c3e6a4d557eedad58d818b0ef8102ba517969ea59a517b05441978e1c996b75"
+          },
+          {
+            "hero_id": 150,
+            "hero_name": "Han Xin",
+            "source_hash": "2c3e6a4d557eedad58d818b0ef8102ba517969ea59a517b05441978e1c996b75"
+          },
+          {
+            "hero_id": 105,
+            "hero_name": "Lian Po",
+            "source_hash": "2c3e6a4d557eedad58d818b0ef8102ba517969ea59a517b05441978e1c996b75"
+          },
+          {
+            "hero_id": 184,
+            "hero_name": "Cai Yan",
+            "source_hash": "2c3e6a4d557eedad58d818b0ef8102ba517969ea59a517b05441978e1c996b75"
+          },
+          {
+            "hero_id": 166,
+            "hero_name": "Arthur",
+            "source_hash": "2c3e6a4d557eedad58d818b0ef8102ba517969ea59a517b05441978e1c996b75"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.92,
+            "tidak": 0.052,
+            "tidak_diketahui": 0.028
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.84,
+            "tidak": 0.104,
+            "tidak_diketahui": 0.056
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

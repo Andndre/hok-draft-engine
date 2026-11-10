@@ -1,0 +1,8 @@
+{
+  "source_bundle_id": "38fd3a007b77b98f54c371f0a4e5c867e50ba9c18a618443752ff8a25359ced5",
+  "gpu": "NVIDIA L4",
+  "torch": "2.14.1+cu130",
+  "cuda": "13.0",
+  "precision": "bf16",
+  "batch_exit_code": 0
+}

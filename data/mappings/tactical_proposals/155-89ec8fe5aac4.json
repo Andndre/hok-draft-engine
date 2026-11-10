@@ -1,0 +1,608 @@
+{
+  "schema_version": 2,
+  "hero_id": 155,
+  "source_hash": "89ec8fe5aac48fd7f4d50fda224cb830bacdd26adceb5439fbeb3912fe6e4f08",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Elf Dance",
+          "desc": "Her Basic Attack grants Energy. At max Energy, she speeds up, gains a stack of Laurel, and enhances her next Basic Attack. The speed-up increases with her Magical Attack. Her Pierce and Lifesteal stats are linked, using whichever is higher."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Dance - Leaf Greeting",
+          "desc": "Shoots a leaf to deal damage and gain marks. The leaf then forms a circle, damaging and slowing enemies. Magical Attack reduces the skill's cooldown."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Twirl - Forest Whisper",
+          "desc": "Recovers full Energy and gains marks, immunity to slow, and Attack Speed."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Waltz - Laurel Bloom",
+          "desc": "This skill is unlocked when Erin gains enough Laurels. She consumes Laurels to deal damage and gain Movement Speed, while reducing the cooldown of Skill 2."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Strong consistent damage output",
+          "Excellent kiting potential",
+          "Magic damage Farm Lane"
+        ],
+        "cons": [
+          "Weak in the early game",
+          "Item dependent",
+          "Vulnerable to dive heroes"
+        ],
+        "gameplay_tips": "## Early Game\nErin is very weak in the early game. You want to prioritze farming and last-hitting minions and avoid unnecessary trades. Erin's passive can be used to poke enemies safely. You do not want to waste your 2nd Skill Twirl aggressively; instead, save it for escaping ganks. \n\n## Teamfights\nIn teamfights, focus on kiting; keep moving while attacking to keep stacking towards your ultimate. Position behind your frontline and save 2nd Skill Twirl for when assassins try to jump onto you. When you are far enough ahead, you can look to dash aggressively and use your Ultimate to burst high-value enemy heroes.\n\n## Tips & Tricks\nUse Skill 2 Twirl during your Ultimate to get closer to enemy heroes\nCancel your Ultimate if there are no enemies nearby to save Laurel stacks. Your Ultimate has a low cooldown and can be used again after a few seconds\nAt 2 stacks of energy, you can auto attack and then use Skill 2 Twirl to double dash. Very effective for escaping or trying to get to the enemy backline.\n\n"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Erin susah bertahan hidup, simpen control buat dia."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/erin/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Elf Dance",
+            "description": "Her Basic Attack grants Energy. At max Energy, she speeds up, gains a stack of Laurel, and enhances her next Basic Attack. The speed-up increases with her Magical Attack. Her Pierce and Lifesteal stats are linked, using whichever is higher.",
+            "type": "passive"
+          },
+          {
+            "name": "Dance - Leaf Greeting",
+            "description": "Shoots a leaf to deal damage and gain marks. The leaf then forms a circle, damaging and slowing enemies. Magical Attack reduces the skill's cooldown.",
+            "type": "skill1"
+          },
+          {
+            "name": "Twirl - Forest Whisper",
+            "description": "Recovers full Energy and gains marks, immunity to slow, and Attack Speed.",
+            "type": "skill2"
+          },
+          {
+            "name": "Waltz - Laurel Bloom",
+            "description": "This skill is unlocked when Erin gains enough Laurels. She consumes Laurels to deal damage and gain Movement Speed, while reducing the cooldown of Skill 2.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy lacks reliable healing reduction, leaving sustain unchecked",
+          "Your team needs a primary damage carry that scales with items and team-fight positioning",
+          "The enemy draft includes Ying, Han Xin, and Lam, who appear in counter data as matchups Erin can pressure."
+        ],
+        "avoid_when": [
+          "The game state demands burst rather than slow attrition",
+          "The enemy stacks dive and assassins, making it impossible for the marksman to free-cast in fights",
+          "The enemy already drafted Dun, who counter data identifies as direct answers to Erin."
+        ],
+        "power_spikes": [
+          "Early game: farm safely behind the support, surviving lane phase to reach the marksman scaling window.",
+          "Lifesteal item online: trade patterns flip from neutral to favorable once sustain stacks with damage",
+          "Late game: with full damage online, sustained DPS outpaces enemy healing in extended fights."
+        ],
+        "common_mistakes": [
+          "Forcing all-ins against opponents already wearing anti-heal — your healing barely activates.",
+          "Auto-attacking instead of repositioning when the enemy assassin is missing — losing the marksman loses the fight.",
+          "Ignoring Dun on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Auto-attacking through enemy dive instead of repositioning — losing the marksman in early fights collapses the late-game win condition."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 538,
+            "hero_name": "Ying",
+            "evidence": "Ying",
+            "source_hash": "5a18b308f94a9e323510f69bca12ef1e39a0360cfa15c03fe785eeb74782d730"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 150,
+            "hero_name": "Han Xin",
+            "evidence": "Han Xin",
+            "source_hash": "0d7dac945b7638a5b11712c146897a4ecdc0cf3ead173a42dc2ebb40b530629b"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 528,
+            "hero_name": "Lam",
+            "evidence": "Lam",
+            "source_hash": "c366b6a6533448171c6c6b5780b80950b1f9fec04bcf4a740cfbf13eac71296e"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 126,
+            "hero_name": "Dun",
+            "evidence": "Dun",
+            "source_hash": "33db2fa631e01db53a1d8cc6da574c857a770e0b17d0190c4840f19e4da38ed6"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 501,
+            "hero_name": "Ming",
+            "source_hash": "5e91ffc2c680d67402e6005ba5ff73cbdb4ee1fadaa5606083f1d5fd6b0f75e3"
+          },
+          {
+            "hero_id": 162,
+            "hero_name": "Nakoruru",
+            "source_hash": "5e91ffc2c680d67402e6005ba5ff73cbdb4ee1fadaa5606083f1d5fd6b0f75e3"
+          },
+          {
+            "hero_id": 646,
+            "hero_name": "Butterfly",
+            "source_hash": "5e91ffc2c680d67402e6005ba5ff73cbdb4ee1fadaa5606083f1d5fd6b0f75e3"
+          },
+          {
+            "hero_id": 118,
+            "hero_name": "Sun Bin",
+            "source_hash": "5e91ffc2c680d67402e6005ba5ff73cbdb4ee1fadaa5606083f1d5fd6b0f75e3"
+          },
+          {
+            "hero_id": 114,
+            "hero_name": "Liu Shan",
+            "source_hash": "5e91ffc2c680d67402e6005ba5ff73cbdb4ee1fadaa5606083f1d5fd6b0f75e3"
+          },
+          {
+            "hero_id": 504,
+            "hero_name": "Milady",
+            "source_hash": "5e91ffc2c680d67402e6005ba5ff73cbdb4ee1fadaa5606083f1d5fd6b0f75e3"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.85,
+            "tidak": 0.0975,
+            "tidak_diketahui": 0.0525
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

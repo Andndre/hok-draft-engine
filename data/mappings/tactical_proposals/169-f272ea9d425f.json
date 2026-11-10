@@ -1,0 +1,643 @@
+{
+  "schema_version": 2,
+  "hero_id": 169,
+  "source_hash": "f272ea9d425f6fdea56f3c4be90cb7221f41f2526ad6b1c8e39a8ebdf13d73da",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Chastising Shot",
+          "desc": "Basic Attack hits grant Attack Speed and 1 stack of enhancement.At 3 stacks, enhanced Basic Attacks shoot 3 arrows, dealing more totaldamage than a regular Basic Attack."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Arrow Volley",
+          "desc": "Enhances Basic Attacks for 5s to deal heavy damage. At the same time, HouYi shoots arrows to hit two other enemies in front of him, dealing 50%damage."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Afterglow",
+          "desc": "Inflicts damage and slow on enemies in the target area while also gaining vision of the area."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Burning Sun Arrow",
+          "desc": "Fires an arrow in the target direction. Deals AoE damage upon hitting a hero inflicting stun and slow."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Global Ultimate that can catch enemies",
+          "Excellent late game scaling",
+          "Easy to play"
+        ],
+        "cons": [
+          "No Mobility",
+          "Weak Early Game",
+          "Relies on team to peel for him"
+        ],
+        "gameplay_tips": "## Early Game\nFocus on farming and last-hitting minions to maximize the amount of gold you get during the early game. Once you reach Level 4, you can look to use Burning Sun Arrow to stun enemies.\n\n## Teamfights\nPositioning is key. Stay behind your team in fights; stay at maximum attack range so you don't get jumped on by assassins. Always keep an eye on the map for targets to hit with Burning Sun Arrow. Your Ultimate is a gamechanging and stunning a key target can win you the game.\n\n## Tips & Tricks\nSave your Skill 1 Arrow Volley until you have reached maximum stacks of your passive for maximum damage output\nBurning Sun Arrow is a global Ultimate, meaning it can go across the whole map, giving you opportunities to help other lanes\n"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Hou Yi tipis banget dan susah nyelametin diri. Pas nyerang perhatiin posisi. Kalau bahaya jangan basic attack, serang dari jauh pakai skill 2."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/hou-yi/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Chastising Shot",
+            "description": "Each Basic Attack hit increases Attack Speed. When the effect is fully stacked, he shoots several shots with each Basic Attack.",
+            "type": "passive"
+          },
+          {
+            "name": "Arrow Volley",
+            "description": "Increases Basic Attack damage and shoots extra arrows to hit multiple enemies.",
+            "type": "skill1"
+          },
+          {
+            "name": "Afterglow",
+            "description": "Inflicts area damage and slow.",
+            "type": "skill2"
+          },
+          {
+            "name": "Burning Sun Arrow",
+            "description": "Shoots a long-range explosive arrow that stuns the target on hit, dealing area damage and inflicting slow.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team needs a setup hero whose Afterglow creates kill windows for the carry",
+          "The enemy team has front-line targets that Hou Yi can chip down with sustained ranged damage",
+          "The enemy draft includes Cirrus, Mulan, and Xuance, who appear in counter data as matchups Hou Yi can pressure."
+        ],
+        "avoid_when": [
+          "The enemy team is loaded with cleanse, dashes, and immunity that bypass crowd control",
+          "The game is decided early before the marksman can hit core item spikes",
+          "The enemy already drafted Agudo, who counter data identifies as direct answers to Hou Yi."
+        ],
+        "power_spikes": [
+          "Early game: farm safely behind the support, surviving lane phase to reach the marksman scaling window.",
+          "Ultimate online: Burning Sun Arrow extends control duration, making team fights snowball off a single hit",
+          "Late game: full build online, Hou Yi reaches the spike public guides describe — extended fights favor him once items are completed."
+        ],
+        "common_mistakes": [
+          "Throwing Afterglow on the front-line tank instead of saving it for backline carries.",
+          "Auto-attacking instead of repositioning when the enemy assassin is missing — losing the marksman loses the fight.",
+          "Ignoring Agudo on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Auto-attacking through enemy dive instead of repositioning — losing the marksman in early fights collapses the late-game win condition."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 506,
+            "hero_name": "Cirrus",
+            "evidence": "Cirrus",
+            "source_hash": "399f0cc8ce2f68553ca02d11c9195e4b23e228535a63527ba99ea6cb4872192b"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 154,
+            "hero_name": "Mulan",
+            "evidence": "Mulan",
+            "source_hash": "34fcc8266e903e0295bdf6f5744757ba465109ef3876db6acc9bb1bcc0247245"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 195,
+            "hero_name": "Xuance",
+            "evidence": "Xuance",
+            "source_hash": "296c1bba02800592a165379eb77a27b3354802508ba52bf5a21f8edc35bd34f8"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 533,
+            "hero_name": "Agudo",
+            "evidence": "Furball leaps onto Hou Yi and holds him in place, and he has no dash to escape.",
+            "source_hash": "397680783e5aeba821a6f12ce7bffe270c830b854ba99ac7c08f0e319de11aca"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 116,
+            "hero_name": "Arke",
+            "evidence": "Stealth lets Arke reach Hou Yi from behind, where her crits are guaranteed.",
+            "source_hash": "77e30c012a88a1009e9af789f8162d2abc7678a0550d93b277d8ebeda51ed0f2"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 581,
+            "hero_name": "Flowborn (Tank)",
+            "evidence": "All In leaps onto Hou Yi and launches him.",
+            "source_hash": "14a2e52dd5cd854b0451c5b9db82fce4c22e4582e13e4719c473f459f30db0fe"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 558,
+            "hero_name": "Umbrosa",
+            "evidence": "Feathered Tempest dashes in and knocks back Hou Yi.",
+            "source_hash": "df2f65b8be03a58c6ab3090fae749a853703071a9b3164f6cfb9fdd0c841d226"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 135,
+            "hero_name": "Xiang Yu",
+            "evidence": "Righteous Fervor pushes Hou Yi out of position and Hegemon's Slash stuns him.",
+            "source_hash": "6762a01e5b3e54ac4a473b7376f3f96da6a9d7076eef0d62951530be2a63a684"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 556,
+            "hero_name": "Ata",
+            "evidence": "Ghost Ship walls trap Hou Yi, who has no dash to escape.",
+            "source_hash": "99d5ae4e7fe9b0ac2ca8d130df9ca20eed7f6a8c3e24138591abf31e548db881"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 149,
+            "hero_name": "Liu Bang",
+            "source_hash": "3c9288c02f4a2ec54e5f3b6602568177a6194f4eaee632f6e39bbb8e76960ba9"
+          },
+          {
+            "hero_id": 501,
+            "hero_name": "Ming",
+            "source_hash": "3c9288c02f4a2ec54e5f3b6602568177a6194f4eaee632f6e39bbb8e76960ba9"
+          },
+          {
+            "hero_id": 183,
+            "hero_name": "Athena",
+            "source_hash": "3c9288c02f4a2ec54e5f3b6602568177a6194f4eaee632f6e39bbb8e76960ba9"
+          },
+          {
+            "hero_id": 126,
+            "hero_name": "Dun",
+            "source_hash": "3c9288c02f4a2ec54e5f3b6602568177a6194f4eaee632f6e39bbb8e76960ba9"
+          },
+          {
+            "hero_id": 109,
+            "hero_name": "Daji",
+            "source_hash": "3c9288c02f4a2ec54e5f3b6602568177a6194f4eaee632f6e39bbb8e76960ba9"
+          },
+          {
+            "hero_id": 190,
+            "hero_name": "Kongming",
+            "source_hash": "3c9288c02f4a2ec54e5f3b6602568177a6194f4eaee632f6e39bbb8e76960ba9"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.92,
+            "tidak": 0.052,
+            "tidak_diketahui": 0.028
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.84,
+            "tidak": 0.104,
+            "tidak_diketahui": 0.056
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

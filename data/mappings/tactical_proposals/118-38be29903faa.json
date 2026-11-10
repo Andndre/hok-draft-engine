@@ -1,0 +1,620 @@
+{
+  "schema_version": 2,
+  "hero_id": 118,
+  "source_hash": "38be29903faa5331a53c353557cf0769b31424c05a1717532f0a588cdad056d9",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Hourglass of Time",
+          "desc": "Gains a Movement Speed bonus after using skills."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Time Bomb",
+          "desc": "Fires a bomb in the target direction, which deals damage and attaches itself to the hit enemy. After a brief delay, inflicts AoE damage and slow."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Time Flux",
+          "desc": "Timebender and nearby teammates within range gain increased Movement Speed. When the effect ends, restores Health equal to 25% of the damage taken while the effect was active. Passive: Gains Cooldown Reduction."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Time Lapse",
+          "desc": "Throws a bomb in the target direction, inflicting AoE damage, slow, and silence upon coming in contact with an enemy or reaching its max range. After a brief delay, the bomb deals AoE damage again."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Assassin masuk abis Sun Bin pakai control. 2) Control-nya bisa dihindarin tinggal gerak. 3) Nyebar pas teamfight biar silence dan slow ult-nya gak kena banyak orang."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/sun-bin/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Hourglass of Time",
+            "description": "Gains a Movement Speed bonus after using skills.",
+            "type": "passive"
+          },
+          {
+            "name": "Time Bomb",
+            "description": "Fires a bomb in the target direction, which deals damage and attaches itself to the hit enemy. After a brief delay, inflicts area damage and slow.",
+            "type": "skill1"
+          },
+          {
+            "name": "Time Flux",
+            "description": "Increases his and nearby teammates' Movement Speed. When the effect ends, he restores Health equal to 25% of the damage taken during the effect's duration. Passive: Gains Cooldown Reduction.",
+            "type": "skill2"
+          },
+          {
+            "name": "Time Lapse",
+            "description": "Throws a bomb in the target direction, inflicting area damage, slow, and silence upon coming in contact with an enemy or reaching its max range. After a brief delay, the bomb deals area damage again.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has multiple high-mobility threats that need to be locked down before they reach your backline",
+          "Your team has the structure to use his ability to protect the marksman, set vision, and engage on cooldown windows, since Sun Bin delivers utility, vision, and timely peel for the carries.",
+          "The enemy draft includes Kaizer and Musashi, who appear in counter data as matchups Sun Bin can pressure."
+        ],
+        "avoid_when": [
+          "Your team lacks the follow-up damage to convert your control windows into kills",
+          "Your team needs a damage pick more than Sun Bin's specialty, leaving the role unfilled if you commit here.",
+          "A stronger pick in the same role is open and the matchup does not specifically reward Sun Bin's Crowd Control."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Sun Bin's mid-game tools come online.",
+          "Ultimate online: Time Lapse extends control duration, making team fights snowball off a single hit",
+          "Late game: full build online, Sun Bin reaches the spike public guides describe — extended fights favor him once items are completed."
+        ],
+        "common_mistakes": [
+          "Throwing Time Flux on the front-line tank instead of saving it for backline carries.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Sun Bin's commit reaches the target alive.",
+          "Forgetting vision while looking for picks — losing the marksman because the support roamed without setting wards is a recurring mistake."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 193,
+            "hero_name": "Kaizer",
+            "evidence": "Kaizer",
+            "source_hash": "e081abb30a166a33da946a35cadb198bc4ba1d9bc63ac00dfeff69dcf1aed9c6"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 130,
+            "hero_name": "Musashi",
+            "evidence": "Musashi",
+            "source_hash": "f2e7334fb278389d2f3b97dd1b10e938ef0f22721fa23ca3012b953b4ba57c95"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 640,
+            "hero_name": "Annette",
+            "evidence": "Time Lapse silences Annette before she can raise Hurricane Wall.",
+            "source_hash": "6d63b422d8d798b7e731e75a3d429dc04655ed81c1895528dd98a6cbce8dc053"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 149,
+            "hero_name": "Liu Bang",
+            "evidence": "Time Lapse can silence Liu Bang before Battlefield Command teleports him.",
+            "source_hash": "8864e37c41ba4f50588f99822d3119f82968a6c423241089e5eefcd470b977f6"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 171,
+            "hero_name": "Zhang Fei",
+            "evidence": "Time Lapse silences Zhang Fei so he cannot cast Unbridled Outburst.",
+            "source_hash": "27e12c5cd2a12093264e51e5f4f8608b527c270d15850f95dc10cbd61c813779"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 116,
+            "hero_name": "Arke",
+            "evidence": "Arke's stealth lets her backstab Sun Bin, who has little crowd control to peel.",
+            "source_hash": "adefaecd142f8649aa98aa59f10d2d296d1385108830edeb084ef84010706826"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 168,
+            "hero_name": "Lapulapu",
+            "evidence": "Island's Blessing dashes onto Sun Bin and launches him.",
+            "source_hash": "5add7c51f0099f5e7c27215c1ce332a7532d9a7cb96754007b077273e0b6cdb6"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 120,
+            "hero_name": "Bai Qi",
+            "source_hash": "0806fe9a0c3c84a61767ef62e51ffd24f0b44cf324174ba09be82f9b8e68fe1b"
+          },
+          {
+            "hero_id": 119,
+            "hero_name": "Dr Bian",
+            "source_hash": "0806fe9a0c3c84a61767ef62e51ffd24f0b44cf324174ba09be82f9b8e68fe1b"
+          },
+          {
+            "hero_id": 133,
+            "hero_name": "Di Renjie",
+            "source_hash": "0806fe9a0c3c84a61767ef62e51ffd24f0b44cf324174ba09be82f9b8e68fe1b"
+          },
+          {
+            "hero_id": 556,
+            "hero_name": "Ata",
+            "source_hash": "0806fe9a0c3c84a61767ef62e51ffd24f0b44cf324174ba09be82f9b8e68fe1b"
+          },
+          {
+            "hero_id": 514,
+            "hero_name": "Allain",
+            "source_hash": "0806fe9a0c3c84a61767ef62e51ffd24f0b44cf324174ba09be82f9b8e68fe1b"
+          },
+          {
+            "hero_id": 524,
+            "hero_name": "Meng Ya",
+            "source_hash": "0806fe9a0c3c84a61767ef62e51ffd24f0b44cf324174ba09be82f9b8e68fe1b"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.91,
+            "tidak": 0.0585,
+            "tidak_diketahui": 0.0315
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.91,
+            "tidak": 0.0585,
+            "tidak_diketahui": 0.0315
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.07,
+            "tidak": 0.8,
+            "tidak_diketahui": 0.13
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

@@ -1,0 +1,656 @@
+{
+  "schema_version": 2,
+  "hero_id": 152,
+  "source_hash": "f2191da0dcdceeeddd8965733338a4c35bfec4e168826dd3fbf9517f3fde45b3",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Frozen Heart",
+          "desc": "Upon leaving combat, gains a shield that chills the attacker when taking damage. When the shield disappears, deals damage to nearby enemies. Every third Basic Attack is enhanced, inflicting extra damage and chill effects."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Shattered Ice",
+          "desc": "Damages and slows enemies in the target area while granting vision of Them."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Frigid Prison",
+          "desc": "After a brief delay, freezes enemies in the target area and slows them. Attacks on frozen targets deal extra damage."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Winter is Here",
+          "desc": "Continuously inflicts damage and slow on enemies in the target area."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Excellent crowd control",
+          "Strong AOE damage",
+          "Great wave clear to stop pushes"
+        ],
+        "cons": [
+          "Low Mobility",
+          "Skillshot reliant",
+          "Needs frontline CC to start fights"
+        ],
+        "gameplay_tips": "## Early Game\nWang Zhaojun has a pretty solid early game. Her wave clear isn't the best early on, but when you rotate, your crowd control can be clutch in skirmishes. Don't waste Frigid Prison Skill 2 for poke. Instead, keep it for setting up kills and punishing enemies who step too far forward.\n\n## Teamfight\nIn teamfights, be patient with Frigid Prison Skill 2 and only use it when you can guarantee it hits an enemy. Usually it's good to wait for your team to use their crowd control, then follow up afterwards. Position yourself in the back line and use your Ultimate Winter is Here to protect yourself and zone enemies.\n\n## Tips & Tricks\nYou can auto-attack whilst standing still to get your enhanced basic attack when you get to lane or at the start of a fight\nUse Skill 1 Shattered Ice to slow enemies, making Skill 2 Frigid Prison easier to hit\nYou can use Skill 1 and Skill 2 to check bushes before enterting them\n"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Gerakan lincah buat ngindarin poke dan control Wang Zhaojun. 2) Pas teamfight pakai assassin buat bunuh dia. 3) Simpen control buat motong ult-nya."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/wang-zhaojun/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Frozen Heart",
+            "description": "Upon leaving combat, gains a shield that chills the attacker when taking damage. When the shield disappears, deals damage to nearby enemies. Every third Basic Attack is enhanced, inflicting extra damage and chill effects.",
+            "type": "passive"
+          },
+          {
+            "name": "Shattered Ice",
+            "description": "Damages and slows enemies in the target area while gaining vision of them.",
+            "type": "skill1"
+          },
+          {
+            "name": "Frigid Prison",
+            "description": "After a short delay, freezes enemies in the target area and slows them. Attacking frozen targets will deal extra damage.",
+            "type": "skill2"
+          },
+          {
+            "name": "Winter Is Here",
+            "description": "Summons a snowstorm in the target location, constantly dealing damage and slowing enemies.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team needs a setup hero whose Frigid Prison creates kill windows for the carry",
+          "Your team has the structure to use her ability to farm safely and rotate to side lanes when the wave allows, since Wang Zhaojun delivers consistent damage output and timely roams.",
+          "The enemy team relies on grouped fights or channeled abilities, exactly what Frigid Prison interrupts best."
+        ],
+        "avoid_when": [
+          "The enemy team is loaded with cleanse, dashes, and immunity that bypass crowd control",
+          "Your team needs a jungle pick more than Wang Zhaojun's specialty, leaving the role unfilled if you commit here.",
+          "The enemy team is built around answers to Crowd Control, removing the windows Wang Zhaojun's kit needs to perform."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Wang Zhaojun's mid-game tools come online.",
+          "Ultimate online: Winter is Here extends control duration, making team fights snowball off a single hit",
+          "Late game: cooldowns become short enough that Frigid Prison influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Throwing Frigid Prison on the front-line tank instead of saving it for backline carries.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Wang Zhaojun's commit reaches the target alive.",
+          "Greeding farm in mid lane while side lanes get camped — rotation timing matters more than CS lead in most matchups."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 123,
+            "hero_name": "Lu Bu",
+            "evidence": "Frigid Prison freezes Lu Bu as he charges in.",
+            "source_hash": "5ada5a89b1b958f1d071a2bf1be75af86cfb7e18c8a7dc7c7fafc48db1c45232"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 154,
+            "hero_name": "Mulan",
+            "evidence": "Frigid Prison and Winter Is Here punish Mulan's short-range dashes.",
+            "source_hash": "8be26811158a3e86911e35556e545a294d63de6393d52f0a3d33be61b46b7021"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 139,
+            "hero_name": "Fuzi",
+            "evidence": "Frigid Prison freezes Fuzi before he can land Sage's Might.",
+            "source_hash": "b5224de96a39625ddfe19725c484b14fbcb059e36de52847221cf9fefb7cbc33"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 168,
+            "hero_name": "Lapulapu",
+            "evidence": "Frigid Prison freezes Lapulapu as he dashes in.",
+            "source_hash": "6c9500a9712f1ec690d115bfd5be2f5b6bbe072146a3e9f20fc5603e5913e9b6"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 180,
+            "hero_name": "Nezha",
+            "evidence": "Frigid Prison freezes Nezha after Red Armillary Sash flips him in.",
+            "source_hash": "78fdbcc7de09f720eb6e6b76dc04d4c4f281fc79fe93b25a2bc60e5362199459"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 558,
+            "hero_name": "Umbrosa",
+            "evidence": "Frigid Prison freezes Umbrosa during Feverish Dance.",
+            "source_hash": "7ebb48fed6897bdf9b37f45d8642197075ac56bbe6c3fbd65bc1d40bbacd5f31"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 542,
+            "hero_name": "Feyd",
+            "evidence": "Frigid Prison freezes Feyd when he drops off a wall to strike.",
+            "source_hash": "cc6a284cced1a6db7cf45858ecaa4bdfc167a8b601a8e02f7830f5aeda293992"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 192,
+            "hero_name": "Huang Zhong",
+            "evidence": "Winter Is Here and Frigid Prison punish Huang Zhong while he is immobile in Turret Mode.",
+            "source_hash": "ec8f57a0c54c912deec7928f0c00cdb129f99ea7b37ac611d9d134f279842b03"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 533,
+            "hero_name": "Agudo",
+            "evidence": "Furball's leap and crowd control catch Wang Zhaojun while she channels Winter Is Here.",
+            "source_hash": "86a7007627a2e46bc760bc506abc1b9287e5f7a33cca723d496bb848d40786f7"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 116,
+            "hero_name": "Arke",
+            "evidence": "Phantom Dance stealth lets Arke backstab immobile mages like Wang Zhaojun for guaranteed crits.",
+            "source_hash": "1ea3d2cfd265693cd413a309bb252046484b414bb7503b1cea738e8ca6a664fc"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 506,
+            "hero_name": "Cirrus",
+            "evidence": "Cirrus ignores terrain to reach Wang Zhaojun and carries her out of position.",
+            "source_hash": "0b468d06638449cc289080468b8aadae40904079149d6735c08367706bd3d513"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 132,
+            "hero_name": "Marco Polo",
+            "source_hash": "bc7f20c19e5048528d34b9e12a8c88e2b053588c965ecf6b84f12f0d32e6818c"
+          },
+          {
+            "hero_id": 505,
+            "hero_name": "Yaria",
+            "source_hash": "bc7f20c19e5048528d34b9e12a8c88e2b053588c965ecf6b84f12f0d32e6818c"
+          },
+          {
+            "hero_id": 199,
+            "hero_name": "Arli",
+            "source_hash": "bc7f20c19e5048528d34b9e12a8c88e2b053588c965ecf6b84f12f0d32e6818c"
+          },
+          {
+            "hero_id": 631,
+            "hero_name": "Florentino",
+            "source_hash": "bc7f20c19e5048528d34b9e12a8c88e2b053588c965ecf6b84f12f0d32e6818c"
+          },
+          {
+            "hero_id": 189,
+            "hero_name": "Guiguzi",
+            "source_hash": "bc7f20c19e5048528d34b9e12a8c88e2b053588c965ecf6b84f12f0d32e6818c"
+          },
+          {
+            "hero_id": 547,
+            "hero_name": "Luara",
+            "source_hash": "bc7f20c19e5048528d34b9e12a8c88e2b053588c965ecf6b84f12f0d32e6818c"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.07,
+            "tidak": 0.8,
+            "tidak_diketahui": 0.13
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.84,
+            "tidak": 0.104,
+            "tidak_diketahui": 0.056
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

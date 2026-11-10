@@ -1,0 +1,591 @@
+{
+  "schema_version": 2,
+  "hero_id": 140,
+  "source_hash": "f66e31e6452f61146415ff6553cf362c545a9af769bd1ecd88aefaf28819e4ca",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Rider of Triumph",
+          "desc": "'''Normal Stance:''' Moving constantly accumulates a Movement Speed bonus, and reaching a certain distance activates the Charge Stance. '''Charge Stance:''' Enhances the next skill and Basic Attack."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Heroic Charge",
+          "desc": "'''Normal Stance:''' Deals damage to enemies within range. '''Charge Stance:''' Charges forward, knocking back enemies in his path while dealing damage."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Soaring Green Dragon",
+          "desc": "'''Normal Stance:''' Removes crowd control effects and gains Movement Speed. '''Charge Stance:''' Removes crowd control effects and leaps forward, knocking back enemies within the landing area and dealing damage."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Razor Cavalry",
+          "desc": "'''Normal Stance:''' Enhances himself, reducing the movement distance required to enter Charge stance. '''Charge Stance:''' Summons heavy cavalry that dash forward, dealing damage and knocking back enemies in their path."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Pas Guan Yu lagi charge, hero tipis jaga jarak aman. 2) Pas teamfight jangan buang damage utama ke dia. 3) Pas skill 2 dan ult-nya ready, jangan pakai control utama ke dia."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/guan-yu/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Rider of Triumph",
+            "description": "Normal Stance: Moving constantly accumulates a Movement Speed bonus, and reaching a certain distance activates the Charge Stance. Charge Stance: Enhances the next skill and Basic Attack.",
+            "type": "passive"
+          },
+          {
+            "name": "Heroic Charge",
+            "description": "Normal Stance: Deals damage to enemies within range. Charge Stance: Charges forward, knocking back enemies in his path while dealing damage.",
+            "type": "skill1"
+          },
+          {
+            "name": "Soaring Green Dragon",
+            "description": "Normal Stance: Removes crowd control effects and gains Movement Speed. Charge Stance: Removes crowd control effects and leaps forward, knocking back enemies within the landing area and dealing damage.",
+            "type": "skill2"
+          },
+          {
+            "name": "Razor Cavalry",
+            "description": "Normal Stance: Enhances himself, reducing the movement distance required to enter Charge stance. Charge Stance: Summons heavy cavalry that dash forward, dealing damage and knocking back enemies in their path.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has carries with limited self-peel that Guan Yu can reach before the team can react",
+          "Your team has the structure to use his ability to soak pressure in lane and threaten side objectives, since Guan Yu delivers a durable front-line presence with steady wave control.",
+          "The enemy draft includes Daji, Mi Yue, and Yixing, who appear in counter data as matchups Guan Yu can pressure."
+        ],
+        "avoid_when": [
+          "The enemy stacks crowd control that interrupts the engage before damage goes out",
+          "Your team needs a mid pick more than Guan Yu's specialty, leaving the role unfilled if you commit here.",
+          "A stronger pick in the same role is open and the matchup does not specifically reward Guan Yu's Gap-Close."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Guan Yu's mid-game tools come online.",
+          "Ultimate unlocked: Razor Cavalry converts mobility into burst, the moment Guan Yu starts threatening picks across the map",
+          "Late game: cooldowns become short enough that Soaring Green Dragon influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Engaging without follow-up — gap-close gets you to the target, but a solo dive without ally damage trades 1-for-1.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Guan Yu's commit reaches the target alive.",
+          "Forcing solo engages instead of waiting for ally commit — Guan Yu's value compounds when the team follows up on engages."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 109,
+            "hero_name": "Daji",
+            "evidence": "Daji",
+            "source_hash": "52060a34dd8d21fc266695c2f334dc43fefa6d7cd7fe1a9b8747ae696b723e34"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 121,
+            "hero_name": "Mi Yue",
+            "evidence": "Mi Yue",
+            "source_hash": "aabab228896f39d8985dd8abbde0e80c55d56f49112f3ef005e6c2436582738d"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 197,
+            "hero_name": "Yixing",
+            "evidence": "Yixing",
+            "source_hash": "5807395b1d0adcf8a9eb4b1c2400cac6df79b48826e53f7f20fb562bbcc413a3"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 187,
+            "hero_name": "Donghuang",
+            "evidence": "Forsaken Contract can suppress Guan Yu before he cleanses with Soaring Green Dragon.",
+            "source_hash": "e70a95f42265f27567edd2dfa774dcee16fd9e9b1d835aedd73d74dc11e16f6b"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 139,
+            "hero_name": "Fuzi",
+            "evidence": "Sage's Might restricts Guan Yu's movement, stopping his charge.",
+            "source_hash": "1aa20680b7991c13af4f4b803cd5806e19997daedb96188a2e4a1643a0549bd2"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 533,
+            "hero_name": "Agudo",
+            "source_hash": "4963925ded755be08fff3a04211ddaa66a54369db434debbbb17048be1881314"
+          },
+          {
+            "hero_id": 124,
+            "hero_name": "Zhou Yu",
+            "source_hash": "4963925ded755be08fff3a04211ddaa66a54369db434debbbb17048be1881314"
+          },
+          {
+            "hero_id": 502,
+            "hero_name": "Pei",
+            "source_hash": "4963925ded755be08fff3a04211ddaa66a54369db434debbbb17048be1881314"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

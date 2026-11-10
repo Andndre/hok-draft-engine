@@ -1,0 +1,655 @@
+{
+  "schema_version": 2,
+  "hero_id": 175,
+  "source_hash": "50a37a307c63f574466482d3880447b90e87406480173612f9df3ea2899bf1fe",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Ethereal Outburst",
+          "desc": "Deals area damage upon taking heavy damage in a single hit or after dying."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Mortals!",
+          "desc": "Inflicts damage and slow on enemies in the target area."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Join Me",
+          "desc": "Throws his chain hook in the target direction, damaging the enemy and pulling them to him. Upon learning this skill, gains a passive effect that increases his Health on defeats and assists."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Into the Void",
+          "desc": "Deals damage multiple times and slows enemies within range. For heroes marked by Skill 2, the slow effect is upgraded to a stun."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Ngumpet di belakang minion atau tank biar gak kena hook Kui. 2) Kalau kena, langsung dash buat kabur. 3) Waspadain Kui yang HP-nya rendah, bisa aja dia nerjang jadi bom bunuh diri."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/kui/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Ethereal Outburst",
+            "description": "Deals area damage upon taking heavy damage in a single hit or after dying.",
+            "type": "passive"
+          },
+          {
+            "name": "Mortals!",
+            "description": "Damages and slows nearby enemies. Marks enemies in the inner circle while dealing extra damage and slowing enemies.",
+            "type": "skill1"
+          },
+          {
+            "name": "Join Me",
+            "description": "Throws a chain hook in the target direction that pulls the target back, dealing damage and marking them. Passive: Defeats and assists permanently boost Health.",
+            "type": "skill2"
+          },
+          {
+            "name": "Into the Void",
+            "description": "Deals damage multiple times and slows enemies within range. Against marked heroes, the slow effect is upgraded to a stun.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team needs a setup hero whose Join Me creates kill windows for the carry",
+          "Your team has the structure to use his ability to protect the marksman, set vision, and engage on cooldown windows, since Kui delivers utility, vision, and timely peel for the carries.",
+          "The enemy draft includes Kaizer and Xiang Yu, who appear in counter data as matchups Kui can pressure."
+        ],
+        "avoid_when": [
+          "The enemy team is loaded with cleanse, dashes, and immunity that bypass crowd control",
+          "Your team needs a damage pick more than Kui's specialty, leaving the role unfilled if you commit here.",
+          "The enemy team is built around answers to Crowd Control, removing the windows Kui's kit needs to perform."
+        ],
+        "power_spikes": [
+          "Early game: Kui is listed as an early-game threat in public guide data — convert the early window into objectives before scaling picks come online.",
+          "Ultimate online: Into the Void extends control duration, making team fights snowball off a single hit",
+          "Late game: cooldowns become short enough that Join Me influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Throwing Join Me on the front-line tank instead of saving it for backline carries.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Kui's commit reaches the target alive.",
+          "Forgetting vision while looking for picks — losing the marksman because the support roamed without setting wards is a recurring mistake."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 193,
+            "hero_name": "Kaizer",
+            "evidence": "Kaizer",
+            "source_hash": "36def9f80d1538040925fb56ff983782049c11d18ab94e09098ebc984d4abe30"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 135,
+            "hero_name": "Xiang Yu",
+            "evidence": "Xiang Yu",
+            "source_hash": "86dd3a6da545384fdba8bcae8eb1d739b54c4e523363e523afa9a2f8fbaf3690"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 519,
+            "hero_name": "Ao'yin",
+            "evidence": "Join Me pulls Aoyin out of position, and he has little escape beyond Riding the Wind.",
+            "source_hash": "6beb9a70a4606eaf0b3ad912585256dbc7c36c000a85c2d554b92a3c0fad229f"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 542,
+            "hero_name": "Feyd",
+            "evidence": "Join Me hooks Feyd off his wall and Into the Void stuns him.",
+            "source_hash": "b09766b91706fd2e26e01d8f9cd9d5a601f199ceeecfed6805840dd545020343"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 631,
+            "hero_name": "Florentino",
+            "evidence": "Kui's slow and stun stop Florentino's dash chain.",
+            "source_hash": "a37182ca447b1f1f0e5472a639c6a49f53bd8a6fb4accea7216e3f8e5b64e95b"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 115,
+            "hero_name": "Gao",
+            "evidence": "Join Me pulls Gao out of position and Into the Void stuns him.",
+            "source_hash": "0c85380fe000fa3b5069eda872aacce218b1e5e133fd2a132d9d840cec603a36"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 501,
+            "hero_name": "Ming",
+            "evidence": "Join Me pulls Ming away from his linked teammate.",
+            "source_hash": "566234a0d6018110c472d89d15493b0b17301b1e9f689dd00319c8fd8e24884d"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 180,
+            "hero_name": "Nezha",
+            "evidence": "Into the Void stuns Nezha as he flips onto a target.",
+            "source_hash": "0e5007b8f97eef8c6801e9fb3a1b1a3c6714e29cd57c29d49d35b772297e4e2c"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 138,
+            "hero_name": "Wang Wei",
+            "evidence": "Join Me hooks Wang Wei and Into the Void stuns him before his dodge stacks are ready.",
+            "source_hash": "4749f36661c735ddf6602561278951fa0b7d3836147a170de09c3db23164af03"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 537,
+            "hero_name": "Devara",
+            "evidence": "Millennium Echo grants crowd control immunity, so Kui's hook-and-stun combo fails.",
+            "source_hash": "a0345ee732b72888122e997c96bac08fc3e334599f6b6b8886244e3a01cea56a"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 128,
+            "hero_name": "Fatih",
+            "evidence": "Sacred Tree Blessing cleanses Kui's slow and stun.",
+            "source_hash": "6da0b34f0afbd4d035126bdba63d4b93e0d7bbcb0595761ce8677fbfd13e91ba"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 125,
+            "hero_name": "Yango",
+            "evidence": "Dispersal cleanses Kui's stun and repositions Yango.",
+            "source_hash": "1e5842c0c3ad4ed51449357f20d5875790210e7086cf21d86baca493603214c7"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 166,
+            "hero_name": "Arthur",
+            "source_hash": "d5b4d6e653ba1b95f3b2c5e241c062608cbdd9862e24fc7f149fb9d8a831b423"
+          },
+          {
+            "hero_id": 109,
+            "hero_name": "Daji",
+            "source_hash": "d5b4d6e653ba1b95f3b2c5e241c062608cbdd9862e24fc7f149fb9d8a831b423"
+          },
+          {
+            "hero_id": 142,
+            "hero_name": "Angela",
+            "source_hash": "d5b4d6e653ba1b95f3b2c5e241c062608cbdd9862e24fc7f149fb9d8a831b423"
+          },
+          {
+            "hero_id": 121,
+            "hero_name": "Mi Yue",
+            "source_hash": "d5b4d6e653ba1b95f3b2c5e241c062608cbdd9862e24fc7f149fb9d8a831b423"
+          },
+          {
+            "hero_id": 507,
+            "hero_name": "Li Xin",
+            "source_hash": "d5b4d6e653ba1b95f3b2c5e241c062608cbdd9862e24fc7f149fb9d8a831b423"
+          },
+          {
+            "hero_id": 167,
+            "hero_name": "Wukong",
+            "source_hash": "d5b4d6e653ba1b95f3b2c5e241c062608cbdd9862e24fc7f149fb9d8a831b423"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.07,
+            "tidak": 0.8,
+            "tidak_diketahui": 0.13
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

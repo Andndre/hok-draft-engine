@@ -1,0 +1,671 @@
+{
+  "schema_version": 2,
+  "hero_id": 123,
+  "source_hash": "eca8c8239db763796f23765ffa48480d089771bab471bfd47fee479db5797d8e",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Bloodthirsty Ancestry",
+          "desc": "Becomes enhanced when Skill 1 or Ultimate hits an enemy hero. While enhanced, Basic Attacks, Skill 1, and Ultimate deal true damage and restore Health."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Impaling Thrust",
+          "desc": "Performs a sweep attack to the target area. Restores a certain amount of Health with each enemy hero hit. Failing to hit a hero will cause the enhancement to disappear."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Souleater",
+          "desc": "Slows enemies in the target area and grants a shield for each enemy hit (upto 3 stacks). The shield value is converted to Health over time."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Tremble, Mortals",
+          "desc": "Leaps to the target location, launching and damaging enemies within range upon landing, then forming a killing field. While inside the killing field, he gains increased Physical and Magical Defense, while enemies suffer damage and slow."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Strong sustained damage",
+          "Hard engage with a reliable stun",
+          "Tanky once he hits his ult"
+        ],
+        "cons": [
+          "Kited easily before items",
+          "Weak early game",
+          "Ult on a long cooldown"
+        ],
+        "gameplay_tips": "## Early Game\nFarm safely and respect ranged matchups until level 4.\n\n## Team Fights\nWait for the enemy to commit, then Charge the highest-value target and pop your Ultimate.\n\n- Never open a fight without your Ultimate available\n- Use Sky-Piercer Sweep to peel enemies off your carry"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Lu Bu kasih true damage yang nembus armor dan shield, kuat lawan hero tebel dan ber-shield, tapi lambat bantu tim dan kurang ngancem backline. Hero clash yang bisa ngimbangin: Mi Yue, Fuzi (jago bertahan di lane), Ma Chao (gerakannya licin), Yao (susah disentuh), Li Xin, Yang Jian. Gak neken penuh, tapi laning 50:50."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/lu-bu/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Bloodthirsty Ancestry",
+            "description": "Enchants his weapon when it hits an enemy during Skill 1 or Ultimate. While enchanted, Basic Attacks and Skills deal additional true damage and recover his Health.",
+            "type": "passive"
+          },
+          {
+            "name": "Impaling Thrust",
+            "description": "Performs a sweep attack on the target area. Restores a certain amount of Health with each enemy hero hit. Failing to hit a hero will cause his enhancement to disappear.",
+            "type": "skill1"
+          },
+          {
+            "name": "Souleater",
+            "description": "Slows and damages enemies in the target area and gains a shield for each enemy hit (up to 3 stacks). The shield value is converted to Health over time.",
+            "type": "skill2"
+          },
+          {
+            "name": "Tremble, Mortals",
+            "description": "Leaps to the target location, launching and damaging enemies within range upon landing, then forming a ring of slaughter. While inside the ring, he gains increased Physical and Magical Defense, while enemies suffer damage and slow.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team can engage first, letting Lu Bu second-wave into low-health targets",
+          "The enemy team has high physical or magic burst that demands a dedicated tank to absorb",
+          "The enemy draft includes Heino, Daji, and Luna, who appear in counter data as matchups Lu Bu can pressure."
+        ],
+        "avoid_when": [
+          "Your team has no primary engage, leaving the cleanup pick with nothing to follow up on",
+          "Your team comp lacks damage and adding another non-damage pick collapses the win condition",
+          "The enemy already drafted Han Xin, Lam, and Pei, who counter data identifies as direct answers to Lu Bu."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Lu Bu's mid-game tools come online.",
+          "Ultimate online: Tremble, Mortals provides the cleanup finisher once the enemy commits cooldowns",
+          "Late game: full build online, Lu Bu reaches the spike public guides describe — extended fights favor him once items are completed."
+        ],
+        "common_mistakes": [
+          "Engaging first instead of second — cleanup picks lose their value as primary engagers.",
+          "Building damage items hoping to deal kills, when the team needs the durability that makes you a tank in the first place.",
+          "Ignoring Han Xin and Lam on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Forcing solo engages instead of waiting for ally commit — Lu Bu's value compounds when the team follows up on engages."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 563,
+            "hero_name": "Heino",
+            "evidence": "Heino",
+            "source_hash": "bea09842ef0d27833fa2fe7ff55c86e3d5da1f7d941958d676d722b85990b8f5"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 109,
+            "hero_name": "Daji",
+            "evidence": "Daji",
+            "source_hash": "fa2b14510e961282288a2f269f72989f495f5a5cb4d56dfe6dfa7206782bd53e"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 146,
+            "hero_name": "Luna",
+            "evidence": "Luna",
+            "source_hash": "abed2ac35cd5f6104537f5681216fb95d74207d5bfd3b415df17f72ca9108b85"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 150,
+            "hero_name": "Han Xin",
+            "evidence": "Han Xin",
+            "source_hash": "d47188629a3a950bf9660ed18f3cbc8c8d0b4b51d61c51d28de3b38e2e08e9fe"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 528,
+            "hero_name": "Lam",
+            "evidence": "Lam",
+            "source_hash": "d665d9ba0a00bbee0dc0a8ec1dc4fd3e9c9265e3aa045f13c8b17b0041b76af3"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 502,
+            "hero_name": "Pei",
+            "evidence": "Pei",
+            "source_hash": "60d52b4b24d8ca019606021942aa999067f1d8845c340b5eecc4f84f768df810"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 137,
+            "hero_name": "Sima Yi",
+            "evidence": "Sima Yi",
+            "source_hash": "7afa82af82f7329e4757aff6a3d5c005d1275fd6d1f4106969ceed8f0b77ecf5"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 177,
+            "hero_name": "Chano",
+            "evidence": "Leader Stance lets Chano kite Lu Bu while shooting on the move.",
+            "source_hash": "1cc62741d17bb8d5162c46d51028137313ccde051c7f1aa618c68662711eacd5"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 174,
+            "hero_name": "Consort Yu",
+            "evidence": "Protecting Winds makes Consort Yu invulnerable to Lu Bu's physical damage when he dives her.",
+            "source_hash": "c3885a1334beef7d4bda55b35e1673a45a67011b6797deafa31fde68693fdf75"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 582,
+            "hero_name": "Flowborn (Mage)",
+            "evidence": "Flow Formation's slow and lingering damage keep Lu Bu from closing in.",
+            "source_hash": "750593a298d10ed763090e274e9fb9fcb1357082a3b5c1c0a4b9600bd899a83b"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 635,
+            "hero_name": "Lorion",
+            "evidence": "Lorion's orb hits from range and Darkness Falls flies him away from Lu Bu.",
+            "source_hash": "4c88b2f460c87cf0a25cf9c644ea0ad1e255abbeca3bed6dcfe48d184f7d74a3"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 138,
+            "hero_name": "Wang Wei",
+            "evidence": "Endless River knocks Lu Bu back and Misty Mountain slows him as he approaches.",
+            "source_hash": "05507bdce34d87534a502db1d544ac87d1eb24ab08688ea6e2a6ba92e36f754f"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 152,
+            "hero_name": "Wang Zhaojun",
+            "evidence": "Frigid Prison freezes Lu Bu as he charges in.",
+            "source_hash": "1a4d19a92ab2f4cf6fa4a15cd22e451d00a4a28f98ed25f9043d39bfbc1a277c"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 159,
+            "hero_name": "Dolia",
+            "source_hash": "c83958d0b9d1f70cbbb296a477beef60e8bb19656c4a0894477c08b59429817d"
+          },
+          {
+            "hero_id": 115,
+            "hero_name": "Gao",
+            "source_hash": "c83958d0b9d1f70cbbb296a477beef60e8bb19656c4a0894477c08b59429817d"
+          },
+          {
+            "hero_id": 197,
+            "hero_name": "Yixing",
+            "source_hash": "c83958d0b9d1f70cbbb296a477beef60e8bb19656c4a0894477c08b59429817d"
+          },
+          {
+            "hero_id": 513,
+            "hero_name": "Shangguan",
+            "source_hash": "c83958d0b9d1f70cbbb296a477beef60e8bb19656c4a0894477c08b59429817d"
+          },
+          {
+            "hero_id": 110,
+            "hero_name": "Garuda",
+            "source_hash": "c83958d0b9d1f70cbbb296a477beef60e8bb19656c4a0894477c08b59429817d"
+          },
+          {
+            "hero_id": 132,
+            "hero_name": "Marco Polo",
+            "source_hash": "c83958d0b9d1f70cbbb296a477beef60e8bb19656c4a0894477c08b59429817d"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.85,
+            "tidak": 0.0975,
+            "tidak_diketahui": 0.0525
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

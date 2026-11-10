@@ -1,0 +1,601 @@
+{
+  "schema_version": 2,
+  "hero_id": 646,
+  "source_hash": "97ad25a5791a8e0cbc1f86510cd9c3f4dba23e35d51adaab5db17cf58d4c9084",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Assassination",
+          "desc": "Butterfly gains 2 stacks of mark from defeating heroes and 1 stack fromassisting or killing monsters/minions. At 3 stacks, the next skill used willnot enter cooldown."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Whirlwind",
+          "desc": "Butterfly deals damage to enemies around her and gains a shield. HerMovement Speed increases during this time."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Sword Propel",
+          "desc": "Butterfly deals damage in the target direction and inflicts slow."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Death Dealer",
+          "desc": "Butterfly jumps to the target and deals damagelf the target is defeated within a certain period of time, the cooldown of thisskill is refreshed."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": ""
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/butterfly/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Assassination",
+            "description": "Gains 2 marks from defeating heroes and 1 mark from assisting or killing monsters/minions. When she accumulates 3 marks, the next skill used will not enter cooldown.",
+            "type": "passive"
+          },
+          {
+            "name": "Whirlwind",
+            "description": "Deals damage to enemies around her and gains a shield. Her Movement Speed increases during this time.",
+            "type": "skill1"
+          },
+          {
+            "name": "Sword Propel",
+            "description": "Deals damage in the target direction and inflicts slow.",
+            "type": "skill2"
+          },
+          {
+            "name": "Death Dealer",
+            "description": "Jumps to the target, dealing damage. If the target is defeated within a certain time, the skill's cooldown will be reset.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team can engage first, letting Butterfly second-wave into low-health targets",
+          "Your team has the structure to use her ability to clear camps efficiently and convert pressure into ganks, since Butterfly delivers tempo from objectives and cross-map kill threats.",
+          "The enemy draft includes Wang Zhaojun and Luban No.7, who appear in counter data as matchups Butterfly can pressure."
+        ],
+        "avoid_when": [
+          "Your team has no primary engage, leaving the cleanup pick with nothing to follow up on",
+          "Your team needs a tank pick more than Butterfly's specialty, leaving the role unfilled if you commit here.",
+          "The enemy team is built around answers to Cleanup, removing the windows Butterfly's kit needs to perform."
+        ],
+        "power_spikes": [
+          "Early game: jungle clear into level-4 ganks is the first window where Butterfly can translate routes into kills.",
+          "Ultimate online: Death Dealer provides the cleanup finisher once the enemy commits cooldowns",
+          "Late game: full build online, Butterfly reaches the spike public guides describe — extended fights favor her once items are completed."
+        ],
+        "common_mistakes": [
+          "Engaging first instead of second — cleanup picks lose their value as primary engagers.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Butterfly's commit reaches the target alive.",
+          "Pathing predictably and getting tracked by the enemy jungler — vary first clear and rotate based on ward placement rather than muscle memory."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 563,
+            "hero_name": "Heino",
+            "evidence": "Heino",
+            "source_hash": "b3feb52f9691f78fea9bfe16d72f293a0e6d3ca8b8ad7a99938032d68df73801"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 182,
+            "hero_name": "Gan & Mo",
+            "evidence": "Gan & Mo",
+            "source_hash": "6eb2585c64836d6cf604a7ffd364c214393b3a5cb83ca4440e2e6cdbe489d048"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 141,
+            "hero_name": "Diaochan",
+            "evidence": "Diaochan",
+            "source_hash": "0d500cf50aedbcb18ac20df770108d9b326edf5ffb25bffc002b0950c44170a8"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 187,
+            "hero_name": "Donghuang",
+            "evidence": "Forsaken Contract suppresses Butterfly and stops her Death Dealer reset chain.",
+            "source_hash": "4c6d9b0aebff0a194ea050eee7885dbde9df05eff2eb7d0c87ce47d5e2b91c0b"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 171,
+            "hero_name": "Zhang Fei",
+            "evidence": "Zhang Fei's shields absorb Butterfly's burst, so Death Dealer fails to reset.",
+            "source_hash": "12847f91f03cad886d5b1eb889531ace267882da928faf56306d1ed5c0702f56"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 133,
+            "hero_name": "Di Renjie",
+            "source_hash": "eb6c101b7a7c43ef687105aee44d17d2e264a18a5a5c6893ad29cbbd509e5678"
+          },
+          {
+            "hero_id": 114,
+            "hero_name": "Liu Shan",
+            "source_hash": "eb6c101b7a7c43ef687105aee44d17d2e264a18a5a5c6893ad29cbbd509e5678"
+          },
+          {
+            "hero_id": 155,
+            "hero_name": "Erin",
+            "source_hash": "eb6c101b7a7c43ef687105aee44d17d2e264a18a5a5c6893ad29cbbd509e5678"
+          },
+          {
+            "hero_id": 118,
+            "hero_name": "Sun Bin",
+            "source_hash": "eb6c101b7a7c43ef687105aee44d17d2e264a18a5a5c6893ad29cbbd509e5678"
+          },
+          {
+            "hero_id": 505,
+            "hero_name": "Yaria",
+            "source_hash": "eb6c101b7a7c43ef687105aee44d17d2e264a18a5a5c6893ad29cbbd509e5678"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

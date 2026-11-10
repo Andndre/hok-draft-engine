@@ -1,0 +1,605 @@
+{
+  "schema_version": 2,
+  "hero_id": 564,
+  "source_hash": "57f310d6b8d0df6bf268dd9fae963f96fd7ecfed1799a97dd3a0e9f406c59e02",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Slack Off a Lil Bit",
+          "desc": "Recovery replaced by Slack Off, which restores Strength and Health. She will also slack off while at rest.She will not slack off when she attacks, is attacked, moves, or is in the Serious State."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Whatever (I)",
+          "desc": "Costs 1 Punch Strength. Runs forward, pulling in enemies in a cone-shaped area and damaging them.F ollow up with Skill 2 or another use of this skill for various effects."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Whatever (II)",
+          "desc": "Costs 1 Kick Strength. Jumps to dodge crowd controls and damage, and recover Health. Can follow up with Skill 2 or another use of this skill for different effects."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Get Serious",
+          "desc": "Damages nearby enemies. Recovers 1 Punch Strength and Kick Strength Bar, and increases max Strength for each by 1. Gains Movement Speed and is less affected by slow."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": ""
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/mayene/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Slack Off a Lil Bit",
+            "description": "Using skills consumes Strength, which is recovered over time. When not moving, Strength and Health recover faster.",
+            "type": "passive"
+          },
+          {
+            "name": "Whatever (I)",
+            "description": "Runs in the target direction and pulls enemies in front, dealing area damage and slowing them. 1-1 Combo: Deals area damage and launches enemies. 1-2 Combo: Deals damage and recovers Health.",
+            "type": "skill1"
+          },
+          {
+            "name": "Exploit Weakness",
+            "description": "Runs in the target direction and pulls enemies in front, dealing area damage and slowing them. 1-1 Combo: Deals area damage and launches enemies. 1-2 Combo: Deals damage and recovers Health.",
+            "type": "skill1"
+          },
+          {
+            "name": "Defend by Attacking",
+            "description": "Runs in the target direction and pulls enemies in front, dealing area damage and slowing them. 1-1 Combo: Deals area damage and launches enemies. 1-2 Combo: Deals damage and recovers Health.",
+            "type": "skill1"
+          },
+          {
+            "name": "Feint to Retreat",
+            "description": "Skill 2: Flips forward, gains immunity and damage reduction, and recovers Health. 2-1 Combo: Blinks behind the enemy, knocking them back and damaging them. 2-2 Combo: Deals damage before leaping back, gaining immunity and damage reduction, and recovering Health.",
+            "type": "skill2"
+          },
+          {
+            "name": "Whatever (II)",
+            "description": "Skill 2: Flips forward, gains immunity and damage reduction, and recovers Health. 2-1 Combo: Blinks behind the enemy, knocking them back and damaging them. 2-2 Combo: Deals damage before leaping back, gaining immunity and damage reduction, and recovering Health.",
+            "type": "skill2"
+          },
+          {
+            "name": "Flee Danger",
+            "description": "Skill 2: Flips forward, gains immunity and damage reduction, and recovers Health. 2-1 Combo: Blinks behind the enemy, knocking them back and damaging them. 2-2 Combo: Deals damage before leaping back, gaining immunity and damage reduction, and recovering Health.",
+            "type": "skill2"
+          },
+          {
+            "name": "Get Serious",
+            "description": "Damages nearby enemies and recovers Punch Strength and Kick Strength. For 10s, increases max Strength and gains Movement Speed.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has carries with limited self-peel that Mayene can reach before the team can react",
+          "The enemy team has multiple high-mobility threats that need to be locked down before they reach your backline",
+          "The enemy draft includes Nuwa, Mi Yue, and Liang, who appear in counter data as matchups Mayene can pressure."
+        ],
+        "avoid_when": [
+          "Enemy peel is strong and Mayene cannot reach the backline without dying first",
+          "Your team lacks the follow-up damage to convert your control windows into kills",
+          "The enemy already drafted Yaria, who counter data identifies as direct answers to Mayene."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Mayene's mid-game tools come online.",
+          "Mid game: with cooldown reduction online, gap-close skills come back fast enough to chain into multiple fights",
+          "Late game: cooldowns become short enough that Whatever (II) influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Diving while enemy hard control is still up, which directly counters Mayene's engage.",
+          "Throwing Whatever (II) on the front-line tank instead of saving it for backline carries.",
+          "Ignoring Yaria on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Forcing solo engages instead of waiting for ally commit — Mayene's value compounds when the team follows up on engages."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 179,
+            "hero_name": "Nuwa",
+            "evidence": "Nuwa",
+            "source_hash": "2e9f01437b653c2cefa786d61a022bf740e90a0bea1fcd8b390cf1a757156952"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 121,
+            "hero_name": "Mi Yue",
+            "evidence": "Mi Yue",
+            "source_hash": "7d905ab1b6ce4f144bed880c483a5f6407b26b554005f4324d62c90d2f2040f5"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 156,
+            "hero_name": "Liang",
+            "evidence": "Liang",
+            "source_hash": "858b215fd8226d5303e86f2b20b93fe7b03459dd8d9f677c406d49a65d7a5fa2"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 505,
+            "hero_name": "Yaria",
+            "evidence": "Yaria",
+            "source_hash": "f9e6f267d7f8add2b07e1302ddaeb27c66a9c0ba17d627a2de60f9ef12f12269"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 111,
+            "hero_name": "Lady Sun",
+            "source_hash": "b0ff969f864880d878e08db38dd6ff03b178b19d795fb8b655cd41c74ef2f23e"
+          },
+          {
+            "hero_id": 118,
+            "hero_name": "Sun Bin",
+            "source_hash": "b0ff969f864880d878e08db38dd6ff03b178b19d795fb8b655cd41c74ef2f23e"
+          },
+          {
+            "hero_id": 187,
+            "hero_name": "Donghuang",
+            "source_hash": "b0ff969f864880d878e08db38dd6ff03b178b19d795fb8b655cd41c74ef2f23e"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

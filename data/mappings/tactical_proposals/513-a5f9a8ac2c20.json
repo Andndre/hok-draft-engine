@@ -1,0 +1,609 @@
+{
+  "schema_version": 2,
+  "hero_id": 513,
+  "source_hash": "a5f9a8ac2c204d2bd11b40481cebd6b0aaa24fae3c2b557b2b12427cb837f880",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Piercing Brush",
+          "desc": "Enhances every 3rd Basic Attack, causing it to deal pierce damage. Deals damage when brush strokes of different skills come in contact. Touching Brush Power grants enhanced Basic Attack and Health restoration."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Ink Burst",
+          "desc": "Swipes the brush in the target direction, dealing damage to enemies in the path. Extra damage is dealt at max distance."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Seething Script",
+          "desc": "Summons a brush to write at the target location, dealing damage andslowing enemies in the path."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Finishing Stroke",
+          "desc": "Dashes forward, damaging enemies in the path. Can dash again upon coming into contact with an enemy or brushstroke. Dash 3-5 times to become untargetable and damage nearby enemies multiple times."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Perhatiin jalur skill 2 buat nebak arah serangannya. 2) Simpen control buat motong ult Shangguan, ancamannya langsung turun jauh."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/shangguan/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Piercing Brush",
+            "description": "Enhances every 3rd Basic Attack, causing it to deal pierce damage. Deals damage when ink from different skills come in contact. Gains an enhanced Basic Attack and recovers Health if she is also nearby when they do.",
+            "type": "passive"
+          },
+          {
+            "name": "Ink Burst",
+            "description": "Flings a powerful drop of ink, which deals damage to enemies in its path and explodes to deal extra damage at the end of its range.",
+            "type": "skill1"
+          },
+          {
+            "name": "Seething Script",
+            "description": "Summons a brush to write at the target location, dealing damage and slowing enemies in its path.",
+            "type": "skill2"
+          },
+          {
+            "name": "Finishing Stroke",
+            "description": "Dashes wildly with her brush, dealing damage to enemies in her path. Can dash again if she passes through an enemy or ink left by another skill. After dashing 3–5 times, becomes untargetable and continuously attacks nearby enemies.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team needs a damage threat that can finish a fight when Finishing Stroke comes back up",
+          "Your draft can capitalize on early picks and snowball lane leads",
+          "The enemy draft includes Diaochan, Mulan, and Sima Yi, who appear in counter data as matchups Shangguan can pressure."
+        ],
+        "avoid_when": [
+          "The enemy already invested in magic resist and shields that absorb committed burst windows",
+          "Enemy peel is strong and Shangguan cannot reach the backline without dying first",
+          "The enemy already drafted Augran, Biron, and Musashi, who counter data identifies as direct answers to Shangguan."
+        ],
+        "power_spikes": [
+          "Early game: Shangguan is listed as an early-game threat in public guide data — convert the early window into objectives before scaling picks come online.",
+          "Ultimate unlocked: Finishing Stroke is the threshold where Shangguan starts deleting low-resist targets in one rotation",
+          "Late game: cooldowns become short enough that Seething Script influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Opening fights when the enemy still has full crowd control, getting deleted before damage lands.",
+          "Diving while enemy hard control is still up, which directly counters Shangguan's engage.",
+          "Ignoring Augran and Biron on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Greeding farm in mid lane while side lanes get camped — rotation timing matters more than CS lead in most matchups."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 141,
+            "hero_name": "Diaochan",
+            "evidence": "Diaochan",
+            "source_hash": "fe9cd739e27b0df118675756c50ca23a7a6f0d620a2e8574ce0535ee1b248fdd"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 154,
+            "hero_name": "Mulan",
+            "evidence": "Mulan",
+            "source_hash": "33456ee079318c65fe7f8a0ce785ce1ae295eaf27b4dc167674e7a0e91d5da92"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 137,
+            "hero_name": "Sima Yi",
+            "evidence": "Sima Yi",
+            "source_hash": "4878c7f8ea29a056b626bfb8887e9872578097404fb83597dbd8acb3008f31c0"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 517,
+            "hero_name": "Augran",
+            "evidence": "Augran",
+            "source_hash": "e533bfd38d7380661083d8271615427865bb8c47abde14668d81ce9fb8f15f06"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 503,
+            "hero_name": "Biron",
+            "evidence": "Biron",
+            "source_hash": "90dcf37fd5fddf8f03639d3ea009040757f16cf75d0176f2f96ab6d3e73a0186"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 130,
+            "hero_name": "Musashi",
+            "evidence": "Musashi",
+            "source_hash": "b9ef79c1ee19183404f27b304209fcf0a008c4c6d18b45a69c9deb77fa7e6ea4"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 159,
+            "hero_name": "Dolia",
+            "source_hash": "5781d71bd3bfeef0076bfc62cad38e4d1e58fa575dd8c4f3f8ca7a7338f60bf7"
+          },
+          {
+            "hero_id": 123,
+            "hero_name": "Lu Bu",
+            "source_hash": "5781d71bd3bfeef0076bfc62cad38e4d1e58fa575dd8c4f3f8ca7a7338f60bf7"
+          },
+          {
+            "hero_id": 133,
+            "hero_name": "Di Renjie",
+            "source_hash": "5781d71bd3bfeef0076bfc62cad38e4d1e58fa575dd8c4f3f8ca7a7338f60bf7"
+          },
+          {
+            "hero_id": 170,
+            "hero_name": "Liu Bei",
+            "source_hash": "5781d71bd3bfeef0076bfc62cad38e4d1e58fa575dd8c4f3f8ca7a7338f60bf7"
+          },
+          {
+            "hero_id": 558,
+            "hero_name": "Umbrosa",
+            "source_hash": "5781d71bd3bfeef0076bfc62cad38e4d1e58fa575dd8c4f3f8ca7a7338f60bf7"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

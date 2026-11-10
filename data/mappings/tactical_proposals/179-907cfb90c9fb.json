@@ -1,0 +1,638 @@
+{
+  "schema_version": 2,
+  "hero_id": 179,
+  "source_hash": "907cfb90c9fbae53cb76e70dbfcd1d660034e1238a0f04f414b1855da8a15950",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Divine Consciousness",
+          "desc": "Gains enhanced vision and range when leveling up."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Divine Glow - Creation",
+          "desc": "Unleashes energy that deals damage, knocks back enemies, and creates a matrix. When the energy stops, it expands to deal extra damage."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Divine Glow - Coalescence",
+          "desc": "Creates a matrix and allows her to teleport. The matrix blocks enemy heroes' movement. Matrices can be fused twice."
+        },
+        {
+          "type": "Skill 3",
+          "name": "Divine Glow - Emergence",
+          "desc": "Teleports to the target area after a short delay. Generates a shield, gains Movement Speed, deals damage, and slows the enemy. Passive: Magical Attack can reduce cast time."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Divine Glow - Annihilation",
+          "desc": "Deals damage to targets in a straight line across the map."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Insane range",
+          "Global Ultimate",
+          "Excellent zone control"
+        ],
+        "cons": [
+          "Vulnerable to dives",
+          "Relies on skill shots",
+          "Low mobility"
+        ],
+        "gameplay_tips": "## Early Game\nNuwa has one of the worst minion clear speeds in early levels. You want to play under the tower and play reactive to where the enemy mid lane is rotating. Rotate the opposite way and try to impact other lanes. When you have access to Skill 3 Emergence, it becomes much easier to roam and helps you get back to mid lane quicker to secure minion gold and experience.\n\n## Teamfights\nIn teamfights, you want to take control of the fights with your boxes. They can be used for damage, rotations and blocking enemies' path. You have decent self-peel with your knockback, but it can be difficult to land, and with your global Ultimate you can always make an impact in a fight.\n\n## Tips & Tricks\nOne-Shot combo - Skill 2 > Skill 2 > Skill 1 > Ultimate\nSkill 2's box can be used to traverse over terrain\nSkill 3 can be used for vision and cancelled so you don't travel"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Push wave cepet biar Nuwa gak gampang ninggalin lane. 2) Skill Nuwa butuh prediksi, pakai dash gampang dihindarin."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/nuwa/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Divine Consciousness",
+            "description": "Gains enhanced vision and range when leveling up.",
+            "type": "passive"
+          },
+          {
+            "name": "Divine Glow - Creation",
+            "description": "Unleashes energy that deals damage, knocks back enemies, and creates a matrix. When the energy stops, it expands to deal extra damage.",
+            "type": "skill1"
+          },
+          {
+            "name": "Divine Glow - Coalescence",
+            "description": "Creates a matrix that she can jump over but blocks enemy heroes' movement. Matrices can be fused twice and set off explosions if hit by her other skills.",
+            "type": "skill2"
+          },
+          {
+            "name": "Divine Glow - Emergence",
+            "description": "Teleports to the target area after a short delay. Generates a shield, gains Movement Speed, deals damage, and slows the enemy. Passive: Magical Attack can reduce cast time.",
+            "type": "ultimate"
+          },
+          {
+            "name": "Divine Glow - Annihilation",
+            "description": "Deals damage to targets in a straight line across the map.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team plays dive comp, giving you space to poke before they engage",
+          "Your team has the structure to use her ability to farm safely and rotate to side lanes when the wave allows, since Nuwa delivers consistent damage output and timely roams.",
+          "The enemy draft includes Mulan, Nakoruru, and Pei, who appear in counter data as matchups Nuwa can pressure."
+        ],
+        "avoid_when": [
+          "The enemy has hard engage that closes distance through poke patterns",
+          "Your team needs a jungle pick more than Nuwa's specialty, leaving the role unfilled if you commit here.",
+          "The enemy already drafted Liu Bei, Mayene, and Mulan, who counter data identifies as direct answers to Nuwa."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Nuwa's mid-game tools come online.",
+          "Mana sustain online: poke patterns become repeatable once cooldown reduction and mana regen items come online",
+          "Late game: full build online, Nuwa reaches the spike public guides describe — extended fights favor her once items are completed."
+        ],
+        "common_mistakes": [
+          "Spending mana on poke that does not threaten kills, leaving you empty for the actual fight.",
+          "Ignoring Liu Bei and Mayene on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Greeding farm in mid lane while side lanes get camped — rotation timing matters more than CS lead in most matchups."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 154,
+            "hero_name": "Mulan",
+            "evidence": "Mulan",
+            "source_hash": "d49870e1f377ff373a717feff138416e5bbb7e68d1bec94ce50a166f0fc7cbf3"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 162,
+            "hero_name": "Nakoruru",
+            "evidence": "Nakoruru",
+            "source_hash": "8d4ff5aa3492ea24730b04ca510f026ee2e62733718a4f94b4529a028c7d6620"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 502,
+            "hero_name": "Pei",
+            "evidence": "Pei",
+            "source_hash": "fdd70b8cee6006776cea8c551b30533cf4712d869ac47751e19d9a9b9411c56f"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 170,
+            "hero_name": "Liu Bei",
+            "evidence": "Liu Bei",
+            "source_hash": "7e92271516d803f9b967fded555b201561f8333cf4c63efa20b370b1412f97fc"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 564,
+            "hero_name": "Mayene",
+            "evidence": "Mayene",
+            "source_hash": "1904314de9efa3f7d9da0fd573c4b287ab7a132e348069a2b8202cb4e99325f9"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 154,
+            "hero_name": "Mulan",
+            "evidence": "Mulan",
+            "source_hash": "60d7df204384c8421d58f6a2993f4b8b6a2fa801e85452a45f68e646868dbc6b"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 180,
+            "hero_name": "Nezha",
+            "evidence": "Nezha",
+            "source_hash": "81e6bd449be8b91827a78f334d6e0a462860348e827794b0d96e948b9c1aae76"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 133,
+            "hero_name": "Di Renjie",
+            "source_hash": "6426fbae01d734e2695c38cc7b4ecff50e1fa93341dacbd4b241b41cc353e8fe"
+          },
+          {
+            "hero_id": 534,
+            "hero_name": "Sakeer",
+            "source_hash": "6426fbae01d734e2695c38cc7b4ecff50e1fa93341dacbd4b241b41cc353e8fe"
+          },
+          {
+            "hero_id": 172,
+            "hero_name": "Chicha",
+            "source_hash": "6426fbae01d734e2695c38cc7b4ecff50e1fa93341dacbd4b241b41cc353e8fe"
+          },
+          {
+            "hero_id": 171,
+            "hero_name": "Zhang Fei",
+            "source_hash": "6426fbae01d734e2695c38cc7b4ecff50e1fa93341dacbd4b241b41cc353e8fe"
+          },
+          {
+            "hero_id": 139,
+            "hero_name": "Fuzi",
+            "source_hash": "6426fbae01d734e2695c38cc7b4ecff50e1fa93341dacbd4b241b41cc353e8fe"
+          },
+          {
+            "hero_id": 502,
+            "hero_name": "Pei",
+            "source_hash": "6426fbae01d734e2695c38cc7b4ecff50e1fa93341dacbd4b241b41cc353e8fe"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.92,
+            "tidak": 0.052,
+            "tidak_diketahui": 0.028
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.84,
+            "tidak": 0.104,
+            "tidak_diketahui": 0.056
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

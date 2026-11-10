@@ -1,0 +1,628 @@
+{
+  "schema_version": 2,
+  "hero_id": 153,
+  "source_hash": "147aa50df7b8ffe18b1e67809df1c66073c41564d6bc0a2ba36703c4b9f25282",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Secret Skill - Rush",
+          "desc": "When an enemy is within a certain range from Prince of Lanling, moving toward them will grant him increased Movement Speed."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Secret Skill - Split",
+          "desc": "Deals damage to enemies within a certain range, and deals a 2nd strike of damage to a random enemy in range."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Secret Skill - Sling",
+          "desc": "Throws a dagger that damages, slows, and marks the first enemy in its path. When attacking marked targets, stuns them and recovers Health. Marks deal grievous damage when disappearing."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Secret Skill - Strike",
+          "desc": "Exits stealth mode and dashes in the target direction, dealing damage to enemies in his path."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Tank tim nempel ke carry buat nahan pisau dan nge-control Gao Changgong begitu dia nongol. 2) Dia kasih damage lebih ke musuh yang sendirian, jadi jangan sendirian. 3) Abis kena pisaunya, menjauh biar gak kena damage lanjutan."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/gao-changgong/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Secret Skill - Rush",
+            "description": "When an enemy is within a certain range, moving toward them will grant him increased Movement Speed.",
+            "type": "passive"
+          },
+          {
+            "name": "Secret Skill - Split",
+            "description": "Deals damage to enemies within a certain range, and deals a second strike of damage to a random enemy in range. September 10 update: Skill 1 - Secret Skill - Split: base damage 350 (+70 per skill level) (+125% extra Physical Attack) → 400 (+80 per skill level) (+135% extra Physical Attack).",
+            "type": "skill1"
+          },
+          {
+            "name": "Secret Skill - Sling",
+            "description": "Throws a dagger that damages, slows, and marks the first enemy in its path. When attacking marked targets, he stuns them and recovers Health. Marks deal grievous damage when disappearing.",
+            "type": "skill2"
+          },
+          {
+            "name": "Secret Skill - Strike",
+            "description": "Exits stealth mode and dashes in the target direction, dealing damage to enemies in his path. September 10 update: Ultimate - Secret Skill - Strike: base damage 700 (+350 per skill level) (+250% extra Physical Attack) → 750 (+375 per skill level) (+255% extra Physical Attack).",
+            "type": "ultimate"
+          },
+          {
+            "name": "Secret Skill - Shadow",
+            "description": "Enters stealth after a short delay, increasing Movement Speed. Leaving stealth increases Attack Speed. Stealth ends if near an enemy hero for too long.",
+            "type": "skill4"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has carries with limited self-peel that Gao Changgong can reach before the team can react",
+          "Your team can engage first, letting Gao Changgong second-wave into low-health targets",
+          "The enemy composition leaves room for Gao Changgong to reach the targets his kit punishes."
+        ],
+        "avoid_when": [
+          "The team needs sustained team-fight damage rather than a single-target diver",
+          "Your team has no primary engage, leaving the cleanup pick with nothing to follow up on",
+          "The enemy team is built around answers to Gap-Close, removing the windows Gao Changgong's kit needs to perform."
+        ],
+        "power_spikes": [
+          "Early game: Gao Changgong is listed as an early-game threat in public guide data — convert the early window into objectives before scaling picks come online.",
+          "Ultimate unlocked: Secret Skill - Strike converts mobility into burst, the moment Gao Changgong starts threatening picks across the map",
+          "Late game: cooldowns become short enough that Secret Skill - Sling influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Engaging without follow-up — gap-close gets you to the target, but a solo dive without ally damage trades 1-for-1.",
+          "Engaging first instead of second — cleanup picks lose their value as primary engagers.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Gao Changgong's commit reaches the target alive.",
+          "Pathing predictably and getting tracked by the enemy jungler — vary first clear and rotate based on ward placement rather than muscle memory."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 112,
+            "hero_name": "Luban No.7",
+            "evidence": "Gao Changgong approaches unseen and bursts Luban No.7, who has no dash.",
+            "source_hash": "9b22f190bde452e67f7e8f40f94940216c96fddad9e725649f05f448d143867d"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 584,
+            "hero_name": "Flowborn (Marksman)",
+            "evidence": "Gao Changgong approaches unseen and bursts the marksman form.",
+            "source_hash": "2f8d17ed3349900bc1d8e97ead51fee2bdcb9fcf88af477fcc59151dfaf56971"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 110,
+            "hero_name": "Garuda",
+            "evidence": "Gao Changgong approaches unseen and bursts Garuda.",
+            "source_hash": "7e65261a13660dc2a5d84c6df14bcbd2580d39166050e3c676f824f34bc5196f"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 111,
+            "hero_name": "Lady Sun",
+            "evidence": "Gao Changgong approaches unseen and bursts Lady Sun.",
+            "source_hash": "09a40aa5815b4a81d22d7deeefbcd9d085e00fd23074715246a0042e6515d4e5"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 635,
+            "hero_name": "Lorion",
+            "evidence": "Gao Changgong approaches unseen and bursts Lorion.",
+            "source_hash": "ca94a3ae887012028cbcb7f998f98a0538c3356ae795c1fe55bd3624a0607106"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 106,
+            "hero_name": "Xiao Qiao",
+            "evidence": "Stealth lets Gao Changgong reach Xiao Qiao, who has no escape.",
+            "source_hash": "6d07518299a78b8116e96991ff0dc90818393d86b6eec6225a7353cbc323cda4"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 192,
+            "hero_name": "Huang Zhong",
+            "evidence": "Lay the Mines reveals Gao Changgong in stealth.",
+            "source_hash": "4371b02f67d100427663eb4476d11b8f850ee008d8d7f0e006de2ada27f21801"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 189,
+            "hero_name": "Guiguzi",
+            "evidence": "Out of Sight tracks the nearest enemy hero, making it harder for Gao Changgong to ambush.",
+            "source_hash": "1f48555b9d65f861d4ace0ee893631c979ba724f09e46b80db546406112433ef"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 182,
+            "hero_name": "Gan & Mo",
+            "source_hash": "e276c4d74e076e35120c1f0400f104f48f8f5f6d16f315c423091028f89906be"
+          },
+          {
+            "hero_id": 196,
+            "hero_name": "Shouyue",
+            "source_hash": "e276c4d74e076e35120c1f0400f104f48f8f5f6d16f315c423091028f89906be"
+          },
+          {
+            "hero_id": 155,
+            "hero_name": "Erin",
+            "source_hash": "e276c4d74e076e35120c1f0400f104f48f8f5f6d16f315c423091028f89906be"
+          },
+          {
+            "hero_id": 124,
+            "hero_name": "Zhou Yu",
+            "source_hash": "e276c4d74e076e35120c1f0400f104f48f8f5f6d16f315c423091028f89906be"
+          },
+          {
+            "hero_id": 142,
+            "hero_name": "Angela",
+            "source_hash": "e276c4d74e076e35120c1f0400f104f48f8f5f6d16f315c423091028f89906be"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

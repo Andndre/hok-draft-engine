@@ -1,7 +1,7 @@
 import type { Hero, TournamentDataset } from '../types';
 import { analyzeLaneOccupancy, applyDraftAction, DRAFT_SEQUENCE, getDraftTurn, isLegalHero, isRiskyOpener, oppositeSide } from './draftRules';
 import type { DraftContext, DraftPosition, DraftAction, Side } from './draftRules';
-import { evaluateTacticalScores, runTournamentInference } from './tournamentInference';
+import { evaluateTacticalScores, evaluateEnemyCounterExposure, computeTournamentBaseQuality, runTournamentInference } from './tournamentInference';
 
 export interface SearchContext extends DraftContext {
   synergy: TournamentDataset['synergy'];
@@ -33,7 +33,6 @@ export function rankedCandidates(position: DraftPosition, context: SearchContext
   return fits.length ? fits : legal;
 }
 
-const tierWeight = (h: Hero) => ({ S: 0.35, A: 0.20, B: 0.05, C: -0.10, D: -0.25 }[h.tier] ?? 0);
 function pairBonus(a: Hero, b: Hero, context: SearchContext) {
   const pair = context.synergy.pairs?.[`${Math.min(a.hero_id, b.hero_id)}_${Math.max(a.hero_id, b.hero_id)}`];
   return pair?.matches >= 20 && pair.win_rate >= 0.5 ? (pair.synergy_lift || 0) * 2.2 + 0.35 : 0;
@@ -48,12 +47,22 @@ export function evaluatePosition(position: DraftPosition, context: SearchContext
   const team = (side: Side) => position.picks[side].map(id => byId.get(id)!).filter(Boolean);
   const strength = (side: Side) => {
     const ours = team(side), enemy = team(oppositeSide(side));
+    const b1Openers = context.synergy?.b1_openers || {};
     const radar = evaluateTacticalScores(ours, enemy);
     const coverage = analyzeLaneOccupancy(ours).occupiedLanes.size;
-    let score = ours.reduce((sum, h) => sum + (h.win_rate - 0.48) * 4 + tierWeight(h) + h.pick_rate * 2.8, 0);
+    const exposures = new Map(ours.map(h => [h.hero_id, evaluateEnemyCounterExposure(h, enemy, b1Openers)]));
+    let score = ours.reduce((sum, h) => {
+      const exp = exposures.get(h.hero_id)!;
+      return sum + computeTournamentBaseQuality(h, b1Openers, position.step, exp.synergyMultiplier) - exp.exposurePenalty;
+    }, 0);
     score += radar.early_game_pressure + radar.cc_chain_lockdown + radar.frontline_durability + radar.enemy_carry_shutdown + radar.draft_flexibility + radar.team_utility;
     score += counterBonus(ours, enemy) - (ours.length - coverage) * 2.5;
-    for (let i = 0; i < ours.length; i++) for (let j = i + 1; j < ours.length; j++) score += pairBonus(ours[i], ours[j], context);
+    for (let i = 0; i < ours.length; i++) {
+      for (let j = i + 1; j < ours.length; j++) {
+        const mult = Math.min(exposures.get(ours[i].hero_id)!.synergyMultiplier, exposures.get(ours[j].hero_id)!.synergyMultiplier);
+        score += pairBonus(ours[i], ours[j], context) * mult;
+      }
+    }
     if (ours.length === 5) return score;
     // Available follow-ups keep ban positions meaningful before the first pick.
     const projected = { ...position, step: side === 'blue' ? 4 : 5 };
@@ -62,8 +71,10 @@ export function evaluatePosition(position: DraftPosition, context: SearchContext
       if (!isLegalHero(projected, h.hero_id, context)) continue;
       if (position.step <= 4 && isRiskyOpener(h)) continue;
       if (analyzeLaneOccupancy([...ours, h]).occupiedLanes.size !== ours.length + 1) continue;
-      const value = (h.win_rate - 0.48) * 4 + tierWeight(h) + h.pick_rate * 2.8 + counterBonus([h], enemy)
-        + ours.reduce((sum, teammate) => sum + pairBonus(h, teammate, context), 0);
+      const exp = evaluateEnemyCounterExposure(h, enemy, b1Openers);
+      const value = computeTournamentBaseQuality(h, b1Openers, projected.step, exp.synergyMultiplier)
+        + counterBonus([h], enemy) - exp.exposurePenalty
+        + ours.reduce((sum, teammate) => sum + pairBonus(h, teammate, context) * exp.synergyMultiplier, 0);
       potential = Math.max(potential, value);
     }
     return score + potential * 0.25;

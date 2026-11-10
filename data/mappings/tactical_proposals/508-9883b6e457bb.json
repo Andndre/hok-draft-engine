@@ -1,0 +1,621 @@
+{
+  "schema_version": 2,
+  "hero_id": 508,
+  "source_hash": "9883b6e457bbd4a053b251749b1b631a5273a85e1f7e7cf510f21d64ce6c5b03",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Piercing Arrow",
+          "desc": "Deals double damage to shields with Basic Attacks and skills."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Enchanted Arrows",
+          "desc": ";On: Range and Basic Attack interval increase. Basic Attack costs Mana and deals damage over time. ;Off: Gains Movement Speed and restores range and Basic Attack interval toinitial values.Basic Attack hits restore Mana."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Silent Arrow",
+          "desc": "Fires an arrow in the target direction, dealing damage to enemies hit while silencing and slowing them. After a brief delay, deals another strike of damage to enemies within range of the same location."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Sphere of Purity",
+          "desc": "Damages enemies in range. Gains Attack Speed and Critical Rate when in the magic circle.Use this skill again to grant Critical Rate and Move Speed to teammates in the circle and damage enemies in the circle"
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Long attack range",
+          "Strong against shields",
+          "Excellent late-game DPS"
+        ],
+        "cons": [
+          "Limited mobility",
+          "Mana dependent",
+          "Vulnerable to dives"
+        ],
+        "gameplay_tips": "## Early Game\nFocus on farming in the early game and avoid unnecessary trades or fights until you get some attack speed and critical rate from your core items. Use Skill 2 Silent Arrow to poke the enemy and interrupt them from engaging. Remember, do not use Skill 1 when attacking minions or jungle monsters, as it will waste your mana, and you'll struggle to stay in lane.\n\n## Teamfights\nIn teamfights, you want to stay behind your frontline and abuse your range advantage from Skill 1 Enchanted Arrows. Even though you don't have much mobility, the movement speed from your Ultimate Sphere of Purity can help with kiting in the late game. If you are chasing or kiting away from your Ultimate, make sure to use it again to break the circle so you can get some extra movement speed.\n\n## Tips & Tricks\nOnly use Skill 1 when attacking heroes in trades and teamfights. Don't waste your mana attacking minions/monsters\nAlways try to position yourself inside Garo's Ultimate for the increased movement speed and critical rate."
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Jangkauan Garo unggul, incer pakai assassin yang dash-nya kuat. 2) Makin cepet tower di belakangnya ancur, makin kebatas dia."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/garo/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Piercing Arrow",
+            "description": "Basic Attacks and skills deal 50% extra damage to shields.",
+            "type": "passive"
+          },
+          {
+            "name": "Enchanted Arrows",
+            "description": "Enhanced: Attack Range and Basic Attack interval increase. Basic Attacks cost Mana and deal damage over time. Unenhanced: Gains Movement Speed and restores Attack Range and Basic Attack interval to initial values. Basic Attack hits restore Mana.",
+            "type": "skill1"
+          },
+          {
+            "name": "Silent Arrow",
+            "description": "Fires an arrow in the target direction, dealing damage to enemies hit while silencing and slowing them. After a brief delay, deals another strike of damage to enemies within range of the same location.",
+            "type": "skill2"
+          },
+          {
+            "name": "Sphere of Purity",
+            "description": "Creates a magic circle, dealing damage and increasing her Movement Speed and Critical Rate. When the circle is destroyed, it deals damage and increases her Critical Rate and Movement Speed.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team plays dive comp, giving you space to poke before they engage",
+          "The enemy team has front-line targets that Garo can chip down with sustained ranged damage",
+          "The enemy draft includes Nakoruru, Xuance, and Li Bai, who appear in counter data as matchups Garo can pressure."
+        ],
+        "avoid_when": [
+          "The enemy has hard engage that closes distance through poke patterns",
+          "The game is decided early before the marksman can hit core item spikes",
+          "The enemy team is built around answers to Ranged Harass, removing the windows Garo's kit needs to perform."
+        ],
+        "power_spikes": [
+          "Early game: farm safely behind the support, surviving lane phase to reach the marksman scaling window.",
+          "Mana sustain online: poke patterns become repeatable once cooldown reduction and mana regen items come online",
+          "Late game: full build online, Garo reaches the spike public guides describe — extended fights favor her once items are completed."
+        ],
+        "common_mistakes": [
+          "Spending mana on poke that does not threaten kills, leaving you empty for the actual fight.",
+          "Auto-attacking instead of repositioning when the enemy assassin is missing — losing the marksman loses the fight.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Garo's commit reaches the target alive.",
+          "Auto-attacking through enemy dive instead of repositioning — losing the marksman in early fights collapses the late-game win condition."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 162,
+            "hero_name": "Nakoruru",
+            "evidence": "Nakoruru",
+            "source_hash": "89748863f589f43535e509439c613decfdb37aa8a3a51695281fb30e4835c382"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 195,
+            "hero_name": "Xuance",
+            "evidence": "Xuance",
+            "source_hash": "d9bdd50ab4c9b9b957562cadea23ff7e3728d392b6044a8ffd0829115bc69893"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 131,
+            "hero_name": "Li Bai",
+            "evidence": "Li Bai",
+            "source_hash": "3b45ecccb4bf0b1f1e3a1a7ca94007c1c8976aa3bd428c71b7dc22e9b7eef1c9"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 640,
+            "hero_name": "Annette",
+            "evidence": "Garo deals 50% extra damage to shields, cutting through Annette's Wind Cuffs.",
+            "source_hash": "a7a441fff4db13390aa07e312681fca39854b34dd976550bf385eac2013f981a"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 149,
+            "hero_name": "Liu Bang",
+            "evidence": "Garo deals 50% extra damage to shields, breaking Dominator's Shield.",
+            "source_hash": "67540a71d23862ae7cb58ea78c24f8bc6264d6039739bf54ada191fc4d838ab7"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 171,
+            "hero_name": "Zhang Fei",
+            "evidence": "Garo deals 50% extra damage to shields, cutting through Zhang Fei's protection.",
+            "source_hash": "2daa6aaf1202391c3e3a07c71a79d87e9d12d61cb5338fe2f39af2e400298c44"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 168,
+            "hero_name": "Lapulapu",
+            "evidence": "Island's Blessing dashes onto Garo and launches her.",
+            "source_hash": "cdbd49f36bb05611403428f83327789bc002dea8dabd387f1eb1a3438d624be6"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 116,
+            "hero_name": "Arke",
+            "evidence": "Arke's stealth lets her backstab Garo for guaranteed crits.",
+            "source_hash": "ce2ac8b464b578875296074d4f07dbfd831070ea557b92398560cd78dc59f3f7"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 190,
+            "hero_name": "Kongming",
+            "source_hash": "1c58dc66a61814e4297244a28dd01ab750e0503888760239bc75269c6bdddf5c"
+          },
+          {
+            "hero_id": 501,
+            "hero_name": "Ming",
+            "source_hash": "1c58dc66a61814e4297244a28dd01ab750e0503888760239bc75269c6bdddf5c"
+          },
+          {
+            "hero_id": 113,
+            "hero_name": "Zhuangzi",
+            "source_hash": "1c58dc66a61814e4297244a28dd01ab750e0503888760239bc75269c6bdddf5c"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.91,
+            "tidak": 0.0585,
+            "tidak_diketahui": 0.0315
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.07,
+            "tidak": 0.8,
+            "tidak_diketahui": 0.13
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

@@ -1,0 +1,599 @@
+{
+  "schema_version": 2,
+  "hero_id": 521,
+  "source_hash": "822d65fe6008938cee3188a8a026ea069a3346c5761be99357c366716682c224",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Moon's Farewell",
+          "desc": "MarkEnhance Spends moon crystals to use skills. When all moon crystals have been spent, her Skill 1 and Skill 2 will enter their (full) cooldowns, and her next Basic Attack is enhanced, dealing extra damage. Skill 1 and Skill 2 apply a mark on hit. Hitting marked targets again triggers additional effects."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Crescent Wave",
+          "desc": "Damage Unleashes a beam of moonlight, dealing damage. Deals extra damage if a mark is triggered."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Wayward Rays",
+          "desc": "ShieldCrowd Control Releases orbs to deal damage while gaining a shield and increased Movement Speed. If mark are triggered, targets will be stunned."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Moonscape Mirage",
+          "desc": "DreamscapeCooldownShield Links to a hero, gaining damage reduction while linked. After a delay, they enter a mirage. Upon entering, she gains a shield, and her skill cooldowns are shorter. If she uses this skill again while inside the mirage, she moves 700 units away from the target."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Excellent duelling power in Ultimate",
+          "Access to true damage",
+          "Great self-peel"
+        ],
+        "cons": [
+          "Vulnerable to Crowd Control",
+          "Dependent on her cooldowns",
+          "Ultimate can be countered"
+        ],
+        "gameplay_tips": "## Early Game\nIn the Early Game, Haya can line up and clear the first minion wave with 3 casts of her Skill 1 Crescent Wave. This will give you time to roam to other lanes to help them gain an advantage, or you can help your jungle clear camps. Always keep an eye out on your passive moon crystals since this is your main resource for using skills. If your passive is charging up, play safe until you can use your skills again.\n\n## Teamfights\nIn teamfights, stay in the backline and let your tanks protect you. Don't waste your Ultimate on the first target you see; sometimes it's best to wait until you get jumped on by enemy assassins or use it on the enemy Mage/Marksman to take them out of the fight. When fighting around the Tyrant or Overlord, use your Ultimate on the enemy jungler to help your team secure the objective.\n\n## Tips & Tricks\n\nUse Skill 2's stun to give you a better chance of hitting enemies with Haya's Skill 1 true damage\nSkill 2 can be used on jungle camps to help rotate faster around the map\nUse Haya's Ultimate to give you damage reduction when being jumped on by assassins\n"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": ""
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/haya/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Moon's Farewell",
+            "description": "Spends moon crystals to use skills. When all moon crystals have been spent, her Skill 1 and Skill 2 will enter their cooldowns, and her next Basic Attack is enhanced, dealing extra damage. Skill 1 and Skill 2 apply a Mark on hit. Hitting marked targets again triggers additional effects.",
+            "type": "passive"
+          },
+          {
+            "name": "Crescent Wave",
+            "description": "Unleashes a beam of moonlight, dealing damage. Deals extra damage if a mark is triggered.",
+            "type": "skill1"
+          },
+          {
+            "name": "Wayward Rays",
+            "description": "Releases orbs to deal damage while gaining a shield and increased Movement Speed. If marks are triggered, targets will be stunned.",
+            "type": "skill2"
+          },
+          {
+            "name": "Moonscape Mirage",
+            "description": "Links to a hero, gaining damage reduction while linked. After a delay, they enter a mirage. Upon entering, she gains a shield, and her skill cooldowns are shorter. If she uses this skill again while inside the mirage, she moves 700 units away from the target.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team plays dive comp, giving you space to poke before they engage",
+          "Your team has the structure to use her ability to farm safely and rotate to side lanes when the wave allows, since Haya delivers consistent damage output and timely roams.",
+          "The enemy draft includes Sakeer, Zilong, and Milady, who appear in counter data as matchups Haya can pressure."
+        ],
+        "avoid_when": [
+          "The enemy has hard engage that closes distance through poke patterns",
+          "Your team needs a jungle pick more than Haya's specialty, leaving the role unfilled if you commit here.",
+          "The enemy team is built around answers to Ranged Harass, removing the windows Haya's kit needs to perform."
+        ],
+        "power_spikes": [
+          "Early game: Haya is listed as an early-game threat in public guide data — convert the early window into objectives before scaling picks come online.",
+          "Mana sustain online: poke patterns become repeatable once cooldown reduction and mana regen items come online",
+          "Late game: cooldowns become short enough that Wayward Rays influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Spending mana on poke that does not threaten kills, leaving you empty for the actual fight.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Haya's commit reaches the target alive.",
+          "Greeding farm in mid lane while side lanes get camped — rotation timing matters more than CS lead in most matchups."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 534,
+            "hero_name": "Sakeer",
+            "evidence": "Sakeer",
+            "source_hash": "96d0c56e9895505b31d3c3743bd753bde02987beab1450ea58a697dd653e4255"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 107,
+            "hero_name": "Zilong",
+            "evidence": "Zilong",
+            "source_hash": "b8bed617c8357f13436acfdc95a59d4d0b49c45dd4f12a370f2bbd71cdcadf64"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 504,
+            "hero_name": "Milady",
+            "evidence": "Milady",
+            "source_hash": "a77a9f06870c68c6319307b671295d191a1508c735b501f69070332639369a2b"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 116,
+            "hero_name": "Arke",
+            "evidence": "Arke's stealth lets her backstab Haya for guaranteed crits.",
+            "source_hash": "b955d7984bc9b1b68d3d896c40bbf5750bbc4d962f38a6962228b3c146727320"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 150,
+            "hero_name": "Han Xin",
+            "evidence": "Han Xin's dashes reach Haya before Moonscape Mirage takes effect.",
+            "source_hash": "f860247f637665b7e83ad3c08702fe6411fd138c2da98fdc88b8cc6b28216b00"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 159,
+            "hero_name": "Dolia",
+            "source_hash": "4479a532b947cdeb37f12b765ab485034063a18547ac924282371d77cf3c50ca"
+          },
+          {
+            "hero_id": 178,
+            "hero_name": "Yang Jian",
+            "source_hash": "4479a532b947cdeb37f12b765ab485034063a18547ac924282371d77cf3c50ca"
+          },
+          {
+            "hero_id": 584,
+            "hero_name": "Flowborn (Marksman)",
+            "source_hash": "4479a532b947cdeb37f12b765ab485034063a18547ac924282371d77cf3c50ca"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

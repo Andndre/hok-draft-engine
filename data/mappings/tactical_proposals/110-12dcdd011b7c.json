@@ -1,0 +1,590 @@
+{
+  "schema_version": 2,
+  "hero_id": 110,
+  "source_hash": "12dcdd011b7c9755b94c2b934c32a2beef9103d7de543ed61d33acb8b522907f",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Keen Feathers",
+          "desc": "Damage Basic Attacks can pierce and deal damage to enemies in their path."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Arrows of Gold",
+          "desc": "Damage Slow Conjures an arrow formation that deals continuous damage to targets within range while slowing them."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Golden Winged Blessing",
+          "desc": "Speed Up Shield Damage Gains Movement Speed and a shield while dealing damage to nearby enemies."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Wings of Judgment",
+          "desc": "Damage Speed Up Sends arrows surging forward, dealing damage. Using the skill again shoots all remaining arrows, damaging nearby enemies, inflicting them with Dread, and removing all Physical Attack bonuses granted by their equipment."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Assassin manfaatin Garuda yang salah posisi. 2) Hindarin skill 1-nya. 3) Ult Garuda bentuknya garis lurus, bisa dihindarin tinggal geser."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/garuda/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Keen Feathers",
+            "description": "Basic Attacks can pierce and deal damage to enemies in their path.",
+            "type": "passive"
+          },
+          {
+            "name": "Arrows of Gold",
+            "description": "Conjures an arrow formation that deals continuous damage to targets within range while slowing them.",
+            "type": "skill1"
+          },
+          {
+            "name": "Golden Winged Blessing",
+            "description": "Gains Movement Speed and a shield while dealing damage to nearby enemies.",
+            "type": "skill2"
+          },
+          {
+            "name": "Wings of Judgment",
+            "description": "Sends arrows surging forward, dealing damage. Using the skill again shoots all remaining arrows, damaging nearby enemies, inflicting them with Dread, and removing all Physical Attack bonuses granted by their equipment.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team needs a mid-lane poke mage who can clear minions quickly and pressure from range.",
+          "The enemy composition groups for objectives, letting Garuda's area damage and ultimate punish stacked targets.",
+          "Your draft can protect Garuda from assassins while he plays behind the frontline and chips enemies down."
+        ],
+        "avoid_when": [
+          "The enemy has backline dive such as Prince of Lanling or Han Xin, which public counter data lists as effective pressure.",
+          "Your team cannot protect a stationary mage during ultimate windows or objective fights.",
+          "The enemy can shove mid early and deny farm, a counter approach specifically recommended against Garuda."
+        ],
+        "power_spikes": [
+          "Wave control: Keen Feathers and Arrows of Gold let Garuda clear and poke before committing to fights.",
+          "Core magic items online: Frozen Breath, Mask of Agony, and Void Staff give him stronger poke and magic penetration.",
+          "Late-game grouped fights: public guide data describes Garuda as strong late when his ultimate hits crowds."
+        ],
+        "common_mistakes": [
+          "Standing too far forward after using Skill 2, leaving no escape when divers appear.",
+          "Casting Wings of Judgment into a single low-value target instead of waiting for grouped enemies.",
+          "Letting opponents shove mid and delay farm, which public counter guidance identifies as a way to weaken Garuda.",
+          "Ignoring magic-resistance itemization on opponents when deciding whether poke will finish a fight."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 154,
+            "hero_name": "Mulan",
+            "evidence": "Arrows of Gold slows Mulan and punishes her short-range dashes.",
+            "source_hash": "68ac534ba8c28e60b47bde482fa2adf119b04114a445c5d067c225b66a45b5cf"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 105,
+            "hero_name": "Lian Po",
+            "evidence": "Arrows of Gold's slow and constant damage kite slow frontliners like Lian Po.",
+            "source_hash": "ba0ecd088221e2bcccaa90354885c21161779e0fa37e852429296ece9554256f"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 150,
+            "hero_name": "Han Xin",
+            "evidence": "Han Xin dashes past Arrows of Gold and bursts Garuda.",
+            "source_hash": "dfee108d0a8a659e29cc3101bb00bb144d649fac6689a7d4ebec47d92e1ee7a2"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 153,
+            "hero_name": "Gao Changgong",
+            "evidence": "Gao Changgong approaches unseen and bursts Garuda.",
+            "source_hash": "b63388cc864e3769c576be1813f6cfa49faf41161c09803f223e85bdd54a680d"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 159,
+            "hero_name": "Dolia",
+            "source_hash": "5c4f253eeae1385516653aa53772379ba7d56d7aa32ebd87e9edd509c77c37cd"
+          },
+          {
+            "hero_id": 123,
+            "hero_name": "Lu Bu",
+            "source_hash": "5c4f253eeae1385516653aa53772379ba7d56d7aa32ebd87e9edd509c77c37cd"
+          },
+          {
+            "hero_id": 514,
+            "hero_name": "Allain",
+            "source_hash": "5c4f253eeae1385516653aa53772379ba7d56d7aa32ebd87e9edd509c77c37cd"
+          },
+          {
+            "hero_id": 126,
+            "hero_name": "Dun",
+            "source_hash": "5c4f253eeae1385516653aa53772379ba7d56d7aa32ebd87e9edd509c77c37cd"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.07,
+            "tidak": 0.8,
+            "tidak_diketahui": 0.13
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

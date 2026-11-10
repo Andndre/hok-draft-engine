@@ -1,0 +1,568 @@
+{
+  "schema_version": 2,
+  "hero_id": 537,
+  "source_hash": "0fbe2ff9027c9570e7e7a68c77550ffb930f789a573a21f132078e8c43dad2c4",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": []
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Built-in shield",
+          "Strong anti CC Ultimate",
+          "Good mobility"
+        ],
+        "cons": [
+          "Can be kited",
+          "Vulnerable to disengage",
+          "Damage isn't instant"
+        ],
+        "gameplay_tips": "## Early Game\nIn the early game, Devara can use his ranged attacks to punish the enemy when they want to walk up and last-hit minions. When looking to trade, always use Skill 1 Thunderblaze to gain a shield and an empowered auto attack to win every time. Always use a skill when at full energy. Do not waste the downtime of stacking your passive with auto attacks. Even if you use Skill 1 to get an empowered auto attack to help clear the wave or jungle camp, it all helps his tempo.\n\n## Teamfights\nIn teamfights, as Devara, you need to play patiently. You don't want to be the first hero that goes in. You want to use your range and mobility to kite in fights and poke the enemy. Use your Ultimate when you are about to get hit by crowd control or need to escape; however, be careful because you can still take damage and die whilst transforming. After being transformed, you can look to play aggressively with his bonus damage and quick passive stacking.\n\n## Tips & Tricks\nAlways auto-attack after using a Skill to deal extra magic damage and restore health\nSkill 1 can be used to dash over walls\nStack your passive on minions or monsters before trading or joining a teamfight"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Cooldown transformasi Devara lama banget. Incer dia di jeda abis dia berubah."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/devara/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Wish of the Living",
+            "description": "Devara's Basic Attacks grant Energy. Becomes enhanced and gains another basic skill chance upon reaching the limit.",
+            "type": "passive"
+          },
+          {
+            "name": "Thunderblaze",
+            "description": "Dashes forward, dealing damage to enemies in his path while gaining a shield.",
+            "type": "active"
+          },
+          {
+            "name": "Divine Judgment",
+            "description": "Knocks back and damages enemies in front of him.",
+            "type": "active"
+          },
+          {
+            "name": "Millennium Echo",
+            "description": "Gains crowd control immunity and a Movement Speed boost. Upon landing, enhances Basic Attack. Basic Attacks grant Energy.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Pick Devara when the team needs a durable Clash Lane Fighter who can engage, shield himself, and stay active in extended fights."
+        ],
+        "avoid_when": [
+          "Avoid Devara when the enemy can repeatedly disengage before he builds Energy or when your draft already has enough short-range frontline heroes."
+        ],
+        "power_spikes": [
+          "Devara becomes strongest after reaching high Energy and activating Millennium Echo, which grants crowd control immunity, Movement Speed, and an enhanced Basic Attack."
+        ],
+        "common_mistakes": [
+          "Do not enter a fight with no Energy and use every skill immediately; prepare charge first so the enhanced skill cycle is available during the engagement."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 175,
+            "hero_name": "Kui",
+            "evidence": "Millennium Echo grants crowd control immunity, so Kui's hook-and-stun combo fails.",
+            "source_hash": "331980fc8fd937ef9b815f9946c661e2c7712f591234250082f9516621a848bc"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 189,
+            "hero_name": "Guiguzi",
+            "evidence": "Millennium Echo's crowd control immunity ignores the stun from Guiguzi's spriteflies.",
+            "source_hash": "6f8dc68d1461352543f9e0d16d0c5bf5f76515a75b4ab3fe9ac050a15602fe0b"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 187,
+            "hero_name": "Donghuang",
+            "evidence": "Forsaken Contract can suppress Devara before he activates Millennium Echo.",
+            "source_hash": "cacc8cf37b65114f090056450e81a052fe98a1f1967c517f78439646812b762f"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 174,
+            "hero_name": "Consort Yu",
+            "evidence": "Protecting Winds makes Consort Yu invulnerable to Devara's physical damage.",
+            "source_hash": "556cf266a27a7d50b3885278f27b35e5dac7c0804366243fd5919e750c3462e7"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 193,
+            "hero_name": "Kaizer",
+            "source_hash": "5cef63db406b4031f0ce48ad07a71052ebef16569656593bd049440b0ee6688d"
+          },
+          {
+            "hero_id": 523,
+            "hero_name": "Shi",
+            "source_hash": "5cef63db406b4031f0ce48ad07a71052ebef16569656593bd049440b0ee6688d"
+          },
+          {
+            "hero_id": 171,
+            "hero_name": "Zhang Fei",
+            "source_hash": "5cef63db406b4031f0ce48ad07a71052ebef16569656593bd049440b0ee6688d"
+          },
+          {
+            "hero_id": 577,
+            "hero_name": "Dyadia",
+            "source_hash": "5cef63db406b4031f0ce48ad07a71052ebef16569656593bd049440b0ee6688d"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.85,
+            "tidak": 0.0975,
+            "tidak_diketahui": 0.0525
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

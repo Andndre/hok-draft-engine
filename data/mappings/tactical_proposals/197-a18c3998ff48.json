@@ -1,0 +1,621 @@
+{
+  "schema_version": 2,
+  "hero_id": 197,
+  "source_hash": "a18c3998ff48ff826699f4d8ee2f0818aeb2ef5ce79b5ba182be9552b1a127a0",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Maintaining Initiative",
+          "desc": "Basic Attacks deal magical damage. For every 4 skill hits on the same enemy, generates a Weiqi stone that deals magical damage and adds to the total number of Weiqi stones. Gains brief immunity to all damage and increased Movement Speed upon taking fatal damage."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Sliding Stones",
+          "desc": "Places a Weiqi stone at the target location, gaining vision and damaging enemies. Weiqi stones will be pulled into Skill 2's Weiqi formation, damaging and slowing enemies in their path."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Taking Liberties",
+          "desc": "Deals damage to the target area and creates a Weiqi formation. The formation pulls enemies toward its center, damaging them in the process."
+        },
+        {
+          "type": "Ultimate",
+          "name": "The World is My Board",
+          "desc": "Draws a Weiqi board that launches enemies and places marks on them while exposing their location. Enemies caught within the Weiqi board are bound and will be unable to leave. When the Weiqi board is fully formed, his Movement Speed is increased."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Pasif penyelamat Yixing kuat tapi cooldown-nya lama. 2) Di awal dia lemah bantu tim dan fight, jadi kumpulin keunggulan dari awal."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/yixing/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Maintaining Initiative",
+            "description": "Basic Attacks deal magical damage. For every 4 skill hits on the same enemy, generates a Weiqi stone that deals magical damage and adds to the total number of Weiqi stones. Upon taking fatal damage, gains brief immunity to all damage and increased Movement Speed.",
+            "type": "passive"
+          },
+          {
+            "name": "Sliding Stones",
+            "description": "Places a Weiqi stone at the target location, gaining vision and damaging enemies. Weiqi stones will be pulled into Skill 2's Weiqi formation, damaging and slowing enemies in their path.",
+            "type": "skill1"
+          },
+          {
+            "name": "Taking Liberties",
+            "description": "Deals damage to the target area and creates a Weiqi formation. The formation pulls enemies toward its center, damaging them in the process.",
+            "type": "skill2"
+          },
+          {
+            "name": "The World is My Board",
+            "description": "Draws a Weiqi board that launches enemies and places marks on them while exposing their location. Enemies caught within the Weiqi board are bound and will be unable to leave. Gains Movement Speed while forming the board.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team wants to siege objectives where ranged poke whittles down defenders",
+          "Your team needs a setup hero whose Taking Liberties creates kill windows for the carry",
+          "The enemy draft includes Augran, Cirrus, and Lam, who appear in counter data as matchups Yixing can pressure."
+        ],
+        "avoid_when": [
+          "The team fight will happen in cramped jungle spaces where poke ranges are minimized",
+          "The enemy team is loaded with cleanse, dashes, and immunity that bypass crowd control",
+          "The enemy already drafted Allain, Dharma, and Dian Wei, who counter data identifies as direct answers to Yixing."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Yixing's mid-game tools come online.",
+          "Mana sustain online: poke patterns become repeatable once cooldown reduction and mana regen items come online",
+          "Late game: cooldowns become short enough that Taking Liberties influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Spending mana on poke that does not threaten kills, leaving you empty for the actual fight.",
+          "Throwing Taking Liberties on the front-line tank instead of saving it for backline carries.",
+          "Ignoring Allain and Dharma on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Greeding farm in mid lane while side lanes get camped — rotation timing matters more than CS lead in most matchups."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 517,
+            "hero_name": "Augran",
+            "evidence": "Augran",
+            "source_hash": "f40a6d337faf8b270d69baf3eeb3086f299ea3a3cadb10850be7e08683f2ae53"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 506,
+            "hero_name": "Cirrus",
+            "evidence": "Cirrus",
+            "source_hash": "9be57c472c45b79bc707facd250c5a7984542051dc832cf4ddd1b969275b16d7"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 528,
+            "hero_name": "Lam",
+            "evidence": "Lam",
+            "source_hash": "c6a0e6e737159a5f7a186552f2ba099f2523baf9128697c8e7e808fa3d11bc7f"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 514,
+            "hero_name": "Allain",
+            "evidence": "Allain",
+            "source_hash": "deb68c886e9ae435165ab7f4f8e1ee57915e8cb0ba6ce757bc7b9f704011f7d7"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 134,
+            "hero_name": "Dharma",
+            "evidence": "Dharma",
+            "source_hash": "fb4bfe981342bc623374c3f7015a89d095462829c05069199a53f5de7d615105"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 129,
+            "hero_name": "Dian Wei",
+            "evidence": "Dian Wei",
+            "source_hash": "0d2b8eaf2a15664f4a976543612b7efdee3f737f64cc9bd908eee283b3eaa9b8"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 140,
+            "hero_name": "Guan Yu",
+            "evidence": "Guan Yu",
+            "source_hash": "57988afe35af565afb1c71a84951bb5c45be648499ff31aa37435bef89fd543e"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 159,
+            "hero_name": "Dolia",
+            "source_hash": "2418c337e14806191ba5973f5407438721f2c494d70994283db2812367f4d4b2"
+          },
+          {
+            "hero_id": 123,
+            "hero_name": "Lu Bu",
+            "source_hash": "2418c337e14806191ba5973f5407438721f2c494d70994283db2812367f4d4b2"
+          },
+          {
+            "hero_id": 199,
+            "hero_name": "Arli",
+            "source_hash": "2418c337e14806191ba5973f5407438721f2c494d70994283db2812367f4d4b2"
+          },
+          {
+            "hero_id": 505,
+            "hero_name": "Yaria",
+            "source_hash": "2418c337e14806191ba5973f5407438721f2c494d70994283db2812367f4d4b2"
+          },
+          {
+            "hero_id": 577,
+            "hero_name": "Dyadia",
+            "source_hash": "2418c337e14806191ba5973f5407438721f2c494d70994283db2812367f4d4b2"
+          },
+          {
+            "hero_id": 542,
+            "hero_name": "Feyd",
+            "source_hash": "2418c337e14806191ba5973f5407438721f2c494d70994283db2812367f4d4b2"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.07,
+            "tidak": 0.8,
+            "tidak_diketahui": 0.13
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.84,
+            "tidak": 0.104,
+            "tidak_diketahui": 0.056
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

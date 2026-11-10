@@ -44,15 +44,27 @@ export function evaluateTacticalScores(ourHeroes: Hero[], enemyHeroes: Hero[]): 
     teamUtility = Math.min(0.95, 0.35 + reviewedUtility.size * 0.12);
 
     let counterAdv = 0;
+    let counterVulnerability = 0;
     for (const oh of ourHeroes) {
+      let counteredByCount = 0;
       for (const eh of enemyHeroes) {
-        if (oh.counters.some((c) => c.target_id === eh.hero_id)) {
+        if (oh.counters.some((c) => c.target_id === eh.hero_id) || eh.countered_by?.some((c) => c.counter_id === oh.hero_id)) {
           counterAdv += 0.08;
         }
+        if (eh.counters.some((c) => c.target_id === oh.hero_id) || oh.countered_by?.some((c) => c.counter_id === eh.hero_id)) {
+          counteredByCount += 1;
+        }
+      }
+      if (counteredByCount === 1) {
+        counterVulnerability += 0.07;
+      } else if (counteredByCount === 2) {
+        counterVulnerability += 0.18;
+      } else if (counteredByCount >= 3) {
+        counterVulnerability += 0.32 + (counteredByCount - 3) * 0.10;
       }
     }
-    shutdown = Math.min(0.95, 0.45 + (roleCounts['Assassin'] || 0) * 0.15 + counterAdv);
-    draftAdvantage = Math.min(0.85, Math.max(0.15, avgWr + counterAdv * 0.5));
+    shutdown = Math.min(0.95, Math.max(0.15, 0.45 + (roleCounts['Assassin'] || 0) * 0.15 + counterAdv - counterVulnerability * 0.35));
+    draftAdvantage = Math.min(0.85, Math.max(0.15, avgWr + (counterAdv - counterVulnerability) * 0.5));
   }
 
   return {
@@ -126,34 +138,173 @@ export interface TournamentPredictionResult {
 /**
  * Computes how strong a hero is as a Phase 1 First-Pick / Core Opener (S-Tier + KPL B1/R1 frequency).
  */
+export function computeTournamentBaseQuality(
+  hero: Hero,
+  b1Openers: Record<string, any> = {},
+  draftStep: number = 5,
+  synergyMultiplier: number = 1.0
+): number {
+  const kplStat = b1Openers[String(hero.hero_id)];
+  const b1Count = kplStat?.b1_picks || 0;
+  const r1Count = kplStat?.r1_r2_picks || 0;
+  const p1Bans = kplStat?.p1_bans || 0;
+  const totalKplPresence = b1Count + r1Count + p1Bans;
+
+  // Casual HOKFIRE tier (S/A) reflects solo-queue Diamond+ (e.g. split-push Li Xin #507 is S-tier in pub with 0 KPL matches).
+  // Cap casual tier bonus if the hero lacks empirical KPL tournament presence.
+  let tierBonus = { S: 0.35, A: 0.20, B: 0.05, C: -0.10, D: -0.25 }[hero.tier] ?? 0.0;
+  if (totalKplPresence < 50) {
+    tierBonus = Math.min(tierBonus, 0.05);
+  }
+
+  // Empirical KPL tournament presence bonus (rewards true pro staples like Arli, Da Qiao, Kaizer, Lam, Dolia, Zhang Fei)
+  const kplPresenceBonus =
+    Math.min(0.85, (b1Count * 1.2 + r1Count * 0.9) / 650 + (p1Bans * 0.35) / 1400) * synergyMultiplier;
+
+  // Penalize pub-only heroes with zero/negligible KPL presence, especially during Phase 1 opener picks (Steps 4..6: B1, R1, R2)
+  const nonTournamentPenalty = totalKplPresence === 0 ? -0.35 : totalKplPresence < 40 ? -0.15 : 0.0;
+  const earlyNonOpenerPenalty = draftStep >= 4 && draftStep <= 6 && b1Count + r1Count < 60 ? -0.60 : 0.0;
+
+  const rawWrDelta = (hero.win_rate - 0.48) * 1.5;
+  const adjustedWrDelta = rawWrDelta > 0 ? rawWrDelta * synergyMultiplier : rawWrDelta;
+
+  return adjustedWrDelta + tierBonus + hero.pick_rate * 1.8 + kplPresenceBonus + nonTournamentPenalty + earlyNonOpenerPenalty;
+}
+
 function computeOpenerPriorityScore(
   hero: Hero,
   b1Openers: Record<string, any>,
   forBlueSide: boolean,
   onlyGlobal: boolean = true
 ): number {
-  const tierWeight = { S: 0.65, A: 0.25, B: 0.0, C: -0.25, D: -0.5 }[hero.tier] ?? 0;
   const kplStat = b1Openers[String(hero.hero_id)];
   const b1Count = kplStat?.b1_picks || 0;
   const r1Count = kplStat?.r1_r2_picks || 0;
   const p1Bans = kplStat?.p1_bans || 0;
+  const totalKplPresence = b1Count + r1Count + p1Bans;
 
-  // Immobile carry penalty:
-  // Luban No.7 (112), Hou Yi (169), Angela (142), Daji (109), Milady (504)
-  // Di turnamen kompetitif (khususnya tanpa Master Luban 525 di Global),
-  // First-picking hero tanpa mobilitas ini rentan di-dive lawan dan dilarang dijadikan B1 First Pick / Opener.
+  let tierWeight = { S: 0.55, A: 0.30, B: 0.10, C: -0.15, D: -0.40 }[hero.tier] ?? 0;
+  if (totalKplPresence < 50) {
+    tierWeight = Math.min(tierWeight, 0.0);
+  }
+
+  // Immobile carry & non-tournament opener penalties:
   let openerPenalty = 0;
   const isImmobileCarry = isRiskyOpener(hero);
   if (isImmobileCarry) {
     openerPenalty = -2.5;
+  } else if (b1Count + r1Count < 60) {
+    // Pub-only heroes (e.g. Li Xin #507, Arthur #166, Wukong #167) are never Phase 1 tournament openers
+    openerPenalty = -1.25;
   }
 
-  const kplOpenerBonus = forBlueSide
-    ? Math.min(0.85, b1Count / 400 + p1Bans / 1200)
-    : Math.min(0.85, r1Count / 500 + b1Count / 600 + p1Bans / 1200);
+  // Channeled suppress heroes (e.g. Liang #156) are situational anti-mobility lockdowns in KPL (only 110 B1 picks),
+  // not blind B1 openers ahead of Ao'yin / Augran / Haya / Dun because blind B1 exposes their channel to long-range poke/hooks.
+  const blindSuppressAdjustment = hero.tactical_profile?.tags.suppress === true ? -0.30 : 0;
 
-  const flexBonus = hero.lanes.length > 1 ? 0.15 : 0;
-  return (hero.win_rate - 0.48) * 4.5 + hero.pick_rate * 3.5 + tierWeight + kplOpenerBonus + flexBonus + openerPenalty;
+  const kplOpenerBonus = forBlueSide
+    ? Math.min(0.75, b1Count / 260) + Math.min(0.30, p1Bans / 2000)
+    : Math.min(0.75, r1Count / 350 + b1Count / 500) + Math.min(0.30, p1Bans / 2000);
+  const banRateBonus = Math.min(0.25, (hero.ban_rate || 0) * 4.0);
+
+  const flexBonus = hero.lanes.length > 1 ? 0.10 : 0;
+  return (
+    (hero.win_rate - 0.48) * 1.8 +
+    hero.pick_rate * 2.0 +
+    tierWeight +
+    kplOpenerBonus +
+    banRateBonus +
+    flexBonus +
+    blindSuppressAdjustment +
+    openerPenalty
+  );
+}
+
+export interface EnemyCounterExposure {
+  counteredByNames: string[];
+  counterCount: number;
+  exposurePenalty: number;
+  synergyMultiplier: number;
+  tacticalTrapReason?: string;
+}
+
+export function evaluateEnemyCounterExposure(
+  cand: Hero,
+  enemyHeroes: Hero[],
+  b1Openers: Record<string, any> = {}
+): EnemyCounterExposure {
+  if (enemyHeroes.length === 0) {
+    return { counteredByNames: [], counterCount: 0, exposurePenalty: 0, synergyMultiplier: 1.0 };
+  }
+
+  const counteredByNames: string[] = [];
+  const candCleanSlug = cand.slug.replace(/-/g, '').toLowerCase();
+
+  for (const eh of enemyHeroes) {
+    const ehCleanSlug = eh.slug.replace(/-/g, '').toLowerCase();
+    const directCounter = eh.counters.some((c) => c.target_id === cand.hero_id);
+    const reverseCountered = cand.countered_by?.some((c) => c.counter_id === eh.hero_id) ?? false;
+    const kplPrebans: Array<{ ban_id: number; count: number }> = b1Openers[String(cand.hero_id)]?.top_prebans || [];
+    const kplPrebanHit = kplPrebans.some((p) => p.ban_id === eh.hero_id && p.count >= 18);
+
+    const hokfireWeak =
+      (cand.hokfire_counters?.weak_against?.some((s) => s.replace(/-/g, '').toLowerCase() === ehCleanSlug) ?? false) ||
+      (eh.hokfire_counters?.strong_against?.some((s) => s.replace(/-/g, '').toLowerCase() === candCleanSlug) ?? false);
+
+    const hokstatsCountered =
+      (cand.hokstats_guide?.matchups?.some(
+        (m) => m.relation === 'countered_by' && m.hero_id === eh.hero_id && m.source.review_status === 'approved'
+      ) ?? false) ||
+      (eh.hokstats_guide?.matchups?.some(
+        (m) => m.relation === 'strong_against' && m.hero_id === cand.hero_id && m.source.review_status === 'approved'
+      ) ?? false);
+
+    if (directCounter || reverseCountered || hokfireWeak || hokstatsCountered || kplPrebanHit) {
+      counteredByNames.push(eh.name);
+    }
+  }
+
+  const counterCount = counteredByNames.length;
+  let exposurePenalty = 0;
+  let synergyMultiplier = 1.0;
+
+  // Non-linear compounding penalty & KPL synergy dampener when countered by 1, 2, or 3+ enemy heroes:
+  if (counterCount === 1) {
+    exposurePenalty = 0.55;
+    synergyMultiplier = 0.55;
+  } else if (counterCount === 2) {
+    exposurePenalty = 1.45;
+    synergyMultiplier = 0.10;
+  } else if (counterCount >= 3) {
+    exposurePenalty = 2.60 + (counterCount - 3) * 0.85;
+    synergyMultiplier = 0.0;
+  }
+
+  // Tactical profile composition trap checks (e.g. dive_vulnerable candidate into 2+ enemy divers/initiators)
+  let tacticalTrapReason: string | undefined = undefined;
+  const candTags = cand.tactical_profile?.tags;
+  if (candTags) {
+    const enemyDivers = enemyHeroes.filter(
+      (eh) =>
+        eh.tactical_profile?.tags.engage === true ||
+        (eh.tactical_profile?.tags.mobility === true && (eh.primary_role === 'Assassin' || eh.primary_role === 'Fighter')) ||
+        eh.primary_role === 'Assassin'
+    );
+    if (candTags.dive_vulnerable === true && enemyDivers.length >= 2) {
+      const divePenalty = enemyDivers.length >= 3 ? 0.70 : 0.40;
+      exposurePenalty += divePenalty;
+      synergyMultiplier = Math.min(synergyMultiplier, enemyDivers.length >= 3 ? 0.15 : 0.40);
+      tacticalTrapReason = `Rentan Dive (${enemyDivers.map((e) => e.name).join(', ')})`;
+    }
+  }
+
+  return {
+    counteredByNames,
+    counterCount,
+    exposurePenalty,
+    synergyMultiplier,
+    tacticalTrapReason,
+  };
 }
 
 export function runTournamentInference(
@@ -234,17 +385,25 @@ export function runTournamentInference(
   const candidateOpeners = rankedOpeners.filter(h => !isRiskyOpener(h)).slice(0, 8);
 
   // Determine Plan A and Plan B:
+  const hasExplicitUserPlan = Boolean(planAId || planBId);
   let planAHero: Hero | null = planAId ? idMap.get(planAId) || null : null;
   let planBHero: Hero | null = planBId ? idMap.get(planBId) || null : null;
 
-  // Auto-suggest Plan A if not specified
+  // Auto-suggest Plan A if not specified (prefer opener not already countered by enemy picks)
   if (!planAHero && rankedOpeners.length > 0) {
-    planAHero = rankedOpeners[0];
+    planAHero =
+      rankedOpeners.find((h) => evaluateEnemyCounterExposure(h, enemyHeroes, b1Openers).counterCount === 0) ||
+      rankedOpeners[0];
   }
   // Auto-suggest Plan B if not specified (pick hero with different role or primary lane)
   if (!planBHero && rankedOpeners.length > 1) {
-    const fallbackOp = rankedOpeners.find((h) => h.hero_id !== planAHero?.hero_id && h.primary_lane !== planAHero?.primary_lane);
-    planBHero = fallbackOp || rankedOpeners[1];
+    const fallbackOp = rankedOpeners.find(
+      (h) =>
+        h.hero_id !== planAHero?.hero_id &&
+        h.primary_lane !== planAHero?.primary_lane &&
+        evaluateEnemyCounterExposure(h, enemyHeroes, b1Openers).counterCount === 0
+    );
+    planBHero = fallbackOp || rankedOpeners.find((h) => h.hero_id !== planAHero?.hero_id) || rankedOpeners[1];
   }
 
   const isPlanABanned = Boolean(planAHero && bannedHeroIds.includes(planAHero.hero_id));
@@ -252,18 +411,27 @@ export function runTournamentInference(
   const isPlanBBanned = Boolean(planBHero && bannedHeroIds.includes(planBHero.hero_id));
   const isPlanBPicked = Boolean(planBHero && (ourHeroIds.includes(planBHero.hero_id) || enemyHeroIds.includes(planBHero.hero_id)));
 
-  // Resolve Active Planned Opener:
+  // Resolve Active Planned Opener (and auto-pivot if Plan A is hard-countered by enemy picks):
   let plannedOpener: Hero | null = null;
   let activePlan: 'PLAN_A' | 'PLAN_B' | 'AI_FALLBACK' = 'PLAN_A';
+  const planAExposure = planAHero ? evaluateEnemyCounterExposure(planAHero, enemyHeroes, b1Openers).counterCount : 0;
+  const planBExposure = planBHero ? evaluateEnemyCounterExposure(planBHero, enemyHeroes, b1Openers).counterCount : 0;
 
-  if (planAHero && !openerUnavailable.has(planAHero.hero_id) && (draftStep > 4 || !isRiskyOpener(planAHero))) {
+  if (
+    planAHero &&
+    !openerUnavailable.has(planAHero.hero_id) &&
+    (draftStep > 4 || !isRiskyOpener(planAHero)) &&
+    (planAExposure === 0 || (planBHero && planBExposure >= planAExposure))
+  ) {
     plannedOpener = planAHero;
     activePlan = 'PLAN_A';
   } else if (planBHero && !openerUnavailable.has(planBHero.hero_id) && (draftStep > 4 || !isRiskyOpener(planBHero))) {
     plannedOpener = planBHero;
     activePlan = 'PLAN_B';
   } else if (rankedOpeners.length > 0) {
-    plannedOpener = rankedOpeners[0];
+    plannedOpener =
+      rankedOpeners.find((h) => evaluateEnemyCounterExposure(h, enemyHeroes, b1Openers).counterCount === 0) ||
+      rankedOpeners[0];
     activePlan = 'AI_FALLBACK';
   }
 
@@ -332,8 +500,11 @@ export function runTournamentInference(
 
     const cand = heroes[i];
     const isImmobileCarry = isRiskyOpener(cand);
-    const tierBonus = { S: 0.35, A: 0.20, B: 0.05, C: -0.10, D: -0.25 }[cand.tier] || 0.0;
-    let score = (cand.win_rate - 0.48) * 4.0 + tierBonus + cand.pick_rate * 2.8;
+    const exposure = isPickPhase
+      ? evaluateEnemyCounterExposure(cand, enemyHeroes, b1Openers)
+      : { counteredByNames: [], counterCount: 0, exposurePenalty: 0, synergyMultiplier: 1.0 };
+
+    let score = computeTournamentBaseQuality(cand, b1Openers, draftStep, exposure.synergyMultiplier);
     let laneTag: string | undefined = undefined;
     let proComboTag: string | undefined = undefined;
 
@@ -347,6 +518,8 @@ export function runTournamentInference(
       }
       const kplOpenerInfo = b1Openers[String(cand.hero_id)];
       const p1BansCount = kplOpenerInfo?.p1_bans || 0;
+      const totalKplPresence = (kplOpenerInfo?.b1_picks || 0) + (kplOpenerInfo?.r1_r2_picks || 0) + p1BansCount;
+      const isCompetitiveSTier = cand.tier === 'S' && totalKplPresence >= 50;
 
       if (isBlueSide) {
         // BLUE SIDE (First Pick B1 Advantage):
@@ -356,9 +529,9 @@ export function runTournamentInference(
           laneTag = 'Jangan Di-Ban (Target B1)';
           proComboTag = `👑 Simpan untuk First-Pick B1 Kita!`;
         } else if (plannedOpener) {
-          // 2. HIGHEST PRIORITY: Ban hard counters to our planned B1 Meta Opener!
           const counterCheck = getCounterStrengthAgainst(cand, plannedOpener);
-          if (counterCheck.isCounter) {
+          if (hasExplicitUserPlan && counterCheck.isCounter) {
+            // 2A. User explicitly selected a Plan A/B hero: prioritize banning its hard counters!
             const prebanBoost = Math.min(0.55, counterCheck.kplPrebanCount / 160);
             score += 1.25 + prebanBoost;
             laneTag = `Counter ${plannedOpener.name}`;
@@ -366,16 +539,27 @@ export function runTournamentInference(
               counterCheck.kplPrebanCount > 0
                 ? `🎯 Amankan B1 ${plannedOpener.name}: Pre-Ban Counter (${counterCheck.kplPrebanCount}x di KPL)`
                 : `🎯 Amankan B1 ${plannedOpener.name}: Ban Hard Counter Utama`;
-          } else if (cand.primary_lane === plannedOpener.primary_lane && (cand.tier === 'S' || p1BansCount >= 80)) {
-            // 3. Same-lane S-Tier rival: if we pick `plannedOpener`, Red could respond with this rival at R1/R2
-            score += 0.65 + Math.min(0.35, p1BansCount / 400);
-            laneTag = `Deny Respon ${cand.primary_lane}`;
-            proComboTag = `🚫 Cegah Red ambil ${cand.name} di R1+R2 sbg lawan ${plannedOpener.name}`;
-          } else if (p1BansCount >= 120 || cand.ban_rate >= 0.25) {
-            // 4. High KPL Phase 1 Ban threat that Red could abuse in R1+R2 double pick
-            score += 0.55 + Math.min(0.40, p1BansCount / 500);
-            laneTag = 'Ancaman R1+R2 Red';
-            proComboTag = `🚫 Meta Threat R1+R2 (${p1BansCount}x Phase-1 Ban KPL)`;
+          } else {
+            // 2B. Default balanced Phase 1 Ban: prioritize R1+R2 tournament meta threats first,
+            // so niche B/C-tier counters (like Shouyue) don't crowd out top meta bans when no Plan A is locked.
+            if (p1BansCount >= 120 || cand.ban_rate >= 0.025 || isCompetitiveSTier) {
+              const metaThreatBoost =
+                (isCompetitiveSTier ? 0.50 : cand.tier === 'A' && totalKplPresence >= 50 ? 0.25 : 0.10) +
+                Math.min(0.65, p1BansCount / 850) +
+                Math.min(0.40, (cand.ban_rate || 0) * 6.5);
+              score += metaThreatBoost;
+              laneTag = 'Ancaman R1+R2 Red';
+              proComboTag = `🚫 Meta Threat R1+R2 (${p1BansCount}x Phase-1 Ban KPL)`;
+            }
+            if (counterCheck.isCounter && (p1BansCount >= 80 || isCompetitiveSTier || (cand.tier === 'A' && totalKplPresence >= 50))) {
+              score += 0.35 + Math.min(0.20, counterCheck.kplPrebanCount / 220);
+              laneTag = `Counter ${plannedOpener.name}`;
+              proComboTag = `🎯 Amankan B1 ${plannedOpener.name} & Deny Meta R1+R2`;
+            } else if (cand.primary_lane === plannedOpener.primary_lane && (isCompetitiveSTier || p1BansCount >= 180)) {
+              score += 0.30 + Math.min(0.25, p1BansCount / 600);
+              laneTag = `Deny Respon ${cand.primary_lane}`;
+              proComboTag = `🚫 Cegah Red ambil ${cand.name} di R1+R2 sbg lawan ${plannedOpener.name}`;
+            }
           }
         }
       } else {
@@ -392,16 +576,23 @@ export function runTournamentInference(
           proComboTag = `🚫 Cegah Blue First-Pick ${cand.name} di B1 (${kplOpenerInfo?.b1_picks || 'Top'}x B1 KPL)`;
         } else if (plannedOpener) {
           const counterCheck = getCounterStrengthAgainst(cand, plannedOpener);
-          if (counterCheck.isCounter) {
-            // 3. Ban hard counters to Red's planned R1+R2 core
+          if (hasExplicitUserPlan && counterCheck.isCounter) {
+            // 3. Ban hard counters to Red's explicitly planned R1+R2 core
             score += 1.05 + Math.min(0.40, counterCheck.kplPrebanCount / 180);
             laneTag = `Counter ${plannedOpener.name}`;
             proComboTag = `🛡️ Amankan R1+R2 ${plannedOpener.name}: Ban Counter Utama`;
-          } else if (cand.tier === 'S' && (kplOpenerInfo?.b1_picks || 0) >= 120) {
-            // Other S-Tier B1 openers Blue might take
-            score += 0.85 + Math.min(0.40, (kplOpenerInfo?.b1_picks || 0) / 400);
+          } else if (isCompetitiveSTier || (kplOpenerInfo?.b1_picks || 0) >= 160 || p1BansCount >= 500) {
+            // Other S-Tier / KPL B1 openers Blue might take
+            score +=
+              (isCompetitiveSTier ? 0.55 : 0.25) +
+              Math.min(0.45, (kplOpenerInfo?.b1_picks || 0) / 400) +
+              Math.min(0.35, p1BansCount / 1200);
             laneTag = 'Ancaman B1 Blue';
-            proComboTag = `🚫 Potensi First-Pick B1 Blue (${kplOpenerInfo?.b1_picks}x B1 KPL)`;
+            proComboTag = `🚫 Potensi First-Pick B1 Blue (${kplOpenerInfo?.b1_picks || 0}x B1 KPL)`;
+          } else if (counterCheck.isCounter) {
+            score += 0.45 + Math.min(0.25, counterCheck.kplPrebanCount / 220);
+            laneTag = `Counter ${plannedOpener.name}`;
+            proComboTag = `🛡️ Amankan R1+R2 ${plannedOpener.name}: Ban Counter Utama`;
           }
         }
       }
@@ -412,6 +603,8 @@ export function runTournamentInference(
     // =========================================================================
     else if (phaseId === 'PICK_PHASE_1') {
       const kplOpenerInfo = b1Openers[String(cand.hero_id)];
+      const hasKplOpenerCredibility =
+        (kplOpenerInfo?.b1_picks || 0) >= 90 || (kplOpenerInfo?.r1_r2_picks || 0) >= 180;
       const isPrimaryOccupied = ourOccupiedLanes.has(cand.primary_lane);
       const canFlexToVacant = cand.lanes.some((l) => ourVacantLanes.has(l));
 
@@ -433,17 +626,20 @@ export function runTournamentInference(
 
       // Step 4 is Blue B1 First Pick: Execute our Planned First-Pick Strategy!
       if (draftStep === 4 && plannedOpener && cand.hero_id === plannedOpener.hero_id) {
-        score += 1.45;
+        score += 1.45 * exposure.synergyMultiplier;
         laneTag = 'B1 Target Utama';
         proComboTag =
           bannedOpenerCounters.length > 0
             ? `👑 Eksekusi First-Pick B1! Counter (${bannedOpenerCounters.join(', ')}) sudah di-ban`
             : `👑 First-Pick Meta Prioritas #1 (B1 Opener)`;
-      } else if (draftStep <= 6 && !isImmobileCarry && (cand.tier === 'S' || (kplOpenerInfo?.b1_picks || 0) >= 100)) {
-        // Early Phase 1 (B1 / R1+R2) Meta Priority Bonus
-        const openerBoost = computeOpenerPriorityScore(cand, b1Openers, isBlueSide, onlyGlobalReleased) * 0.45;
+      } else if (draftStep <= 6 && !isImmobileCarry && hasKplOpenerCredibility) {
+        // Early Phase 1 (B1 / R1+R2) Meta Priority Bonus (requires empirical KPL opener credibility!)
+        const openerBoost =
+          computeOpenerPriorityScore(cand, b1Openers, isBlueSide, onlyGlobalReleased) *
+          0.45 *
+          exposure.synergyMultiplier;
         score += openerBoost;
-        if (!proComboTag && kplOpenerInfo?.b1_picks >= 80) {
+        if (!proComboTag && ((kplOpenerInfo?.b1_picks || 0) >= 80 || (kplOpenerInfo?.r1_r2_picks || 0) >= 180) && exposure.counterCount === 0) {
           proComboTag = `👑 Prioritas Pembuka Turnamen (${kplOpenerInfo.b1_picks}x B1 / ${kplOpenerInfo.r1_r2_picks}x R1-R2 KPL)`;
         }
       } else if (draftStep === 4 && isImmobileCarry && cand.hero_id !== plannedOpener?.hero_id) {
@@ -465,6 +661,7 @@ export function runTournamentInference(
       }
 
       // Empirical KPL Synergy & Chain CC Combos with Our Already-Picked Teammates
+      // (Dampened by `exposure.synergyMultiplier` so KPL synergy cannot override being countered by 2-3 enemy heroes!)
       for (const teammate of ourHeroes) {
         const p1 = Math.min(cand.hero_id, teammate.hero_id);
         const p2 = Math.max(cand.hero_id, teammate.hero_id);
@@ -476,8 +673,10 @@ export function runTournamentInference(
           const matches = pairData.matches || 0;
 
           if (matches >= 20 && pairData.win_rate >= 0.50) {
-            score += lift * 2.2 + 0.35;
-            proComboTag = `🔗 Kombo KPL: ${(pairData.win_rate * 100).toFixed(0)}% WR dg ${teammate.name} (${matches} Match)`;
+            score += (lift * 2.2 + 0.35) * exposure.synergyMultiplier;
+            if (exposure.counterCount < 2) {
+              proComboTag = `🔗 Kombo KPL: ${(pairData.win_rate * 100).toFixed(0)}% WR dg ${teammate.name} (${matches} Match)`;
+            }
           }
         }
 
@@ -485,13 +684,13 @@ export function runTournamentInference(
         if (hasEnemyDunshan) {
           if (dunshanPairs[pairKey]) {
             const dData = dunshanPairs[pairKey];
-            score += 0.55;
+            score += 0.55 * exposure.synergyMultiplier;
             proComboTag = `⚡ Counter Dunshan: ${cand.name} + ${teammate.name} (${(dData.win_rate_vs_dunshan * 100).toFixed(0)}% WR KPL)`;
           } else if (
             (cand.hero_id === 175 && teammate.hero_id === 106) ||
             (cand.hero_id === 106 && teammate.hero_id === 175)
           ) {
-            score += 0.65;
+            score += 0.65 * exposure.synergyMultiplier;
             proComboTag = '⚡ Chain CC: Hook Kui + Knockup S2 Xiao Qiao tembus Dunshan';
           }
         }
@@ -499,8 +698,8 @@ export function runTournamentInference(
         // HOKFIRE Official Synergy Check (e.g. Lady Sun + Zhang Fei / Lapulapu)
         const teamCleanSlug = teammate.slug.replace(/-/g, '').toLowerCase();
         if (cand.hokfire_counters?.synergizes?.some((s) => s.replace(/-/g, '').toLowerCase() === teamCleanSlug)) {
-          score += 0.40;
-          if (!proComboTag) {
+          score += 0.40 * exposure.synergyMultiplier;
+          if (!proComboTag && exposure.counterCount < 2) {
             proComboTag = `✨ Sinergi Duet HOKFIRE: Duet ideal bersama ${teammate.name}`;
           }
         }
@@ -640,7 +839,7 @@ export function runTournamentInference(
           : `⚔️ Counter Pick Fase 2: Menangkal ${counteredEnemies.join(', ')}`;
       }
 
-      // KPL Pro Synergy with our 3-4 picked heroes
+      // KPL Pro Synergy with our 3-4 picked heroes (dampened by enemy counter exposure!)
       for (const teammate of ourHeroes) {
         const p1 = Math.min(cand.hero_id, teammate.hero_id);
         const p2 = Math.max(cand.hero_id, teammate.hero_id);
@@ -649,8 +848,8 @@ export function runTournamentInference(
         if (proPairs[pairKey]) {
           const pairData = proPairs[pairKey];
           if (pairData.matches >= 20 && pairData.win_rate >= 0.50) {
-            score += (pairData.synergy_lift || 0) * 2.0 + 0.30;
-            if (!proComboTag) {
+            score += ((pairData.synergy_lift || 0) * 2.0 + 0.30) * exposure.synergyMultiplier;
+            if (!proComboTag && exposure.counterCount < 2) {
               proComboTag = `🔗 Sinergi Penutup KPL: ${(pairData.win_rate * 100).toFixed(0)}% WR dg ${teammate.name}`;
             }
           }
@@ -661,7 +860,7 @@ export function runTournamentInference(
             (cand.hero_id === 175 && teammate.hero_id === 106) ||
             (cand.hero_id === 106 && teammate.hero_id === 175)
           ) {
-            score += 0.65;
+            score += 0.65 * exposure.synergyMultiplier;
             proComboTag = '⚡ Chain CC: Hook Kui + Knockup S2 Xiao Qiao tembus Dunshan';
           }
         }
@@ -670,10 +869,10 @@ export function runTournamentInference(
       // Team Composition Radar Balancing (Frontline / CC gap)
       if (!isPrimaryOccupied) {
         if (frontline < 0.48 && (cand.primary_role === 'Tank' || cand.primary_role === 'Fighter')) {
-          score += 0.35;
+          score += 0.35 * exposure.synergyMultiplier;
           if (!proComboTag) proComboTag = '🛡️ Melengkapi Frontline Durability Tim';
         } else if (cc < 0.48 && (cand.primary_role === 'Support' || cand.primary_role === 'Tank' || cand.primary_role === 'Mage')) {
-          score += 0.30;
+          score += 0.30 * exposure.synergyMultiplier;
           if (!proComboTag) proComboTag = '⛓️ Melengkapi Rantai CC Lockdown Tim';
         }
       }
@@ -682,7 +881,22 @@ export function runTournamentInference(
     if (phaseId === 'PICK_PHASE_1' || phaseId === 'PICK_PHASE_2') {
       // One HoKStats bonus per verified enemy; combined source-derived bonus stays below a direct counter.
       const sourceBonuses = reviewedHoKStatsBonuses(cand, ourHeroes, enemyHeroes);
-      score += sourceBonuses.totalBonus;
+      score += Math.min(0.45, sourceBonuses.matchupBonus + sourceBonuses.traitBonus * exposure.synergyMultiplier);
+
+      // Apply enemy counter exposure penalty (compounding for 2-3+ counters + dive vulnerability trap)
+      score -= exposure.exposurePenalty;
+
+      if (exposure.counterCount >= 2) {
+        proComboTag = `⚠️ Rawan Di-Counter ${exposure.counterCount} Musuh (${exposure.counteredByNames.join(', ')})`;
+      } else if (exposure.counterCount === 1) {
+        if (proComboTag) {
+          proComboTag = `${proComboTag} (⚠️ Waspada Counter: ${exposure.counteredByNames[0]})`;
+        } else {
+          proComboTag = `⚠️ Waspada: Di-Counter ${exposure.counteredByNames[0]}`;
+        }
+      } else if (exposure.tacticalTrapReason && !proComboTag) {
+        proComboTag = `⚠️ ${exposure.tacticalTrapReason}`;
+      }
     }
 
     scoredCandidates.push({

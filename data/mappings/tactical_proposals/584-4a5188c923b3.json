@@ -1,0 +1,603 @@
+{
+  "schema_version": 2,
+  "hero_id": 584,
+  "source_hash": "4a5188c923b3cb8564bb78ab2713caccbe155b209b4d19ef85f4ac45d37e5b4d",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Flow of the World",
+          "desc": "Channels the Flow into the body to gain Attack Speed and enhance one of four stats: Health/Attack/Movement Speed/Cooldown. Can spend Flow to perform an enhanced Basic Attack that deals piercing physical damage."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Convergence",
+          "desc": "Deals physical damage to nearby enemies and knocks them back. Gains Health recovery, 5 stacks of Flow, and reduces the cooldown of Arrow of No Retreat and Arrowstorm."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Arrow of No Retreat",
+          "desc": "Shoots an enormous projectile at the target, dealing physical damage and knocking back non-hero units. Can dash a short distance after use."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Arrowstorm",
+          "desc": "Shoots multiple light projectiles at the target area, dealing physical damage and gaining Movement Speed."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Great self-peel",
+          "Excellent DPS",
+          "Strong poke damage"
+        ],
+        "cons": [
+          "Vulnerable to crowd control",
+          "Weak Early Game",
+          "Can be punished by Assassins"
+        ],
+        "gameplay_tips": "## Early Game\nFocus on farming and last-hitting minions to maximise the amount of gold you get. Use Skill 1 before getting to the minion wave so you can pierce through all the minions at once to help with your clear. Skill 2 can be used on minions to close the gap to the enemy to help you poke or help you escape danger.\n\n## Teamfights\nIn teamfights, always keep an eye on your positioning. Stay behind your team so you don't get jumped on by assassins. When using Flowborn marksman Ultimate, you will be a little exposed, so be sure to use it in a safe position. Save Skill 2 to reposition, whether that's away from the enemy to escape or close the gap to help you finish off low-health enemy heroes.\n\n## Tips & Tricks\nIn base Passive: Early Game > Damage ; Late Game > Movement Speed\nUse Ultimate twice to levitate over walls\nSkill 2 can be used to help last-hit minions or for mobility in fights"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": ""
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/flowborn-marksman/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Flow of the World",
+            "description": "Channels the Flow into the body to gain Attack Speed and enhance one of four stats: Health/Attack/Movement Speed/Cooldown. Can spend Flow to perform an enhanced Basic Attack that deals piercing physical damage.",
+            "type": "passive"
+          },
+          {
+            "name": "Convergence",
+            "description": "Deals physical damage to nearby enemies and knocks them back. Gains Health recovery, 5 stacks of Flow, and reduces the cooldown of Arrow of No Retreat and Arrowstorm.",
+            "type": "skill1"
+          },
+          {
+            "name": "Arrow of No Retreat",
+            "description": "Shoots an enormous projectile at the target, dealing physical damage and knocking back non-hero units. Can dash a short distance after use.",
+            "type": "skill2"
+          },
+          {
+            "name": "Arrowstorm",
+            "description": "Shoots multiple light projectiles at the target area, dealing physical damage and gaining Movement Speed. September 10 update: Ultimate - Arrowstorm: base damage 50 (+25 per skill level) (+24% Physical Attack) → 40 (+20 per skill level) (+21% Physical Attack).",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy lacks reliable healing reduction, leaving sustain unchecked",
+          "Your team needs a primary damage carry that scales with items and team-fight positioning",
+          "The enemy team lacks reliable assassin pressure, letting Flowborn (Marksman) free-cast through extended fights."
+        ],
+        "avoid_when": [
+          "The game state demands burst rather than slow attrition",
+          "The enemy stacks dive and assassins, making it impossible for the marksman to free-cast in fights",
+          "The enemy team is built around answers to Sustained Damage, removing the windows Flowborn (Marksman)'s kit needs to perform."
+        ],
+        "power_spikes": [
+          "Early game: farm safely behind the support, surviving lane phase to reach the marksman scaling window.",
+          "Lifesteal item online: trade patterns flip from neutral to favorable once sustain stacks with damage",
+          "Late game: full build online, Flowborn (Marksman) reaches the spike public guides describe — extended fights favor them once items are completed."
+        ],
+        "common_mistakes": [
+          "Forcing all-ins against opponents already wearing anti-heal — your healing barely activates.",
+          "Auto-attacking instead of repositioning when the enemy assassin is missing — losing the marksman loses the fight.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Flowborn (Marksman)'s commit reaches the target alive.",
+          "Auto-attacking through enemy dive instead of repositioning — losing the marksman in early fights collapses the late-game win condition."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 150,
+            "hero_name": "Han Xin",
+            "evidence": "Convergence knocks back divers like Han Xin and buys time to reposition.",
+            "source_hash": "3b9111b46fac3f275bb09f6ea9c72bd3039c0fb3c0d03ab77343462db646a2b8"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 131,
+            "hero_name": "Li Bai",
+            "evidence": "Convergence knocks Li Bai back as he dashes in.",
+            "source_hash": "b585c563f32aaece34a705cc787b1beb3aa97b98432a0feed1b5eb9ef3c7da0c"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 168,
+            "hero_name": "Lapulapu",
+            "evidence": "Island's Blessing dashes onto the marksman form and launches it.",
+            "source_hash": "8955eaf9c9399cd438df0b2984db3d49a2d398803d85b796eb246a747b4cc18c"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 153,
+            "hero_name": "Gao Changgong",
+            "evidence": "Gao Changgong approaches unseen and bursts the marksman form.",
+            "source_hash": "b0248e5647c0677307d17e202966a924ac1f313f97a058b08f89d5d9e2703df8"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 159,
+            "hero_name": "Dolia",
+            "source_hash": "d70a077010270bc766bb84854a5868235d8fc332f0f46bc735aaaf5d65a405ac"
+          },
+          {
+            "hero_id": 521,
+            "hero_name": "Haya",
+            "source_hash": "d70a077010270bc766bb84854a5868235d8fc332f0f46bc735aaaf5d65a405ac"
+          },
+          {
+            "hero_id": 542,
+            "hero_name": "Feyd",
+            "source_hash": "d70a077010270bc766bb84854a5868235d8fc332f0f46bc735aaaf5d65a405ac"
+          },
+          {
+            "hero_id": 171,
+            "hero_name": "Zhang Fei",
+            "source_hash": "d70a077010270bc766bb84854a5868235d8fc332f0f46bc735aaaf5d65a405ac"
+          },
+          {
+            "hero_id": 190,
+            "hero_name": "Kongming",
+            "source_hash": "d70a077010270bc766bb84854a5868235d8fc332f0f46bc735aaaf5d65a405ac"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.84,
+            "tidak": 0.104,
+            "tidak_diketahui": 0.056
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

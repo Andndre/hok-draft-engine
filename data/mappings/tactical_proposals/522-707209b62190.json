@@ -1,0 +1,607 @@
+{
+  "schema_version": 2,
+  "hero_id": 522,
+  "source_hash": "707209b62190edc57f837f19826895cd736eda3e5b88b569d3a0acc0d0c0c90b",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Gift of the Stars",
+          "desc": "Recovers Health when landing skill hits. Using any 3 skills enhances his next skill, and using the enhanced skill will enhance his next Basic Attack."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Starlight Slice",
+          "desc": "Deals damage to nearby enemies."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Starburn (Yao)",
+          "desc": "Moves quickly, dealing damage and slowing enemies in his path."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Return to Dust",
+          "desc": "Returns to his location 2s ago, removes Star Reduction, and deals damage to enemies in his path. Passive: Some of his damage taken is converted into Star Reduction after a short delay."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Jaga jarak. Yao cuma bisa milih antara burst atau gerak lincah, gak bisa dua-duanya."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/yao/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Gift of the Stars",
+            "description": "Recovers Health when landing skill hits. Using any 3 skills enhances his next skill, and using the enhanced skill will enhance his next Basic Attack.",
+            "type": "passive"
+          },
+          {
+            "name": "Starlight Slice",
+            "description": "Deals damage to nearby enemies.",
+            "type": "skill1"
+          },
+          {
+            "name": "Star Rush",
+            "description": "Moves quickly, dealing damage and slowing enemies in his path.",
+            "type": "skill2"
+          },
+          {
+            "name": "Return to Dust",
+            "description": "Returns to his location 2s ago, removes Star Reduction, and deals damage to enemies in his path. Passive: Some of his damage taken is converted into Star Reduction after a short delay.",
+            "type": "ultimate"
+          },
+          {
+            "name": "Brilliance: Starlight Slice",
+            "description": "Deals damage to nearby enemies.",
+            "type": "skill1"
+          },
+          {
+            "name": "Brilliance: Star Rush",
+            "description": "Moves quickly, dealing damage and slowing enemies in his path.",
+            "type": "skill2"
+          },
+          {
+            "name": "Brilliance: Return to Dust",
+            "description": "Returns to his location 2s ago, removes Star Reduction, and deals damage to enemies in his path. Passive: Some of his damage taken is converted into Star Reduction after a short delay.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has carries with limited self-peel that Yao can reach before the team can react",
+          "The enemy team relies on long-cooldown engage skills that leave them vulnerable post-fight",
+          "The enemy draft includes Angela, Mi Yue, and Ziya, who appear in counter data as matchups Yao can pressure."
+        ],
+        "avoid_when": [
+          "The team needs sustained team-fight damage rather than a single-target diver",
+          "The enemy team disengages well, so cleanup windows never open",
+          "The enemy team is built around answers to Gap-Close, removing the windows Yao's kit needs to perform."
+        ],
+        "power_spikes": [
+          "Early game: jungle clear into level-4 ganks is the first window where Yao can translate routes into kills.",
+          "Mid game: with cooldown reduction online, gap-close skills come back fast enough to chain into multiple fights",
+          "Late game: cooldowns become short enough that Star Rush influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Diving while enemy hard control is still up, which directly counters Yao's engage.",
+          "Engaging first instead of second — cleanup picks lose their value as primary engagers.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Yao's commit reaches the target alive.",
+          "Pathing predictably and getting tracked by the enemy jungler — vary first clear and rotate based on ward placement rather than muscle memory."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 142,
+            "hero_name": "Angela",
+            "evidence": "Angela",
+            "source_hash": "36b5bf8c6cd634d167e3cfdb559918eaa32958f23585e4a6725fcc8e0251ac38"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 121,
+            "hero_name": "Mi Yue",
+            "evidence": "Mi Yue",
+            "source_hash": "8f23c3a70508faa0f2c8925ec39aa70fb73c22aad0f8c95b84053df564eee739"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 148,
+            "hero_name": "Ziya",
+            "evidence": "Ziya",
+            "source_hash": "f332d07c935e41f72dd89f0df660bb4979b7540abc41abc13ae018fb7db0519c"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 180,
+            "hero_name": "Nezha",
+            "evidence": "Fire-tipped Spear cuts the Health Yao recovers from skill hits.",
+            "source_hash": "1e1159830e422a0c17b2582c50321ef3965e37fc884a505b431009ab0e929603"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 187,
+            "hero_name": "Donghuang",
+            "evidence": "Forsaken Contract suppresses Yao before he can use Return to Dust.",
+            "source_hash": "2fe322a64ff0a64299b1cea493617eb9c1bff51c54671eda6f1f87d93df5a36a"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 199,
+            "hero_name": "Arli",
+            "source_hash": "6da209589715d615b64f2f42a785fc74e0e26eef602e54d99d50d581441a6922"
+          },
+          {
+            "hero_id": 191,
+            "hero_name": "Da Qiao",
+            "source_hash": "6da209589715d615b64f2f42a785fc74e0e26eef602e54d99d50d581441a6922"
+          },
+          {
+            "hero_id": 133,
+            "hero_name": "Di Renjie",
+            "source_hash": "6da209589715d615b64f2f42a785fc74e0e26eef602e54d99d50d581441a6922"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

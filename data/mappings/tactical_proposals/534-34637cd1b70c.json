@@ -1,0 +1,582 @@
+{
+  "schema_version": 2,
+  "hero_id": 534,
+  "source_hash": "34637cd1b70c7d3b38f965bdb422a295625ec87e7e340b7d67a86e2b1b75ae62",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Firefly Protection",
+          "desc": "Basic Attacks and skills summon fireflies that deal extra damage to enemies and grant vision of them. Periodically heals teammates. Can charge up his Basic Attack to heal himself."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Mulberry Power",
+          "desc": "Launches and damages enemies in front while summoning fireflies to heal teammates or damage enemies."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Ride the Wind",
+          "desc": "Flies to a brush while summoning fireflies that heal teammates or damage enemies."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Firefly Fields",
+          "desc": "Summons a brush and can fly into it by using this skill again. The brush summons fireflies over time that heal teammates or damage enemies."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Bisa di-counter hero burst dan hero hard CC."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/sakeer/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Firefly Protection",
+            "description": "Basic Attacks and skills summon fireflies that deal extra damage to enemies and grant vision of them. Periodically heals teammates, or can charge up his Basic Attack to heal himself instead.",
+            "type": "passive"
+          },
+          {
+            "name": "Mulberry Power",
+            "description": "Launches and damages enemies in front while summoning fireflies to heal teammates or damage enemies.",
+            "type": "skill1"
+          },
+          {
+            "name": "Ride the Wind",
+            "description": "Flies to a brush while summoning fireflies that heal teammates or damage enemies.",
+            "type": "skill2"
+          },
+          {
+            "name": "Firefly Fields",
+            "description": "Summons a brush and can fly into it by using this skill again. The brush summons fireflies over time that heal teammates or damage enemies.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team needs a setup hero whose Ride the Wind creates kill windows for the carry",
+          "Your team has the structure to use his ability to protect the marksman, set vision, and engage on cooldown windows, since Sakeer delivers utility, vision, and timely peel for the carries.",
+          "The enemy draft includes Ying and Luna, who appear in counter data as matchups Sakeer can pressure."
+        ],
+        "avoid_when": [
+          "The enemy team is loaded with cleanse, dashes, and immunity that bypass crowd control",
+          "Your team needs a damage pick more than Sakeer's specialty, leaving the role unfilled if you commit here.",
+          "The enemy already drafted Haya, who counter data identifies as direct answers to Sakeer."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Sakeer's mid-game tools come online.",
+          "Ultimate online: Firefly Fields extends control duration, making team fights snowball off a single hit",
+          "Late game: cooldowns become short enough that Ride the Wind influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Throwing Ride the Wind on the front-line tank instead of saving it for backline carries.",
+          "Ignoring Haya on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Forgetting vision while looking for picks — losing the marksman because the support roamed without setting wards is a recurring mistake."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 538,
+            "hero_name": "Ying",
+            "evidence": "Ying",
+            "source_hash": "d6d2f0e047b2d05504ab63b223ce2ee539e4c9d1e4e348944c78e40b05db3f49"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 146,
+            "hero_name": "Luna",
+            "evidence": "Luna",
+            "source_hash": "0de4544e1d9d9e414236a4c1fa0ff9cb44b367b95a79dd071c8a6ab78451b919"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 521,
+            "hero_name": "Haya",
+            "evidence": "Haya",
+            "source_hash": "a88d1bef10f0286735692c9b0acd109bbd8753e7d2ba7930f9bfa4847b35e75a"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 133,
+            "hero_name": "Di Renjie",
+            "source_hash": "f0649802bc67dc247a771f2ce34ec3c7b04e88ffc732b1064fcf3e053714125d"
+          },
+          {
+            "hero_id": 179,
+            "hero_name": "Nuwa",
+            "source_hash": "f0649802bc67dc247a771f2ce34ec3c7b04e88ffc732b1064fcf3e053714125d"
+          },
+          {
+            "hero_id": 199,
+            "hero_name": "Arli",
+            "source_hash": "f0649802bc67dc247a771f2ce34ec3c7b04e88ffc732b1064fcf3e053714125d"
+          },
+          {
+            "hero_id": 125,
+            "hero_name": "Yango",
+            "source_hash": "f0649802bc67dc247a771f2ce34ec3c7b04e88ffc732b1064fcf3e053714125d"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.91,
+            "tidak": 0.0585,
+            "tidak_diketahui": 0.0315
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.07,
+            "tidak": 0.8,
+            "tidak_diketahui": 0.13
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

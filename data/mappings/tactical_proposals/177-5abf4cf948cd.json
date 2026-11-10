@@ -1,0 +1,600 @@
+{
+  "schema_version": 2,
+  "hero_id": 177,
+  "source_hash": "5abf4cf948cd5f9c6f0ac9b71cb5a89d8f0ff3b43889956b69383ced22d63d68",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Hunting",
+          "desc": "Whenever he moves through brush, gains Movement Speed and enhances his next Basic Attack to a double shot that deals extra damage. Leaps when emerging from brush."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Soaring Signal",
+          "desc": "Leaps into the air, gaining Movement Speed and allowing him to traverse terrain. While airborne, his Basic Attack fires a powerful arrow, dealing physical damage and knocking back enemies."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Lupine Trap",
+          "desc": "Throws a wolf spirit trap at a target location. When triggered, it deals physical damage and summons a wolf spirit to attack the enemy."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Leader Stance",
+          "desc": "Summons wolf spirits and gains the ability to shoot while moving. Also boosts Physical Attack, Movement Speed, and Attack Speed for 8s."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": ""
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/chano/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Hunting",
+            "description": "Whenever he moves through brush, gains Movement Speed and enhances his next Basic Attack to a double shot that deals extra damage. Leaps when emerging from brush.",
+            "type": "passive"
+          },
+          {
+            "name": "Soaring Signal",
+            "description": "Leaps into the air, gaining Movement Speed and allowing him to traverse terrain. While airborne, his Basic Attack fires a powerful arrow, dealing physical damage and knocking back enemies.",
+            "type": "skill1"
+          },
+          {
+            "name": "Lupine Trap",
+            "description": "Throws a wolf spirit trap at a target location. When triggered, it deals physical damage and summons a wolf spirit to attack the enemy.",
+            "type": "skill2"
+          },
+          {
+            "name": "Leader Stance",
+            "description": "Summons wolf spirits and gains the ability to shoot while moving. Also boosts Physical Attack, Movement Speed, and Attack Speed for 8s.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team can engage first, letting Chano second-wave into low-health targets",
+          "The enemy team has front-line targets that Chano can chip down with sustained ranged damage",
+          "The enemy draft includes Liu Bei and Shouyue, who appear in counter data as matchups Chano can pressure."
+        ],
+        "avoid_when": [
+          "Your team has no primary engage, leaving the cleanup pick with nothing to follow up on",
+          "The game is decided early before the marksman can hit core item spikes",
+          "The enemy already drafted Ziya and Mai Shiranui, who counter data identifies as direct answers to Chano."
+        ],
+        "power_spikes": [
+          "Early game: farm safely behind the support, surviving lane phase to reach the marksman scaling window.",
+          "Ultimate online: Leader Stance provides the cleanup finisher once the enemy commits cooldowns",
+          "Late game: full build online, Chano reaches the spike public guides describe — extended fights favor him once items are completed."
+        ],
+        "common_mistakes": [
+          "Engaging first instead of second — cleanup picks lose their value as primary engagers.",
+          "Auto-attacking instead of repositioning when the enemy assassin is missing — losing the marksman loses the fight.",
+          "Ignoring Ziya and Mai Shiranui on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Auto-attacking through enemy dive instead of repositioning — losing the marksman in early fights collapses the late-game win condition."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 503,
+            "hero_name": "Biron",
+            "evidence": "Leader Stance lets Chano shoot while moving and kite slow melee fighters like Biron.",
+            "source_hash": "849cc2518c185eb9aeaa740be99063ffd07c6f58b745f34df743e33b198b81ef"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 123,
+            "hero_name": "Lu Bu",
+            "evidence": "Leader Stance lets Chano kite Lu Bu while shooting on the move.",
+            "source_hash": "de913a8520d9bf8ba3b09f470317d18614850b1a8536f50282ceb8d552a2ef6b"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 192,
+            "hero_name": "Huang Zhong",
+            "evidence": "Lay the Mines grants vision, denying the brush ambushes Chano relies on.",
+            "source_hash": "494e1faa3897ad7f40fd048ec8cfe27cb108f570a0596c69a01ea52cf30e3f57"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 187,
+            "hero_name": "Donghuang",
+            "evidence": "Forsaken Contract suppresses Chano, who relies on Leader Stance to kite.",
+            "source_hash": "42cd1dfb43012dc5d35907bdf30a52d7b693d31fcdc5aa18deddb1500b2a5848"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 556,
+            "hero_name": "Ata",
+            "source_hash": "75c1f02407ad99c8a0fa0295bc06f33a5b8eb3a083fd14e991b834511ddd6f31"
+          },
+          {
+            "hero_id": 157,
+            "hero_name": "Mai Shiranui",
+            "source_hash": "75c1f02407ad99c8a0fa0295bc06f33a5b8eb3a083fd14e991b834511ddd6f31"
+          },
+          {
+            "hero_id": 184,
+            "hero_name": "Cai Yan",
+            "source_hash": "75c1f02407ad99c8a0fa0295bc06f33a5b8eb3a083fd14e991b834511ddd6f31"
+          },
+          {
+            "hero_id": 581,
+            "hero_name": "Flowborn (Tank)",
+            "source_hash": "75c1f02407ad99c8a0fa0295bc06f33a5b8eb3a083fd14e991b834511ddd6f31"
+          },
+          {
+            "hero_id": 179,
+            "hero_name": "Nuwa",
+            "source_hash": "75c1f02407ad99c8a0fa0295bc06f33a5b8eb3a083fd14e991b834511ddd6f31"
+          },
+          {
+            "hero_id": 171,
+            "hero_name": "Zhang Fei",
+            "source_hash": "75c1f02407ad99c8a0fa0295bc06f33a5b8eb3a083fd14e991b834511ddd6f31"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

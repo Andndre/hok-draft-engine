@@ -1,0 +1,605 @@
+{
+  "schema_version": 2,
+  "hero_id": 139,
+  "source_hash": "9e69c80d64fc416531163fcd6cc4d90f44f3dc6ffdc373ab30e1e95baa44002f",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Ancient Wisdom",
+          "desc": "After landing 5 Basic Attacks, he becomes enhanced. While enhanced, he gains Attack Speed and Movement Speed. Each Basic Attack deals extra true damage and reduces the cooldown of Skill 1 and Skill 2."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Corporal Punishment",
+          "desc": "Swings his ferule in the target direction, pulling enemies in its path to his location while dealing damage and slowing them."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Intuition",
+          "desc": "Enhances himself. While enhanced, he reflects every enemy hero's 1st Basic Attack and slows them. Passive: Basic Attacks have a chance of turning into 2 consecutive Basic Attacks. Passive: Each basic attack has a 25% chance to strike twice, with the second attack dealing 50% damage and applying on-hit effects."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Sage's Might",
+          "desc": "Charges in the target direction, dealing damage to the 1st enemy hero hit and restricting their movement to a fixed area for a while. Restricted targets deal less damage."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Control Fuzi bisa dihindarin pakai gerakan lincah. Hero tipis jaga jarak dari Fuzi pas fight."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/fuzi/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Ancient Wisdom",
+            "description": "After landing 5 Basic Attacks, he becomes enhanced. While enhanced, he gains Attack Speed and Movement Speed. Each Basic Attack deals extra true damage and reduces the cooldown of Skills 1 and 2.",
+            "type": "passive"
+          },
+          {
+            "name": "Corporal Punishment",
+            "description": "Swings his ferule in the target direction, pulling enemies in its path to his location while dealing damage and slowing them.",
+            "type": "skill1"
+          },
+          {
+            "name": "Intuition",
+            "description": "Enhances himself. While enhanced, he reflects every enemy hero's 1st Basic Attack and slows them. Passive: Basic Attacks have a chance of turning into 2 consecutive Basic Attacks.",
+            "type": "skill2"
+          },
+          {
+            "name": "Sage's Might",
+            "description": "Charges in the target direction, dealing damage to the 1st enemy hero hit and restricting their movement to a fixed area for a while. Restricted targets deal less damage.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your draft can capitalize on early picks and snowball lane leads",
+          "Your team has the structure to use his ability to soak pressure in lane and threaten side objectives, since Fuzi delivers a durable front-line presence with steady wave control.",
+          "The enemy draft includes Milady, Luna, and Mai Shiranui, who appear in counter data as matchups Fuzi can pressure."
+        ],
+        "avoid_when": [
+          "Enemy peel is strong and Fuzi cannot reach the backline without dying first",
+          "Your team needs a mid pick more than Fuzi's specialty, leaving the role unfilled if you commit here.",
+          "A stronger pick in the same role is open and the matchup does not specifically reward Fuzi's Gap-Close."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Fuzi's mid-game tools come online.",
+          "Ultimate unlocked: Sage's Might converts mobility into burst, the moment Fuzi starts threatening picks across the map",
+          "Late game: full build online, Fuzi reaches the spike public guides describe — extended fights favor him once items are completed."
+        ],
+        "common_mistakes": [
+          "Engaging without follow-up — gap-close gets you to the target, but a solo dive without ally damage trades 1-for-1.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Fuzi's commit reaches the target alive.",
+          "Forcing solo engages instead of waiting for ally commit — Fuzi's value compounds when the team follows up on engages."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 504,
+            "hero_name": "Milady",
+            "evidence": "Milady",
+            "source_hash": "07435cdd498b8a0f918045e78e5813b3431b04339ec19816d245fdf2d64275a1"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 146,
+            "hero_name": "Luna",
+            "evidence": "Luna",
+            "source_hash": "9d9835e733aee746023f6b258a8cd5dfb82de2255b3da14fbe30dbaf742599be"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 157,
+            "hero_name": "Mai Shiranui",
+            "evidence": "Mai Shiranui",
+            "source_hash": "98c3fea3e5f988e9c82177196f203d5489e6f39a83ec063d5fa197702805d40f"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 536,
+            "hero_name": "Charlotte",
+            "evidence": "Sage's Might traps Charlotte in a fixed area, limiting her dashes.",
+            "source_hash": "ed6202fe2395a2f1586e7792db665f5aed2eeeda082cef8c8e08e46a001685eb"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 140,
+            "hero_name": "Guan Yu",
+            "evidence": "Sage's Might restricts Guan Yu's movement, stopping his charge.",
+            "source_hash": "4bb68a92d97fcf9485846f8d560570bd8bad51183271ff6ddfd8aeeac923c87f"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 152,
+            "hero_name": "Wang Zhaojun",
+            "evidence": "Frigid Prison freezes Fuzi before he can land Sage's Might.",
+            "source_hash": "0608afd53479076d7510acbcff24052d9204da837c7df1a46a9d834a34dae0ed"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 109,
+            "hero_name": "Daji",
+            "evidence": "Daji's skill burst bypasses Intuition, which only reflects Basic Attacks.",
+            "source_hash": "a88838ce423ab7cfba86f7f0955b2e994d69de28c2dacef447ddb2caa0fb512f"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 191,
+            "hero_name": "Da Qiao",
+            "source_hash": "61479e8597c71372b94b347c06e1b348f0a438bf79b3b43fc020e1ef3212ebd0"
+          },
+          {
+            "hero_id": 502,
+            "hero_name": "Pei",
+            "source_hash": "61479e8597c71372b94b347c06e1b348f0a438bf79b3b43fc020e1ef3212ebd0"
+          },
+          {
+            "hero_id": 179,
+            "hero_name": "Nuwa",
+            "source_hash": "61479e8597c71372b94b347c06e1b348f0a438bf79b3b43fc020e1ef3212ebd0"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

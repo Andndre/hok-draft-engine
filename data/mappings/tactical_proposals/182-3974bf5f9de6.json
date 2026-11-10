@@ -1,0 +1,618 @@
+{
+  "schema_version": 2,
+  "hero_id": 182,
+  "source_hash": "3974bf5f9de63f2c00c4312e34da2064e4c8148982f8a0d377bfd04d3da561d1",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Forever Entwined",
+          "desc": "Basic Attacks deal extra damage.Flying Sword hits apply Sword Energy to targets, and Flying Swords dealextra damage to targets marked with Sword Energy."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Guard Her Grave",
+          "desc": "Launches Splitting Sword and moves backwards, knocking back the enemyand dealing damage while reducing their Magical Defense."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Coupled Blades - Short",
+          "desc": "Launches a Flying Sword, dealing damage to enemies in its path."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Coupled Blades - Long",
+          "desc": "Launches a Flying Sword, dealing damage to enemies in its path."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Jangkauan dan lintasan pedang terbang Gan & Mo itu tetap, jadi mending cepet nempel. 2) Area pedangnya lebar tapi bagian tengahnya kosong dan gak kasih damage."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/gan-mo/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Forever Entwined",
+            "description": "Basic Attacks deal extra damage. Flying sword skills have a shared usage cap. When flying swords hit, place Sword Energy on targets, and flying swords deal extra damage to targets marked with Sword Energy.",
+            "type": "passive"
+          },
+          {
+            "name": "Guard Her Grave",
+            "description": "Unleashes Splitting Sword and moves backwards, knocking back enemies and dealing damage while reducing their Magical Defense.",
+            "type": "skill1"
+          },
+          {
+            "name": "Coupled Blades - Short",
+            "description": "Throws flying swords that deal damage to enemies in their path.",
+            "type": "skill2"
+          },
+          {
+            "name": "Coupled Blades - Long",
+            "description": "Throws flying swords that deal damage to enemies in their path.",
+            "type": "skill3"
+          },
+          {
+            "name": "Freshly Forged",
+            "description": "Immediately gains 2 uses of flying sword skill and summons more swords to enhance the next flying sword skill. Passive: Increases field of vision and grants one additional use of Coupled Blades. Each time a flying sword hits an enemy, the cooldown of Freshly Forged is reduced.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team lacks reliable burst on isolated picks and needs single-target finishing damage",
+          "Your team has the structure to use their ability to farm safely and rotate to side lanes when the wave allows, since Gan & Mo delivers consistent damage output and timely roams.",
+          "The enemy draft includes Cirrus, Jing, and Pei, who appear in counter data as matchups Gan & Mo can pressure."
+        ],
+        "avoid_when": [
+          "You need sustained damage rather than one-shot windows tied to Coupled Blades - Long's cooldown",
+          "Your team needs a jungle pick more than Gan & Mo's specialty, leaving the role unfilled if you commit here.",
+          "The enemy already drafted Butterfly and Sun Ce, who counter data identifies as direct answers to Gan & Mo."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Gan & Mo's mid-game tools come online.",
+          "Two-item spike: once core damage is online, Gan & Mo's Coupled Blades - Short starts one-shotting backline picks",
+          "Late game: full build online, Gan & Mo reaches the spike public guides describe — extended fights favor them once items are completed."
+        ],
+        "common_mistakes": [
+          "Committing Coupled Blades - Long when the target still has a shield, dash, or cleanse available, wasting the cooldown.",
+          "Ignoring Butterfly and Sun Ce on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Greeding farm in mid lane while side lanes get camped — rotation timing matters more than CS lead in most matchups."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 506,
+            "hero_name": "Cirrus",
+            "evidence": "Cirrus",
+            "source_hash": "4ace042794ab642892354092bce82c621485866be53fe2b7b0ae5d78fb3f4d26"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 531,
+            "hero_name": "Jing",
+            "evidence": "Jing",
+            "source_hash": "5491501df0f9bec9a7baacec81dc13909b09c5767989a2ecad590bb109fe41ba"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 502,
+            "hero_name": "Pei",
+            "evidence": "Pei",
+            "source_hash": "ade373157f803aa3d867b2918436b842e2c1d16dcc07e391a9d57fce2d18c2ae"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 646,
+            "hero_name": "Butterfly",
+            "evidence": "Butterfly",
+            "source_hash": "c5a8a665f057cd0d2ae5eaeaf53d4f79ec6114acd7395447133c9509015811e6"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 510,
+            "hero_name": "Sun Ce",
+            "evidence": "Sun Ce",
+            "source_hash": "39b151bc0388eb76a4833b47a7d0e85e05647cf4611d0b5b7de8484249121af9"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 542,
+            "hero_name": "Feyd",
+            "evidence": "Wall-walking lets Feyd reach Gan Mo, a long-range mage with no escape.",
+            "source_hash": "2be2a36c3107040a05d35d9882080902365fcd07c1f093fb673c274e74c7de6a"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 196,
+            "hero_name": "Shouyue",
+            "source_hash": "527024f889837bb2d6040e029c4b63cf22a40042692bf71cfa3726bac3a8a172"
+          },
+          {
+            "hero_id": 167,
+            "hero_name": "Wukong",
+            "source_hash": "527024f889837bb2d6040e029c4b63cf22a40042692bf71cfa3726bac3a8a172"
+          },
+          {
+            "hero_id": 153,
+            "hero_name": "Gao Changgong",
+            "source_hash": "527024f889837bb2d6040e029c4b63cf22a40042692bf71cfa3726bac3a8a172"
+          },
+          {
+            "hero_id": 134,
+            "hero_name": "Dharma",
+            "source_hash": "527024f889837bb2d6040e029c4b63cf22a40042692bf71cfa3726bac3a8a172"
+          },
+          {
+            "hero_id": 187,
+            "hero_name": "Donghuang",
+            "source_hash": "527024f889837bb2d6040e029c4b63cf22a40042692bf71cfa3726bac3a8a172"
+          },
+          {
+            "hero_id": 193,
+            "hero_name": "Kaizer",
+            "source_hash": "527024f889837bb2d6040e029c4b63cf22a40042692bf71cfa3726bac3a8a172"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.84,
+            "tidak": 0.104,
+            "tidak_diketahui": 0.056
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

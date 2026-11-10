@@ -1,0 +1,844 @@
+{
+  "schema_version": 2,
+  "hero_id": 174,
+  "source_hash": "0d35adbcccc8159ec64070c9d3f7d469406fc3215e2b4d6bd747bc2701447198",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Blessing of the Dryads",
+          "desc": "Basic Attacks have a chance to grant an extra Basic Attack that dealsdamage and slows the enemy."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Oak Bolt",
+          "desc": "Fires an arrow in the target direction, dealing damage to enemies hit"
+        },
+        {
+          "type": "Skill 2",
+          "name": "Protecting Winds",
+          "desc": "Removes crowd control effects while gaining increased Movement Speedand invulnerability to physical damage for a period of time.The next Basic Attack will trigger Blessing of the Dryads.Passive: Gains increased Attack Speed."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Vaulting Shot",
+          "desc": "Jumps to the target, stunning and slowing them, then flips back to the start point and shoots 2 bolts at them. Gains immunity while using this skill and Attack Speed upon landing."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Strong against physical damage",
+          "Excellent kiting",
+          "Great self-peel"
+        ],
+        "cons": [
+          "Weak against magic damage",
+          "Weak late-game damage",
+          "Struggles against tanks"
+        ],
+        "gameplay_tips": "## Early Game\nFocus on farming minions and jungle camps until you get your first items. Consort Yu scales with attack speed, and with no attack speed early on, she can struggle. Use Skill 1 Oak Bolt to last-hit minions and poke the enemy at a safe range. Skill 2 Protecting Winds will save your life more than you think. Save it for when the enemy markman want to commit or for enemy jungle ganks.\n\n## Teamfights\nIn teamfights, stay behind your frontline and hit the first enemy in front of you. Don't use Skill 2 too early; instead, save it for when the enemy is looking to dive onto you. Keep moving and repositioning in fights; your slows from your passive help you kite well in teamfights. Consort Yu's ultimate Vaulting Shot is a great chasing tool to stun enemies but can also be used to escape danger, so use it wisely.\n\n## Tips & Tricks\nUse Consort Yu's passive to attack and kite enemies\nTry to bait enemies in when you have Skill 2 up to surprise them and kill them in a 1 vs 1\nConsort Yu's Ultimate is best used as a reposition tool if you get jumped on by enemies"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Poke skill 1 Consort Yu bisa dihindarin. 2) Pas dia dateng gank, mundur ke tower lebih awal. 3) Kalau pakai assassin fisik, tunggu efek skill 2-nya abis baru cast skill."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/consort-yu/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Blessing of the Dryads",
+            "description": "Basic Attacks have a chance to shoot two bolts in a row and inflict slow.",
+            "type": "passive"
+          },
+          {
+            "name": "Oak Bolt",
+            "description": "Charges up and shoots a bolt in the target direction, dealing damage to enemies in its path. The higher her Attack Speed, the shorter the charge time.",
+            "type": "skill1"
+          },
+          {
+            "name": "Protecting Winds",
+            "description": "Gains Movement Speed and enhances the next Basic Attack. During this effect, becomes Invulnerable to physical damage. Upon learning, gains a permanent Attack Speed boost and enhanced Passive effect.",
+            "type": "skill2"
+          },
+          {
+            "name": "Vaulting Shot",
+            "description": "Jumps at a target, slowing and stunning them, then returns to the original location, gaining an Attack boost and shooting bolts. The higher her Attack Speed, the more bolts are shot.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your draft can capitalize on early picks and snowball lane leads",
+          "Your team wants to siege objectives where ranged poke whittles down defenders",
+          "The enemy draft includes Marco Polo and Han Xin, who appear in counter data as matchups Consort Yu can pressure."
+        ],
+        "avoid_when": [
+          "The enemy stacks crowd control that interrupts the engage before damage goes out",
+          "The team fight will happen in cramped jungle spaces where poke ranges are minimized",
+          "The enemy already drafted Luna and Diaochan, who counter data identifies as direct answers to Consort Yu."
+        ],
+        "power_spikes": [
+          "Early game: farm safely behind the support, surviving lane phase to reach the marksman scaling window.",
+          "Mid game: with cooldown reduction online, gap-close skills come back fast enough to chain into multiple fights",
+          "Late game: with full damage online, sustained DPS outpaces enemy healing in extended fights."
+        ],
+        "common_mistakes": [
+          "Diving while enemy hard control is still up, which directly counters Consort Yu's engage.",
+          "Spending mana on poke that does not threaten kills, leaving you empty for the actual fight.",
+          "Ignoring Luna and Diaochan on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Auto-attacking through enemy dive instead of repositioning — losing the marksman in early fights collapses the late-game win condition."
+        ],
+        "pros": [],
+        "cons": [
+          "虞姬",
+          "Marksman",
+          "Save a hero you want to play. You can undo it any time.",
+          "Hero saved",
+          "Consort Yu · Saved on this device",
+          "View Saved",
+          "Saved on this device. Sync is pending.",
+          "Could not save this change. Check the current saved state and try again.",
+          "Fan favorites · No votes yet",
+          "Fan favorites",
+          "This week",
+          "Votes this week",
+          "—",
+          "Participating voters",
+          "3 votes a day. 1 per hero. A new poll every week.",
+          "Voting for this form opens soon.",
+          "Explore the hero guide",
+          "No login needed. Your daily votes stay on this browser.",
+          "Consort Yu is also known as Yu Ji (虞姬) in Chinese Honor of Kings references.",
+          "Quick summary",
+          "Consort Yu is a strong Farm Marksman who wants to close distance and snowball off picks. Public guides recommend a build starting with Boots of Dexterity. Watch for Luna-style counters in the enemy draft.",
+          "The HoKStats app is live on the App Store and Google Play. Take tier lists, builds and counters with you.",
+          "Download on the App Store",
+          "Get it on Google Play",
+          "Download the app",
+          "When to pick Consort Yu, when to avoid them, and how to adapt your build.",
+          "Consort Yu is a strong Farm Marksman who wants to close distance on a chosen target and stick to them. Public guide data shows a build centered on Boots of Dexterity, Eternity Blade, Twinblades of Destruction, used to farm the safe side, scale into late game, and protect priority targets. Pick her when the draft lets Consort Yu reach targets that aren't built around Luna-style answers; avoid when the enemy chains crowd control that stops the engage before damage lands.",
+          "Your draft can capitalize on early picks and snowball lane leads",
+          "Your team wants to siege objectives where ranged poke whittles down defenders",
+          "The enemy draft includes Marco Polo and Han Xin, who appear in counter data as matchups Consort Yu can pressure.",
+          "The enemy stacks crowd control that interrupts the engage before damage goes out",
+          "The team fight will happen in cramped jungle spaces where poke ranges are minimized",
+          "The enemy already drafted Luna and Diaochan, who counter data identifies as direct answers to Consort Yu.",
+          "Default farm path",
+          "Public build references for Consort Yu recommend Boots of Dexterity, Eternity Blade, Twinblades of Destruction, Shadow Ripper, Bloodsoul, and Mortal Punisher. Use this as the baseline marksman plan before adapting to the enemy draft.",
+          "Situational item pivots",
+          "Spare options listed in build data include Cloud Piercer, Daybreaker's Virtue, Deepfrost Siege, and Bloodweeper. Treat these as situational swaps when the default path is not enough — for example, swapping in defensive items against burst comps or penetration items against stacked armor.",
+          "Versus Luna",
+          "Luna and Diaochan are flagged in counter data as a direct answer to Consort Yu. Bait the enemy crowd control before engaging, and route through fog to reach targets without being seen first.",
+          "Versus crowd control",
+          "Reliable hard control stops Consort Yu's engage before the combo lands. Bait the most threatening control skill before committing Vaulting Shot, and wait for ally engage to absorb peel.",
+          "Synergies",
+          "Public synergy data lists Donghuang and Daji as strong partners for Consort Yu. Plan engages around Donghuang's setup window, then second-engage with Vaulting Shot.",
+          "Diving while enemy hard control is still up, which directly counters Consort Yu's engage.",
+          "Spending mana on poke that does not threaten kills, leaving you empty for the actual fight.",
+          "Ignoring Luna and Diaochan on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Auto-attacking through enemy dive instead of repositioning — losing the marksman in early fights collapses the late-game win condition.",
+          "Woodland Ranger",
+          "A girl at one with the forces of nature, innocent and beautiful. Every arrow from her bow radiates the blessings of the forest. Acting upon her master's orders, she embarked on a journey to explore the world around her, and in the process, fell in love with the heroic Xiang Yu. However, she was warned by her senior, Liang, that the person she had fallen in love with was the dark master from the prophecies. Brokenhearted and resigned to her fate, Consort Yu's arrow had already tragically pierced her lover's heart when the illusion of the being disguised as Liang wore off. How will this fateful love tragedy end, and what should the despairing Consort Yu do?",
+          "Race:",
+          "Human",
+          "Height:",
+          "173 cm",
+          "Style:",
+          "Martial Arts",
+          "Nation:",
+          "Hongmen",
+          "Title:",
+          "Protector of Nature",
+          "Source: Official Honor of Kings — canonical lore for Consort Yu.",
+          "Official Honor of Kings",
+          "Official HOK Camp popularity bands for heroes on the international server, with ranked win, pick, and ban rates. Popularity is not a strength tier list.",
+          "Official popularity",
+          "Ban rate",
+          "0.2%",
+          "HOK Camp",
+          "Pick rate",
+          "1.5%",
+          "Popularity category",
+          "A",
+          "Win rate",
+          "51.2%",
+          "Current · 120/120",
+          "The source groups heroes by their primary position. Win, pick, and ban rates come from ranked matches; the source does not confirm that they are limited to that position.",
+          "Last checked: November 7, 2026",
+          "Survivability",
+          "Offense",
+          "Utility",
+          "Check Consort Yu in HOK Camp official popularity →",
+          "Build this hero in Build Lab",
+          "How to choose a build",
+          "Start with the safe default badge if the draft looks normal, then swap to burst, anti-tank, sustain, or utility builds when the matchup clearly calls for it.",
+          "Base build for this hero.",
+          "Boots of Dexterity",
+          "Eternity Blade",
+          "Shadow Ripper",
+          "Daybreaker's Virtue",
+          "Bloodweeper",
+          "Haste - Sunpool",
+          "Compared with Build 1: adds Mortal Punisher; drops Haste - Sunpool.",
+          "Mortal Punisher",
+          "Yui.",
+          "Compared with Build 1: adds Sparkforged Dagger, Doomsday, Succubus Cloak; drops Eternity Blade, Shadow Ripper, Bloodweeper.",
+          "Sparkforged Dagger",
+          "Doomsday",
+          "Succubus Cloak",
+          "Deepfrost Siege",
+          "Compared with Build 1: adds Sparkforged Dagger, Doomsday; drops Bloodweeper, Haste - Sunpool.",
+          "Presets",
+          "Compared with Build 1: adds Sparkforged Dagger, Doomsday, Sage's Sanctuary; drops Bloodweeper, Haste - Sunpool.",
+          "Sage's Sanctuary",
+          "Compared with Build 1: adds Doomsday; drops Haste - Sunpool.",
+          "Compared with Build 1: adds Axe of Torment, Deepfrost Siege, Overlord's Might; drops Eternity Blade, Shadow Ripper, Bloodweeper.",
+          "Axe of Torment",
+          "Overlord's Might",
+          "Compared with Build 1: adds Sunchaser; drops Haste - Sunpool.",
+          "Sunchaser",
+          "Populer",
+          "Compared with Build 1: adds Sparkforged Dagger, Doomsday; drops Shadow Ripper, Bloodweeper.",
+          "Basic Attacks have a chance to shoot two bolts in a row and inflict slow.",
+          "Charges up and shoots a bolt in the target direction, dealing damage to enemies in its path. The higher her Attack Speed, the shorter the charge time.",
+          "Gains Movement Speed and enhances the next Basic Attack. During this effect, becomes Invulnerable to physical damage. Upon learning, gains a permanent Attack Speed boost and enhanced Passive effect.",
+          "Jumps at a target, slowing and stunning them, then returns to the original location, gaining an Attack boost and shooting bolts. The higher her Attack Speed, the more bolts are shot.",
+          "Mission: Jurassic World",
+          "Wish of Abundance",
+          "Endless Love",
+          "Wings of Freedom",
+          "Lightbringer",
+          "Classy Corsair",
+          "Bait the enemy crowd-control cooldowns before committing the engage. Manage mana carefully — burning resources on poke leaves nothing for the actual fight window. Position behind your front-line, save flash for the dive, and let the support set vision.",
+          "Adjusted Skill Damage",
+          "Increased passive damage.",
+          "Consort Yu's passive triggers on a chance. We wanted to give it more consistent damage output when it triggers.",
+          "Compare Consort Yu with other Farm picks on the international server. See the full Farm tier list .",
+          "Farm tier list",
+          "A Ao'yin",
+          "C Chicha",
+          "H Hou Yi",
+          "E Erin",
+          "G Garo",
+          "L Lady Sun",
+          "Server",
+          "International",
+          "Last verified",
+          "2026-06-04",
+          "Latest patch",
+          "2026/01/22",
+          "Sources",
+          "Official data, HokBuild, verified public references",
+          "HoKStats.gg tracks Honor of Kings international server data separately from the Chinese 王者荣耀 server.",
+          "Strong vs",
+          "L Lu Bu Editorial pick Protecting Winds makes Consort Yu invulnerable to Lu Bu's physical damage when he dives her.",
+          "L Li Bai Editorial pick Protecting Winds blocks Li Bai's physical burst, letting her shoot back safely.",
+          "L Lapulapu Editorial pick Protecting Winds makes Consort Yu invulnerable to Lapulapu's physical damage.",
+          "S Sun Ce Editorial pick Protecting Winds makes Consort Yu invulnerable to Sun Ce's physical damage.",
+          "U Umbrosa Editorial pick Protecting Winds makes Consort Yu invulnerable to Umbrosa's physical damage.",
+          "Y Yang Jian Editorial pick Protecting Winds makes Consort Yu invulnerable to Yang Jian's physical damage.",
+          "D Devara Editorial pick Protecting Winds makes Consort Yu invulnerable to Devara's physical damage.",
+          "Struggles against",
+          "Z Zhang Fei",
+          "Partners",
+          "L Liu Shan",
+          "M Milady",
+          "D Dian Wei",
+          "Z Ziya",
+          "A Angela",
+          "K Kui",
+          "X Xiang Yu 100 Lover After the romantic meeting of the elf-like beauty and the fierce warrior, there blossomed a deep love—which was turned to a tragic end. Could fate really be so cruel?",
+          "Xiang Yu",
+          "Lover",
+          "After the romantic meeting of the elf-like beauty and the fierce warrior, there blossomed a deep love—which was turned to a tragic end. Could fate really be so cruel?",
+          "L Liang 90 Senior The peers were raised together in secret in an ancient temple. Their teacher instructed them in both knowledge and magic, but they also inherited his will to fight the feralis.",
+          "Liang",
+          "Senior",
+          "The peers were raised together in secret in an ancient temple. Their teacher instructed them in both knowledge and magic, but they also inherited his will to fight the feralis.",
+          "Z Ziya 80 Mentor Consort Yu is an obedient and well-mannered disciple. She admires her teacher Ziya, the Augur Immemorial, so she follows his guidance and fights the feralis. She remains unaware, however, that her very existence is a trap that has been planted...",
+          "Ziya",
+          "Mentor",
+          "Consort Yu is an obedient and well-mannered disciple. She admires her teacher Ziya, the Augur Immemorial, so she follows his guidance and fights the feralis. She remains unaware, however, that her very existence is a trap that has been planted...",
+          "Consort Yu's recommended core build is Boots of Dexterity, Eternity Blade, Twinblades of Destruction, and Shadow Ripper. Round out the build with Bloodsoul and Mortal Punisher based on the matchup. Check the Build section above for the full item order.",
+          "Public counter data lists Luna and Diaochan as direct answers to Consort Yu, because they have the crowd control or peel to interrupt the engage before damage lands. The Matchups sidebar shows the current source-tracked list.",
+          "Consort Yu's Chinese name is 虞姬 (CN server). On the international server, the hero is called Consort Yu. The kit and abilities are identical — only the name differs across regions.",
+          "Consort Yu pairs best with Donghuang and Daji according to public synergy data. These supports provide the peel and setup Consort Yu needs to scale safely through the early game.",
+          "Consort Yu sits at A-tier because extended team fights reward sustained DPS, exactly what Consort Yu delivers when protected. Recent patch notes (Stat Changes) reinforce her performance in the current meta. See the Tier List for the full ranking context.",
+          "Consort Yu scales into late-game team fights once core items come online. The full build (Twinblades of Destruction, Shadow Ripper, and Bloodsoul) brings sustained DPS that compounds in extended fights. Avoid forcing early commits — the win condition is reaching the late game intact.",
+          "Start typing to search heroes, items, arcana, and guides.",
+          "Allow optional Google Analytics cookies to help us understand and improve fan voting. Declining won’t block voting or navigation.",
+          "Privacy",
+          "We couldn’t save your choice. Analytics stays off; voting still works.",
+          "HoKStats.gg",
+          "Part of Arena Index , a TOTM Tech game intelligence brand.",
+          "Arena Index",
+          "© 2026 HoKStats.gg",
+          "Not affiliated with Tencent or Level Infinite. Honor of Kings is a trademark of Tencent.",
+          "Related project: LoL Classic Guide for League of Legends Classic reveal tracking, old items, runes and Season 3 systems.",
+          "LoL Classic Guide",
+          "Tier list",
+          "Fan vote",
+          "Meta tracker",
+          "Heroes",
+          "Counters",
+          "Items",
+          "Arcana",
+          "Spells",
+          "Guides",
+          "Beginner guide",
+          "Ranks",
+          "Patches",
+          "Patch history",
+          "News",
+          "Codes",
+          "All tools",
+          "App",
+          "About",
+          "Contact",
+          "Privacy Policy",
+          "Terms of Service"
+        ],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 123,
+            "hero_name": "Lu Bu",
+            "evidence": "Protecting Winds makes Consort Yu invulnerable to Lu Bu's physical damage when he dives her.",
+            "source_hash": "7c1e213406f33b6e6b51df1e516ba8ef17ce8df934590c711ee92879da246786"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 131,
+            "hero_name": "Li Bai",
+            "evidence": "Protecting Winds blocks Li Bai's physical burst, letting her shoot back safely.",
+            "source_hash": "ed243df8eea105f6dab27c533ebf52eb13d6eedccd9206b65ff14874e9b3f1a0"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 168,
+            "hero_name": "Lapulapu",
+            "evidence": "Protecting Winds makes Consort Yu invulnerable to Lapulapu's physical damage.",
+            "source_hash": "f9a8a27b37939fa6e3cd95886432415c11ee557a4114f92bb93bac64b3c6913c"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 510,
+            "hero_name": "Sun Ce",
+            "evidence": "Protecting Winds makes Consort Yu invulnerable to Sun Ce's physical damage.",
+            "source_hash": "b081358ebc1d9cf5c7434dc82d76c6476dbc4044ba26e4a488bc21d5739a1258"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 558,
+            "hero_name": "Umbrosa",
+            "evidence": "Protecting Winds makes Consort Yu invulnerable to Umbrosa's physical damage.",
+            "source_hash": "88f8a612a39a39afc96ecd42ddeefbe00fc07f21ab5d9d7d37b3a50c2f2ebc64"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 178,
+            "hero_name": "Yang Jian",
+            "evidence": "Protecting Winds makes Consort Yu invulnerable to Yang Jian's physical damage.",
+            "source_hash": "b2e01a7fa981b36072d8a42d782f1df1eb6890755e3a29daddbbae21bf8ed14f"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 537,
+            "hero_name": "Devara",
+            "evidence": "Protecting Winds makes Consort Yu invulnerable to Devara's physical damage.",
+            "source_hash": "8a9ec28aaa22425e78e0b3076bd54cbdc61c07a3c77ea68be09a92cb19358340"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 171,
+            "hero_name": "Zhang Fei",
+            "evidence": "Zhang Fei",
+            "source_hash": "fb6d2ee31ed203d20468adb5970313920355172f48878fbbdc9272c27be7820a"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 114,
+            "hero_name": "Liu Shan",
+            "source_hash": "53f4f525445ba61c1aaedd6e43d3791379bcb230b23bb1650d185d706cbeeda3"
+          },
+          {
+            "hero_id": 504,
+            "hero_name": "Milady",
+            "source_hash": "53f4f525445ba61c1aaedd6e43d3791379bcb230b23bb1650d185d706cbeeda3"
+          },
+          {
+            "hero_id": 129,
+            "hero_name": "Dian Wei",
+            "source_hash": "53f4f525445ba61c1aaedd6e43d3791379bcb230b23bb1650d185d706cbeeda3"
+          },
+          {
+            "hero_id": 148,
+            "hero_name": "Ziya",
+            "source_hash": "53f4f525445ba61c1aaedd6e43d3791379bcb230b23bb1650d185d706cbeeda3"
+          },
+          {
+            "hero_id": 142,
+            "hero_name": "Angela",
+            "source_hash": "53f4f525445ba61c1aaedd6e43d3791379bcb230b23bb1650d185d706cbeeda3"
+          },
+          {
+            "hero_id": 175,
+            "hero_name": "Kui",
+            "source_hash": "53f4f525445ba61c1aaedd6e43d3791379bcb230b23bb1650d185d706cbeeda3"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

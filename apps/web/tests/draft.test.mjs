@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { DRAFT_SEQUENCE, emptyPosition, getDraftTurn, applyDraftAction, isLegalHero, analyzeLaneOccupancy, IMMOBILE_OPENERS } from '../src/engine/draftRules.ts';
 import { rankedCandidates, searchDraft, evaluatePosition } from '../src/engine/draftSearch.ts';
-import { evaluateTacticalScores, reviewedHoKStatsBonuses, runTournamentInference } from '../src/engine/tournamentInference.ts';
+import { evaluateTacticalScores, evaluateEnemyCounterExposure, reviewedHoKStatsBonuses, runTournamentInference } from '../src/engine/tournamentInference.ts';
 import { matchesDecisionTag, OpponentClient } from '../src/engine/opponentClient.ts';
 
 const read = p => JSON.parse(readFileSync(new URL('../public/' + p, import.meta.url), 'utf8'));
@@ -74,6 +74,28 @@ test('Liang direction, Ata mapping, and competitive opener restrictions remain i
     const result = runTournamentInference([], [], [], [], step === 4, true, heroes, step, null, null, true, synergy);
     assert.ok(result.recommendations.every(r => !IMMOBILE_OPENERS.has(r.hero.hero_id)));
   }
+});
+test('default Phase 1 ban avoids blind Liang/Shouyue tunnel-vision and penalizes candidates countered by 2-3 enemies', () => {
+  const defaultBan = runTournamentInference([], [], [], [], false, true, heroes, 0, null, null, true, synergy);
+  assert.notEqual(defaultBan.phaseStrategy.plannedOpener?.hero_id, 156, 'Liang is not forced as blind #1 default opener');
+  assert.notEqual(defaultBan.recommendations[0]?.hero.hero_id, 196, 'Shouyue is not forced as #1 default ban');
+
+  const liang = heroes.find(h => h.hero_id === 156);
+  const liangCounters = [182, 127, 175, 196].map(id => heroes.find(h => h.hero_id === id)).filter(Boolean);
+  const exp3 = evaluateEnemyCounterExposure(liang, liangCounters.slice(0, 3), synergy.b1_openers);
+  assert.equal(exp3.counterCount, 3);
+  assert.equal(exp3.synergyMultiplier, 0.0, 'KPL synergy is zeroed out when countered by 3 enemy heroes');
+  assert.ok(exp3.exposurePenalty >= 2.6, 'compounding penalty applied for 3 enemy counters');
+
+  const uncounteredPick = runTournamentInference([171], [105], [], [], true, true, heroes, 7, null, null, true, synergy);
+  const counteredPick = runTournamentInference([171], [182, 127, 175], [], [], true, true, heroes, 7, null, null, true, synergy);
+  const liangSafeScore = uncounteredPick.recommendations.find(r => r.hero.hero_id === 156)?.choiceScore ?? 0;
+  const liangCounteredScore = counteredPick.recommendations.find(r => r.hero.hero_id === 156)?.choiceScore ?? 0;
+  assert.ok(liangSafeScore - liangCounteredScore >= 2.5, 'hero countered by 3 enemies drops sharply despite team synergy');
+
+  const r1AfterAoyin = runTournamentInference([], [519], [521, 156, 517, 126], [], true, false, heroes, 5, null, null, true, synergy);
+  const top10Ids = r1AfterAoyin.recommendations.slice(0, 10).map(r => r.hero.hero_id);
+  assert.equal(top10Ids.includes(507), false, 'Pub-only Li Xin (0 KPL matches) is never recommended as R1 tournament opener');
 });
 test('minimax follows consecutive Red picks and completes bounded iterative deepening', () => {
   const ctx = context(), position = advance(emptyPosition(), ctx, 5);

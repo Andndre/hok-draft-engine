@@ -9480,15 +9480,15 @@
     "semantic_hash": ""
   },
   "apps/web/src/engine/tournamentInference.ts": {
-    "mtime": 1794232083.403104,
-    "seen": 1794232200.0459113,
-    "ast_hash": "5bdee51b0283fd45618cee67dea2d6ae",
+    "mtime": 1794347666.6807196,
+    "seen": 1794348564.818558,
+    "ast_hash": "a68b8f2c4e10f6d396b8f32ca7fa37e7",
     "semantic_hash": ""
   },
   "apps/web/public/data_manifest.json": {
-    "mtime": 1794238472.5654023,
-    "seen": 1794239328.5800247,
-    "ast_hash": "c22c842b63876dc749d0b473238fbbb9",
+    "mtime": 1794348382.9457202,
+    "seen": 1794348564.8113353,
+    "ast_hash": "dc20939ce190289eecdc1a91d035a61b",
     "semantic_hash": ""
   },
   "apps/web/public/datasets/cd93ce3919397697/hero_metadata.json": {
@@ -9540,9 +9540,9 @@
     "semantic_hash": ""
   },
   "packages/ml-engine/tactical_profiles.py": {
-    "mtime": 1794260270.3850355,
-    "seen": 1794260526.9569175,
-    "ast_hash": "84916dd2fa81173b67c3d492a9625c2d",
+    "mtime": 1794348511.7510393,
+    "seen": 1794348564.8448272,
+    "ast_hash": "a0a96dc973f533bdd4fea141dfc03544",
     "semantic_hash": ""
   },
   "packages/ml-engine/test_data_pipeline.py": {
@@ -9552,9 +9552,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/engine/draftSearch.ts": {
-    "mtime": 1794230594.817663,
-    "seen": 1794232200.045653,
-    "ast_hash": "217388db35e220b0e5f9aa0cc702391b",
+    "mtime": 1794347663.0791698,
+    "seen": 1794348564.8181562,
+    "ast_hash": "9169aa20a81bf540fce7cc5ee403b845",
     "semantic_hash": ""
   },
   "apps/web/src/engine/opponent.worker.ts": {
@@ -9570,9 +9570,9 @@
     "semantic_hash": ""
   },
   "apps/web/tests/draft.test.mjs": {
-    "mtime": 1794232034.5046055,
-    "seen": 1794232200.0464458,
-    "ast_hash": "32f7df92dc37d950f63b0c8ced2fa91d",
+    "mtime": 1794347609.0969422,
+    "seen": 1794347627.7358856,
+    "ast_hash": "5562e0d2cc73ec064c831ca9f61d4467",
     "semantic_hash": ""
   },
   "apps/web/src/components/PracticeDraft.tsx": {
@@ -9629,16 +9629,10 @@
     "ast_hash": "2591470bc9c9ed71dc8d1fbd9bfe0388",
     "semantic_hash": ""
   },
-  "packages/ml-engine/nanojev_provider.py": {
-    "mtime": 1794260240.3019085,
-    "seen": 1794260526.9567225,
-    "ast_hash": "eb58c8d890ef9a79d6faaa50194aae08",
-    "semantic_hash": ""
-  },
   "packages/ml-engine/test_nanojev_provider.py": {
-    "mtime": 1794260584.8756447,
-    "seen": 1794260609.2907324,
-    "ast_hash": "8d4314d1d95cb19a2ead7e77618c43cd",
+    "mtime": 1794348533.4918509,
+    "seen": 1794348564.8451972,
+    "ast_hash": "121064458b768361ffaec1038a9213f8",
     "semantic_hash": ""
   },
   "apps/web/src/components/HeroRosterToolbar.tsx": {
@@ -9977,10 +9971,772 @@
     "ast_hash": "604718787d87e91a57bd24b8bf0c5d78",
     "semantic_hash": ""
   },
-  "notebooks/prepare_nanojev_source_bundle.py": {
-    "mtime": 1794263246.6443756,
-    "seen": 1794263397.6863825,
-    "ast_hash": "8b1a7ec05f2442d09b526e544807dc49",
+  "apps/web/public/datasets/e3219284e299f8ae/hero_release_status.json": {
+    "mtime": 1794345213.804286,
+    "seen": 1794345287.437518,
+    "ast_hash": "38f12bfbc30b456d0fa62b21e8dbd83e",
+    "semantic_hash": ""
+  },
+  "apps/web/public/datasets/e3219284e299f8ae/item_catalog.json": {
+    "mtime": 1794345213.804286,
+    "seen": 1794345287.4375212,
+    "ast_hash": "53cce0f0ccd9d379dae4fc8cf60293cd",
+    "semantic_hash": ""
+  },
+  "apps/web/public/datasets/e3219284e299f8ae/kpl_synergy_matrix.json": {
+    "mtime": 1794345213.8027766,
+    "seen": 1794345287.4375236,
+    "ast_hash": "0dd6e641131c83ca43338d58d47687da",
+    "semantic_hash": ""
+  },
+  "apps/web/public/datasets/e3219284e299f8ae/spell_catalog.json": {
+    "mtime": 1794345213.804286,
+    "seen": 1794345287.4375265,
+    "ast_hash": "48e97bce71db45527d41d1804b34d969",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/105-4285759a8db5.json": {
+    "mtime": 1794345211.292377,
+    "seen": 1794345287.4443545,
+    "ast_hash": "49eb5da8a4f0c2e1d25a540069c8b9e3",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/106-123ab639aa93.json": {
+    "mtime": 1794345211.2948837,
+    "seen": 1794345287.4443579,
+    "ast_hash": "f8470c59664b5e7b5775ae006fb73739",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/107-72ebc82ed4fd.json": {
+    "mtime": 1794345211.297654,
+    "seen": 1794345287.4443603,
+    "ast_hash": "8daf645f21b424b33c97e79b835e498f",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/108-2c6fc3248e97.json": {
+    "mtime": 1794345211.299693,
+    "seen": 1794345287.444362,
+    "ast_hash": "524ae335e8df5f6f67c591d9b87d8487",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/109-35ff884af29b.json": {
+    "mtime": 1794345211.3017595,
+    "seen": 1794345287.4443643,
+    "ast_hash": "4960a5d6ab77b42567500c91d9df0795",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/110-12dcdd011b7c.json": {
+    "mtime": 1794345211.3027625,
+    "seen": 1794345287.444366,
+    "ast_hash": "328f569bb9561a298397bccbf1232b98",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/111-7fa4e58363cf.json": {
+    "mtime": 1794345211.305803,
+    "seen": 1794345287.4443684,
+    "ast_hash": "8ccf1dcda7712d57f86d32d5cdd3f43d",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/112-1a36ccb21b44.json": {
+    "mtime": 1794345211.3089507,
+    "seen": 1794345287.4443703,
+    "ast_hash": "f2cb9112caa21a125138642e5d6d0ed0",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/113-41a16e418c23.json": {
+    "mtime": 1794345211.3111234,
+    "seen": 1794345287.4443722,
+    "ast_hash": "2d9c3dab5eec38e1c80adf00f3ee61a6",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/114-0f18244038bb.json": {
+    "mtime": 1794345211.3131368,
+    "seen": 1794345287.4443736,
+    "ast_hash": "fe7b9aaa281050c251b3599397b96acd",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/115-8850b1873df7.json": {
+    "mtime": 1794345211.3141353,
+    "seen": 1794345287.4443753,
+    "ast_hash": "56c08ab024f8add327450cd5b3cfb098",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/116-28f0a03f244c.json": {
+    "mtime": 1794345211.3167918,
+    "seen": 1794345287.4443772,
+    "ast_hash": "e3d0ebf25c7f772470e2cb62004733b8",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/117-9fdb2d55a4ca.json": {
+    "mtime": 1794345211.318866,
+    "seen": 1794345287.4443796,
+    "ast_hash": "b90463411b4413058a91e808041b4356",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/118-38be29903faa.json": {
+    "mtime": 1794345211.3218775,
+    "seen": 1794345287.4443815,
+    "ast_hash": "948df388f0d4d3802624b97b1aae2a94",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/119-c8284ad8f71b.json": {
+    "mtime": 1794345211.3238752,
+    "seen": 1794345287.4443834,
+    "ast_hash": "02be09e5c7afe8038ec4e131e2ee4c4a",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/120-07a1ef6d7f28.json": {
+    "mtime": 1794345211.325385,
+    "seen": 1794345287.444385,
+    "ast_hash": "6460f3fb48d0d2c6a1a6c6166b98975b",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/121-d62d16e3a94c.json": {
+    "mtime": 1794345211.3275626,
+    "seen": 1794345287.444387,
+    "ast_hash": "cac74493c86620de3c7761c00bf603ae",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/123-eca8c8239db7.json": {
+    "mtime": 1794345211.3306003,
+    "seen": 1794345287.4443886,
+    "ast_hash": "b7eabf24f0bd1f97eee01c594d22ec65",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/124-f29463515111.json": {
+    "mtime": 1794345211.3331175,
+    "seen": 1794345287.444391,
+    "ast_hash": "0f216e636c70ff5dc3c3f442f7ec0b26",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/125-cbbd3dd2b826.json": {
+    "mtime": 1794345211.3356974,
+    "seen": 1794345287.4443924,
+    "ast_hash": "7cc68c99797a419038afa8e1fd42ba4d",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/126-f0b69612f170.json": {
+    "mtime": 1794345211.3388247,
+    "seen": 1794345287.4443944,
+    "ast_hash": "15394b3f9049d1446db5bcbeb7d6f623",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/127-95f8de6a83bc.json": {
+    "mtime": 1794345211.340837,
+    "seen": 1794345287.4443958,
+    "ast_hash": "fa8f731a5ca073a3e19b56f68ecac894",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/128-0719b5873c51.json": {
+    "mtime": 1794345211.342955,
+    "seen": 1794345287.4443972,
+    "ast_hash": "9abb1e329f6ad2d6a2c928394c69afc7",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/129-a473ae863eb1.json": {
+    "mtime": 1794345211.345852,
+    "seen": 1794345287.4443994,
+    "ast_hash": "f3954752bc14c7088ebe1537de023c2a",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/130-6b352b9bfa84.json": {
+    "mtime": 1794345211.3478785,
+    "seen": 1794345287.4444015,
+    "ast_hash": "58fa6328b9fc01a75562a20eb963a5d0",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/131-2d28afad9ba5.json": {
+    "mtime": 1794345211.3498745,
+    "seen": 1794345287.444403,
+    "ast_hash": "5dacfea462e9bb3a6c47100c117782a3",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/132-5c03714952eb.json": {
+    "mtime": 1794345211.3524485,
+    "seen": 1794345287.4444044,
+    "ast_hash": "209864c57a90be1a567ee49828b0becc",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/133-b754ec3958ab.json": {
+    "mtime": 1794345211.3534462,
+    "seen": 1794345287.4444063,
+    "ast_hash": "70f4ef2dbfed19ba32be6d1c2b861158",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/134-dfd8799bb51b.json": {
+    "mtime": 1794345211.3564668,
+    "seen": 1794345287.4444084,
+    "ast_hash": "f5e25b7da3025a65207230e211dd0796",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/135-7191c4bf4020.json": {
+    "mtime": 1794345211.3584845,
+    "seen": 1794345287.4444106,
+    "ast_hash": "2ce9893e70d673798d8755348a9c32c1",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/137-9982678a4241.json": {
+    "mtime": 1794345211.3604853,
+    "seen": 1794345287.4444125,
+    "ast_hash": "ba2cf50596f09dfb96fb9e1a5493d4ac",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/138-23ae6646b845.json": {
+    "mtime": 1794345211.3624904,
+    "seen": 1794345287.4444141,
+    "ast_hash": "70a0fe6a7830176aa6a17e03171a83e1",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/139-9e69c80d64fc.json": {
+    "mtime": 1794345211.3634875,
+    "seen": 1794345287.444416,
+    "ast_hash": "e33ef232ac82aa936549d4eb23cc548b",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/140-f66e31e6452f.json": {
+    "mtime": 1794345211.366515,
+    "seen": 1794345287.4444177,
+    "ast_hash": "39c566fe0e8bfe5435cd4ba7eda68bfd",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/141-a22367bdbe8d.json": {
+    "mtime": 1794345211.370647,
+    "seen": 1794345287.4444196,
+    "ast_hash": "3bd2ae7611d8f6f7b1e5897323b1c0c4",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/142-1a913ead5960.json": {
+    "mtime": 1794345211.3743124,
+    "seen": 1794345287.444421,
+    "ast_hash": "d6cae19f2210d4465b6dfd198760457e",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/146-7b0e546238b4.json": {
+    "mtime": 1794345211.376052,
+    "seen": 1794345287.444423,
+    "ast_hash": "9c9aa7ca35d4b0d299e5be3abd1a25bf",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/148-90efa0c79dc4.json": {
+    "mtime": 1794345211.3786824,
+    "seen": 1794345287.4444244,
+    "ast_hash": "85b6165761cb767451069cbaae889b9c",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/149-7e7a16e2704d.json": {
+    "mtime": 1794345211.380188,
+    "seen": 1794345287.4444265,
+    "ast_hash": "12bbca08125944b3098b2e350d347053",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/150-258ded24b589.json": {
+    "mtime": 1794345211.3822317,
+    "seen": 1794345287.4444282,
+    "ast_hash": "0612601c3a09f654989325c6fc878b04",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/152-f2191da0dcdc.json": {
+    "mtime": 1794345211.3847456,
+    "seen": 1794345287.44443,
+    "ast_hash": "f9c944782bf01927b8289de1d8865069",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/153-147aa50df7b8.json": {
+    "mtime": 1794345211.3882613,
+    "seen": 1794345287.4444313,
+    "ast_hash": "2a17c83e39ef62885dbeb7e025c582c5",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/154-43e916214dee.json": {
+    "mtime": 1794345211.3912673,
+    "seen": 1794345287.4444332,
+    "ast_hash": "42475ec588f60e339604dc6cea035893",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/155-89ec8fe5aac4.json": {
+    "mtime": 1794345211.393268,
+    "seen": 1794345287.4444344,
+    "ast_hash": "19c06f2dcc1ebaeade02db79e5fc794a",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/156-40da3d22d96c.json": {
+    "mtime": 1794345211.3952687,
+    "seen": 1794345287.444436,
+    "ast_hash": "978c668839a4c25401819f1514f87d65",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/157-996733c7161f.json": {
+    "mtime": 1794345211.3979447,
+    "seen": 1794345287.444438,
+    "ast_hash": "620990ecef76f015f43d529b0c6a6d04",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/159-b7dca60ad7cd.json": {
+    "mtime": 1794345211.4026287,
+    "seen": 1794345287.4444396,
+    "ast_hash": "3438e721fef96227491df9c8aa8a17cb",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/162-7fb925e979e4.json": {
+    "mtime": 1794345211.4036288,
+    "seen": 1794345287.4444416,
+    "ast_hash": "04402c2d79673bb4a1015bc12c794ed1",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/163-f30cdce2fae0.json": {
+    "mtime": 1794345211.4056275,
+    "seen": 1794345287.4444509,
+    "ast_hash": "73ba3ca8a7bc1be3e2d7c3d6be03502d",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/166-467cde5a8571.json": {
+    "mtime": 1794345211.4077067,
+    "seen": 1794345287.4444528,
+    "ast_hash": "14bdb18912487564b96f20026f63aea8",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/167-cdbc0a3b2763.json": {
+    "mtime": 1794345211.4109416,
+    "seen": 1794345287.4444547,
+    "ast_hash": "6e56b026594805a0960c738dbea5f690",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/168-73fba08bf38b.json": {
+    "mtime": 1794345211.4134548,
+    "seen": 1794345287.444456,
+    "ast_hash": "cda2e3c1f5264c667d4a416a11f57dca",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/169-f272ea9d425f.json": {
+    "mtime": 1794345211.417012,
+    "seen": 1794345287.444458,
+    "ast_hash": "0074472cf08dacfb1fbcd9c93f40b303",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/170-5d571e91a3f3.json": {
+    "mtime": 1794345211.4181662,
+    "seen": 1794345287.4444597,
+    "ast_hash": "d52423362654ce5d57cc8eb0f1de57bd",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/171-c643142ec6cf.json": {
+    "mtime": 1794345211.4212902,
+    "seen": 1794345287.4444613,
+    "ast_hash": "afc396f8de9bb658fb306a05b0b23514",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/172-441bc2cd3cfb.json": {
+    "mtime": 1794345211.4233003,
+    "seen": 1794345287.444463,
+    "ast_hash": "c9ee5e9b0e75d8d31110d529576dfdee",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/173-3ac8b4cf51ce.json": {
+    "mtime": 1794345211.426411,
+    "seen": 1794345287.4444652,
+    "ast_hash": "19ee7fb06016c9e810c7c299c9b06c59",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/174-0d35adbcccc8.json": {
+    "mtime": 1794345211.4314585,
+    "seen": 1794345287.4444664,
+    "ast_hash": "3e3ce2f118638223754b2ae9571c0797",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/175-50a37a307c63.json": {
+    "mtime": 1794345211.4334629,
+    "seen": 1794345287.4444678,
+    "ast_hash": "0fa558af2d706f59cff3a28ef339345e",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/176-c685eac6dca8.json": {
+    "mtime": 1794345211.4365056,
+    "seen": 1794345287.444469,
+    "ast_hash": "e809c14bc589df36c76d0a0ed252ccb9",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/177-5abf4cf948cd.json": {
+    "mtime": 1794345211.4375472,
+    "seen": 1794345287.4444702,
+    "ast_hash": "5e15d4c1ca5045cf4d469841558183e0",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/178-c4c75f1c3b67.json": {
+    "mtime": 1794345211.439939,
+    "seen": 1794345287.4444716,
+    "ast_hash": "7f3db4169c7a75ff3a4de257675e051d",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/179-907cfb90c9fb.json": {
+    "mtime": 1794345211.4424183,
+    "seen": 1794345287.444473,
+    "ast_hash": "8fec8fa25ef50bdd340faf870ed318db",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/180-8a76cf778abe.json": {
+    "mtime": 1794345211.4454176,
+    "seen": 1794345287.4444745,
+    "ast_hash": "510e10a8feaaa50ebb90eb3d7b6004d9",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/182-3974bf5f9de6.json": {
+    "mtime": 1794345211.4474294,
+    "seen": 1794345287.4444764,
+    "ast_hash": "82d955e6457b0f59bb6d66a51e7a29f1",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/183-f1ded0c8a788.json": {
+    "mtime": 1794345211.4513032,
+    "seen": 1794345287.444478,
+    "ast_hash": "9c343af8637881b3f825a8fe3e7de843",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/184-22158d0b8f4a.json": {
+    "mtime": 1794345211.453818,
+    "seen": 1794345287.4444792,
+    "ast_hash": "c54a7b8240c267caf72cc0bc2dc2089c",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/187-2a48aef61410.json": {
+    "mtime": 1794345211.4573402,
+    "seen": 1794345287.4444807,
+    "ast_hash": "fc0428b394cdb063216b27469cb96f45",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/189-12f38854345b.json": {
+    "mtime": 1794345211.459869,
+    "seen": 1794345287.444482,
+    "ast_hash": "69b506087b50937ffebcbeca30cee3a6",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/190-ea169d3672ac.json": {
+    "mtime": 1794345211.4634879,
+    "seen": 1794345287.4444835,
+    "ast_hash": "8303af85b3f407d85cd775cb2ba8875e",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/191-912da82727b6.json": {
+    "mtime": 1794345211.466498,
+    "seen": 1794345287.4444854,
+    "ast_hash": "dff13d36d256d85fa5934da9aef72047",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/192-cd519612ba1b.json": {
+    "mtime": 1794345211.4705303,
+    "seen": 1794345287.4444869,
+    "ast_hash": "4d4a1836bdf8c044f19e32f81f46e1ae",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/193-83457ef284f5.json": {
+    "mtime": 1794345211.4747171,
+    "seen": 1794345287.4444888,
+    "ast_hash": "7d3ad43313e6d76287425fa15c92f9b5",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/195-a3bedb804064.json": {
+    "mtime": 1794345211.477716,
+    "seen": 1794345287.4444902,
+    "ast_hash": "b75dbfa88830e712f7c27ba9825595da",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/196-b6fca6d611dd.json": {
+    "mtime": 1794345211.4796631,
+    "seen": 1794345287.444492,
+    "ast_hash": "736fab1b1c8c6d481a91dab4b801fb4f",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/197-a18c3998ff48.json": {
+    "mtime": 1794345211.4821677,
+    "seen": 1794345287.4444938,
+    "ast_hash": "babd053c9da7bcafe86e1fcaefe7395b",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/198-0c13c5da2a78.json": {
+    "mtime": 1794345211.4841805,
+    "seen": 1794345287.4444954,
+    "ast_hash": "f0745d2d73fc1cb3278342bbb8fbf643",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/199-d6e7a3725b04.json": {
+    "mtime": 1794345211.485182,
+    "seen": 1794345287.4444969,
+    "ast_hash": "5e5b551ea780eaafa7262b2060e9fe58",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/501-de042fb35a64.json": {
+    "mtime": 1794345211.4886959,
+    "seen": 1794345287.4444985,
+    "ast_hash": "a4fde2cac63b9b133007611cf5b397e6",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/502-c5336f631d1f.json": {
+    "mtime": 1794345211.4911785,
+    "seen": 1794345287.4444997,
+    "ast_hash": "b74618885c4f7b9bec25e6dbfb8c1524",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/503-322692f9b841.json": {
+    "mtime": 1794345211.4946942,
+    "seen": 1794345287.444501,
+    "ast_hash": "26029209c3b045baa8bcab831076fd8b",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/504-1327eb18d8cd.json": {
+    "mtime": 1794345211.4966948,
+    "seen": 1794345287.4445026,
+    "ast_hash": "94b238c07f1e89b4f176a7adaedb875e",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/505-1daddad77b6d.json": {
+    "mtime": 1794345211.5012102,
+    "seen": 1794345287.444504,
+    "ast_hash": "43ee3dc8b119d054f1c96f8032b31075",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/506-b71bcd00aca6.json": {
+    "mtime": 1794345211.5036979,
+    "seen": 1794345287.4445057,
+    "ast_hash": "ea3d5e0f893181f7a2e6c07335b39ff0",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/507-a285079f59e7.json": {
+    "mtime": 1794345211.5094037,
+    "seen": 1794345287.4445076,
+    "ast_hash": "84809fe6819e2f7c040bb828553b0c9a",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/508-9883b6e457bb.json": {
+    "mtime": 1794345211.5124004,
+    "seen": 1794345287.444509,
+    "ast_hash": "54f43eb135a8b6651aaeb6d834b4c346",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/509-0a4066fec712.json": {
+    "mtime": 1794345211.5134003,
+    "seen": 1794345287.4445102,
+    "ast_hash": "f3bc99346d3780e2509b129792dcb6f7",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/510-ae869f2aa4ad.json": {
+    "mtime": 1794345211.515401,
+    "seen": 1794345287.4445114,
+    "ast_hash": "fc2f2b721d6fdfd8e1656c5f23023df3",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/513-a5f9a8ac2c20.json": {
+    "mtime": 1794345211.5195875,
+    "seen": 1794345287.444513,
+    "ast_hash": "efe44472473251e41fe60d6c0ed5d20a",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/514-948994fb1c0b.json": {
+    "mtime": 1794345211.5215874,
+    "seen": 1794345287.4445143,
+    "ast_hash": "ebb9e8887bfe6880498d05a895f06117",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/517-351a1c8d213a.json": {
+    "mtime": 1794345211.523588,
+    "seen": 1794345287.4445152,
+    "ast_hash": "107f47e8d40acc15b22535cef61fbbfb",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/519-4665c498530d.json": {
+    "mtime": 1794345211.5286136,
+    "seen": 1794345287.4445167,
+    "ast_hash": "305dc633b04bb07caf4a58d203ca3202",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/521-822d65fe6008.json": {
+    "mtime": 1794345211.530623,
+    "seen": 1794345287.4445179,
+    "ast_hash": "9cf177488888ec56a7544c0c2f2db471",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/522-707209b62190.json": {
+    "mtime": 1794345211.533128,
+    "seen": 1794345287.4445193,
+    "ast_hash": "f2479f5869b0b17420a4d8e84a1492cc",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/523-bd79da0f910c.json": {
+    "mtime": 1794345211.5346403,
+    "seen": 1794345287.4445202,
+    "ast_hash": "5fcdbe10d6043ad8ef710f4953888df5",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/524-7bb5cfa930f0.json": {
+    "mtime": 1794345211.5366478,
+    "seen": 1794345287.4445217,
+    "ast_hash": "f42b3bf9dc663088274ff6a1649c2357",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/528-feab20e8f4db.json": {
+    "mtime": 1794345211.5408463,
+    "seen": 1794345287.4445233,
+    "ast_hash": "951be1c9d89cb48fadc3b5631d1890a6",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/531-ae10e8cdb29a.json": {
+    "mtime": 1794345211.542846,
+    "seen": 1794345287.4445248,
+    "ast_hash": "d3c3e83297dd41a127890753f5a4f235",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/533-40261e490f2b.json": {
+    "mtime": 1794345211.544844,
+    "seen": 1794345287.4445262,
+    "ast_hash": "a890acc9f87a41b76b5e37a8a0f7c888",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/534-34637cd1b70c.json": {
+    "mtime": 1794345211.5468445,
+    "seen": 1794345287.4445276,
+    "ast_hash": "bebcf282ebb99d17a673bc633833f733",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/536-ac1f6a809aca.json": {
+    "mtime": 1794345211.5498576,
+    "seen": 1794345287.4445288,
+    "ast_hash": "ca70e2831c7cab096d723e72db0a3fdb",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/537-0fbe2ff9027c.json": {
+    "mtime": 1794345211.5518637,
+    "seen": 1794345287.4445302,
+    "ast_hash": "19f828c2244fada661fe0bd2181db66d",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/538-587bffa7f0a5.json": {
+    "mtime": 1794345211.5548646,
+    "seen": 1794345287.4445317,
+    "ast_hash": "d3293d2689299200b7e00705dea5c378",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/542-f81aaea42c4a.json": {
+    "mtime": 1794345211.5588844,
+    "seen": 1794345287.4445333,
+    "ast_hash": "82a361461a651e012c0944714139885c",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/545-c1e7d8bdcae1.json": {
+    "mtime": 1794345211.5611703,
+    "seen": 1794345287.4445348,
+    "ast_hash": "78a4b2296c0d634b6eddf17f016dfd04",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/547-90a13cf86522.json": {
+    "mtime": 1794345211.564626,
+    "seen": 1794345287.4445362,
+    "ast_hash": "29508c3119e94bc04b61e00608ecdaf5",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/556-dae7b0fd95c5.json": {
+    "mtime": 1794345211.569862,
+    "seen": 1794345287.4445376,
+    "ast_hash": "6bb45f8ffa1a051dcb7009046558fa61",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/558-6a2e1e2dc6cb.json": {
+    "mtime": 1794345211.5721905,
+    "seen": 1794345287.4445388,
+    "ast_hash": "7ced59ee86891bac9d8f993739bf81db",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/563-f26c426fc890.json": {
+    "mtime": 1794345211.576215,
+    "seen": 1794345287.4445407,
+    "ast_hash": "79ef3012add7bd986851de3b94bf0f3c",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/564-57f310d6b8d0.json": {
+    "mtime": 1794345211.5792677,
+    "seen": 1794345287.4445424,
+    "ast_hash": "72dc999ce79186ffcf49f90fb31ef6b0",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/577-f435cf201db6.json": {
+    "mtime": 1794345211.582306,
+    "seen": 1794345287.4445438,
+    "ast_hash": "f6c7ace925a100b84cb9f6332565ba27",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/581-0c0edc0b2d0f.json": {
+    "mtime": 1794345211.586567,
+    "seen": 1794345287.444545,
+    "ast_hash": "49e4ded71c410f0c56ef45e91c19ef5e",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/582-e1e612b660e6.json": {
+    "mtime": 1794345211.5895803,
+    "seen": 1794345287.4445467,
+    "ast_hash": "b497bce3b888c1b79b2fdc5618b2a63c",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/583-9051b4bac735.json": {
+    "mtime": 1794345211.5908432,
+    "seen": 1794345287.444548,
+    "ast_hash": "0c0d3470e424ef3f0fce42ed78cee36c",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/584-4a5188c923b3.json": {
+    "mtime": 1794345211.5939376,
+    "seen": 1794345287.444549,
+    "ast_hash": "d8bd910414e5a50059b0198fcd0f88e4",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/585-5d41fc61ef7a.json": {
+    "mtime": 1794345211.594936,
+    "seen": 1794345287.444551,
+    "ast_hash": "05ecb381f29845ec5656daec0b0318f7",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/631-a7a049b192f3.json": {
+    "mtime": 1794345211.5971353,
+    "seen": 1794345287.4445522,
+    "ast_hash": "4aae214b2938d07edf50799d8d8c8dfa",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/635-ccb88797c30e.json": {
+    "mtime": 1794345211.5983562,
+    "seen": 1794345287.4445531,
+    "ast_hash": "0890e1313010b17efcff0571be4af4e2",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/640-a028287b7c03.json": {
+    "mtime": 1794345211.6018794,
+    "seen": 1794345287.4445546,
+    "ast_hash": "515d04c240fe49cf7e6dc9192f242c1b",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/646-97ad25a5791a.json": {
+    "mtime": 1794345211.603879,
+    "seen": 1794345287.4445558,
+    "ast_hash": "646847586f8bd1cd0b02b0e36f3057fe",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/audit_report.json": {
+    "mtime": 1794345211.604879,
+    "seen": 1794345287.4445574,
+    "ast_hash": "44fb4ce19dcf3fd9d85b895aa44d98cc",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/coverage_report.json": {
+    "mtime": 1794245208.0,
+    "seen": 1794345287.444559,
+    "ast_hash": "ebfab0c0ff39f1addaba92dea9d6520e",
+    "semantic_hash": ""
+  },
+  "data/mappings/tactical_proposals/run_info.json": {
+    "mtime": 1794245230.0,
+    "seen": 1794345287.4445603,
+    "ast_hash": "64480784762ec16fb3f0fd6a841735d6",
+    "semantic_hash": ""
+  },
+  "packages/ml-engine/skill_evidence_audit.py": {
+    "mtime": 1794345208.7320611,
+    "seen": 1794345287.4456651,
+    "ast_hash": "6e29d9c33ba4687d9984ea6b6b675e3a",
     "semantic_hash": ""
   },
   "apps/web/package-lock.json": {

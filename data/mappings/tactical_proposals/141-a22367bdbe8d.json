@@ -1,0 +1,680 @@
+{
+  "schema_version": 2,
+  "hero_id": 141,
+  "source_hash": "a22367bdbe8d5b7797b4eaa0eb81b7085724d47048feccb34eb8c87ca3e3d462",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Explosion of Fragrance",
+          "desc": "Applies stacks to the opponent. At max stacks, inflicts AoE damage and slow while restoring Health."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Returning Lotus",
+          "desc": "Sends out a lotus in a direction that returns to her when it reaches its max distance, damaging enemies in its path."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Petals in the Wind",
+          "desc": "Dashes in the target direction, during which she is untargetable. Launches orbs to attack nearby enemies, dealing damage and reducing the cooldown of Skill 2."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Flowery Potential",
+          "desc": "Diaochan conjures up a magic circle around her, which lasts for a period oftime. While she is within the circle, the cooldowns of Skill 1 and Skill 2 aresped up. The circle deals damage to enemies within it when it is generatedand when it expires."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Assassin masuk abis Diaochan pakai dash. 2) Pakai hero hard CC: kunci terus bunuh begitu dia masuk. 3) Jangan berdiri rapet biar AoE-nya gak kena banyak orang."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/diaochan/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Explosion of Fragrance",
+            "description": "Applies stacks to the opponent. At max stacks, deals area damage and slows enemies, while recovering Health.",
+            "type": "passive"
+          },
+          {
+            "name": "Returning Lotus",
+            "description": "Sends out a lotus in the target direction that returns to her when it reaches its max distance, damaging enemies in its path.",
+            "type": "skill1"
+          },
+          {
+            "name": "Petals in the Wind",
+            "description": "Dashes in the target direction, becoming untargetable during the dash. Releases petals to attack nearby enemies, dealing damage and reducing the cooldown of Skill 2.",
+            "type": "skill2"
+          },
+          {
+            "name": "Flowery Potential",
+            "description": "Conjures up a magic circle around her, which lasts for a period of time. While she is within the circle, the cooldowns of Skill 1 and Skill 2 are sped up. The circle deals damage to enemies within it when it is conjured and when it expires.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The team draft favors extended team fights where healing scales",
+          "Your team has the structure to use her ability to farm safely and rotate to side lanes when the wave allows, since Diaochan delivers consistent damage output and timely roams.",
+          "The enemy draft includes Luna and Zhang Fei, who appear in counter data as matchups Diaochan can pressure."
+        ],
+        "avoid_when": [
+          "The enemy already builds anti-heal items, neutralizing your sustain plan",
+          "Your team needs a jungle pick more than Diaochan's specialty, leaving the role unfilled if you commit here.",
+          "The enemy already drafted Liang and Mulan, who counter data identifies as direct answers to Diaochan."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Diaochan's mid-game tools come online.",
+          "Lifesteal item online: trade patterns flip from neutral to favorable once sustain stacks with damage",
+          "Late game: full build online, Diaochan reaches the spike public guides describe — extended fights favor her once items are completed."
+        ],
+        "common_mistakes": [
+          "Forcing all-ins against opponents already wearing anti-heal — your healing barely activates.",
+          "Ignoring Liang and Mulan on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Greeding farm in mid lane while side lanes get camped — rotation timing matters more than CS lead in most matchups."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 154,
+            "hero_name": "Mulan",
+            "evidence": "Mulan",
+            "source_hash": "a5dddea28cef1944263fcdcd1289305693686afa54299114095cf4f877b727b2"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 162,
+            "hero_name": "Nakoruru",
+            "evidence": "Nakoruru",
+            "source_hash": "121feeaa48010ac447bfc911bfd0dcbcf43bc556c95505059d330fa448a8ff5a"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 195,
+            "hero_name": "Xuance",
+            "evidence": "Xuance",
+            "source_hash": "bd79b830292c1591dadab0100d6a4398b5b6b030bb101115d8095878ccef0ed1"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 142,
+            "hero_name": "Angela",
+            "evidence": "Angela",
+            "source_hash": "4b9cd40419e932871562b0173382be1d304aba598b8d75035a7a4b0674dd37e2"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 646,
+            "hero_name": "Butterfly",
+            "evidence": "Butterfly",
+            "source_hash": "e1e0adf2d98387274d93a9c1ad322e8bf267c5892cad779fe7691884965ebdfd"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 119,
+            "hero_name": "Dr Bian",
+            "evidence": "Dr Bian",
+            "source_hash": "e2cf240d076b5d003131e0d4e8f81aa538b8f24907e95cba7bbc23f7698c58e0"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 126,
+            "hero_name": "Dun",
+            "evidence": "Dun",
+            "source_hash": "09c23c76200cf535e41d8dce353b832902b8307f3240e905e6512bdcee384a64"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 563,
+            "hero_name": "Heino",
+            "evidence": "Heino",
+            "source_hash": "aea17f2877f1fecafa6b1da0a834e8c333fe7cc504ac8eda38f65af130a3a351"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 193,
+            "hero_name": "Kaizer",
+            "evidence": "Kaizer",
+            "source_hash": "90ca31c30000f03112ac0d0d92a8c85660c848959291bbf2add66d2a28c1e35e"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 111,
+            "hero_name": "Lady Sun",
+            "evidence": "Lady Sun",
+            "source_hash": "ae1a4684e678ba018dd2fee68415543c625255510dc25179a6208a4f99c2d7d9"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 547,
+            "hero_name": "Luara",
+            "evidence": "Luara",
+            "source_hash": "99d3fa73d975d1b58da3a3ab826fd66a825f6d91789d58e46cfe352f73dcbc9b"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 524,
+            "hero_name": "Meng Ya",
+            "evidence": "Meng Ya",
+            "source_hash": "156e15902ed6028c2f736337d52c7283429e25929684b0ed28dbe6299e80f471"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 130,
+            "hero_name": "Musashi",
+            "evidence": "Musashi",
+            "source_hash": "19c25d838099ec50d1b55d4d03ab033283cfd2b3eca70d97647b29352b4f4844"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 513,
+            "hero_name": "Shangguan",
+            "evidence": "Shangguan",
+            "source_hash": "5d194d863a141bf7f1a326401aca60c42a05a3f9c97460b7b37b1f64594ccf7b"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 196,
+            "hero_name": "Shouyue",
+            "evidence": "Shouyue",
+            "source_hash": "c586200bda9a2634aa5050fe7c4ff161f758e72ac1dfbd383f72bd0b13adaab5"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 178,
+            "hero_name": "Yang Jian",
+            "evidence": "Yang Jian",
+            "source_hash": "cbbcff884b243b28cb981ba21e0671213afeb4cbd9a35f2a8a5bb293cd1d1154"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 148,
+            "hero_name": "Ziya",
+            "evidence": "Ziya",
+            "source_hash": "b8303d2a28751ac143772f25c52ba9710aa087d7d0c7e31dc744b8cba539c7d1"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 132,
+            "hero_name": "Marco Polo",
+            "source_hash": "e6d942c831c3a3337d76b8d038819eb8c354c06f8801a4a4a20b06523fb714ad"
+          },
+          {
+            "hero_id": 505,
+            "hero_name": "Yaria",
+            "source_hash": "e6d942c831c3a3337d76b8d038819eb8c354c06f8801a4a4a20b06523fb714ad"
+          },
+          {
+            "hero_id": 196,
+            "hero_name": "Shouyue",
+            "source_hash": "e6d942c831c3a3337d76b8d038819eb8c354c06f8801a4a4a20b06523fb714ad"
+          },
+          {
+            "hero_id": 167,
+            "hero_name": "Wukong",
+            "source_hash": "e6d942c831c3a3337d76b8d038819eb8c354c06f8801a4a4a20b06523fb714ad"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.84,
+            "tidak": 0.104,
+            "tidak_diketahui": 0.056
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

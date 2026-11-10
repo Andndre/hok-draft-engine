@@ -1,0 +1,619 @@
+{
+  "schema_version": 2,
+  "hero_id": 166,
+  "source_hash": "467cde5a85717d693aca0de37a3b5bdbf7898ab4ff9ed57c271d85503fd919ad",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Holy Vanguard",
+          "desc": "Invokes the protection of the divine light to recover Health continuously. If Movement Speed is impaired, the Health restored is doubled."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Valiant Charge",
+          "desc": "Enhances the next Basic Attack into a dash, dealing extra damage and silencing enemies."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Whirling Strike",
+          "desc": "Deals damage over time to nearby enemies."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Might of Excalibur",
+          "desc": "Jumps to the target enemy hero to deal damage. Launches all heroes within range."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Simple kit to learn",
+          "In-built sustain",
+          "Strong lane phase"
+        ],
+        "cons": [
+          "Can be kited easily",
+          "Struggles to reach the back line",
+          "Limited damage"
+        ],
+        "gameplay_tips": "## Early Game\nSkill 2, Whirling Strike, can help you clear the first minion wave quickly to get level 2 before your opponent, giving you an advantage that you can use to win early trades. You want to take short trades so you can heal back up from your Passive every time. Each short chip of damage will help you win the Early Game. With this early advantage, you can look to secure Space Sprite and roam to help your team.\n\n## Teamfights\nTeamfights are a struggle for Arthur. You don't have a lot of mobility, so it's difficult for you to get onto the back line with your Ultimate and Skill 1. Try to stay in bushes to surprise the enemy carries and use your silence to stop high-impact skills on the enemy team. Always stay close enough to your team so they can back up your engage, and don't chase too far, as you can be kited very easily.\n\n## Tips & Tricks\nStart trades with Skill 1 for more damage on your auto attacks and other skills\nYou can auto attack after using Skill 1 to dash anywhere even over walls"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Melee di lane jangan adu poke sama Arthur, pasti kalah. 2) Hero ranged bisa poke dia. 3) Pas HP rendah jauhin Arthur, ult-nya sakit banget buat target sekarat."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/arthur/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Holy Vanguard",
+            "description": "Recovers Health every second. Health recovered is increased if his Movement Speed has been reduced.",
+            "type": "passive"
+          },
+          {
+            "name": "Valiant Charge",
+            "description": "Gains Movement Speed and enhances his next Basic Attack to dash to the enemy in front, then damage and silence them.",
+            "type": "skill1"
+          },
+          {
+            "name": "Whirling Strike",
+            "description": "Deals damage every second to enemies within range.",
+            "type": "skill2"
+          },
+          {
+            "name": "Might of Excalibur",
+            "description": "Leaps to the target, damaging and launching them.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has multiple high-mobility threats that need to be locked down before they reach your backline",
+          "Your team needs a primary front-line who can engage on cooldown windows",
+          "The enemy draft includes Han Xin and Arke, who appear in counter data as matchups Arthur can pressure."
+        ],
+        "avoid_when": [
+          "Your team lacks the follow-up damage to convert your control windows into kills",
+          "The enemy stacks anti-tank items like armor penetration and percent-HP damage, melting front-liners quickly",
+          "The enemy already drafted Xiang Yu and Lady Sun, who counter data identifies as direct answers to Arthur."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Arthur's mid-game tools come online.",
+          "Ultimate online: Might of Excalibur extends control duration, making team fights snowball off a single hit",
+          "Late game: Glacial Buckler, Overlord's Platemail, and Eye of the Phoenix on the bar means Arthur can soak commits in 5v5 team fights for his carries."
+        ],
+        "common_mistakes": [
+          "Throwing Whirling Strike on the front-line tank instead of saving it for backline carries.",
+          "Building damage items hoping to deal kills, when the team needs the durability that makes you a tank in the first place.",
+          "Ignoring Xiang Yu and Lady Sun on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Forcing solo engages instead of waiting for ally commit — Arthur's value compounds when the team follows up on engages."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 142,
+            "hero_name": "Angela",
+            "evidence": "Arthur's silence stops Angela's skills, and his passive healing outlasts her poke.",
+            "source_hash": "0356b99619d845c1dde8c48da68ca28eb883e1be4945b078a661d01be2f759c9"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 533,
+            "hero_name": "Agudo",
+            "evidence": "Valiant Charge silences Agudo, stopping Wild Growth and Tumble.",
+            "source_hash": "e437a2d40e03e8f4866bdbe09e12d41b320efe8dc38827668192a1464c02dd6d"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 124,
+            "hero_name": "Zhou Yu",
+            "evidence": "Valiant Charge silences Zhou Yu before he can set up his zones.",
+            "source_hash": "7e31b4452fdd04bc7f7dad9e59a35ad54bfb8f0ce1a9f05817e82a90674deb72"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 184,
+            "hero_name": "Cai Yan",
+            "evidence": "Cai Yan",
+            "source_hash": "35b3ff3ff5f59061dcb4e186ece5036b8a696762312e410324a94886154c645c"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 114,
+            "hero_name": "Liu Shan",
+            "evidence": "Liu Shan",
+            "source_hash": "307c2b89cb29e206cab1424cdf304b502892a01f3b0e4bead17bb257bf44a4bc"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 502,
+            "hero_name": "Pei",
+            "evidence": "Pei",
+            "source_hash": "1b4cf223cd7e1f7bd70f95a42d7ae2b3d068a131f1cd3fc9a82b1e078136364e"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 163,
+            "hero_name": "Ukyo Tachibana",
+            "evidence": "Ukyo Tachibana",
+            "source_hash": "619f85720d14fa4febbd324543d6713f99df4d76fc5a20d3a49daac585534df4"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 169,
+            "hero_name": "Hou Yi",
+            "source_hash": "3d1379535b3fc84947a7d8c65d55fc3221b11f00ca35f7608d572183adfad1bb"
+          },
+          {
+            "hero_id": 501,
+            "hero_name": "Ming",
+            "source_hash": "3d1379535b3fc84947a7d8c65d55fc3221b11f00ca35f7608d572183adfad1bb"
+          },
+          {
+            "hero_id": 109,
+            "hero_name": "Daji",
+            "source_hash": "3d1379535b3fc84947a7d8c65d55fc3221b11f00ca35f7608d572183adfad1bb"
+          },
+          {
+            "hero_id": 175,
+            "hero_name": "Kui",
+            "source_hash": "3d1379535b3fc84947a7d8c65d55fc3221b11f00ca35f7608d572183adfad1bb"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.91,
+            "tidak": 0.0585,
+            "tidak_diketahui": 0.0315
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.85,
+            "tidak": 0.0975,
+            "tidak_diketahui": 0.0525
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

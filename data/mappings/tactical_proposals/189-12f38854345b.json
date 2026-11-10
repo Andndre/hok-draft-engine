@@ -1,0 +1,641 @@
+{
+  "schema_version": 2,
+  "hero_id": 189,
+  "source_hash": "12f38854345b552bbc9fd004b79720965ec09f252fd30691fd82c258d88ae84a",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "The Laws of Nature",
+          "desc": "Slips out of vision and enhances the next Basic Attack to inflict extra damage and slow."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Prophecy - Hidden Hand",
+          "desc": "Gains a Movement Speed boost and a disguise, reducing the Physical andMagical Defense of enemies touched and dealing damage to them."
+        },
+        {
+          "type": "Skill 2",
+          "name": "The Animist",
+          "desc": "Summons sprites, and after a brief delay, pulls nearby enemies, inflicting damage and stun. When an enemy hero is hit, gains a shield and grants ashield to all nearby allies."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Prophecy - Out of Sight",
+          "desc": "After 1s, he grants disguise and Move Speed to himself and near by teammates. Gains vision of the nearest enemy hero. Disguise breaks upon using Basic Attacks, skills, or actions that affect enemies."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Perhatiin gerakan Guiguzi dan selalu cek apakah lu kelihatan musuh. 2) Di late pas vision kurang, ati-ati serangan mendadak grup musuh."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/guiguzi/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "The Laws of Nature",
+            "description": "After leaving the enemy's vision, the next Basic Attack deals extra damage and slows the enemy.",
+            "type": "passive"
+          },
+          {
+            "name": "Prophecy - Hidden Hand",
+            "description": "Gains a Movement Speed boost and camouflages himself, reducing the Physical and Magical Defense of enemies touched while dealing damage to them.",
+            "type": "skill1"
+          },
+          {
+            "name": "The Animist",
+            "description": "Summons spriteflies, and after a brief delay, pulls in nearby enemies, dealing damage and stunning them. If he hits an enemy hero, he and nearby teammates gain a shield.",
+            "type": "skill2"
+          },
+          {
+            "name": "Prophecy - Out of Sight",
+            "description": "After 1s, camouflages and grants Movement Speed to himself and nearby teammates. Gains vision of the nearest enemy hero. The disguise breaks upon using Basic Attacks, skills, or actions that affect enemies.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has multiple high-mobility threats that need to be locked down before they reach your backline",
+          "Your team has the structure to use his ability to protect the marksman, set vision, and engage on cooldown windows, since Guiguzi delivers utility, vision, and timely peel for the carries.",
+          "The enemy draft includes Li Xin, Mozi, and Zilong, who appear in counter data as matchups Guiguzi can pressure."
+        ],
+        "avoid_when": [
+          "Your team lacks the follow-up damage to convert your control windows into kills",
+          "Your team needs a damage pick more than Guiguzi's specialty, leaving the role unfilled if you commit here.",
+          "A stronger pick in the same role is open and the matchup does not specifically reward Guiguzi's Crowd Control."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Guiguzi's mid-game tools come online.",
+          "Ultimate online: Prophecy - Out of Sight extends control duration, making team fights snowball off a single hit",
+          "Late game: cooldowns become short enough that The Animist influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Throwing The Animist on the front-line tank instead of saving it for backline carries.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Guiguzi's commit reaches the target alive.",
+          "Forgetting vision while looking for picks — losing the marksman because the support roamed without setting wards is a recurring mistake."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 507,
+            "hero_name": "Li Xin",
+            "evidence": "Li Xin",
+            "source_hash": "450a50d702ef3d877254f14f1d599761f36045c6d1e8885112ded370ec8e39a8"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 108,
+            "hero_name": "Mozi",
+            "evidence": "Mozi",
+            "source_hash": "9c487734fe19a0e351864d6ae29d63031aa83d1fece70f2a0577d59bf06800cb"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 107,
+            "hero_name": "Zilong",
+            "evidence": "Zilong",
+            "source_hash": "9c057f7511c6ebe11cdb52a52ba66a987e5bfdea6dfc98c38cfbeb280d35cdaf"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 116,
+            "hero_name": "Arke",
+            "evidence": "Out of Sight tracks the nearest enemy hero, making it harder for Arke to ambush.",
+            "source_hash": "0f6c1436e8e094b5819f3161bfd75c94243b455dab9f3440019cf169fc4b62e2"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 153,
+            "hero_name": "Gao Changgong",
+            "evidence": "Out of Sight tracks the nearest enemy hero, making it harder for Gao Changgong to ambush.",
+            "source_hash": "57913e3bb1cf27089b421a127ba6952f7baec0da1bb76f7b3c8a86a6a84fd6bf"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 128,
+            "hero_name": "Fatih",
+            "evidence": "Sacred Tree Blessing cleanses the stun from Guiguzi's spriteflies.",
+            "source_hash": "8ff70bed94033a486620d327e43234afc82d96ecf5e99e340a90ed8ae30144f0"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 125,
+            "hero_name": "Yango",
+            "evidence": "Dispersal cleanses the stun from Guiguzi's spriteflies.",
+            "source_hash": "0bb899d961028cecd14b479c5573b5263fb3355e587990d1138acc67f0272ec4"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 180,
+            "hero_name": "Nezha",
+            "evidence": "Universe Ring hits and reveals enemy heroes across the map, which can expose Guiguzi's camouflage.",
+            "source_hash": "41ace943a7f0b9bfa5885aa435319b0b78c87ac0a83535eb9878e0f153c4ceb2"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 192,
+            "hero_name": "Huang Zhong",
+            "evidence": "Lay the Mines reveals camouflaged Guiguzi.",
+            "source_hash": "ce979f5d576f7f84eca54d2aa80ad92d0c9348c4ca03d5bf8d30628aec650929"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 537,
+            "hero_name": "Devara",
+            "evidence": "Millennium Echo's crowd control immunity ignores the stun from Guiguzi's spriteflies.",
+            "source_hash": "e952136366dd9454d396ba9bd857628680c1d2078aadc5a19c0f5798c8a4ba2f"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 132,
+            "hero_name": "Marco Polo",
+            "source_hash": "fe9ab8325190247759e60aef433e8dc050c7237ea75f18a64756dfb8561fb0e2"
+          },
+          {
+            "hero_id": 137,
+            "hero_name": "Sima Yi",
+            "source_hash": "fe9ab8325190247759e60aef433e8dc050c7237ea75f18a64756dfb8561fb0e2"
+          },
+          {
+            "hero_id": 631,
+            "hero_name": "Florentino",
+            "source_hash": "fe9ab8325190247759e60aef433e8dc050c7237ea75f18a64756dfb8561fb0e2"
+          },
+          {
+            "hero_id": 152,
+            "hero_name": "Wang Zhaojun",
+            "source_hash": "fe9ab8325190247759e60aef433e8dc050c7237ea75f18a64756dfb8561fb0e2"
+          },
+          {
+            "hero_id": 115,
+            "hero_name": "Gao",
+            "source_hash": "fe9ab8325190247759e60aef433e8dc050c7237ea75f18a64756dfb8561fb0e2"
+          },
+          {
+            "hero_id": 170,
+            "hero_name": "Liu Bei",
+            "source_hash": "fe9ab8325190247759e60aef433e8dc050c7237ea75f18a64756dfb8561fb0e2"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.91,
+            "tidak": 0.0585,
+            "tidak_diketahui": 0.0315
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.07,
+            "tidak": 0.8,
+            "tidak_diketahui": 0.13
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

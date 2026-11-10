@@ -1,0 +1,606 @@
+{
+  "schema_version": 2,
+  "hero_id": 501,
+  "source_hash": "de042fb35a64ce31064bb65e5398590a80c4d640dd88a34d6d04269ac8b19606",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Good Omens",
+          "desc": "Every 5s, Ming's next Basic Attack deals more magical damage and heals himself and the linked teammate. The healing is reduced if the enemy is nota hero."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Time - Carefree",
+          "desc": "Forms a link with the target. When linked to an ally, increases the Physical and Magical Attack Movement Speed, and Attack Speed of both parties. When linked to an enemy unit, reduces their Physical and Magical Attack while dealing damage over time."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Mastery - Glide",
+          "desc": "Switches the effect of the link. When linked to an ally, increases the Physical and Magical Defense of both parties. When linked to an enemy unit, reduces their Physical and Magical Defense. The effect can beswitched repeatedly."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Peace - Longevity",
+          "desc": "While linked, can spend own Health to restore an equal amount of Health toallies or deal an equal amount of damage to enemies. Recovers Health continuously while out of combat."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Abis kena rantai, langsung mundur. 2) Abis Ming pakai ult, langsung serang dan bunuh."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/ming/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Good Omens",
+            "description": "Every 5s, Ming's next Basic Attack deals magical damage and heals himself and the linked teammate. The healing is reduced if the enemy is not a hero.",
+            "type": "passive"
+          },
+          {
+            "name": "Time - Carefree",
+            "description": "Throws his instrument and links it to a teammate, increasing their main attack stat and Attack Speed. Enemies who touch the link take damage over time. Passive: Increases Ming's Physical Attack, Magical Attack, and Movement Speed.",
+            "type": "skill1"
+          },
+          {
+            "name": "Mastery - Glide",
+            "description": "Throws his instrument and links it to an enemy, reducing their Physical and Magical Defense. Enemies who touch the link take damage over time. Passive: Gains Physical and Magical Defense.",
+            "type": "skill2"
+          },
+          {
+            "name": "Peace - Longevity",
+            "description": "Ming channels for a short time before sacrificing Health to deal true damage to the linked enemy or heal the linked teammate. If linked to both, he does not lose Health.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has burst threats that need to be absorbed by reliable shields",
+          "Your team has the structure to use his ability to protect the marksman, set vision, and engage on cooldown windows, since Ming delivers utility, vision, and timely peel for the carries.",
+          "The enemy draft includes Cirrus, Menki, and Wuyan, who appear in counter data as matchups Ming can pressure."
+        ],
+        "avoid_when": [
+          "The enemy plays sustained damage rather than burst, which shields cannot absorb in single windows",
+          "Your team needs a damage pick more than Ming's specialty, leaving the role unfilled if you commit here.",
+          "A stronger pick in the same role is open and the matchup does not specifically reward Ming's Team Buffs."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Ming's mid-game tools come online.",
+          "Defensive item online: shield strength scales with magic power or HP, so Ming's value grows after the first item spike",
+          "Late game: cooldowns become short enough that Mastery - Glide influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Pre-shielding before the engage actually starts, wasting the absorb window before damage lands.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Ming's commit reaches the target alive.",
+          "Forgetting vision while looking for picks — losing the marksman because the support roamed without setting wards is a recurring mistake."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 506,
+            "hero_name": "Cirrus",
+            "evidence": "Cirrus",
+            "source_hash": "b4df5624a7bd5606c9adf4970780a3393edf49b0549ba8526b315963a5941ecc"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 198,
+            "hero_name": "Menki",
+            "evidence": "Menki",
+            "source_hash": "96d5f8df1a97686ded6d299f38ed07e3b045295fc93f00e840083bae601292fd"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 117,
+            "hero_name": "Wuyan",
+            "evidence": "Wuyan",
+            "source_hash": "579fbb28e1bbe85f28eaa743f60df9cd1ecafb411941425d45013fc18ed2b712"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 180,
+            "hero_name": "Nezha",
+            "evidence": "Fire-tipped Spear cuts the healing Ming gives his linked teammate.",
+            "source_hash": "589e6d29f4e5c7b1983ca239e4fc7834b8c811f1cde9e5599dae41c7d89603b7"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 175,
+            "hero_name": "Kui",
+            "evidence": "Join Me pulls Ming away from his linked teammate.",
+            "source_hash": "34f4691d4daa24497570292976141e72aa6d74d8498e189be2143aea1d8bb6d9"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 169,
+            "hero_name": "Hou Yi",
+            "source_hash": "6ee83f0a5257a29e34ead4cd3bb2c40e6b0fffab87acc191a583cdd4440653e3"
+          },
+          {
+            "hero_id": 149,
+            "hero_name": "Liu Bang",
+            "source_hash": "6ee83f0a5257a29e34ead4cd3bb2c40e6b0fffab87acc191a583cdd4440653e3"
+          },
+          {
+            "hero_id": 183,
+            "hero_name": "Athena",
+            "source_hash": "6ee83f0a5257a29e34ead4cd3bb2c40e6b0fffab87acc191a583cdd4440653e3"
+          },
+          {
+            "hero_id": 126,
+            "hero_name": "Dun",
+            "source_hash": "6ee83f0a5257a29e34ead4cd3bb2c40e6b0fffab87acc191a583cdd4440653e3"
+          },
+          {
+            "hero_id": 109,
+            "hero_name": "Daji",
+            "source_hash": "6ee83f0a5257a29e34ead4cd3bb2c40e6b0fffab87acc191a583cdd4440653e3"
+          },
+          {
+            "hero_id": 111,
+            "hero_name": "Lady Sun",
+            "source_hash": "6ee83f0a5257a29e34ead4cd3bb2c40e6b0fffab87acc191a583cdd4440653e3"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.91,
+            "tidak": 0.0585,
+            "tidak_diketahui": 0.0315
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.88,
+            "tidak": 0.078,
+            "tidak_diketahui": 0.042
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.07,
+            "tidak": 0.8,
+            "tidak_diketahui": 0.13
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

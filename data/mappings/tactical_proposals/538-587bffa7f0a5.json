@@ -1,0 +1,656 @@
+{
+  "schema_version": 2,
+  "hero_id": 538,
+  "source_hash": "587bffa7f0a5d28cf1e4ff1de87ae6a0eaae4f707ead0b67752db01e8d83d51f",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Spear Will - Sweeping Fire",
+          "desc": "Skills grant marks (up to 3 stacks), and different stacks upgrade thefollowing Basic Attacks into different skills."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Moonslash",
+          "desc": "Deals damage to enemies within range and launches them."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Cloudchaser",
+          "desc": "Dashes to the target location then sweeps the enemy, slowing them and dealing damage. Skill can be charged to enhance damage and gain extra effects"
+        },
+        {
+          "type": "Ultimate",
+          "name": "Starburn",
+          "desc": "Dashes in the target direction, damaging and launching enemies. Then returns to the start point to damage and pull enemies a short distance. Gains lmmunity and damage reduction while using. Use again to deal continuous damage to the target area."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Perhatiin jenis jurus tombak Ying, sebisa mungkin hindarin ult-nya. Hero burst juga jelas counter dia."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/ying/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Spear Will - Sweeping Fire",
+            "description": "Gains an enhanced Basic Attack after using skills. Using the enhanced Basic Attack reduces the cooldowns of Skill 1 and Skill 2.",
+            "type": "passive"
+          },
+          {
+            "name": "Moonslash",
+            "description": "Launches and deals damage to enemies.",
+            "type": "skill1"
+          },
+          {
+            "name": "Cloudchaser",
+            "description": "Gains Movement Speed while charging, then dashes forward, dealing damage and slowing enemies.",
+            "type": "skill2"
+          },
+          {
+            "name": "Starburn",
+            "description": "Dashes in the target direction, then returns to her original location, launching and dealing damage to enemies in her path. She gains crowd control immunity and damage reduction while dashing. Second Phase: Deals damage over time in the target location. While Starburn is active, the second phase of the skill sweeps her surroundings, interrupting subsequent dashes, dealing area damage, and leaving a ring of fire behind for 0.2s.",
+            "type": "ultimate"
+          },
+          {
+            "name": "Stalwart - Peacemaker",
+            "description": "Continuously deals damage to enemies within range and gains a shield. September 10 update: 1 stack of Spear Will - Sweeping Fire, Stalwart - Peacemaker: base damage 55–110 (+40% Physical Attack) → 50–100 (+35% Physical Attack).",
+            "type": "ultimate"
+          },
+          {
+            "name": "Zealous - Devastation",
+            "description": "Strikes 3 times, dealing damage and restoring Health. September 10 update: 2 stacks of Spear Will - Sweeping Fire, Zealous - Devastation: first 2 strikes 60–120 (+40% Physical Attack) → 50–100 (+35% Physical Attack); last hit 120–240 (+80% Physical Attack) → 100–200 (+70% Physical Attack).",
+            "type": "ultimate"
+          },
+          {
+            "name": "Zenith - Wildfire",
+            "description": "Gains Movement Speed and damage reduction, and can ignore terrain. Then deals damage to enemies. September 10 update: 3 stacks of Spear Will - Sweeping Fire, Zenith - Wildfire: base damage 160–320 (+100% Physical Attack) → 150–300 (+90% Physical Attack); maximum damage 320–640 (+200% Physical Attack) → 300–600 (+180% Physical Attack).",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your draft can capitalize on early picks and snowball lane leads",
+          "Your team has the structure to use her ability to clear camps efficiently and convert pressure into ganks, since Ying delivers tempo from objectives and cross-map kill threats.",
+          "The enemy draft includes Kongming, Liang, and Yuhuan, who appear in counter data as matchups Ying can pressure."
+        ],
+        "avoid_when": [
+          "The team needs sustained team-fight damage rather than a single-target diver",
+          "Your team needs a tank pick more than Ying's specialty, leaving the role unfilled if you commit here.",
+          "The enemy already drafted Di Renjie, Erin, and Lady Sun, who counter data identifies as direct answers to Ying."
+        ],
+        "power_spikes": [
+          "Early game: jungle clear into level-4 ganks is the first window where Ying can translate routes into kills.",
+          "Mid game: with cooldown reduction online, gap-close skills come back fast enough to chain into multiple fights",
+          "Late game: cooldowns become short enough that Cloudchaser influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Diving while enemy hard control is still up, which directly counters Ying's engage.",
+          "Ignoring Di Renjie and Erin on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Pathing predictably and getting tracked by the enemy jungler — vary first clear and rotate based on ward placement rather than muscle memory."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 190,
+            "hero_name": "Kongming",
+            "evidence": "Kongming",
+            "source_hash": "ba63ee41d9d213bcff3d7c113b3ac3488b8a4c1ddcf129b701fe6d22c57d34e9"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 156,
+            "hero_name": "Liang",
+            "evidence": "Liang",
+            "source_hash": "edd82c04f55361a76b943302d95b9fb5517b9255d7d26eb33b5c507b3eeea2a4"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 176,
+            "hero_name": "Yuhuan",
+            "evidence": "Yuhuan",
+            "source_hash": "1dc0183d13e565e72d0bf3cc6e217184a0b2aa09bd821ff42c9a1393097052c2"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 133,
+            "hero_name": "Di Renjie",
+            "evidence": "Di Renjie",
+            "source_hash": "ac4156830be44db14f8f553ea4aa86f9142f8b1ec4b5fcb4773e101a2e34bf5c"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 155,
+            "hero_name": "Erin",
+            "evidence": "Erin",
+            "source_hash": "36e33c9a0363f8eb3dc5f485b8aa57e41649ed30994371ddf5294b431f7e818a"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 111,
+            "hero_name": "Lady Sun",
+            "evidence": "Lady Sun",
+            "source_hash": "58b7771c2dfe23f4fee30d60d774d69cc84a44928905f0cd613cc48c8ad39c33"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 112,
+            "hero_name": "Luban No.7",
+            "evidence": "Luban No.7",
+            "source_hash": "80c0ed1241ef13de922959ac7fcbc1cac8dde4f217b74c6934a73abaf5c932d6"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 534,
+            "hero_name": "Sakeer",
+            "evidence": "Sakeer",
+            "source_hash": "62a8a37b6548093e3828aa9ab8a79e6d63e52e80d5f3973c3f8bd8756725d9af"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 196,
+            "hero_name": "Shouyue",
+            "evidence": "Shouyue",
+            "source_hash": "8f24745203d83a375d7796def4cf354ad4a9f8057ff93484799c202ec74bf80d"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 148,
+            "hero_name": "Ziya",
+            "evidence": "Ziya",
+            "source_hash": "3e89e7a4d84162fc24f6f9901f73dc6f182bb146528a741faa2576c633506789"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 132,
+            "hero_name": "Marco Polo",
+            "source_hash": "c8d2d7fa5ef18dc8a1e227c7573731978fbaba6326ef96ba739b255b748da9e1"
+          },
+          {
+            "hero_id": 505,
+            "hero_name": "Yaria",
+            "source_hash": "c8d2d7fa5ef18dc8a1e227c7573731978fbaba6326ef96ba739b255b748da9e1"
+          },
+          {
+            "hero_id": 119,
+            "hero_name": "Dr Bian",
+            "source_hash": "c8d2d7fa5ef18dc8a1e227c7573731978fbaba6326ef96ba739b255b748da9e1"
+          },
+          {
+            "hero_id": 118,
+            "hero_name": "Sun Bin",
+            "source_hash": "c8d2d7fa5ef18dc8a1e227c7573731978fbaba6326ef96ba739b255b748da9e1"
+          },
+          {
+            "hero_id": 184,
+            "hero_name": "Cai Yan",
+            "source_hash": "c8d2d7fa5ef18dc8a1e227c7573731978fbaba6326ef96ba739b255b748da9e1"
+          },
+          {
+            "hero_id": 180,
+            "hero_name": "Nezha",
+            "source_hash": "c8d2d7fa5ef18dc8a1e227c7573731978fbaba6326ef96ba739b255b748da9e1"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

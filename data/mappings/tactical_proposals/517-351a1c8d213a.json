@@ -1,0 +1,616 @@
+{
+  "schema_version": 2,
+  "hero_id": 517,
+  "source_hash": "351a1c8d213a3585d8826e95cf769df81557a16d9658c28d11614af073780566",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Soul Resonance",
+          "desc": "Basic Attacks can connect to an enemy's soul, dealing damage continuously unless the enemy breaks free. When the connection ends, it deals a large amount of damage."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Path of Passing",
+          "desc": "Slashes open a path to the afterlife, dealing damage to enemies hit. The path accelerates when it hits walls or the Life-Death Border, then deals extra damage. By traversing on the path, he can ignore terrain and gain Movement Speed. Hitting a wall for the first time generates an afterlife bridge, and he gains Movement Speed when crossing the bridge while enemies nearby are slowed. Using this skill again causes him to enter the Seer State."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Death's Precipice",
+          "desc": "Deals damage and inflicts slow on enemies to the front, then generates a Life-Death Border which damages, slows, and marks enemies who touch it. His next Basic Attack additionally attacks up to 3 marked targets, dealing extra damage and recovering his Health."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Conductor of Souls",
+          "desc": "Descends from the sky, damaging and knocking back nearby enemies. Hitting an enemy hero will recover his Health and summon their spirit counterpart to assist him. Enters the Seer State after, in which his Basic Attacks will kill targets with low Health instantly."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Insane mobility through terrain",
+          "Strong sustain/healing",
+          "Execute potential"
+        ],
+        "cons": [
+          "Vulnerable to hard crowd control",
+          "Weak when behind early",
+          "Can be kited"
+        ],
+        "gameplay_tips": "## Early Game\nAugran has one of the fastest jungle clear speeds in the entire game. With Skill 1 Path of Passing, he can walk through terrain and execute jungle camps with his auto attacks. With his mobility and execute, it also allows him to invade very effectively, with both execute and smite allowing him to steal enemy jungle camps away, giving him an early advantage. When looking for ganks, Augran relies on his slows and team to CC enemies so he can finish them off with his execute.\n\n## Teamfights\nIn teamfights, positioning is key. You want to be close enough so you can auto attack and execute enemies, but you also don't want to be too close that you can be burst down from the enemies' crowd control. Save your Ultimate Conductor of Soul for the right moment. You don't need to always use it at the start of a fight. Sometimes you need to save it for the heal or use it to be able to get Steer State to execute low-health enemies.\n\n## Tips & Tricks\nOnly use Skill 1 a 2nd time to enter Steer State when you can execute enemies or jungle camps\nIf you want to quickly enter Steer State to execute enemies, use your Ultimate\nCombo Skill 2 and Skill 1 to gain a burst of movement speed to catch up with enemies"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": ""
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/augran/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Soul Resonance",
+            "description": "Basic Attacks can connect to an enemy's soul, dealing damage continuously unless the enemy breaks free. When the connection ends, it deals a large amount of damage.",
+            "type": "passive"
+          },
+          {
+            "name": "Path of Passing",
+            "description": "Carves a path to the afterlife, dealing damage to enemies hit. The path accelerates when it hits walls or the Life-Death Border, then deals extra damage. By traversing on the path, he can ignore terrain and gain Movement Speed. Hitting a wall for the first time generates an afterlife bridge, and he gains Movement Speed when crossing the bridge while enemies nearby are slowed. Using this skill again causes him to enter the Seer State.",
+            "type": "skill1"
+          },
+          {
+            "name": "Death's Precipice",
+            "description": "Deals damage and inflicts slow on enemies to the front, then generates a Life-Death Border which damages, slows, and marks enemies who touch it. His next Basic Attack attacks up to 3 additional marked targets, dealing extra damage and recovering his Health.",
+            "type": "skill2"
+          },
+          {
+            "name": "Conductor of Souls",
+            "description": "Descends from the sky, damaging and knocking back nearby enemies. Hitting an enemy hero will recover his Health and summon their spirit counterpart to assist him. Enters the Seer State after, in which his Basic Attacks will kill targets with low Health instantly.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your draft can capitalize on early picks and snowball lane leads",
+          "Your team can engage first, letting Augran second-wave into low-health targets",
+          "The enemy draft includes Mai Shiranui and Nezha, who appear in counter data as matchups Augran can pressure."
+        ],
+        "avoid_when": [
+          "The team needs sustained team-fight damage rather than a single-target diver",
+          "Your team has no primary engage, leaving the cleanup pick with nothing to follow up on",
+          "The enemy already drafted Liu Bei, who counter data identifies as direct answers to Augran."
+        ],
+        "power_spikes": [
+          "Early game: jungle clear into level-4 ganks is the first window where Augran can translate routes into kills.",
+          "Ultimate unlocked: Conductor of Souls converts mobility into burst, the moment Augran starts threatening picks across the map",
+          "Late game: cooldowns become short enough that Death's Precipice influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Engaging without follow-up — gap-close gets you to the target, but a solo dive without ally damage trades 1-for-1.",
+          "Engaging first instead of second — cleanup picks lose their value as primary engagers.",
+          "Ignoring Liu Bei on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Pathing predictably and getting tracked by the enemy jungler — vary first clear and rotate based on ward placement rather than muscle memory."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 146,
+            "hero_name": "Luna",
+            "evidence": "Luna",
+            "source_hash": "9c197e05b618ed0aee2256720dbd0652edc8641c033cdaa8735e3a43fa42a242"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 513,
+            "hero_name": "Shangguan",
+            "evidence": "Shangguan",
+            "source_hash": "a4f63011a4c1fa95f9e2127666244eefc72baf70ad45a1e08a72f3b1ef2c4974"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 124,
+            "hero_name": "Zhou Yu",
+            "evidence": "Zhou Yu",
+            "source_hash": "e7b1c4957f37cd06af7abb3680f7cd229f17cd4f1c68e12f08d11c451e944c3a"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 142,
+            "hero_name": "Angela",
+            "evidence": "Angela",
+            "source_hash": "12bddca627547d620ade6b8ff751e7b2646d87b1e63a36438f4fb3bd9fb7a7a3"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 109,
+            "hero_name": "Daji",
+            "evidence": "Daji",
+            "source_hash": "aa17f6c16eec3b8d791108b3e767f1b82f889a93ddfbe1ae9a4504151b3a25f0"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 159,
+            "hero_name": "Dolia",
+            "evidence": "Dolia",
+            "source_hash": "47c3959322873d0ad424a6632cb7e2ca73743d16238af1b03b45f13366de5a90"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 114,
+            "hero_name": "Liu Shan",
+            "evidence": "Liu Shan",
+            "source_hash": "0953c3a5c5109bcd2c9e0466c2650f9bb79db9194c605cdf174e39812c76c483"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 197,
+            "hero_name": "Yixing",
+            "evidence": "Yixing",
+            "source_hash": "64458d384a01a9dc6c181fb0fa43d8ae1368f5e0dbe55c005e232d3372d8b4e1"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 519,
+            "hero_name": "Ao'yin",
+            "source_hash": "8cf34c09af481eb4ae69c09a6fb40b367bdf83ff5f442c1207fd5d0d92993d6d"
+          },
+          {
+            "hero_id": 118,
+            "hero_name": "Sun Bin",
+            "source_hash": "8cf34c09af481eb4ae69c09a6fb40b367bdf83ff5f442c1207fd5d0d92993d6d"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.85,
+            "tidak": 0.0975,
+            "tidak_diketahui": 0.0525
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

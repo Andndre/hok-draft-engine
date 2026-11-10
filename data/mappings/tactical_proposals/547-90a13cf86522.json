@@ -1,0 +1,599 @@
+{
+  "schema_version": 2,
+  "hero_id": 547,
+  "source_hash": "90a13cf86522082d7ce5c2810b6ce81dbc726c3ec3773d8affb18dda8c1bdb11",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Serpent's Envoy",
+          "desc": "Basic Attacks unleash serpent blades to deal damage, reducing Skill 1's cooldown for every enemy hit."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Deadly Fang",
+          "desc": "Activates a serpent blade and gains Movement Speed. She can quickly scale walls should she run into them during this period."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Furtive Attack",
+          "desc": "Summons the Fire Serpent at the target location, which then moves toward her, damaging and slowing enemies in its path. If serpent blades are active, it deals additional damage to enemies. If not, the cooldown is reduced."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Blazing Glare",
+          "desc": "Releases the Fire Serpent in the target direction, dealing damage and blinding enemies in its path, and gains a serpent blade. During this time, both attacking and being attacked will accumulate Fury. At full Fury, deals area damage and launches enemies."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Great Mobility",
+          "Strong kiting",
+          "Excellent DPS"
+        ],
+        "cons": [
+          "Vulnerable to dives",
+          "Weak early game",
+          "Hard to chase enemies"
+        ],
+        "gameplay_tips": "## Early Game\nLuara's early game is very weak. With her low attack range, it's extremely difficult to walk up and try to trade efficiently, so most of the time you want to stay underneath the tower and farm safely. Start with Skill 2 to safely farm from range and try to poke the enemy at the same time. Skill 1 can help you clear minion waves and gives you extra movement speed to run out of the enemy Marksman's attack range and escape ganks.\n\n## Teamfights\nWith Luara's low range, it's always best to attack the first enemy in front of you. Always fight around terrain so you can use your Skill 1 to jump over walls to escape danger. Your Ultimate Blazing Glare is a game changer. It does insane damage, and blinding is a very strong tool to have, where enemies' attacks and skills will miss you. It's best to save this for when you get dove on by assassins\n\n## Tips & Tricks\nIn fights, stay near a wall so you can use Skill 1 to jump over and escape\nUse Skill 1 before Skill 2 to get a serpent blade that does damage when Skill 2 hits"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": ""
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/luara/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Serpent's Envoy",
+            "description": "Basic Attacks unleash serpent blades to deal damage, reducing Skill 1's cooldown for every enemy hit.",
+            "type": "passive"
+          },
+          {
+            "name": "Deadly Fang",
+            "description": "Activates a serpent blade and gains Movement Speed. She can quickly scale walls should she run into them during this period. September 10 update: Skill 1 - Deadly Fang: base damage 30 (+6 per skill level) (+12% Physical Attack) → 35 (+7 per skill level) (+15% Physical Attack). Serpent Blade Attack Cooldown Reduction: 0.15s → 0.15–0.12s.",
+            "type": "skill1"
+          },
+          {
+            "name": "Furtive Attack",
+            "description": "Summons the Fire Serpent at the target location, which then moves toward her, damaging and slowing enemies in its path. If serpent blades are active, it deals additional damage to enemies. If not, the cooldown is reduced. September 10 update: Skill 2 - Furtive Attack: cooldown 10s (-0.4s per skill level) → 8s (-0.3s per skill level); skill cost 40 → 35; base damage 350 (+70 per skill level) (+100% extra Physical Attack) → 450 (+90 per skill level) (+140% extra Physical Attack).",
+            "type": "skill2"
+          },
+          {
+            "name": "Blazing Glare",
+            "description": "Releases the Fire Serpent in the target direction, dealing damage and blinding enemies in its path, and gains a serpent blade. During this time, both attacking and being attacked will accumulate Fury. At full Fury, deals area damage and launches enemies. September 10 update: Ultimate - Blazing Glare: cooldown 60s (-6s per skill level) → 50s (-5s per skill level); Fire Rain damage 150 (+75 per skill level) (+45% extra Physical Attack) → 150 (+75 per skill level) (+48% extra Physical Attack).",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team needs a primary damage carry that scales with items and team-fight positioning",
+          "Your team has the structure to use her ability to farm the safe side, scale into late game, and protect priority targets, since Luara delivers sustained ranged damage in extended team fights.",
+          "The enemy draft includes Diaochan, Mulan, and Lam, who appear in counter data as matchups Luara can pressure."
+        ],
+        "avoid_when": [
+          "The enemy stacks dive and assassins, making it impossible for the marksman to free-cast in fights",
+          "Your team needs a support pick more than Luara's specialty, leaving the role unfilled if you commit here.",
+          "The enemy team is built around answers to Carry, removing the windows Luara's kit needs to perform."
+        ],
+        "power_spikes": [
+          "Early game: farm safely behind the support, surviving lane phase to reach the marksman scaling window.",
+          "Late game: scaling marksman damage outpaces front-line healing, turning extended fights into wins",
+          "Late game: full build online, Luara reaches the spike public guides describe — extended fights favor her once items are completed."
+        ],
+        "common_mistakes": [
+          "Auto-attacking instead of repositioning when the enemy assassin is missing — losing the marksman loses the fight.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Luara's commit reaches the target alive.",
+          "Auto-attacking through enemy dive instead of repositioning — losing the marksman in early fights collapses the late-game win condition."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 141,
+            "hero_name": "Diaochan",
+            "evidence": "Diaochan",
+            "source_hash": "3cc63bf64e26aa5d97b5969bc268daa871dbcaf966b15471e75f9ad972c483fe"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 154,
+            "hero_name": "Mulan",
+            "evidence": "Mulan",
+            "source_hash": "74efdad5c240cf09e3f0e2d07cd6f99414c727b4c591bbaf4d8adb597b05dda7"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 528,
+            "hero_name": "Lam",
+            "evidence": "Lam",
+            "source_hash": "6f5b182f83548e9d67d83cba33b61fdbcb102ec33c8a7a768d856af5908990d3"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 195,
+            "hero_name": "Xuance",
+            "evidence": "Nightmare Hooks pin Luara before she can scale a wall to escape.",
+            "source_hash": "5bcefd0b67a379962e563ba019adc0a564299b24d93944ecda55fff999a21083"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 168,
+            "hero_name": "Lapulapu",
+            "evidence": "Island's Blessing dashes onto Luara and launches her.",
+            "source_hash": "0a6391ae6d2605ada49997b5dc455da73f6770aaf3eb6c6e134d71218c10fdd9"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 501,
+            "hero_name": "Ming",
+            "source_hash": "d39cf20c985ddd12a94a390a1c7224e147d618875ac06a6634e53a5ad0277680"
+          },
+          {
+            "hero_id": 152,
+            "hero_name": "Wang Zhaojun",
+            "source_hash": "d39cf20c985ddd12a94a390a1c7224e147d618875ac06a6634e53a5ad0277680"
+          },
+          {
+            "hero_id": 189,
+            "hero_name": "Guiguzi",
+            "source_hash": "d39cf20c985ddd12a94a390a1c7224e147d618875ac06a6634e53a5ad0277680"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.07,
+            "tidak": 0.8,
+            "tidak_diketahui": 0.13
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.84,
+            "tidak": 0.104,
+            "tidak_diketahui": 0.056
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

@@ -1,0 +1,736 @@
+{
+  "schema_version": 1,
+  "provider": "nanojev",
+  "target_global_released_count": 120,
+  "generated": [
+    {
+      "hero_id": 105,
+      "hero_name": "Lian Po",
+      "file": "105-4285759a8db5.json",
+      "source_hash": "4285759a8db52a55542568cecd7a66530aae1b42ce26b6a725df12ff1aa89620"
+    },
+    {
+      "hero_id": 106,
+      "hero_name": "Xiao Qiao",
+      "file": "106-123ab639aa93.json",
+      "source_hash": "123ab639aa935d4cc7258578edf1fa8eacdda885ede0f885cd42cf4ed2bf8833"
+    },
+    {
+      "hero_id": 107,
+      "hero_name": "Zilong",
+      "file": "107-72ebc82ed4fd.json",
+      "source_hash": "72ebc82ed4fdeaabbb77bc41a0fcc22b320e2144523ff0b7d86f6c4c50e46b78"
+    },
+    {
+      "hero_id": 108,
+      "hero_name": "Mozi",
+      "file": "108-2c6fc3248e97.json",
+      "source_hash": "2c6fc3248e97a39ad5fd466b00da3cd7284ab03e41895e141d14a3f12338e7df"
+    },
+    {
+      "hero_id": 109,
+      "hero_name": "Daji",
+      "file": "109-35ff884af29b.json",
+      "source_hash": "35ff884af29b416102cc2826949df5be543e20f944e39c8e004f0a2e4ea9eb44"
+    },
+    {
+      "hero_id": 110,
+      "hero_name": "Garuda",
+      "file": "110-12dcdd011b7c.json",
+      "source_hash": "12dcdd011b7c9755b94c2b934c32a2beef9103d7de543ed61d33acb8b522907f"
+    },
+    {
+      "hero_id": 111,
+      "hero_name": "Lady Sun",
+      "file": "111-7fa4e58363cf.json",
+      "source_hash": "7fa4e58363cfa3ee2364cf9aa6904e2cf3556e646d09be700e540f31fba4cb39"
+    },
+    {
+      "hero_id": 112,
+      "hero_name": "Luban No.7",
+      "file": "112-1a36ccb21b44.json",
+      "source_hash": "1a36ccb21b442dc4f63d374bfd4d697c15a45ebc1a5b5c174e702f3bbf756e8b"
+    },
+    {
+      "hero_id": 113,
+      "hero_name": "Zhuangzi",
+      "file": "113-41a16e418c23.json",
+      "source_hash": "41a16e418c23e5250a2150358c8acb0b48f27c211e0042cff63abc7cd0801d64"
+    },
+    {
+      "hero_id": 114,
+      "hero_name": "Liu Shan",
+      "file": "114-0f18244038bb.json",
+      "source_hash": "0f18244038bb1b11ddccfe051f9efd1bed3b7bb2809b55b549a9df413b5a068b"
+    },
+    {
+      "hero_id": 115,
+      "hero_name": "Gao",
+      "file": "115-8850b1873df7.json",
+      "source_hash": "8850b1873df71740dcdbf0ce4ac0de3ecc4b112808edcdd4cbbb5b115cad5175"
+    },
+    {
+      "hero_id": 116,
+      "hero_name": "Arke",
+      "file": "116-28f0a03f244c.json",
+      "source_hash": "28f0a03f244cebfbe9f6486a6568168c601d686ac12a6dc039b485ab8aec6650"
+    },
+    {
+      "hero_id": 117,
+      "hero_name": "Wuyan",
+      "file": "117-9fdb2d55a4ca.json",
+      "source_hash": "9fdb2d55a4ca734b80e59aa98429f02b57f5226bc950e26a3a887aa8c7920a6f"
+    },
+    {
+      "hero_id": 118,
+      "hero_name": "Sun Bin",
+      "file": "118-38be29903faa.json",
+      "source_hash": "38be29903faa5331a53c353557cf0769b31424c05a1717532f0a588cdad056d9"
+    },
+    {
+      "hero_id": 119,
+      "hero_name": "Dr Bian",
+      "file": "119-c8284ad8f71b.json",
+      "source_hash": "c8284ad8f71bd7ca01b12790f087e52d309ac001f20ef73e293480b8f20c8f96"
+    },
+    {
+      "hero_id": 120,
+      "hero_name": "Bai Qi",
+      "file": "120-07a1ef6d7f28.json",
+      "source_hash": "07a1ef6d7f286e7a34a78abffb8be8d513f17318f8c62db4ef786b95bdf4b027"
+    },
+    {
+      "hero_id": 121,
+      "hero_name": "Mi Yue",
+      "file": "121-d62d16e3a94c.json",
+      "source_hash": "d62d16e3a94c127163bf27c33cc2e1a0d0b553e5e3377828dd7e0e9f205f142a"
+    },
+    {
+      "hero_id": 123,
+      "hero_name": "Lu Bu",
+      "file": "123-eca8c8239db7.json",
+      "source_hash": "eca8c8239db763796f23765ffa48480d089771bab471bfd47fee479db5797d8e"
+    },
+    {
+      "hero_id": 124,
+      "hero_name": "Zhou Yu",
+      "file": "124-f29463515111.json",
+      "source_hash": "f29463515111ec08b5d49c6fe90786bf6172e159567ac5c65110c0eaee9af580"
+    },
+    {
+      "hero_id": 125,
+      "hero_name": "Yango",
+      "file": "125-cbbd3dd2b826.json",
+      "source_hash": "cbbd3dd2b826ac82d7f78c81370762789c4b2e0c96ef01e52bd3730b5a9e55ce"
+    },
+    {
+      "hero_id": 126,
+      "hero_name": "Dun",
+      "file": "126-f0b69612f170.json",
+      "source_hash": "f0b69612f170cc0e440fef103392babf49081d1eb4401b9b20e0f356fae56be3"
+    },
+    {
+      "hero_id": 127,
+      "hero_name": "Lady Zhen",
+      "file": "127-95f8de6a83bc.json",
+      "source_hash": "95f8de6a83bcf880ac571fb01e66624b094e2b9527bd024d4c0bb8e18f987b60"
+    },
+    {
+      "hero_id": 128,
+      "hero_name": "Fatih",
+      "file": "128-0719b5873c51.json",
+      "source_hash": "0719b5873c51f795c76fcb288168bba1e360dbb1839032753706b2b75f7fa8cd"
+    },
+    {
+      "hero_id": 129,
+      "hero_name": "Dian Wei",
+      "file": "129-a473ae863eb1.json",
+      "source_hash": "a473ae863eb1b23fb754ea8b200955003fedb525ffa423b5839fc50a43e26a73"
+    },
+    {
+      "hero_id": 130,
+      "hero_name": "Musashi",
+      "file": "130-6b352b9bfa84.json",
+      "source_hash": "6b352b9bfa84098df0dc37bf8a5427727297d76605af490895f175269aa5a894"
+    },
+    {
+      "hero_id": 131,
+      "hero_name": "Li Bai",
+      "file": "131-2d28afad9ba5.json",
+      "source_hash": "2d28afad9ba54a37e9af2fab8792e591a66e15c56d09a64ab67194380cd160de"
+    },
+    {
+      "hero_id": 132,
+      "hero_name": "Marco Polo",
+      "file": "132-5c03714952eb.json",
+      "source_hash": "5c03714952eb4df6c0ceb6ee70e10553c7fa6430825dccf42cd58dc4db01b09f"
+    },
+    {
+      "hero_id": 133,
+      "hero_name": "Di Renjie",
+      "file": "133-b754ec3958ab.json",
+      "source_hash": "b754ec3958ab084c96394c9d2aeb0cb2fd2335bf56bc2913a73bc948c6eaff6d"
+    },
+    {
+      "hero_id": 134,
+      "hero_name": "Dharma",
+      "file": "134-dfd8799bb51b.json",
+      "source_hash": "dfd8799bb51ba298ee4803c78c1dff4c5799f66911a723901dd8528707a9f107"
+    },
+    {
+      "hero_id": 135,
+      "hero_name": "Xiang Yu",
+      "file": "135-7191c4bf4020.json",
+      "source_hash": "7191c4bf402030a863aa8e3f70934b5a4ac4012aabbc4ce52e811788f4272b8d"
+    },
+    {
+      "hero_id": 137,
+      "hero_name": "Sima Yi",
+      "file": "137-9982678a4241.json",
+      "source_hash": "9982678a424183cb33b344f57ad52d749383b6f88d4d8ca0d5e5bb36e92d30e7"
+    },
+    {
+      "hero_id": 138,
+      "hero_name": "Wang Wei",
+      "file": "138-23ae6646b845.json",
+      "source_hash": "23ae6646b8456f325bfbee1ec2b4e8ba840d67d4a3c7908d8d91b61ec3619b0f"
+    },
+    {
+      "hero_id": 139,
+      "hero_name": "Fuzi",
+      "file": "139-9e69c80d64fc.json",
+      "source_hash": "9e69c80d64fc416531163fcd6cc4d90f44f3dc6ffdc373ab30e1e95baa44002f"
+    },
+    {
+      "hero_id": 140,
+      "hero_name": "Guan Yu",
+      "file": "140-f66e31e6452f.json",
+      "source_hash": "f66e31e6452f61146415ff6553cf362c545a9af769bd1ecd88aefaf28819e4ca"
+    },
+    {
+      "hero_id": 141,
+      "hero_name": "Diaochan",
+      "file": "141-a22367bdbe8d.json",
+      "source_hash": "a22367bdbe8d5b7797b4eaa0eb81b7085724d47048feccb34eb8c87ca3e3d462"
+    },
+    {
+      "hero_id": 142,
+      "hero_name": "Angela",
+      "file": "142-1a913ead5960.json",
+      "source_hash": "1a913ead596096d92b3d278e773bc76375bc28ad21464a6c17974a8202144274"
+    },
+    {
+      "hero_id": 146,
+      "hero_name": "Luna",
+      "file": "146-7b0e546238b4.json",
+      "source_hash": "7b0e546238b404648b7fc20a2498d7a80381655461b1fe2867b04c1dfce569b5"
+    },
+    {
+      "hero_id": 148,
+      "hero_name": "Ziya",
+      "file": "148-90efa0c79dc4.json",
+      "source_hash": "90efa0c79dc4e13e713a1077cd02520c8341f622368d3560f3c79c49d85c7f45"
+    },
+    {
+      "hero_id": 149,
+      "hero_name": "Liu Bang",
+      "file": "149-7e7a16e2704d.json",
+      "source_hash": "7e7a16e2704ddb5c70f94155b54adddf87bdee681a696d886359d01970341610"
+    },
+    {
+      "hero_id": 150,
+      "hero_name": "Han Xin",
+      "file": "150-258ded24b589.json",
+      "source_hash": "258ded24b58969d2912841a14a313749c28aab5d0794190865a641fd8b3bd267"
+    },
+    {
+      "hero_id": 152,
+      "hero_name": "Wang Zhaojun",
+      "file": "152-f2191da0dcdc.json",
+      "source_hash": "f2191da0dcdceeeddd8965733338a4c35bfec4e168826dd3fbf9517f3fde45b3"
+    },
+    {
+      "hero_id": 153,
+      "hero_name": "Gao Changgong",
+      "file": "153-147aa50df7b8.json",
+      "source_hash": "147aa50df7b8ffe18b1e67809df1c66073c41564d6bc0a2ba36703c4b9f25282"
+    },
+    {
+      "hero_id": 154,
+      "hero_name": "Mulan",
+      "file": "154-43e916214dee.json",
+      "source_hash": "43e916214dee4b37ed1109942282e5e041610e4ff2378738539ad904b68ec796"
+    },
+    {
+      "hero_id": 155,
+      "hero_name": "Erin",
+      "file": "155-89ec8fe5aac4.json",
+      "source_hash": "89ec8fe5aac48fd7f4d50fda224cb830bacdd26adceb5439fbeb3912fe6e4f08"
+    },
+    {
+      "hero_id": 156,
+      "hero_name": "Liang",
+      "file": "156-40da3d22d96c.json",
+      "source_hash": "40da3d22d96cf709f34840383391cb55bbaf6ceb1cafc5448434a16bf5f2ff8c"
+    },
+    {
+      "hero_id": 157,
+      "hero_name": "Mai Shiranui",
+      "file": "157-996733c7161f.json",
+      "source_hash": "996733c7161f9245f86d1cb2b68e6953c92e61d5ada42892dcdc6e2e89e145fe"
+    },
+    {
+      "hero_id": 159,
+      "hero_name": "Dolia",
+      "file": "159-b7dca60ad7cd.json",
+      "source_hash": "b7dca60ad7cdfe23f6fdbab9debb189f7817181bfa90ac2a4a379cedf3acc4c6"
+    },
+    {
+      "hero_id": 162,
+      "hero_name": "Nakoruru",
+      "file": "162-7fb925e979e4.json",
+      "source_hash": "7fb925e979e4d6f91c3652b2fb35f068c20380e6c627dceac4b9a40df28f8f40"
+    },
+    {
+      "hero_id": 163,
+      "hero_name": "Ukyo Tachibana",
+      "file": "163-f30cdce2fae0.json",
+      "source_hash": "f30cdce2fae0a747a9fbf46a932db97f5a02e0989d1d81f8574c0ec295d0866f"
+    },
+    {
+      "hero_id": 166,
+      "hero_name": "Arthur",
+      "file": "166-467cde5a8571.json",
+      "source_hash": "467cde5a85717d693aca0de37a3b5bdbf7898ab4ff9ed57c271d85503fd919ad"
+    },
+    {
+      "hero_id": 167,
+      "hero_name": "Wukong",
+      "file": "167-cdbc0a3b2763.json",
+      "source_hash": "cdbc0a3b27637de6a40fbf711e5954b590411a17d0e98452f7c6a82f4336e44c"
+    },
+    {
+      "hero_id": 168,
+      "hero_name": "Lapulapu",
+      "file": "168-73fba08bf38b.json",
+      "source_hash": "73fba08bf38b9ef8c0407a34c6cf7f149e58e5ea357ea963573d9e80c8d163b0"
+    },
+    {
+      "hero_id": 169,
+      "hero_name": "Hou Yi",
+      "file": "169-f272ea9d425f.json",
+      "source_hash": "f272ea9d425f6fdea56f3c4be90cb7221f41f2526ad6b1c8e39a8ebdf13d73da"
+    },
+    {
+      "hero_id": 170,
+      "hero_name": "Liu Bei",
+      "file": "170-5d571e91a3f3.json",
+      "source_hash": "5d571e91a3f34cbeb31036dd34ec274794a7d01acb73b5ce923a1cf2d32e8790"
+    },
+    {
+      "hero_id": 171,
+      "hero_name": "Zhang Fei",
+      "file": "171-c643142ec6cf.json",
+      "source_hash": "c643142ec6cf8e0bc2d3984034cfdd988095496f1c029081494d9fec876690e7"
+    },
+    {
+      "hero_id": 172,
+      "hero_name": "Chicha",
+      "file": "172-441bc2cd3cfb.json",
+      "source_hash": "441bc2cd3cfbfd2956d392fa841df7443c01c2e5dc57382bb866ac01aa29a21c"
+    },
+    {
+      "hero_id": 173,
+      "hero_name": "Fang",
+      "file": "173-3ac8b4cf51ce.json",
+      "source_hash": "3ac8b4cf51ceb115b5b7288499ba6e45cfa876b663d68776b835009fcef3c1be"
+    },
+    {
+      "hero_id": 174,
+      "hero_name": "Consort Yu",
+      "file": "174-0d35adbcccc8.json",
+      "source_hash": "0d35adbcccc8159ec64070c9d3f7d469406fc3215e2b4d6bd747bc2701447198"
+    },
+    {
+      "hero_id": 175,
+      "hero_name": "Kui",
+      "file": "175-50a37a307c63.json",
+      "source_hash": "50a37a307c63f574466482d3880447b90e87406480173612f9df3ea2899bf1fe"
+    },
+    {
+      "hero_id": 176,
+      "hero_name": "Yuhuan",
+      "file": "176-c685eac6dca8.json",
+      "source_hash": "c685eac6dca8323669cb3cc878762879f45d5b2471f96ab8b2c84de9c503c230"
+    },
+    {
+      "hero_id": 177,
+      "hero_name": "Chano",
+      "file": "177-5abf4cf948cd.json",
+      "source_hash": "5abf4cf948cd5f9c6f0ac9b71cb5a89d8f0ff3b43889956b69383ced22d63d68"
+    },
+    {
+      "hero_id": 178,
+      "hero_name": "Yang Jian",
+      "file": "178-c4c75f1c3b67.json",
+      "source_hash": "c4c75f1c3b67f72085bff580117fccf97751fa6a4ce810ac603d9b55f966a337"
+    },
+    {
+      "hero_id": 179,
+      "hero_name": "Nuwa",
+      "file": "179-907cfb90c9fb.json",
+      "source_hash": "907cfb90c9fbae53cb76e70dbfcd1d660034e1238a0f04f414b1855da8a15950"
+    },
+    {
+      "hero_id": 180,
+      "hero_name": "Nezha",
+      "file": "180-8a76cf778abe.json",
+      "source_hash": "8a76cf778abe636a9010d923752e9750c647001444515e6c18446bcdc9f63e65"
+    },
+    {
+      "hero_id": 182,
+      "hero_name": "Gan & Mo",
+      "file": "182-3974bf5f9de6.json",
+      "source_hash": "3974bf5f9de63f2c00c4312e34da2064e4c8148982f8a0d377bfd04d3da561d1"
+    },
+    {
+      "hero_id": 183,
+      "hero_name": "Athena",
+      "file": "183-f1ded0c8a788.json",
+      "source_hash": "f1ded0c8a78853663d039b86672c4849682ad522115d35e340e99db096105d8b"
+    },
+    {
+      "hero_id": 184,
+      "hero_name": "Cai Yan",
+      "file": "184-22158d0b8f4a.json",
+      "source_hash": "22158d0b8f4a1c76dc16d09ad07b86eb04416af5b8ca78b1059b3d67ad8b2777"
+    },
+    {
+      "hero_id": 187,
+      "hero_name": "Donghuang",
+      "file": "187-2a48aef61410.json",
+      "source_hash": "2a48aef614102e36653fb76866defca07660787ef073d2870fcfe9212efd41f7"
+    },
+    {
+      "hero_id": 189,
+      "hero_name": "Guiguzi",
+      "file": "189-12f38854345b.json",
+      "source_hash": "12f38854345b552bbc9fd004b79720965ec09f252fd30691fd82c258d88ae84a"
+    },
+    {
+      "hero_id": 190,
+      "hero_name": "Kongming",
+      "file": "190-ea169d3672ac.json",
+      "source_hash": "ea169d3672ac48c4547eec21f2ad7a395c55e3290afa1ba625ee1c8288120b45"
+    },
+    {
+      "hero_id": 191,
+      "hero_name": "Da Qiao",
+      "file": "191-912da82727b6.json",
+      "source_hash": "912da82727b661e51defa560db05c12f5ff6274787773ffeacaeb29503779d14"
+    },
+    {
+      "hero_id": 192,
+      "hero_name": "Huang Zhong",
+      "file": "192-cd519612ba1b.json",
+      "source_hash": "cd519612ba1b2e0b77536d1abf93cb4b7df3ccf463b6a7de7a08a3b26f7fb52d"
+    },
+    {
+      "hero_id": 193,
+      "hero_name": "Kaizer",
+      "file": "193-83457ef284f5.json",
+      "source_hash": "83457ef284f5581d12ad1dc10a46d09d36caa0dc149aff76dd4712085b3876a6"
+    },
+    {
+      "hero_id": 195,
+      "hero_name": "Xuance",
+      "file": "195-a3bedb804064.json",
+      "source_hash": "a3bedb80406498f887d4176c3bc9463bdab1751c09d78a0e4061362a37d6685c"
+    },
+    {
+      "hero_id": 196,
+      "hero_name": "Shouyue",
+      "file": "196-b6fca6d611dd.json",
+      "source_hash": "b6fca6d611ddffa105a67777539fc69f34b458c59f0f982af77f6e233392d67f"
+    },
+    {
+      "hero_id": 197,
+      "hero_name": "Yixing",
+      "file": "197-a18c3998ff48.json",
+      "source_hash": "a18c3998ff48ff826699f4d8ee2f0818aeb2ef5ce79b5ba182be9552b1a127a0"
+    },
+    {
+      "hero_id": 198,
+      "hero_name": "Menki",
+      "file": "198-0c13c5da2a78.json",
+      "source_hash": "0c13c5da2a786276be26ae64938b5372c437ee8fc4be7b2717a76ed7035f9f20"
+    },
+    {
+      "hero_id": 199,
+      "hero_name": "Arli",
+      "file": "199-d6e7a3725b04.json",
+      "source_hash": "d6e7a3725b0467257f55f4af0747e9dd58faef7381abe67bf5149c352a013233"
+    },
+    {
+      "hero_id": 501,
+      "hero_name": "Ming",
+      "file": "501-de042fb35a64.json",
+      "source_hash": "de042fb35a64ce31064bb65e5398590a80c4d640dd88a34d6d04269ac8b19606"
+    },
+    {
+      "hero_id": 502,
+      "hero_name": "Pei",
+      "file": "502-c5336f631d1f.json",
+      "source_hash": "c5336f631d1f2f6bb54a2fa3c8c48ed0149830553c34a339c27ee67cd4ccbf4e"
+    },
+    {
+      "hero_id": 503,
+      "hero_name": "Biron",
+      "file": "503-322692f9b841.json",
+      "source_hash": "322692f9b8417d9561edf6d581e4620c4a06abf11760d33ffee41faa239f41a3"
+    },
+    {
+      "hero_id": 504,
+      "hero_name": "Milady",
+      "file": "504-1327eb18d8cd.json",
+      "source_hash": "1327eb18d8cd4ff7b5537263e766e87a92436a1384b61c461fa47b69d0f3f1d7"
+    },
+    {
+      "hero_id": 505,
+      "hero_name": "Yaria",
+      "file": "505-1daddad77b6d.json",
+      "source_hash": "1daddad77b6d229636423a28d39a0889a224c850e13f3dcabe7b0c27cd435d92"
+    },
+    {
+      "hero_id": 506,
+      "hero_name": "Cirrus",
+      "file": "506-b71bcd00aca6.json",
+      "source_hash": "b71bcd00aca6a2bdcfc2c2b0f82bead49c78ebbacc304f276e51ee9e7434756a"
+    },
+    {
+      "hero_id": 507,
+      "hero_name": "Li Xin",
+      "file": "507-a285079f59e7.json",
+      "source_hash": "a285079f59e765ee973211b4ba59f8c287d0f91b02287badd70da7f8b66fcacd"
+    },
+    {
+      "hero_id": 508,
+      "hero_name": "Garo",
+      "file": "508-9883b6e457bb.json",
+      "source_hash": "9883b6e457bbd4a053b251749b1b631a5273a85e1f7e7cf510f21d64ce6c5b03"
+    },
+    {
+      "hero_id": 509,
+      "hero_name": "Dunshan",
+      "file": "509-0a4066fec712.json",
+      "source_hash": "0a4066fec7122b6a269c2221a60b9eb7f33d4c4c021476a8486b0c8a6b041d70"
+    },
+    {
+      "hero_id": 510,
+      "hero_name": "Sun Ce",
+      "file": "510-ae869f2aa4ad.json",
+      "source_hash": "ae869f2aa4adbb63c29fbae6498a056993e2ad7734228fd3f5deda544660f37d"
+    },
+    {
+      "hero_id": 513,
+      "hero_name": "Shangguan",
+      "file": "513-a5f9a8ac2c20.json",
+      "source_hash": "a5f9a8ac2c204d2bd11b40481cebd6b0aaa24fae3c2b557b2b12427cb837f880"
+    },
+    {
+      "hero_id": 514,
+      "hero_name": "Allain",
+      "file": "514-948994fb1c0b.json",
+      "source_hash": "948994fb1c0b30376fa01ada57a4c877cd3c2786ac3d367a2516e037e92595cc"
+    },
+    {
+      "hero_id": 517,
+      "hero_name": "Augran",
+      "file": "517-351a1c8d213a.json",
+      "source_hash": "351a1c8d213a3585d8826e95cf769df81557a16d9658c28d11614af073780566"
+    },
+    {
+      "hero_id": 519,
+      "hero_name": "Ao'yin",
+      "file": "519-4665c498530d.json",
+      "source_hash": "4665c498530d1a256bbebc5fcf7040117cd3994e0be9ec6f33069c6d8e59b411"
+    },
+    {
+      "hero_id": 521,
+      "hero_name": "Haya",
+      "file": "521-822d65fe6008.json",
+      "source_hash": "822d65fe6008938cee3188a8a026ea069a3346c5761be99357c366716682c224"
+    },
+    {
+      "hero_id": 522,
+      "hero_name": "Yao",
+      "file": "522-707209b62190.json",
+      "source_hash": "707209b62190edc57f837f19826895cd736eda3e5b88b569d3a0acc0d0c0c90b"
+    },
+    {
+      "hero_id": 523,
+      "hero_name": "Shi",
+      "file": "523-bd79da0f910c.json",
+      "source_hash": "bd79da0f910c7d4397a15b4c1cd146bafca5130f0c7d3e07652cbdf49ff1d1e1"
+    },
+    {
+      "hero_id": 524,
+      "hero_name": "Meng Ya",
+      "file": "524-7bb5cfa930f0.json",
+      "source_hash": "7bb5cfa930f0d20c7d2687f416f5a1ae6626b681c5ef9b61563274d700f10829"
+    },
+    {
+      "hero_id": 528,
+      "hero_name": "Lam",
+      "file": "528-feab20e8f4db.json",
+      "source_hash": "feab20e8f4db66a2b68f11418df8913f592c76bae593fdf05e1b70a36b4b4cca"
+    },
+    {
+      "hero_id": 531,
+      "hero_name": "Jing",
+      "file": "531-ae10e8cdb29a.json",
+      "source_hash": "ae10e8cdb29aef3675d8efdeb2368787a23893dfc5cbb28faa6ce81c0c765283"
+    },
+    {
+      "hero_id": 533,
+      "hero_name": "Agudo",
+      "file": "533-40261e490f2b.json",
+      "source_hash": "40261e490f2b6c255f706629c64a7380208c288bf978c5ca71244b0190240feb"
+    },
+    {
+      "hero_id": 534,
+      "hero_name": "Sakeer",
+      "file": "534-34637cd1b70c.json",
+      "source_hash": "34637cd1b70c7d3b38f965bdb422a295625ec87e7e340b7d67a86e2b1b75ae62"
+    },
+    {
+      "hero_id": 536,
+      "hero_name": "Charlotte",
+      "file": "536-ac1f6a809aca.json",
+      "source_hash": "ac1f6a809aca40c22847836ed217e12a7571dc66f01e50c72aecf79216554941"
+    },
+    {
+      "hero_id": 537,
+      "hero_name": "Devara",
+      "file": "537-0fbe2ff9027c.json",
+      "source_hash": "0fbe2ff9027c9570e7e7a68c77550ffb930f789a573a21f132078e8c43dad2c4"
+    },
+    {
+      "hero_id": 538,
+      "hero_name": "Ying",
+      "file": "538-587bffa7f0a5.json",
+      "source_hash": "587bffa7f0a5d28cf1e4ff1de87ae6a0eaae4f707ead0b67752db01e8d83d51f"
+    },
+    {
+      "hero_id": 542,
+      "hero_name": "Feyd",
+      "file": "542-f81aaea42c4a.json",
+      "source_hash": "f81aaea42c4a805e7170637041d1cb4c053a0f1d35079e44de0845c4f79e688f"
+    },
+    {
+      "hero_id": 545,
+      "hero_name": "Alessio",
+      "file": "545-c1e7d8bdcae1.json",
+      "source_hash": "c1e7d8bdcae1704b0d211c9959be7e05f61209ae12a07bd12d55294ed1b45ced"
+    },
+    {
+      "hero_id": 547,
+      "hero_name": "Luara",
+      "file": "547-90a13cf86522.json",
+      "source_hash": "90a13cf86522082d7ce5c2810b6ce81dbc726c3ec3773d8affb18dda8c1bdb11"
+    },
+    {
+      "hero_id": 556,
+      "hero_name": "Ata",
+      "file": "556-dae7b0fd95c5.json",
+      "source_hash": "dae7b0fd95c504f0a1bea8fad7e0e5cb8de6d00e85258ce9c08566a73f9a1b99"
+    },
+    {
+      "hero_id": 558,
+      "hero_name": "Umbrosa",
+      "file": "558-6a2e1e2dc6cb.json",
+      "source_hash": "6a2e1e2dc6cb5bb447fa10cab3047ea3649d2d4b099bc78be10c1727562517bf"
+    },
+    {
+      "hero_id": 563,
+      "hero_name": "Heino",
+      "file": "563-f26c426fc890.json",
+      "source_hash": "f26c426fc890def42d19125ae325522bfe99be145148df67f57cfa8df667cc49"
+    },
+    {
+      "hero_id": 564,
+      "hero_name": "Mayene",
+      "file": "564-57f310d6b8d0.json",
+      "source_hash": "57f310d6b8d0df6bf268dd9fae963f96fd7ecfed1799a97dd3a0e9f406c59e02"
+    },
+    {
+      "hero_id": 577,
+      "hero_name": "Dyadia",
+      "file": "577-f435cf201db6.json",
+      "source_hash": "f435cf201db6f3b0f207d8b5700b99853229aac12a7869c954562d5b13045744"
+    },
+    {
+      "hero_id": 581,
+      "hero_name": "Flowborn (Tank)",
+      "file": "581-0c0edc0b2d0f.json",
+      "source_hash": "0c0edc0b2d0fc4b3c1dc2cb3a3ef8d716afe443456f0274ef64b69a362ab5f11"
+    },
+    {
+      "hero_id": 582,
+      "hero_name": "Flowborn (Mage)",
+      "file": "582-e1e612b660e6.json",
+      "source_hash": "e1e612b660e6b4f12bccc3e33b5e78c51f29ddfc5e30fdaf7d36bd38b4864b1d"
+    },
+    {
+      "hero_id": 583,
+      "hero_name": "Flowborn (Assassin)",
+      "file": "583-9051b4bac735.json",
+      "source_hash": "9051b4bac7355f708f9fec7c464c7e09fea5902f7a52af4559e9eaa396f90882"
+    },
+    {
+      "hero_id": 584,
+      "hero_name": "Flowborn (Marksman)",
+      "file": "584-4a5188c923b3.json",
+      "source_hash": "4a5188c923b3cb8564bb78ab2713caccbe155b209b4d19ef85f4ac45d37e5b4d"
+    },
+    {
+      "hero_id": 585,
+      "hero_name": "Flowborn (Roamer)",
+      "file": "585-5d41fc61ef7a.json",
+      "source_hash": "5d41fc61ef7a59c1a79ec247685eab2472870ec7f54339d100eff7702f40bddc"
+    },
+    {
+      "hero_id": 631,
+      "hero_name": "Florentino",
+      "file": "631-a7a049b192f3.json",
+      "source_hash": "a7a049b192f3bf52c9de7695860dfadeada3fa1c06e7a8bd6b5154ed59f85029"
+    },
+    {
+      "hero_id": 635,
+      "hero_name": "Lorion",
+      "file": "635-ccb88797c30e.json",
+      "source_hash": "ccb88797c30e3b554f8b1511cbaa8f9a08c5270690e3f8fa6268ba80fc3c176a"
+    },
+    {
+      "hero_id": 640,
+      "hero_name": "Annette",
+      "file": "640-a028287b7c03.json",
+      "source_hash": "a028287b7c03d7f8f5bd928509c7fbc69cd2e07229e84a653d82a2d813c20f23"
+    },
+    {
+      "hero_id": 646,
+      "hero_name": "Butterfly",
+      "file": "646-97ad25a5791a.json",
+      "source_hash": "97ad25a5791a8e0cbc1f86510cd9c3f4dba23e35d51adaab5db17cf58d4c9084"
+    }
+  ],
+  "already_present": [],
+  "skipped_no_source": [],
+  "failed": [],
+  "summary": {
+    "generated": 120,
+    "already_present": 0,
+    "skipped_no_source": 0,
+    "failed": 0
+  }
+}

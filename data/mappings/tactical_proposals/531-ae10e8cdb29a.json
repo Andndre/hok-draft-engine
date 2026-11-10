@@ -1,0 +1,633 @@
+{
+  "schema_version": 2,
+  "hero_id": 531,
+  "source_hash": "ae10e8cdb29aef3675d8efdeb2368787a23893dfc5cbb28faa6ce81c0c765283",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Lethal Reflections",
+          "desc": "Jing and her image apply 2 different types of marks on enemies when they deal damage. If an enemy has both types of mark at the same time, they take damage and the cooldowns of Skill 1 and Skill 2 are reset."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Reflective Assault",
+          "desc": "Dashes forward, damaging enemies in her path and slowing them while enhancing her next Basic Attack. If no mirror image is present on the battlefield, one will be created to fight alongside her."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Shattered Illusions",
+          "desc": "Deals damage to nearby enemies while recovering Health and gaining increased Movement Speed. If no mirror image is present on the battlefield, then one will be created to fight alongside her. skill3 Dimensional Shift Switch locations with her mirror image. Stocks up to 4 charges."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Mirror Domain",
+          "desc": "Dashes forward, pulling enemies to the center of her magic circle and immobilizing them there. She gains damage reduction while inside the circle, and recovers Health when she swaps locations."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Burst Jing tinggi banget. Pas dia ult, langsung keluar dari areanya atau dorong dia keluar."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/jing/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Lethal Reflections",
+            "description": "Jing and her image apply 2 different types of marks on enemies when they deal damage. If an enemy has both types of mark at the same time, they take damage and the cooldowns of Skill 1 and Skill 2 are reset.",
+            "type": "passive"
+          },
+          {
+            "name": "Reflective Assault",
+            "description": "Dashes forward, damaging enemies in her path and slowing them while enhancing her next Basic Attack. If no mirror image is present on the battlefield, one will be created to fight alongside her.",
+            "type": "skill1"
+          },
+          {
+            "name": "Shattered Illusions",
+            "description": "Deals damage to nearby enemies while recovering Health and gaining increased Movement Speed. If no mirror image is present on the battlefield, then one will be created to fight alongside her.",
+            "type": "skill2"
+          },
+          {
+            "name": "Dimensional Shift",
+            "description": "Switch locations with her mirror image. Stocks up to 4 charges.",
+            "type": "skill3"
+          },
+          {
+            "name": "Mirror Domain",
+            "description": "Dashes forward, pulling enemies to the center of her magic circle and immobilizing them there. She gains damage reduction while inside the circle, and recovers Health when she swaps locations.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The map shape favors gank routes, where mobility translates directly into kills",
+          "Your team can engage first, letting Jing second-wave into low-health targets",
+          "The enemy draft includes Dharma, Ata, and Lian Po, who appear in counter data as matchups Jing can pressure."
+        ],
+        "avoid_when": [
+          "The team needs sustained team-fight damage rather than a single-target diver",
+          "Your team has no primary engage, leaving the cleanup pick with nothing to follow up on",
+          "The enemy already drafted Angela, Daji, and Gan & Mo, who counter data identifies as direct answers to Jing."
+        ],
+        "power_spikes": [
+          "Early game: jungle clear into level-4 ganks is the first window where Jing can translate routes into kills.",
+          "Ultimate unlocked: Mirror Domain converts mobility into burst, the moment Jing starts threatening picks across the map",
+          "Late game: cooldowns become short enough that Shattered Illusions influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Engaging without follow-up — gap-close gets you to the target, but a solo dive without ally damage trades 1-for-1.",
+          "Engaging first instead of second — cleanup picks lose their value as primary engagers.",
+          "Ignoring Angela and Daji on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Pathing predictably and getting tracked by the enemy jungler — vary first clear and rotate based on ward placement rather than muscle memory."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 134,
+            "hero_name": "Dharma",
+            "evidence": "Dharma",
+            "source_hash": "aa768f267549ee4605fea798b0817e8c569cc42764484527d7d7a8de62c69a75"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 556,
+            "hero_name": "Ata",
+            "evidence": "Ata",
+            "source_hash": "24512fc43a33bfb10e421784d74712fe7e0b0fa18593f0ce80315f24595ba5a5"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 105,
+            "hero_name": "Lian Po",
+            "evidence": "Lian Po",
+            "source_hash": "5c472f09fb617a53f8bfcfcade821016b7124fbec7b647c4394d528019b04ee6"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 142,
+            "hero_name": "Angela",
+            "evidence": "Angela",
+            "source_hash": "2cb273e424e539a99124a29dbc4e9c5e4862dafed36a39c8618d60e7dae45b41"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 109,
+            "hero_name": "Daji",
+            "evidence": "Daji",
+            "source_hash": "517e75a16a18ce341b0fe270012f4b80aa656a115e961a791c34b664f1c3ca23"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 182,
+            "hero_name": "Gan & Mo",
+            "evidence": "Gan & Mo",
+            "source_hash": "ec39e45352c01fa844f68d62f87e72c45494fe412702f754a49489772f9bea7d"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 192,
+            "hero_name": "Huang Zhong",
+            "evidence": "Huang Zhong",
+            "source_hash": "57b08cb39722da2aec8c2101794a0ef55d3700d20d2c7e47b285dd5d1dc676b4"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 190,
+            "hero_name": "Kongming",
+            "evidence": "Kongming",
+            "source_hash": "36871471c9c725dae1fef827d3241c731e09be4fd0163bcb21b53da31dd001e0"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 199,
+            "hero_name": "Arli",
+            "source_hash": "78b49a0306ad2134a5681fdaf84a3ef4783303b9fb51cbebb944cae9eaf2f790"
+          },
+          {
+            "hero_id": 523,
+            "hero_name": "Shi",
+            "source_hash": "78b49a0306ad2134a5681fdaf84a3ef4783303b9fb51cbebb944cae9eaf2f790"
+          },
+          {
+            "hero_id": 519,
+            "hero_name": "Ao'yin",
+            "source_hash": "78b49a0306ad2134a5681fdaf84a3ef4783303b9fb51cbebb944cae9eaf2f790"
+          },
+          {
+            "hero_id": 159,
+            "hero_name": "Dolia",
+            "source_hash": "78b49a0306ad2134a5681fdaf84a3ef4783303b9fb51cbebb944cae9eaf2f790"
+          },
+          {
+            "hero_id": 133,
+            "hero_name": "Di Renjie",
+            "source_hash": "78b49a0306ad2134a5681fdaf84a3ef4783303b9fb51cbebb944cae9eaf2f790"
+          },
+          {
+            "hero_id": 171,
+            "hero_name": "Zhang Fei",
+            "source_hash": "78b49a0306ad2134a5681fdaf84a3ef4783303b9fb51cbebb944cae9eaf2f790"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

@@ -1,0 +1,628 @@
+{
+  "schema_version": 2,
+  "hero_id": 192,
+  "source_hash": "cd519612ba1b2e0b77536d1abf93cb4b7df3ccf463b6a7de7a08a3b26f7fb52d",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Gunner's Spirit",
+          "desc": "Basic Attacks increase attack and Critical Rate"
+        },
+        {
+          "type": "Skill 1",
+          "name": "Unleash Your Potential",
+          "desc": "Gains Movement Speed and permanently increased attack. Cast while in Cannon form to immediately exit the state."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Lay the Mines",
+          "desc": "Places a trap in the target area. The trap grants vision of enemies that touchit, while also inflicting damage, slow, and Sunder on them and granting Huang Zhong a shield."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Bring out the Artillery",
+          "desc": "Huang Zhong dashes for a certain distance and deploys a turret while refreshing his Skill 1. He becomes immobile, gains range and Physical and Magical Defense Basic Attacks deal area damage.The turret will be deactivated after a certain number of Basic Attacks."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Pas adu, jangan nginjek ranjau Huang Zhong. 2) Gank dia sebelum level 4 buat nahan farm-nya. 3) Serang gak lama abis dia pasang ult."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/huang-zhong/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Gunner's Spirit",
+            "description": "Basic Attacks increase Physical Attack and Critical Rate.",
+            "type": "passive"
+          },
+          {
+            "name": "Unleash Your Potential",
+            "description": "Gains a Movement Speed boost. Exits Turret Mode if it is active. Permanently gains Physical Attack upon learning.",
+            "type": "skill1"
+          },
+          {
+            "name": "Lay the Mines",
+            "description": "Places a trap in the target area. The trap grants vision of enemies that trigger it, while also inflicting damage, slow, and sunder on them and granting Huang Zhong a shield.",
+            "type": "skill2"
+          },
+          {
+            "name": "Bring out the Artillery",
+            "description": "Dashes and deploys a turret while refreshing his Skill 1. He becomes immobile, gains Attack Range, and increases his Physical and Magical Defense. Basic Attacks deal area damage. The turret will be deactivated after a certain number of Basic Attacks.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team relies on long-cooldown engage skills that leave them vulnerable post-fight",
+          "The enemy team plays dive comp, giving you space to poke before they engage",
+          "The enemy draft includes Xuance, Mai Shiranui, and Jing, who appear in counter data as matchups Huang Zhong can pressure."
+        ],
+        "avoid_when": [
+          "The enemy team disengages well, so cleanup windows never open",
+          "The enemy has hard engage that closes distance through poke patterns",
+          "A stronger pick in the same role is open and the matchup does not specifically reward Huang Zhong's Cleanup."
+        ],
+        "power_spikes": [
+          "Early game: farm safely behind the support, surviving lane phase to reach the marksman scaling window.",
+          "Ultimate online: Bring out the Artillery provides the cleanup finisher once the enemy commits cooldowns",
+          "Late game: full build online, Huang Zhong reaches the spike public guides describe — extended fights favor him once items are completed."
+        ],
+        "common_mistakes": [
+          "Engaging first instead of second — cleanup picks lose their value as primary engagers.",
+          "Spending mana on poke that does not threaten kills, leaving you empty for the actual fight.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Huang Zhong's commit reaches the target alive.",
+          "Auto-attacking through enemy dive instead of repositioning — losing the marksman in early fights collapses the late-game win condition."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 195,
+            "hero_name": "Xuance",
+            "evidence": "Xuance",
+            "source_hash": "794c05a085ff6aebb1cc1f29adff1802a820b2af5fd45e1319660126be875d01"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 157,
+            "hero_name": "Mai Shiranui",
+            "evidence": "Mai Shiranui",
+            "source_hash": "ba217c250b2149f16a2fb72d0a081c0400dd9fd667c8290a574fd95e126e13ec"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 531,
+            "hero_name": "Jing",
+            "evidence": "Jing",
+            "source_hash": "a206c8c882dd46311a4a3f3393ff75e4fe5802bf5b5098704f9bfe3d08c3c9dc"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 177,
+            "hero_name": "Chano",
+            "evidence": "Lay the Mines grants vision, denying the brush ambushes Chano relies on.",
+            "source_hash": "88472d11d096f2ab6ed4f3d0b7485cdb30adcd0c99ebb9b166eab1efef0ca4c5"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 153,
+            "hero_name": "Gao Changgong",
+            "evidence": "Lay the Mines reveals Gao Changgong in stealth.",
+            "source_hash": "41641c7146bb419e148a00b200463510d3881daf2545ec8c9137c6d22fbe05d0"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 189,
+            "hero_name": "Guiguzi",
+            "evidence": "Lay the Mines reveals camouflaged Guiguzi.",
+            "source_hash": "990948d9c9b2b41600461601d44ce396f7cc8d88479a51af137e306585eac721"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 152,
+            "hero_name": "Wang Zhaojun",
+            "evidence": "Winter Is Here and Frigid Prison punish Huang Zhong while he is immobile in Turret Mode.",
+            "source_hash": "602f391fbf6e31d5cd2164c1231f81549eb85b6bd941463ec39cc2f8145bc517"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 150,
+            "hero_name": "Han Xin",
+            "evidence": "Han Xin's mobility reaches Huang Zhong while he is immobile in Turret Mode.",
+            "source_hash": "61aa831418ee0da4faafcd64c3f8105473b5cf83927761a7071890035635f16e"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 184,
+            "hero_name": "Cai Yan",
+            "source_hash": "4f65d9c2b2f1afb9777c2dbad300cc19704bd9304c8dc9ca373def52c1224a6b"
+          },
+          {
+            "hero_id": 131,
+            "hero_name": "Li Bai",
+            "source_hash": "4f65d9c2b2f1afb9777c2dbad300cc19704bd9304c8dc9ca373def52c1224a6b"
+          },
+          {
+            "hero_id": 116,
+            "hero_name": "Arke",
+            "source_hash": "4f65d9c2b2f1afb9777c2dbad300cc19704bd9304c8dc9ca373def52c1224a6b"
+          },
+          {
+            "hero_id": 105,
+            "hero_name": "Lian Po",
+            "source_hash": "4f65d9c2b2f1afb9777c2dbad300cc19704bd9304c8dc9ca373def52c1224a6b"
+          },
+          {
+            "hero_id": 168,
+            "hero_name": "Lapulapu",
+            "source_hash": "4f65d9c2b2f1afb9777c2dbad300cc19704bd9304c8dc9ca373def52c1224a6b"
+          },
+          {
+            "hero_id": 107,
+            "hero_name": "Zilong",
+            "source_hash": "4f65d9c2b2f1afb9777c2dbad300cc19704bd9304c8dc9ca373def52c1224a6b"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

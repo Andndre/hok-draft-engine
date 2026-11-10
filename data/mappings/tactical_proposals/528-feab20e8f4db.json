@@ -1,0 +1,633 @@
+{
+  "schema_version": 2,
+  "hero_id": 528,
+  "source_hash": "feab20e8f4db66a2b68f11418df8913f592c76bae593fdf05e1b70a36b4b4cca",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Hunter",
+          "desc": "Basic Attacks and skills deal extra true damage to targets with low Health"
+        },
+        {
+          "type": "Skill 1",
+          "name": "Wavebreaker",
+          "desc": "Lam enters “Submerged” state, greatly increasing his Movement Speed for 3 seconds. When the duration ends, Lam leaps out of the water, immediately restoring 50% of this skill’s cooldown. While in Submerged state, casting the skill again will cause Lam to surface early, dealing 300 (+120% Bonus Physical Attack) Physical Damage to nearby enemies and slowing their Movement Speed by 50% for 1.5 seconds. Passive: While in river terrain, the Submerged state has no time limit. If an enemy hero with below 30% Health appears within 1500 range, Lam gains 450 Movement Speed."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Space Split",
+          "desc": "Damages nearby enemies while gaining a mark. Basic Attacks spend marks to gain a dash and Health recovery effect. While submerged, Skill 2 has an extra dash effect."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Death From Below",
+          "desc": "Throws a dagger in the target direction, then dashes to the dagger after a short delay, dragging enemies in his path to the dagger and dealing damage to them. Submerged: Cancels the cast animation and skill delay."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Excellent mobility",
+          "Strong backline access",
+          "Great cleanup potential"
+        ],
+        "cons": [
+          "Vulnerable to crowd control",
+          "Very squishy",
+          "Struggles against tanks"
+        ],
+        "gameplay_tips": "## Early Game\nLam wants to focus on farming to get his core items. Look for lanes that are overextended where Lam can gank and use his ultimate to push the enemy towards your team. This makes it extremely difficult for them to escape.\n\n## Teamfights\nIn teamfights, you don't want to be the first one to dive in. You want to be the one that cleans up a fight to make full use of Lam's passive so you can deal true damage to enemy heroes. Lam has incredible mobility to reach the backline but is very squishy, so be careful when you jump in.\n\n## Tips & Tricks\nSkill 1 can be used to jump over walls\nIf Lam is submerged with Skill 1 in a river, the duration never runs out\nLam's Ultimate can be used behind enemies to push them into your team"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Control bisa motong kejaran Lam, jadi dia susah nempel buat kasih damage."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/lam/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Hunter",
+            "description": "Basic Attacks and skills deal extra true damage to targets with low Health.",
+            "type": "passive"
+          },
+          {
+            "name": "Wavebreaker",
+            "description": "Becomes submerged and gains Movement Speed. Use this skill again to dash and deal damage. Can remain submerged indefinitely in the river. Gains extra Movement Speed when an enemy hero with low Health is nearby.",
+            "type": "skill1"
+          },
+          {
+            "name": "Space Split",
+            "description": "Damages nearby enemies while gaining marks and recovering Health. Basic Attacks consume marks to gain a dash and Health recovery effect. Submerged: Skill 2 has an extra dash effect.",
+            "type": "skill2"
+          },
+          {
+            "name": "Death From Below",
+            "description": "Throws a dagger in the target direction, then dashes to the dagger after a short delay, dragging enemies in his path to the dagger and dealing damage to them. Submerged: Cancels the cast point animation and skill delay.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has carries with limited self-peel that Lam can reach before the team can react",
+          "Your team can engage first, letting Lam second-wave into low-health targets",
+          "The enemy draft includes Lu Bu, Wuyan, and Xiang Yu, who appear in counter data as matchups Lam can pressure."
+        ],
+        "avoid_when": [
+          "Enemy peel is strong and Lam cannot reach the backline without dying first",
+          "Your team has no primary engage, leaving the cleanup pick with nothing to follow up on",
+          "The enemy already drafted Erin, Liang, and Luara, who counter data identifies as direct answers to Lam."
+        ],
+        "power_spikes": [
+          "Early game: jungle clear into level-4 ganks is the first window where Lam can translate routes into kills.",
+          "Ultimate unlocked: Death From Below converts mobility into burst, the moment Lam starts threatening picks across the map",
+          "Late game: cooldowns become short enough that Space Split influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Engaging without follow-up — gap-close gets you to the target, but a solo dive without ally damage trades 1-for-1.",
+          "Engaging first instead of second — cleanup picks lose their value as primary engagers.",
+          "Ignoring Erin and Liang on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Pathing predictably and getting tracked by the enemy jungler — vary first clear and rotate based on ward placement rather than muscle memory."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 123,
+            "hero_name": "Lu Bu",
+            "evidence": "Lu Bu",
+            "source_hash": "273f58a24a7801486529f09873634e958dc7863f07a504430eba2adce3354219"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 117,
+            "hero_name": "Wuyan",
+            "evidence": "Wuyan",
+            "source_hash": "dd4585224e9d5b9a58b7551b7eebbbdd5fa3c074587c3a6501bc4a45c4c5979a"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 135,
+            "hero_name": "Xiang Yu",
+            "evidence": "Xiang Yu",
+            "source_hash": "834c07377fc3f2bce3185109987d775c8d3b278114f599314fff81c2c1301f33"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 155,
+            "hero_name": "Erin",
+            "evidence": "Erin",
+            "source_hash": "a363bd87fbe8cac4664e8572d9857410ca7828fd36ca269543d175bd40ec2790"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 156,
+            "hero_name": "Liang",
+            "evidence": "Liang",
+            "source_hash": "72764c33457c0f95e8ba96e8a1e21a90a6fcf6726eff9458f7129c5092764ac8"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 547,
+            "hero_name": "Luara",
+            "evidence": "Luara",
+            "source_hash": "4b57c8142e41125de407402b7bf27bf6d0b6a000d768205afe04f7cfa77c64b1"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 112,
+            "hero_name": "Luban No.7",
+            "evidence": "Luban No.7",
+            "source_hash": "0b036cd1675892a0562ea0ebdaaa636f3b782d3a1fad43426ff7ada5e8ddd4b1"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 108,
+            "hero_name": "Mozi",
+            "evidence": "Mozi",
+            "source_hash": "0842dec2d26a7b1c16bdcbfbe9cd7df9d1673e273534e9db98f52dcabdf387ce"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 197,
+            "hero_name": "Yixing",
+            "evidence": "Yixing",
+            "source_hash": "bf3c2a4873080fe5d2f749a600daa36049e2a8902a4e4e3c6dfd3a097d5da57b"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 132,
+            "hero_name": "Marco Polo",
+            "source_hash": "9970ee52367f2764f227f0a816a7fa3faaea79421aca243aed9fa9fd07774bba"
+          },
+          {
+            "hero_id": 505,
+            "hero_name": "Yaria",
+            "source_hash": "9970ee52367f2764f227f0a816a7fa3faaea79421aca243aed9fa9fd07774bba"
+          },
+          {
+            "hero_id": 127,
+            "hero_name": "Lady Zhen",
+            "source_hash": "9970ee52367f2764f227f0a816a7fa3faaea79421aca243aed9fa9fd07774bba"
+          },
+          {
+            "hero_id": 106,
+            "hero_name": "Xiao Qiao",
+            "source_hash": "9970ee52367f2764f227f0a816a7fa3faaea79421aca243aed9fa9fd07774bba"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

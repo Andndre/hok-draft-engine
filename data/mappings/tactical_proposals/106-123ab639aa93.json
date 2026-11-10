@@ -1,0 +1,656 @@
+{
+  "schema_version": 2,
+  "hero_id": 106,
+  "source_hash": "123ab639aa935d4cc7258578edf1fa8eacdda885ede0f885cd42cf4ed2bf8833",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Encouraging Thoughts",
+          "desc": "Hitting enemies with skills enhances herself, increasing her Movement Speed."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Blossoming Fan",
+          "desc": "Throws fan in the target direction, which returns to her upon reaching max range, damaging enemies in its path both ways."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Honeysweet Breeze",
+          "desc": "Deals damage to enemies in the target area and launches them."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Meteor Storm",
+          "desc": "Summons meteors, dealing damage to nearby enemies in range."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "High burst damage",
+          "Reliable crowd control",
+          "Strong poke"
+        ],
+        "cons": [
+          "No mobility",
+          "Skill-shot dependent",
+          "Very squishy"
+        ],
+        "gameplay_tips": "## Early Game\nUse Skill 1 Blossoming Fan to clear the minion wave and poke the enemy at the same time. Keep at maximum range of your skills to avoid taking damage. When you have cleared the mid wave, look to roam and use your crowd control with Skill 2 Honeysweet Breeze to impact other lanes and help them get ahead.\n\n## Teamfights\nIn teamfights, be patient with Skill 2. Hide in bushes and look to knockup up high-value targets, but be sure to stand behind your frontline so you don't get caught. Always stay at maximum range of your skills. Don't walk up to get in range to use Xiao Xiao's ultimate Meteor Storm. This Ultimate should only be used if enemies can't escape or help with damage when being jumped on by assassins\n\n## Tips & Tricks\nStandard Combo Skill 2 > Skill 1\nHide in bushes and use Xiao Xiao's combo before enemies see you"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Jangan jalan lurus. 2) Pas teamfight pakai assassin buat bunuh Xiao Qiao. 3) Simpen control buat ngunci terus bunuh dia."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/xiao-qiao/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Encouraging Thoughts",
+            "description": "Hitting enemies with skills enhances herself, increasing her Movement Speed.",
+            "type": "passive"
+          },
+          {
+            "name": "Blossoming Fan",
+            "description": "Throws fan in the target direction, which returns to her upon reaching max range, damaging enemies in its path both ways.",
+            "type": "skill1"
+          },
+          {
+            "name": "Honeysweet Breeze",
+            "description": "Deals damage to enemies in the target area and launches them.",
+            "type": "skill2"
+          },
+          {
+            "name": "Meteor Storm",
+            "description": "Summons meteors, dealing damage to nearby enemies in range.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team wants to siege objectives where ranged poke whittles down defenders",
+          "Your team has the structure to use her ability to farm safely and rotate to side lanes when the wave allows, since Xiao Qiao delivers consistent damage output and timely roams.",
+          "The enemy draft includes Ukyo Tachibana and Han Xin, who appear in counter data as matchups Xiao Qiao can pressure."
+        ],
+        "avoid_when": [
+          "The team fight will happen in cramped jungle spaces where poke ranges are minimized",
+          "Your team needs a jungle pick more than Xiao Qiao's specialty, leaving the role unfilled if you commit here.",
+          "The enemy already drafted Liu Bei and Menki, who counter data identifies as direct answers to Xiao Qiao."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Xiao Qiao's mid-game tools come online.",
+          "Mana sustain online: poke patterns become repeatable once cooldown reduction and mana regen items come online",
+          "Late game: full build online, Xiao Qiao reaches the spike public guides describe — extended fights favor her once items are completed."
+        ],
+        "common_mistakes": [
+          "Spending mana on poke that does not threaten kills, leaving you empty for the actual fight.",
+          "Ignoring Liu Bei and Menki on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Greeding farm in mid lane while side lanes get camped — rotation timing matters more than CS lead in most matchups."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 163,
+            "hero_name": "Ukyo Tachibana",
+            "evidence": "Ukyo Tachibana",
+            "source_hash": "1723435beae54f5e4c179f5f60dac4791a74d886c376a2dc4588d4456b1ff60e"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 150,
+            "hero_name": "Han Xin",
+            "evidence": "Han Xin",
+            "source_hash": "6663a6f4a434ffa28e20bbb5ffbb2fb1d3b46535aeec000e2f6747c8a92c6480"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 170,
+            "hero_name": "Liu Bei",
+            "evidence": "Liu Bei",
+            "source_hash": "8a85c0b7887dcb8f6762b28f23673004b593983d969e75dd62bee7ac46f5e11d"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 198,
+            "hero_name": "Menki",
+            "evidence": "Menki",
+            "source_hash": "e889b6bebbde4ef0617e34ec955510b9a3eb3e3a5c2cdfdbfce2101526634d13"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 172,
+            "hero_name": "Chicha",
+            "evidence": "Chicha dashes through and launches Xiao Qiao, who has no escape.",
+            "source_hash": "61b9cab623237f8d25c0161ce63d6035c4fc73dff3714deba82d70b7946ba394"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 506,
+            "hero_name": "Cirrus",
+            "evidence": "Soaring Whirlwind lifts Xiao Qiao away from her team's protection.",
+            "source_hash": "031494b6063e9e4a9d1910643b74a5625318bf4a81d10c0fef4e9d310711b44d"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 581,
+            "hero_name": "Flowborn (Tank)",
+            "evidence": "Power From Within and All In launch immobile mages like Xiao Qiao.",
+            "source_hash": "086e42b24cef32b1eb60e08de74f202e0e2b70d1490a984787ae8cb90ff22fee"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 157,
+            "hero_name": "Mai Shiranui",
+            "evidence": "Mai's dashes and fan close in on Xiao Qiao and burst her.",
+            "source_hash": "1da228e884d6d9e341b418ce3ecf12a503f6d1a143c97d4badd0c60e0d567b2c"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 135,
+            "hero_name": "Xiang Yu",
+            "evidence": "Righteous Fervor knocks Xiao Qiao into Xiang Yu's team.",
+            "source_hash": "7db38cdb10564b26bc6c3d653638737ed9e87dda55b9ea38f9539b167afe85c0"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 153,
+            "hero_name": "Gao Changgong",
+            "evidence": "Stealth lets Gao Changgong reach Xiao Qiao, who has no escape.",
+            "source_hash": "bd296c1540cf70c1067ea58f91ba149464c30192b4fc74ecc043f2c3cd5b87b4"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 168,
+            "hero_name": "Lapulapu",
+            "evidence": "Island's Blessing dashes onto Xiao Qiao and launches her.",
+            "source_hash": "d2b93fba30e89f0df047be28b2f86b34d52288abb9f145866b99ead60781369d"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 184,
+            "hero_name": "Cai Yan",
+            "source_hash": "f2b793771afd60a74f649c37295b137ea1f104b5d6dd8451af17315f92777abb"
+          },
+          {
+            "hero_id": 107,
+            "hero_name": "Zilong",
+            "source_hash": "f2b793771afd60a74f649c37295b137ea1f104b5d6dd8451af17315f92777abb"
+          },
+          {
+            "hero_id": 510,
+            "hero_name": "Sun Ce",
+            "source_hash": "f2b793771afd60a74f649c37295b137ea1f104b5d6dd8451af17315f92777abb"
+          },
+          {
+            "hero_id": 130,
+            "hero_name": "Musashi",
+            "source_hash": "f2b793771afd60a74f649c37295b137ea1f104b5d6dd8451af17315f92777abb"
+          },
+          {
+            "hero_id": 528,
+            "hero_name": "Lam",
+            "source_hash": "f2b793771afd60a74f649c37295b137ea1f104b5d6dd8451af17315f92777abb"
+          },
+          {
+            "hero_id": 162,
+            "hero_name": "Nakoruru",
+            "source_hash": "f2b793771afd60a74f649c37295b137ea1f104b5d6dd8451af17315f92777abb"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.07,
+            "tidak": 0.8,
+            "tidak_diketahui": 0.13
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.84,
+            "tidak": 0.104,
+            "tidak_diketahui": 0.056
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

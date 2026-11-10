@@ -1,0 +1,602 @@
+{
+  "schema_version": 2,
+  "hero_id": 510,
+  "source_hash": "ae869f2aa4adbb63c29fbae6498a056993e2ad7734228fd3f5deda544660f37d",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Raging Tide",
+          "desc": "The next Basic Attack periodically deals extra damage and restores Health Gains 1 stack every time the skill deals damage, or every time he receives physical or true damage (up to 10 stacks). Each stack increases Physical Defense."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Wave Render",
+          "desc": "Dashes in the target direction, dealing damage to enemies in his path and dealing AoE damage on arrival. After a short delay, launches enemies and deals them damage."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Typhoon",
+          "desc": "Strides forward and sweeps enemies in front, dealing damage and slowing them. Sweeps an extra 2 times before the skill goes into cooldown."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Set Sail!",
+          "desc": "Pilots a boat forward while lmmune. lt can carry 1 teammate. When it runs into terrain or certain enemies, it explodes, damages, launches, and sunders. lf he bails out early, it'll coast for a bit."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Skill 1 Sun Ce ada jedanya, hindarin ombaknya. 2) Pas dia charge naik kapal, dia gak bisa lompatin tembok, manfaatin medan."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/sun-ce/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Raging Tide",
+            "description": "The next Basic Attack periodically deals extra damage and restores Health. Gains 1 stack every time a skill deals damage, or every time he takes physical or true damage, for up to 10 stacks. Each stack increases Physical Defense.",
+            "type": "passive"
+          },
+          {
+            "name": "Wave Render",
+            "description": "Dashes in the target direction, dealing damage to enemies in his path and at the end of his dash. After a short delay, launches enemies and deals further damage.",
+            "type": "skill1"
+          },
+          {
+            "name": "Typhoon",
+            "description": "Strides forward and sweeps enemies in front, dealing damage and slowing them. Can sweep an extra 2 times before the skill goes into cooldown.",
+            "type": "skill2"
+          },
+          {
+            "name": "Set Sail!",
+            "description": "Pilots a boat forward and becomes immune to crowd control. The boat can also carry 1 teammate. When it hits obstacles or certain enemies, it explodes and launches enemies, dealing damage. If he bails out early, the boat will coast for a distance.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team needs a setup hero whose Typhoon creates kill windows for the carry",
+          "The enemy team has high physical or magic burst that demands a dedicated tank to absorb",
+          "The enemy draft includes Liang, Gan & Mo, and Mi Yue, who appear in counter data as matchups Sun Ce can pressure."
+        ],
+        "avoid_when": [
+          "The enemy team is loaded with cleanse, dashes, and immunity that bypass crowd control",
+          "Your team comp lacks damage and adding another non-damage pick collapses the win condition",
+          "The enemy team is built around answers to Crowd Control, removing the windows Sun Ce's kit needs to perform."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Sun Ce's mid-game tools come online.",
+          "Ultimate online: Set Sail! extends control duration, making team fights snowball off a single hit",
+          "Late game: Frigid Charge, Succubus Cloak, and Spikemail on the bar means Sun Ce can soak commits in 5v5 team fights for his carries."
+        ],
+        "common_mistakes": [
+          "Throwing Typhoon on the front-line tank instead of saving it for backline carries.",
+          "Building damage items hoping to deal kills, when the team needs the durability that makes you a tank in the first place.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Sun Ce's commit reaches the target alive.",
+          "Forcing solo engages instead of waiting for ally commit — Sun Ce's value compounds when the team follows up on engages."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 156,
+            "hero_name": "Liang",
+            "evidence": "Liang",
+            "source_hash": "74e07a74883b1744701a3a679ab5b8a184a4978c2ca87dd8e9047f38ed8ea603"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 182,
+            "hero_name": "Gan & Mo",
+            "evidence": "Gan & Mo",
+            "source_hash": "85e12191a980d2259bc08536dc886de31d2cb6749771c728a45157b57ad80f56"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 121,
+            "hero_name": "Mi Yue",
+            "evidence": "Mi Yue",
+            "source_hash": "7557a55a89a39476fd7dabc12f5817230a36b688ecf1385cbb78c79b24957cc5"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 180,
+            "hero_name": "Nezha",
+            "evidence": "Fire-tipped Spear cuts the healing from Raging Tide.",
+            "source_hash": "43a440aa07735b74efc0ce6a528298449bd52b9582480a7e32b35a4d62aabaa3"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 174,
+            "hero_name": "Consort Yu",
+            "evidence": "Protecting Winds makes Consort Yu invulnerable to Sun Ce's physical damage.",
+            "source_hash": "cbe4505be0d0335865bc7c8a20846e1825ec23993f3542f4564f03bcc6cba5fd"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 184,
+            "hero_name": "Cai Yan",
+            "source_hash": "45948f76119dda4caa85b3a184ea78a96498ebc89d9b50e02b3356c075b72963"
+          },
+          {
+            "hero_id": 106,
+            "hero_name": "Xiao Qiao",
+            "source_hash": "45948f76119dda4caa85b3a184ea78a96498ebc89d9b50e02b3356c075b72963"
+          },
+          {
+            "hero_id": 109,
+            "hero_name": "Daji",
+            "source_hash": "45948f76119dda4caa85b3a184ea78a96498ebc89d9b50e02b3356c075b72963"
+          },
+          {
+            "hero_id": 169,
+            "hero_name": "Hou Yi",
+            "source_hash": "45948f76119dda4caa85b3a184ea78a96498ebc89d9b50e02b3356c075b72963"
+          },
+          {
+            "hero_id": 191,
+            "hero_name": "Da Qiao",
+            "source_hash": "45948f76119dda4caa85b3a184ea78a96498ebc89d9b50e02b3356c075b72963"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

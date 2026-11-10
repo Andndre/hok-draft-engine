@@ -1,0 +1,596 @@
+{
+  "schema_version": 2,
+  "hero_id": 113,
+  "source_hash": "41a16e418c23e5250a2150358c8acb0b48f27c211e0042cff63abc7cd0801d64",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Nature's Will",
+          "desc": "Periodically removes crowd control effects and increases Movement Speed and damage reduction."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Kaleidoscope",
+          "desc": "Triggers Nature's Will, releasing dream butterflies in a fan-shaped area, inflicting damage and slowing enemies in range."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Sleep Starts",
+          "desc": "Deals damage to enemies in range and increases ally Movement Speed Grants a stack each time dealing damage, up to 5 stacks. Each stack increases skill damage. Passive: Periodically casts Sleep Starts."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Butterfly Effect",
+          "desc": "Removes crowd controls from allies within range and increases shield."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Pancing ult Zhuangzi dulu sebelum full nyerang. 2) Zhuangzi lemah kalau sendirian, bisa di-pick-off. 3) Dia tank, jangan buang damage dan control ke dia."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/zhuangzi/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Nature's Will",
+            "description": "Periodically removes crowd control effects and increases Movement Speed and damage reduction.",
+            "type": "passive"
+          },
+          {
+            "name": "Kaleidoscope",
+            "description": "Triggers Nature's Will, releasing dream butterflies in a cone-shaped area, inflicting damage and slowing enemies in range.",
+            "type": "skill1"
+          },
+          {
+            "name": "Sleep Starts",
+            "description": "Damages enemies within range and increases teammates' Movement Speed. Gains a stack each time damage is dealt, up to 5 stacks. Each stack increases skill damage. Passive: Periodically uses Sleep Starts.",
+            "type": "skill2"
+          },
+          {
+            "name": "Butterfly Effect",
+            "description": "Removes crowd control effects from teammates within range and provides a shield.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has high physical or magic burst that demands a dedicated tank to absorb",
+          "Your team has the structure to use his ability to protect the marksman, set vision, and engage on cooldown windows, since Zhuangzi delivers utility, vision, and timely peel for the carries.",
+          "The enemy draft includes Cirrus, Dian Wei, and Menki, who appear in counter data as matchups Zhuangzi can pressure."
+        ],
+        "avoid_when": [
+          "Your team comp lacks damage and adding another non-damage pick collapses the win condition",
+          "Your team needs a damage pick more than Zhuangzi's specialty, leaving the role unfilled if you commit here.",
+          "The enemy team is built around answers to Team Buffs, removing the windows Zhuangzi's kit needs to perform."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Zhuangzi's mid-game tools come online.",
+          "Core durability online: defensive items like Boots of Fortitude let Zhuangzi stay in fights longer instead of getting blown up",
+          "Late game: full build online, Zhuangzi reaches the spike public guides describe — extended fights favor him once items are completed."
+        ],
+        "common_mistakes": [
+          "Building damage items hoping to deal kills, when the team needs the durability that makes you a tank in the first place.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Zhuangzi's commit reaches the target alive.",
+          "Forgetting vision while looking for picks — losing the marksman because the support roamed without setting wards is a recurring mistake."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 506,
+            "hero_name": "Cirrus",
+            "evidence": "Cirrus",
+            "source_hash": "83adf2133752936be2a8925534f2515c5be23098b048c0aa6b322236b5781ad3"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 129,
+            "hero_name": "Dian Wei",
+            "evidence": "Dian Wei",
+            "source_hash": "9902feef1e9d69c658259e7c75dfacda508240d4f3fcf862fe122bd9965f30c5"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 198,
+            "hero_name": "Menki",
+            "evidence": "Menki",
+            "source_hash": "3dce34b464382efe46765e7d172d67c396a3574869e24e4bba8fa496d5f946dd"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 111,
+            "hero_name": "Lady Sun",
+            "evidence": "Frag Grenade lowers Zhuangzi's Physical Defense, and Lady Sun's range keeps her out of Kaleidoscope.",
+            "source_hash": "ac5421f83477f17bd07cd3e8e46323301a8dd5dd6292eda4705f530b201e704f"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 132,
+            "hero_name": "Marco Polo",
+            "evidence": "Marco Polo's true damage ignores Zhuangzi's defenses, and his range keeps him out of Kaleidoscope.",
+            "source_hash": "8e61ec056e1c5ca15acc45049b5addc784bd514b4d1bd3f3727c37d503fd8999"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 133,
+            "hero_name": "Di Renjie",
+            "source_hash": "33e911865001ac327e683db008a83501bc4a4008afd6972abc8ce8e09e03c2c1"
+          },
+          {
+            "hero_id": 157,
+            "hero_name": "Mai Shiranui",
+            "source_hash": "33e911865001ac327e683db008a83501bc4a4008afd6972abc8ce8e09e03c2c1"
+          },
+          {
+            "hero_id": 169,
+            "hero_name": "Hou Yi",
+            "source_hash": "33e911865001ac327e683db008a83501bc4a4008afd6972abc8ce8e09e03c2c1"
+          },
+          {
+            "hero_id": 508,
+            "hero_name": "Garo",
+            "source_hash": "33e911865001ac327e683db008a83501bc4a4008afd6972abc8ce8e09e03c2c1"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.91,
+            "tidak": 0.0585,
+            "tidak_diketahui": 0.0315
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.92,
+            "tidak": 0.052,
+            "tidak_diketahui": 0.028
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.92,
+            "tidak": 0.052,
+            "tidak_diketahui": 0.028
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

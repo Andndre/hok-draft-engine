@@ -1,0 +1,619 @@
+{
+  "schema_version": 2,
+  "hero_id": 125,
+  "source_hash": "cbbd3dd2b826ac82d7f78c81370762789c4b2e0c96ef01e52bd3730b5a9e55ce",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Occult Arts - Manipulation",
+          "desc": "PuppetRecovery Chance gaining Hero Shards and recover Health when attacking. Collect 50 Hero Shards (up until 150 stocks, can auto-stock every certain seconds) to summon the corresponding hero."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Occult Arts - Umbra",
+          "desc": "PuppetCrowd ControlMovement Throws the puppet, dealing damage and launching enemies in the path, then begins controlling the puppet."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Occult Arts - Zhi Chu Luan",
+          "desc": "Damage Reduction Tosses paper birds, which deal damage to enemies in their path."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Occult Arts - Shadow Crucifixion",
+          "desc": "MovementSlow Releases several strings, dealing damage to targets hit. Repeated hits additionally inflict slow."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Boneka gak dapet pasif perlindungan, dan bunuh bonekanya bikin Yango pingsan. 2) Cari badan asli Yango biar dia kepaksa berhenti ngendaliin boneka."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/yango/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Occult Arts - Manipulation",
+            "description": "Gain Hero Shards and recover Health when attacking. Collect 50 Hero Shards to summon the corresponding hero.",
+            "type": "passive"
+          },
+          {
+            "name": "Occult Arts - Umbra",
+            "description": "Throws the puppet, dealing damage and launching enemies in the path, then begins controlling the puppet.",
+            "type": "skill1"
+          },
+          {
+            "name": "Occult Arts - Zhi Chu Luan",
+            "description": "Tosses paper birds, which deal damage to enemies in their path.",
+            "type": "skill2"
+          },
+          {
+            "name": "Occult Arts - Shadow Crucifixion",
+            "description": "Releases several strings, dealing damage to targets hit. Repeated hits additionally inflict slow.",
+            "type": "skill3"
+          },
+          {
+            "name": "Occult Arts - Dispersal",
+            "description": "Vanishes, cleansing all crowd control effects, then reappears in the target location after a brief delay.",
+            "type": "ultimate"
+          },
+          {
+            "name": "Occult Arts - Return",
+            "description": "Retrieves the puppet immediately, dealing damage to enemies along the path and launching them.",
+            "type": "skill1"
+          },
+          {
+            "name": "Occult Arts - Substitution",
+            "description": "Swaps positions with the puppet, dealing damage to enemies in the path.",
+            "type": "skill2"
+          },
+          {
+            "name": "Occult Arts - Binding",
+            "description": "Phase 1: Damages and slows nearby enemies. Phase 2: Continuously stuns and damages enemies.",
+            "type": "ultimate"
+          },
+          {
+            "name": "Occult Arts - Breakout",
+            "description": "The puppet dashes in the target direction and pulls its master to itself, dealing damage to enemies in the path.",
+            "type": "skill3"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has carries with limited self-peel that Yango can reach before the team can react",
+          "Your team has the structure to use his ability to clear camps efficiently and convert pressure into ganks, since Yango delivers tempo from objectives and cross-map kill threats.",
+          "The enemy composition leaves room for Yango to reach the targets his kit punishes."
+        ],
+        "avoid_when": [
+          "The enemy stacks crowd control that interrupts the engage before damage goes out",
+          "Your team needs a tank pick more than Yango's specialty, leaving the role unfilled if you commit here.",
+          "The enemy team is built around answers to Initiate, removing the windows Yango's kit needs to perform."
+        ],
+        "power_spikes": [
+          "Early game: jungle clear into level-4 ganks is the first window where Yango can translate routes into kills.",
+          "Ultimate unlocked: Occult Arts - Shadow Crucifixion converts mobility into burst, the moment Yango starts threatening picks across the map",
+          "Late game: cooldowns become short enough that Occult Arts - Zhi Chu Luan influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Engaging without follow-up — gap-close gets you to the target, but a solo dive without ally damage trades 1-for-1.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Yango's commit reaches the target alive.",
+          "Pathing predictably and getting tracked by the enemy jungler — vary first clear and rotate based on ward placement rather than muscle memory."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 175,
+            "hero_name": "Kui",
+            "evidence": "Dispersal cleanses Kui's stun and repositions Yango.",
+            "source_hash": "bf943c8c68dffac8d696f5351a5bc37f547d7891354fa5a0eed44f6c9ac6e017"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 189,
+            "hero_name": "Guiguzi",
+            "evidence": "Dispersal cleanses the stun from Guiguzi's spriteflies.",
+            "source_hash": "004bc181d14eee1f190ed130f7ebd95166dd4a06d4c63338bacdc4a35ba1352e"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 180,
+            "hero_name": "Nezha",
+            "evidence": "Fire-tipped Spear cuts the Health Yango recovers when attacking.",
+            "source_hash": "e1281bde265c978a5ecf3a2af307929ac729287179a28e460bb196d71c553d52"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 187,
+            "hero_name": "Donghuang",
+            "evidence": "Forsaken Contract suppresses Yango before he can use Dispersal.",
+            "source_hash": "a2d8d227d871b34c6418eefd7f4b931a7335957021b0b07074d2ae4ad5c37a1f"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 190,
+            "hero_name": "Kongming",
+            "source_hash": "cb75ef15e10e79f94d55aacc61a0331648a0b44c0b70bcfec8135aee67b136d6"
+          },
+          {
+            "hero_id": 171,
+            "hero_name": "Zhang Fei",
+            "source_hash": "cb75ef15e10e79f94d55aacc61a0331648a0b44c0b70bcfec8135aee67b136d6"
+          },
+          {
+            "hero_id": 577,
+            "hero_name": "Dyadia",
+            "source_hash": "cb75ef15e10e79f94d55aacc61a0331648a0b44c0b70bcfec8135aee67b136d6"
+          },
+          {
+            "hero_id": 502,
+            "hero_name": "Pei",
+            "source_hash": "cb75ef15e10e79f94d55aacc61a0331648a0b44c0b70bcfec8135aee67b136d6"
+          },
+          {
+            "hero_id": 534,
+            "hero_name": "Sakeer",
+            "source_hash": "cb75ef15e10e79f94d55aacc61a0331648a0b44c0b70bcfec8135aee67b136d6"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

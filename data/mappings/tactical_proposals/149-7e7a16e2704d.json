@@ -1,0 +1,596 @@
+{
+  "schema_version": 2,
+  "hero_id": 149,
+  "source_hash": "7e7a16e2704ddb5c70f94155b54adddf87bdee681a696d886359d01970341610",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Royal Ambition",
+          "desc": "Gains 1 mark every second, for up to 4 marks. Basic Attacks expend all marks, dealing additional magical damage per mark. At maximum marks, the next Basic Attack is enhanced into a ranged attack."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Dominator's Shield",
+          "desc": "Grants himself a shield. If the shield is still intact when it expires, it will deal damage to nearby enemies."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Staggering Charge",
+          "desc": "Charges up and dashes forward, damaging and stunning enemies in his path."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Battlefield Command",
+          "desc": "Provides a shield to a teammate. After a short delay, teleports to the teammate and gains Movement Speed."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Pas gank Liu Bang jangan sejajar sama temen biar gak kena control skill 2 barengan. Pas dia channel ult, cepet bunuh temen yang dia teleport biar teleport-nya batal."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/liu-bang/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Royal Ambition",
+            "description": "Gains 1 mark every second, for up to 4 marks. Basic Attacks expend all marks, dealing additional magical damage per mark. At maximum marks, the next Basic Attack is enhanced into a ranged attack.",
+            "type": "passive"
+          },
+          {
+            "name": "Dominator's Shield",
+            "description": "Grants himself a shield. If the shield is still not depleted when it expires, it will deal damage to nearby enemies.",
+            "type": "skill1"
+          },
+          {
+            "name": "Staggering Charge",
+            "description": "Charges up and dashes forward, damaging and stunning enemies in his path.",
+            "type": "skill2"
+          },
+          {
+            "name": "Battlefield Command",
+            "description": "Provides a shield to a teammate. After a short delay, teleports to the teammate and gains Movement Speed.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team needs a primary front-line who can engage on cooldown windows",
+          "Your team has the structure to use his ability to protect the marksman, set vision, and engage on cooldown windows, since Liu Bang delivers utility, vision, and timely peel for the carries.",
+          "The enemy draft includes Marco Polo, Meng Ya, and Shouyue, who appear in counter data as matchups Liu Bang can pressure."
+        ],
+        "avoid_when": [
+          "The enemy stacks anti-tank items like armor penetration and percent-HP damage, melting front-liners quickly",
+          "Your team needs a damage pick more than Liu Bang's specialty, leaving the role unfilled if you commit here.",
+          "A stronger pick in the same role is open and the matchup does not specifically reward Liu Bang's tank utility."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Liu Bang's mid-game tools come online.",
+          "Core durability online: defensive items like Frosthold Targe let Liu Bang stay in fights longer instead of getting blown up",
+          "Late game: Glacial Buckler, Protector's Cuirass, and Blazing Cape on the bar means Liu Bang can soak commits in 5v5 team fights for his carries."
+        ],
+        "common_mistakes": [
+          "Building damage items hoping to deal kills, when the team needs the durability that makes you a tank in the first place.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Liu Bang's commit reaches the target alive.",
+          "Rotating without checking allied and enemy positions, leaving a lane or carry exposed before Battlefield Command can create value."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 132,
+            "hero_name": "Marco Polo",
+            "evidence": "Marco Polo",
+            "source_hash": "60ae414e6d10f46ea78431be026a4a826318fd0eaced638cebc5c2f1281140c0"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 524,
+            "hero_name": "Meng Ya",
+            "evidence": "Meng Ya",
+            "source_hash": "41529d50a46c193c0e062f43e251f85e85a62c7ad017d5e43216e6125e549f5a"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 196,
+            "hero_name": "Shouyue",
+            "evidence": "Shouyue",
+            "source_hash": "7108d49f29b69f720aade8920b89eb6589b1add0a59a70982cafc35b0f8d499e"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 508,
+            "hero_name": "Garo",
+            "evidence": "Garo deals 50% extra damage to shields, breaking Dominator's Shield.",
+            "source_hash": "deb93fdc17a98e823011b316fdddf89ce8f6feb284f013d14dd46967597573c1"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 118,
+            "hero_name": "Sun Bin",
+            "evidence": "Time Lapse can silence Liu Bang before Battlefield Command teleports him.",
+            "source_hash": "7b4ef92edf39b86133ce7f7fd0a93aaef8d490f29f0547fdda4737bfd7299992"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 169,
+            "hero_name": "Hou Yi",
+            "source_hash": "d506eb4403a0f305cdd41a048680ff0a106bd69c92bd06d1f1706c8427add2ca"
+          },
+          {
+            "hero_id": 501,
+            "hero_name": "Ming",
+            "source_hash": "d506eb4403a0f305cdd41a048680ff0a106bd69c92bd06d1f1706c8427add2ca"
+          },
+          {
+            "hero_id": 111,
+            "hero_name": "Lady Sun",
+            "source_hash": "d506eb4403a0f305cdd41a048680ff0a106bd69c92bd06d1f1706c8427add2ca"
+          },
+          {
+            "hero_id": 524,
+            "hero_name": "Meng Ya",
+            "source_hash": "d506eb4403a0f305cdd41a048680ff0a106bd69c92bd06d1f1706c8427add2ca"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.92,
+            "tidak": 0.052,
+            "tidak_diketahui": 0.028
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.91,
+            "tidak": 0.0585,
+            "tidak_diketahui": 0.0315
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

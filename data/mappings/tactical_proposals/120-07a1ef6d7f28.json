@@ -1,0 +1,595 @@
+{
+  "schema_version": 2,
+  "hero_id": 120,
+  "source_hash": "07a1ef6d7f286e7a34a78abffb8be8d513f17318f8c62db4ef786b95bdf4b027",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Reaper's Revenge",
+          "desc": "Enhance Speed Up Gains Energy when dealing or taking damage, increasing his Movement Speed and enhancing his recovery effects."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Blood Echo",
+          "desc": "Damage Recovery Deals damage to nearby enemies and recovers Health. Charging up will boost the skill's effects. '''Passive:''' When taking damage, there is a chance to automatically trigger Skill 1."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Deathscythe",
+          "desc": "Crowd Control Damage Enhance Summons a scythe in the target direction, pulling enemies within range while inflicting damage and slow."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Lay Waste",
+          "desc": "Crowd Control Damage Enhance Leaps to the target location and taunts enemies while dealing damage and enhancing his recovery effects. Taunt duration increases with Health."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Bai Qi itu fighter-tank: HP tebel, damage reduction dari basic attack, regen cepet, taunt area luas. Di clash lane biasanya beli item regen, dan kalau gold-nya udah jalan dia susah dibunuh. Saran: Mi Yue/Lu Bu/Cheng Yaojin/Ata/Meng Tian/Li Xin/Guan Yu (clash), Diaochan/Garuda (mage), Zhuangzi (support), Di Renjie/Arli (marksman). Kalau sama-sama susah dibunuh, menangin lewat nyolong jungle dan kontribusi teamfight."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/bai-qi/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Reaper's Revenge",
+            "description": "Gains Energy when dealing or taking damage, increasing his Movement Speed and enhancing his recovery effects.",
+            "type": "passive"
+          },
+          {
+            "name": "Blood Echo",
+            "description": "Deals damage to nearby enemies and recovers Health. Charging up will boost the skill's effects. Passive: When taking damage, there is a chance to automatically trigger Skill 1.",
+            "type": "skill1"
+          },
+          {
+            "name": "Deathscythe",
+            "description": "Summons scythes in the target direction, pulling back enemies within range while inflicting damage and slow.",
+            "type": "skill2"
+          },
+          {
+            "name": "Lay Waste",
+            "description": "Leaps to the target location and taunts enemies while dealing damage and enhancing his recovery effects. Taunt duration increases with max Health.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team needs a setup hero whose Deathscythe creates kill windows for the carry",
+          "The enemy team has high physical or magic burst that demands a dedicated tank to absorb",
+          "The enemy draft includes Arke and Garo, who appear in counter data as matchups Bai Qi can pressure."
+        ],
+        "avoid_when": [
+          "The enemy team is loaded with cleanse, dashes, and immunity that bypass crowd control",
+          "Your team comp lacks damage and adding another non-damage pick collapses the win condition",
+          "The enemy already drafted Zhuangzi, who counter data identifies as direct answers to Bai Qi."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Bai Qi's mid-game tools come online.",
+          "Ultimate online: Lay Waste extends control duration, making team fights snowball off a single hit",
+          "Late game: Eye of the Phoenix, Overlord's Platemail, and Spikemail on the bar means Bai Qi can soak commits in 5v5 team fights for his carries."
+        ],
+        "common_mistakes": [
+          "Throwing Deathscythe on the front-line tank instead of saving it for backline carries.",
+          "Building damage items hoping to deal kills, when the team needs the durability that makes you a tank in the first place.",
+          "Ignoring Zhuangzi on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Forcing solo engages instead of waiting for ally commit — Bai Qi's value compounds when the team follows up on engages."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 131,
+            "hero_name": "Li Bai",
+            "evidence": "Lay Waste taunts Li Bai mid-combo and drags him into Bai Qi's team.",
+            "source_hash": "52b2ee4caa1736d7a83c294f717f65bc6fdf62016959b5e0dcc1cb30ac75e180"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 150,
+            "hero_name": "Han Xin",
+            "evidence": "Deathscythe pulls Han Xin back as he tries to dash out.",
+            "source_hash": "be5743153d61c48dc4783c50a6a5c1b14fc88705ebea2a70fda78bc3aed17b60"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 180,
+            "hero_name": "Nezha",
+            "evidence": "Fire-tipped Spear reduces Bai Qi's healing, which his kit relies on.",
+            "source_hash": "08771ecfe82b242c255df6c70e3fe548b876b7961e73f6c1a8139c9b8e297a96"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 132,
+            "hero_name": "Marco Polo",
+            "evidence": "Marco Polo's true damage ignores Bai Qi's high defenses.",
+            "source_hash": "400f6a261c441b1dae17a937bee7ed0b05942ef10b31fe7e3e5510041c35c55e"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 119,
+            "hero_name": "Dr Bian",
+            "source_hash": "6a810c886a8e2fe12ce17da6ba5f269e0754e1357171080357cfa89188a86c35"
+          },
+          {
+            "hero_id": 118,
+            "hero_name": "Sun Bin",
+            "source_hash": "6a810c886a8e2fe12ce17da6ba5f269e0754e1357171080357cfa89188a86c35"
+          },
+          {
+            "hero_id": 533,
+            "hero_name": "Agudo",
+            "source_hash": "6a810c886a8e2fe12ce17da6ba5f269e0754e1357171080357cfa89188a86c35"
+          },
+          {
+            "hero_id": 502,
+            "hero_name": "Pei",
+            "source_hash": "6a810c886a8e2fe12ce17da6ba5f269e0754e1357171080357cfa89188a86c35"
+          },
+          {
+            "hero_id": 176,
+            "hero_name": "Yuhuan",
+            "source_hash": "6a810c886a8e2fe12ce17da6ba5f269e0754e1357171080357cfa89188a86c35"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

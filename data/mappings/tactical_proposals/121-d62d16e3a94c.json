@@ -1,0 +1,637 @@
+{
+  "schema_version": 2,
+  "hero_id": 121,
+  "source_hash": "d62d16e3a94c127163bf27c33cc2e1a0d0b553e5e3377828dd7e0e9f205f142a",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Eternal Youth",
+          "desc": "Summons a shadow servant that damages enemies and restores Health to her whenever using a skill. She also gains Shadow Power that boosts her Movement Speed and healing effects."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Dark Transfer",
+          "desc": "Unleashes shadow energy, dealing damage to enemies that come into contact with it. Upon using the skill again, will shift to the shadow's location, dealing damage again. A shadow servant will be summoned if she hits an enemy after shifting."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Ravenous Tether",
+          "desc": "Releases a tether that links to the first enemy hit. Damages and slows over time. Steals Physical and Magical Attack while recovering Health."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Umbral Moon",
+          "desc": "Removes debuffs, gains Movement Speed, and becomes untargetable. Deals damage to nearby enemies upon entering and exiting the untargetable state."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Kekuatan Mi Yue ada di split push dan duel, hampir gak ada lawan, tapi butuh gold banget. Kalau awalnya gak jalan, dia lemah di teamfight late. Saran: Yango/Meng Tian/Ma Chao/Fuzi (clash), Luna (jungle), Sima Yi/Liang (mage), Donghuang (support), Di Renjie/Arli (marksman). Tanpa control susah bunuh Mi Yue, jadi di awal cukup tahan dia dan jaga jungle."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/mi-yue/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Eternal Youth",
+            "description": "Summons a shadow servant that damages enemies and restores Health to her whenever she uses a skill. She also gains Shadow Power that boosts her Movement Speed and healing effects.",
+            "type": "passive"
+          },
+          {
+            "name": "Dark Transfer",
+            "description": "Unleashes shadow energy, dealing damage to enemies that come into contact with it. Can use the skill again to teleport to the shadow's location, dealing damage again. Summons a shadow servant when either use of the skill hits an enemy.",
+            "type": "skill1"
+          },
+          {
+            "name": "Ravenous Tether",
+            "description": "Releases a tether that links to the first enemy hit. Damages and slows over time. Steals Physical and Magical Attack while recovering Health.",
+            "type": "skill2"
+          },
+          {
+            "name": "Umbral Moon",
+            "description": "Removes debuffs, gains Movement Speed, and becomes untargetable. Deals damage to nearby enemies upon entering and exiting the untargetable state.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy lacks reliable healing reduction, leaving sustain unchecked",
+          "The enemy team relies on hard engage that you can read and recover from",
+          "The enemy draft includes Mai Shiranui and Wukong, who appear in counter data as matchups Mi Yue can pressure."
+        ],
+        "avoid_when": [
+          "The game state demands burst rather than slow attrition",
+          "The enemy chains crowd control faster than recovery cooldowns refresh",
+          "The enemy already drafted Dharma and Dian Wei, who counter data identifies as direct answers to Mi Yue."
+        ],
+        "power_spikes": [
+          "Early game: Mi Yue is listed as an early-game threat in public guide data — convert the early window into objectives before scaling picks come online.",
+          "Lifesteal item online: trade patterns flip from neutral to favorable once sustain stacks with damage",
+          "Late game: cooldowns become short enough that Ravenous Tether influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Forcing all-ins against opponents already wearing anti-heal — your healing barely activates.",
+          "Using the recovery skill on the first crowd control, then dying to the follow-up chain.",
+          "Ignoring Dharma on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Forcing solo engages instead of waiting for ally commit — Mi Yue's value compounds when the team follows up on engages."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 105,
+            "hero_name": "Lian Po",
+            "evidence": "Ravenous Tether keeps draining and healing Mi Yue through a long fight with a slow frontliner like Lian Po.",
+            "source_hash": "7cc1f6227fd690e45e42305a5ab9a9160d6bcf63ef73eb6dc4e0d57a911fde15"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 126,
+            "hero_name": "Dun",
+            "evidence": "Ravenous Tether keeps draining and healing Mi Yue through a long fight with a slow frontliner like Dun.",
+            "source_hash": "e15709ea813b072085465f0881a370514ad3ccf5902f14154ef57084f57a49e3"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 581,
+            "hero_name": "Flowborn (Tank)",
+            "evidence": "Ravenous Tether keeps draining and healing Mi Yue through a long fight with the slow tank form.",
+            "source_hash": "23f285bf087ff27f870de47a5e1fce1007ea99ae9f1960647edc9b04822a8d82"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 134,
+            "hero_name": "Dharma",
+            "evidence": "Dharma",
+            "source_hash": "624cef2ffbfa0d3a872d27e88cda630184f3f5bc8e68a1a77bd51b7eeebdcf28"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 129,
+            "hero_name": "Dian Wei",
+            "evidence": "Dian Wei",
+            "source_hash": "0033ab6c93e7ebadb28d3ad3dac964f60ab4bb93ef949e85cdbd6be7aa1eeda0"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 140,
+            "hero_name": "Guan Yu",
+            "evidence": "Guan Yu",
+            "source_hash": "3d150d1ed284f395f26e69510dbfc6c5dc665d056d0ac67b89fa4f07fd4a8b41"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 564,
+            "hero_name": "Mayene",
+            "evidence": "Mayene",
+            "source_hash": "fe9056762ef34d38046e2e8b5d349084b1a74d36254704ffe2e895afb5a38e57"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 154,
+            "hero_name": "Mulan",
+            "evidence": "Mulan",
+            "source_hash": "fe034a6081dd7b8b5cc73abfd1d487abb295c4a9829900d674f39a1327fdee98"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 510,
+            "hero_name": "Sun Ce",
+            "evidence": "Sun Ce",
+            "source_hash": "93f8622a7f2c74b5ca9416dbc572b74109b66bb318c1a0239943b5699d54ce97"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 522,
+            "hero_name": "Yao",
+            "evidence": "Yao",
+            "source_hash": "c9459b559647ad806a91f3746ec34927a4a4d00a725d385820371bcae68c6406"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 168,
+            "hero_name": "Lapulapu",
+            "source_hash": "d90c82a3993b86ae43fe3edd06e7e52d4041586763056f999d8cb6562f7286e2"
+          },
+          {
+            "hero_id": 112,
+            "hero_name": "Luban No.7",
+            "source_hash": "d90c82a3993b86ae43fe3edd06e7e52d4041586763056f999d8cb6562f7286e2"
+          },
+          {
+            "hero_id": 142,
+            "hero_name": "Angela",
+            "source_hash": "d90c82a3993b86ae43fe3edd06e7e52d4041586763056f999d8cb6562f7286e2"
+          },
+          {
+            "hero_id": 175,
+            "hero_name": "Kui",
+            "source_hash": "d90c82a3993b86ae43fe3edd06e7e52d4041586763056f999d8cb6562f7286e2"
+          },
+          {
+            "hero_id": 114,
+            "hero_name": "Liu Shan",
+            "source_hash": "d90c82a3993b86ae43fe3edd06e7e52d4041586763056f999d8cb6562f7286e2"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

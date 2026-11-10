@@ -1,0 +1,622 @@
+{
+  "schema_version": 2,
+  "hero_id": 108,
+  "source_hash": "2c6fc3248e97a39ad5fd466b00da3cd7284ab03e41895e141d14a3f12338e7df",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Fight for Peace",
+          "desc": "Every 4th Basic Attack deals area damage and knocks back enemies. Gains shield stacks when using skills, for up to 3 stacks."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Peacebringer",
+          "desc": "Dashes in the target direction, dealing damage to enemies along the way. The next Basic Attack is enhanced, becoming Fight for Peace."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Cannon Blast",
+          "desc": "Fires a shell in the target direction, stunning and dealing AoE damage to the 1st enemy hit. The shell leaves a crater in the ground after reaching its max range or hitting an enemy, dealing damage over time to enemies that step init."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Think Inside the Box",
+          "desc": "Deals continuous damage to enemies within a certain range of himself, stunning enemies every time he deals damage."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Strong poke",
+          "Great crowd control and lockdown",
+          "Excellent pick potential"
+        ],
+        "cons": [
+          "Skill shot reliant",
+          "Ultimate can be interrupted",
+          "Limited damage"
+        ],
+        "gameplay_tips": "## Early Game\nStart in the mid lane and use Skill 2 to poke the enemy and help your mid laner push the minion wave with your passive. Skill 2 is a strong tool to have early on with its long range and CC potential. After you've cleared the mid wave, look to go into the Farm Lane and continue using Skill 2 to poke and push the enemy back to their tower. Skill 2 can also be used to check bushes when roaming. If you find yourself in any danger, use Skill 1 to dash away to safety.\n\n## Teamfights\nIn teamfights, you want to continue to use Skill 2 at range to CC the enemy and try to catch isolated targets. You don't want to be the first one to dive in with your Ultimate. Instead, wait for your frontline to dive in first and then follow up with Think Inside the Box to lockdown the enemy. You need to be flexible with your playstyle, as in some instances you need to protect your carries and instead use your Skill 2 and Ultimate to peel for them.\n\n## Tips & Tricks\nYou can auto-attack and stack Mozi's passive whilst walking around to get your 4th empowered attack at any time\nUse Skill 1 to reposition in fights for your Skill 2 or Ultimate"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Hindarin control jarak jauh skill 2 Mozi. 2) Jangan berdiri kedeketan sama temen biar ult Mozi gak kena banyak orang."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/mozi/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Fight for Peace",
+            "description": "Every 4th Basic Attack deals area damage and knocks back enemies. Gains shield stacks when using skills, for up to 3 stacks.",
+            "type": "passive"
+          },
+          {
+            "name": "Peacebringer",
+            "description": "Dashes in the target direction, dealing damage to enemies in his path. The next Basic Attack is enhanced, becoming Fight for Peace.",
+            "type": "skill1"
+          },
+          {
+            "name": "Cannon Blast",
+            "description": "Fires a shell in the target direction, stunning and dealing area damage to the 1st enemy hit. The shell leaves a crater in the ground after reaching its max range or hitting an enemy, dealing damage over time to enemies that step in it.",
+            "type": "skill2"
+          },
+          {
+            "name": "Think Inside the Box",
+            "description": "Deals damage over time to enemies within a certain range of himself, stunning enemies every time he deals damage.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team needs a setup hero whose Cannon Blast creates kill windows for the carry",
+          "Your team has a hyper-carry who needs his backline protection to reach scaling",
+          "The enemy draft includes Cirrus, Lam, and Li Bai, who appear in counter data as matchups Mozi can pressure."
+        ],
+        "avoid_when": [
+          "The enemy team is loaded with cleanse, dashes, and immunity that bypass crowd control",
+          "Your team needs proactive engage rather than a reactive shield-and-peel kit",
+          "The enemy already drafted Dolia, Guiguzi, and Nezha, who counter data identifies as direct answers to Mozi."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Mozi's mid-game tools come online.",
+          "Ultimate online: Think Inside the Box extends control duration, making team fights snowball off a single hit",
+          "Late game: full build online, Mozi reaches the spike public guides describe — extended fights favor him once items are completed."
+        ],
+        "common_mistakes": [
+          "Throwing Cannon Blast on the front-line tank instead of saving it for backline carries.",
+          "Pre-shielding before the engage actually starts, wasting the absorb window before damage lands.",
+          "Ignoring Dolia and Guiguzi on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Greeding farm in mid lane while side lanes get camped — rotation timing matters more than CS lead in most matchups."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 506,
+            "hero_name": "Cirrus",
+            "evidence": "Cirrus",
+            "source_hash": "ce289d812fe9e98c4ad3f91784f023645bc795ce74f994b04918b1a36bb80a1f"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 528,
+            "hero_name": "Lam",
+            "evidence": "Lam",
+            "source_hash": "f4e9495d74f5497027bf78f368212ad414ef6c644573211ef10ae99a794db8a7"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 131,
+            "hero_name": "Li Bai",
+            "evidence": "Li Bai",
+            "source_hash": "982ff836b9bcf809e52a80b3509d55bc8c5ff439d27b6306229a3c977480487f"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 159,
+            "hero_name": "Dolia",
+            "evidence": "Dolia",
+            "source_hash": "06e5123c577aa0bac3be9879ac2d2603f00d272ba24401c02cf4b2f4ffa860d2"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 189,
+            "hero_name": "Guiguzi",
+            "evidence": "Guiguzi",
+            "source_hash": "3f6baa0337983e3717f631fef555be8a74586d0d6e9c64b2527ca6c289c2f276"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 180,
+            "hero_name": "Nezha",
+            "evidence": "Nezha",
+            "source_hash": "c79c78ed78d6c42d318ce1f7bc15d4c09d9d56e2e9133c3d6deb811629aa9f0b"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 196,
+            "hero_name": "Shouyue",
+            "source_hash": "56330c87c921cdb0e9844201d0f3210e183f870f9fe90f1018354f7be2a4d252"
+          },
+          {
+            "hero_id": 167,
+            "hero_name": "Wukong",
+            "source_hash": "56330c87c921cdb0e9844201d0f3210e183f870f9fe90f1018354f7be2a4d252"
+          },
+          {
+            "hero_id": 129,
+            "hero_name": "Dian Wei",
+            "source_hash": "56330c87c921cdb0e9844201d0f3210e183f870f9fe90f1018354f7be2a4d252"
+          },
+          {
+            "hero_id": 115,
+            "hero_name": "Gao",
+            "source_hash": "56330c87c921cdb0e9844201d0f3210e183f870f9fe90f1018354f7be2a4d252"
+          },
+          {
+            "hero_id": 112,
+            "hero_name": "Luban No.7",
+            "source_hash": "56330c87c921cdb0e9844201d0f3210e183f870f9fe90f1018354f7be2a4d252"
+          },
+          {
+            "hero_id": 105,
+            "hero_name": "Lian Po",
+            "source_hash": "56330c87c921cdb0e9844201d0f3210e183f870f9fe90f1018354f7be2a4d252"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.84,
+            "tidak": 0.104,
+            "tidak_diketahui": 0.056
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

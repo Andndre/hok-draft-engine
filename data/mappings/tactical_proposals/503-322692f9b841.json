@@ -1,0 +1,613 @@
+{
+  "schema_version": 2,
+  "hero_id": 503,
+  "source_hash": "322692f9b8417d9561edf6d581e4620c4a06abf11760d33ffee41faa239f41a3",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Fearless Chariot",
+          "desc": "Accumulates charge when Basic Attacks or unenhanced skills land hits, for up to 3 bars of charge.While having at least 1 bar, Basic Attack hits recover Health.Using Skill 1, the Ultimate, or an enhanced Basic Attack from Skill 2 will spend 1 bar."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Electrifying Charge",
+          "desc": "Swings his weapon twice in the target direction, dealing damage andrecovering Health with every hit.While charged, deals more damage and recovers more Health."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Storm Strike",
+          "desc": "Dashes in the target direction, dealing damage to enemies in his path whilegaining an enhanced Basic Attack that deals damage and slows targetsWhile charged, the next Basic Attack deals more damage, and the sloweffect is changed to a launch effect."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Force Field Suppression",
+          "desc": "Gains a shield while damaging and slowing nearby enemiesWhile charged, the skill deals more damage, grants a stronger shield, andproduces a spark that deals damage to nearby enemies while stealingMovement Speed from enemy heroes."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Biron kuat banget di clash lane dengan lifesteal, shield, dan dash, di awal susah nyari lawan yang berani adu. Tapi jangkauannya pendek dan gampang di-kite, tanpa flash susah masuk ke backline, jadi biasa aja di teamfight mid-late. Dia hero early game: Guan Yu/Mi Yue/Ma Chao/Sun Ce/Lu Bu (clash) asal gak mati sebelum level 4, sisanya 50:50. Marco Polo/Arli/Lady Sun (marksman), Diaochan/Sima Yi/Liang (mage), Sun Bin (support) juga bagus ngelawan dia."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/biron/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Fearless Chariot",
+            "description": "Charges up when Basic Attacks and unenhanced skills hit. Charged skills gain extra effects. When charged to at least 1 bars, Basic Attacks recover Health on hit.",
+            "type": "passive"
+          },
+          {
+            "name": "Electrifying Charge",
+            "description": "Swings his weapon in the target direction, dealing damage and recovering Health with every hit. While charged, deals more damage and recovers more Health.",
+            "type": "skill1"
+          },
+          {
+            "name": "Storm Strike",
+            "description": "Dashes in the target direction, gaining an enhanced Basic Attack that deals damage and slows targets. While charged, the next Basic Attack deals more damage, and the slow effect is changed to a launch effect.",
+            "type": "skill2"
+          },
+          {
+            "name": "Force Field Suppression",
+            "description": "Damages and slows nearby enemies while gaining a shield. When charged, deals more damage, grants a stronger shield, and generates an electric wave that damages nearby enemies while stealing Movement Speed from enemy heroes.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has carries with limited self-peel that Biron can reach before the team can react",
+          "Your team needs a setup hero whose Storm Strike creates kill windows for the carry",
+          "The enemy draft includes Dun and Wukong, who appear in counter data as matchups Biron can pressure."
+        ],
+        "avoid_when": [
+          "The team needs sustained team-fight damage rather than a single-target diver",
+          "The enemy team is loaded with cleanse, dashes, and immunity that bypass crowd control",
+          "The enemy already drafted Lady Sun and Sun Bin, who counter data identifies as direct answers to Biron."
+        ],
+        "power_spikes": [
+          "Early game: Biron is listed as an early-game threat in public guide data — convert the early window into objectives before scaling picks come online.",
+          "Ultimate unlocked: Force Field Suppression converts mobility into burst, the moment Biron starts threatening picks across the map",
+          "Late game: cooldowns become short enough that Storm Strike influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Engaging without follow-up — gap-close gets you to the target, but a solo dive without ally damage trades 1-for-1.",
+          "Throwing Storm Strike on the front-line tank instead of saving it for backline carries.",
+          "Ignoring Lady Sun and Sun Bin on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Forcing solo engages instead of waiting for ally commit — Biron's value compounds when the team follows up on engages."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 190,
+            "hero_name": "Kongming",
+            "evidence": "Kongming",
+            "source_hash": "3a957037f90157670e703a6294c13c7c5bce89ebe6a7c9a837b3e28d0dd0f007"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 513,
+            "hero_name": "Shangguan",
+            "evidence": "Shangguan",
+            "source_hash": "bc3d157969efa71e6f1e7059f7bd70e478cf62f7cfa8b3dfd6bd1c4a21b5a397"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 148,
+            "hero_name": "Ziya",
+            "evidence": "Ziya",
+            "source_hash": "25c3fbacbdabb68650967c36c46f00bb92ee05af573e276ba9058d7fac8ec4b4"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 191,
+            "hero_name": "Da Qiao",
+            "evidence": "Da Qiao",
+            "source_hash": "bd1f4ae48796b3cae67cdc8f097bd886453576fecd7d9b0e802e69f7096b57bc"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 114,
+            "hero_name": "Liu Shan",
+            "evidence": "Liu Shan",
+            "source_hash": "224247d27917d021258bc2ea52017c6ab833d8fcdd2d71a4238b710c98ab03d4"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 177,
+            "hero_name": "Chano",
+            "evidence": "Leader Stance lets Chano shoot while moving and kite slow melee fighters like Biron.",
+            "source_hash": "d7ac7801e8b1fac031a6cacdaaec7efc273b319151994d4e0d5dba707489fa1c"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 582,
+            "hero_name": "Flowborn (Mage)",
+            "evidence": "Arcane Arts' sustained beam wears down slow frontliners like Biron.",
+            "source_hash": "c615b28c15e9f7cb5ed0690599ff3b41365e6d92e8f512e068ccca97db8a7a6a"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 631,
+            "hero_name": "Florentino",
+            "evidence": "Triple Threat's true damage ignores Biron's high defenses.",
+            "source_hash": "d864249909f670bb0e8466f519e9db60604f2f44203040320adf7e47176c98cb"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 115,
+            "hero_name": "Gao",
+            "source_hash": "a1ca53cc61fb3f998c1ff033df6056dac30f5df26f49485aed3bcf2fd597b69d"
+          },
+          {
+            "hero_id": 118,
+            "hero_name": "Sun Bin",
+            "source_hash": "a1ca53cc61fb3f998c1ff033df6056dac30f5df26f49485aed3bcf2fd597b69d"
+          },
+          {
+            "hero_id": 171,
+            "hero_name": "Zhang Fei",
+            "source_hash": "a1ca53cc61fb3f998c1ff033df6056dac30f5df26f49485aed3bcf2fd597b69d"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.85,
+            "tidak": 0.0975,
+            "tidak_diketahui": 0.0525
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

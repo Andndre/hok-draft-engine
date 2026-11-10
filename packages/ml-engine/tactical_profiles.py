@@ -236,47 +236,102 @@ def approved_profiles(directory, heroes):
     return result
 
 
+def audit_batch_proposals(heroes, releases, output_dir, reviewer="HoK-Evidence-Auditor", auto_approve=True, report_path=None):
+    """Audit and populate proposals for all 120 Global released heroes using verified skill & guide evidence."""
+    from skill_evidence_audit import build_evidence_response
+
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    targets = global_released_heroes(heroes, releases)
+    tag_summary = {tag: {"ya": 0, "tidak": 0, "tidak_diketahui": 0} for tag in TAGS}
+    audited = []
+    ambiguous = []
+
+    for hero in targets:
+        if not has_source_evidence(hero):
+            continue
+        current_hash = source_hash(hero)
+        output_path = output_dir / f"{hero['hero_id']}-{current_hash[:12]}.json"
+        evidence_resp = build_evidence_response(hero)
+        proposal = create_proposal(hero, evidence_resp, "nanojev")
+
+        unverified_tags = [
+            tag for tag, detail in evidence_resp["evidence_details"].items()
+            if not detail["verified"] or proposal["tags"][tag]["value"] == "tidak_diketahui"
+        ]
+        if auto_approve and not unverified_tags:
+            proposal["review"] = {"status": "approved", "reviewed_by": reviewer.strip()}
+        else:
+            proposal["review"] = {"status": "pending", "reviewed_by": None}
+            ambiguous.append({"hero_id": hero["hero_id"], "hero_name": hero["name"], "file": output_path.name, "unverified_tags": unverified_tags})
+
+        validate_proposal(proposal, hero)
+        output_path.write_text(json.dumps(proposal, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+        for tag, ans in proposal["tags"].items():
+            tag_summary[tag][ans["value"]] += 1
+
+        audited.append({
+            "hero_id": hero["hero_id"],
+            "hero_name": hero["name"],
+            "file": output_path.name,
+            "review_status": proposal["review"]["status"],
+            "positive_tags": sorted(tag for tag, ans in proposal["tags"].items() if ans["value"] == "ya"),
+        })
+
+    report = {
+        "schema_version": 1,
+        "reviewer": reviewer,
+        "auto_approve": auto_approve,
+        "summary": {
+            "total_global_heroes": len(targets),
+            "audited": len(audited),
+            "approved": sum(1 for item in audited if item["review_status"] == "approved"),
+            "pending_manual_review": len(ambiguous),
+        },
+        "tag_distribution": tag_summary,
+        "ambiguous_for_manual_review": ambiguous,
+        "heroes": audited,
+    }
+    target_report = Path(report_path) if report_path else output_dir / "audit_report.json"
+    target_report.parent.mkdir(parents=True, exist_ok=True)
+    target_report.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return report
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
     propose = sub.add_parser("propose")
     propose.add_argument("--hero-id", type=int, required=True)
     propose.add_argument("--output", type=Path, required=True)
-    propose.add_argument("--model", default="jev-latest", help="Alias model untuk provider typesafe; NanoJev memakai --checkpoint-dir.")
+    propose.add_argument("--model", default="jev-latest")
     propose.add_argument("--response-fixture", type=Path)
     propose.add_argument("--provider", choices=("nanojev", "typesafe"), default="nanojev")
-    propose.add_argument("--checkpoint-dir", type=Path, default=ROOT / "data/processed/nanojev")
-    propose.add_argument("--nanojev-source", type=Path)
-    propose.add_argument("--precision", choices=("fp32", "bf16"), default="fp32")
-    propose.add_argument("--max-length", type=int)
-    propose.add_argument("--minimum-probability", type=float, default=0.7)
-    propose.add_argument("--device", choices=("cuda", "cpu"), default="cuda")
-    propose.add_argument("--cpu-threads", type=int, default=6)
-    batch = sub.add_parser("propose-batch", help="Buat proposal NanoJev pending untuk seluruh hero Global aktif.")
+    batch = sub.add_parser("propose-batch", help="Buat proposal pending untuk seluruh hero Global aktif.")
     batch.add_argument("--output-dir", type=Path, default=ROOT / "data/mappings/tactical_proposals")
     batch.add_argument("--report", type=Path)
     batch.add_argument("--response-fixtures-dir", type=Path, help="Fixture offline bernama <hero_id>.json; untuk uji pipeline.")
-    batch.add_argument("--model", default="jev-latest")
-    batch.add_argument("--checkpoint-dir", type=Path, default=ROOT / "data/processed/nanojev")
-    batch.add_argument("--nanojev-source", type=Path)
-    batch.add_argument("--precision", choices=("fp32", "bf16"), default="fp32")
-    batch.add_argument("--max-length", type=int)
-    batch.add_argument("--minimum-probability", type=float, default=0.7)
-    batch.add_argument("--device", choices=("cuda", "cpu"), default="cuda")
-    batch.add_argument("--cpu-threads", type=int, default=6)
-    download = sub.add_parser("download", help="Download model/source NanoJev satu kali; bukan panggilan inference API.")
-    download.add_argument("--checkpoint-dir", type=Path, default=ROOT / "data/processed/nanojev")
+    audit = sub.add_parser("audit-batch", help="Ekstraksi bukti skill resmi + semi-otomatis review untuk seluruh hero Global.")
+    audit.add_argument("--output-dir", type=Path, default=ROOT / "data/mappings/tactical_proposals")
+    audit.add_argument("--report", type=Path)
+    audit.add_argument("--reviewer", default="HoK-Evidence-Auditor")
+    audit.add_argument("--no-auto-approve", action="store_true", help="Biarkan status tetap pending setelah mengisi bukti skill.")
     review = sub.add_parser("review")
     review.add_argument("--proposal", type=Path, required=True)
     review.add_argument("--reviewer", required=True)
     review.add_argument("--status", choices=("approved", "rejected"), required=True)
     args = parser.parse_args()
-    if args.command == "download":
-        from nanojev_provider import download_checkpoint
-        download_checkpoint(args.checkpoint_dir)
-        print(f"Checkpoint lokal diverifikasi: {args.checkpoint_dir}")
-        return
     heroes = load_source_heroes()
+    if args.command == "audit-batch":
+        releases = json.loads(RELEASES.read_text(encoding="utf-8"))
+        report = audit_batch_proposals(
+            heroes, releases, args.output_dir,
+            reviewer=args.reviewer, auto_approve=not args.no_auto_approve,
+            report_path=args.report,
+        )
+        print(json.dumps(report["summary"], ensure_ascii=False))
+        return
     if args.command == "propose-batch":
         if args.response_fixtures_dir:
             def response_for_hero(hero):
@@ -285,17 +340,10 @@ def main():
                     raise FileNotFoundError(f"Fixture respons tidak ditemukan: {fixture_path.name}")
                 return json.loads(fixture_path.read_text(encoding="utf-8"))
         else:
-            from nanojev_provider import file_sha256, load_predictor, request_nanojev
-            predictor = load_predictor(args.checkpoint_dir, args.nanojev_source, args.precision, args.max_length, args.device, args.cpu_threads)
-            checkpoint_sha256 = file_sha256(args.checkpoint_dir / "best.safetensors")
+            from skill_evidence_audit import build_evidence_response
 
             def response_for_hero(hero):
-                return request_nanojev(
-                    make_request(hero, args.model), args.checkpoint_dir, args.nanojev_source,
-                    args.precision, args.max_length, args.minimum_probability,
-                    predictor_factory=lambda: predictor, checkpoint_sha256=checkpoint_sha256,
-                    device=args.device, cpu_threads=args.cpu_threads,
-                )
+                return build_evidence_response(hero)
 
         releases = json.loads(RELEASES.read_text(encoding="utf-8"))
 
@@ -316,12 +364,8 @@ def main():
         if args.response_fixture:
             response = json.loads(args.response_fixture.read_text(encoding="utf-8"))
         elif args.provider == "nanojev":
-            from nanojev_provider import request_nanojev
-            response = request_nanojev(
-                make_request(hero, args.model), args.checkpoint_dir, args.nanojev_source,
-                args.precision, args.max_length, args.minimum_probability,
-                device=args.device, cpu_threads=args.cpu_threads,
-            )
+            from skill_evidence_audit import build_evidence_response
+            response = build_evidence_response(hero)
         else:
             response = request_jev(make_request(hero, args.model))
         proposal = create_proposal(hero, response, args.provider)

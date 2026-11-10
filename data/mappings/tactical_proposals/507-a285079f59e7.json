@@ -1,0 +1,665 @@
+{
+  "schema_version": 2,
+  "hero_id": 507,
+  "source_hash": "a285079f59e765ee973211b4ba59f8c287d0f91b02287badd70da7f8b66fcacd",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Ashen Razor",
+          "desc": "Basic Attacks and Skill 2 grant EXP when they hit enemy heroes."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Lightning Dash",
+          "desc": "Dashes in the target direction."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Chaos Wave",
+          "desc": "Unleashes sword energy in the target direction, dealing damage to enemies in its path and slowing them."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Light Awakening",
+          "desc": "Awakens and enters Domination Form."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Strong poke damage",
+          "Great scaling after building some CDR",
+          "Great Dueling and Splitpush potential"
+        ],
+        "cons": [
+          "Vulnerable when caught",
+          "Difficult hero to master",
+          "Low Mobility"
+        ],
+        "gameplay_tips": "## Early Game\n\nLi Xin is not the strongest fighter before level 4. Avoid unnecessary fights until you get your form upgrade; then you can start pressuring your lane opponent with Li Xin's long-range harass in Domination Form.\n\n## Teamfights\n\nWith this build, you want to focus on using Domination Form. Position like you are a ranged carry, using your skills and empowered attacks to deal damage. Only dash in when you know you can guarantee a kill.\n\n## Tips and Tricks\n\nFocus on using Domination Form for long-range poke from your skills and empowered attacks\nYou do not need to use all 4 charges of Blade Flurry. 1 is enough to get your empowered attack\nSave Righteous Charge for dodging and creating distance"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Mode komando: 1) Li Xin kuat banget ke satu arah tapi lemah dari arah lain, serangan mendadak bikin dia gagal ngisi tenaga. 2) Pas pakai serangan cepet dia gak kebal control, jadi di situ dia tipis. Paksa dia berhenti ngayun pedang. Mode ngamuk: 1) Kuat banget jarak deket tapi dash-nya gampang kebaca, jaga jarak. 2) Jangan ngejar kejauhan kalau gagal bunuh dalam satu serangan, dia bakal pulih dan ngebalikin keadaan."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/li-xin/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Ashen Razor",
+            "description": "Gains EXP when hitting enemy heroes with Basic Attacks and Chaos Wave.",
+            "type": "passive"
+          },
+          {
+            "name": "Lightning Dash",
+            "description": "Dashes forward.",
+            "type": "active"
+          },
+          {
+            "name": "Chaos Wave",
+            "description": "Unleashes sword energy, damaging and slowing the target.",
+            "type": "active"
+          },
+          {
+            "name": "Light Awakening",
+            "description": "Transforms into Domination Form and gains new skills.",
+            "type": "active"
+          },
+          {
+            "name": "Dark Awakening",
+            "description": "Transforms into Revenge form. This process cannot be interrupted and is faster at higher skill levels.",
+            "type": "ultimate"
+          },
+          {
+            "name": "Void Slice",
+            "description": "Gains Movement Speed and deals an extra instance of damage after each Basic Attack.",
+            "type": "passive"
+          },
+          {
+            "name": "Righteous Fervor",
+            "description": "Charges up, gaining Movement Speed, immunity to slow, and crowd control immunity, as well as recovering Health. Gains Attack Speed after charging up for 1s. Basic Attacks reduce this skill's cooldown.",
+            "type": "active"
+          },
+          {
+            "name": "Brutal Gouge",
+            "description": "Unleashes sword energy, damaging, slowing, and marking enemies. Recovers Health and deals extra damage when attacking marked targets.",
+            "type": "active"
+          },
+          {
+            "name": "Shadow Seal",
+            "description": "After a short delay, launches and damages nearby targets.",
+            "type": "active"
+          },
+          {
+            "name": "Force Mastery",
+            "description": "Transforms into Domination Form and deals damage to nearby enemies. This process cannot be interrupted.",
+            "type": "ultimate"
+          },
+          {
+            "name": "Scorched Strikes",
+            "description": "After using a skill, enhances the next Basic Attack with increased range, a pierce effect, and extra damage. Hitting a target reduces all skill cooldowns.",
+            "type": "passive"
+          },
+          {
+            "name": "Righteous Charge",
+            "description": "Charges up, gaining crowd control immunity and damage reduction, then dashes forward to deal damage.",
+            "type": "active"
+          },
+          {
+            "name": "Blade Flurry",
+            "description": "Continuously launches sword energy to deal damage. Hits recover Health.",
+            "type": "active"
+          },
+          {
+            "name": "Searing Edge",
+            "description": "Charges up, gaining crowd control immunity and damage reduction. After charging, unleashes sword energy, dealing damage.",
+            "type": "active"
+          },
+          {
+            "name": "Force Break",
+            "description": "Transforms into Revenge Form and deals damage to nearby enemies. This process cannot be interrupted.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The map shape favors gank routes, where mobility translates directly into kills",
+          "The enemy team has multiple high-mobility threats that need to be locked down before they reach your backline",
+          "The enemy draft includes Da Qiao and Liang, who appear in counter data as matchups Li Xin can pressure."
+        ],
+        "avoid_when": [
+          "Enemy peel is strong and Li Xin cannot reach the backline without dying first",
+          "Your team lacks the follow-up damage to convert your control windows into kills",
+          "The enemy already drafted Cai Yan, Da Qiao, and Guiguzi, who counter data identifies as direct answers to Li Xin."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Li Xin's mid-game tools come online.",
+          "Mid game: with cooldown reduction online, gap-close skills come back fast enough to chain into multiple fights",
+          "Late game: cooldowns become short enough that Chaos Wave influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Diving while enemy hard control is still up, which directly counters Li Xin's engage.",
+          "Throwing Chaos Wave on the front-line tank instead of saving it for backline carries.",
+          "Ignoring Cai Yan and Da Qiao on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Forcing solo engages instead of waiting for ally commit — Li Xin's value compounds when the team follows up on engages."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 191,
+            "hero_name": "Da Qiao",
+            "evidence": "Da Qiao",
+            "source_hash": "57895a8554f16528558433ab6c9822b3d4cfd4ca665d867681d279bcac96a101"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 156,
+            "hero_name": "Liang",
+            "evidence": "Liang",
+            "source_hash": "00d79e28214172a4e53cfc156e2477fa38abc3be09ab30892d34b90706f3b298"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 184,
+            "hero_name": "Cai Yan",
+            "evidence": "Cai Yan",
+            "source_hash": "1554b3f75dbfc6948500909ceaba48c2d06eae2be41add71b2fda49e60b2898a"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 191,
+            "hero_name": "Da Qiao",
+            "evidence": "Da Qiao",
+            "source_hash": "1b8d44e3adf6a8774748cb269ad39e370add2c9d9d95f642272830ec37fd8b0a"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 189,
+            "hero_name": "Guiguzi",
+            "evidence": "Guiguzi",
+            "source_hash": "17fa8df6ce012f55dd601726721a7f7eb9bb7541945693d07038ea754754e25a"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 175,
+            "hero_name": "Kui",
+            "source_hash": "0d31d84ffc8701bed9038e8dce3e2bbe06b16f3cb1b875581862bb1bdb129573"
+          },
+          {
+            "hero_id": 167,
+            "hero_name": "Wukong",
+            "source_hash": "0d31d84ffc8701bed9038e8dce3e2bbe06b16f3cb1b875581862bb1bdb129573"
+          },
+          {
+            "hero_id": 196,
+            "hero_name": "Shouyue",
+            "source_hash": "0d31d84ffc8701bed9038e8dce3e2bbe06b16f3cb1b875581862bb1bdb129573"
+          },
+          {
+            "hero_id": 114,
+            "hero_name": "Liu Shan",
+            "source_hash": "0d31d84ffc8701bed9038e8dce3e2bbe06b16f3cb1b875581862bb1bdb129573"
+          },
+          {
+            "hero_id": 171,
+            "hero_name": "Zhang Fei",
+            "source_hash": "0d31d84ffc8701bed9038e8dce3e2bbe06b16f3cb1b875581862bb1bdb129573"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

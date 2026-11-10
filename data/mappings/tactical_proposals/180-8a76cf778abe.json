@@ -1,0 +1,709 @@
+{
+  "schema_version": 2,
+  "hero_id": 180,
+  "source_hash": "8a76cf778abe636a9010d923752e9750c647001444515e6c18446bcdc9f63e65",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Scorching Ember",
+          "desc": "Gains Movement Speed and a shield that negates true damage when attacking the enemy."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Fire-tipped Spear - Sweep",
+          "desc": "Attacks nearby enemies, dealing damage. This attack also weakens the recovery capability of heroes and deals true damage over time."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Red Armillary Sash - Bind",
+          "desc": "Flips behind the target to deal damage. skill3 Universe Ring - Skyfall Flies to a target, dealing damage and knocking them back. When he reaches the target area, he gains damage reduction and Resistance."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Universe Ring",
+          "desc": "Unleashes the universe ring, dealing damage to enemy heroes across the entire map and gaining vision. Enhances the range of Universe Ring - Skyfall to cover the entire map for 5s."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Strong duelist with good sustained damage",
+          "Healthy mix of damage and durability",
+          "Can split-push and skirmish across the map"
+        ],
+        "cons": [
+          "Vulnerable before key items come online",
+          "Struggles into heavy ranged poke",
+          "Can be peeled and kited by control"
+        ],
+        "gameplay_tips": "Nezha is a Fighter who plays the Clash Lane. Your aim is to trade in your lane, then bully your way onto the enemy backline. Pick your moment to use Universe Ring, then follow up with Fire-tipped Spear - Sweep and Red Armillary Sash - Bind. Manage the wave, respect ganks, and look to roam once you have a lead."
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Hero tipis jaga jarak. 2) Jangan pakai control utama ke Nezha."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/nezha/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Scorching Ember",
+            "description": "Gains Movement Speed and a shield that negates true damage when attacking the enemy.",
+            "type": "passive"
+          },
+          {
+            "name": "Fire-tipped Spear - Sweep",
+            "description": "Attacks nearby enemies, dealing damage. This attack also weakens the recovery capability of heroes and deals true damage over time.",
+            "type": "skill1"
+          },
+          {
+            "name": "Red Armillary Sash - Bind",
+            "description": "Flips behind the target to deal damage.",
+            "type": "skill2"
+          },
+          {
+            "name": "Universe Ring - Skyfall",
+            "description": "Flies to a target, dealing damage and knocking them back. When he reaches the target area, he gains damage reduction and Resistance.",
+            "type": "skill3"
+          },
+          {
+            "name": "Universe Ring",
+            "description": "Unleashes the universe ring, dealing damage to enemy heroes across the entire map and gaining vision. Enhances the range of Universe Ring - Skyfall to cover the entire map for 5s.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The map shape favors gank routes, where mobility translates directly into kills",
+          "Your team has the structure to use his ability to soak pressure in lane and threaten side objectives, since Nezha delivers a durable front-line presence with steady wave control.",
+          "The enemy draft includes Mai Shiranui, Mozi, and Nuwa, who appear in counter data as matchups Nezha can pressure."
+        ],
+        "avoid_when": [
+          "The team needs sustained team-fight damage rather than a single-target diver",
+          "Your team needs a mid pick more than Nezha's specialty, leaving the role unfilled if you commit here.",
+          "The enemy team is built around answers to Gap-Close, removing the windows Nezha's kit needs to perform."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Nezha's mid-game tools come online.",
+          "Ultimate unlocked: Universe Ring converts mobility into burst, the moment Nezha starts threatening picks across the map",
+          "Late game: full build online, Nezha reaches the spike public guides describe — extended fights favor him once items are completed."
+        ],
+        "common_mistakes": [
+          "Engaging without follow-up — gap-close gets you to the target, but a solo dive without ally damage trades 1-for-1.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Nezha's commit reaches the target alive.",
+          "Forcing solo engages instead of waiting for ally commit — Nezha's value compounds when the team follows up on engages."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 157,
+            "hero_name": "Mai Shiranui",
+            "evidence": "Mai Shiranui",
+            "source_hash": "1108ecc1563413ed66663a92b500e74f669e1ceb1515a41e09879535667cb757"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 108,
+            "hero_name": "Mozi",
+            "evidence": "Mozi",
+            "source_hash": "29affc7dcc9daea1b11c183d077434ce0c6746447ac6bb147645063e78e00918"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 179,
+            "hero_name": "Nuwa",
+            "evidence": "Nuwa",
+            "source_hash": "c357577aed1627156495dfe8d5475aec7d85e845952bff61a2b7071aad57df48"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 120,
+            "hero_name": "Bai Qi",
+            "evidence": "Fire-tipped Spear reduces Bai Qi's healing, which his kit relies on.",
+            "source_hash": "5367d21de0f04ac3085497fa0591dd1303772fd6edc4000d04d90b87a8b41764"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 184,
+            "hero_name": "Cai Yan",
+            "evidence": "Fire-tipped Spear undermines Cai Yan's healing.",
+            "source_hash": "e15444f7eca1f6884d6c988dab15d36c267a43250c1516f198c304cf42c95aa2"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 536,
+            "hero_name": "Charlotte",
+            "evidence": "Fire-tipped Spear cuts the healing from Splash Fount.",
+            "source_hash": "f4ee6cf33d6e01888079d07c376cae932c0515357ddf165270f5877ba247b2fc"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 172,
+            "hero_name": "Chicha",
+            "evidence": "Fire-tipped Spear reduces the healing from Chicha's Basic Attacks.",
+            "source_hash": "8f077d74eb63d34daa84235126ce14f79ba3eb488837257e036c9ccc1046ecc4"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 159,
+            "hero_name": "Dolia",
+            "evidence": "Fire-tipped Spear reduces the recovery from Wavemaker's pool.",
+            "source_hash": "c15282f43f69289099edc65a657c369d202d1c5ef8d7429ef0a81849ad9ce972"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 187,
+            "hero_name": "Donghuang",
+            "evidence": "Fire-tipped Spear cuts the healing Donghuang gains from his dark orbs.",
+            "source_hash": "58485ba2dff37f3e7e4d0eeceff77d71daa0c70d1388877ae7d94bc0a19a016a"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 577,
+            "hero_name": "Dyadia",
+            "evidence": "Fire-tipped Spear reduces Dyadia's healing on her team.",
+            "source_hash": "113c30fe27fbabcd397d42c20be92888d34e980b1a0eb619e00c14f9c04a560a"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 128,
+            "hero_name": "Fatih",
+            "evidence": "Fire-tipped Spear cuts the healing from The King's Return.",
+            "source_hash": "3f0a224c6a3bf8bb24e4dbf790031f97d24cfcc6c1cbb3d52096e088e74d0847"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 115,
+            "hero_name": "Gao",
+            "evidence": "Fire-tipped Spear cuts the healing Gao gains from String Bender.",
+            "source_hash": "4f37410e92c6fe4b7c77b48b1769e4cef00bd90a5f96a6c4920e320a7048fd5a"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 189,
+            "hero_name": "Guiguzi",
+            "evidence": "Universe Ring hits and reveals enemy heroes across the map, which can expose Guiguzi's camouflage.",
+            "source_hash": "7586be40d68898113baa78a36bb9a7aaf9508c5c5035f8025482e50ac5693bf4"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 501,
+            "hero_name": "Ming",
+            "evidence": "Fire-tipped Spear cuts the healing Ming gives his linked teammate.",
+            "source_hash": "33be5604a98c7786beef38ec36201a9467d165bdb1c7f91bdefeb6f23a9e2087"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 510,
+            "hero_name": "Sun Ce",
+            "evidence": "Fire-tipped Spear cuts the healing from Raging Tide.",
+            "source_hash": "8013fca001a598440aa502ce21a7028df162859d032a230f2b52c9b66880e898"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 178,
+            "hero_name": "Yang Jian",
+            "evidence": "Fire-tipped Spear cuts the healing from Sight of Origin.",
+            "source_hash": "382d4e44c4f53c9c4bef5b1135f6c2a9b48c6f301d29e6156bce2d9a03f22837"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 125,
+            "hero_name": "Yango",
+            "evidence": "Fire-tipped Spear cuts the Health Yango recovers when attacking.",
+            "source_hash": "ac50b647e1d715ce392b5b6da9082b68e23e1d34552178ecb9fc72466a5306d6"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 522,
+            "hero_name": "Yao",
+            "evidence": "Fire-tipped Spear cuts the Health Yao recovers from skill hits.",
+            "source_hash": "3db8f8c871b8d7483a21eb85eca023919a844755bbda0a626912872f9eb4ff8d"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 152,
+            "hero_name": "Wang Zhaojun",
+            "evidence": "Frigid Prison freezes Nezha after Red Armillary Sash flips him in.",
+            "source_hash": "83b5279b559f23e1ff6823ad24a882747833e603657e8c5ff7363887ae5d0274"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 175,
+            "hero_name": "Kui",
+            "evidence": "Into the Void stuns Nezha as he flips onto a target.",
+            "source_hash": "fd442abfd247b18f5cdc01bf7731a362ca54cd87573ac4d54255879053bb713e"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 179,
+            "hero_name": "Nuwa",
+            "source_hash": "792dd9bb18ab4cc7fc2ace82665eb50e85f533da3f729d55871f3a57382cbfe7"
+          },
+          {
+            "hero_id": 505,
+            "hero_name": "Yaria",
+            "source_hash": "792dd9bb18ab4cc7fc2ace82665eb50e85f533da3f729d55871f3a57382cbfe7"
+          },
+          {
+            "hero_id": 538,
+            "hero_name": "Ying",
+            "source_hash": "792dd9bb18ab4cc7fc2ace82665eb50e85f533da3f729d55871f3a57382cbfe7"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.92,
+            "tidak": 0.052,
+            "tidak_diketahui": 0.028
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

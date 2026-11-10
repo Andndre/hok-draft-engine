@@ -1,0 +1,606 @@
+{
+  "schema_version": 2,
+  "hero_id": 505,
+  "source_hash": "1daddad77b6d229636423a28d39a0889a224c850e13f3dcabe7b0c27cd435d92",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Deer Spirit",
+          "desc": "When inflicted with crowd control effects (excluding suppression), gains immunity to all effects."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Wandering Beam",
+          "desc": "Releases a spirit in the target direction, which tracks nearby enemies after reaching its max range.The spirit launches and deals damage to enemies hit. In deer spirit form, using this skill will restore her to Human Form."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Accelerating Blitz",
+          "desc": "Deals continuous damage to nearby enemies. Attached: Increases casting range."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Verdant Protector",
+          "desc": "Attaches herself to a teammate, providing a true damage shield and enhancing your skill effects. Attached: When the shield is exhausted, the attachment will end and enter cooldown. Actively detaching reduces the cooldown of this skill."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Pakai slow dan soft CC lain buat ngebatesin Yaria. Pas dia gak bisa berubah jadi rusa, dia gampang dibunuh."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/yaria/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Deer Spirit",
+            "description": "When inflicted with crowd control effects (excluding suppression), gains immunity to all effects.",
+            "type": "passive"
+          },
+          {
+            "name": "Wandering Beam",
+            "description": "Releases a soul in the target direction, which tracks nearby enemies after reaching its max range. The soul launches and deals damage to enemies hit. In deer spirit form, using this skill will restore her to Human Form.",
+            "type": "skill1"
+          },
+          {
+            "name": "Accelerating Blitz",
+            "description": "Deals continuous damage to nearby enemies. Attached: Increased range.",
+            "type": "skill2"
+          },
+          {
+            "name": "Verdant Protector",
+            "description": "Attaches herself to a teammate, providing a true damage shield and enhancing her own skill effects. Attached: When the shield is exhausted, the attachment ends and the skill goes on cooldown. Actively detaching reduces the cooldown.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team has a hyper-carry who needs her backline protection to reach scaling",
+          "Your team has the structure to use her ability to protect the marksman, set vision, and engage on cooldown windows, since Yaria delivers utility, vision, and timely peel for the carries.",
+          "The enemy draft includes Dian Wei, Dun, and Mayene, who appear in counter data as matchups Yaria can pressure."
+        ],
+        "avoid_when": [
+          "Your team needs proactive engage rather than a reactive shield-and-peel kit",
+          "Your team needs a damage pick more than Yaria's specialty, leaving the role unfilled if you commit here.",
+          "The enemy team is built around answers to Team Buffs, removing the windows Yaria's kit needs to perform."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Yaria's mid-game tools come online.",
+          "Defensive item online: shield strength scales with magic power or HP, so Yaria's value grows after the first item spike",
+          "Late game: cooldowns become short enough that Accelerating Blitz influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Pre-shielding before the engage actually starts, wasting the absorb window before damage lands.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Yaria's commit reaches the target alive.",
+          "Forgetting vision while looking for picks — losing the marksman because the support roamed without setting wards is a recurring mistake."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 129,
+            "hero_name": "Dian Wei",
+            "evidence": "Dian Wei",
+            "source_hash": "c10da21673681d2a834ecd3624865d17f0f0acad1a8a11060068ada5784a07f4"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 126,
+            "hero_name": "Dun",
+            "evidence": "Dun",
+            "source_hash": "b9d1787fcf7f077d8aceb0de7c007214dd233369e1e81ffe022eae6065d951f5"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 564,
+            "hero_name": "Mayene",
+            "evidence": "Mayene",
+            "source_hash": "a51b5fa7e0a4d3389087d9a6b1550787c89629740dfaac167bc4c8b56b96473a"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 187,
+            "hero_name": "Donghuang",
+            "evidence": "Suppression is the one crowd control Deer Spirit cannot ignore.",
+            "source_hash": "fb76e4c54c992406080947f8f33d3d4a132e25194d8ba0ac7476005fb0dd6839"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 116,
+            "hero_name": "Arke",
+            "evidence": "Arke's stealth lets her backstab Yaria before she attaches to a teammate.",
+            "source_hash": "29a8d9ed7007777d629ef352749617de947ede368f04c076d10f348bf174a4b9"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 127,
+            "hero_name": "Lady Zhen",
+            "source_hash": "a408e840441bc6431c59825434f01735669ef72ffb02aa9f6f4fe220b89afdf7"
+          },
+          {
+            "hero_id": 132,
+            "hero_name": "Marco Polo",
+            "source_hash": "a408e840441bc6431c59825434f01735669ef72ffb02aa9f6f4fe220b89afdf7"
+          },
+          {
+            "hero_id": 146,
+            "hero_name": "Luna",
+            "source_hash": "a408e840441bc6431c59825434f01735669ef72ffb02aa9f6f4fe220b89afdf7"
+          },
+          {
+            "hero_id": 528,
+            "hero_name": "Lam",
+            "source_hash": "a408e840441bc6431c59825434f01735669ef72ffb02aa9f6f4fe220b89afdf7"
+          },
+          {
+            "hero_id": 141,
+            "hero_name": "Diaochan",
+            "source_hash": "a408e840441bc6431c59825434f01735669ef72ffb02aa9f6f4fe220b89afdf7"
+          },
+          {
+            "hero_id": 152,
+            "hero_name": "Wang Zhaojun",
+            "source_hash": "a408e840441bc6431c59825434f01735669ef72ffb02aa9f6f4fe220b89afdf7"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.91,
+            "tidak": 0.0585,
+            "tidak_diketahui": 0.0315
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.88,
+            "tidak": 0.078,
+            "tidak_diketahui": 0.042
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.07,
+            "tidak": 0.8,
+            "tidak_diketahui": 0.13
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

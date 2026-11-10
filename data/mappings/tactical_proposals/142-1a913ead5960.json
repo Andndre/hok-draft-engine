@@ -1,0 +1,615 @@
+{
+  "schema_version": 2,
+  "hero_id": 142,
+  "source_hash": "1a913ead596096d92b3d278e773bc76375bc28ad21464a6c17974a8202144274",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Flame Incantation",
+          "desc": "Every time she damages an enemy with a skill, she increases her Movement Speed, and the enemy will take more damage from her subsequent skills."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Scorching Barrage",
+          "desc": "Unleashes fireballs at the target area that deals multi-phase damage toenemy heroes."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Chaos Cinder",
+          "desc": "Hurls a fireball at the target location that turns into a firestorm when it hitsan enemy or reaches its max range, slowing and dealing damage to nearbyenemies.Any enemy that is hit directly by the fireball is stunned."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Blazing Brilliance",
+          "desc": "Channels a blazing beam in the target direction, dealing damage over timeGains a shield and immunity while the shield is active."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "High burst damage combo",
+          "Reliable crowd control",
+          "Strong wave clear"
+        ],
+        "cons": [
+          "Very immobile",
+          "Skill-shot dependent",
+          "Vulnerable to dives"
+        ],
+        "gameplay_tips": "## Early Game\nAngela has one of the fastest level 1 wave clears in the game. Be sure to hit Skill 1 on the entire minion wave twice; then you can look to roam with Skill 2 to take jungle camps and catch enemies off guard.\n\n## Teamfight\nIn teamfights, be patient with your combo. Look for high-value targets that you can hit with your skills, but be sure to stand behind your frontline so you don't get caught. Always try to fight around vision and use bushes to surprise enemies with your combo.\n\n## Tips & Tricks\nOne-shot combo Skill 2 > Skill 1 > Ultimate\nHide in bushes and use Angela combo before enemies see you\nAlways manually aim Angela's skills for a better hit rate\nWhen you are about to get hit by crowd control, use your Ultimate for immunity."
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Deketin Angela pakai jalur zig-zag (S) dan jangan kabur lurus. Semua skill-nya butuh prediksi arah, jadi gerak muter-muter sering bisa ngindarin. Hero melee terus pindah posisi pas nempel."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/angela/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Flame Incantation",
+            "description": "Hitting enemies with skills increases Movement Speed and damage.",
+            "type": "passive"
+          },
+          {
+            "name": "Scorching Barrage",
+            "description": "Unleashes multiple fireballs, dealing multi-phase damage.",
+            "type": "skill1"
+          },
+          {
+            "name": "Chaos Cinder",
+            "description": "Fires a large fireball in the target direction, dealing damage and inflicting stun and slow.",
+            "type": "skill2"
+          },
+          {
+            "name": "Blazing Brilliance",
+            "description": "Channels a blazing beam in the target direction, dealing damage over time. Also gains a shield and crowd control immunity.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team lacks reliable burst on isolated picks and needs single-target finishing damage",
+          "The enemy team has burst threats that need to be absorbed by reliable shields",
+          "The enemy draft includes Luban No.7 and Hou Yi, who appear in counter data as matchups Angela can pressure."
+        ],
+        "avoid_when": [
+          "The enemy already invested in magic resist and shields that absorb committed burst windows",
+          "The enemy plays sustained damage rather than burst, which shields cannot absorb in single windows",
+          "The enemy already drafted Han Xin and Gao Changgong, who counter data identifies as direct answers to Angela."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Angela's mid-game tools come online.",
+          "Ultimate unlocked: Blazing Brilliance is the threshold where Angela starts deleting low-resist targets in one rotation",
+          "Late game: cooldowns become short enough that Chaos Cinder influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Opening fights when the enemy still has full crowd control, getting deleted before damage lands.",
+          "Pre-shielding before the engage actually starts, wasting the absorb window before damage lands.",
+          "Ignoring Han Xin and Gao Changgong on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Greeding farm in mid lane while side lanes get camped — rotation timing matters more than CS lead in most matchups."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 517,
+            "hero_name": "Augran",
+            "evidence": "Augran",
+            "source_hash": "da4dceb4e6c3feed6737f47b326ad56c972e1049e64699fc18dc9c661f691030"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 141,
+            "hero_name": "Diaochan",
+            "evidence": "Diaochan",
+            "source_hash": "0f74ee031cba496046a09f043b9fecb70808dd3f812ee49b0851193c6eed7f4f"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 531,
+            "hero_name": "Jing",
+            "evidence": "Jing",
+            "source_hash": "07fb03a3c97d6a1e4915fe017dbe4ca4f42f0ff3befbaffc4a0f9d03e9192430"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 522,
+            "hero_name": "Yao",
+            "evidence": "Yao",
+            "source_hash": "d6eef0b811ee455df7fc1f6837b1a02f9eb097c6c3d8a71ba905e12a3a54f6f3"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 166,
+            "hero_name": "Arthur",
+            "evidence": "Arthur's silence stops Angela's skills, and his passive healing outlasts her poke.",
+            "source_hash": "e97c3fc7e7b6716671958d92ab8d21a62bf22d676f6b2e21710c2788f7b7066e"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 175,
+            "hero_name": "Kui",
+            "source_hash": "c4684d09fd4ad11167d3a62cded18b53234c3545f8737a8645ee32fd2b2e5ecb"
+          },
+          {
+            "hero_id": 121,
+            "hero_name": "Mi Yue",
+            "source_hash": "c4684d09fd4ad11167d3a62cded18b53234c3545f8737a8645ee32fd2b2e5ecb"
+          },
+          {
+            "hero_id": 174,
+            "hero_name": "Consort Yu",
+            "source_hash": "c4684d09fd4ad11167d3a62cded18b53234c3545f8737a8645ee32fd2b2e5ecb"
+          },
+          {
+            "hero_id": 112,
+            "hero_name": "Luban No.7",
+            "source_hash": "c4684d09fd4ad11167d3a62cded18b53234c3545f8737a8645ee32fd2b2e5ecb"
+          },
+          {
+            "hero_id": 167,
+            "hero_name": "Wukong",
+            "source_hash": "c4684d09fd4ad11167d3a62cded18b53234c3545f8737a8645ee32fd2b2e5ecb"
+          },
+          {
+            "hero_id": 153,
+            "hero_name": "Gao Changgong",
+            "source_hash": "c4684d09fd4ad11167d3a62cded18b53234c3545f8737a8645ee32fd2b2e5ecb"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.92,
+            "tidak": 0.052,
+            "tidak_diketahui": 0.028
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

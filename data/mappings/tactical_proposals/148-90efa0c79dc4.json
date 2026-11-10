@@ -1,0 +1,598 @@
+{
+  "schema_version": 2,
+  "hero_id": 148,
+  "source_hash": "90efa0c79dc4e13e713a1077cd02520c8341f622368d3560f3c79c49d85c7f45",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Sanctification (Ziya)",
+          "desc": "When Ziya deals damage to a target and they are defeated within 4s, he gains EXP. When reaching level, he gains Sanctify, and increases his level cap to 25. Sanctify allows him to increase a teammate's level cap, and potentially earn EXP."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Divine Seal",
+          "desc": "Seals enemies within range, dealing magical damage while reducing their Movement Speed, Physical and Magical Defense for 3.5s. If the skill hits an enemy, he gains a Movement Speed boost."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Divine Punishment",
+          "desc": "Conjures a magic circle that deals 3 strikes of damage to nearby enemies. After a short delay, the magic circle explodes, dealing extra magical damage and launching enemies for 0.8s."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Universal Law",
+          "desc": "Unleashes 3 shockwaves to deal magical damage. Reaching level 15 increases the Ultimate's charging speed by 10% and grants a chance to allow him to move after initiating the charge."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Pas pulang dengan HP rendah waspadain ult jarak jauh Ziya. 2) Ziya gak punya dash dan tipis, cari momen masuk. 3) Jangan berdiri rapet pas teamfight. 4) Begitu kelihatan lintasan ult-nya, langsung ngindar."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/ziya/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Sanctification",
+            "description": "After hitting a target, gains EXP if it is defeated within 4s. Upon reaching level , gains Sanctify and increases his level cap to . Sanctify: Increases a teammate's level cap, with a chance to earn EXP. When playing as support, grants additional Sanctification effects.",
+            "type": "passive"
+          },
+          {
+            "name": "Divine Seal",
+            "description": "Seals enemies within range, dealing magical damage while reducing their Movement Speed, Physical and Magical Defense for 3.5s. If the skill hits any enemy, he gains a Movement Speed boost.",
+            "type": "skill1"
+          },
+          {
+            "name": "Divine Punishment",
+            "description": "Conjures a magic circle that deals 3 strikes of damage to enemies in the target area. After a short delay, the magic circle explodes, dealing extra magical damage and launching enemies for 0.8s.",
+            "type": "skill2"
+          },
+          {
+            "name": "Universal Law",
+            "description": "Unleashes 3 shockwaves that deal magical damage. At level 15, the Ultimate's charging speed increases by 10%, and Ziya can move while charging.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team plays dive comp, giving you space to poke before they engage",
+          "Your team has the structure to use his ability to farm safely and rotate to side lanes when the wave allows, since Ziya delivers consistent damage output and timely roams.",
+          "The enemy draft includes Diaochan, Ying, and Zilong, who appear in counter data as matchups Ziya can pressure."
+        ],
+        "avoid_when": [
+          "The enemy has hard engage that closes distance through poke patterns",
+          "Your team needs a jungle pick more than Ziya's specialty, leaving the role unfilled if you commit here.",
+          "The enemy already drafted Biron, Charlotte, and Yao, who counter data identifies as direct answers to Ziya."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Ziya's mid-game tools come online.",
+          "Mana sustain online: poke patterns become repeatable once cooldown reduction and mana regen items come online",
+          "Late game: full build online, Ziya reaches the spike public guides describe — extended fights favor him once items are completed."
+        ],
+        "common_mistakes": [
+          "Spending mana on poke that does not threaten kills, leaving you empty for the actual fight.",
+          "Ignoring Biron and Charlotte on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Greeding farm in mid lane while side lanes get camped — rotation timing matters more than CS lead in most matchups."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 141,
+            "hero_name": "Diaochan",
+            "evidence": "Diaochan",
+            "source_hash": "792f67d21cb910d4f901c774ec61417d55cb673aeac412b88cfa9001a244519c"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 538,
+            "hero_name": "Ying",
+            "evidence": "Ying",
+            "source_hash": "6ae4df4ecb021089a2435cd7a0c1917a35f13fe79e8cf9a459d0bacc6242e833"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 107,
+            "hero_name": "Zilong",
+            "evidence": "Zilong",
+            "source_hash": "df84d89e5024888c5aba6608ad17791f0fa58ea91dc4c54d9a4adfe17ba19159"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 503,
+            "hero_name": "Biron",
+            "evidence": "Biron",
+            "source_hash": "843c493e37415cf5e96f3381fa1e2cc262cac8352185af94f2a90feed918a383"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 536,
+            "hero_name": "Charlotte",
+            "evidence": "Charlotte",
+            "source_hash": "67aea52aa147c4e79b829c125f8329f6f15706131274141929cdda776d852780"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 522,
+            "hero_name": "Yao",
+            "evidence": "Yao",
+            "source_hash": "776df53f501107a63986ec626e892f101436032a943c3f7c00ac415ceaa79aed"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 174,
+            "hero_name": "Consort Yu",
+            "source_hash": "fa14566592fc62d1cb2dd9485a71657ca1cdead50dff431c0e1b3b1e80856a22"
+          },
+          {
+            "hero_id": 129,
+            "hero_name": "Dian Wei",
+            "source_hash": "fa14566592fc62d1cb2dd9485a71657ca1cdead50dff431c0e1b3b1e80856a22"
+          },
+          {
+            "hero_id": 126,
+            "hero_name": "Dun",
+            "source_hash": "fa14566592fc62d1cb2dd9485a71657ca1cdead50dff431c0e1b3b1e80856a22"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.07,
+            "tidak": 0.8,
+            "tidak_diketahui": 0.13
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.84,
+            "tidak": 0.104,
+            "tidak_diketahui": 0.056
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

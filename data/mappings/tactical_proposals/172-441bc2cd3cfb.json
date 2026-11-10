@@ -1,0 +1,612 @@
+{
+  "schema_version": 2,
+  "hero_id": 172,
+  "source_hash": "441bc2cd3cfbfd2956d392fa841df7443c01c2e5dc57382bb866ac01aa29a21c",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Forge Inheritor",
+          "desc": "Basic Attacks restore Health and switch her weapons and combat forms. When hitting enemies with Basic Attacks or skills, she gains Attack Speed."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Peak-Crushing Polearm",
+          "desc": "Dashes in the target direction, dealing damage to enemies in her path and launching them."
+        },
+        {
+          "type": "Skill 2",
+          "name": "World-Splitting Spear",
+          "desc": "Thrusts forward in the target direction, dealing damage, knocking enemies back, and recovering Health."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Return of the Armsmaster",
+          "desc": "Enhances herself, gaining Movement Speed and Attack Speed, and breaking the Fighting Spirit stack limit. Her Basic Attacks will also deal extra damage, and she will be able to use them while moving."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Strong duelist",
+          "Very versatile",
+          "Insane late-game damage"
+        ],
+        "cons": [
+          "Needs to ramp up passive",
+          "Relies on ultimate for damage",
+          "Melee form is weak"
+        ],
+        "gameplay_tips": "## Early Game\nFor most of the Early Game, Chicha will be in melee form, which is her weakest state. You can use minions or jungle monsters to get 4 stacks of your passive, so once you go to the lane, you only need to auto-attack once, then use Skill 2 World-Splitting Spear to deal huge poke damage. Most of the Early Game will be you sitting underneath the tower last hitting minions, and waiting for your Overkill Form before looking to trade.\n\n## Teamfights\nBefore entering a teamfight, make sure to attack jungle monsters or minions to get 4 stacks. This is essential to Chicha's playstyle since her Overkill Form is what will win teamfights. Be patient with your Ultimate Return of the Armsmaster; wait for the right moment and target before using it for huge damage. You can use Skill 1 and Skill 2 during your Ultimate to help gap close and finish off enemies.\n\n## Tips & Tricks\nAttack monsters or minions 4 times before joining a fight so you can enter Overkill Form straight away for maximum damage\nUse Skill 1 and Skill 2 before entering Overkill Form since the cooldown gets reduced\nAlways use Skill 2 as soon as you enter Overkill since it has a long cooldown\nMake sure to use the attack button when using your Ultimate to deal damage"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": ""
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/chicha/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Forge Inheritor",
+            "description": "Basic Attacks restore Health and switch her weapons and combat forms. When hitting enemies with Basic Attacks or skills, she gains Attack Speed.",
+            "type": "passive"
+          },
+          {
+            "name": "Peak-Crushing Polearm",
+            "description": "Dashes in the target direction, dealing damage to enemies in her path and launching them.",
+            "type": "skill1"
+          },
+          {
+            "name": "Hell-Binding Dagger-Axe",
+            "description": "Dashes in the target direction, dealing damage to enemies in her path and launching them.",
+            "type": "skill1"
+          },
+          {
+            "name": "Sky-Shattering Bow",
+            "description": "Launches a flying kick in the target direction and fires a piercing arrow, dealing damage and knocking back enemies. If enemies hit a wall, they are restricted to a fixed area.",
+            "type": "skill1"
+          },
+          {
+            "name": "World-Splitting Spear",
+            "description": "Thrusts forward in the target direction, dealing damage, knocking enemies back, and recovering Health.",
+            "type": "skill2"
+          },
+          {
+            "name": "Realm-Sweeping Halberd",
+            "description": "Sweeps in the target direction, dealing damage, knocking enemies back, and recovering Health.",
+            "type": "skill2"
+          },
+          {
+            "name": "Star-Felling Arrow",
+            "description": "Shoots deadly arrows, dealing grievous damage, knocking enemies back, and recovering Health.",
+            "type": "skill2"
+          },
+          {
+            "name": "Return of the Armsmaster",
+            "description": "Enhances herself, gaining Movement Speed and Attack Speed, and breaking the Fighting Spirit stack limit. Her Basic Attacks will also deal extra damage, and she will be able to use them while moving.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team relies on long-cooldown engage skills that leave them vulnerable post-fight",
+          "Your team has the structure to use her ability to soak pressure in lane and threaten side objectives, since Chicha delivers a durable front-line presence with steady wave control.",
+          "The enemy composition leaves room for Chicha to reach the targets her kit punishes."
+        ],
+        "avoid_when": [
+          "The enemy team disengages well, so cleanup windows never open",
+          "Your team needs a mid pick more than Chicha's specialty, leaving the role unfilled if you commit here.",
+          "The enemy team is built around answers to Maximum Attack Speed, removing the windows Chicha's kit needs to perform."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Chicha's mid-game tools come online.",
+          "Ultimate online: Return of the Armsmaster provides the cleanup finisher once the enemy commits cooldowns",
+          "Late game: cooldowns become short enough that World-Splitting Spear influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Engaging first instead of second — cleanup picks lose their value as primary engagers.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Chicha's commit reaches the target alive.",
+          "Forcing solo engages instead of waiting for ally commit — Chicha's value compounds when the team follows up on engages."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 124,
+            "hero_name": "Zhou Yu",
+            "evidence": "Peak-Crushing Polearm reaches Zhou Yu, who relies on zones rather than mobility.",
+            "source_hash": "eed25e1b09ada851c8227150501cc65bff24c5dd923dd6a6eeec3fafbecae00e"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 106,
+            "hero_name": "Xiao Qiao",
+            "evidence": "Chicha dashes through and launches Xiao Qiao, who has no escape.",
+            "source_hash": "6545acf5fecabddd1e6e7803b30d9d1a8361a16e278f71a4cc563ad792446f34"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 180,
+            "hero_name": "Nezha",
+            "evidence": "Fire-tipped Spear reduces the healing from Chicha's Basic Attacks.",
+            "source_hash": "aaac7680766195c64d1bc5b599de65e01fe0cb949d1583d6cc06e278aaa3b7e2"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 187,
+            "hero_name": "Donghuang",
+            "evidence": "Forsaken Contract suppresses Chicha and stops her dash-in.",
+            "source_hash": "6db7ab3ef4056c5effa7999294585b55b2081e6ffaabec5b43d539e383bd579a"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 523,
+            "hero_name": "Shi",
+            "source_hash": "7756dc5b3a21b419a02a4fbce470eeba53faa6c2a24ebae54445d9a666a91085"
+          },
+          {
+            "hero_id": 171,
+            "hero_name": "Zhang Fei",
+            "source_hash": "7756dc5b3a21b419a02a4fbce470eeba53faa6c2a24ebae54445d9a666a91085"
+          },
+          {
+            "hero_id": 179,
+            "hero_name": "Nuwa",
+            "source_hash": "7756dc5b3a21b419a02a4fbce470eeba53faa6c2a24ebae54445d9a666a91085"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

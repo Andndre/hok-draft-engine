@@ -1,0 +1,598 @@
+{
+  "schema_version": 2,
+  "hero_id": 581,
+  "source_hash": "0c0edc0b2d0fc4b3c1dc2cb3a3ef8d716afe443456f0274ef64b69a362ab5f11",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Flow of the World",
+          "desc": "Can change Flow states at the Base to enhance stats. Vitality: Increases max Health and Physical and Magical Defense. Piercing Heart: Increases max Health and Physical Attack. Haste: Increases max Health and Movement Speed. Focus: Increases max Health and Cooldown Reduction. Spend 1 stack of Flow to perform an enhanced Basic Attack and deal damage and gain recovery."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Convergence",
+          "desc": "Channels the Flow, reducing the cooldown of other skills by 50%. Also gains 5-9 stacks of Flow based on the number of nearby heroes and minions and recovers Health based on Flow stacks. Damages and knocks back nearby enemies (without applying crowd control)."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Power From Within",
+          "desc": "Charges at the target and slashes, dealing damage, launching enemies, and gaining a shield. Using the skill continuously over a short time converts it to Clearing Slash and Rifting Slash. If the skill is not on cooldown, spend 4 stacks of Flow to stop it from entering cooldown after use."
+        },
+        {
+          "type": "Ultimate",
+          "name": "All In",
+          "desc": "Leaps to the target location and attacks, dealing damage and launching enemies. If the skill is not on cooldown, spend 5 stacks of Flow to stop it from entering cooldown after this use."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Absorbs a lot of damage for the team",
+          "Brings reliable crowd control to open fights",
+          "Very hard to bring down once built"
+        ],
+        "cons": [
+          "Deals limited personal damage",
+          "Needs the team to follow up on engages",
+          "Can be kited by mobile enemies"
+        ],
+        "gameplay_tips": "Flowborn (Tank) is a Tank who plays the Clash Lane. Your aim is to soak damage, start fights and peel for your carries. Pick your moment to use All In, then follow up with Convergence and Power From Within. Manage the wave, respect ganks, and look to roam once you have a lead."
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": ""
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/flowborn-tank/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Flow of the World",
+            "description": "Can change Flow states at the Base to enhance stats. Vitality: Increases max Health and Physical and Magical Defense. Piercing Heart: Increases max Health and Physical Attack. Haste: Increases max Health and Movement Speed. Focus: Increases max Health and Cooldown Reduction. Spend 1 stack of Flow to perform an enhanced Basic Attack and deal damage and gain recovery.",
+            "type": "passive"
+          },
+          {
+            "name": "Convergence",
+            "description": "Channels the Flow, reducing the cooldown of other skills by 50%. Also gains 5–9 stacks of Flow based on the number of nearby heroes and minions and recovers Health based on Flow stacks. Damages and knocks back nearby enemies (without applying crowd control).",
+            "type": "skill1"
+          },
+          {
+            "name": "Power From Within",
+            "description": "Charges at the target and slashes, dealing damage, launching enemies, and gaining a shield. Using the skill continuously over a short time converts it to Clearing Slash and Rifting Slash. If the skill is not on cooldown, spend 4 stacks of Flow to stop it from entering cooldown after use.",
+            "type": "skill2"
+          },
+          {
+            "name": "All In",
+            "description": "Leaps to the target location and attacks, dealing damage and launching enemies. If the skill is not on cooldown, spend 5 stacks of Flow to stop it from entering cooldown after this use.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has multiple high-mobility threats that need to be locked down before they reach your backline",
+          "Your team needs a primary front-line who can engage on cooldown windows",
+          "The enemy team relies on grouped fights or channeled abilities, exactly what Power From Within interrupts best."
+        ],
+        "avoid_when": [
+          "Your team lacks the follow-up damage to convert your control windows into kills",
+          "The enemy stacks anti-tank items like armor penetration and percent-HP damage, melting front-liners quickly",
+          "The enemy team is built around answers to Crowd Control, removing the windows Flowborn (Tank)'s kit needs to perform."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Flowborn (Tank)'s mid-game tools come online.",
+          "Ultimate online: All In extends control duration, making team fights snowball off a single hit",
+          "Late game: Bloodweeper, Overlord's Platemail, and Glacial Buckler on the bar means Flowborn (Tank) can soak commits in 5v5 team fights for their carries."
+        ],
+        "common_mistakes": [
+          "Throwing Power From Within on the front-line tank instead of saving it for backline carries.",
+          "Building damage items hoping to deal kills, when the team needs the durability that makes you a tank in the first place.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Flowborn (Tank)'s commit reaches the target alive.",
+          "Forcing solo engages instead of waiting for ally commit — Flowborn (Tank)'s value compounds when the team follows up on engages."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 106,
+            "hero_name": "Xiao Qiao",
+            "evidence": "Power From Within and All In launch immobile mages like Xiao Qiao.",
+            "source_hash": "77957c5e87ef3eae761041c4bf9668b70f6fdc8bda136021418232a4a1642333"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 169,
+            "hero_name": "Hou Yi",
+            "evidence": "All In leaps onto Hou Yi and launches him.",
+            "source_hash": "5761d3af9c5d8f7976ed60313342e121a53e2b6bfc0aefcfed2fdff917e575d0"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 121,
+            "hero_name": "Mi Yue",
+            "evidence": "Ravenous Tether keeps draining and healing Mi Yue through a long fight with the slow tank form.",
+            "source_hash": "fcbd3679a5c0c22bd83b992519204d827784011892c3f63b8499c2fbe407a0ba"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 519,
+            "hero_name": "Ao'yin",
+            "evidence": "Flaming Palm's true damage cuts through the tank form's bonus defenses.",
+            "source_hash": "6f717f01e2069b8e539dc768fff45c101aaf919d88622e4663fd765b503ee671"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 179,
+            "hero_name": "Nuwa",
+            "source_hash": "286602d4e91a5d512dcc02c519f3f2215ad91424a4018d06358c7f148a133886"
+          },
+          {
+            "hero_id": 635,
+            "hero_name": "Lorion",
+            "source_hash": "286602d4e91a5d512dcc02c519f3f2215ad91424a4018d06358c7f148a133886"
+          },
+          {
+            "hero_id": 177,
+            "hero_name": "Chano",
+            "source_hash": "286602d4e91a5d512dcc02c519f3f2215ad91424a4018d06358c7f148a133886"
+          },
+          {
+            "hero_id": 155,
+            "hero_name": "Erin",
+            "source_hash": "286602d4e91a5d512dcc02c519f3f2215ad91424a4018d06358c7f148a133886"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.85,
+            "tidak": 0.0975,
+            "tidak_diketahui": 0.0525
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

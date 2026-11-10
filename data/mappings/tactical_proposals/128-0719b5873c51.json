@@ -1,0 +1,590 @@
+{
+  "schema_version": 2,
+  "hero_id": 128,
+  "source_hash": "0719b5873c51f795c76fcb288168bba1e360dbb1839032753706b2b75f7fa8cd",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Only the Strong (Fatih)",
+          "desc": "Enhance Recovery Whenever he uses a skill, gains an enhanced Basic Attack that unleashes sword energy. Enhanced Basic Attacks have higher Attack Speed and restore Health. While using Sacred Tree Blessing, enhanced Basic Attacks unleash 1 additional blast of sword energy."
+        },
+        {
+          "type": "Skill 1",
+          "name": "The King's Blade",
+          "desc": "Damage Movement Crowd Control Dashes forward to deal damage. The 3rd skill use also launches the enemy."
+        },
+        {
+          "type": "Skill 2",
+          "name": "The King's Return",
+          "desc": "Damage Slow Unleashes sword energy, dealing damage to enemies and slowing them. Recovers Health if he hits a hero. While using Sacred Tree Blessing, he unleashes 1 additional blast of sword energy."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Sacred Tree Blessing",
+          "desc": "Enhance Purify Recovery Removes all crowd control effects on himself, dealing physical damage to nearby enemies and gaining max Health. Boosts the effects of Skill 2 and enhanced Basic Attacks while this skill is active. Tap again to end the skill."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Hindarin tiga dash skill 1 Fatih, tahap ketiga kasih knock-up. 2) Abis ult aktif, lifesteal dan tenacity-nya kuat banget. Jangan adu langsung atau nyoba nge-control dia."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/fatih/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Only the Strong",
+            "description": "Whenever he uses a skill, gains an enhanced Basic Attack that unleashes sword energy. Enhanced Basic Attacks have higher Attack Speed and restore Health. While using Sacred Tree Blessing, enhanced Basic Attacks unleash 1 additional blast of sword energy.",
+            "type": "passive"
+          },
+          {
+            "name": "The King's Blade",
+            "description": "Dashes forward to deal damage. The 3rd skill use also launches the enemy.",
+            "type": "skill1"
+          },
+          {
+            "name": "The King's Return",
+            "description": "Unleashes sword energy, dealing damage to enemies and slowing them. Recovers Health if he hits a hero. While using Sacred Tree Blessing, he unleashes 1 additional blast of sword energy.",
+            "type": "skill2"
+          },
+          {
+            "name": "Sacred Tree Blessing",
+            "description": "Cleanses himself of all crowd control effects, deals physical damage to nearby enemies, and gains max Health. While this skill is active, Skill 2 and enhanced Basic Attacks unleash sword energy. He also continuously gains enhanced Basic Attacks. Tap again to end the skill.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your draft needs a Fighter who can play Clash Lane or Jungle and stay relevant through sustained trades.",
+          "The enemy team has to fight you in melee range, giving Fatih time to cycle skills into enhanced basic attacks.",
+          "Your team can use Fatih as a side-lane pressure point while he scales into item-dependent duels."
+        ],
+        "avoid_when": [
+          "The enemy composition can kite from range and deny Fatih repeated basic attacks after each skill cast.",
+          "You need immediate long-range initiation rather than a melee sustain fighter who ramps through repeated trades.",
+          "The enemy team can stack anti-heal or burst him before Sacred Tree Blessing and lifesteal can turn the fight."
+        ],
+        "power_spikes": [
+          "Early lane or jungle: public guide data recommends prioritizing Skill 1 to improve early combat ability.",
+          "Ultimate available: Sacred Tree Blessing lets Fatih remove crowd control, gain max health, and improve Skill 2 plus enhanced basic attacks.",
+          "Core damage items online: Axe of Torment, Eternity Blade, Master Sword, Shadow Ripper, and Bloodweeper push him toward stronger extended fights."
+        ],
+        "common_mistakes": [
+          "Using skills without weaving enhanced basic attacks, which wastes Fatih's main recovery and damage pattern.",
+          "Casting Sacred Tree Blessing before enemy control is committed instead of using it as a turn tool.",
+          "Building only damage when the matchup requires Eye of the Phoenix or Spikemail-style durability.",
+          "Forcing short burst trades when Fatih's value is strongest in prolonged melee fights."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 175,
+            "hero_name": "Kui",
+            "evidence": "Sacred Tree Blessing cleanses Kui's slow and stun.",
+            "source_hash": "98fd948351c8e79702b67178e9a594146830858b4d8958c656248e97d25b0b04"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 189,
+            "hero_name": "Guiguzi",
+            "evidence": "Sacred Tree Blessing cleanses the stun from Guiguzi's spriteflies.",
+            "source_hash": "d728ef04c29e066c902636d68f0536dc815cb26bccd97970ac9389c2a0238e7b"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 187,
+            "hero_name": "Donghuang",
+            "evidence": "Forsaken Contract can suppress Fatih before he uses Sacred Tree Blessing.",
+            "source_hash": "af24efd8ee5082dda42a3bcbdedbb7c49eb0e4ffc8247c6a40707ce0bc993ae2"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 180,
+            "hero_name": "Nezha",
+            "evidence": "Fire-tipped Spear cuts the healing from The King's Return.",
+            "source_hash": "f61de758cc95569d5705acdb5306616f6ec6e056ac40b9204fe3b24ce907e7ce"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 133,
+            "hero_name": "Di Renjie",
+            "source_hash": "fa420af770e149bf26942d66f934038627235a4b212a8901efc4a688d52d6e04"
+          },
+          {
+            "hero_id": 118,
+            "hero_name": "Sun Bin",
+            "source_hash": "fa420af770e149bf26942d66f934038627235a4b212a8901efc4a688d52d6e04"
+          },
+          {
+            "hero_id": 159,
+            "hero_name": "Dolia",
+            "source_hash": "fa420af770e149bf26942d66f934038627235a4b212a8901efc4a688d52d6e04"
+          },
+          {
+            "hero_id": 132,
+            "hero_name": "Marco Polo",
+            "source_hash": "fa420af770e149bf26942d66f934038627235a4b212a8901efc4a688d52d6e04"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.85,
+            "tidak": 0.0975,
+            "tidak_diketahui": 0.0525
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

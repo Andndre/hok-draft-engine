@@ -1,0 +1,650 @@
+{
+  "schema_version": 2,
+  "hero_id": 105,
+  "source_hash": "4285759a8db52a55542568cecd7a66530aae1b42ce26b6a725df12ff1aa89620",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Warrior's Soul",
+          "desc": "Gains immunity while using skills. Gains Battle Spirit upon entering combat, using Basic Attacks or skills. Battle Spirit increases damage reduction. Attack Speed increases at max Battle Spirit. When out of combat, Battle Spirit will diminish while restoring Health."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Burst Ram",
+          "desc": "Charges in the target direction, dealing damage and launching enemies in the path. Passive: Every 2 Basic Attacks, enhances the next Basic Attack to deal extra damage."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Magma Slam",
+          "desc": "Gains a shield.Slows nearby enemies a certain range.After a brief delay, deals damage to enemies in range."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Tremor Smash",
+          "desc": "Leaps to the target location and hammers the ground 3 times. The first 2blows deal damage and slow enemies, while the 3rd blow deals damage and launches enemies."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Very tanky",
+          "Excellent AOE crowd control",
+          "Strong engage"
+        ],
+        "cons": [
+          "Predictable engage",
+          "Low damage",
+          "Needs team to follow up"
+        ],
+        "gameplay_tips": "## Early Game\nAt level 1, you want to take Skill 2 and start in the mid lane. With your tankiness, you can walk up and hit all the minions with Skill 2 to help your mid lane clear the wave. After, you want to go to the farm lane to protect your carry. Remember that Skill 1 cooldown can be reset when you hit Skill 2 so you can Skill 1 > Skill 2 > Skill 1 for free damage during the early game.\n\n## Teamfights\nIn teamfights, you want to be the main initiator. You have great AOE knockups with both Skill 1 and your Ultimate. When using your Ultimate, if the enemies are trying to escape, you can flash at the last second to reposition your knockup to surprise enemies in fights. This initiation alone can win teamfights for your team. You can also combo your knockup with Frigid Charge to stun enemies when they land back from your knockup, making it impossible for them to escape.\n\n## Tips & Tricks\nYou can flash during the 3rd strike on Lian Po's Ultimate to reposition so you can hit his knockup\nSkill 1 can be used to dash over walls\nIf enemies are within range when charging Skill 2, Skill 1 resets for an extra dash\n"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Jadi gini, skill Lian Po cooldown-nya lama. Pas lagi cooldown, poke aja biar pasifnya gak nyerap banyak damage. Tapi ingat, jaga posisi dan simpen dash buat cepet keluar dari jangkauan skill-nya biar gak di-control terus."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/lian-po/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Warrior's Soul",
+            "description": "Gains crowd control immunity when using skills. During combat, generates Battle Spirit, which increases damage reduction and Attack Speed. When out of combat, Battle Spirit is consumed to recover health.",
+            "type": "passive"
+          },
+          {
+            "name": "Burst Ram",
+            "description": "Dashes in the target direction, dealing damage and launching enemies in his path. When upgraded, gains a passive effect that enhances every 3rd Basic Attack.",
+            "type": "skill1"
+          },
+          {
+            "name": "Magma Slam",
+            "description": "Charges up at the original location, gaining a shield and slowing nearby enemies while pulling non-hero enemy units toward the center. After a brief delay, deals area damage. If there are enemy units within range, Skill 1's cooldown is reset.",
+            "type": "skill2"
+          },
+          {
+            "name": "Tremor Smash",
+            "description": "Leaps to the target location and hammers the ground 3 times. The first 2 strikes deal damage and slow enemies, while the 3rd strike deals damage and launches them.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy team has multiple high-mobility threats that need to be locked down before they reach your backline",
+          "Your team needs a primary front-line who can engage on cooldown windows",
+          "The enemy draft includes Luban No.7 and Marco Polo, who appear in counter data as matchups Lian Po can pressure."
+        ],
+        "avoid_when": [
+          "Your team lacks the follow-up damage to convert your control windows into kills",
+          "The enemy stacks anti-tank items like armor penetration and percent-HP damage, melting front-liners quickly",
+          "The enemy already drafted Jing, Li Bai, and Ukyo Tachibana, who counter data identifies as direct answers to Lian Po."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Lian Po's mid-game tools come online.",
+          "Ultimate online: Tremor Smash extends control duration, making team fights snowball off a single hit",
+          "Late game: Boots of Fortitude, Succubus Cloak, and Overlord's Platemail on the bar means Lian Po can soak commits in 5v5 team fights for his carries."
+        ],
+        "common_mistakes": [
+          "Throwing Magma Slam on the front-line tank instead of saving it for backline carries.",
+          "Building damage items hoping to deal kills, when the team needs the durability that makes you a tank in the first place.",
+          "Ignoring Jing and Li Bai on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Forcing solo engages instead of waiting for ally commit — Lian Po's value compounds when the team follows up on engages."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 112,
+            "hero_name": "Luban No.7",
+            "evidence": "Luban No.7",
+            "source_hash": "c59ee0a3360a4fba24841f8d194dd5a987185c930f75151f9f6e8933f1223407"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 132,
+            "hero_name": "Marco Polo",
+            "evidence": "Marco Polo",
+            "source_hash": "9287cad2fe1afbc7d638b2fa71e5dd585f33357ef63e00791ff9f15b7bc3c779"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 531,
+            "hero_name": "Jing",
+            "evidence": "Jing",
+            "source_hash": "4da0983fb8ebfd1c0b3718e7e503e50774fdfd558575b3ce2d8ff438cc52b4c4"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 131,
+            "hero_name": "Li Bai",
+            "evidence": "Li Bai",
+            "source_hash": "160b66e14a1a2bb52be73b743bcb5727990ed97e66985536f9e4c5780d522727"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 163,
+            "hero_name": "Ukyo Tachibana",
+            "evidence": "Ukyo Tachibana",
+            "source_hash": "6947ef199f2008df0ff09f60df40b2cbe069da94535a18b68b466b3917bdf9cc"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 167,
+            "hero_name": "Wukong",
+            "evidence": "Wukong",
+            "source_hash": "e32fe71b72c1ba9bcdd54adee1eb4629a62b9caf1439b2c9f2468304edee521a"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 519,
+            "hero_name": "Ao'yin",
+            "evidence": "True damage from Flaming Palm cuts through Lian Po's high defenses.",
+            "source_hash": "e97bd659ad113ba08d8f4cfac87ae21a8a6e18faaa663067c07d1a9293dd7331"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 631,
+            "hero_name": "Florentino",
+            "evidence": "Triple Threat's true damage ignores Lian Po's defenses.",
+            "source_hash": "ae7e08a1af9bf7c9d906313ce39a632b83d8b9afe48f2b2bf75b02114c714564"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 121,
+            "hero_name": "Mi Yue",
+            "evidence": "Ravenous Tether keeps draining and healing Mi Yue through a long fight with a slow frontliner like Lian Po.",
+            "source_hash": "c3421701cf38325e463783ee747e0042780ab50565368b20f8a18e516903fcc0"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 110,
+            "hero_name": "Garuda",
+            "evidence": "Arrows of Gold's slow and constant damage kite slow frontliners like Lian Po.",
+            "source_hash": "8a6ee67ba6a37102100c93c418ae758364486d247bffceecd4bb373231645e5f"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 109,
+            "hero_name": "Daji",
+            "source_hash": "8a556136d479bd1a57f1e1939bdb30b0c502aa87a382d8d78960ab2afc25bec4"
+          },
+          {
+            "hero_id": 150,
+            "hero_name": "Han Xin",
+            "source_hash": "8a556136d479bd1a57f1e1939bdb30b0c502aa87a382d8d78960ab2afc25bec4"
+          },
+          {
+            "hero_id": 108,
+            "hero_name": "Mozi",
+            "source_hash": "8a556136d479bd1a57f1e1939bdb30b0c502aa87a382d8d78960ab2afc25bec4"
+          },
+          {
+            "hero_id": 116,
+            "hero_name": "Arke",
+            "source_hash": "8a556136d479bd1a57f1e1939bdb30b0c502aa87a382d8d78960ab2afc25bec4"
+          },
+          {
+            "hero_id": 192,
+            "hero_name": "Huang Zhong",
+            "source_hash": "8a556136d479bd1a57f1e1939bdb30b0c502aa87a382d8d78960ab2afc25bec4"
+          },
+          {
+            "hero_id": 173,
+            "hero_name": "Fang",
+            "source_hash": "8a556136d479bd1a57f1e1939bdb30b0c502aa87a382d8d78960ab2afc25bec4"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.85,
+            "tidak": 0.0975,
+            "tidak_diketahui": 0.0525
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

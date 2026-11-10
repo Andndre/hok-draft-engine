@@ -1,0 +1,679 @@
+{
+  "schema_version": 2,
+  "hero_id": 157,
+  "source_hash": "996733c7161f9245f86d1cb2b68e6953c92e61d5ada42892dcdc6e2e89e145fe",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "HISSATSU SHINOBI-BACHI",
+          "desc": "Periodically gains an enhanced Basic Attack that lets her dash while dealing damage and knocking back enemies in her path. After using an enhanced Basic Attack or any skill, she can roll and gain Movement Speed."
+        },
+        {
+          "type": "Skill 1",
+          "name": "HISHOU RYUUENJIN",
+          "desc": "Dashes forward to deal damage and launch enemies in the target area. Recovers Energy upon hit."
+        },
+        {
+          "type": "Skill 2",
+          "name": "KACHOUSEN",
+          "desc": "Throws her fan to damage and slow a target enemy while reducing their Magical Defense. Hits recover Energy. After it hits, the fan also deals magical damage to the closest unit behind the target."
+        },
+        {
+          "type": "Ultimate",
+          "name": "CHOU HISSATSU SHINOBI-BACHI",
+          "desc": "Dashes forward to deal damage and knock back enemies while reducing their Physical Attack. Recovers Energy upon hitting a target."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Jangan biarin Mai Shiranui nge-trigger pasifnya. 2) Pas teamfight jangan berdiri rapet biar skill 3-nya gak kena banyak orang. 3) Damage tinggi tapi tipis, pakai hero control buat nahan dia."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/mai-shiranui/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "HISSATSU SHINOBI-BACHI",
+            "description": "Periodically gains an enhanced Basic Attack that lets her dash while dealing damage and knocking back enemies in her path. After using an enhanced Basic Attack or any skill, she can roll and gain Movement Speed.",
+            "type": "passive"
+          },
+          {
+            "name": "HISHOU RYUUENJIN",
+            "description": "Dashes forward to deal damage and launch enemies in the target area. Recovers Energy upon hit.",
+            "type": "skill1"
+          },
+          {
+            "name": "KACHOUSEN",
+            "description": "Throws her fan to damage and slow a target enemy while reducing their Magical Defense. Hits recover Energy. After it hits, the fan also deals magical damage to the closest unit behind the target.",
+            "type": "skill2"
+          },
+          {
+            "name": "CHOU HISSATSU SHINOBI-BACHI",
+            "description": "Dashes forward to deal damage and knock back enemies while reducing their Physical Attack. Recovers Energy upon hitting a target.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team lacks reliable burst on isolated picks and needs single-target finishing damage",
+          "The map shape favors gank routes, where mobility translates directly into kills",
+          "The enemy back line is squishy and predictable, giving CHOU HISSATSU SHINOBI-BACHI an obvious target every fight."
+        ],
+        "avoid_when": [
+          "The matchup is grouped and shielded, leaving no isolated targets to delete",
+          "Enemy peel is strong and Mai Shiranui cannot reach the backline without dying first",
+          "The enemy already drafted Alessio, Charlotte, and Di Renjie, who counter data identifies as direct answers to Mai Shiranui."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Mai Shiranui's mid-game tools come online.",
+          "Two-item spike: once core damage is online, Mai Shiranui's KACHOUSEN starts one-shotting backline picks",
+          "Late game: cooldowns become short enough that KACHOUSEN influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Committing CHOU HISSATSU SHINOBI-BACHI when the target still has a shield, dash, or cleanse available, wasting the cooldown.",
+          "Engaging without follow-up — gap-close gets you to the target, but a solo dive without ally damage trades 1-for-1.",
+          "Ignoring Alessio and Charlotte on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Greeding farm in mid lane while side lanes get camped — rotation timing matters more than CS lead in most matchups."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 106,
+            "hero_name": "Xiao Qiao",
+            "evidence": "Mai's dashes and fan close in on Xiao Qiao and burst her.",
+            "source_hash": "0a0a3d1219f5f6c9534071afb8bda736193a7f42ae4992122ea2f5da04b958c9"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 112,
+            "hero_name": "Luban No.7",
+            "evidence": "Mai's enhanced dash and burst kill Luban No.7 before he can respond.",
+            "source_hash": "5d1002f7204d79d13bbf38d8b69b84799ff7c03f69cd2f354eca6018baa36c61"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 545,
+            "hero_name": "Alessio",
+            "evidence": "Alessio",
+            "source_hash": "fa447d5ee393041526ffdccd1df817c03166dc36adff8cf4ba2e71c03af5b2b6"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 536,
+            "hero_name": "Charlotte",
+            "evidence": "Charlotte",
+            "source_hash": "ab3cedbcfd8f6f8bd49861a496be8b0d269d27cac92f84b23268c9d04a86ecad"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 133,
+            "hero_name": "Di Renjie",
+            "evidence": "Di Renjie",
+            "source_hash": "595423395baf450c0b22c3f317cf18aa66ddc5bd4ecaad13548c925dad3cb87b"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 119,
+            "hero_name": "Dr Bian",
+            "evidence": "Dr Bian",
+            "source_hash": "54c5551f50e2a8192226f5e441da942a9857141d0544c2a7aa11d7dc0a184ac6"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 173,
+            "hero_name": "Fang",
+            "evidence": "Fang",
+            "source_hash": "ed46bd53bc2946ed514e35f792fb686cb48c0a34e1f1ab0c7700a19d1ad28c0a"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 139,
+            "hero_name": "Fuzi",
+            "evidence": "Fuzi",
+            "source_hash": "ca1df552d606f2c9c327d635e07f0ecd95401d7b1eb693dfee8f9038016f66a9"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 115,
+            "hero_name": "Gao",
+            "evidence": "Gao",
+            "source_hash": "86e89fae004003b64f3c37b166d9f4066de740320dbd17e130dc54ab16e214ab"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 192,
+            "hero_name": "Huang Zhong",
+            "evidence": "Huang Zhong",
+            "source_hash": "9a0c6b79c0502e1c5cea7505feb1d2485db27e6155d981050c520b285f1ec6c4"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 132,
+            "hero_name": "Marco Polo",
+            "evidence": "Marco Polo",
+            "source_hash": "3709fb6055bb0fc5a8bfc912691d1d36c5407c819019567b459f5a552bb29a3d"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 524,
+            "hero_name": "Meng Ya",
+            "evidence": "Meng Ya",
+            "source_hash": "6c098f7c9ced60c38c7de0d7526e1d97244927fb93a2c83573391c0531520875"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 198,
+            "hero_name": "Menki",
+            "evidence": "Menki",
+            "source_hash": "7be20d96d49926d0017b47552f1e94018e95199dbd264e96b0cbb3687562f5d2"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 504,
+            "hero_name": "Milady",
+            "evidence": "Milady",
+            "source_hash": "837cc666f36e4ab2dcab3b7a5a54c82dcab940d754250a6eb86f98433fa9999c"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 180,
+            "hero_name": "Nezha",
+            "evidence": "Nezha",
+            "source_hash": "10da95bfa4dca1c2fd08168749992999d3864196a3f969a1d61c7490155b0b10"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 176,
+            "hero_name": "Yuhuan",
+            "evidence": "Yuhuan",
+            "source_hash": "659598c6fdad7e342834c9f148606e167562e98679d10ccf4315dee7771047f6"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 556,
+            "hero_name": "Ata",
+            "source_hash": "c02401972311eae3f33c6287fb1a73b38d5bbc7bf5fcd2cbe9dd84d50ec57957"
+          },
+          {
+            "hero_id": 177,
+            "hero_name": "Chano",
+            "source_hash": "c02401972311eae3f33c6287fb1a73b38d5bbc7bf5fcd2cbe9dd84d50ec57957"
+          },
+          {
+            "hero_id": 133,
+            "hero_name": "Di Renjie",
+            "source_hash": "c02401972311eae3f33c6287fb1a73b38d5bbc7bf5fcd2cbe9dd84d50ec57957"
+          },
+          {
+            "hero_id": 113,
+            "hero_name": "Zhuangzi",
+            "source_hash": "c02401972311eae3f33c6287fb1a73b38d5bbc7bf5fcd2cbe9dd84d50ec57957"
+          },
+          {
+            "hero_id": 184,
+            "hero_name": "Cai Yan",
+            "source_hash": "c02401972311eae3f33c6287fb1a73b38d5bbc7bf5fcd2cbe9dd84d50ec57957"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.84,
+            "tidak": 0.104,
+            "tidak_diketahui": 0.056
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

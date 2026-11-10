@@ -1,0 +1,698 @@
+{
+  "schema_version": 2,
+  "hero_id": 187,
+  "source_hash": "2a48aef614102e36653fb76866defca07660787ef073d2870fcfe9212efd41f7",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Soul Sacrifice",
+          "desc": "Every time a dark orb passes through an enemy, it damages and restores Health to him."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Eclipse",
+          "desc": "Deals damage to enemies in range and summons a dark orb. Donghuang can have up to have 3 dark orbs at a time. Hitting enemies with this skill reduces its cooldown."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Dark Impact",
+          "desc": "Unleashes up to 3 dark orbs at the target location, increasing own Movement Speed and dealing damage to enemies in range. The 1st and 2nd dark orbs slow enemies. The 3rd dark orb stuns enemies."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Forsaken Contract",
+          "desc": "Suppresses an enemy hero and summons 3 dark orbslf he or the target is damaged during suppression, the other will take thesame amount of damage."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Di awal Donghuang susah last-hit dari jauh dan agak lemah, jadi tekan farm-nya. Pas ult-nya ngunci temen lu, jangan serang dia, soalnya damage yang dia terima diterusin ke temen yang kekunci."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/donghuang/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Soul Sacrifice",
+            "description": "Every time a dark orb passes through an enemy, it deals damage and restores Health to him.",
+            "type": "passive"
+          },
+          {
+            "name": "Eclipse",
+            "description": "Deals damage to enemies within range and summons a dark orb. There can be 3 dark orbs at a time. Hitting enemies with this skill reduces its cooldown, and with 3 dark orbs, it restores Health.",
+            "type": "skill1"
+          },
+          {
+            "name": "Dark Impact",
+            "description": "Unleashes up to 3 dark orbs at the target location, increasing his Movement Speed and dealing damage to enemies in range. The 1st and 2nd dark orbs slow enemies. The 3rd dark orb stuns enemies.",
+            "type": "skill2"
+          },
+          {
+            "name": "Forsaken Contract",
+            "description": "Suppresses an enemy hero and summons 3 dark orbs. If he or the target takes damage during suppression, the other will take the same amount of damage.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The team draft favors extended team fights where healing scales",
+          "The enemy team relies on hard engage that you can read and recover from",
+          "The enemy draft includes Allain, Cirrus, and Kaizer, who appear in counter data as matchups Donghuang can pressure."
+        ],
+        "avoid_when": [
+          "The enemy already builds anti-heal items, neutralizing your sustain plan",
+          "The enemy chains crowd control faster than recovery cooldowns refresh",
+          "The enemy team is built around answers to Recovery, removing the windows Donghuang's kit needs to perform."
+        ],
+        "power_spikes": [
+          "Early game: Donghuang is listed as an early-game threat in public guide data — convert the early window into objectives before scaling picks come online.",
+          "Lifesteal item online: trade patterns flip from neutral to favorable once sustain stacks with damage",
+          "Late game: Overlord's Platemail, Breakthrough Robe, and Savant's Wrath on the bar means Donghuang can soak commits in 5v5 team fights for his carries."
+        ],
+        "common_mistakes": [
+          "Forcing all-ins against opponents already wearing anti-heal — your healing barely activates.",
+          "Using the recovery skill on the first crowd control, then dying to the follow-up chain.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Donghuang's commit reaches the target alive.",
+          "Forgetting vision while looking for picks — losing the marksman because the support roamed without setting wards is a recurring mistake."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 514,
+            "hero_name": "Allain",
+            "evidence": "Allain",
+            "source_hash": "7bf62a434f548b3c3a384c86651411635b52cad3b09c171e759b8523788f3eac"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 506,
+            "hero_name": "Cirrus",
+            "evidence": "Cirrus",
+            "source_hash": "e64568a31d086266d483a88f48c0252a5787795ac6e1e5edca1b719e7042f8db"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 193,
+            "hero_name": "Kaizer",
+            "evidence": "Kaizer",
+            "source_hash": "3478e1e727d3163516d89db2c98b1d3e607ee0a75c6281589b1633917ea63461"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 533,
+            "hero_name": "Agudo",
+            "evidence": "Forsaken Contract suppresses Agudo and separates her from Furball.",
+            "source_hash": "29c467c544d183bce3e0496dda4e2dc22c242b52d3b23df284ac3bf5c8340a36"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 519,
+            "hero_name": "Ao'yin",
+            "evidence": "Forsaken Contract suppresses Aoyin and shuts off his damage.",
+            "source_hash": "2a6b27e78d0a7f654a3fd344e36b80c79d2169badde48b310ae3288a64521719"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 646,
+            "hero_name": "Butterfly",
+            "evidence": "Forsaken Contract suppresses Butterfly and stops her Death Dealer reset chain.",
+            "source_hash": "600446d6d5e4c1dcff39fa3d0fed4d285ce76f595bc009fac47ac5eda989bcda"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 177,
+            "hero_name": "Chano",
+            "evidence": "Forsaken Contract suppresses Chano, who relies on Leader Stance to kite.",
+            "source_hash": "61badb051e8e8287d65b1d583db5e1125f4a717f9f59fae5fddeea24f2287a71"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 172,
+            "hero_name": "Chicha",
+            "evidence": "Forsaken Contract suppresses Chicha and stops her dash-in.",
+            "source_hash": "0fc4089cf6c76c5dd57ed26e31cb2e4375e3543c157759985d73e0b79182e5af"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 128,
+            "hero_name": "Fatih",
+            "evidence": "Forsaken Contract can suppress Fatih before he uses Sacred Tree Blessing.",
+            "source_hash": "afa2788d0e8867cb9251a1547f81f3f7ba292626ea0dbe34135fc9f6698d48d8"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 631,
+            "hero_name": "Florentino",
+            "evidence": "Forsaken Contract locks Florentino before he can pick up bouquets.",
+            "source_hash": "cac738d4fa51c6e290f257ed4a69190e616c744dd2d62375086fa0609ef3f365"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 140,
+            "hero_name": "Guan Yu",
+            "evidence": "Forsaken Contract can suppress Guan Yu before he cleanses with Soaring Green Dragon.",
+            "source_hash": "b7016547228d2fdd5e52510d525eab3008623ad648880d50bfde89080c5c4fb0"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 125,
+            "hero_name": "Yango",
+            "evidence": "Forsaken Contract suppresses Yango before he can use Dispersal.",
+            "source_hash": "c079527419ce1859316d3c3b9512babb48db659cd6df31ff775d7bf7a373e7ed"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 522,
+            "hero_name": "Yao",
+            "evidence": "Forsaken Contract suppresses Yao before he can use Return to Dust.",
+            "source_hash": "e96786839a96198587771f1fde5b09edf418363f8b87d52146ed5b0b89f98577"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 505,
+            "hero_name": "Yaria",
+            "evidence": "Suppression is the one crowd control Deer Spirit cannot ignore.",
+            "source_hash": "69cd530c9966e1fc9210ad94d30dfda205fa12a6a83baa3f4403fa8d12b00cea"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 116,
+            "hero_name": "Arke",
+            "evidence": "Forsaken Contract suppresses Arke as she exits stealth.",
+            "source_hash": "353d034c0d36a956c7fb975dc5fcbb03e7acb19fc995b71be33259408cf0b352"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 537,
+            "hero_name": "Devara",
+            "evidence": "Forsaken Contract can suppress Devara before he activates Millennium Echo.",
+            "source_hash": "484b62f5b70d6cc4e4c2ae34d64a7f9204eac6c4737cca9192aae3c06f0f35a6"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 180,
+            "hero_name": "Nezha",
+            "evidence": "Fire-tipped Spear cuts the healing Donghuang gains from his dark orbs.",
+            "source_hash": "f6c459c23aa15f719bc8cb957457e4f35f21b890525c97983e56a97a36ad7c36"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 132,
+            "hero_name": "Marco Polo",
+            "evidence": "Marco Polo's true damage ignores Donghuang's defenses.",
+            "source_hash": "b6112ef1542860cd0dad4923932c2e5411e3338a622c9e8378094d5a030c75a9"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 109,
+            "hero_name": "Daji",
+            "source_hash": "7b06f9e8c03b4e6b814b56aa2d76718e7a0000225cfd5e0e885b42feb58294ad"
+          },
+          {
+            "hero_id": 167,
+            "hero_name": "Wukong",
+            "source_hash": "7b06f9e8c03b4e6b814b56aa2d76718e7a0000225cfd5e0e885b42feb58294ad"
+          },
+          {
+            "hero_id": 134,
+            "hero_name": "Dharma",
+            "source_hash": "7b06f9e8c03b4e6b814b56aa2d76718e7a0000225cfd5e0e885b42feb58294ad"
+          },
+          {
+            "hero_id": 182,
+            "hero_name": "Gan & Mo",
+            "source_hash": "7b06f9e8c03b4e6b814b56aa2d76718e7a0000225cfd5e0e885b42feb58294ad"
+          },
+          {
+            "hero_id": 112,
+            "hero_name": "Luban No.7",
+            "source_hash": "7b06f9e8c03b4e6b814b56aa2d76718e7a0000225cfd5e0e885b42feb58294ad"
+          },
+          {
+            "hero_id": 564,
+            "hero_name": "Mayene",
+            "source_hash": "7b06f9e8c03b4e6b814b56aa2d76718e7a0000225cfd5e0e885b42feb58294ad"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.94,
+            "tidak": 0.039,
+            "tidak_diketahui": 0.021
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

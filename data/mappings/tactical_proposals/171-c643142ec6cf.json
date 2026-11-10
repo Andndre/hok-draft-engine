@@ -1,0 +1,631 @@
+{
+  "schema_version": 2,
+  "hero_id": 171,
+  "source_hash": "c643142ec6cf8e0bc2d3984034cfdd988095496f1c029081494d9fec876690e7",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Dark Potential",
+          "desc": "Human Form: Hits from Basic Attacks and skills grant madness. Ferali Form: Casting the skill reduces the Movement Speed of enemies in range."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Forbidden Domain",
+          "desc": "Deals damage to enemies in range. Knocks back enemy heroes."
+        },
+        {
+          "type": "Skill 2",
+          "name": "Leaping Savior",
+          "desc": "Jumps to the target location, granting a shield to nearby teammates. Gains extra Madness for every teammate he shields."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Unbridled Outburst",
+          "desc": "Roars and transforms, gaining brief Invincibility, then a shield. The roar forms a gust of wind that damages, knocks back, and stuns enemies. While inside the wind, Zhang Fei gains increased Movement Speed"
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Super Tanky throughout the game",
+          "Strong engage and disengage",
+          "Mobility to get over walls for vision"
+        ],
+        "cons": [
+          "Needs Ultimate to be useful",
+          "Slow at helping clear waves"
+        ],
+        "gameplay_tips": "## Early Game\nPrioritise pushing Mid Lane and roaming to Farm Lane to help secure jungle camps. Shield your teammates when the enemy is looking to trade damage. \n\n## Team Fights\nUse your Ultimate to catch enemies off guard or to start a teamfight. You can also use it defensively to disengage and stop the enemy from jumping onto your team.\n\n## Tips & Tricks\n- Use Frigid Charge after your Ultimate to keep enemies locked in one place\n- Attack minions and monsters to charge your passive to get your Ultimate sooner\n- Aim your Ultimate towards walls to make it easier to follow up "
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Zhang Fei lemah pas energinya belum penuh, serang di situ. 2) Pas teamfight jangan buang skill ke dia."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/zhang-fei/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Dark Potential",
+            "description": "Human Form: Basic Attack and skill hits grant Madness. Ferali Form: Using the skill reduces the Movement Speed of enemies within range.",
+            "type": "passive"
+          },
+          {
+            "name": "Forbidden Domain",
+            "description": "Deals damage to enemies within range. Knocks back enemy heroes.",
+            "type": "skill1"
+          },
+          {
+            "name": "Leaping Savior",
+            "description": "Leaps to the target location, granting shields to nearby teammates. Gains Madness for each shield granted.",
+            "type": "skill2"
+          },
+          {
+            "name": "Unbridled Outburst",
+            "description": "Roars and transforms. After a short period of invincibility and immunity to crowd control, gains a shield. The roar creates a wind that damages, knocks back, and stuns enemies. Gains Movement Speed while in the wind zone.",
+            "type": "ultimate"
+          },
+          {
+            "name": "Mad Slaughter",
+            "description": "Damages and launches enemies in front.",
+            "type": "skill1"
+          },
+          {
+            "name": "Stampede",
+            "description": "Leaps to the target area, dealing damage and launching nearby enemies.",
+            "type": "skill2"
+          }
+        ],
+        "pick_when": [
+          "Your team needs a setup hero whose Leaping Savior creates kill windows for the carry",
+          "The enemy team has high physical or magic burst that demands a dedicated tank to absorb",
+          "The enemy draft includes Arli, Consort Yu, and Marco Polo, who appear in counter data as matchups Zhang Fei can pressure."
+        ],
+        "avoid_when": [
+          "The enemy team is loaded with cleanse, dashes, and immunity that bypass crowd control",
+          "Your team comp lacks damage and adding another non-damage pick collapses the win condition",
+          "A stronger pick in the same role is open and the matchup does not specifically reward Zhang Fei's Crowd Control."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Zhang Fei's mid-game tools come online.",
+          "Ultimate online: Unbridled Outburst extends control duration, making team fights snowball off a single hit",
+          "Late game: Guardian - Radiance, Ominous Premonition, and Succubus Cloak on the bar means Zhang Fei can soak commits in 5v5 team fights for his carries."
+        ],
+        "common_mistakes": [
+          "Throwing Leaping Savior on the front-line tank instead of saving it for backline carries.",
+          "Building damage items hoping to deal kills, when the team needs the durability that makes you a tank in the first place.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Zhang Fei's commit reaches the target alive.",
+          "Forgetting vision while looking for picks — losing the marksman because the support roamed without setting wards is a recurring mistake."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 199,
+            "hero_name": "Arli",
+            "evidence": "Arli",
+            "source_hash": "22998df525c7477b2d0263aca38d6416862d29a388a3391b3d6f4e67ee2c3577"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 174,
+            "hero_name": "Consort Yu",
+            "evidence": "Consort Yu",
+            "source_hash": "306ba24de8ecfec84ab4398a0ed2378b9ef56ee524db8adb2807026387dd5c2d"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 132,
+            "hero_name": "Marco Polo",
+            "evidence": "Marco Polo",
+            "source_hash": "db69c46d2624bfe3e3c3ea0dda20f51ac2fa8475b85310849d5b24fc664215a7"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 646,
+            "hero_name": "Butterfly",
+            "evidence": "Zhang Fei's shields absorb Butterfly's burst, so Death Dealer fails to reset.",
+            "source_hash": "1b07b06943f3671da4535393fa482ae3eda8daf43113fcc9dd6041557a497025"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 508,
+            "hero_name": "Garo",
+            "evidence": "Garo deals 50% extra damage to shields, cutting through Zhang Fei's protection.",
+            "source_hash": "57d2df01146e1673ad87e6d3d1af89d1cd772a69c13a2552b45207de3b412f0b"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 118,
+            "hero_name": "Sun Bin",
+            "evidence": "Time Lapse silences Zhang Fei so he cannot cast Unbridled Outburst.",
+            "source_hash": "c6405a53f270cfa7ba77d95e295a88edfec54529c6d80382bd3e72d6527a2eb7"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 542,
+            "hero_name": "Feyd",
+            "source_hash": "7b55e88be295b3cf202581ca37724ed1dc93b388457e85c5606ed013634dc70d"
+          },
+          {
+            "hero_id": 584,
+            "hero_name": "Flowborn (Marksman)",
+            "source_hash": "7b55e88be295b3cf202581ca37724ed1dc93b388457e85c5606ed013634dc70d"
+          },
+          {
+            "hero_id": 190,
+            "hero_name": "Kongming",
+            "source_hash": "7b55e88be295b3cf202581ca37724ed1dc93b388457e85c5606ed013634dc70d"
+          },
+          {
+            "hero_id": 172,
+            "hero_name": "Chicha",
+            "source_hash": "7b55e88be295b3cf202581ca37724ed1dc93b388457e85c5606ed013634dc70d"
+          },
+          {
+            "hero_id": 523,
+            "hero_name": "Shi",
+            "source_hash": "7b55e88be295b3cf202581ca37724ed1dc93b388457e85c5606ed013634dc70d"
+          },
+          {
+            "hero_id": 133,
+            "hero_name": "Di Renjie",
+            "source_hash": "7b55e88be295b3cf202581ca37724ed1dc93b388457e85c5606ed013634dc70d"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.91,
+            "tidak": 0.0585,
+            "tidak_diketahui": 0.0315
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

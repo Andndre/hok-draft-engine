@@ -1,0 +1,615 @@
+{
+  "schema_version": 2,
+  "hero_id": 184,
+  "source_hash": "22158d0b8f4a1c76dc16d09ad07b86eb04416af5b8ca78b1059b3d67ad8b2777",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "Can't Touch This",
+          "desc": "Periodic Passive Effect: Restores Health and gains a Movement Speedbonus when taking damage."
+        },
+        {
+          "type": "Skill 1",
+          "name": "Healing Hymn",
+          "desc": "Continuously restores Health to nearby allies in range while gaining"
+        },
+        {
+          "type": "Skill 2",
+          "name": "Earworm",
+          "desc": "Fires a sound wave in the target direction, stunning and dealing damage to enemies hit. Sound waves bounce between nearby enemies."
+        },
+        {
+          "type": "Ultimate",
+          "name": "Tune of Tranquility",
+          "desc": "Continuously heals the nearby ally with the lowest Health within rangewhile granting them increased Physical and Magical Defense."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Excellent team healing",
+          "Reliable crowd control",
+          "good self-survivability"
+        ],
+        "cons": [
+          "Vulnerable to burst",
+          "Limited engage",
+          "Countered by antiheal"
+        ],
+        "gameplay_tips": "## Early Game\nIn the early game, use Skill 2 Earworm on enemies to deal damage and stun them when they want to walk up and last-hit minions. You can use Skill 2 when the enemy is trying to stand behind minions, and it will still bounce onto them, giving you super reliable damage and crowd control. When roaming, use Skill 1 Healing Hymn to give yourself movement speed so you are the first one on the rotations to help your team.\n\n## Teamfights\nIn teamfights, your main goal is to keep your Marksman and Mage alive. You have excellent aoe healing that can keep them both healthy at the same time. If assassins look to dive your carries, use your Ultimate early to give them defences to help them survive enemy burst. Skill 2 can also be used to crowd control the enemy that is trying to dive.\n\n## Tips & Tricks\nSkill 2 can bounce on minions and monsters to help reach enemy heroes\nYour Ultimate not only heals but also gives Physical and Magical defence, so don't leave it too late"
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Assassin pick-off Cai Yan, dia lemah kalau sendirian. 2) Control skill 2-nya bisa dihindarin. 3) Pas dia ult, cari cara motong secepet mungkin."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/cai-yan/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Can't Touch This",
+            "description": "Periodic Passive Effect: Recovers Health and gains Movement Speed when taking damage.",
+            "type": "passive"
+          },
+          {
+            "name": "Healing Hymn",
+            "description": "Gains Movement Speed and continuously heals teammates within a certain range.",
+            "type": "skill1"
+          },
+          {
+            "name": "Earworm",
+            "description": "Fires a sound wave in the target direction, stunning and damaging enemies hit. Sound waves bounce between nearby enemies.",
+            "type": "skill2"
+          },
+          {
+            "name": "Tune of Tranquility",
+            "description": "Continuously heals the teammate with the lowest Health within range, while granting them Physical and Magical Defense.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The enemy lacks reliable healing reduction, leaving sustain unchecked",
+          "The enemy team relies on hard engage that you can read and recover from",
+          "The enemy draft includes Diaochan and Arke, who appear in counter data as matchups Cai Yan can pressure."
+        ],
+        "avoid_when": [
+          "The game state demands burst rather than slow attrition",
+          "The enemy chains crowd control faster than recovery cooldowns refresh",
+          "The enemy already drafted Gao Changgong and Mulan, who counter data identifies as direct answers to Cai Yan."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Cai Yan's mid-game tools come online.",
+          "Lifesteal item online: trade patterns flip from neutral to favorable once sustain stacks with damage",
+          "Late game: cooldowns become short enough that Earworm influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Forcing all-ins against opponents already wearing anti-heal — your healing barely activates.",
+          "Using the recovery skill on the first crowd control, then dying to the follow-up chain.",
+          "Ignoring Gao Changgong and Mulan on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Forgetting vision while looking for picks — losing the marksman because the support roamed without setting wards is a recurring mistake."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 166,
+            "hero_name": "Arthur",
+            "evidence": "Arthur",
+            "source_hash": "9896b90a6b72f6bccb8acc1de9b7549314406c3ee85af54c864ac471953e4bb7"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 506,
+            "hero_name": "Cirrus",
+            "evidence": "Cirrus",
+            "source_hash": "04b8de1881cb283e3f3cfa7eea69dcbc08acc1111f8e6e8c3efb367074dcb349"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 507,
+            "hero_name": "Li Xin",
+            "evidence": "Li Xin",
+            "source_hash": "0c3bd764f4e55c83b2650c94d8ec4e241b8c9bf893c45edda78a5977754e5c46"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 180,
+            "hero_name": "Nezha",
+            "evidence": "Fire-tipped Spear undermines Cai Yan's healing.",
+            "source_hash": "bafc152b34330cb0f68641e1b715693bb2609353a79acb3c769af33ee2b18504"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 168,
+            "hero_name": "Lapulapu",
+            "evidence": "Island's Blessing dashes onto Cai Yan and launches her.",
+            "source_hash": "68247fb9f3a9efc4ee12798d1f887e000d4a33df33798c5c2c32bd8fa40c9cbb"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 109,
+            "hero_name": "Daji",
+            "source_hash": "1778676d323d841d99e2e0ac0c7b7aa94d0d461b15dd53ca76f41270b7763dfb"
+          },
+          {
+            "hero_id": 169,
+            "hero_name": "Hou Yi",
+            "source_hash": "1778676d323d841d99e2e0ac0c7b7aa94d0d461b15dd53ca76f41270b7763dfb"
+          },
+          {
+            "hero_id": 192,
+            "hero_name": "Huang Zhong",
+            "source_hash": "1778676d323d841d99e2e0ac0c7b7aa94d0d461b15dd53ca76f41270b7763dfb"
+          },
+          {
+            "hero_id": 131,
+            "hero_name": "Li Bai",
+            "source_hash": "1778676d323d841d99e2e0ac0c7b7aa94d0d461b15dd53ca76f41270b7763dfb"
+          },
+          {
+            "hero_id": 107,
+            "hero_name": "Zilong",
+            "source_hash": "1778676d323d841d99e2e0ac0c7b7aa94d0d461b15dd53ca76f41270b7763dfb"
+          },
+          {
+            "hero_id": 177,
+            "hero_name": "Chano",
+            "source_hash": "1778676d323d841d99e2e0ac0c7b7aa94d0d461b15dd53ca76f41270b7763dfb"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.91,
+            "tidak": 0.0585,
+            "tidak_diketahui": 0.0315
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.07,
+            "tidak": 0.8,
+            "tidak_diketahui": 0.13
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

@@ -1,0 +1,613 @@
+{
+  "schema_version": 2,
+  "hero_id": 163,
+  "source_hash": "f30cdce2fae0a747a9fbf46a932db97f5a02e0989d1d81f8574c0ec295d0866f",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "type": "Passive",
+          "name": "CONCEALED SABRE HAZY BLADE",
+          "desc": "Every 5-4s, Ukyo Tachibana gains one enhanced Basic Attack that has increased range, restores Health, deals extra damage, and slows enemies. Dealing skill damage shortens the enhanced Basic Attack's cooldown."
+        },
+        {
+          "type": "Skill 1",
+          "name": "CONCEALED SABRE SWALLOW SWIPE",
+          "desc": "Ukyo Tachibana creates a domain around himself, then leaps backward, dealing damage to enemies in his path. This skill can be used again after 2s, or immediately if it hits a target. If he returns to the starting point of phase 1 after using phase 2, phase 2 is enhanced."
+        },
+        {
+          "type": "Skill 2",
+          "name": "CONCEALED SABRE HEAVENLY HACK",
+          "desc": "Slashes in the target direction, dealing damage to enemies within range. Enemies at the edge of the skill's range will be stunned."
+        },
+        {
+          "type": "Ultimate",
+          "name": "CONCEALED SABRE SNOWFALL SLASH",
+          "desc": "Slashes 4 times in the target direction, dealing damage to enemies within range. Recovers Health each time damage is dealt."
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Skill 2 Ukyo bisa dihindarin tinggal gerak. 2) Pas dia ult, langsung ngindar. 3) Gank Ukyo abis dia pakai skill 1, peluang berhasilnya lebih gede."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/ukyo-tachibana/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "CONCEALED SABRE HAZY BLADE",
+            "description": "Every 4–5s, Ukyo Tachibana gains one enhanced Basic Attack that has increased range, restores Health, deals extra damage, and slows enemies. Dealing skill damage shortens the enhanced Basic Attack's cooldown.",
+            "type": "passive"
+          },
+          {
+            "name": "CONCEALED SABRE SWALLOW SWIPE",
+            "description": "Ukyo Tachibana creates a domain around himself, then leaps backward, dealing damage to enemies in his path. This skill can be used again after 2s, or immediately if it hits a target. If he returns to the starting point of phase 1 after using phase 2, phase 2 is enhanced.",
+            "type": "skill1"
+          },
+          {
+            "name": "CONCEALED SABRE HEAVENLY HACK",
+            "description": "Slashes in the target direction, dealing damage to enemies within range. Enemies at the edge of the skill's range will be stunned.",
+            "type": "skill2"
+          },
+          {
+            "name": "CONCEALED SABRE SNOWFALL SLASH",
+            "description": "Slashes 4 times in the target direction, dealing damage to enemies within range. Recovers Health each time damage is dealt.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The map shape favors gank routes, where mobility translates directly into kills",
+          "The team draft favors extended team fights where healing scales",
+          "The enemy draft includes Arthur, Lian Po, and Wuyan, who appear in counter data as matchups Ukyo Tachibana can pressure."
+        ],
+        "avoid_when": [
+          "Enemy peel is strong and Ukyo Tachibana cannot reach the backline without dying first",
+          "The enemy already builds anti-heal items, neutralizing your sustain plan",
+          "The enemy already drafted Di Renjie, Kongming, and Luban No.7, who counter data identifies as direct answers to Ukyo Tachibana."
+        ],
+        "power_spikes": [
+          "Early game: Ukyo Tachibana is listed as an early-game threat in public guide data — convert the early window into objectives before scaling picks come online.",
+          "Ultimate unlocked: CONCEALED SABRE SNOWFALL SLASH converts mobility into burst, the moment Ukyo Tachibana starts threatening picks across the map",
+          "Late game: cooldowns become short enough that CONCEALED SABRE HEAVENLY HACK influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Engaging without follow-up — gap-close gets you to the target, but a solo dive without ally damage trades 1-for-1.",
+          "Forcing all-ins against opponents already wearing anti-heal — your healing barely activates.",
+          "Ignoring Di Renjie and Kongming on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Pathing predictably and getting tracked by the enemy jungler — vary first clear and rotate based on ward placement rather than muscle memory."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 166,
+            "hero_name": "Arthur",
+            "evidence": "Arthur",
+            "source_hash": "6f2902ad74f4ce72edd21bf1eb44cd1bb2fbe87266fc5fe31130f869f0e0d866"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 105,
+            "hero_name": "Lian Po",
+            "evidence": "Lian Po",
+            "source_hash": "145ae136b9ec91763a0783f9ff84a104af8cf5d644b63ec82b3a22ab4f0bb433"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 117,
+            "hero_name": "Wuyan",
+            "evidence": "Wuyan",
+            "source_hash": "b91d4e64a42e4ef2a3e73422bcda66b834744f23ccc8d266504599c738b2b8d0"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 133,
+            "hero_name": "Di Renjie",
+            "evidence": "Di Renjie",
+            "source_hash": "e6707c4619cc90a5eaae4fe7777efaa1ffafa82df4e7c62c015381807ab3e2cc"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 190,
+            "hero_name": "Kongming",
+            "evidence": "Kongming",
+            "source_hash": "24d8f44f89eba0f40a84cc712ab76016fc0bb9bb36b45835e165aa54c22a1a0e"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 112,
+            "hero_name": "Luban No.7",
+            "evidence": "Luban No.7",
+            "source_hash": "08015fd2d791c454b2c53a7cc0f9b72ebad630c6709bfc15a1f4f7b0d6969591"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 523,
+            "hero_name": "Shi",
+            "evidence": "Shi",
+            "source_hash": "dfc633806e0d2d976f3fd6d31b4d0285ef64f5a4ed47fa2177f89c5bf092f9a2"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 106,
+            "hero_name": "Xiao Qiao",
+            "evidence": "Xiao Qiao",
+            "source_hash": "f3e221440ed1c254dee1155d298c0869472229e6e3285c5d4bdc06e5c0691e6d"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 114,
+            "hero_name": "Liu Shan",
+            "source_hash": "92f31fc8aa21f6c817a6c226cbf57b38bae3c0befb1978c4015df04d7a9e322e"
+          },
+          {
+            "hero_id": 504,
+            "hero_name": "Milady",
+            "source_hash": "92f31fc8aa21f6c817a6c226cbf57b38bae3c0befb1978c4015df04d7a9e322e"
+          },
+          {
+            "hero_id": 155,
+            "hero_name": "Erin",
+            "source_hash": "92f31fc8aa21f6c817a6c226cbf57b38bae3c0befb1978c4015df04d7a9e322e"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "NanoJev-Evidence-Teacher-v2",
+  "provider": "nanojev",
+  "model_info": {
+    "provider": "nanojev",
+    "engine": "skill-evidence-teacher",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.07,
+            "tidak": 0.8,
+            "tidak_diketahui": 0.13
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}
