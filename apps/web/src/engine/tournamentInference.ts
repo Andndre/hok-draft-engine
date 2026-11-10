@@ -1,3 +1,17 @@
+/**
+ * @file tournamentInference.ts
+ * @description Mesin inferensi taktis deterministik 4-fase turnamen Honor of Kings (HoK Global).
+ *
+ * Menggabungkan 6 lapisan sinyal taktis kompetitif:
+ * 1. Data empiris 11.141+ match turnamen resmi KPL/KIC (frekuensi B1 opener, R1-R2 pick, dan ban fase 1/2).
+ * 2. Matriks sinergi duet profesional (KPL pairs dengan >= 20 match dan winrate >= 50%).
+ * 3. Matriks counter terarah (Kurohiko priors, HOKFIRE matchup, dan KPL pre-ban history).
+ * 4. Analisis lane vacancy & flex lane (memastikan tidak terjadi duplikasi role di turnamen).
+ * 5. Evaluasi radar 7 dimensi (early pressure, CC chain lockdown, frontline, shutdown, flexibility, utility).
+ * 6. Dampener paparan counter lawan (evaluateEnemyCounterExposure): penalti berjenjang (-0.55 / -1.45 / -2.60+)
+ *    dan peredam sinergi (100% / 55% / 10% / 0%) agar hero tidak direkomendasikan jika sudah di-counter 2-3 musuh.
+ */
+
 import type { Hero, TacticalVector, Lane } from '../types';
 import { isHeroGlobalReleased } from '../data/heroReleaseStatus';
 import { getTournamentPhase, analyzeLaneOccupancy, isRiskyOpener } from './draftRules';
@@ -5,8 +19,23 @@ import { getTournamentPhase, analyzeLaneOccupancy, isRiskyOpener } from './draft
 export type { TournamentPhaseId } from './draftRules';
 import type { TournamentPhaseId } from './draftRules';
 
-export function evaluateTacticalScores(ourHeroes: Hero[], enemyHeroes: Hero[]): TacticalVector {
+// =============================================================================
+// SECTION 1: EVALUASI RADAR TAKTIS & PROFIL HERO
+// =============================================================================
 
+/**
+ * Menghitung vektor taktis 7-dimensi berdasarkan komposisi hero tim kita vs musuh.
+ *
+ * Dimensi:
+ * - early_game_pressure: Kapasitas rotasi dan invasi awal (Assassin/Fighter + mobilitas/engage).
+ * - cc_chain_lockdown: Kapasitas crowd control beruntun (Tank/Support/Mage + suppress/disengage).
+ * - frontline_durability: Daya tahan garis depan menyerap damage (Tank/Fighter + frontline tag).
+ * - enemy_carry_shutdown: Kemampuan mengunci dan melumpuhkan carry lawan (Assassin + counterAdv).
+ * - draft_flexibility: Keberagaman opsi penempatan lane hero fleksibel (hero dengan multi-lane).
+ * - team_utility: Nilai utilitas tim (shield, heal, move speed, attack speed, cleanse, immunity).
+ * - draft_advantage: Keunggulan komposisi agregat dari rata-rata winrate dan selisih counter.
+ */
+export function evaluateTacticalScores(ourHeroes: Hero[], enemyHeroes: Hero[]): TacticalVector {
   let early = 0.5;
   let cc = 0.5;
   let frontline = 0.5;
@@ -25,36 +54,104 @@ export function evaluateTacticalScores(ourHeroes: Hero[], enemyHeroes: Hero[]): 
     }
 
     const avgWr = totalWr / ourHeroes.length;
-    early = Math.min(0.95, 0.35 + (roleCounts['Assassin'] || 0) * 0.18 + (roleCounts['Fighter'] || 0) * 0.10);
-    cc = Math.min(0.95, 0.30 + (roleCounts['Tank'] || 0) * 0.20 + (roleCounts['Support'] || 0) * 0.18 + (roleCounts['Mage'] || 0) * 0.12);
-    frontline = Math.min(0.95, 0.25 + ourHeroes.reduce((sum, hero) => {
-      const reviewed = hero.tactical_profile?.tags.frontline;
-      return sum + (reviewed === undefined ? (hero.primary_role === 'Tank' ? 0.28 : hero.primary_role === 'Fighter' ? 0.16 : 0) : reviewed ? 0.28 : 0);
-    }, 0));
-    cc = Math.min(0.95, cc + ourHeroes.filter(h => h.tactical_profile?.tags.suppress === true).length * 0.12 + ourHeroes.filter(h => h.tactical_profile?.tags.disengage === true).length * 0.04);
-    early = Math.min(0.95, early + ourHeroes.filter(h => h.tactical_profile?.tags.mobility === true).length * 0.04 + ourHeroes.filter(h => h.tactical_profile?.tags.engage === true).length * 0.03);
+
+    // Early Game Pressure
+    early = Math.min(
+      0.95,
+      0.35 + (roleCounts['Assassin'] || 0) * 0.18 + (roleCounts['Fighter'] || 0) * 0.10
+    );
+
+    // Crowd Control Chain Lockdown
+    cc = Math.min(
+      0.95,
+      0.30 +
+        (roleCounts['Tank'] || 0) * 0.20 +
+        (roleCounts['Support'] || 0) * 0.18 +
+        (roleCounts['Mage'] || 0) * 0.12
+    );
+
+    // Frontline Durability (didukung tag bukti profil taktis yang telah diaudit)
+    frontline = Math.min(
+      0.95,
+      0.25 +
+        ourHeroes.reduce((sum, hero) => {
+          const reviewed = hero.tactical_profile?.tags.frontline;
+          return (
+            sum +
+            (reviewed === undefined
+              ? hero.primary_role === 'Tank'
+                ? 0.28
+                : hero.primary_role === 'Fighter'
+                ? 0.16
+                : 0
+              : reviewed
+              ? 0.28
+              : 0)
+          );
+        }, 0)
+    );
+
+    // Tambahan CC dari tag suppress (Liang/Donghuang) & disengage
+    cc = Math.min(
+      0.95,
+      cc +
+        ourHeroes.filter((h) => h.tactical_profile?.tags.suppress === true).length * 0.12 +
+        ourHeroes.filter((h) => h.tactical_profile?.tags.disengage === true).length * 0.04
+    );
+
+    // Tambahan Early Pressure dari mobilitas & engage aktif
+    early = Math.min(
+      0.95,
+      early +
+        ourHeroes.filter((h) => h.tactical_profile?.tags.mobility === true).length * 0.04 +
+        ourHeroes.filter((h) => h.tactical_profile?.tags.engage === true).length * 0.03
+    );
+
+    // Fleksibilitas penempatan hero (multi-lane hero seperti Dun, Sun Ce, Liang)
     flex = Math.min(0.95, 0.40 + ourHeroes.filter((h) => h.lanes.length > 1).length * 0.15);
 
-    const utilityTags = ['ally_shield', 'ally_heal', 'ally_move_speed_buff', 'ally_attack_speed_buff', 'ally_damage_buff', 'ally_cleanse', 'ally_cc_immunity'] as const;
+    // Team Utility dari 7 tag dukungan sekutu
+    const utilityTags = [
+      'ally_shield',
+      'ally_heal',
+      'ally_move_speed_buff',
+      'ally_attack_speed_buff',
+      'ally_damage_buff',
+      'ally_cleanse',
+      'ally_cc_immunity',
+    ] as const;
+
     const reviewedUtility = new Set<string>();
     for (const hero of ourHeroes) {
       if (hero.is_global_released !== true) continue;
-      for (const tag of utilityTags) if (hero.tactical_profile?.tags[tag] === true) reviewedUtility.add(tag);
+      for (const tag of utilityTags) {
+        if (hero.tactical_profile?.tags[tag] === true) {
+          reviewedUtility.add(tag);
+        }
+      }
     }
     teamUtility = Math.min(0.95, 0.35 + reviewedUtility.size * 0.12);
 
+    // Keunggulan vs Kerentanan Counter
     let counterAdv = 0;
     let counterVulnerability = 0;
     for (const oh of ourHeroes) {
       let counteredByCount = 0;
       for (const eh of enemyHeroes) {
-        if (oh.counters.some((c) => c.target_id === eh.hero_id) || eh.countered_by?.some((c) => c.counter_id === oh.hero_id)) {
+        if (
+          oh.counters.some((c) => c.target_id === eh.hero_id) ||
+          eh.countered_by?.some((c) => c.counter_id === oh.hero_id)
+        ) {
           counterAdv += 0.08;
         }
-        if (eh.counters.some((c) => c.target_id === oh.hero_id) || oh.countered_by?.some((c) => c.counter_id === eh.hero_id)) {
+        if (
+          eh.counters.some((c) => c.target_id === oh.hero_id) ||
+          oh.countered_by?.some((c) => c.counter_id === eh.hero_id)
+        ) {
           counteredByCount += 1;
         }
       }
+
       if (counteredByCount === 1) {
         counterVulnerability += 0.07;
       } else if (counteredByCount === 2) {
@@ -63,80 +160,103 @@ export function evaluateTacticalScores(ourHeroes: Hero[], enemyHeroes: Hero[]): 
         counterVulnerability += 0.32 + (counteredByCount - 3) * 0.10;
       }
     }
-    shutdown = Math.min(0.95, Math.max(0.15, 0.45 + (roleCounts['Assassin'] || 0) * 0.15 + counterAdv - counterVulnerability * 0.35));
+
+    shutdown = Math.min(
+      0.95,
+      Math.max(0.15, 0.45 + (roleCounts['Assassin'] || 0) * 0.15 + counterAdv - counterVulnerability * 0.35)
+    );
     draftAdvantage = Math.min(0.85, Math.max(0.15, avgWr + (counterAdv - counterVulnerability) * 0.5));
   }
 
   return {
-    draft_advantage: draftAdvantage, early_game_pressure: early, cc_chain_lockdown: cc,
-    frontline_durability: frontline, enemy_carry_shutdown: shutdown, draft_flexibility: flex, team_utility: teamUtility,
+    draft_advantage: draftAdvantage,
+    early_game_pressure: early,
+    cc_chain_lockdown: cc,
+    frontline_durability: frontline,
+    enemy_carry_shutdown: shutdown,
+    draft_flexibility: flex,
+    team_utility: teamUtility,
   };
 }
 
-export function reviewedHoKStatsBonuses(candidate: Hero, ourHeroes: Hero[], enemyHeroes: Hero[]): { matchupBonus: number; traitBonus: number; totalBonus: number } {
-  if (candidate.is_global_released !== true) return { matchupBonus: 0, traitBonus: 0, totalBonus: 0 };
+/**
+ * Menghitung bonus sinyal editorial HoKStats yang telah diaudit dan disetujui (approved).
+ * Memberi batas maksimal +0.45 agar sinyal panduan tidak melampaui sinergi empiris KPL atau counter langsung.
+ */
+export function reviewedHoKStatsBonuses(
+  candidate: Hero,
+  ourHeroes: Hero[],
+  enemyHeroes: Hero[]
+): { matchupBonus: number; traitBonus: number; totalBonus: number } {
+  if (candidate.is_global_released !== true) {
+    return { matchupBonus: 0, traitBonus: 0, totalBonus: 0 };
+  }
+
   const reviewedEnemies = new Set<number>();
   for (const enemy of enemyHeroes) {
     if (enemy.is_global_released !== true) continue;
-    const candidateEvidence = candidate.hokstats_guide?.matchups?.some(matchup =>
-      matchup.relation === 'strong_against' && matchup.hero_id === enemy.hero_id && matchup.source.review_status === 'approved'
-    ) ?? false;
-    const enemyEvidence = enemy.hokstats_guide?.matchups?.some(matchup =>
-      matchup.relation === 'countered_by' && matchup.hero_id === candidate.hero_id && matchup.source.review_status === 'approved'
-    ) ?? false;
-    if (candidateEvidence || enemyEvidence) reviewedEnemies.add(enemy.hero_id);
+    const candidateEvidence =
+      candidate.hokstats_guide?.matchups?.some(
+        (matchup) =>
+          matchup.relation === 'strong_against' &&
+          matchup.hero_id === enemy.hero_id &&
+          matchup.source.review_status === 'approved'
+      ) ?? false;
+
+    const enemyEvidence =
+      enemy.hokstats_guide?.matchups?.some(
+        (matchup) =>
+          matchup.relation === 'countered_by' &&
+          matchup.hero_id === candidate.hero_id &&
+          matchup.source.review_status === 'approved'
+      ) ?? false;
+
+    if (candidateEvidence || enemyEvidence) {
+      reviewedEnemies.add(enemy.hero_id);
+    }
   }
+
   const matchupBonus = Math.min(0.45, reviewedEnemies.size * 0.15);
   const tags = candidate.tactical_profile?.tags;
-  if (!tags) return { matchupBonus, traitBonus: 0, totalBonus: matchupBonus };
-  const globalTeam = ourHeroes.filter(hero => hero.is_global_released === true);
-  const alreadyHas = (tag: keyof typeof tags) => globalTeam.some(hero => hero.tactical_profile?.tags[tag] === true);
+  if (!tags) {
+    return { matchupBonus, traitBonus: 0, totalBonus: matchupBonus };
+  }
+
+  const globalTeam = ourHeroes.filter((hero) => hero.is_global_released === true);
+  const alreadyHas = (tag: keyof typeof tags) => globalTeam.some((hero) => hero.tactical_profile?.tags[tag] === true);
+
   const gaps: Array<[keyof typeof tags, boolean]> = [
-    ['frontline', !globalTeam.some(hero => hero.primary_role === 'Tank' || hero.tactical_profile?.tags.frontline === true)],
-    ['engage', !globalTeam.some(hero => hero.tactical_profile?.tags.engage === true)],
-    ['peel', !globalTeam.some(hero => hero.tactical_profile?.tags.peel === true || hero.tactical_profile?.tags.disengage === true)],
-    ['ally_shield', !alreadyHas('ally_shield')], ['ally_heal', !alreadyHas('ally_heal')],
-    ['ally_move_speed_buff', !alreadyHas('ally_move_speed_buff')], ['ally_attack_speed_buff', !alreadyHas('ally_attack_speed_buff')],
-    ['ally_damage_buff', !alreadyHas('ally_damage_buff')], ['ally_cleanse', !alreadyHas('ally_cleanse')], ['ally_cc_immunity', !alreadyHas('ally_cc_immunity')],
+    ['frontline', !globalTeam.some((hero) => hero.primary_role === 'Tank' || hero.tactical_profile?.tags.frontline === true)],
+    ['engage', !globalTeam.some((hero) => hero.tactical_profile?.tags.engage === true)],
+    ['peel', !globalTeam.some((hero) => hero.tactical_profile?.tags.peel === true || hero.tactical_profile?.tags.disengage === true)],
+    ['ally_shield', !alreadyHas('ally_shield')],
+    ['ally_heal', !alreadyHas('ally_heal')],
+    ['ally_move_speed_buff', !alreadyHas('ally_move_speed_buff')],
+    ['ally_attack_speed_buff', !alreadyHas('ally_attack_speed_buff')],
+    ['ally_damage_buff', !alreadyHas('ally_damage_buff')],
+    ['ally_cleanse', !alreadyHas('ally_cleanse')],
+    ['ally_cc_immunity', !alreadyHas('ally_cc_immunity')],
   ];
-  const traitBonus = Math.min(0.45, gaps.reduce((sum, [tag, gap]) => sum + (gap && tags[tag] === true ? 0.15 : 0), 0));
+
+  const traitBonus = Math.min(
+    0.45,
+    gaps.reduce((sum, [tag, gap]) => sum + (gap && tags[tag] === true ? 0.15 : 0), 0)
+  );
+
   return { matchupBonus, traitBonus, totalBonus: Math.min(0.45, matchupBonus + traitBonus) };
 }
 
-
-
-export interface TournamentPhaseStrategy {
-  phaseId: TournamentPhaseId;
-  phaseTitle: string;
-  phaseObjective: string;
-  plannedOpener: Hero | null;
-  activePlan: 'PLAN_A' | 'PLAN_B' | 'AI_FALLBACK';
-  planAHero: Hero | null;
-  planBHero: Hero | null;
-  isPlanABanned: boolean;
-  isPlanBBanned: boolean;
-  candidateOpeners: Hero[];
-  bannedOpenerCounters: string[];
-  ourVacantLanes: Lane[];
-  enemyVacantLanes: Lane[];
-}
-
-export interface TournamentPredictionResult {
-  tacticalScores: TacticalVector;
-  recommendations: Array<{
-    hero: Hero;
-    rankingWeight: number;
-    choiceScore: number;
-    proComboTag?: string;
-    laneTag?: string;
-  }>;
-  phaseStrategy: TournamentPhaseStrategy;
-  latencyMs: number;
-  engineKind: 'deterministic' | 'search';
-}
+// =============================================================================
+// SECTION 2: BASE QUALITY & EVALUASI PAPARAN COUNTER MUSUH
+// =============================================================================
 
 /**
- * Computes how strong a hero is as a Phase 1 First-Pick / Core Opener (S-Tier + KPL B1/R1 frequency).
+ * Menghitung kualitas dasar turnamen hero (Presensi KPL + Tier + Winrate).
+ *
+ * Catatan Kompetitif:
+ * - Tier Diamond+ kasual (HOKFIRE) menganggap hero seperti Li Xin split-push sebagai S-tier.
+ *   Namun di KPL, Li Xin memiliki 0 pertandingan. Fungsi ini membatasi tier bonus dan memberi sanksi
+ *   pada hero pub-only agar tidak direkomendasikan pada pick pembuka Fase 1 (B1/R1/R2).
  */
 export function computeTournamentBaseQuality(
   hero: Hero,
@@ -150,27 +270,35 @@ export function computeTournamentBaseQuality(
   const p1Bans = kplStat?.p1_bans || 0;
   const totalKplPresence = b1Count + r1Count + p1Bans;
 
-  // Casual HOKFIRE tier (S/A) reflects solo-queue Diamond+ (e.g. split-push Li Xin #507 is S-tier in pub with 0 KPL matches).
-  // Cap casual tier bonus if the hero lacks empirical KPL tournament presence.
   let tierBonus = { S: 0.35, A: 0.20, B: 0.05, C: -0.10, D: -0.25 }[hero.tier] ?? 0.0;
   if (totalKplPresence < 50) {
     tierBonus = Math.min(tierBonus, 0.05);
   }
 
-  // Empirical KPL tournament presence bonus (rewards true pro staples like Arli, Da Qiao, Kaizer, Lam, Dolia, Zhang Fei)
+  // Bonus presensi empiris turnamen KPL
   const kplPresenceBonus =
     Math.min(0.85, (b1Count * 1.2 + r1Count * 0.9) / 650 + (p1Bans * 0.35) / 1400) * synergyMultiplier;
 
-  // Penalize pub-only heroes with zero/negligible KPL presence, especially during Phase 1 opener picks (Steps 4..6: B1, R1, R2)
+  // Penalti hero kasual tanpa presensi turnamen
   const nonTournamentPenalty = totalKplPresence === 0 ? -0.35 : totalKplPresence < 40 ? -0.15 : 0.0;
   const earlyNonOpenerPenalty = draftStep >= 4 && draftStep <= 6 && b1Count + r1Count < 60 ? -0.60 : 0.0;
 
   const rawWrDelta = (hero.win_rate - 0.48) * 1.5;
   const adjustedWrDelta = rawWrDelta > 0 ? rawWrDelta * synergyMultiplier : rawWrDelta;
 
-  return adjustedWrDelta + tierBonus + hero.pick_rate * 1.8 + kplPresenceBonus + nonTournamentPenalty + earlyNonOpenerPenalty;
+  return (
+    adjustedWrDelta +
+    tierBonus +
+    hero.pick_rate * 1.8 +
+    kplPresenceBonus +
+    nonTournamentPenalty +
+    earlyNonOpenerPenalty
+  );
 }
 
+/**
+ * Menghitung skor prioritas pembuka (Opener Priority) untuk First Pick B1 atau respon R1+R2.
+ */
 function computeOpenerPriorityScore(
   hero: Hero,
   b1Openers: Record<string, any>,
@@ -188,26 +316,24 @@ function computeOpenerPriorityScore(
     tierWeight = Math.min(tierWeight, 0.0);
   }
 
-  // Immobile carry & non-tournament opener penalties:
+  // Penalti carry statis & hero tanpa kredibilitas turnamen
   let openerPenalty = 0;
   const isImmobileCarry = isRiskyOpener(hero);
   if (isImmobileCarry) {
-    openerPenalty = -2.5;
+    openerPenalty = -2.5; // Luban No.7, Hou Yi, Angela, Daji, Milady tidak boleh jadi B1
   } else if (b1Count + r1Count < 60) {
-    // Pub-only heroes (e.g. Li Xin #507, Arthur #166, Wukong #167) are never Phase 1 tournament openers
     openerPenalty = -1.25;
   }
 
-  // Channeled suppress heroes (e.g. Liang #156) are situational anti-mobility lockdowns in KPL (only 110 B1 picks),
-  // not blind B1 openers ahead of Ao'yin / Augran / Haya / Dun because blind B1 exposes their channel to long-range poke/hooks.
+  // Hero channeled suppress (Liang) adalah situational lockdown, bukan blind B1 opener
   const blindSuppressAdjustment = hero.tactical_profile?.tags.suppress === true ? -0.30 : 0;
 
   const kplOpenerBonus = forBlueSide
     ? Math.min(0.75, b1Count / 260) + Math.min(0.30, p1Bans / 2000)
     : Math.min(0.75, r1Count / 350 + b1Count / 500) + Math.min(0.30, p1Bans / 2000);
   const banRateBonus = Math.min(0.25, (hero.ban_rate || 0) * 4.0);
-
   const flexBonus = hero.lanes.length > 1 ? 0.10 : 0;
+
   return (
     (hero.win_rate - 0.48) * 1.8 +
     hero.pick_rate * 2.0 +
@@ -220,6 +346,7 @@ function computeOpenerPriorityScore(
   );
 }
 
+/** Struktur data hasil evaluasi paparan counter musuh */
 export interface EnemyCounterExposure {
   counteredByNames: string[];
   counterCount: number;
@@ -228,6 +355,17 @@ export interface EnemyCounterExposure {
   tacticalTrapReason?: string;
 }
 
+/**
+ * Mengevaluasi paparan counter terhadap musuh yang sudah dipilih (Enemy Counter Exposure).
+ *
+ * Menerapkan penalti non-linear compounding dan peredam sinergi KPL:
+ * - 1 counter musuh: Penalti -0.55, sinergi KPL diredam ke 55%.
+ * - 2 counter musuh: Penalti -1.45, sinergi KPL diredam ke 10%.
+ * - 3+ counter musuh: Penalti -2.60+, sinergi KPL dipotong habis (0%).
+ *
+ * Mencegah algoritma memaksakan rekomendasi hero dengan sinergi KPL tinggi jika hero tersebut
+ * sudah di-counter oleh formasi musuh di arena.
+ */
 export function evaluateEnemyCounterExposure(
   cand: Hero,
   enemyHeroes: Hero[],
@@ -268,7 +406,6 @@ export function evaluateEnemyCounterExposure(
   let exposurePenalty = 0;
   let synergyMultiplier = 1.0;
 
-  // Non-linear compounding penalty & KPL synergy dampener when countered by 1, 2, or 3+ enemy heroes:
   if (counterCount === 1) {
     exposurePenalty = 0.55;
     synergyMultiplier = 0.55;
@@ -280,14 +417,15 @@ export function evaluateEnemyCounterExposure(
     synergyMultiplier = 0.0;
   }
 
-  // Tactical profile composition trap checks (e.g. dive_vulnerable candidate into 2+ enemy divers/initiators)
+  // Periksa jebakan komposisi: Hero rentan dive (dive_vulnerable) berhadapan dengan 2+ diver musuh
   let tacticalTrapReason: string | undefined = undefined;
   const candTags = cand.tactical_profile?.tags;
   if (candTags) {
     const enemyDivers = enemyHeroes.filter(
       (eh) =>
         eh.tactical_profile?.tags.engage === true ||
-        (eh.tactical_profile?.tags.mobility === true && (eh.primary_role === 'Assassin' || eh.primary_role === 'Fighter')) ||
+        (eh.tactical_profile?.tags.mobility === true &&
+          (eh.primary_role === 'Assassin' || eh.primary_role === 'Fighter')) ||
         eh.primary_role === 'Assassin'
     );
     if (candTags.dive_vulnerable === true && enemyDivers.length >= 2) {
@@ -307,6 +445,43 @@ export function evaluateEnemyCounterExposure(
   };
 }
 
+// =============================================================================
+// SECTION 3: STRUKTUR DATA HASIL & ORCHESTRATOR UTAMA
+// =============================================================================
+
+export interface TournamentPhaseStrategy {
+  phaseId: TournamentPhaseId;
+  phaseTitle: string;
+  phaseObjective: string;
+  plannedOpener: Hero | null;
+  activePlan: 'PLAN_A' | 'PLAN_B' | 'AI_FALLBACK';
+  planAHero: Hero | null;
+  planBHero: Hero | null;
+  isPlanABanned: boolean;
+  isPlanBBanned: boolean;
+  candidateOpeners: Hero[];
+  bannedOpenerCounters: string[];
+  ourVacantLanes: Lane[];
+  enemyVacantLanes: Lane[];
+}
+
+export interface TournamentPredictionResult {
+  tacticalScores: TacticalVector;
+  recommendations: Array<{
+    hero: Hero;
+    rankingWeight: number;
+    choiceScore: number;
+    proComboTag?: string;
+    laneTag?: string;
+  }>;
+  phaseStrategy: TournamentPhaseStrategy;
+  latencyMs: number;
+  engineKind: 'deterministic' | 'search';
+}
+
+/**
+ * Mesin utama kalkulasi inferensi taktis turnamen untuk giliran draft aktif.
+ */
 export function runTournamentInference(
   ourHeroIds: number[],
   enemyHeroIds: number[],
@@ -335,11 +510,11 @@ export function runTournamentInference(
   const enemyHeroes = enemyHeroIds.map((id) => idMap.get(id)).filter(Boolean) as Hero[];
   const bannedHeroes = bannedHeroIds.map((id) => idMap.get(id)).filter(Boolean) as Hero[];
 
-  // 1. Both Teams' Lane Occupancy Analysis
+  // 1. Analisis Okupansi Lane Kedua Tim
   const { occupiedLanes: ourOccupiedLanes, vacantLanes: ourVacantLanes } = analyzeLaneOccupancy(ourHeroes);
   const { occupiedLanes: enemyOccupiedLanes, vacantLanes: enemyVacantLanes } = analyzeLaneOccupancy(enemyHeroes);
 
-  // 2. Build unavailable mask
+  // 2. Bangun Masking Hero Tidak Tersedia
   const maskArr = new Float32Array(heroes.length);
   const unavailableSet = new Set([
     ...ourHeroIds,
@@ -348,7 +523,6 @@ export function runTournamentInference(
     ...(isPickPhase ? fearlessUnavailableIds : []),
   ]);
 
-  // When onlyGlobalReleased is true, exclude CN-only unreleased heroes from recommendation & picks
   if (onlyGlobalReleased) {
     heroes.forEach((h) => {
       if (!isHeroGlobalReleased(h)) {
@@ -372,30 +546,28 @@ export function runTournamentInference(
   const phase2BanProtectOur = synergyDb?.phase2_ban_protect_our || {};
   const dunshanPairs = synergyDb?.dunshan_pair_counters || {};
 
-  // 4. Identify Top Available Meta Openers for Phase 1 Strategy
+  // 3. Identifikasi Opener Meta Terbaik untuk Strategi Fase 1
   const openerUnavailable = new Set([...unavailableSet, ...fearlessUnavailableIds]);
-  const availableHeroes = heroes.filter(h => !openerUnavailable.has(h.hero_id));
+  const availableHeroes = heroes.filter((h) => !openerUnavailable.has(h.hero_id));
   const rankedOpeners = [...availableHeroes].sort(
     (a, b) =>
       computeOpenerPriorityScore(b, b1Openers, isBlueSide, onlyGlobalReleased) -
       computeOpenerPriorityScore(a, b1Openers, isBlueSide, onlyGlobalReleased)
   );
 
-  // Top candidate openers for recommendation / quick selection
-  const candidateOpeners = rankedOpeners.filter(h => !isRiskyOpener(h)).slice(0, 8);
+  const candidateOpeners = rankedOpeners.filter((h) => !isRiskyOpener(h)).slice(0, 8);
 
-  // Determine Plan A and Plan B:
+  // Menentukan Plan A dan Plan B
   const hasExplicitUserPlan = Boolean(planAId || planBId);
   let planAHero: Hero | null = planAId ? idMap.get(planAId) || null : null;
   let planBHero: Hero | null = planBId ? idMap.get(planBId) || null : null;
 
-  // Auto-suggest Plan A if not specified (prefer opener not already countered by enemy picks)
   if (!planAHero && rankedOpeners.length > 0) {
     planAHero =
       rankedOpeners.find((h) => evaluateEnemyCounterExposure(h, enemyHeroes, b1Openers).counterCount === 0) ||
       rankedOpeners[0];
   }
-  // Auto-suggest Plan B if not specified (pick hero with different role or primary lane)
+
   if (!planBHero && rankedOpeners.length > 1) {
     const fallbackOp = rankedOpeners.find(
       (h) =>
@@ -407,11 +579,9 @@ export function runTournamentInference(
   }
 
   const isPlanABanned = Boolean(planAHero && bannedHeroIds.includes(planAHero.hero_id));
-  const isPlanAPicked = Boolean(planAHero && (ourHeroIds.includes(planAHero.hero_id) || enemyHeroIds.includes(planAHero.hero_id)));
   const isPlanBBanned = Boolean(planBHero && bannedHeroIds.includes(planBHero.hero_id));
-  const isPlanBPicked = Boolean(planBHero && (ourHeroIds.includes(planBHero.hero_id) || enemyHeroIds.includes(planBHero.hero_id)));
 
-  // Resolve Active Planned Opener (and auto-pivot if Plan A is hard-countered by enemy picks):
+  // Resolusi Opener Terencana & Auto-Pivot jika Plan A Di-Hard-Counter oleh Musuh
   let plannedOpener: Hero | null = null;
   let activePlan: 'PLAN_A' | 'PLAN_B' | 'AI_FALLBACK' = 'PLAN_A';
   const planAExposure = planAHero ? evaluateEnemyCounterExposure(planAHero, enemyHeroes, b1Openers).counterCount : 0;
@@ -435,15 +605,19 @@ export function runTournamentInference(
     activePlan = 'AI_FALLBACK';
   }
 
-  // Helper: Check if `counterCand` is a counter to `targetHero` (via Kurohiko matrix, HOKFIRE guide, or KPL Pre-Ban history)
-  const getCounterStrengthAgainst = (counterCand: Hero, targetHero: Hero): { isCounter: boolean; kplPrebanCount: number; reason?: string } => {
+  /**
+   * Helper: Memeriksa kekuatan relasi counter antara `counterCand` terhadap `targetHero`.
+   */
+  const getCounterStrengthAgainst = (
+    counterCand: Hero,
+    targetHero: Hero
+  ): { isCounter: boolean; kplPrebanCount: number; reason?: string } => {
     const directCounter = counterCand.counters.find((c) => c.target_id === targetHero.hero_id);
     const reverseCountered = targetHero.countered_by?.find((c) => c.counter_id === counterCand.hero_id);
     const kplPrebans: Array<{ ban_id: number; count: number }> = b1Openers[String(targetHero.hero_id)]?.top_prebans || [];
     const prebanEntry = kplPrebans.find((p) => p.ban_id === counterCand.hero_id);
     const kplPrebanCount = prebanEntry ? prebanEntry.count : 0;
 
-    // Check HOKFIRE guide official matchups (weak_against / strong_against)
     const candCleanSlug = counterCand.slug.replace(/-/g, '').toLowerCase();
     const targetCleanSlug = targetHero.slug.replace(/-/g, '').toLowerCase();
 
@@ -454,7 +628,9 @@ export function runTournamentInference(
       counterCand.hokfire_counters?.strong_against?.some((s) => s.replace(/-/g, '').toLowerCase() === targetCleanSlug)
     );
 
-    const isCounter = Boolean(directCounter || reverseCountered || isHokfireWeakAgainst || isHokfireStrongAgainst || kplPrebanCount >= 12);
+    const isCounter = Boolean(
+      directCounter || reverseCountered || isHokfireWeakAgainst || isHokfireStrongAgainst || kplPrebanCount >= 12
+    );
     let reason = directCounter?.reason || reverseCountered?.reason;
     if (!reason && (isHokfireWeakAgainst || isHokfireStrongAgainst)) {
       reason = `HOKFIRE Official Counter: ${counterCand.name} unggul terhadap ${targetHero.name}`;
@@ -467,7 +643,7 @@ export function runTournamentInference(
     };
   };
 
-  // Check which counters to `plannedOpener` have ALREADY been banned in this draft
+  // Cek counter apa saja dari `plannedOpener` yang sudah berhasil di-ban pada sesi draft ini
   const bannedOpenerCounters: string[] = [];
   if (plannedOpener) {
     for (const bh of bannedHeroes) {
@@ -481,7 +657,10 @@ export function runTournamentInference(
   const tacticalScores = evaluateTacticalScores(ourHeroes, enemyHeroes);
   const { frontline_durability: frontline, cc_chain_lockdown: cc } = tacticalScores;
 
-  // 6. Score every available candidate using 4-Phase Tournament Strategy
+  // ===========================================================================
+  // SECTION 4: PERHITUNGAN SKOR KANDIDAT BERDASARKAN 4 FASE TURNAMEN
+  // ===========================================================================
+
   const scoredCandidates: Array<{
     hero: Hero;
     baseScore: number;
@@ -508,12 +687,11 @@ export function runTournamentInference(
     let laneTag: string | undefined = undefined;
     let proComboTag: string | undefined = undefined;
 
-    // =========================================================================
-    // PHASE 1: BAN PHASE 1 (Steps 0..3) — Pre-Ban Counters to Planned Meta Opener
-    // =========================================================================
+    // -------------------------------------------------------------------------
+    // FASE 1: BAN PHASE 1 (Steps 0..3) — Pre-Ban Counter & Deny First Pick
+    // -------------------------------------------------------------------------
     if (phaseId === 'BAN_PHASE_1') {
       if (isImmobileCarry) {
-        // Immobile carries are never banned in Phase 1 tournament draft
         score -= 2.2;
       }
       const kplOpenerInfo = b1Openers[String(cand.hero_id)];
@@ -522,8 +700,8 @@ export function runTournamentInference(
       const isCompetitiveSTier = cand.tier === 'S' && totalKplPresence >= 50;
 
       if (isBlueSide) {
-        // BLUE SIDE (First Pick B1 Advantage):
-        // 1. NEVER ban the #1 meta opener we plan to first-pick at B1!
+        // SISI BLUE (Keuntungan First-Pick B1):
+        // 1. DILARANG mem-ban hero B1 target kita sendiri!
         if (plannedOpener && cand.hero_id === plannedOpener.hero_id) {
           score -= 3.0;
           laneTag = 'Jangan Di-Ban (Target B1)';
@@ -531,7 +709,7 @@ export function runTournamentInference(
         } else if (plannedOpener) {
           const counterCheck = getCounterStrengthAgainst(cand, plannedOpener);
           if (hasExplicitUserPlan && counterCheck.isCounter) {
-            // 2A. User explicitly selected a Plan A/B hero: prioritize banning its hard counters!
+            // 2A. Pengguna mengunci Plan A/B: utamakan ban hard counter terhadap hero tersebut
             const prebanBoost = Math.min(0.55, counterCheck.kplPrebanCount / 160);
             score += 1.25 + prebanBoost;
             laneTag = `Counter ${plannedOpener.name}`;
@@ -540,8 +718,7 @@ export function runTournamentInference(
                 ? `🎯 Amankan B1 ${plannedOpener.name}: Pre-Ban Counter (${counterCheck.kplPrebanCount}x di KPL)`
                 : `🎯 Amankan B1 ${plannedOpener.name}: Ban Hard Counter Utama`;
           } else {
-            // 2B. Default balanced Phase 1 Ban: prioritize R1+R2 tournament meta threats first,
-            // so niche B/C-tier counters (like Shouyue) don't crowd out top meta bans when no Plan A is locked.
+            // 2B. Prioritaskan ancaman meta R1+R2 Red
             if (p1BansCount >= 120 || cand.ban_rate >= 0.025 || isCompetitiveSTier) {
               const metaThreatBoost =
                 (isCompetitiveSTier ? 0.50 : cand.tier === 'A' && totalKplPresence >= 50 ? 0.25 : 0.10) +
@@ -563,26 +740,23 @@ export function runTournamentInference(
           }
         }
       } else {
-        // RED SIDE (Second Pick R1+R2 — Must Deny Blue's B1 Opener & Protect R1+R2):
-        // 1. Protect Red's own planned R1 opener from being self-banned
+        // SISI RED (Second Pick R1+R2 — Deny B1 Blue & Lindungi Core R1+R2):
         if (plannedOpener && cand.hero_id === plannedOpener.hero_id) {
           score -= 2.5;
           laneTag = 'Simpan utk R1 Kita';
           proComboTag = `👑 Simpan untuk R1+R2 Pick Kita!`;
         } else if (blueB1ThreatHero && cand.hero_id === blueB1ThreatHero.hero_id) {
-          // 2. Deny Blue's #1 S-Tier B1 Opener!
+          // Deny Hero S-Tier Utama Pembuka B1 Blue!
           score += 1.35;
           laneTag = 'Wajib Deny B1 Blue';
           proComboTag = `🚫 Cegah Blue First-Pick ${cand.name} di B1 (${kplOpenerInfo?.b1_picks || 'Top'}x B1 KPL)`;
         } else if (plannedOpener) {
           const counterCheck = getCounterStrengthAgainst(cand, plannedOpener);
           if (hasExplicitUserPlan && counterCheck.isCounter) {
-            // 3. Ban hard counters to Red's explicitly planned R1+R2 core
             score += 1.05 + Math.min(0.40, counterCheck.kplPrebanCount / 180);
             laneTag = `Counter ${plannedOpener.name}`;
             proComboTag = `🛡️ Amankan R1+R2 ${plannedOpener.name}: Ban Counter Utama`;
           } else if (isCompetitiveSTier || (kplOpenerInfo?.b1_picks || 0) >= 160 || p1BansCount >= 500) {
-            // Other S-Tier / KPL B1 openers Blue might take
             score +=
               (isCompetitiveSTier ? 0.55 : 0.25) +
               Math.min(0.45, (kplOpenerInfo?.b1_picks || 0) / 400) +
@@ -598,9 +772,9 @@ export function runTournamentInference(
       }
     }
 
-    // =========================================================================
-    // PHASE 2: PICK PHASE 1 (Steps 4..9) — Secure Meta Opener, Counter & Combo
-    // =========================================================================
+    // -------------------------------------------------------------------------
+    // FASE 2: PICK PHASE 1 (Steps 4..9) — Amankan Opener, Kombo KPL & Respon
+    // -------------------------------------------------------------------------
     else if (phaseId === 'PICK_PHASE_1') {
       const kplOpenerInfo = b1Openers[String(cand.hero_id)];
       const hasKplOpenerCredibility =
@@ -608,7 +782,7 @@ export function runTournamentInference(
       const isPrimaryOccupied = ourOccupiedLanes.has(cand.primary_lane);
       const canFlexToVacant = cand.lanes.some((l) => ourVacantLanes.has(l));
 
-      // Strict Lane Vacancy Check (No duplicate Farm/Jungle/Mid!)
+      // Pemeriksaan Ketat Okupansi Lane (Jangan duplikasi lane yang sudah terisi)
       if (ourHeroes.length > 0) {
         if (!isPrimaryOccupied) {
           score += 0.50;
@@ -617,14 +791,14 @@ export function runTournamentInference(
           score -= 0.15;
           laneTag = `Flex ${cand.lanes.find((l) => ourVacantLanes.has(l))}`;
         } else {
-          score -= 1.60; // Never recommend duplicate filled lane in tournament!
+          score -= 1.60;
           laneTag = `${cand.primary_lane} Sudah Ada`;
         }
       } else {
         laneTag = `Opener ${cand.primary_lane}`;
       }
 
-      // Step 4 is Blue B1 First Pick: Execute our Planned First-Pick Strategy!
+      // Step 4 adalah First-Pick B1 Blue: Eksekusi strategi opener utama!
       if (draftStep === 4 && plannedOpener && cand.hero_id === plannedOpener.hero_id) {
         score += 1.45 * exposure.synergyMultiplier;
         laneTag = 'B1 Target Utama';
@@ -633,22 +807,24 @@ export function runTournamentInference(
             ? `👑 Eksekusi First-Pick B1! Counter (${bannedOpenerCounters.join(', ')}) sudah di-ban`
             : `👑 First-Pick Meta Prioritas #1 (B1 Opener)`;
       } else if (draftStep <= 6 && !isImmobileCarry && hasKplOpenerCredibility) {
-        // Early Phase 1 (B1 / R1+R2) Meta Priority Bonus (requires empirical KPL opener credibility!)
         const openerBoost =
           computeOpenerPriorityScore(cand, b1Openers, isBlueSide, onlyGlobalReleased) *
           0.45 *
           exposure.synergyMultiplier;
         score += openerBoost;
-        if (!proComboTag && ((kplOpenerInfo?.b1_picks || 0) >= 80 || (kplOpenerInfo?.r1_r2_picks || 0) >= 180) && exposure.counterCount === 0) {
+        if (
+          !proComboTag &&
+          ((kplOpenerInfo?.b1_picks || 0) >= 80 || (kplOpenerInfo?.r1_r2_picks || 0) >= 180) &&
+          exposure.counterCount === 0
+        ) {
           proComboTag = `👑 Prioritas Pembuka Turnamen (${kplOpenerInfo.b1_picks}x B1 / ${kplOpenerInfo.r1_r2_picks}x R1-R2 KPL)`;
         }
       } else if (draftStep === 4 && isImmobileCarry && cand.hero_id !== plannedOpener?.hero_id) {
-        // Heavy penalty for blind first-picking immobile carry at Step 4 B1
         score -= 2.0;
         laneTag = 'Rentan Di-Dive Musuh';
       }
 
-      // Direct Counter to Enemy Phase 1 Picks (e.g. Red R1+R2 responding to Blue B1, or Blue B2+B3 responding to Red R1+R2)
+      // Counter Langsung terhadap Pick Musuh di Fase 1 (misal Red R1+R2 respon B1)
       const counteredEnemyNames: string[] = [];
       for (const eh of enemyHeroes) {
         if (cand.counters.some((c) => c.target_id === eh.hero_id)) {
@@ -660,8 +836,7 @@ export function runTournamentInference(
         proComboTag = `⚔️ Respon Counter Pick: Menangkal ${counteredEnemyNames.join(', ')}`;
       }
 
-      // Empirical KPL Synergy & Chain CC Combos with Our Already-Picked Teammates
-      // (Dampened by `exposure.synergyMultiplier` so KPL synergy cannot override being countered by 2-3 enemy heroes!)
+      // Sinergi Duet KPL dengan Rekan Tim yang Sudah Dipilih
       for (const teammate of ourHeroes) {
         const p1 = Math.min(cand.hero_id, teammate.hero_id);
         const p2 = Math.max(cand.hero_id, teammate.hero_id);
@@ -680,7 +855,7 @@ export function runTournamentInference(
           }
         }
 
-        // Anti-Dunshan Chain CC combo check (e.g. Kui + Xiao Qiao)
+        // Penanganan Khusus Counter Dunshan (Kui + Xiao Qiao)
         if (hasEnemyDunshan) {
           if (dunshanPairs[pairKey]) {
             const dData = dunshanPairs[pairKey];
@@ -695,7 +870,7 @@ export function runTournamentInference(
           }
         }
 
-        // HOKFIRE Official Synergy Check (e.g. Lady Sun + Zhang Fei / Lapulapu)
+        // Sinergi Resmi HOKFIRE
         const teamCleanSlug = teammate.slug.replace(/-/g, '').toLowerCase();
         if (cand.hokfire_counters?.synergizes?.some((s) => s.replace(/-/g, '').toLowerCase() === teamCleanSlug)) {
           score += 0.40 * exposure.synergyMultiplier;
@@ -706,12 +881,11 @@ export function runTournamentInference(
       }
     }
 
-    // =========================================================================
-    // PHASE 3: BAN PHASE 2 (Steps 10..13) — Break Enemy Combo in Vacant Lanes & Protect Core
-    // =========================================================================
+    // -------------------------------------------------------------------------
+    // FASE 3: BAN PHASE 2 (Steps 10..13) — Putus Kombo Lane Kosong Musuh & Proteksi
+    // -------------------------------------------------------------------------
     else if (phaseId === 'BAN_PHASE_2') {
-      // In Ban Phase 2, Enemy already has 3 heroes (3 occupied lanes, 2 vacant lanes).
-      // Filter strictly by ENEMY'S VACANT LANES so we never waste a ban on a role the enemy already picked!
+      // Di Fase Ban 2, musuh sudah memiliki 3 hero. Filter KHUSUS sisa 2 lane kosong musuh!
       const fitsEnemyVacantPrimary = enemyVacantLanes.has(cand.primary_lane);
       const fitsEnemyVacantFlex = cand.lanes.some((l) => enemyVacantLanes.has(l));
 
@@ -723,22 +897,21 @@ export function runTournamentInference(
         score += 0.20;
         laneTag = `Target Flex ${flexTarget} Musuh`;
       } else {
-        // Enemy ALREADY filled this hero's lane(s) in Phase 1! Wasted ban!
+        // Musuh sudah mengisi lane ini di Fase 1: Wasted Ban!
         score -= 2.40;
         laneTag = `Musuh Sudah Ada ${cand.primary_lane}`;
       }
 
-      // Also avoid banning a hero we desperately need for our own vacant lane unless it's a massive enemy combo threat
+      // Hindari mem-ban hero yang kita butuhkan sendiri untuk lane kosong kita
       if (ourVacantLanes.has(cand.primary_lane) && !fitsEnemyVacantPrimary) {
         score -= 1.20;
       }
 
-      // Only evaluate combo-breaking & counter-protection if the hero can actually fit the enemy's remaining lanes
       if (fitsEnemyVacantPrimary || fitsEnemyVacantFlex) {
         let bestComboThreatScore = 0;
         let comboThreatDesc: string | undefined = undefined;
 
-        // PRIORITY 1: Break Enemy Combo (Hero in enemyVacantLanes that combos with Enemy's 3 Phase-1 picks)
+        // PRIORITAS 1: Putus Kombo Musuh (Hero di lane kosong musuh yang kombo dengan 3 hero musuh)
         for (const eh of enemyHeroes) {
           const p1 = Math.min(cand.hero_id, eh.hero_id);
           const p2 = Math.max(cand.hero_id, eh.hero_id);
@@ -759,7 +932,6 @@ export function runTournamentInference(
             }
           }
 
-          // Check empirical KPL Phase 2 Ban vs Enemy Pick (`phase2_ban_vs_enemy`)
           const p2BansForEnemy: Array<{ ban_id: number; count: number }> = phase2BanVsEnemy[String(eh.hero_id)] || [];
           const p2Entry = p2BansForEnemy.find((b) => b.ban_id === cand.hero_id);
           if (p2Entry && p2Entry.count >= 10) {
@@ -776,7 +948,7 @@ export function runTournamentInference(
           proComboTag = comboThreatDesc;
         }
 
-        // PRIORITY 2: Protect Our 3 Picked Heroes (Ban counters in enemyVacantLanes that threaten our core)
+        // PRIORITAS 2: Lindungi 3 Hero Core Kita (Ban counter di lane kosong musuh)
         const threatenedTeammates: string[] = [];
         let protectKplBonus = 0;
 
@@ -801,14 +973,13 @@ export function runTournamentInference(
       }
     }
 
-    // =========================================================================
-    // PHASE 4: PICK PHASE 2 (Steps 14..17) — Fill Remaining 2 Lanes, Counter & Complete Comp
-    // =========================================================================
+    // -------------------------------------------------------------------------
+    // FASE 4: PICK PHASE 2 (Steps 14..17) — Isi Sisa Lane, Counter & Penutup
+    // -------------------------------------------------------------------------
     else {
       const isPrimaryOccupied = ourOccupiedLanes.has(cand.primary_lane);
       const canFlexToVacant = cand.lanes.some((l) => ourVacantLanes.has(l));
 
-      // Strict Lane Vacancy Enforcement for Final 2 Picks (B4+B5 / R4+R5)
       if (!isPrimaryOccupied) {
         score += 0.80;
         laneTag = `Wajib Isi ${cand.primary_lane}`;
@@ -817,11 +988,11 @@ export function runTournamentInference(
         score -= 0.25;
         laneTag = `Flex Isi ${flexLane}`;
       } else {
-        score -= 2.50; // Strictly forbid duplicate lanes in Phase 2!
+        score -= 2.50; // Penalti keras duplikasi lane di Fase 2
         laneTag = `${cand.primary_lane} Sudah Penuh`;
       }
 
-      // Direct Counter to Enemy's 3-4 Picked Heroes (Extra weight on Step 17 R5 Last Counter-Pick!)
+      // Counter Langsung ke 3-4 Hero Musuh (Bobot ekstra di Step 17 Red Last Pick!)
       const isLastPickR5 = draftStep === 17;
       const counterWeight = isLastPickR5 ? 0.70 : 0.50;
       const counteredEnemies: string[] = [];
@@ -839,7 +1010,7 @@ export function runTournamentInference(
           : `⚔️ Counter Pick Fase 2: Menangkal ${counteredEnemies.join(', ')}`;
       }
 
-      // KPL Pro Synergy with our 3-4 picked heroes (dampened by enemy counter exposure!)
+      // Sinergi KPL dengan Hero Tim
       for (const teammate of ourHeroes) {
         const p1 = Math.min(cand.hero_id, teammate.hero_id);
         const p2 = Math.max(cand.hero_id, teammate.hero_id);
@@ -866,24 +1037,29 @@ export function runTournamentInference(
         }
       }
 
-      // Team Composition Radar Balancing (Frontline / CC gap)
+      // Keseimbangan Komposisi Tim (Frontline / CC gap)
       if (!isPrimaryOccupied) {
         if (frontline < 0.48 && (cand.primary_role === 'Tank' || cand.primary_role === 'Fighter')) {
           score += 0.35 * exposure.synergyMultiplier;
           if (!proComboTag) proComboTag = '🛡️ Melengkapi Frontline Durability Tim';
-        } else if (cc < 0.48 && (cand.primary_role === 'Support' || cand.primary_role === 'Tank' || cand.primary_role === 'Mage')) {
+        } else if (
+          cc < 0.48 &&
+          (cand.primary_role === 'Support' || cand.primary_role === 'Tank' || cand.primary_role === 'Mage')
+        ) {
           score += 0.30 * exposure.synergyMultiplier;
           if (!proComboTag) proComboTag = '⛓️ Melengkapi Rantai CC Lockdown Tim';
         }
       }
     }
 
+    // -------------------------------------------------------------------------
+    // BONUS HOKSTATS & PENALTI PAPARAN COUNTER MUSUH (Fase Pick 1 & Pick 2)
+    // -------------------------------------------------------------------------
     if (phaseId === 'PICK_PHASE_1' || phaseId === 'PICK_PHASE_2') {
-      // One HoKStats bonus per verified enemy; combined source-derived bonus stays below a direct counter.
       const sourceBonuses = reviewedHoKStatsBonuses(cand, ourHeroes, enemyHeroes);
       score += Math.min(0.45, sourceBonuses.matchupBonus + sourceBonuses.traitBonus * exposure.synergyMultiplier);
 
-      // Apply enemy counter exposure penalty (compounding for 2-3+ counters + dive vulnerability trap)
+      // Pengurangan skor paparan counter musuh
       score -= exposure.exposurePenalty;
 
       if (exposure.counterCount >= 2) {
@@ -908,7 +1084,10 @@ export function runTournamentInference(
     });
   }
 
-  // Softmax normalization over final scores
+  // ===========================================================================
+  // SECTION 5: NORMALISASI SOFTMAX & RANGKUMAN STRATEGI UI
+  // ===========================================================================
+
   const maxScore = Math.max(...scoredCandidates.map((c) => c.finalScore), 0);
   let expSum = 0;
   const expScores = scoredCandidates.map((c) => {
@@ -927,7 +1106,6 @@ export function runTournamentInference(
 
   recommendations.sort((a, b) => b.rankingWeight - a.rankingWeight);
 
-  // 7. Build Human-Readable Phase Strategy Summary for UI
   const ourVacantArr = Array.from(ourVacantLanes);
   const enemyVacantArr = Array.from(enemyVacantLanes);
 

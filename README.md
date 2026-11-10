@@ -2,18 +2,104 @@
 
 Simulator draft, latihan melawan AI, counter lookup, dan wiki hero **Honor of Kings Global**. Frontend React/TypeScript berjalan pada static hosting; keputusan draft dihitung di browser pengguna.
 
-## Cara kerja
+## Cara kerja mesin draft
+
+Sistem ini dirancang dengan pendekatan **zero-server compute di produksi**, menjalankan kalkulasi taktis deterministik dan pencarian Minimax langsung di browser pengguna tanpa dependensi neural/cloud.
 
 | Bagian | Peran |
 |---|---|
-| Mesin taktis TypeScript | Memberi peringkat pick/ban dari fase draft, statistik hero, counter, sinergi KPL, Plan A/B, dan komposisi lane. |
-| Pencarian lokal dalam Web Worker | Membandingkan respons kedua tim dengan iterative deepening minimax: maksimal empat aksi, delapan kandidat per node, anggaran 1.500 ms per keputusan. |
-| Pipeline Audit Bukti Skill | Mengekstraksi dan mengklasifikasikan bukti skill/taktis resmi hero menjadi profil taktis deterministik yang ditinjau oleh reviewer. |
-| Sinergi Empiris KPL | Menghitung frekuensi pick/ban dan rasio kemenangan pasangan hero dari 11.000+ pertandingan turnamen profesional. |
+| Mesin Taktis TypeScript ([tournamentInference.ts](apps/web/src/engine/tournamentInference.ts)) | Menghitung bobot ranking instan dari 4 fase turnamen, presensi KPL, sinergi duet, okupansi lane, dan matriks counter. |
+| Pencarian Minimax Web Worker ([draftSearch.ts](apps/web/src/engine/draftSearch.ts)) | Membandingkan pohon keputusan zero-sum kedua tim via Iterative Deepening Minimax (Depth 1..4, Width 8 cabang, batas 1.500 ms). |
+| Pipeline Audit Bukti Skill ([skill_evidence_audit.py](packages/ml-engine/skill_evidence_audit.py)) | Ekstraksi bukti skill resmi dan panduan taktis untuk memvalidasi 28 tag mobilitas, crowd control, dan peran tim. |
+| Sinergi Empiris KPL ([extract_kpl_synergy.py](packages/ml-engine/extract_kpl_synergy.py)) | Menghitung frekuensi pick B1/R1, ban fase 1/2, dan winrate duet dari 11.141+ pertandingan KPL/KIC 2019–2026. |
 
-Seluruh keputusan draft dan pencarian AI dihitung secara deterministik di browser pengguna tanpa memerlukan runtime ONNX/WASM, model transformer, maupun pemanggilan API eksternal.
+### Diagram Arsitektur Alur Keputusan (Decision Pipeline)
 
-Pencarian memakai heuristik yang dapat diperiksa, shortlist kandidat, dan kedalaman terbatas. Hasilnya bukan jaminan draft optimal secara global. Radar komposisi dan ranking rekomendasi juga bukan probabilitas kemenangan terkalibrasi.
+```mermaid
+flowchart TD
+    subgraph ClientState["1. State Giliran Draft (Client)"]
+        A["Input Turn (Step 0..17, Blue / Red)"] --> B["Analisis Okupansi Lane & Fearless BP"]
+        B --> C["Evaluasi Paparan Counter Lawan (Exposure)"]
+    end
+
+    subgraph InferenceEngine["2. Mesin Inferensi Taktis (tournamentInference.ts)"]
+        C --> D{"Deteksi 4 Fase Turnamen"}
+        D -->|Fase 1: Ban 1| E1["Pre-Ban Counter B1 / Deny S-Tier"]
+        D -->|Fase 2: Pick 1| E2["Amankan Opener B1 & Sinergi Duet KPL"]
+        D -->|Fase 3: Ban 2| E3["Putus Kombo Lane Kosong Musuh & Proteksi Core"]
+        D -->|Fase 4: Pick 2| E4["Penutup Lane Kosong & R5 Counter-Pick"]
+        
+        E1 --> F["Normalisasi Skor Softmax"]
+        E2 --> F
+        E3 --> F
+        E4 --> F
+    end
+
+    subgraph SearchWorker["3. Pencarian Minimax (draftSearch.ts @ Web Worker)"]
+        F --> G["Shortlist 8 Kandidat Teratas (Width 8)"]
+        G --> H["Iterative Deepening Minimax (Depth 1..4)"]
+        H --> I["Evaluasi Posisi Asimetris: Strength(Kita) - Strength(Musuh)"]
+        I --> J["Alpha-Beta Pruning (Batas Waktu 1.500 ms)"]
+    end
+
+    J --> K["Rekomendasi AI Terbaik & Variasi Utama (PV)"]
+```
+
+### Siklus 18 Aksi Turnamen Kompetitif
+
+Format pertandingan mengikuti standar turnamen resmi KPL / Global:
+
+```mermaid
+flowchart LR
+    subgraph P1["Fase 1: Ban 1 (Langkah 0-3)"]
+        B1["Blue Ban 1"] --> R1["Red Ban 1"]
+        R1 --> B2["Blue Ban 2"]
+        B2 --> R2["Red Ban 2"]
+    end
+
+    subgraph P2["Fase 2: Pick 1 (Langkah 4-9)"]
+        R2 --> BP1["Blue Pick B1"]
+        BP1 --> RP1["Red Pick R1+R2"]
+        RP1 --> BP2["Blue Pick B2+B3"]
+        BP2 --> RP2["Red Pick R3"]
+    end
+
+    subgraph P3["Fase 3: Ban 2 (Langkah 10-13)"]
+        RP2 --> RB1["Red Ban 3"]
+        RB1 --> BB1["Blue Ban 3"]
+        BB1 --> RB2["Red Ban 4"]
+        RB2 --> BB2["Blue Ban 4"]
+    end
+
+    subgraph P4["Fase 4: Pick 2 (Langkah 14-17)"]
+        BB2 --> RP3["Red Pick R4"]
+        RP3 --> BP3["Blue Pick B4+B5"]
+        BP3 --> RP4["Red Pick R5 (Last Pick)"]
+    end
+```
+
+### Logika Taktis Kompetitif Utama
+
+1. **Fase Ban 1 (Pre-Ban & Deny First Pick):**
+   - **Sisi Blue:** Mengamankan First-Pick B1 (Plan A/B). Blue dilarang mem-ban opener rencananya sendiri, melainkan mem-ban hero hard counter alaminya berdasarkan data pre-ban turnamen KPL.
+   - **Sisi Red:** Karena Blue memegang First-Pick B1, Red fokus mem-ban S-Tier opener Blue (*Deny B1 Blue*) atau mengamankan core respon R1+R2 miliknya.
+2. **Fase Pick 1 (Opener & Sinergi KPL):**
+   - **Filter Anti-Immobile Carry:** Hero carry tanpa skill escape (Luban No.7, Hou Yi, Angela, Daji, Milady) dikenakan penalti keras `-2.0` sampai `-2.5` agar tidak direkomendasikan pada pick pembuka (B1/R1/R2) karena sangat rentan terhadap komposisi dive turnamen.
+   - **Sinergi Duet KPL:** Menghitung bonus `synergy_lift` untuk pasangan hero yang memiliki riwayat $\ge 20$ match dan winrate $\ge 50\%$ di KPL.
+3. **Fase Ban 2 (Break Enemy Combo & Strictly Lane-Aware):**
+   - Musuh telah memiliki 3 hero di Fase 1 (menyisakan 2 lane kosong). Mesin menyisir kandidat hero yang *bisa mengisi 2 lane kosong musuh* dan memiliki sinergi tinggi dengan 3 hero musuh yang sudah ada, lalu merekomendasikan ban untuk memutus kombo tersebut sebelum musuh sempat melengkapinya.
+   - Penalti keras `-2.40` diberikan jika pengguna mencoba mem-ban hero di lane yang sudah diisi musuh (*anti-wasted ban*).
+4. **Fase Pick 2 (Penutup Komposisi & Counter Pick):**
+   - Memastikan sisa lane kosong terisi tanpa duplikasi role.
+   - Langkah 17 (Red Pick R5) mendapat bobot counter tertinggi (`+0.70`) sebagai *Last Counter-Pick* penutup draft.
+5. **Peredam Paparan Counter Musuh (`evaluateEnemyCounterExposure`):**
+   - Mencegah algoritma memaksakan rekomendasi hero bersinergi tinggi jika hero tersebut menjadi target empuk musuh:
+     - 1 counter musuh: Penalti `-0.55`, bobot sinergi KPL diredam ke **55%**.
+     - 2 counter musuh: Penalti `-1.45`, bobot sinergi KPL diredam ke **10%**.
+     - 3+ counter musuh: Penalti `-2.60+`, bobot sinergi KPL dipotong menjadi **0%**.
+6. **Mekanisme Deny Pick di Minimax:**
+   - Evaluasi Minimax bekerja zero-sum: $\text{Strength}(\text{Kita}) - \text{Strength}(\text{Musuh})$.
+   - Ketika AI mengambil hero kunci lawan, nilai tree musuh di masa depan anjlok drastis. Akibatnya, Minimax secara alami memprioritaskan *Deny Pick* jika langkah tersebut memberikan keuntungan posisi ganda (memperkuat tim sendiri sekaligus memotong opsi terbaik lawan).
 
 ## Simulator dan latihan
 
