@@ -1,13 +1,10 @@
-"""Maintainer-only tactical proposals: local NanoJev by default, optional TypeSafe API."""
+"""Maintainer-only tactical proposals: local deterministic skill evidence audit."""
 import argparse
 import hashlib
 import json
 import math
 import os
-import time
 from pathlib import Path
-from urllib.error import HTTPError
-from urllib.request import Request, urlopen
 from dataset_sources import load_source_heroes
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -159,29 +156,12 @@ def make_request(hero, model):
     }
 
 
-def request_jev(payload):
-    from dotenv import load_dotenv
-    load_dotenv(Path(__file__).parent / ".env")
-    key = os.environ.get("TYPESAFE_API_KEY")
-    if not key:
-        raise ValueError("Set TYPESAFE_API_KEY di lingkungan pipeline atau gunakan --response-fixture.")
-    request = Request("https://api.typesafe.ai/v1/systemone", data=canonical(payload).encode("utf-8"), headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"}, method="POST")
-    for attempt in range(3):
-        try:
-            with urlopen(request, timeout=30) as response:
-                return json.load(response)
-        except HTTPError as error:
-            if error.code not in (429, 500, 502, 503, 504) or attempt == 2:
-                raise ValueError(f"Jev gagal (HTTP {error.code}); proposal belum ditulis.") from None
-            time.sleep(2 ** attempt)
-
-
 def validate_proposal(proposal, hero):
     if proposal.get("schema_version") != 2 or proposal.get("hero_id") != hero["hero_id"] or proposal.get("source_hash") != source_hash(hero) or proposal.get("sources") != source_material(hero):
         raise ValueError("Identitas/sumber proposal berubah atau sudah kedaluwarsa; buat proposal baru.")
     if not isinstance(proposal.get("model"), str) or not proposal["model"]:
         raise ValueError("Versi model wajib dicatat.")
-    if proposal.get("provider", "typesafe") not in ("nanojev", "typesafe"):
+    if proposal.get("provider", "nanojev") not in ("nanojev", "evidence", "typesafe"):
         raise ValueError("Provider proposal tidak dikenal.")
     if set(proposal.get("tags", {})) != set(TAGS):
         raise ValueError("Label taktis tidak lengkap atau tidak dikenal.")
@@ -189,13 +169,11 @@ def validate_proposal(proposal, hero):
         if answer.get("value") not in ("ya", "tidak", "tidak_diketahui"):
             raise ValueError("Nilai label tidak valid.")
         confidence = answer.get("confidence")
-        if confidence is None and proposal.get("provider", "typesafe") != "nanojev":
-            raise ValueError("Confidence TypeSafe belum tersedia.")
         if confidence is not None and (not isinstance(confidence, (int, float)) or not math.isfinite(confidence) or not 0 <= confidence <= 1):
             raise ValueError("Confidence tidak valid.")
 
 
-def create_proposal(hero, response, provider="typesafe"):
+def create_proposal(hero, response, provider="nanojev"):
     proposal = {
         "schema_version": 2, "hero_id": hero["hero_id"], "source_hash": source_hash(hero),
         "sources": source_material(hero), "model": response.get("model"), "provider": provider,
@@ -231,7 +209,7 @@ def approved_profiles(directory, heroes):
         result[hero["hero_id"]] = {
             "tags": {tag: answer["value"] == "ya" for tag, answer in proposal["tags"].items() if answer["value"] != "tidak_diketahui"},
             "source_hash": proposal["source_hash"], "model": proposal["model"], "reviewed_by": reviewer,
-            "provider": proposal.get("provider", "typesafe"),
+            "provider": proposal.get("provider", "nanojev"),
         }
     return result
 
@@ -305,9 +283,9 @@ def main():
     propose = sub.add_parser("propose")
     propose.add_argument("--hero-id", type=int, required=True)
     propose.add_argument("--output", type=Path, required=True)
-    propose.add_argument("--model", default="jev-latest")
+    propose.add_argument("--model", default="Evidence-Audit-v1")
     propose.add_argument("--response-fixture", type=Path)
-    propose.add_argument("--provider", choices=("nanojev", "typesafe"), default="nanojev")
+    propose.add_argument("--provider", default="nanojev")
     batch = sub.add_parser("propose-batch", help="Buat proposal pending untuk seluruh hero Global aktif.")
     batch.add_argument("--output-dir", type=Path, default=ROOT / "data/mappings/tactical_proposals")
     batch.add_argument("--report", type=Path)
@@ -363,11 +341,9 @@ def main():
             parser.error("Output sudah ada; gunakan nama proposal baru agar review sebelumnya tersimpan.")
         if args.response_fixture:
             response = json.loads(args.response_fixture.read_text(encoding="utf-8"))
-        elif args.provider == "nanojev":
+        else:
             from skill_evidence_audit import build_evidence_response
             response = build_evidence_response(hero)
-        else:
-            response = request_jev(make_request(hero, args.model))
         proposal = create_proposal(hero, response, args.provider)
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(proposal, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

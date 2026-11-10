@@ -36,9 +36,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/App.tsx": {
-    "mtime": 1794230749.3395271,
-    "seen": 1794232200.0442648,
-    "ast_hash": "577cc59157fe40bb625f376ae344c191",
+    "mtime": 1794349387.7510853,
+    "seen": 1794349426.5853143,
+    "ast_hash": "c06ae5b2711f787b74c0c6810d095a03",
     "semantic_hash": ""
   },
   "apps/web/src/components/BottomCommandDock.tsx": {
@@ -114,9 +114,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/types.ts": {
-    "mtime": 1794236892.804655,
-    "seen": 1794237304.6734195,
-    "ast_hash": "8519669544fca6ae4eda383de6237f15",
+    "mtime": 1794349388.5602016,
+    "seen": 1794349426.5877583,
+    "ast_hash": "2c9716c161ffa0db335b4dce62ad8934",
     "semantic_hash": ""
   },
   "apps/web/src/vite-env.d.ts": {
@@ -191,24 +191,6 @@
     "ast_hash": "59e805a548f0d42a0ec2ccc1b9b1c36e",
     "semantic_hash": ""
   },
-  "packages/ml-engine/2_jev_teacher_scorer.py": {
-    "mtime": 1794180299.857587,
-    "seen": 1794208404.7746007,
-    "ast_hash": "abb931b964796a05cf59120a5068ecab",
-    "semantic_hash": ""
-  },
-  "packages/ml-engine/3_train_student_net.py": {
-    "mtime": 1794180332.6781595,
-    "seen": 1794208404.7746017,
-    "ast_hash": "ac980399608a5c4ee272049faa214a66",
-    "semantic_hash": ""
-  },
-  "packages/ml-engine/4_export_and_publish_r2.py": {
-    "mtime": 1794214000.38081,
-    "seen": 1794214437.908205,
-    "ast_hash": "4f2b1635097dfccb45647ef09ab8069f",
-    "semantic_hash": ""
-  },
   "packages/ml-engine/extract_kpl_counters.py": {
     "mtime": 1794188429.9579246,
     "seen": 1794208404.7746043,
@@ -234,15 +216,15 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1794263337.2567825,
-    "seen": 1794263397.6890776,
-    "ast_hash": "a53c0f9380ef665895dafeb53e877cbc",
+    "mtime": 1794349387.0288393,
+    "seen": 1794349426.6017454,
+    "ast_hash": "24929889c3128b2573961fef7e684631",
     "semantic_hash": ""
   },
   "apps/web/index.html": {
-    "mtime": 1794180507.2070885,
-    "seen": 1794208404.7746732,
-    "ast_hash": "2e395c236ae502047baf76b55f87adab",
+    "mtime": 1794349387.2573016,
+    "seen": 1794349426.6017473,
+    "ast_hash": "07ebac36338e00d0f852e06095dd18e5",
     "semantic_hash": ""
   },
   "packages/ml-engine/README.md": {
@@ -9456,9 +9438,9 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1794262545.5321481,
-    "seen": 1794262556.8727777,
-    "ast_hash": "ddc80247adfe260aaf690f2b13ca049e",
+    "mtime": 1794349386.8945663,
+    "seen": 1794349426.6017427,
+    "ast_hash": "e971b95e4b422d209f49eb1c8748f9d3",
     "semantic_hash": ""
   },
   "packages/ml-engine/verify_simulation.py": {
@@ -9540,15 +9522,15 @@
     "semantic_hash": ""
   },
   "packages/ml-engine/tactical_profiles.py": {
-    "mtime": 1794348511.7510393,
-    "seen": 1794348564.8448272,
-    "ast_hash": "a0a96dc973f533bdd4fea141dfc03544",
+    "mtime": 1794349388.6835647,
+    "seen": 1794349426.6015759,
+    "ast_hash": "fa8c68f13c4d7d2bab9c796db66691af",
     "semantic_hash": ""
   },
   "packages/ml-engine/test_data_pipeline.py": {
-    "mtime": 1794240640.3676615,
-    "seen": 1794240719.2809403,
-    "ast_hash": "6f1af3105b501e5f2e5dcfe452a5b0a0",
+    "mtime": 1794349388.8919332,
+    "seen": 1794349426.6015787,
+    "ast_hash": "a635bec82eb66da1c85deb5e44f4f60f",
     "semantic_hash": ""
   },
   "apps/web/src/engine/draftSearch.ts": {
@@ -9630,8 +9612,8 @@
     "semantic_hash": ""
   },
   "packages/ml-engine/test_nanojev_provider.py": {
-    "mtime": 1794348533.4918509,
-    "seen": 1794348564.8451972,
+    "mtime": 1794348581.3691492,
+    "seen": 1794349426.601662,
     "ast_hash": "121064458b768361ffaec1038a9213f8",
     "semantic_hash": ""
   },

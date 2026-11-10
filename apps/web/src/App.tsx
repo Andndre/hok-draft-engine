@@ -236,7 +236,7 @@ export const App: React.FC = () => {
           }
         }
       } catch (err) {
-        console.error('[JevInference] Error during inference:', err);
+        console.error('[DraftEngine] Error during inference:', err);
       }
     },
     [previousScores, onlyGlobalReleased, synergyData]

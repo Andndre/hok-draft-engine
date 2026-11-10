@@ -14,7 +14,7 @@ from publish_data import MAPPINGS
 class DataPipelineTests(unittest.TestCase):
     def setUp(self):
         self.hero = {"hero_id": 556, "name": "Ata", "abilities": [{"name": "Fixture", "desc": "Dash"}], "counters": [{"target_id": 123}], "is_global_released": True}
-        self.response = {"model": "jev-test-fixture", "answers": {tag: {"choice": "tidak_diketahui", "confidence": 0.8} for tag in TAGS}}
+        self.response = {"model": "tactical-test-fixture", "answers": {tag: {"choice": "tidak_diketahui", "confidence": 0.8} for tag in TAGS}}
         self.response["answers"]["mobility"]["choice"] = "ya"
         self.releases = {"556": {"released": True}, "511": {"released": False, "alias_of": 556}}
 
@@ -48,7 +48,7 @@ class DataPipelineTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             create_proposal(self.hero, self.response)
 
-    def test_hokstats_source_changes_expire_nanojev_approval(self):
+    def test_hokstats_source_changes_expire_proposal_approval(self):
         proposal = create_proposal(self.hero, self.response)
         updated = copy.deepcopy(self.hero)
         updated["hokstats_guide"] = {"skills": [{"name": "New source text"}], "source": {"source_hash": "new"}}

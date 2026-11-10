@@ -7,12 +7,12 @@ Dokumen ini disusun sebagai panduan operasional komprehensif agar setiap autonom
 
 ## 1. Misi & Arsitektur Utama
 
-`hok-draft-engine` adalah sistem simulator Draft Pick, Counter Matrix, dan Wiki Interaktif untuk **Honor of Kings (HoK Global)** dengan mesin taktis deterministik dan pencarian AI lokal. **NanoJev lokal** membantu pengolahan label taktis pada pipeline pengelola; TypeSafe API hanya provider opsional:
+`hok-draft-engine` adalah sistem simulator Draft Pick, Counter Matrix, dan Wiki Interaktif untuk **Honor of Kings (HoK Global)** dengan mesin taktis deterministik dan pencarian AI lokal. **Ekstraksi bukti skill lokal (skill evidence audit)** mengelola label taktis pada pipeline pengelola secara deterministik tanpa dependensi neural/cloud:
 1. **Zero Server Compute di Produksi:**
-   - Keputusan draft berjalan di browser melalui scorer TypeScript dan Web Worker minimax (maksimal 4 aksi, 8 kandidat per node, anggaran 1.500 ms). Tidak ada ONNX atau panggilan Jev dalam runtime produksi.
+   - Keputusan draft berjalan di browser melalui scorer TypeScript dan Web Worker minimax (maksimal 4 aksi, 8 kandidat per node, anggaran 1.500 ms). Tidak ada ONNX atau panggilan model neural dalam runtime produksi.
    - Backend web adalah static assets (HTML/JS/CSS) yang dapat dideploy di Shared Hosting cPanel, Cloudflare Pages, atau Nginx statis.
 2. **Dual-Stack Monorepo:**
-   - `packages/ml-engine/`: Pipeline Python lokal untuk ekstraksi data, review proposal NanoJev lokal, dan publikasi dataset berversi ke S3/R2. Training PyTorch/ONNX tetap menjadi eksperimen terpisah di data/processed/experimental-model/.
+   - `packages/ml-engine/`: Pipeline Python lokal untuk ekstraksi data, audit bukti skill & review proposal profil taktis, dan publikasi dataset berversi ke S3/R2.
    - `apps/web/`: Single Page Application (SPA) berbasis Vite, React 19, TypeScript, dan Tailwind CSS.
 3. **Multi-Source Data Ingestion:**
    - Data 120 hero Global dari `https://hok.kurohiko.id/` (alasan taktis lokal & counter matrix).
@@ -114,9 +114,9 @@ Di masa lalu terjadi bug inversi 180 derajat karena salah menginterpretasikan ar
 - Jalankan `uv run hokstats_source.py sync` dari `packages/ml-engine` untuk mengimpor HoKStats. Matchup, hero guide, item, dan spell tetap berstatus pending sampai sumbernya direview; hash yang berubah membatalkan review lama.
 - Jangan mengedit JSON di folder datasets secara manual. Perbarui sumber di data/mappings lalu jalankan `uv run publish_data.py`. Byte artefak dilindungi oleh .gitattributes.
 - Seri latihan memakai snapshot tetap. Data baru hanya berlaku saat memulai seri berikutnya.
-- CLI proposal memakai NanoJev lokal. CUDA tetap default; `--device cpu` mengaktifkan adapter CPU FP32 secara eksplisit untuk mesin tanpa NVIDIA. CPU sangat lambat untuk model 0,6B dan cocoknya untuk uji terbatas; gunakan notebook GPU untuk batch. Tidak ada fallback API. Download model adalah subcommand eksplisit dan bobot tidak boleh masuk public/dist.
-- NanoJev belum dikalibrasi untuk HoK. Simpan probabilitas per chunk dan hash bobot; jangan membuat confidence terkalibrasi dari probabilitas maksimum.
-- Proposal NanoJev/TypeSafe harus direview; status pending/rejected tidak dipublikasikan. Sumber yang berubah membatalkan proposal approved lama.
+- Profil taktis hero (28 tag crowd control, mobilitas, frontline/peel, dan kerentanan) diekstraksi secara deterministik dari deskripsi skill resmi dan panduan taktis melalui `skill_evidence_audit.py` (atau `tactical_profiles.py audit-batch`). Pipeline tidak lagi memerlukan model NanoJev, checkpoint safetensors, runtime PyTorch/CUDA, atau layanan AI eksternal.
+- Setiap proposal taktis menyimpan sumber resmi, hash konten, dan status review. Proposal harus berstatus approved untuk dikompilasi ke dataset produksi; status pending/rejected diabaikan oleh publisher.
+- Jika data sumber hero berubah (misal revisi skill atau update patch), hash sumber berubah dan secara otomatis membatalkan approval lama hingga ditinjau kembali.
 
 ### E. Invarian Latihan dan Pencarian
 - Urutan 18 aksi, fase, dan validasi terpusat di draftRules.ts. Terapkan aksi melalui fungsi bersama, termasuk dari kartu, rekomendasi, dan drawer.
@@ -183,11 +183,9 @@ hok-draft-engine/
 │       ├── 0_sync_global_assets.py   # Scraper Kurohiko & HOKFIRE
 │       ├── hokstats_source.py        # Importer offline hero/item/spell/matchup HoKStats
 │       ├── 1_ingest_kpl.py           # Ingestion database KPL
-│       ├── 2_jev_teacher_scorer.py   # Komputasi sinergi duet & 6-axis vectors
-│       ├── 3_train_student_net.py    # Training PyTorch model
-│       ├── 4_export_and_publish_r2.py# Ekspor model eksperimen (bukan produksi)
-│       ├── tactical_profiles.py      # Proposal/review; NanoJev lokal default
-│       ├── nanojev_provider.py       # Adapter checkpoint lokal, tanpa cloud
+│       ├── extract_kpl_synergy.py    # Ekstraksi sinergi duet & matriks turnamen KPL
+│       ├── tactical_profiles.py      # Ekstraksi profil taktis, audit proposal batch & CLI review
+│       ├── skill_evidence_audit.py   # Parser deterministik bukti skill resmi & 28 tag taktis
 │       └── publish_data.py           # Paket produksi berversi + publikasi manifest terakhir
 └── apps/
     └── web/                          # Static Frontend SPA (Vite + React 19 + TS)

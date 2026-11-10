@@ -204,7 +204,7 @@ export interface TacticalProfile {
   source_hash: string;
   model: string;
   reviewed_by: string;
-  provider?: 'nanojev' | 'typesafe';
+  provider?: 'evidence' | 'nanojev';
 }
 export interface DataManifest {
   schema_version: 2;
