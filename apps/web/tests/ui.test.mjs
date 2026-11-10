@@ -13,7 +13,7 @@ import { HeroWikiDrawer } from '../src/components/HeroWikiDrawer.tsx';
 import { PlanSelectionModal } from '../src/components/PlanSelectionModal.tsx';
 import { PracticeDraft } from '../src/components/PracticeDraft.tsx';
 import { displayCopy } from '../src/components/ui/presentation.ts';
-import { evaluateTacticalScores } from '../src/engine/tournamentInference.ts';
+import { evaluateTacticalScores, computeDraftOutcomeProjection } from '../src/engine/tournamentInference.ts';
 import { DropdownSelect } from '../src/components/ui/DropdownSelect.tsx';
 import { Layers } from 'lucide-react';
 const noop = () => {};
@@ -94,6 +94,204 @@ test('recommendations use thumbnails and separate detail/action controls without
   const waiting = render(TacticalRadarPanel, { ...base, recommendations: [], isWaiting: true });
   assert.ok(waiting.includes('Giliran AI. Rekomendasi tersedia saat giliran Anda.'));
   assert.ok(!waiting.includes('is-spinning'));
+});
+
+test('recommendation panel renders top candidate tabs and outcome projections', () => {
+  const altHero = { ...hero, hero_id: 9999, name: 'Alt Hero' };
+  const projection = {
+    bestCaseScore: 82,
+    bestCaseScenario: 'Duet KPL bersama Tank Roam',
+    worstCaseScore: 56,
+    worstCaseScenario: 'Risiko Counter Lawan di Mid',
+    riskLevel: 'SEDANG',
+  };
+  const base = {
+    scores: evaluateTacticalScores([], []),
+    recommendations: [
+      { hero, proComboTag: 'Prioritas pertama', laneTag: '', projection },
+      { hero: altHero, proComboTag: 'Alternatif solid', laneTag: '', projection },
+    ],
+    onSelectCandidate: noop,
+    onInspectHero: noop,
+    activeSide: 'blue',
+    isPickPhase: true,
+  };
+  const html = render(TacticalRadarPanel, base);
+  assert.ok(html.includes('recommendation-tabs'));
+  assert.ok(html.includes('#1') && html.includes('#2'));
+  assert.ok(html.includes('Proyeksi Hasil Draft'));
+  assert.ok(html.includes('82%') && html.includes('56%'));
+  assert.ok(html.includes('Risiko SEDANG'));
+  assert.ok(html.includes('Pick ' + hero.name));
+});
+
+test('hero card exposes tactical reason and draft outcome projection on recommendation hovercard', () => {
+  const projection = {
+    bestCaseScore: 85,
+    bestCaseScenario: 'Kombo Sinergi B1',
+    worstCaseScore: 60,
+    worstCaseScenario: 'Risiko Dive Musuh',
+    riskLevel: 'RENDAH',
+  };
+  const compactHtml = render(HeroCardCompact, {
+    hero,
+    onClick: noop,
+    onSelect: noop,
+    quickBadge: 'AI #2',
+    aiRank: 2,
+    recommendationReason: 'Counter Pick Fase 2',
+    projection,
+  });
+  assert.ok(compactHtml.includes('AI #2'));
+  assert.ok(compactHtml.includes('Counter Pick Fase 2'));
+  assert.ok(compactHtml.includes('85%') && compactHtml.includes('60%'));
+
+  const detailedHtml = render(HeroCardDetailed, {
+    hero,
+    onClick: noop,
+    onSelect: noop,
+    aiRank: 2,
+    recommendationReason: 'Counter Pick Fase 2',
+    projection,
+  });
+  assert.ok(detailedHtml.includes('#2'));
+  assert.ok(detailedHtml.includes('Counter Pick Fase 2'));
+  assert.ok(detailedHtml.includes('85%') && detailedHtml.includes('60%'));
+});
+
+test('computeDraftOutcomeProjection produces specific hero names and lanes in Ban and Pick phases', () => {
+  const testHero = dataset.heroes.find(h => h.name.toLowerCase() === 'jing' || h.hero_id === 507) || hero;
+  const aoyin = dataset.heroes.find(h => h.hero_id === 519) || hero;
+  const haya = dataset.heroes.find(h => h.name.toLowerCase() === 'haya' || h.hero_id === 521);
+  const luban = dataset.heroes.find(h => h.name.includes('Luban') || h.hero_id === 112) || hero;
+  const consort = dataset.heroes.find(h => h.name === 'Consort Yu');
+
+  const available = dataset.heroes.filter(h => h.is_global_released);
+  const banProj = computeDraftOutcomeProjection(
+    testHero,
+    false,
+    [],
+    [],
+    available,
+    new Set(['Jungle', 'Roam', 'Mid', 'Clash', 'Farm']),
+    new Set(['Jungle', 'Roam', 'Mid', 'Clash', 'Farm']),
+    dataset.synergy?.pairs || {},
+    evaluateTacticalScores([], [])
+  );
+  assert.ok(banProj.worstCaseScenario.includes('Pivot Lawan') || banProj.worstCaseScenario.includes('Lane Terkunci'));
+  assert.ok(!banProj.worstCaseScenario.includes('alternatif tier cadangan'));
+  assert.ok(banProj.bestCaseScenario.length > 10);
+
+  // Blue Ban Phase 1 tidak boleh menyebut "first-pick lawan" karena Blue pemegang First Pick
+  if (haya) {
+    const augran = dataset.heroes.find(h => h.hero_id === 517);
+    const blueBanHayaProj = computeDraftOutcomeProjection(
+      haya,
+      false,
+      [],
+      [],
+      available,
+      new Set(['Jungle', 'Roam', 'Mid', 'Clash', 'Farm']),
+      new Set(['Jungle', 'Roam', 'Mid', 'Clash', 'Farm']),
+      dataset.synergy?.pairs || {},
+      evaluateTacticalScores([], []),
+      false,
+      augran || null,
+      true,
+      2,
+      [],
+      dataset.synergy?.b1_openers || {}
+    );
+    assert.ok(!blueBanHayaProj.bestCaseScenario.includes('first-pick lawan'));
+    assert.ok(blueBanHayaProj.bestCaseScenario.includes('Pre-Ban KPL') || blueBanHayaProj.bestCaseScenario.includes('First-Pick B1'));
+
+    const blueBanNoPlan = computeDraftOutcomeProjection(
+      haya,
+      false,
+      [],
+      [],
+      available,
+      new Set(['Jungle', 'Roam', 'Mid', 'Clash', 'Farm']),
+      new Set(['Jungle', 'Roam', 'Mid', 'Clash', 'Farm']),
+      dataset.synergy?.pairs || {},
+      evaluateTacticalScores([], []),
+      false,
+      null,
+      true,
+      2,
+      [],
+      dataset.synergy?.b1_openers || {}
+    );
+    assert.ok(blueBanNoPlan.bestCaseScenario.includes('respon R1+R2 lawan'));
+  }
+
+  // Early pick B1 dengan pre-ban counter (Haya di-ban) menghasilkan risiko RENDAH, bukan TINGGI
+  if (haya) {
+    const aoyinProj = computeDraftOutcomeProjection(
+      aoyin,
+      true,
+      [],
+      [],
+      available,
+      new Set(['Farm', 'Clash', 'Jungle', 'Mid', 'Roam']),
+      new Set(['Farm', 'Clash', 'Jungle', 'Mid', 'Roam']),
+      dataset.synergy?.pairs || {},
+      evaluateTacticalScores([], []),
+      false,
+      null,
+      true,
+      4,
+      [haya.hero_id],
+      dataset.synergy?.b1_openers || {}
+    );
+    assert.strictEqual(aoyinProj.riskLevel, 'RENDAH');
+    assert.ok(aoyinProj.worstCaseScenario.includes('Haya'));
+    assert.ok(aoyinProj.worstCaseScore >= 45);
+  }
+
+  // Blind pick hero carry statis tanpa escape di B1 wajib menghasilkan risiko TINGGI
+  const lubanProj = computeDraftOutcomeProjection(
+    luban,
+    true,
+    [],
+    [],
+    available,
+    new Set(['Farm', 'Clash', 'Jungle', 'Mid', 'Roam']),
+    new Set(['Farm', 'Clash', 'Jungle', 'Mid', 'Roam']),
+    dataset.synergy?.pairs || {},
+    evaluateTacticalScores([], []),
+    true,
+    null,
+    true,
+    4,
+    [],
+    dataset.synergy?.b1_openers || {}
+  );
+  assert.strictEqual(lubanProj.riskLevel, 'TINGGI');
+  assert.ok(lubanProj.worstCaseScenario.includes('Dive') || lubanProj.worstCaseScenario.includes('assassin'));
+
+  // Hero yang langsung di-counter oleh musuh yang SUDAH di board menghasilkan risiko TINGGI
+  if (consort) {
+    const counteredProj = computeDraftOutcomeProjection(
+      aoyin,
+      true,
+      [],
+      [consort],
+      available,
+      new Set(['Farm', 'Clash', 'Jungle', 'Mid', 'Roam']),
+      new Set(['Clash', 'Jungle', 'Mid', 'Roam']),
+      dataset.synergy?.pairs || {},
+      evaluateTacticalScores([], []),
+      false,
+      null,
+      false,
+      5,
+      [],
+      dataset.synergy?.b1_openers || {}
+    );
+    assert.strictEqual(counteredProj.riskLevel, 'TINGGI');
+    assert.ok(counteredProj.worstCaseScenario.includes('Consort Yu'));
+  }
 });
 
 test('plan and wiki dialogs expose names, native controls and counter-first navigation', () => {

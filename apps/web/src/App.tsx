@@ -449,8 +449,19 @@ export const App: React.FC = () => {
                 : !filteredAndSortedHeroes.length ? <div className="empty-state">{activeTab === 'favorites' && !favorites.size ? <Star aria-hidden="true" /> : <SearchX aria-hidden="true" />}<h3>{activeTab === 'favorites' && !favorites.size ? 'Belum ada hero favorit' : 'Hero tidak ditemukan'}</h3><p>{activeTab === 'favorites' && !favorites.size ? 'Buka wiki hero, lalu simpan ke favorit.' : 'Coba nama lain atau hapus filter lane yang aktif.'}</p><button type="button" className="ui-button ui-button--quiet" onClick={() => { setSearchQuery(''); setSelectedLane('All'); if (activeTab === 'favorites' && !favorites.size) setActiveTab('wiki'); }}>{activeTab === 'favorites' && !favorites.size ? <BookOpen aria-hidden="true" /> : <FilterX aria-hidden="true" />}{activeTab === 'favorites' && !favorites.size ? 'Jelajahi hero' : 'Bersihkan filter'}</button></div>
                 : <div className={'hero-grid' + (viewMode === 'detailed' ? ' hero-grid--detailed' : '')}>{filteredAndSortedHeroes.map(hero => {
                   const isUnavailable = activeTab === 'draft' && currentDraftUnavailableIds.has(hero.hero_id);
-                  const rank = activeTab === 'draft' ? recommendations.findIndex(rec => rec.hero.hero_id === hero.hero_id) + 1 : 0;
-                  const shared = { hero, isUnavailable, onClick: setWikiHero, onSelect: activeTab === 'draft' ? handleSelectHero : undefined, selectionDisabled: currentTurn.isComplete, action: currentTurn.action };
+                  const rec = activeTab === 'draft' ? recommendations.find(r => r.hero.hero_id === hero.hero_id) : undefined;
+                  const rank = rec ? recommendations.indexOf(rec) + 1 : 0;
+                  const shared = {
+                    hero,
+                    isUnavailable,
+                    onClick: setWikiHero,
+                    onSelect: activeTab === 'draft' ? handleSelectHero : undefined,
+                    selectionDisabled: currentTurn.isComplete,
+                    action: currentTurn.action,
+                    aiRank: rank > 0 ? rank : undefined,
+                    recommendationReason: rec?.proComboTag || rec?.laneTag,
+                    projection: rec?.projection,
+                  };
                   return viewMode === 'compact' ? <HeroCardCompact key={hero.hero_id} {...shared} quickBadge={rank > 0 && rank <= 5 ? 'AI #' + rank : undefined} /> : <HeroCardDetailed key={hero.hero_id} {...shared} aiRank={rank > 0 ? rank : undefined} />;
                 })}</div>}
             </section>

@@ -465,6 +465,14 @@ export interface TournamentPhaseStrategy {
   enemyVacantLanes: Lane[];
 }
 
+export interface DraftOutcomeProjection {
+  bestCaseScore: number;
+  bestCaseScenario: string;
+  worstCaseScore: number;
+  worstCaseScenario: string;
+  riskLevel: 'RENDAH' | 'SEDANG' | 'TINGGI';
+}
+
 export interface TournamentPredictionResult {
   tacticalScores: TacticalVector;
   recommendations: Array<{
@@ -473,10 +481,410 @@ export interface TournamentPredictionResult {
     choiceScore: number;
     proComboTag?: string;
     laneTag?: string;
+    projection?: DraftOutcomeProjection;
   }>;
   phaseStrategy: TournamentPhaseStrategy;
   latencyMs: number;
   engineKind: 'deterministic' | 'search';
+}
+
+/**
+ * Menghitung estimasi proyeksi hasil akhir draft (Best Case & Worst Case) untuk satu kandidat hero.
+ *
+ * - Best Case: Potensi peningkatan skor jika dipasangkan dengan duet sinergi KPL terbaik
+ *   yang masih tersedia di pool untuk lane kosong kita.
+ * - Worst Case: Potensi penurunan skor jika lawan merespon dengan hard counter yang masih
+ *   tersedia di pool untuk sisa lane mereka.
+ * - Risk Level: Indikator tingkat risiko keterpaparan counter ('RENDAH' | 'SEDANG' | 'TINGGI').
+ */
+export function computeDraftOutcomeProjection(
+  candidate: Hero,
+  isPickPhase: boolean,
+  ourHeroes: Hero[],
+  enemyHeroes: Hero[],
+  availableCandidates: Hero[],
+  ourVacantLanes: Set<Lane>,
+  enemyVacantLanes: Set<Lane>,
+  proPairs: Record<string, any>,
+  tacticalScores: TacticalVector,
+  isRiskyCandidate: boolean = false,
+  plannedOpener?: Hero | null,
+  isBlueSide: boolean = true,
+  draftStep: number = 0,
+  bannedHeroIds: number[] = [],
+  b1Openers: Record<string, any> = {}
+): DraftOutcomeProjection {
+  // Skor dasar draft advantage (skala 0 - 100)
+  const baseVector = isPickPhase
+    ? evaluateTacticalScores([...ourHeroes, candidate], enemyHeroes)
+    : tacticalScores;
+  let baseScore = Math.round(baseVector.draft_advantage * 100);
+
+  // Kalibrasi Turnamen: Jika First Pick B1 atau pembuka Fase 1 (draftStep <= 8 atau hero tim <= 1),
+  // hero Tier S / A pro openers memiliki tournament equity lebih tinggi dari pub Diamond biasa.
+  const isEarlyPhasePick = isPickPhase && (draftStep <= 8 || ourHeroes.length <= 1);
+  if (isEarlyPhasePick) {
+    if (candidate.tier === 'S') baseScore = Math.max(54, baseScore + 5);
+    else if (candidate.tier === 'A') baseScore = Math.max(52, baseScore + 3);
+  }
+
+  if (!isPickPhase) {
+    // -------------------------------------------------------------------------
+    // BAN PHASE: PROYEKSI TAKTIS SPESIFIK TURNAMEN
+    // -------------------------------------------------------------------------
+    const targetLanes = enemyVacantLanes.size > 0
+      ? candidate.lanes.filter((l) => enemyVacantLanes.has(l))
+      : (candidate.lanes.length > 0 ? candidate.lanes : [candidate.primary_lane]);
+    const effectiveLane = targetLanes[0] || candidate.primary_lane;
+
+    // Cari alternatif kompetitif terbaik yang masih OPEN di lane tersebut untuk respon lawan jika candidate di-ban
+    const openAlternatives = availableCandidates
+      .filter(
+        (a) =>
+          a.hero_id !== candidate.hero_id &&
+          !(isBlueSide && draftStep <= 3 && plannedOpener && a.hero_id === plannedOpener.hero_id) &&
+          (a.primary_lane === effectiveLane || a.lanes.includes(effectiveLane))
+      )
+      .sort((a, b) => {
+        const tierRank = (t: string) => (t === 'S' ? 4 : t === 'A' ? 3 : t === 'B' ? 2 : 1);
+        return (tierRank(b.tier) * 0.15 + b.win_rate) - (tierRank(a.tier) * 0.15 + a.win_rate);
+      });
+
+    const alt1 = openAlternatives[0];
+    const alt2 = openAlternatives[1];
+
+    // BEST CASE: Dampak strategis positif dari ban hero ini
+    let bestCaseScore = baseScore + 5;
+    let bestCaseScenario = '';
+
+    const isDirectCounterToOpener = Boolean(
+      plannedOpener &&
+      (candidate.counters?.some((c) => c.target_id === plannedOpener.hero_id) ||
+        plannedOpener.countered_by?.some((c) => c.counter_id === candidate.hero_id))
+    );
+    const openerPrebans: Array<{ ban_id: number; count: number }> =
+      plannedOpener ? (b1Openers[String(plannedOpener.hero_id)]?.top_prebans || []) : [];
+    const openerPrebanMatch = openerPrebans.find((p) => p.ban_id === candidate.hero_id && p.count >= 12);
+
+    let enemyComboPartner: Hero | null = null;
+    let enemyComboWr = 0;
+    for (const eh of enemyHeroes) {
+      const p1 = Math.min(candidate.hero_id, eh.hero_id);
+      const p2 = Math.max(candidate.hero_id, eh.hero_id);
+      const pair = proPairs[`${p1}_${p2}`];
+      if (pair && pair.matches >= 15 && pair.win_rate >= 0.52) {
+        if (pair.win_rate > enemyComboWr) {
+          enemyComboWr = pair.win_rate;
+          enemyComboPartner = eh;
+        }
+      }
+    }
+
+    const ourTargetSlot = isBlueSide ? 'First-Pick B1' : 'R1+R2';
+    const enemyTargetSlot = isBlueSide
+      ? (draftStep <= 3 ? 'respon R1+R2 lawan' : 'pick penutup lawan')
+      : (draftStep <= 3 ? 'first-pick B1 lawan' : 'pick penutup lawan');
+
+    if (isDirectCounterToOpener) {
+      bestCaseScore = Math.min(94, baseScore + 7);
+      bestCaseScenario = `Proteksi Core: Menyingkirkan counter langsung ${plannedOpener?.name} (${candidate.name}) agar aman di ${ourTargetSlot} (+7%)`;
+    } else if (openerPrebanMatch && plannedOpener) {
+      bestCaseScore = Math.min(94, baseScore + 7);
+      bestCaseScenario = `Pre-Ban KPL (${openerPrebanMatch.count}x): Menghapus ancaman ${candidate.name} (${effectiveLane}) untuk mengamankan ${ourTargetSlot} ${plannedOpener.name} (+7%)`;
+    } else if (enemyComboPartner) {
+      bestCaseScore = Math.min(95, baseScore + 8);
+      bestCaseScenario = `Putus Kombo KPL: Mematikan duet maut ${enemyComboPartner.name} + ${candidate.name} (${Math.round(enemyComboWr * 100)}% WR, +8% keunggulan)`;
+    } else if (candidate.tier === 'S' || candidate.win_rate >= 0.52) {
+      bestCaseScore = Math.min(93, baseScore + 6);
+      bestCaseScenario = `Deny S-Tier: Menghapus power-pick ${candidate.name} (${effectiveLane}) dari ${enemyTargetSlot} (+6%)`;
+    } else {
+      bestCaseScore = Math.min(92, baseScore + 5);
+      bestCaseScenario = `Kunci Jalur: Mempersempit pool ${effectiveLane} lawan dan mengamankan tempo draft (+5%)`;
+    }
+
+    // WORST CASE: Risiko spesifik pivot lawan setelah candidate di-ban
+    let worstCaseScore = baseScore - 4;
+    let worstCaseScenario = '';
+    let riskLevel: 'RENDAH' | 'SEDANG' | 'TINGGI' = 'RENDAH';
+
+    if (alt1 && (alt1.tier === 'S' || alt1.tier === 'A' || alt1.win_rate >= 0.51)) {
+      const penalty = alt1.tier === 'S' ? 8 : 6;
+      worstCaseScore = Math.max(25, baseScore - penalty);
+      if (alt2 && (alt2.tier === 'S' || alt2.tier === 'A')) {
+        worstCaseScenario = `Pivot Lawan: Ban ${candidate.name} menyisakan ${alt1.name} atau ${alt2.name} open di ${effectiveLane} (-${penalty}%)`;
+      } else {
+        worstCaseScenario = `Pivot Lawan: Lawan masih bisa mengamankan ${alt1.name} (Tier ${alt1.tier}, ${Math.round(alt1.win_rate * 100)}% WR) di ${effectiveLane} (-${penalty}%)`;
+      }
+      riskLevel = alt1.tier === 'S' ? 'SEDANG' : 'RENDAH';
+    } else if (alt1) {
+      const penalty = 4;
+      worstCaseScore = Math.max(30, baseScore - penalty);
+      worstCaseScenario = `Lane Terkunci: Opsi pengganti lawan di ${effectiveLane} turun ke ${alt1.name} (Tier ${alt1.tier}) (-${penalty}%)`;
+      riskLevel = 'RENDAH';
+    } else {
+      worstCaseScore = baseScore;
+      worstCaseScenario = `Dominasi Lane: Lawan kehabisan opsi hero meta di ${effectiveLane}`;
+      riskLevel = 'RENDAH';
+    }
+
+    return {
+      bestCaseScore,
+      bestCaseScenario,
+      worstCaseScore,
+      worstCaseScenario,
+      riskLevel,
+    };
+  }
+
+  // ---------------------------------------------------------------------------
+  // 1. BEST CASE SCENARIO (PICK PHASE)
+  // ---------------------------------------------------------------------------
+  const candLanes = candidate.lanes.length > 0 ? candidate.lanes : [candidate.primary_lane];
+  const remainingOurVacant = Array.from(ourVacantLanes).filter((l) => !candLanes.includes(l));
+
+  let bestPartner: Hero | null = null;
+  let bestSynergyBonus = 0;
+  let bestPairWr = 0;
+
+  if (remainingOurVacant.length > 0) {
+    for (const partner of availableCandidates) {
+      if (partner.hero_id === candidate.hero_id) continue;
+      const partnerLanes = partner.lanes.length > 0 ? partner.lanes : [partner.primary_lane];
+      const fitsVacant = partnerLanes.some((l) => remainingOurVacant.includes(l));
+      if (!fitsVacant) continue;
+
+      const p1 = Math.min(candidate.hero_id, partner.hero_id);
+      const p2 = Math.max(candidate.hero_id, partner.hero_id);
+      const pairKey = `${p1}_${p2}`;
+      const pairData = proPairs[pairKey];
+
+      if (pairData && pairData.matches >= 15 && pairData.win_rate >= 0.50) {
+        const bonus = (pairData.win_rate - 0.50) * 40 + (pairData.synergy_lift || 0) * 30 + 5;
+        if (bonus > bestSynergyBonus) {
+          bestSynergyBonus = bonus;
+          bestPartner = partner;
+          bestPairWr = pairData.win_rate;
+        }
+      }
+    }
+  }
+
+  let bestCaseScore = baseScore;
+  let bestCaseScenario = '';
+
+  if (bestPartner) {
+    const delta = Math.min(16, Math.max(4, Math.round(bestSynergyBonus)));
+    bestCaseScore = Math.min(96, baseScore + delta);
+    bestCaseScenario = `Duet KPL: +${bestPartner.name} (${Math.round(bestPairWr * 100)}% WR, +${delta}% sinergi)`;
+  } else if (remainingOurVacant.length > 0) {
+    const delta = 6;
+    bestCaseScore = Math.min(94, baseScore + delta);
+    const nextLane = remainingOurVacant[0];
+    bestCaseScenario = `Komposisi Solid: Mengunci ${candidate.primary_lane} & membuka fleksibilitas isi ${nextLane} (+${delta}%)`;
+  } else {
+    // Formasi tim kita sudah 5 hero (pick penutup)
+    bestCaseScore = Math.min(98, baseScore + 5);
+    bestCaseScenario = 'Formasi Sempurna: Komposisi 5 hero terkunci tanpa celah role';
+  }
+
+  // ---------------------------------------------------------------------------
+  // 2. WORST CASE SCENARIO & COUNTER RISK (PICK PHASE)
+  // ---------------------------------------------------------------------------
+  const enemyVacantArr = Array.from(enemyVacantLanes);
+  let worstCaseScore = baseScore;
+  let worstCaseScenario = '';
+  let riskLevel: 'RENDAH' | 'SEDANG' | 'TINGGI' = 'RENDAH';
+
+  const enemyResponseWindow = isBlueSide
+    ? (draftStep <= 6 ? 'R1-R2' : 'Fase 2')
+    : (draftStep <= 6 ? 'B2-B3' : 'Fase 2');
+  const ourFollowUpWindow = isBlueSide
+    ? (draftStep <= 6 ? 'B2+B3' : 'Fase 2')
+    : (draftStep === 5 ? 'R2' : 'Fase 2');
+
+  // A. Periksa apakah sudah ada hero musuh di board yang secara aktif meng-counter candidate
+  const activeEnemyHardCounters: string[] = [];
+  const activeEnemySoftCounters: string[] = [];
+  for (const eh of enemyHeroes) {
+    const cb = candidate.countered_by?.find((c) => c.counter_id === eh.hero_id);
+    const directReverse = eh.counters?.find((c) => c.target_id === candidate.hero_id);
+    const isHard = cb?.severity === 'hard' || directReverse?.severity === 'hard';
+    if (cb || directReverse) {
+      if (isHard) activeEnemyHardCounters.push(eh.name);
+      else activeEnemySoftCounters.push(eh.name);
+    }
+  }
+
+  if (activeEnemyHardCounters.length >= 1 || activeEnemySoftCounters.length >= 2) {
+    riskLevel = 'TINGGI';
+    const penalty = 15 + activeEnemyHardCounters.length * 3;
+    worstCaseScore = Math.max(22, baseScore - penalty);
+    const names = [...activeEnemyHardCounters, ...activeEnemySoftCounters].slice(0, 2).join(' & ');
+    worstCaseScenario = `Sudah Ter-Counter: Lawan sudah mengunci ${names} di board (-${penalty}%)`;
+  } else if (enemyVacantArr.length > 0) {
+    // B. Identifikasi ancaman counter yang sudah berhasil di-ban (Pre-ban / Counter cover)
+    const bannedThreatNames: string[] = [];
+    const bannedIdSet = new Set(bannedHeroIds);
+
+    // Dari daftar countered_by
+    if (candidate.countered_by) {
+      for (const cb of candidate.countered_by) {
+        if (bannedIdSet.has(cb.counter_id) && !bannedThreatNames.includes(cb.counter_name)) {
+          bannedThreatNames.push(cb.counter_name);
+        }
+      }
+    }
+
+    // Dari KPL b1_openers top_prebans
+    const openerData = b1Openers[String(candidate.hero_id)];
+    const topPrebans: Array<{ ban_id: number; ban_name: string; count: number }> = openerData?.top_prebans || [];
+    for (const pb of topPrebans) {
+      if (bannedIdSet.has(pb.ban_id) && pb.count >= 20 && !bannedThreatNames.includes(pb.ban_name)) {
+        bannedThreatNames.push(pb.ban_name);
+      }
+    }
+
+    // C. Klasifikasikan counter yang masih OPEN di sisa lane musuh
+    const openCrossLaneHardCounters: Array<{ name: string; lane: string }> = [];
+    const openSameLaneHardCounters: Array<{ name: string; lane: string }> = [];
+    const openSoftCounters: Array<{ name: string; lane: string }> = [];
+
+    if (candidate.countered_by && candidate.countered_by.length > 0) {
+      for (const cb of candidate.countered_by) {
+        if (bannedIdSet.has(cb.counter_id)) continue;
+
+        const counterHero = availableCandidates.find((a) => a.hero_id === cb.counter_id);
+        if (counterHero) {
+          const counterLanes = counterHero.lanes.length > 0 ? counterHero.lanes : [counterHero.primary_lane];
+          const fitsEnemy = enemyVacantLanes.size === 0 || counterLanes.some((l) => enemyVacantLanes.has(l));
+          if (fitsEnemy) {
+            const entry = { name: cb.counter_name, lane: counterHero.primary_lane };
+            if (cb.severity === 'hard') {
+              if (counterHero.primary_lane === candidate.primary_lane) {
+                openSameLaneHardCounters.push(entry);
+              } else {
+                openCrossLaneHardCounters.push(entry);
+              }
+            } else {
+              openSoftCounters.push(entry);
+            }
+          }
+        }
+      }
+    }
+
+    const totalOpenHard = openCrossLaneHardCounters.length + openSameLaneHardCounters.length;
+    const isFlexPick = candidate.lanes.length >= 2;
+
+    // Evaluasi Tingkat Risiko Berdasarkan Fase Draft
+    if (isEarlyPhasePick) {
+      // FASE 1 (Step 4 - 8, First Pick B1 / R1-R2 / B2-B3):
+      // Hero meta memiliki inisiatif; hanya carry immobile tanpa escape yang benar-benar TINGGI jika belum ter-counter langsung.
+      if (isRiskyCandidate) {
+        riskLevel = 'TINGGI';
+        const penalty = 16;
+        worstCaseScore = Math.max(26, baseScore - penalty);
+        worstCaseScenario = `Blind Pick Rentan Dive: Carry statis tanpa escape membuka respon assassin & burst ${enemyResponseWindow} lawan (-${penalty}%)`;
+      } else if (bannedThreatNames.length > 0 && openCrossLaneHardCounters.length === 0) {
+        // Opener dengan counter utama sudah di-ban (seperti Ao'yin saat Haya di-ban)
+        riskLevel = 'RENDAH';
+        const penalty = 5;
+        worstCaseScore = Math.max(48, baseScore - penalty);
+        const bannedStr = bannedThreatNames.slice(0, 2).join(', ');
+        if (openSameLaneHardCounters.length > 0) {
+          const names = openSameLaneHardCounters
+            .slice(0, 2)
+            .map((c) => `${c.name} (${c.lane})`)
+            .join(' / ');
+          worstCaseScenario = `Aman dari Hard Counter: Ancaman utama (${bannedStr}) sudah ter-ban. Respon lawan di ${enemyResponseWindow} terbatas pada matchup lane ${names}, siap di-cover kombo ${ourFollowUpWindow} (-${penalty}%)`;
+        } else if (openSoftCounters.length > 0) {
+          const names = openSoftCounters
+            .slice(0, 2)
+            .map((c) => `${c.name} (${c.lane})`)
+            .join(' / ');
+          worstCaseScenario = `Aman dari Hard Counter: Ancaman utama (${bannedStr}) sudah ter-ban. Respon lawan di ${enemyResponseWindow} hanya soft-matchup ${names} (-${penalty}%)`;
+        } else {
+          worstCaseScenario = `Opener Optimal: Ancaman utama (${bannedStr}) sudah di-ban, tidak ada counter terbuka di sisa pool`;
+        }
+      } else if (isFlexPick && openCrossLaneHardCounters.length <= 1) {
+        // Hero fleksibel multi-lane (seperti Dun Clash/Jungle/Roam)
+        riskLevel = totalOpenHard >= 2 ? 'SEDANG' : 'RENDAH';
+        const penalty = totalOpenHard >= 2 ? 8 : 5;
+        worstCaseScore = Math.max(46, baseScore - penalty);
+        const names = [...openSameLaneHardCounters, ...openCrossLaneHardCounters]
+          .slice(0, 2)
+          .map((c) => `${c.name} (${c.lane})`)
+          .join(' / ');
+        worstCaseScenario = `Flex Opener: Lawan bisa respon ${names}, namun ${candidate.name} bisa fleksibel dipindah role di ${ourFollowUpWindow} (-${penalty}%)`;
+      } else if (openCrossLaneHardCounters.length === 0 && openSameLaneHardCounters.length === 1) {
+        // Hanya 1 hard counter se-lane (misal Marco Polo vs Arli di Farm), tanpa ancaman cross-lane
+        riskLevel = 'RENDAH';
+        const penalty = 5;
+        worstCaseScore = Math.max(48, baseScore - penalty);
+        worstCaseScenario = `Blind Pick Stabil: Hanya menyisakan laning matchup ${openSameLaneHardCounters[0].name} (${openSameLaneHardCounters[0].lane}) di ${enemyResponseWindow}, siap di-cover kombo tim (-${penalty}%)`;
+      } else if (openCrossLaneHardCounters.length >= 2 || totalOpenHard >= 2) {
+        // Opener dengan ancaman hard-counter cross-lane atau multi-hard counter terbuka
+        riskLevel = 'SEDANG';
+        const penalty = 9;
+        worstCaseScore = Math.max(38, baseScore - penalty);
+        const names = [...openCrossLaneHardCounters, ...openSameLaneHardCounters]
+          .slice(0, 2)
+          .map((c) => `${c.name} (${c.lane})`)
+          .join(' / ');
+        worstCaseScenario = `Waspada Respon ${enemyResponseWindow}: Musuh masih leluasa memilih respon counter ${names} (-${penalty}%)`;
+      } else if (totalOpenHard === 1) {
+        riskLevel = 'SEDANG';
+        const penalty = 7;
+        worstCaseScore = Math.max(42, baseScore - penalty);
+        const allHard = [...openCrossLaneHardCounters, ...openSameLaneHardCounters];
+        worstCaseScenario = `Respon Counter Terarah: Musuh bisa respon ${allHard[0].name} (${allHard[0].lane}) di ${enemyResponseWindow} (-${penalty}%)`;
+      } else if (openSoftCounters.length > 0) {
+        riskLevel = 'RENDAH';
+        const penalty = 4;
+        worstCaseScore = Math.max(48, baseScore - penalty);
+        const names = openSoftCounters.slice(0, 2).map((c) => `${c.name} (${c.lane})`).join(' / ');
+        worstCaseScenario = `Blind Pick Aman: Bebas dari hard counter; lawan hanya memiliki soft matchup ${names} (-${penalty}%)`;
+      } else {
+        riskLevel = 'RENDAH';
+        worstCaseScore = Math.max(50, baseScore - 3);
+        worstCaseScenario = `Opener Optimal: Seluruh counter alami ${candidate.name} sudah terblokir atau ter-ban`;
+      }
+    } else {
+      // FASE 2 (Step 9..17): Lane musuh sudah sempit (1 - 2 lane)
+      const allHard = [...openCrossLaneHardCounters, ...openSameLaneHardCounters];
+      if (allHard.length >= 1) {
+        riskLevel = 'TINGGI';
+        const penalty = 13 + allHard.length * 2;
+        worstCaseScore = Math.max(24, baseScore - penalty);
+        const names = allHard.slice(0, 2).map((c) => `${c.name} (${c.lane})`).join(' / ');
+        worstCaseScenario = `Risiko Counter Terbuka: Musuh diproyeksikan mengunci ${names} di sisa lane mereka (-${penalty}%)`;
+      } else if (openSoftCounters.length >= 1) {
+        riskLevel = 'SEDANG';
+        const penalty = 7;
+        worstCaseScore = Math.max(32, baseScore - penalty);
+        const names = openSoftCounters.slice(0, 2).map((c) => `${c.name} (${c.lane})`).join(' / ');
+        worstCaseScenario = `Potensi Counter: Musuh bisa respon ${names} di sisa lane (-${penalty}%)`;
+      } else {
+        riskLevel = 'RENDAH';
+        const penalty = 4;
+        worstCaseScore = Math.max(38, baseScore - penalty);
+        worstCaseScenario = `Aman dari Counter: Tidak ada hero counter ${candidate.name} yang cocok dengan sisa lane musuh`;
+      }
+    }
+  } else {
+    // Musuh sudah tidak memiliki pick tersisa (misal kita last pick R5)
+    riskLevel = 'RENDAH';
+    worstCaseScore = baseScore;
+    worstCaseScenario = 'Counter Terakhir: Lawan tidak memiliki giliran pick balasan';
+  }
+
+  return {
+    bestCaseScore,
+    bestCaseScenario,
+    worstCaseScore,
+    worstCaseScenario,
+    riskLevel,
+  };
 }
 
 /**
@@ -611,7 +1019,7 @@ export function runTournamentInference(
   const getCounterStrengthAgainst = (
     counterCand: Hero,
     targetHero: Hero
-  ): { isCounter: boolean; kplPrebanCount: number; reason?: string } => {
+  ): { isCounter: boolean; kplPrebanCount: number; counterWeight: number; reason?: string } => {
     const directCounter = counterCand.counters.find((c) => c.target_id === targetHero.hero_id);
     const reverseCountered = targetHero.countered_by?.find((c) => c.counter_id === counterCand.hero_id);
     const kplPrebans: Array<{ ban_id: number; count: number }> = b1Openers[String(targetHero.hero_id)]?.top_prebans || [];
@@ -628,6 +1036,9 @@ export function runTournamentInference(
       counterCand.hokfire_counters?.strong_against?.some((s) => s.replace(/-/g, '').toLowerCase() === targetCleanSlug)
     );
 
+    const isHardMechanicCounter = Boolean(
+      directCounter?.severity === 'hard' || reverseCountered?.severity === 'hard'
+    );
     const isCounter = Boolean(
       directCounter || reverseCountered || isHokfireWeakAgainst || isHokfireStrongAgainst || kplPrebanCount >= 12
     );
@@ -638,7 +1049,11 @@ export function runTournamentInference(
 
     return {
       isCounter,
-      kplPrebanCount: kplPrebanCount + (isHokfireWeakAgainst || isHokfireStrongAgainst ? 25 : 0),
+      kplPrebanCount,
+      counterWeight:
+        kplPrebanCount +
+        (isHardMechanicCounter ? 45 : 0) +
+        (isHokfireWeakAgainst || isHokfireStrongAgainst ? 25 : 0),
       reason,
     };
   };
@@ -710,7 +1125,7 @@ export function runTournamentInference(
           const counterCheck = getCounterStrengthAgainst(cand, plannedOpener);
           if (hasExplicitUserPlan && counterCheck.isCounter) {
             // 2A. Pengguna mengunci Plan A/B: utamakan ban hard counter terhadap hero tersebut
-            const prebanBoost = Math.min(0.55, counterCheck.kplPrebanCount / 160);
+            const prebanBoost = Math.min(0.55, counterCheck.counterWeight / 160);
             score += 1.25 + prebanBoost;
             laneTag = `Counter ${plannedOpener.name}`;
             proComboTag =
@@ -729,7 +1144,7 @@ export function runTournamentInference(
               proComboTag = `🚫 Meta Threat R1+R2 (${p1BansCount}x Phase-1 Ban KPL)`;
             }
             if (counterCheck.isCounter && (p1BansCount >= 80 || isCompetitiveSTier || (cand.tier === 'A' && totalKplPresence >= 50))) {
-              score += 0.35 + Math.min(0.20, counterCheck.kplPrebanCount / 220);
+              score += 0.35 + Math.min(0.20, counterCheck.counterWeight / 220);
               laneTag = `Counter ${plannedOpener.name}`;
               proComboTag = `🎯 Amankan B1 ${plannedOpener.name} & Deny Meta R1+R2`;
             } else if (cand.primary_lane === plannedOpener.primary_lane && (isCompetitiveSTier || p1BansCount >= 180)) {
@@ -753,7 +1168,7 @@ export function runTournamentInference(
         } else if (plannedOpener) {
           const counterCheck = getCounterStrengthAgainst(cand, plannedOpener);
           if (hasExplicitUserPlan && counterCheck.isCounter) {
-            score += 1.05 + Math.min(0.40, counterCheck.kplPrebanCount / 180);
+            score += 1.05 + Math.min(0.40, counterCheck.counterWeight / 180);
             laneTag = `Counter ${plannedOpener.name}`;
             proComboTag = `🛡️ Amankan R1+R2 ${plannedOpener.name}: Ban Counter Utama`;
           } else if (isCompetitiveSTier || (kplOpenerInfo?.b1_picks || 0) >= 160 || p1BansCount >= 500) {
@@ -764,7 +1179,7 @@ export function runTournamentInference(
             laneTag = 'Ancaman B1 Blue';
             proComboTag = `🚫 Potensi First-Pick B1 Blue (${kplOpenerInfo?.b1_picks || 0}x B1 KPL)`;
           } else if (counterCheck.isCounter) {
-            score += 0.45 + Math.min(0.25, counterCheck.kplPrebanCount / 220);
+            score += 0.45 + Math.min(0.25, counterCheck.counterWeight / 220);
             laneTag = `Counter ${plannedOpener.name}`;
             proComboTag = `🛡️ Amankan R1+R2 ${plannedOpener.name}: Ban Counter Utama`;
           }
@@ -1096,7 +1511,7 @@ export function runTournamentInference(
     return val;
   });
 
-  const recommendations = scoredCandidates.map((c, idx) => ({
+  const recommendations: TournamentPredictionResult['recommendations'] = scoredCandidates.map((c, idx) => ({
     hero: c.hero,
     rankingWeight: expSum > 0 ? expScores[idx] / expSum : 1 / scoredCandidates.length,
     choiceScore: c.finalScore,
@@ -1105,6 +1520,33 @@ export function runTournamentInference(
   }));
 
   recommendations.sort((a, b) => b.rankingWeight - a.rankingWeight);
+
+  // Hitung proyeksi hasil akhir (Best Case & Worst Case) untuk kandidat teratas
+  const enemyFearlessSet = new Set(enemyFearlessUnavailableIds);
+  const availableCandidates = heroes.filter(
+    (h, i) => maskArr[i] === 0 && (isPickPhase || !enemyFearlessSet.has(h.hero_id))
+  );
+  const projectionCount = Math.min(15, recommendations.length);
+  for (let i = 0; i < projectionCount; i++) {
+    const rec = recommendations[i];
+    rec.projection = computeDraftOutcomeProjection(
+      rec.hero,
+      isPickPhase,
+      ourHeroes,
+      enemyHeroes,
+      availableCandidates,
+      ourVacantLanes,
+      enemyVacantLanes,
+      proPairs,
+      tacticalScores,
+      isRiskyOpener(rec.hero),
+      plannedOpener,
+      isBlueSide,
+      draftStep,
+      bannedHeroIds,
+      b1Openers
+    );
+  }
 
   const ourVacantArr = Array.from(ourVacantLanes);
   const enemyVacantArr = Array.from(enemyVacantLanes);

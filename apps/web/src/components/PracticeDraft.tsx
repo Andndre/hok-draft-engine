@@ -167,8 +167,19 @@ export function PracticeDraft(props: Props) {
       <section className="hero-roster" aria-label="Roster latihan Global"><HeroRosterToolbar title="Roster Global" count={filtered.length} searchQuery={props.searchQuery} onSearchChange={props.onSearchChange} selectedLane={props.selectedLane} onLaneChange={props.onLaneChange} sortMode={props.sortMode} onSortChange={props.onSortChange} viewMode={props.viewMode} onViewChange={props.onViewChange} hideAiSort={!assistance} active={active} />
         {!filtered.length ? <div className="empty-state"><SearchX aria-hidden="true" /><h3>Hero tidak ditemukan</h3><p>Ubah pencarian atau bersihkan filter lane yang aktif.</p><button type="button" className={button} onClick={() => { props.onSearchChange(''); props.onLaneChange('All'); }}><FilterX aria-hidden="true" />Bersihkan filter</button></div> : <div className={'hero-grid' + (props.viewMode === 'detailed' ? ' hero-grid--detailed' : '')}>{filtered.map(hero => {
           const legal = isLegalHero(previewPosition, hero.hero_id, context);
-          const rank = recommendations.findIndex(rec => rec.hero.hero_id === hero.hero_id) + 1;
-          const shared = { hero, onClick: setWikiHero, onSelect: choose, isUnavailable: !legal && !turn.isComplete, selectionDisabled: !canAct, action: rosterAction };
+          const rec = recommendations.find(r => r.hero.hero_id === hero.hero_id);
+          const rank = rec ? recommendations.indexOf(rec) + 1 : 0;
+          const shared = {
+            hero,
+            onClick: setWikiHero,
+            onSelect: choose,
+            isUnavailable: !legal && !turn.isComplete,
+            selectionDisabled: !canAct,
+            action: rosterAction,
+            aiRank: rank > 0 ? rank : undefined,
+            recommendationReason: rec?.proComboTag || rec?.laneTag,
+            projection: rec?.projection,
+          };
           return props.viewMode === 'compact' ? <HeroCardCompact key={hero.hero_id} {...shared} quickBadge={rank > 0 && rank <= 5 ? 'AI #' + rank : undefined} /> : <HeroCardDetailed key={hero.hero_id} {...shared} aiRank={rank > 0 ? rank : undefined} />;
         })}</div>}
       </section>
