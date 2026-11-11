@@ -1,17 +1,17 @@
 # Graph Report - hok-draft-engine  (2026-11-12)
 
 ## Corpus Check
-- 257 files · ~1,438,036 words
+- 257 files · ~1,438,775 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 18 file(s) not represented in the graph (top: (none) 10, .csv 3, .jsonl 2)
 
 ## Summary
-- 1052 nodes · 2410 edges · 64 communities (54 shown, 10 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 36 edges (avg confidence: 0.89)
+- 1054 nodes · 2423 edges · 61 communities (50 shown, 11 thin omitted)
+- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 38 edges (avg confidence: 0.89)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `2561ab3c`
+- Built from commit: `cbf2b8c4`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -20,31 +20,29 @@
 - 0_sync_global_assets.py
 - package.json
 - practiceState.ts
-- 0_sync_global_assets.py
+- build_artifact.py
 - compilerOptions
 - heroDataLoader.ts
-- publish_data.py
-- evaluateLaneMatchup
+- DataPipelineTests
+- 1_ingest_kpl.py
 - main
 - json
 - validate-dataset.mjs
 - types.ts
 - test_data_pipeline.py
 - AGENTS.md — Developer & Agent Field Manual
+- Data & Audit Pipeline (`packages/ml-engine`)
 - vite-env.d.ts
-- gamePlan.ts
+- verify_simulation.py
 - build-kpl-db.mjs
 - ml-engine
-- gamePlan.test.mjs
 - draftRules.ts
 - verify-dist.mjs
-- generatePostDraftGamePlan
-- json
+- export_draft_benchmark.py
 - validate.yml
 - 0_sync_global_assets.py
-- draft.test.mjs
+- worker.test.mjs
 - load-sqlite.mjs
-- AGENTS.md — Developer & Agent Field Manual
 - draftSearch.ts
 - collect-kpl-bp-all.mjs
 - with
@@ -79,9 +77,9 @@
 ## God Nodes (most connected - your core abstractions)
 1. `Hero` - 31 edges
 2. `PracticeDraft()` - 31 edges
-3. `App()` - 28 edges
+3. `App()` - 29 edges
 4. `parse_hero_page()` - 25 edges
-5. `runTournamentInference()` - 23 edges
+5. `runTournamentInference()` - 24 edges
 6. `react` - 22 edges
 7. `getDraftTurn()` - 21 edges
 8. `norm()` - 20 edges
@@ -97,33 +95,33 @@
   AGENTS.md → apps/web/src/engine/tournamentInference.ts
 - `Repository Layout` --references--> `verify()`  [INFERRED]
   CONTRIBUTING.md → .github/hostinger/check-deploy.py
-- `God Nodes (Abstraksi Paling Kritis):` --references--> `isHeroGlobalReleased()`  [INFERRED]
-  AGENTS.md → apps/web/src/data/heroReleaseStatus.ts
+- `God Nodes (Abstraksi Paling Kritis):` --references--> `loadTournamentDataset()`  [INFERRED]
+  AGENTS.md → apps/web/src/engine/heroDataLoader.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (64 total, 10 thin omitted)
+## Communities (61 total, 11 thin omitted)
 
 ### Community 0 - "PracticeDraft.tsx"
 Cohesion: 0.06
-Nodes (83): God Nodes (Abstraksi Paling Kritis):, App(), BottomCommandDock(), DraftSimulator(), DraftSimulatorProps, HeaderSortBar(), Props, HeroCardCompact() (+75 more)
+Nodes (91): God Nodes (Abstraksi Paling Kritis):, App(), BottomCommandDock(), DraftSimulator(), DraftSimulatorProps, HeaderSortBar(), Props, HeroCardCompact() (+83 more)
 
 ### Community 1 - "0_sync_global_assets.py"
 Cohesion: 0.18
-Nodes (6): clean_ability_sentences(), compact_state_for_prompt(), evaluate_hero_evidence(), _guide_fields(), _match_ally_sentence(), _match_positive()
+Nodes (7): build_evidence_response(), clean_ability_sentences(), compact_state_for_prompt(), evaluate_hero_evidence(), _guide_fields(), _match_ally_sentence(), _match_positive()
 
 ### Community 2 - "package.json"
 Cohesion: 0.07
 Nodes (34): dependencies, clsx@^2.1.1, lucide-react@^1.70.0, react@^19.3.1, react-dom@^19.3.1, tailwind-merge@^3.7.0, devDependencies, tailwindcss@^4.3.5 (+26 more)
 
 ### Community 3 - "practiceState.ts"
-Cohesion: 0.19
-Nodes (16): DraftAction, DraftContext, DraftPosition, Side, SearchContext, SearchDecision, DecisionTag, matchesDecisionTag() (+8 more)
+Cohesion: 0.17
+Nodes (19): DraftAction, DraftContext, DraftPosition, emptyPosition(), Side, SearchContext, SearchDecision, DecisionTag (+11 more)
 
-### Community 4 - "0_sync_global_assets.py"
-Cohesion: 0.10
-Nodes (26): build_root(), contract(), digest(), extra_inventory(), extra_roots(), file_references(), identity(), inventory() (+18 more)
+### Community 4 - "build_artifact.py"
+Cohesion: 0.22
+Nodes (16): build_root(), contract(), digest(), extra_inventory(), extra_roots(), file_references(), identity(), inventory() (+8 more)
 
 ### Community 5 - "compilerOptions"
 Cohesion: 0.11
@@ -133,89 +131,69 @@ Nodes (18): compilerOptions, allowImportingTsExtensions, isolatedModules, jsx, l
 Cohesion: 0.17
 Nodes (18): ArtifactKind, CachedPackage, DATA_CACHE_KEY, DatasetIO, decodePackage(), fetchText(), KINDS, loadHeroMetadata() (+10 more)
 
-### Community 7 - "publish_data.py"
-Cohesion: 0.23
-Nodes (8): attach_hokstats(), _load_json(), load_source_heroes(), build_package(), encode(), _load_json(), main(), write_package()
-
-### Community 8 - "evaluateLaneMatchup"
-Cohesion: 0.33
-Nodes (6): computeRoamContextAdjustment(), evaluateLaneMatchup(), evaluateSwapMacroProfile(), getPairWinRate(), hasKplFlexLane(), scoreHeroMatchup()
+### Community 8 - "1_ingest_kpl.py"
+Cohesion: 0.31
+Nodes (3): ingest_kpl_data(), init_db(), load_global_mapping()
 
 ### Community 9 - "main"
 Cohesion: 0.60
 Nodes (6): battleJobs(), getJson(), loadLeagues(), loadMatches(), main(), sleep()
 
 ### Community 10 - "json"
-Cohesion: 0.10
-Nodes (40): _alias_maps(), _build_variants(), canonical(), _cards(), _clean(), fetch_page(), _heading_list(), _hero_label_id() (+32 more)
+Cohesion: 0.07
+Nodes (49): Repository Layout, Dependencies, diagnose_error(), fetch(), format_github_summary(), main(), select_assets(), verify() (+41 more)
 
 ### Community 11 - "validate-dataset.mjs"
 Cohesion: 0.03
 Nodes (47): actionRows, ALLOWED_LENS, anomalyLens, argv, battleIds, battleIndex, battles, completeHeroes (+39 more)
 
 ### Community 12 - "types.ts"
-Cohesion: 0.08
-Nodes (25): ArcanaItem, CounteredByInfo, CounterInfo, DraftSlot, GameDraftData, GamePlanAnalysis, HeroAbility, HeroTempoBucket (+17 more)
+Cohesion: 0.05
+Nodes (59): KplLaneRateMap, buildHeroMap(), classifyCompArchetype(), computeJungleAndGankPlan(), computeRelativeTempoShare(), computeRoamContextAdjustment(), computeTempoComparison(), countHardCc() (+51 more)
 
 ### Community 13 - "test_data_pipeline.py"
-Cohesion: 0.16
-Nodes (15): build_evidence_response(), approved_profiles(), audit_batch_proposals(), canonical(), create_proposal(), generate_batch_proposals(), has_source_evidence(), has_text() (+7 more)
+Cohesion: 0.25
+Nodes (12): approved_profiles(), audit_batch_proposals(), canonical(), create_proposal(), generate_batch_proposals(), has_source_evidence(), has_text(), main() (+4 more)
 
 ### Community 14 - "AGENTS.md — Developer & Agent Field Manual"
 Cohesion: 0.05
-Nodes (30): 1. Clone With Submodule (or Initialize After Clone), 2. Frontend Setup (`apps/web`), 3. Data Pipeline & KPL Ingestion (`packages/ml-engine`), Contributing to HoK Draft Engine, Critical Domain Rules & Data Workflow, Licensing, Option A — Automated Setup (Recommended), Option B — Manual Setup (+22 more)
+Nodes (41): 1. Misi & Arsitektur Utama, 2. Standar Lingkungan & Perkakas (Wajib Diikuti), 3. Navigasi Knowledge Graph (`graphify`), 4. Logika Domain & Batasan Taktis (CRITICAL PITFALLS), 5. Alur Kerja & Perintah Pemeliharaan Rutin, 6. Struktur Direktori Proyek, A. Membangun & Memperbarui Frontend Statis:, A. Python & Manajemen Package (`uv`) (+33 more)
 
-### Community 17 - "gamePlan.ts"
-Cohesion: 0.11
-Nodes (20): ALL_LANES, KplLaneRateMap, computeRelativeTempoShare(), computeTempoComparison(), estimateHeroTempoFromProfile(), LANE_SWAP_PAIRS, summarizeTeamTempoWithExact(), TempoCurveMap (+12 more)
+### Community 15 - "Data & Audit Pipeline (`packages/ml-engine`)"
+Cohesion: 0.40
+Nodes (4): Data & Audit Pipeline (`packages/ml-engine`), Pipeline Scripts, Setup, Tests
 
 ### Community 19 - "build-kpl-db.mjs"
 Cohesion: 0.05
 Nodes (37): actionRows, argv, banSlotsAll, battleCsv, battles, bpLenDist, byId, gamesByLeague (+29 more)
 
-### Community 21 - "gamePlan.test.mjs"
-Cohesion: 0.25
-Nodes (4): globalHeroes, heroes, manifest, synergy
-
 ### Community 22 - "draftRules.ts"
-Cohesion: 0.15
-Nodes (19): ActionKind, applyDraftAction(), applyGameHero(), createInitialGameDraft(), getDraftPhases(), getDraftTurn(), getTournamentPhase(), isLegalHero() (+11 more)
+Cohesion: 0.12
+Nodes (16): ActionKind, ALL_LANES, applyGameHero(), RANKED_DRAFT_SEQUENCE, RANKED_PHASES, TeamCompositionIntegrity, toPosition(), TOURNAMENT_PHASES (+8 more)
 
 ### Community 23 - "verify-dist.mjs"
-Cohesion: 0.25
+Cohesion: 0.14
 Nodes (5): files, manifest, root, scripts, walk()
 
-### Community 24 - "generatePostDraftGamePlan"
-Cohesion: 0.39
-Nodes (8): buildHeroMap(), classifyCompArchetype(), computeJungleAndGankPlan(), countHardCc(), deriveWinningCondition(), evaluateAllLanes(), generatePostDraftGamePlan(), suggestBeneficialLaneSwaps()
-
-### Community 26 - "json"
-Cohesion: 0.18
-Nodes (8): ingest_kpl_data(), init_db(), load_global_mapping(), export(), main(), main(), compute_opener_score(), simulate_step()
+### Community 26 - "export_draft_benchmark.py"
+Cohesion: 0.27
+Nodes (3): export(), main(), main()
 
 ### Community 27 - "validate.yml"
 Cohesion: 0.09
 Nodes (22): concurrency, cancel-in-progress, group, jobs, validate, name, on, pull_request (+14 more)
 
 ### Community 28 - "0_sync_global_assets.py"
-Cohesion: 0.10
-Nodes (18): build_master_database(), download_and_process_portrait(), fetch_hokfire_data(), load_kpl_hero_mapping(), load_kpl_win_rates(), scrape_kurohiko_hero_counters(), scrape_kurohiko_roster(), download_file() (+10 more)
-
-### Community 29 - "draft.test.mjs"
-Cohesion: 0.12
-Nodes (9): computeSeriesFearlessLocks(), DRAFT_SEQUENCE, findSeriesFearlessConflicts(), teamOnSide(), heroes, manifest, synergy, dataset (+1 more)
+Cohesion: 0.07
+Nodes (28): asset_inventory(), Deployment, digest(), main(), parse_rsync_stats(), relative_path(), target_path(), main() (+20 more)
 
 ### Community 30 - "load-sqlite.mjs"
 Cohesion: 0.11
 Nodes (12): argv, DATA, db, HERE, leagues, OUT, parseLine(), playerRows (+4 more)
 
-### Community 31 - "AGENTS.md — Developer & Agent Field Manual"
-Cohesion: 0.11
-Nodes (19): 1. Misi & Arsitektur Utama, 2. Standar Lingkungan & Perkakas (Wajib Diikuti), 3. Navigasi Knowledge Graph (`graphify`), 4. Logika Domain & Batasan Taktis (CRITICAL PITFALLS), 5. Alur Kerja & Perintah Pemeliharaan Rutin, 6. Struktur Direktori Proyek, A. Membangun & Memperbarui Frontend Statis:, A. Python & Manajemen Package (`uv`) (+11 more)
-
 ### Community 32 - "draftSearch.ts"
-Cohesion: 0.21
-Nodes (21): isHeroGlobalReleased(), analyzeLaneOccupancy(), computeKplPairAdjustment(), evaluateTeamCompositionIntegrity(), getDraftSequence(), getPairEvidence(), isRiskyOpener(), TournamentPhaseId (+13 more)
+Cohesion: 0.19
+Nodes (23): analyzeLaneOccupancy(), computeKplPairAdjustment(), evaluateTeamCompositionIntegrity(), FLOWBORN_HERO_IDS, getPairEvidence(), getTournamentPhase(), isFlowborn(), isRiskyOpener() (+15 more)
 
 ### Community 33 - "collect-kpl-bp-all.mjs"
 Cohesion: 0.14
@@ -226,7 +204,7 @@ Cohesion: 0.14
 Nodes (14): with, artifact-ids, cache, cache-dependency-glob, cache-dependency-path, enable-cache, if-no-files-found, merge-multiple (+6 more)
 
 ### Community 35 - "extract_kpl_synergy.py"
-Cohesion: 0.22
+Cohesion: 0.24
 Nodes (5): classify_tempo_profile(), extract_lane_rates(), extract_synergy(), extract_tempo_curves(), normalize_hid()
 
 ### Community 36 - "字段字典"
@@ -314,32 +292,36 @@ Cohesion: 0.50
 Nodes (4): parseCsvLine(), readCsv(), readJsonl(), readText()
 
 ### Community 59 - "rankedCandidates"
-Cohesion: 0.32
-Nodes (10): emptyPosition(), oppositeSide(), rankedCandidates(), createGame(), createPracticeSession(), practiceContext(), reducePractice(), dataset (+2 more)
+Cohesion: 0.30
+Nodes (13): applyDraftAction(), getDraftSequence(), getDraftTurn(), isLegalHero(), oppositeSide(), rankedCandidates(), searchDraft(), practiceContext() (+5 more)
 
 ### Community 60 - "assignHeroLanes"
 Cohesion: 0.29
 Nodes (8): assignHeroLanes(), getCandidateLanesWithWeights(), 1. Format Turnamen Kompetitif (18 Aksi / 4 Fase), 2. Format Ranked Match (16 Aksi / 2 Fase), Cara kerja mesin draft, Diagram Arsitektur Alur Keputusan (Decision Pipeline), Format Pertandingan: Turnamen & Ranked, Logika Taktis Kompetitif Utama
 
+### Community 61 - "test_data_pipeline.py"
+Cohesion: 0.20
+Nodes (6): attach_hokstats(), _load_json(), load_source_heroes(), global_released_heroes(), make_request(), TacticalEvidenceTests
+
 ## Knowledge Gaps
 - **1 isolated node(s):** `ml-engine`
   These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 464 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **10 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **11 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `HoK Draft Engine` connect `AGENTS.md — Developer & Agent Field Manual` to `assignHeroLanes`?**
-  _High betweenness centrality (0.320) - this node is a cross-community bridge._
+- **Why does `Contributing to HoK Draft Engine` connect `AGENTS.md — Developer & Agent Field Manual` to `json`?**
+  _High betweenness centrality (0.339) - this node is a cross-community bridge._
+- **Are the 2 inferred relationships involving `App()` (e.g. with `God Nodes (Abstraksi Paling Kritis):` and `isFlowborn()`) actually correct?**
+  _`App()` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `ml-engine` to the rest of the system?**
   _1 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `PracticeDraft.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.06486486486486487 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.058823529411764705 - nodes in this community are weakly interconnected._
+- **Why does `Repository Layout` connect `json` to `AGENTS.md — Developer & Agent Field Manual`?**
+  _High betweenness centrality (0.321) - this node is a cross-community bridge._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.07301587301587302 - nodes in this community are weakly interconnected._
-- **Should `0_sync_global_assets.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.09714285714285714 - nodes in this community are weakly interconnected._
 - **Should `compilerOptions` be split into smaller, more focused modules?**
   _Cohesion score 0.10526315789473684 - nodes in this community are weakly interconnected._
-- **Should `json` be split into smaller, more focused modules?**
-  _Cohesion score 0.10491803278688525 - nodes in this community are weakly interconnected._

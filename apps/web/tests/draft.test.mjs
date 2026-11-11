@@ -13,6 +13,8 @@ import {
   computeKplPairAdjustment,
   computeSeriesFearlessLocks,
   teamOnSide,
+  FLOWBORN_HERO_IDS,
+  isFlowborn,
 } from '../src/engine/draftRules.ts';
 import { rankedCandidates, searchDraft, evaluatePosition } from '../src/engine/draftSearch.ts';
 import { evaluateTacticalScores, evaluateEnemyCounterExposure, reviewedHoKStatsBonuses, runTournamentInference } from '../src/engine/tournamentInference.ts';
@@ -440,4 +442,75 @@ test('user real matches Game 1 and Game 2 regression: Red phase-1 ban prioritize
   assert.ok(locksG3.red.has(byName('Zilong').hero_id), "Red in Game 3 (Team A) must have Zilong locked");
   assert.ok(locksG3.red.has(byName('Lapulapu').hero_id), "Red in Game 3 (Team A) must have Lapulapu locked");
   assert.ok(!locksG3.red.has(byName('Lian Po').hero_id), "Team A (on Red) can pick Lian Po since only Team B used it");
+});
+
+test('Flowborn single-hero equivalence rule across draft, bans, and fearless', () => {
+  const ctx = context();
+  // Verify all 5 flowborn IDs exist
+  const flowbornIds = [581, 582, 583, 584, 585];
+  assert.equal(FLOWBORN_HERO_IDS.size, 5);
+  flowbornIds.forEach(id => assert.ok(isFlowborn(id), `Hero ${id} must be Flowborn`));
+  assert.ok(!isFlowborn(155), 'Dun is not Flowborn');
+
+  // 1. Advance to B1 pick (step 4: after 4 bans)
+  let pos = advance(emptyPosition(), ctx, 4);
+  assert.equal(pos.step, 4); // B1
+  // Flowborn Tank (581) is legal to pick for Blue
+  assert.ok(isLegalHero(pos, 581, ctx), 'Flowborn Tank should be legal at B1');
+  assert.ok(isLegalHero(pos, 584, ctx), 'Flowborn Marksman should be legal at B1');
+
+  // Blue picks Flowborn (Tank) #581 at B1
+  pos = applyDraftAction(pos, { side: 'blue', action: 'pick', heroId: 581 }, ctx);
+  assert.equal(pos.step, 5); // R1
+  assert.deepEqual(pos.picks.blue, [581]);
+
+  // Now for Red at R1: Flowborn Tank is illegal, AND all other 4 Flowborn roles are also illegal!
+  assert.equal(isLegalHero(pos, 581, ctx), false, 'Flowborn Tank cannot be picked again');
+  assert.equal(isLegalHero(pos, 582, ctx), false, 'Flowborn Mage cannot be picked after Blue picked Flowborn Tank');
+  assert.equal(isLegalHero(pos, 583, ctx), false, 'Flowborn Assassin cannot be picked after Blue picked Flowborn Tank');
+  assert.equal(isLegalHero(pos, 584, ctx), false, 'Flowborn Marksman cannot be picked after Blue picked Flowborn Tank');
+  assert.equal(isLegalHero(pos, 585, ctx), false, 'Flowborn Roamer cannot be picked after Blue picked Flowborn Tank');
+
+  // 2. Ban mutual exclusivity: if any Flowborn is banned, none can be picked or banned
+  let banPos = emptyPosition(); // step 0: Blue Ban 1
+  banPos = applyDraftAction(banPos, { side: 'blue', action: 'ban', heroId: 582 }, ctx); // Blue bans Flowborn Mage
+  assert.equal(banPos.step, 1); // Red Ban 1
+  // Red cannot ban or pick any Flowborn variant
+  flowbornIds.forEach(fid => {
+    assert.equal(isLegalHero(banPos, fid, ctx), false, `Flowborn ${fid} cannot be banned or picked once Flowborn Mage is banned`);
+  });
+
+  // 3. Fearless Draft Lock: picking any Flowborn locks ALL Flowborn variants for subsequent games
+  const flowbornHero = heroes.find(h => h.hero_id === 584) || { hero_id: 584, name: 'Flowborn (Marksman)' };
+  const mockGames = {
+    1: {
+      bluePicks: [flowbornHero, null, null, null, null],
+      redPicks: Array(5).fill(null),
+      blueBans: Array(4).fill(null),
+      redBans: Array(4).fill(null),
+      draftStep: 18,
+      blueTeam: 'A',
+      winner: null,
+    },
+    2: {
+      bluePicks: Array(5).fill(null),
+      redPicks: Array(5).fill(null),
+      blueBans: Array(4).fill(null),
+      redBans: Array(4).fill(null),
+      draftStep: 0,
+      blueTeam: 'A',
+      winner: null,
+    },
+  };
+
+  const g2Locks = computeSeriesFearlessLocks(mockGames, 2, true);
+  // Team A was Blue in Game 1 and is Blue in Game 2.
+  // ALL 5 Flowborn variants must be in Blue's fearless lock set for Game 2!
+  flowbornIds.forEach(fid => {
+    assert.ok(g2Locks.blue.has(fid), `Flowborn ${fid} must be locked for Team A in Game 2`);
+  });
+  // Team B (Red) did not pick Flowborn, so they must not be locked
+  flowbornIds.forEach(fid => {
+    assert.ok(!g2Locks.red.has(fid), `Flowborn ${fid} must NOT be locked for Team B in Game 2`);
+  });
 });

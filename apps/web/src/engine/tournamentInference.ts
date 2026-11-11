@@ -22,6 +22,8 @@ import {
   evaluateTeamCompositionIntegrity,
   computeKplPairAdjustment,
   getPairEvidence,
+  FLOWBORN_HERO_IDS,
+  isFlowborn,
 } from './draftRules';
 
 export type { TournamentPhaseId } from './draftRules';
@@ -1027,6 +1029,10 @@ export function runTournamentInference(
     ...(isPickPhase ? fearlessUnavailableIds : []),
   ]);
 
+  if (Array.from(unavailableSet).some(isFlowborn)) {
+    FLOWBORN_HERO_IDS.forEach((fid) => unavailableSet.add(fid));
+  }
+
   if (onlyGlobalReleased) {
     heroes.forEach((h) => {
       if (!isHeroGlobalReleased(h)) {
@@ -1190,9 +1196,14 @@ export function runTournamentInference(
 
   const hasEnemyDunshan = enemyHeroes.some((e) => e.hero_id === 509 || e.name.toLowerCase() === 'dunshan');
 
+  const enemyFearlessSet = new Set(enemyFearlessUnavailableIds);
+  if (enemyFearlessUnavailableIds.some(isFlowborn)) {
+    FLOWBORN_HERO_IDS.forEach((fid) => enemyFearlessSet.add(fid));
+  }
+
   for (let i = 0; i < heroes.length; i++) {
     if (maskArr[i] === 1 || phaseId === 'DRAFT_COMPLETE') continue;
-    if (!isPickPhase && enemyFearlessUnavailableIds.includes(heroes[i].hero_id)) continue;
+    if (!isPickPhase && enemyFearlessSet.has(heroes[i].hero_id)) continue;
     if (draftStep <= firstPickStep && isRiskyOpener(heroes[i])) continue;
 
     const cand = heroes[i];
@@ -1654,7 +1665,6 @@ export function runTournamentInference(
   recommendations.sort((a, b) => b.rankingWeight - a.rankingWeight);
 
   // Hitung proyeksi hasil akhir (Best Case & Worst Case) untuk kandidat teratas
-  const enemyFearlessSet = new Set(enemyFearlessUnavailableIds);
   const availableCandidates = heroes.filter(
     (h, i) => maskArr[i] === 0 && (isPickPhase || !enemyFearlessSet.has(h.hero_id))
   );

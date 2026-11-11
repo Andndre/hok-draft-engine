@@ -19,7 +19,7 @@ import { HeroWikiDrawer } from './components/HeroWikiDrawer';
 import { PlanSelectionModal } from './components/PlanSelectionModal';
 import { isHeroGlobalReleased } from './data/heroReleaseStatus';
 
-import { assignHeroLanes, DRAFT_SEQUENCE, getDraftTurn, createInitialGameDraft, applyGameHero, computeSeriesFearlessLocks, findSeriesFearlessConflicts, teamOnSide } from './engine/draftRules';
+import { assignHeroLanes, DRAFT_SEQUENCE, getDraftTurn, createInitialGameDraft, applyGameHero, computeSeriesFearlessLocks, findSeriesFearlessConflicts, teamOnSide, FLOWBORN_HERO_IDS, isFlowborn } from './engine/draftRules';
 import type { Side } from './engine/draftRules';
 
 export const App: React.FC = () => {
@@ -153,17 +153,48 @@ export const App: React.FC = () => {
   }, [gamesData, fearlessEnabled, draftFormat]);
 
   const blueFearlessUsedHeroes = useMemo(() => {
-    return heroes.filter((h) => blueFearlessUnavailableIds.has(h.hero_id));
-  }, [heroes, blueFearlessUnavailableIds]);
+    const list: Hero[] = [];
+    const seen = new Set<number>();
+    for (let g = 1; g < gameNumber; g++) {
+      const past = gamesData[g];
+      if (!past) continue;
+      const curBlueTeam = teamOnSide(gamesData[gameNumber] || { blueTeam }, 'blue');
+      const bTeam = teamOnSide(past, 'blue');
+      const picks = bTeam === curBlueTeam ? past.bluePicks : (teamOnSide(past, 'red') === curBlueTeam ? past.redPicks : []);
+      for (const h of picks) {
+        if (h && !seen.has(h.hero_id)) {
+          seen.add(h.hero_id);
+          list.push(h);
+        }
+      }
+    }
+    return list;
+  }, [gamesData, gameNumber, blueTeam]);
 
   const redFearlessUsedHeroes = useMemo(() => {
-    return heroes.filter((h) => redFearlessUnavailableIds.has(h.hero_id));
-  }, [heroes, redFearlessUnavailableIds]);
+    const list: Hero[] = [];
+    const seen = new Set<number>();
+    for (let g = 1; g < gameNumber; g++) {
+      const past = gamesData[g];
+      if (!past) continue;
+      const curRedTeam = teamOnSide(gamesData[gameNumber] || { blueTeam }, 'red');
+      const bTeam = teamOnSide(past, 'blue');
+      const picks = bTeam === curRedTeam ? past.bluePicks : (teamOnSide(past, 'red') === curRedTeam ? past.redPicks : []);
+      for (const h of picks) {
+        if (h && !seen.has(h.hero_id)) {
+          seen.add(h.hero_id);
+          list.push(h);
+        }
+      }
+    }
+    return list;
+  }, [gamesData, gameNumber, blueTeam]);
 
   // Unavailable heroes in current draft for the ACTIVE TEAM:
   // - Already picked or banned in current match
   // - In Ranked blind ban, opposing teams can ban the same hero
   // - PLUS heroes that the ACTIVE side already picked in previous games of this Fearless series!
+  // - If any Flowborn role is picked/banned/locked, all 5 Flowborn role variants are unavailable!
   const currentDraftUnavailableIds = useMemo(() => {
     const ids = new Set<number>();
     bluePicks.forEach((h) => h && ids.add(h.hero_id));
@@ -181,11 +212,29 @@ export const App: React.FC = () => {
       const teamFearlessSet = currentTurn.side === 'blue' ? blueFearlessUnavailableIds : redFearlessUnavailableIds;
       teamFearlessSet.forEach((id) => ids.add(id));
     }
+
+    if (Array.from(ids).some(isFlowborn)) {
+      FLOWBORN_HERO_IDS.forEach((fId) => ids.add(fId));
+    }
+
     return ids;
   }, [bluePicks, redPicks, blueBans, redBans, fearlessEnabled, draftFormat, currentTurn, blueFearlessUnavailableIds, redFearlessUnavailableIds]);
 
-  const allPickedHeroIds = useMemo(() => new Set([...bluePicks, ...redPicks].filter(Boolean).map(h => h!.hero_id)), [bluePicks, redPicks]);
-  const allBannedHeroIds = useMemo(() => new Set([...blueBans, ...redBans].filter(Boolean).map(h => h!.hero_id)), [blueBans, redBans]);
+  const allPickedHeroIds = useMemo(() => {
+    const ids = new Set([...bluePicks, ...redPicks].filter(Boolean).map(h => h!.hero_id));
+    if (Array.from(ids).some(isFlowborn)) {
+      FLOWBORN_HERO_IDS.forEach((fId) => ids.add(fId));
+    }
+    return ids;
+  }, [bluePicks, redPicks]);
+
+  const allBannedHeroIds = useMemo(() => {
+    const ids = new Set([...blueBans, ...redBans].filter(Boolean).map(h => h!.hero_id));
+    if (Array.from(ids).some(isFlowborn)) {
+      FLOWBORN_HERO_IDS.forEach((fId) => ids.add(fId));
+    }
+    return ids;
+  }, [blueBans, redBans]);
 
   // Active plan IDs for the side whose turn it is
   const activeSidePlanAId = currentTurn.side === 'blue' ? bluePlanAId : redPlanAId;

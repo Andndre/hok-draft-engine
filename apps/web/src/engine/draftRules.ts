@@ -5,6 +5,8 @@ export type Side = 'blue' | 'red';
 export type ActionKind = 'ban' | 'pick';
 export type TournamentPhaseId = 'BAN_PHASE_1' | 'PICK_PHASE_1' | 'BAN_PHASE_2' | 'PICK_PHASE_2' | 'RANKED_BAN' | 'RANKED_PICK' | 'ULTIMATE_BATTLE' | 'DRAFT_COMPLETE';
 export const IMMOBILE_OPENERS = new Set([112, 169, 142, 109, 504]);
+export const FLOWBORN_HERO_IDS = new Set([581, 582, 583, 584, 585]);
+export const isFlowborn = (heroId: number): boolean => FLOWBORN_HERO_IDS.has(heroId);
 export function isRiskyOpener(hero: Hero): boolean {
   const tags = hero.tactical_profile?.tags;
   return IMMOBILE_OPENERS.has(hero.hero_id) || (tags?.dive_vulnerable === true && tags.mobility === false && ['Mage', 'Marksman'].includes(hero.primary_role));
@@ -109,32 +111,36 @@ export function isLegalHero(
   const hero = context.heroes.find(h => h.hero_id === heroId);
   if (turn.isComplete || !hero || heroId === 511 || (context.onlyGlobal && !isHeroGlobalReleased(hero))) return false;
 
+  const matchesHeroOrFlowborn = (id: number) => id === heroId || (isFlowborn(heroId) && isFlowborn(id));
+
   // Ultimate Battle (Game 7 Peak Showdown): No bans, full pool reset, mirror picks allowed across teams
   if (isUltimateBattle) {
     if (turn.action !== 'pick') return false;
-    // Same team cannot pick the same hero twice
-    return !position.picks[turn.side].includes(heroId);
+    // Same team cannot pick the same hero twice (nor multiple Flowborn roles)
+    return !position.picks[turn.side].some(matchesHeroOrFlowborn);
   }
 
   if (turn.action === 'ban') {
     if (format === 'ranked') {
       // In Ranked blind ban, opposing teams can ban the same hero, but the same team cannot ban it twice
-      if (position.bans[turn.side].includes(heroId)) return false;
-      if (position.picks.blue.includes(heroId) || position.picks.red.includes(heroId)) return false;
+      if (position.bans[turn.side].some(matchesHeroOrFlowborn)) return false;
+      if (position.picks.blue.some(matchesHeroOrFlowborn) || position.picks.red.some(matchesHeroOrFlowborn)) return false;
       return true;
     }
     // Tournament ban: no duplicates across all bans/picks
-    if ([...position.picks.blue, ...position.picks.red, ...position.bans.blue, ...position.bans.red].includes(heroId)) {
+    const allUsed = [...position.picks.blue, ...position.picks.red, ...position.bans.blue, ...position.bans.red];
+    if (allUsed.some(matchesHeroOrFlowborn)) {
       return false;
     }
     return true;
   }
 
   // Pick action: cannot pick any hero already picked or banned by either team
-  if ([...position.picks.blue, ...position.picks.red, ...position.bans.blue, ...position.bans.red].includes(heroId)) {
+  const allUsed = [...position.picks.blue, ...position.picks.red, ...position.bans.blue, ...position.bans.red];
+  if (allUsed.some(matchesHeroOrFlowborn)) {
     return false;
   }
-  return !context.fearless[turn.side].includes(heroId);
+  return !context.fearless[turn.side].some(matchesHeroOrFlowborn);
 }
 
 export function applyDraftAction(
@@ -171,8 +177,20 @@ export function computeSeriesFearlessLocks(
     if (!past) continue;
     const bTeam = teamOnSide(past, 'blue');
     const rTeam = teamOnSide(past, 'red');
-    past.bluePicks.forEach((h) => h && byTeam[bTeam].add(h.hero_id));
-    past.redPicks.forEach((h) => h && byTeam[rTeam].add(h.hero_id));
+    past.bluePicks.forEach((h) => {
+      if (!h) return;
+      byTeam[bTeam].add(h.hero_id);
+      if (isFlowborn(h.hero_id)) {
+        FLOWBORN_HERO_IDS.forEach((fid) => byTeam[bTeam].add(fid));
+      }
+    });
+    past.redPicks.forEach((h) => {
+      if (!h) return;
+      byTeam[rTeam].add(h.hero_id);
+      if (isFlowborn(h.hero_id)) {
+        FLOWBORN_HERO_IDS.forEach((fid) => byTeam[rTeam].add(fid));
+      }
+    });
   }
 
   const curBlueTeam = curGame ? teamOnSide(curGame, 'blue') : 'A';
@@ -198,18 +216,20 @@ export function findSeriesFearlessConflicts(
 
     for (const h of game.bluePicks) {
       if (!h) continue;
-      if (seenByTeam[bTeam].has(h.hero_id)) {
+      const canonicalKey = isFlowborn(h.hero_id) ? 581 : h.hero_id;
+      if (seenByTeam[bTeam].has(canonicalKey)) {
         conflicts.push({ game: g, side: 'blue', heroId: h.hero_id, heroName: h.name });
       } else {
-        seenByTeam[bTeam].set(h.hero_id, g);
+        seenByTeam[bTeam].set(canonicalKey, g);
       }
     }
     for (const h of game.redPicks) {
       if (!h) continue;
-      if (seenByTeam[rTeam].has(h.hero_id)) {
+      const canonicalKey = isFlowborn(h.hero_id) ? 581 : h.hero_id;
+      if (seenByTeam[rTeam].has(canonicalKey)) {
         conflicts.push({ game: g, side: 'red', heroId: h.hero_id, heroName: h.name });
       } else {
-        seenByTeam[rTeam].set(h.hero_id, g);
+        seenByTeam[rTeam].set(canonicalKey, g);
       }
     }
   }
