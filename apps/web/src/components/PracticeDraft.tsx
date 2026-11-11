@@ -90,12 +90,15 @@ export function PracticeDraft(props: Props) {
   );
   const playerHeroes = heroList(position.picks[playerSide]);
   const enemyHeroes = heroList(position.picks[oppositeSide(playerSide)]);
+  const activeBans = (format === 'ranked' && turn.action === 'ban')
+    ? position.bans[playerSide]
+    : [...position.bans.blue, ...position.bans.red];
   const hints = useMemo(() => game ? runTournamentInference(
-    position.picks[playerSide], position.picks[oppositeSide(playerSide)], [...position.bans.blue, ...position.bans.red],
+    position.picks[playerSide], position.picks[oppositeSide(playerSide)], activeBans,
     context.fearless[playerSide], turn.action === 'pick', playerSide === 'blue', snapshot.heroes, position.step,
     game.playerPlan.a, game.playerPlan.b, true, snapshot.synergy, context.fearless[oppositeSide(playerSide)],
     format
-  ) : null, [game, playerSide, context, snapshot, format, turn.action]);
+  ) : null, [game, playerSide, context, snapshot, format, turn.action, activeBans]);
   const recommendations = assistance && canAct ? hints?.recommendations ?? [] : [];
   const send = (event: PracticeEvent) => {
     client.cancel(); setError(''); setNotice(''); setThinking(false);
@@ -250,14 +253,30 @@ export function PracticeDraft(props: Props) {
     <div className={assistance && !turn.isComplete && latest ? 'draft-workspace' : ''}>
       <section className="hero-roster" aria-label="Roster latihan Global"><HeroRosterToolbar title="Roster Global" count={filtered.length} searchQuery={props.searchQuery} onSearchChange={props.onSearchChange} selectedLane={props.selectedLane} onLaneChange={props.onLaneChange} sortMode={props.sortMode} onSortChange={props.onSortChange} viewMode={props.viewMode} onViewChange={props.onViewChange} hideAiSort={!assistance} active={active} />
         {!filtered.length ? <div className="empty-state"><SearchX aria-hidden="true" /><h3>Hero tidak ditemukan</h3><p>Ubah pencarian atau bersihkan filter lane yang aktif.</p><button type="button" className={button} onClick={() => { props.onSearchChange(''); props.onLaneChange('All'); }}><FilterX aria-hidden="true" />Bersihkan filter</button></div> : <div className={'hero-grid' + (props.viewMode === 'detailed' ? ' hero-grid--detailed' : '')}>{filtered.map(hero => {
-          const legal = isLegalHero(previewPosition, hero.hero_id, context);
+          const legal = isLegalHero(previewPosition, hero.hero_id, context, format);
           const rec = recommendations.find(r => r.hero.hero_id === hero.hero_id);
           const rank = rec ? recommendations.indexOf(rec) + 1 : 0;
+          const isUnavailable = !legal && !turn.isComplete;
+          let unavailableLabel: string | undefined = undefined;
+          if (isUnavailable) {
+            if (position.picks.blue.includes(hero.hero_id) || position.picks.red.includes(hero.hero_id)) {
+              unavailableLabel = 'Terpilih';
+            } else if (format === 'ranked' && rosterAction === 'ban') {
+              if (position.bans[playerSide].includes(hero.hero_id)) unavailableLabel = 'Terban';
+            } else if (position.bans.blue.includes(hero.hero_id) || position.bans.red.includes(hero.hero_id)) {
+              unavailableLabel = 'Terban';
+            } else if (session?.config.fearless && context.fearless[playerSide].includes(hero.hero_id)) {
+              unavailableLabel = 'Terkunci';
+            } else {
+              unavailableLabel = rosterAction === 'ban' ? 'Terban' : 'Terpilih';
+            }
+          }
           const shared = {
             hero,
             onClick: setWikiHero,
             onSelect: choose,
-            isUnavailable: !legal && !turn.isComplete,
+            isUnavailable,
+            unavailableLabel,
             selectionDisabled: !canAct,
             action: rosterAction,
             aiRank: rank > 0 ? rank : undefined,
@@ -269,7 +288,7 @@ export function PracticeDraft(props: Props) {
       </section>
       {assistance && !turn.isComplete && latest && hints && <aside className="analysis-sidebar"><TacticalRadarPanel scores={playerRadar} phaseStrategy={hints.phaseStrategy} recommendations={recommendations} isWaiting={!canAct} onSelectCandidate={choose} onInspectHero={setWikiHero} activeSide={playerSide} isPickPhase={turn.action === 'pick'} onOpenPlanModal={() => setPlanOpen(true)} onSelectQuickPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} /></aside>}
     </div>
-    <HeroWikiDrawer hero={wikiHero} onClose={() => setWikiHero(null)} isFavorite={!!wikiHero && props.favorites.has(wikiHero.hero_id)} onToggleFavorite={props.onToggleFavorite} onPickForDraft={canAct && wikiHero && isLegalHero(position, wikiHero.hero_id, context) ? choose : undefined} draftActionLabel={turn.action === 'ban' ? 'Ban hero ini' : 'Pick hero ini'} allHeroes={snapshot.heroes} onSelectRelatedHero={setWikiHero} itemCatalog={snapshot.items} spellCatalog={snapshot.spells} />
+    <HeroWikiDrawer hero={wikiHero} onClose={() => setWikiHero(null)} isFavorite={!!wikiHero && props.favorites.has(wikiHero.hero_id)} onToggleFavorite={props.onToggleFavorite} onPickForDraft={canAct && wikiHero && isLegalHero(position, wikiHero.hero_id, context, format) ? choose : undefined} draftActionLabel={turn.action === 'ban' ? 'Ban hero ini' : 'Pick hero ini'} allHeroes={snapshot.heroes} onSelectRelatedHero={setWikiHero} itemCatalog={snapshot.items} spellCatalog={snapshot.spells} />
     <PlanSelectionModal isOpen={planOpen && latest} onClose={() => setPlanOpen(false)} heroes={snapshot.heroes} currentPlanAId={game.playerPlan.a} currentPlanBId={game.playerPlan.b} onSelectPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} onSelectPlanB={heroId => send({ type: 'plan', plan: 'b', heroId })} activeSide={playerSide} unavailableHeroIds={unavailablePlans} recommendedOpeners={assistance ? hints?.phaseStrategy.candidateOpeners ?? [] : []} onlyGlobalReleased />
   </section>;
 }

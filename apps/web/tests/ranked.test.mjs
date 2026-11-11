@@ -161,3 +161,18 @@ test('createInitialGameDraft creates 3 ban slots for ranked and 4 for tournament
   assert.equal(tourneyGame.blueBans.length, 4);
   assert.equal(tourneyGame.redBans.length, 4);
 });
+
+test('at step 3 of ranked draft, a hero banned by blue remains legal and candidate for red', () => {
+  const ctx = rankedContext();
+  const augran = heroes.find(h => h.name === 'Augran');
+  let pos = emptyPosition();
+  pos.bans.blue = [augran.hero_id, 106, 107];
+  pos.step = 3; // Red ban 1
+
+  // isLegalHero without 4th argument should read context.format
+  assert.equal(isLegalHero(pos, augran.hero_id, ctx), true);
+
+  const candidates = rankedCandidates(pos, ctx);
+  const augranCand = candidates.find(c => c.hero.hero_id === augran.hero_id);
+  assert.ok(augranCand, 'Augran must remain a candidate for Red even if Blue already banned him');
+});

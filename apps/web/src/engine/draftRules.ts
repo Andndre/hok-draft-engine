@@ -90,7 +90,7 @@ export function isLegalHero(
   position: DraftPosition,
   heroId: number,
   context: DraftContext,
-  format: DraftFormat = 'tournament'
+  format: DraftFormat = context.format ?? 'tournament'
 ): boolean {
   const turn = getDraftTurn(position.step, format);
   const hero = context.heroes.find(h => h.hero_id === heroId);
@@ -121,7 +121,7 @@ export function applyDraftAction(
   position: DraftPosition,
   action: DraftAction,
   context: DraftContext,
-  format: DraftFormat = 'tournament'
+  format: DraftFormat = context.format ?? 'tournament'
 ): DraftPosition {
   const turn = getDraftTurn(position.step, format);
   if (turn.side !== action.side || turn.action !== action.action || !isLegalHero(position, action.heroId, context, format)) return position;
@@ -153,7 +153,7 @@ export function applyGameHero(
   game: GameDraftData,
   hero: Hero,
   context: DraftContext,
-  format: DraftFormat = 'tournament'
+  format: DraftFormat = context.format ?? 'tournament'
 ): GameDraftData {
   const position = toPosition(game);
   const turn = getDraftTurn(position.step, format);

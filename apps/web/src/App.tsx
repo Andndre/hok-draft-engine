@@ -173,6 +173,9 @@ export const App: React.FC = () => {
     return ids;
   }, [bluePicks, redPicks, blueBans, redBans, fearlessEnabled, draftFormat, currentTurn, blueFearlessUnavailableIds, redFearlessUnavailableIds]);
 
+  const allPickedHeroIds = useMemo(() => new Set([...bluePicks, ...redPicks].filter(Boolean).map(h => h!.hero_id)), [bluePicks, redPicks]);
+  const allBannedHeroIds = useMemo(() => new Set([...blueBans, ...redBans].filter(Boolean).map(h => h!.hero_id)), [blueBans, redBans]);
+
   // Active plan IDs for the side whose turn it is
   const activeSidePlanAId = currentTurn.side === 'blue' ? bluePlanAId : redPlanAId;
   const activeSidePlanBId = currentTurn.side === 'blue' ? bluePlanBId : redPlanBId;
@@ -197,7 +200,9 @@ export const App: React.FC = () => {
       const enemyPicks = turn.side === 'blue' ? rPicks : bPicks;
       const ourHeroIds = ourPicks.filter(Boolean).map((h) => h!.hero_id);
       const enemyHeroIds = enemyPicks.filter(Boolean).map((h) => h!.hero_id);
-      const bannedIds = [...bBans, ...rBans].filter(Boolean).map((h) => h!.hero_id);
+      const bannedIds = (draftFormat === 'ranked' && turn.action === 'ban')
+        ? (turn.side === 'blue' ? bBans : rBans).filter(Boolean).map((h) => h!.hero_id)
+        : [...bBans, ...rBans].filter(Boolean).map((h) => h!.hero_id);
       const teamFearlessIds = turn.side === 'blue' ? Array.from(blueFearlessSet) : Array.from(redFearlessSet);
 
       try {
@@ -546,11 +551,24 @@ export const App: React.FC = () => {
                 : !filteredAndSortedHeroes.length ? <div className="empty-state">{activeTab === 'favorites' && !favorites.size ? <Star aria-hidden="true" /> : <SearchX aria-hidden="true" />}<h3>{activeTab === 'favorites' && !favorites.size ? 'Belum ada hero favorit' : 'Hero tidak ditemukan'}</h3><p>{activeTab === 'favorites' && !favorites.size ? 'Buka wiki hero, lalu simpan ke favorit.' : 'Coba nama lain atau hapus filter lane yang aktif.'}</p><button type="button" className="ui-button ui-button--quiet" onClick={() => { setSearchQuery(''); setSelectedLane('All'); if (activeTab === 'favorites' && !favorites.size) setActiveTab('wiki'); }}>{activeTab === 'favorites' && !favorites.size ? <BookOpen aria-hidden="true" /> : <FilterX aria-hidden="true" />}{activeTab === 'favorites' && !favorites.size ? 'Jelajahi hero' : 'Bersihkan filter'}</button></div>
                 : <div className={'hero-grid' + (viewMode === 'detailed' ? ' hero-grid--detailed' : '')}>{filteredAndSortedHeroes.map(hero => {
                   const isUnavailable = activeTab === 'draft' && currentDraftUnavailableIds.has(hero.hero_id);
+                  let unavailableLabel: string | undefined = undefined;
+                  if (isUnavailable) {
+                    if (allPickedHeroIds.has(hero.hero_id)) {
+                      unavailableLabel = 'Terpilih';
+                    } else if (allBannedHeroIds.has(hero.hero_id)) {
+                      unavailableLabel = 'Terban';
+                    } else if (fearlessEnabled && draftFormat !== 'ranked' && (blueFearlessUnavailableIds.has(hero.hero_id) || redFearlessUnavailableIds.has(hero.hero_id))) {
+                      unavailableLabel = 'Terkunci';
+                    } else {
+                      unavailableLabel = currentTurn.action === 'ban' ? 'Terban' : 'Terpilih';
+                    }
+                  }
                   const rec = activeTab === 'draft' ? recommendations.find(r => r.hero.hero_id === hero.hero_id) : undefined;
                   const rank = rec ? recommendations.indexOf(rec) + 1 : 0;
                   const shared = {
                     hero,
                     isUnavailable,
+                    unavailableLabel,
                     onClick: setWikiHero,
                     onSelect: activeTab === 'draft' ? handleSelectHero : undefined,
                     selectionDisabled: currentTurn.isComplete,

@@ -9,6 +9,7 @@ export function HeroCardDetailed({
   hero,
   isSelected,
   isUnavailable,
+  unavailableLabel,
   onClick,
   onSelect,
   selectionDisabled,
@@ -94,7 +95,7 @@ export function HeroCardDetailed({
             aria-label={(action === 'ban' ? 'Ban ' : 'Pick ') + hero.name}
           >
             {isUnavailable ? <LockKeyhole aria-hidden="true" /> : <ActionIcon aria-hidden="true" />}
-            {isUnavailable ? 'Terpakai' : action === 'ban' ? 'Ban hero' : 'Pick hero'}
+            {isUnavailable ? (unavailableLabel ?? (action === 'ban' ? 'Terban' : 'Terpilih')) : action === 'ban' ? 'Ban hero' : 'Pick hero'}
           </button>
         )}
       </div>

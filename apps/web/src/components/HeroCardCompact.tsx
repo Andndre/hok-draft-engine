@@ -10,6 +10,7 @@ export interface HeroCardProps {
   hero: Hero;
   isSelected?: boolean;
   isUnavailable?: boolean;
+  unavailableLabel?: string;
   onClick: (hero: Hero) => void;
   onSelect?: (hero: Hero) => void;
   selectionDisabled?: boolean;
@@ -24,6 +25,7 @@ export function HeroCardCompact({
   hero,
   isSelected,
   isUnavailable,
+  unavailableLabel,
   onClick,
   onSelect,
   selectionDisabled,
@@ -123,7 +125,7 @@ export function HeroCardCompact({
             aria-label={(action === 'ban' ? 'Ban ' : 'Pick ') + hero.name}
           >
             {isUnavailable ? <LockKeyhole aria-hidden="true" /> : <ActionIcon aria-hidden="true" />}
-            <span>{isUnavailable ? 'Terpakai' : action === 'ban' ? 'Ban' : 'Pick'}</span>
+            <span>{isUnavailable ? (unavailableLabel ?? (action === 'ban' ? 'Terban' : 'Terpilih')) : action === 'ban' ? 'Ban' : 'Pick'}</span>
           </button>
         )}
       </div>

@@ -63,10 +63,14 @@ export function rankedCandidates(position: DraftPosition, context: SearchContext
   const turn = getDraftTurn(position.step, context.format);
   if (turn.isComplete) return [];
 
+  const activeBans = (context.format === 'ranked' && turn.action === 'ban')
+    ? position.bans[turn.side]
+    : [...position.bans.blue, ...position.bans.red];
+
   const inferenceResult = runTournamentInference(
     position.picks[turn.side],
     position.picks[oppositeSide(turn.side)],
-    [...position.bans.blue, ...position.bans.red],
+    activeBans,
     context.fearless[turn.side],
     turn.action === 'pick',
     turn.side === 'blue',
