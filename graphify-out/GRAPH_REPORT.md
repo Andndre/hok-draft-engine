@@ -1,7 +1,7 @@
 # Graph Report - hok-draft-engine  (2026-11-11)
 
 ## Corpus Check
-- 247 files · ~1,090,622 words
+- 252 files · ~1,208,713 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 18 file(s) not represented in the graph (top: (none) 10, .csv 3, .jsonl 2)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `2184c12b`
+- Built from commit: `02bfb324`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -303,13 +303,13 @@ Nodes (4): parseCsvLine(), readCsv(), readJsonl(), readText()
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Cara kerja mesin draft` connect `AGENTS.md — Developer & Agent Field Manual` to `draftRules.ts`?**
-  _High betweenness centrality (0.316) - this node is a cross-community bridge._
+  _High betweenness centrality (0.355) - this node is a cross-community bridge._
 - **What connects `ml-engine` to the rest of the system?**
   _1 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `PracticeDraft.tsx` be split into smaller, more focused modules?**
   _Cohesion score 0.06315789473684211 - nodes in this community are weakly interconnected._
-- **Why does `assignHeroLanes()` connect `draftRules.ts` to `PracticeDraft.tsx`, `gamePlan.ts`, `gamePlan.test.mjs`, `AGENTS.md — Developer & Agent Field Manual`?**
-  _High betweenness centrality (0.313) - this node is a cross-community bridge._
+- **Why does `Repository Layout` connect `AGENTS.md — Developer & Agent Field Manual` to `check-deploy.py`?**
+  _High betweenness centrality (0.354) - this node is a cross-community bridge._
 - **Should `0_sync_global_assets.py` be split into smaller, more focused modules?**
   _Cohesion score 0.1028225806451613 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**

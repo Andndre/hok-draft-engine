@@ -36,9 +36,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/App.tsx": {
-    "mtime": 1794396500.9153037,
-    "seen": 1794396551.7679257,
-    "ast_hash": "30734c61a1ef41ee9afa8f6f79745f40",
+    "mtime": 1794398478.3055272,
+    "seen": 1794398586.0782259,
+    "ast_hash": "9de7f2c4f8de0a72c9ed95006969152f",
     "semantic_hash": ""
   },
   "apps/web/src/components/BottomCommandDock.tsx": {
@@ -60,14 +60,14 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/HeroCardCompact.tsx": {
-    "mtime": 1794396361.56834,
-    "seen": 1794396551.7681034,
+    "mtime": 1794397070.4008188,
+    "seen": 1794398586.0784774,
     "ast_hash": "156d1e48af7a44654f620d9650170ea1",
     "semantic_hash": ""
   },
   "apps/web/src/components/HeroCardDetailed.tsx": {
-    "mtime": 1794396384.8129501,
-    "seen": 1794396551.7681055,
+    "mtime": 1794397070.9148376,
+    "seen": 1794398586.0784802,
     "ast_hash": "31a2f47a8b1b03a2c5f69f4684a7e5f1",
     "semantic_hash": ""
   },
@@ -9450,8 +9450,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/engine/draftRules.ts": {
-    "mtime": 1794396414.83436,
-    "seen": 1794396551.7695532,
+    "mtime": 1794397072.7606883,
+    "seen": 1794398586.0799954,
     "ast_hash": "11195b128e350243e60c9e5fbf714afd",
     "semantic_hash": ""
   },
@@ -9468,9 +9468,9 @@
     "semantic_hash": ""
   },
   "apps/web/public/data_manifest.json": {
-    "mtime": 1794393906.6710196,
-    "seen": 1794393999.2430975,
-    "ast_hash": "0ffe1e1f24057e73824bd32327c7c322",
+    "mtime": 1794397509.7705593,
+    "seen": 1794398586.077139,
+    "ast_hash": "28579434303d57f9390b8ee929e5a4f7",
     "semantic_hash": ""
   },
   "apps/web/tests/dataset.test.mjs": {
@@ -9516,8 +9516,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/engine/draftSearch.ts": {
-    "mtime": 1794396422.6959996,
-    "seen": 1794396551.7695563,
+    "mtime": 1794397073.4402244,
+    "seen": 1794398586.0799992,
     "ast_hash": "62061bc5e454810cfbb70cb89c20a5d3",
     "semantic_hash": ""
   },
@@ -9540,15 +9540,15 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/PracticeDraft.tsx": {
-    "mtime": 1794396474.3110628,
-    "seen": 1794396551.7684438,
-    "ast_hash": "83238093f7accb3d1b2a3603983027b9",
+    "mtime": 1794398553.9074924,
+    "seen": 1794398586.0788295,
+    "ast_hash": "28bfa6253f6203b7da074e1fe8e4f1d3",
     "semantic_hash": ""
   },
   "apps/web/src/engine/practiceState.ts": {
-    "mtime": 1794396099.9503677,
-    "seen": 1794396551.7697341,
-    "ast_hash": "6f2793abfe92dd612e3946179ba7900f",
+    "mtime": 1794398464.6791713,
+    "seen": 1794398586.080384,
+    "ast_hash": "e897529e2683fa3fbfc7166e683b684b",
     "semantic_hash": ""
   },
   "apps/web/tests/benchmark.mjs": {
@@ -9564,9 +9564,9 @@
     "semantic_hash": ""
   },
   "apps/web/tests/ui.test.mjs": {
-    "mtime": 1794394458.3277469,
-    "seen": 1794394482.8681645,
-    "ast_hash": "2e340da5ab513d95fb4f20d2b4ae56b8",
+    "mtime": 1794398533.4822392,
+    "seen": 1794398586.0817194,
+    "ast_hash": "e1f31139baae78d0cd703192850c6c72",
     "semantic_hash": ""
   },
   "apps/web/tests/verify-dist.mjs": {
@@ -10791,6 +10791,30 @@
     "mtime": 1794396517.125672,
     "seen": 1794396551.7704287,
     "ast_hash": "6c3aacc1cb211bcefc6a67186d4d26eb",
+    "semantic_hash": ""
+  },
+  "apps/web/public/datasets/3c904e8cd2998de6/hero_release_status.json": {
+    "mtime": 1794397509.7691338,
+    "seen": 1794398586.0771458,
+    "ast_hash": "38f12bfbc30b456d0fa62b21e8dbd83e",
+    "semantic_hash": ""
+  },
+  "apps/web/public/datasets/3c904e8cd2998de6/item_catalog.json": {
+    "mtime": 1794397509.7691338,
+    "seen": 1794398586.077151,
+    "ast_hash": "53cce0f0ccd9d379dae4fc8cf60293cd",
+    "semantic_hash": ""
+  },
+  "apps/web/public/datasets/3c904e8cd2998de6/kpl_synergy_matrix.json": {
+    "mtime": 1794397509.7691338,
+    "seen": 1794398586.0771549,
+    "ast_hash": "ecb6efeb607c2765bdd8fc3e077657c3",
+    "semantic_hash": ""
+  },
+  "apps/web/public/datasets/3c904e8cd2998de6/spell_catalog.json": {
+    "mtime": 1794397509.7691338,
+    "seen": 1794398586.0771582,
+    "ast_hash": "48e97bce71db45527d41d1804b34d969",
     "semantic_hash": ""
   },
   "apps/web/package-lock.json": {
