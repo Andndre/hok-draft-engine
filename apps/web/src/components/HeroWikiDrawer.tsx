@@ -49,43 +49,43 @@ interface MatchupPanelProps {
 const FACTUAL_SKILL_TAG_GROUPS: ReadonlyArray<{
   category: 'Mobilitas' | 'Crowd Control' | 'Utilitas Tim';
   tone: string;
-  items: ReadonlyArray<readonly [TacticalTag, string]>;
+  items: ReadonlyArray<readonly [TacticalTag, string, string]>;
 }> = [
   {
     category: 'Mobilitas',
     tone: 'border-sky-800/60 bg-sky-950/30 text-sky-200',
     items: [
-      ['dash', 'Dash'],
-      ['blink', 'Blink'],
-      ['leap', 'Leap'],
-      ['teleport', 'Teleport Peta'],
+      ['dash', 'Dash', 'Melesat atau meluncur cepat di atas tanah secara horizontal.'],
+      ['blink', 'Blink', 'Teleportasi instan seketika tanpa jeda lintasan fisik.'],
+      ['leap', 'Leap', 'Melompat ke udara dan mendarat di area target (dapat melewati rintangan).'],
+      ['teleport', 'Teleport Peta', 'Berpindah posisi jarak jauh atau lintas peta.'],
     ],
   },
   {
     category: 'Crowd Control',
     tone: 'border-amber-800/60 bg-amber-950/30 text-amber-200',
     items: [
-      ['suppress', 'Suppress'],
-      ['cc_knockup', 'Knock-up'],
-      ['cc_knockback', 'Knock-back'],
-      ['cc_pull', 'Pull / Hook'],
-      ['cc_stun', 'Stun'],
-      ['cc_root', 'Root'],
-      ['cc_silence', 'Silence'],
-      ['cc_slow', 'Slow'],
+      ['suppress', 'Suppress', 'Mengunci lawan total tanpa bisa dibatalkan spell Purify atau cleanse biasa.'],
+      ['cc_knockup', 'Knock-up', 'Menerbangkan lawan ke udara (airborne) dan menghentikan aksi.'],
+      ['cc_knockback', 'Knock-back', 'Mendorong atau menghempaskan posisi lawan ke belakang.'],
+      ['cc_pull', 'Pull / Hook', 'Menarik atau menculik lawan ke arah hero atau titik skill.'],
+      ['cc_stun', 'Stun', 'Melumpuhkan lawan total sehingga tidak bisa bergerak atau memakai skill.'],
+      ['cc_root', 'Root', 'Mengikat lawan di tempat (tidak bisa bergerak, namun masih bisa memakai skill tertentu).'],
+      ['cc_silence', 'Silence', 'Membisukan lawan sehingga tidak dapat menggunakan skill selama durasi.'],
+      ['cc_slow', 'Slow', 'Memperlambat kecepatan gerak (movement speed) lawan.'],
     ],
   },
   {
     category: 'Utilitas Tim',
     tone: 'border-emerald-800/60 bg-emerald-950/30 text-emerald-200',
     items: [
-      ['ally_heal', 'Heal Sekutu'],
-      ['ally_shield', 'Shield Sekutu'],
-      ['ally_move_speed_buff', 'Buff Speed Sekutu'],
-      ['ally_attack_speed_buff', 'Buff Attack Speed Sekutu'],
-      ['ally_damage_buff', 'Buff Damage Sekutu'],
-      ['ally_cleanse', 'Cleanse CC Sekutu'],
-      ['ally_cc_immunity', 'Imunitas CC Sekutu'],
+      ['ally_heal', 'Heal Sekutu', 'Memulihkan sejumlah HP untuk rekan satu tim.'],
+      ['ally_shield', 'Shield Sekutu', 'Memberikan tameng pelindung (shield) kepada rekan satu tim.'],
+      ['ally_move_speed_buff', 'Buff Speed Sekutu', 'Meningkatkan kecepatan gerak rekan tim di sekitar.'],
+      ['ally_attack_speed_buff', 'Buff Attack Speed Sekutu', 'Meningkatkan kecepatan serangan (attack speed) rekan tim.'],
+      ['ally_damage_buff', 'Buff Damage Sekutu', 'Meningkatkan output damage atau status serangan rekan tim.'],
+      ['ally_cleanse', 'Cleanse CC Sekutu', 'Menghapus efek crowd control yang sedang dialami rekan tim.'],
+      ['ally_cc_immunity', 'Imunitas CC Sekutu', 'Memberikan imunitas sementara dari efek crowd control kepada rekan tim.'],
     ],
   },
 ];
@@ -695,8 +695,12 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                     {factualSkillGroups.map((group) => (
                       <div key={group.category} className="flex flex-wrap items-center gap-1.5">
                         <span className="text-[11px] font-semibold text-slate-400 mr-1">{group.category}:</span>
-                        {group.matched.map(([tag, label]) => (
-                          <span key={tag} className={`rounded-md border px-2 py-0.5 text-xs font-semibold ${group.tone}`}>
+                        {group.matched.map(([tag, label, desc]) => (
+                          <span
+                            key={tag}
+                            title={desc}
+                            className={`rounded-md border px-2 py-0.5 text-xs font-semibold cursor-help transition-all hover:brightness-125 ${group.tone}`}
+                          >
                             {label}
                           </span>
                         ))}
