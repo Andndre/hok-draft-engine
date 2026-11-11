@@ -178,3 +178,62 @@ export function analyzeLaneOccupancy(
   const { occupiedLanes, vacantLanes } = assignHeroLanes(heroes, kplLaneRates);
   return { occupiedLanes, vacantLanes };
 }
+
+export interface TeamCompositionIntegrity {
+  laneState: ReturnType<typeof assignHeroLanes>;
+  displacedSupports: Hero[];
+  duplicateRoamSupports: number;
+  isFullCompWithoutMagicDamage: boolean;
+}
+
+/**
+ * Flags unnatural Roam-Support displacement (for example pushing a Support out of Roam
+ * into Mid or Clash just to fit a second Roam Support) and full drafts without a Mage/Mid carry.
+ */
+export function evaluateTeamCompositionIntegrity(
+  heroes: Hero[],
+  kplLaneRates?: KplLaneRateMap
+): TeamCompositionIntegrity {
+  const team = heroes.slice(0, 5);
+  const laneState = assignHeroLanes(team, kplLaneRates);
+  const displacedSupports = team.filter((hero) => {
+    const isRoamSupport = hero.primary_role === 'Support' && hero.primary_lane === 'Roam';
+    const assigned = laneState.assignments.get(hero.hero_id);
+    return isRoamSupport && assigned !== undefined && assigned !== 'Roam';
+  });
+  const roamSupportsCount = team.filter(
+    (hero) => hero.primary_role === 'Support' && hero.primary_lane === 'Roam'
+  ).length;
+  const duplicateRoamSupports = Math.max(0, roamSupportsCount - 1);
+  const hasMidMagicCarry = team.some(
+    (hero) => hero.primary_role === 'Mage' || hero.primary_lane === 'Mid'
+  );
+  return {
+    laneState,
+    displacedSupports,
+    duplicateRoamSupports,
+    isFullCompWithoutMagicDamage: team.length === 5 && !hasMidMagicCarry,
+  };
+}
+
+/**
+ * Computes empirical KPL pair delta, rewarding proven positive synergies (>= 20 matches, >= 50% WR)
+ * and penalizing strongly negative anti-synergies (>= 15 matches, < 45% WR, lift <= -0.05).
+ */
+export function computeKplPairAdjustment(
+  pairData: { matches?: number; win_rate?: number; synergy_lift?: number } | undefined,
+  liftScale = 2.2,
+  positiveBase = 0.35
+): number {
+  if (!pairData) return 0;
+  const matches = pairData.matches ?? 0;
+  const winRate = pairData.win_rate ?? 0.5;
+  const lift = pairData.synergy_lift ?? 0;
+  if (matches >= 20 && winRate >= 0.5) {
+    return lift * liftScale + positiveBase;
+  }
+  if (matches >= 15 && winRate < 0.45 && lift <= -0.05) {
+    return Math.max(-0.85, lift * liftScale);
+  }
+  return 0;
+}

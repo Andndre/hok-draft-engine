@@ -1,7 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { DRAFT_SEQUENCE, emptyPosition, getDraftTurn, applyDraftAction, isLegalHero, analyzeLaneOccupancy, IMMOBILE_OPENERS } from '../src/engine/draftRules.ts';
+import {
+  DRAFT_SEQUENCE,
+  emptyPosition,
+  getDraftTurn,
+  applyDraftAction,
+  isLegalHero,
+  analyzeLaneOccupancy,
+  IMMOBILE_OPENERS,
+  evaluateTeamCompositionIntegrity,
+  computeKplPairAdjustment,
+} from '../src/engine/draftRules.ts';
 import { rankedCandidates, searchDraft, evaluatePosition } from '../src/engine/draftSearch.ts';
 import { evaluateTacticalScores, evaluateEnemyCounterExposure, reviewedHoKStatsBonuses, runTournamentInference } from '../src/engine/tournamentInference.ts';
 import { matchesDecisionTag, OpponentClient } from '../src/engine/opponentClient.ts';
@@ -264,4 +274,76 @@ test('runTournamentInference flex reassignment in Pick Phase and enemy flex open
     banClash.choiceScore > banClosedMid.choiceScore,
     'BAN_PHASE_2 values denying Clash pick because EnemyFlexCJ can flex to Jungle, unlike truly closed Mid'
   );
+});
+
+test('AI never forces a Roam Support (Da Qiao) into Mid to draft a second Roam Support while preserving valid flexes', () => {
+  const byName = (name) => {
+    const hero = heroes.find(h => h.name === name);
+    assert.ok(hero, `Missing Global hero ${name}`);
+    return hero;
+  };
+  const kaizer = byName('Kaizer');
+  const marco = byName('Marco Polo');
+  const luBu = byName('Lu Bu');
+  const daQiao = byName('Da Qiao');
+  const sunBin = byName('Sun Bin');
+  const wang = byName('Wang Zhaojun');
+  const liang = byName('Liang');
+  const lapu = byName('Lapulapu');
+  const biron = byName('Biron');
+  const yixing = byName('Yixing');
+  const fang = byName('Fang');
+
+  const kplRates = synergy?.hero_lane_rates;
+  const brokenIntegrity = evaluateTeamCompositionIntegrity([kaizer, marco, luBu, daQiao, sunBin], kplRates);
+  assert.equal(brokenIntegrity.displacedSupports.map(h => h.hero_id).includes(daQiao.hero_id), true);
+  assert.equal(brokenIntegrity.duplicateRoamSupports, 1);
+  assert.equal(brokenIntegrity.isFullCompWithoutMagicDamage, true);
+
+  const validFlexIntegrity = evaluateTeamCompositionIntegrity([kaizer, marco, luBu, liang, wang], kplRates);
+  assert.equal(validFlexIntegrity.displacedSupports.length, 0);
+  assert.equal(validFlexIntegrity.duplicateRoamSupports, 0);
+  assert.equal(validFlexIntegrity.isFullCompWithoutMagicDamage, false);
+  assert.equal(validFlexIntegrity.laneState.assignments.get(kaizer.hero_id), 'Jungle');
+  assert.equal(validFlexIntegrity.laneState.assignments.get(liang.hero_id), 'Roam');
+
+  // Negative KPL synergy guard (Da Qiao + Sun Bin: 26.7% WR across 15 games)
+  const negSyn = computeKplPairAdjustment(synergy?.pairs?.['118_191']);
+  assert.ok(negSyn < 0, `Expected negative anti-synergy adjustment for Da Qiao + Sun Bin, got ${negSyn}`);
+
+  const redPicks = [lapu.hero_id, biron.hero_id, yixing.hero_id, fang.hero_id];
+  const blueStep15 = [kaizer.hero_id, marco.hero_id, luBu.hero_id];
+  const aiCtx = {
+    ...context(),
+    aiSide: 'blue',
+  };
+
+  // Step 15 (B4) search should complete with a Roam + genuine Mid Mage, never Zhuangzi/Sun Bin + Da Qiao Mid
+  const dec15 = searchDraft(
+    { step: 15, picks: { blue: blueStep15, red: redPicks }, bans: { blue: [], red: [] } },
+    aiCtx,
+    { budgetMs: 1200 }
+  );
+  const b4Hero = heroes.find(h => h.hero_id === dec15.heroId);
+  assert.ok(b4Hero && (b4Hero.primary_lane === 'Roam' || b4Hero.primary_lane === 'Mid'));
+
+  // Step 16 (B5 after Da Qiao picked B4) with top 3 mages banned must still pick a real Mid carry, never a 2nd Roam Support
+  const haya = byName('Haya');
+  const zhen = byName('Lady Zhen');
+  const blueStep16 = [...blueStep15, daQiao.hero_id];
+  const bans16 = [haya.hero_id, zhen.hero_id, wang.hero_id];
+  const inf16 = runTournamentInference(blueStep16, redPicks, bans16, [], true, true, heroes, 16, null, null, true, synergy, []);
+  const top5Mid = inf16.recommendations.slice(0, 5);
+  assert.ok(
+    top5Mid.every(rec => rec.hero.primary_role !== 'Support'),
+    `Expected all top 5 Mid recommendations after Da Qiao to be non-Support, got ${top5Mid.map(r => r.hero.name).join(', ')}`
+  );
+
+  const dec16 = searchDraft(
+    { step: 16, picks: { blue: blueStep16, red: redPicks }, bans: { blue: bans16, red: [] } },
+    aiCtx,
+    { budgetMs: 1200 }
+  );
+  const pickedB5 = heroes.find(h => h.hero_id === dec16.heroId);
+  assert.ok(pickedB5 && pickedB5.primary_lane === 'Mid' && pickedB5.primary_role !== 'Support');
 });

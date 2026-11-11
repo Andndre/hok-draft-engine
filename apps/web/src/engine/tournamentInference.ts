@@ -14,7 +14,14 @@
 
 import type { Hero, TacticalVector, Lane } from '../types';
 import { isHeroGlobalReleased } from '../data/heroReleaseStatus';
-import { assignHeroLanes, getTournamentPhase, analyzeLaneOccupancy, isRiskyOpener } from './draftRules';
+import {
+  assignHeroLanes,
+  getTournamentPhase,
+  analyzeLaneOccupancy,
+  isRiskyOpener,
+  evaluateTeamCompositionIntegrity,
+  computeKplPairAdjustment,
+} from './draftRules';
 
 export type { TournamentPhaseId } from './draftRules';
 import type { TournamentPhaseId } from './draftRules';
@@ -925,11 +932,56 @@ export function runTournamentInference(
   const dunshanPairs = synergyDb?.dunshan_pair_counters || {};
   const kplLaneRates = synergyDb?.hero_lane_rates || {};
 
-  // 1. Analisis Okupansi Lane Kedua Tim (memperhitungkan flex resmi & KPL pro flex)
-  const ourLaneState = assignHeroLanes(ourHeroes, kplLaneRates);
-  const enemyLaneState = assignHeroLanes(enemyHeroes, kplLaneRates);
+  // 1. Analisis Okupansi Lane & Integritas Role Kedua Tim (memperhitungkan flex resmi & KPL pro flex)
+  const ourBaseIntegrity = evaluateTeamCompositionIntegrity(ourHeroes, kplLaneRates);
+  const enemyBaseIntegrity = evaluateTeamCompositionIntegrity(enemyHeroes, kplLaneRates);
+  const ourLaneState = ourBaseIntegrity.laneState;
+  const enemyLaneState = enemyBaseIntegrity.laneState;
   const { occupiedLanes: ourOccupiedLanes, vacantLanes: ourVacantLanes } = ourLaneState;
   const { occupiedLanes: enemyOccupiedLanes, vacantLanes: enemyVacantLanes } = enemyLaneState;
+
+  const evaluatePickLaneFit = (
+    cand: Hero,
+    primaryBonus: number,
+    flexAllyBonus: number,
+    flexSelfPenalty: number,
+    duplicatePenalty: number,
+    openPrefix: string,
+    duplicateLabel: string
+  ): { delta: number; laneTag: string; isPrimaryOccupied: boolean } => {
+    const isPrimaryOccupied = ourOccupiedLanes.has(cand.primary_lane);
+    if (!isPrimaryOccupied) {
+      return { delta: primaryBonus, laneTag: `${openPrefix} ${cand.primary_lane}`, isPrimaryOccupied };
+    }
+    const withCandIntegrity = evaluateTeamCompositionIntegrity([...ourHeroes, cand], kplLaneRates);
+    const withCand = withCandIntegrity.laneState;
+    const createsSupportAnomaly =
+      withCandIntegrity.displacedSupports.length > ourBaseIntegrity.displacedSupports.length ||
+      withCandIntegrity.duplicateRoamSupports > ourBaseIntegrity.duplicateRoamSupports;
+    if (createsSupportAnomaly) {
+      return { delta: -2.40, laneTag: `Hindari 2 Support (${cand.primary_lane})`, isPrimaryOccupied };
+    }
+    if (withCand.occupiedLanes.size > ourOccupiedLanes.size) {
+      const candAssigned = withCand.assignments.get(cand.hero_id);
+      const shiftedAlly = ourHeroes.find(
+        (oh) => withCand.assignments.get(oh.hero_id) !== ourLaneState.assignments.get(oh.hero_id)
+      );
+      if (candAssigned === cand.primary_lane && shiftedAlly) {
+        return {
+          delta: flexAllyBonus,
+          laneTag: `Flex ${shiftedAlly.name} → ${withCand.assignments.get(shiftedAlly.hero_id)}`,
+          isPrimaryOccupied,
+        };
+      }
+      const targetLane = candAssigned || cand.lanes.find((l) => ourVacantLanes.has(l)) || cand.primary_lane;
+      return {
+        delta: flexSelfPenalty,
+        laneTag: openPrefix === 'Wajib Isi' ? `Flex Isi ${targetLane}` : `Flex ${targetLane}`,
+        isPrimaryOccupied,
+      };
+    }
+    return { delta: duplicatePenalty, laneTag: duplicateLabel, isPrimaryOccupied };
+  };
 
   // 2. Bangun Masking Hero Tidak Tersedia
   const maskArr = new Float32Array(heroes.length);
@@ -1197,32 +1249,19 @@ export function runTournamentInference(
       const kplOpenerInfo = b1Openers[String(cand.hero_id)];
       const hasKplOpenerCredibility =
         (kplOpenerInfo?.b1_picks || 0) >= 90 || (kplOpenerInfo?.r1_r2_picks || 0) >= 180;
-      const isPrimaryOccupied = ourOccupiedLanes.has(cand.primary_lane);
-
-      // Pemeriksaan Okupansi Lane dengan Flex Reassignment (rekan flex lama bisa bergeser)
+      // Pemeriksaan Okupansi Lane dengan Flex Reassignment & Guard Support Role
       if (ourHeroes.length > 0) {
-        if (!isPrimaryOccupied) {
-          score += 0.50;
-          laneTag = `Isi ${cand.primary_lane}`;
-        } else {
-          const withCand = assignHeroLanes([...ourHeroes, cand], kplLaneRates);
-          if (withCand.occupiedLanes.size > ourOccupiedLanes.size) {
-            const candAssigned = withCand.assignments.get(cand.hero_id);
-            const shiftedAlly = ourHeroes.find(
-              (oh) => withCand.assignments.get(oh.hero_id) !== ourLaneState.assignments.get(oh.hero_id)
-            );
-            if (candAssigned === cand.primary_lane && shiftedAlly) {
-              score += 0.35;
-              laneTag = `Flex ${shiftedAlly.name} → ${withCand.assignments.get(shiftedAlly.hero_id)}`;
-            } else {
-              score -= 0.15;
-              laneTag = `Flex ${candAssigned || cand.lanes.find((l) => ourVacantLanes.has(l)) || cand.primary_lane}`;
-            }
-          } else {
-            score -= 1.60;
-            laneTag = `${cand.primary_lane} Sudah Ada`;
-          }
-        }
+        const laneFit = evaluatePickLaneFit(
+          cand,
+          0.50,
+          0.35,
+          -0.15,
+          -1.60,
+          'Isi',
+          `${cand.primary_lane} Sudah Ada`
+        );
+        score += laneFit.delta;
+        laneTag = laneFit.laneTag;
       } else {
         laneTag = `Opener ${cand.primary_lane}`;
       }
@@ -1273,14 +1312,16 @@ export function runTournamentInference(
 
         if (proPairs[pairKey]) {
           const pairData = proPairs[pairKey];
-          const lift = pairData.synergy_lift || 0;
           const matches = pairData.matches || 0;
+          const pairAdj = computeKplPairAdjustment(pairData, 2.2, 0.35);
 
-          if (matches >= 20 && pairData.win_rate >= 0.50) {
-            score += (lift * 2.2 + 0.35) * exposure.synergyMultiplier;
+          if (pairAdj > 0) {
+            score += pairAdj * exposure.synergyMultiplier;
             if (exposure.counterCount < 2) {
               proComboTag = `🔗 Kombo KPL: ${(pairData.win_rate * 100).toFixed(0)}% WR dg ${teammate.name} (${matches} Match)`;
             }
+          } else if (pairAdj < 0) {
+            score += pairAdj;
           }
         }
 
@@ -1317,12 +1358,17 @@ export function runTournamentInference(
       // Di Fase Ban 2, musuh sudah memiliki 3 hero. Periksa sisa lane kosong + potensi flex musuh!
       const fitsEnemyVacantPrimary = enemyVacantLanes.has(cand.primary_lane);
       const fitsEnemyVacantFlex = cand.lanes.some((l) => enemyVacantLanes.has(l));
-      const enemyWithCand =
+      const enemyWithCandIntegrity =
         !fitsEnemyVacantPrimary && enemyHeroes.length < 5
-          ? assignHeroLanes([...enemyHeroes, cand], kplLaneRates)
+          ? evaluateTeamCompositionIntegrity([...enemyHeroes, cand], kplLaneRates)
           : null;
+      const enemyWithCand = enemyWithCandIntegrity?.laneState ?? null;
       const fitsViaEnemyFlex = Boolean(
-        enemyWithCand && enemyWithCand.occupiedLanes.size > enemyOccupiedLanes.size
+        enemyWithCandIntegrity &&
+          enemyWithCand &&
+          enemyWithCand.occupiedLanes.size > enemyOccupiedLanes.size &&
+          enemyWithCandIntegrity.displacedSupports.length <= enemyBaseIntegrity.displacedSupports.length &&
+          enemyWithCandIntegrity.duplicateRoamSupports <= enemyBaseIntegrity.duplicateRoamSupports
       );
 
       if (fitsEnemyVacantPrimary) {
@@ -1421,30 +1467,18 @@ export function runTournamentInference(
     // FASE 4: PICK PHASE 2 (Steps 14..17) — Isi Sisa Lane, Counter & Penutup
     // -------------------------------------------------------------------------
     else {
-      const isPrimaryOccupied = ourOccupiedLanes.has(cand.primary_lane);
-
-      if (!isPrimaryOccupied) {
-        score += 0.80;
-        laneTag = `Wajib Isi ${cand.primary_lane}`;
-      } else {
-        const withCand = assignHeroLanes([...ourHeroes, cand], kplLaneRates);
-        if (withCand.occupiedLanes.size > ourOccupiedLanes.size) {
-          const candAssigned = withCand.assignments.get(cand.hero_id);
-          const shiftedAlly = ourHeroes.find(
-            (oh) => withCand.assignments.get(oh.hero_id) !== ourLaneState.assignments.get(oh.hero_id)
-          );
-          if (candAssigned === cand.primary_lane && shiftedAlly) {
-            score += 0.55;
-            laneTag = `Flex ${shiftedAlly.name} → ${withCand.assignments.get(shiftedAlly.hero_id)}`;
-          } else {
-            score -= 0.25;
-            laneTag = `Flex Isi ${candAssigned || cand.lanes.find((l) => ourVacantLanes.has(l)) || cand.primary_lane}`;
-          }
-        } else {
-          score -= 2.50; // Penalti keras duplikasi lane di Fase 2
-          laneTag = `${cand.primary_lane} Sudah Penuh`;
-        }
-      }
+      const laneFit = evaluatePickLaneFit(
+        cand,
+        0.80,
+        0.55,
+        -0.25,
+        -2.50,
+        'Wajib Isi',
+        `${cand.primary_lane} Sudah Penuh`
+      );
+      const isPrimaryOccupied = laneFit.isPrimaryOccupied;
+      score += laneFit.delta;
+      laneTag = laneFit.laneTag;
 
       // Counter Langsung ke 3-4 Hero Musuh (Bobot ekstra di Step 17 Red Last Pick!)
       const isLastPickR5 = draftStep === 17;
@@ -1472,11 +1506,14 @@ export function runTournamentInference(
 
         if (proPairs[pairKey]) {
           const pairData = proPairs[pairKey];
-          if (pairData.matches >= 20 && pairData.win_rate >= 0.50) {
-            score += ((pairData.synergy_lift || 0) * 2.0 + 0.30) * exposure.synergyMultiplier;
+          const pairAdj = computeKplPairAdjustment(pairData, 2.0, 0.30);
+          if (pairAdj > 0) {
+            score += pairAdj * exposure.synergyMultiplier;
             if (!proComboTag && exposure.counterCount < 2) {
               proComboTag = `🔗 Sinergi Penutup KPL: ${(pairData.win_rate * 100).toFixed(0)}% WR dg ${teammate.name}`;
             }
+          } else if (pairAdj < 0) {
+            score += pairAdj;
           }
         }
 

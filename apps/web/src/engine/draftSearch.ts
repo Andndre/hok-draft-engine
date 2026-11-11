@@ -13,7 +13,9 @@ import type { Hero, TournamentDataset } from '../types';
 import {
   analyzeLaneOccupancy,
   applyDraftAction,
+  computeKplPairAdjustment,
   DRAFT_SEQUENCE,
+  evaluateTeamCompositionIntegrity,
   getDraftTurn,
   isLegalHero,
   isRiskyOpener,
@@ -86,9 +88,23 @@ export function rankedCandidates(position: DraftPosition, context: SearchContext
     return legalCandidates;
   }
 
-  // Pada fase pick, utamakan kandidat yang mengisi lane yang belum terisi
+  // Pada fase pick, utamakan kandidat yang mengisi lane kosong tanpa memaksa Support keluar dari Roam
   const ourHeroes = context.heroes.filter((h) => position.picks[turn.side].includes(h.hero_id));
   const kplLaneRates = context.synergy?.hero_lane_rates;
+  const baseIntegrity = evaluateTeamCompositionIntegrity(ourHeroes, kplLaneRates);
+  const healthyLaneFittingCandidates = legalCandidates.filter((r) => {
+    const nextIntegrity = evaluateTeamCompositionIntegrity([...ourHeroes, r.hero], kplLaneRates);
+    return (
+      nextIntegrity.laneState.occupiedLanes.size === ourHeroes.length + 1 &&
+      nextIntegrity.displacedSupports.length <= baseIntegrity.displacedSupports.length &&
+      nextIntegrity.duplicateRoamSupports <= baseIntegrity.duplicateRoamSupports &&
+      !nextIntegrity.isFullCompWithoutMagicDamage
+    );
+  });
+  if (healthyLaneFittingCandidates.length > 0) {
+    return healthyLaneFittingCandidates;
+  }
+
   const laneFittingCandidates = legalCandidates.filter(
     (r) => analyzeLaneOccupancy([...ourHeroes, r.hero], kplLaneRates).occupiedLanes.size === ourHeroes.length + 1
   );
@@ -98,16 +114,12 @@ export function rankedCandidates(position: DraftPosition, context: SearchContext
 
 /**
  * Menghitung bonus sinergi duet empiris KPL antara dua hero.
- * Mensyaratkan minimal 20 match dan winrate >= 50% di data turnamen KPL.
+ * Mensyaratkan minimal 20 match dan winrate >= 50% untuk bonus, serta penalti anti-sinergi berat.
  */
 function pairBonus(heroA: Hero, heroB: Hero, context: SearchContext): number {
   const pairKey = `${Math.min(heroA.hero_id, heroB.hero_id)}_${Math.max(heroA.hero_id, heroB.hero_id)}`;
   const pairData = context.synergy.pairs?.[pairKey];
-
-  if (pairData && pairData.matches >= 20 && pairData.win_rate >= 0.5) {
-    return (pairData.synergy_lift || 0) * 2.2 + 0.35;
-  }
-  return 0;
+  return computeKplPairAdjustment(pairData, 2.2, 0.35);
 }
 
 /**
@@ -143,7 +155,8 @@ export function evaluatePosition(position: DraftPosition, context: SearchContext
     const b1Openers = context.synergy?.b1_openers || {};
 
     const tacticalRadar = evaluateTacticalScores(ourTeam, enemyTeam);
-    const laneCoverage = analyzeLaneOccupancy(ourTeam, kplLaneRates).occupiedLanes.size;
+    const integrity = evaluateTeamCompositionIntegrity(ourTeam, kplLaneRates);
+    const laneCoverage = integrity.laneState.occupiedLanes.size;
     const exposures = new Map(
       ourTeam.map((h) => [h.hero_id, evaluateEnemyCounterExposure(h, enemyTeam, b1Openers)])
     );
@@ -169,16 +182,22 @@ export function evaluatePosition(position: DraftPosition, context: SearchContext
       tacticalRadar.draft_flexibility +
       tacticalRadar.team_utility;
 
-    // 3. Counter bonus langsung & penalti keras duplikasi lane
-    totalScore += counterBonus(ourTeam, enemyTeam) - (ourTeam.length - laneCoverage) * 2.5;
+    // 3. Counter bonus, integritas role/lane (cegah Support dipaksa ke Mid/Clash), & penalti duplikasi lane
+    totalScore +=
+      counterBonus(ourTeam, enemyTeam) -
+      (ourTeam.length - laneCoverage) * 2.5 -
+      integrity.displacedSupports.length * 2.8 -
+      integrity.duplicateRoamSupports * 1.8 -
+      (integrity.isFullCompWithoutMagicDamage ? 1.5 : 0);
 
-    // 4. Bonus sinergi duet KPL antar-anggota tim (diredam jika hero terkena counter musuh)
+    // 4. Sinergi duet KPL antar-anggota tim (bonus diredam jika terkena counter, penalti anti-sinergi utuh)
     for (let i = 0; i < ourTeam.length; i++) {
       for (let j = i + 1; j < ourTeam.length; j++) {
         const multA = exposures.get(ourTeam[i].hero_id)!.synergyMultiplier;
         const multB = exposures.get(ourTeam[j].hero_id)!.synergyMultiplier;
         const combinedMultiplier = Math.min(multA, multB);
-        totalScore += pairBonus(ourTeam[i], ourTeam[j], context) * combinedMultiplier;
+        const pb = pairBonus(ourTeam[i], ourTeam[j], context);
+        totalScore += pb > 0 ? pb * combinedMultiplier : pb;
       }
     }
 
