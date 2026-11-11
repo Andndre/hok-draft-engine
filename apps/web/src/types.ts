@@ -239,6 +239,9 @@ export interface DraftSlot {
   hero: Hero | null;
 }
 
+export type SeriesFormat = 'BO3' | 'BO5' | 'BO7';
+export type SeriesTeam = 'A' | 'B';
+
 export interface GameDraftData {
   bluePicks: Array<Hero | null>;
   redPicks: Array<Hero | null>;
@@ -249,6 +252,9 @@ export interface GameDraftData {
   bluePlanBId: number | null;
   redPlanAId: number | null;
   redPlanBId: number | null;
+  blueTeam: SeriesTeam;
+  winner?: 'blue' | 'red' | null;
+  isUltimateBattle?: boolean;
 }
 
 export type LaneAssignmentMap = Record<Lane, number | null>;

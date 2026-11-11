@@ -21,6 +21,7 @@ import {
   isRiskyOpener,
   evaluateTeamCompositionIntegrity,
   computeKplPairAdjustment,
+  getPairEvidence,
 } from './draftRules';
 
 export type { TournamentPhaseId } from './draftRules';
@@ -652,6 +653,7 @@ export function computeDraftOutcomeProjection(
   let bestPartner: Hero | null = null;
   let bestSynergyBonus = 0;
   let bestPairWr = 0;
+  let isTeamHolistic = false;
 
   if (remainingOurVacant.length > 0) {
     for (const partner of availableCandidates) {
@@ -660,18 +662,48 @@ export function computeDraftOutcomeProjection(
       const fitsVacant = partnerLanes.some((l) => remainingOurVacant.includes(l));
       if (!fitsVacant) continue;
 
+      // 1. Pair synergy between candidate and partner
       const p1 = Math.min(candidate.hero_id, partner.hero_id);
       const p2 = Math.max(candidate.hero_id, partner.hero_id);
       const pairKey = `${p1}_${p2}`;
       const pairData = proPairs[pairKey];
+      const candEvidence = getPairEvidence(pairData);
 
-      if (pairData && pairData.matches >= 15 && pairData.win_rate >= 0.50) {
-        const bonus = (pairData.win_rate - 0.50) * 40 + (pairData.synergy_lift || 0) * 30 + 5;
-        if (bonus > bestSynergyBonus) {
-          bestSynergyBonus = bonus;
-          bestPartner = partner;
-          bestPairWr = pairData.win_rate;
+      // 2. Team-wide synergy between partner and already picked teammates
+      let teamPairBonus = 0;
+      let teamPairsCount = 0;
+      let teamWrSum = 0;
+      for (const teammate of ourHeroes) {
+        const tp1 = Math.min(teammate.hero_id, partner.hero_id);
+        const tp2 = Math.max(teammate.hero_id, partner.hero_id);
+        const tPair = proPairs[`${tp1}_${tp2}`];
+        const tAdj = computeKplPairAdjustment(tPair);
+        if (tAdj !== 0) {
+          teamPairBonus += tAdj * 15;
+          teamPairsCount++;
+          teamWrSum += tPair?.win_rate ?? 0.50;
         }
+      }
+
+      // 3. Counter exposure penalty of partner vs enemy heroes
+      const partnerExposure = evaluateEnemyCounterExposure(partner, enemyHeroes, b1Openers);
+      const exposureDeduction = partnerExposure.exposurePenalty * 25;
+
+      // Candidate's own pair bonus
+      let candPairBonus = 0;
+      if (candEvidence.eligible && candEvidence.lift > 0) {
+        candPairBonus = candEvidence.lift * 40 + ((pairData?.win_rate ?? 0.50) - 0.50) * 15;
+      }
+
+      const totalBonus = (candPairBonus + teamPairBonus) * partnerExposure.synergyMultiplier - exposureDeduction + (ourHeroes.length > 0 ? 3 : 5);
+
+      if (totalBonus > bestSynergyBonus && (candPairBonus > 0 || teamPairBonus > 0)) {
+        bestSynergyBonus = totalBonus;
+        bestPartner = partner;
+        isTeamHolistic = ourHeroes.length > 0 && teamPairBonus > candPairBonus;
+        bestPairWr = isTeamHolistic && teamPairsCount > 0
+          ? Math.round((teamWrSum / teamPairsCount) * 100) / 100
+          : (pairData?.evidence?.weighted_win_rate ?? pairData?.win_rate ?? 0.52);
       }
     }
   }
@@ -682,7 +714,9 @@ export function computeDraftOutcomeProjection(
   if (bestPartner) {
     const delta = Math.min(16, Math.max(4, Math.round(bestSynergyBonus)));
     bestCaseScore = Math.min(96, baseScore + delta);
-    bestCaseScenario = `Duet KPL: +${bestPartner.name} (${Math.round(bestPairWr * 100)}% WR, +${delta}% sinergi)`;
+    bestCaseScenario = isTeamHolistic
+      ? `Sinergi Tim: +${bestPartner.name} (${Math.round(bestPairWr * 100)}% WR rata-rata kombo tim)`
+      : `Duet KPL: +${bestPartner.name} (${Math.round(bestPairWr * 100)}% WR, +${delta}% sinergi)`;
   } else if (remainingOurVacant.length > 0) {
     const delta = 6;
     bestCaseScore = Math.min(94, baseScore + delta);
@@ -1019,6 +1053,14 @@ export function runTournamentInference(
       computeOpenerPriorityScore(a, b1Openers, isBlueSide, onlyGlobalReleased)
   );
 
+  // Perspective-aware Blue B1 Threat Hero (always computed as Blue opener priority #1)
+  const blueOpenersRanked = [...availableHeroes].sort(
+    (a, b) =>
+      computeOpenerPriorityScore(b, b1Openers, true, onlyGlobalReleased) -
+      computeOpenerPriorityScore(a, b1Openers, true, onlyGlobalReleased)
+  );
+  const blueB1ThreatHero = blueOpenersRanked[0] || null;
+
   const candidateOpeners = rankedOpeners.filter((h) => !isRiskyOpener(h)).slice(0, 8);
 
   // Menentukan Plan A dan Plan B
@@ -1027,9 +1069,14 @@ export function runTournamentInference(
   let planBHero: Hero | null = planBId ? idMap.get(planBId) || null : null;
 
   if (!planAHero && rankedOpeners.length > 0) {
-    planAHero =
-      rankedOpeners.find((h) => evaluateEnemyCounterExposure(h, enemyHeroes, b1Openers).counterCount === 0) ||
-      rankedOpeners[0];
+    if (!isBlueSide && blueB1ThreatHero && rankedOpeners.length > 1) {
+      // Red AI without user plan does not blindly target Blue's #1 B1 opener as its own R1 target
+      planAHero = rankedOpeners.find((h) => h.hero_id !== blueB1ThreatHero.hero_id && evaluateEnemyCounterExposure(h, enemyHeroes, b1Openers).counterCount === 0) || rankedOpeners[1];
+    } else {
+      planAHero =
+        rankedOpeners.find((h) => evaluateEnemyCounterExposure(h, enemyHeroes, b1Openers).counterCount === 0) ||
+        rankedOpeners[0];
+    }
   }
 
   if (!planBHero && rankedOpeners.length > 1) {
@@ -1142,7 +1189,6 @@ export function runTournamentInference(
   }> = [];
 
   const hasEnemyDunshan = enemyHeroes.some((e) => e.hero_id === 509 || e.name.toLowerCase() === 'dunshan');
-  const blueB1ThreatHero = rankedOpeners[0] || null;
 
   for (let i = 0; i < heroes.length; i++) {
     if (maskArr[i] === 1 || phaseId === 'DRAFT_COMPLETE') continue;
@@ -1213,15 +1259,23 @@ export function runTournamentInference(
         }
       } else {
         // SISI RED (Second Pick R1+R2 — Deny B1 Blue & Lindungi Core R1+R2):
-        if (plannedOpener && cand.hero_id === plannedOpener.hero_id) {
-          score -= 2.5;
-          laneTag = 'Simpan utk R1 Kita';
-          proComboTag = `👑 Simpan untuk R1+R2 Pick Kita!`;
-        } else if (blueB1ThreatHero && cand.hero_id === blueB1ThreatHero.hero_id) {
+        const isBlueB1Threat = Boolean(blueB1ThreatHero && cand.hero_id === blueB1ThreatHero.hero_id);
+        const isUserExplicitPlanned = Boolean(hasExplicitUserPlan && plannedOpener && cand.hero_id === plannedOpener.hero_id);
+
+        if (isBlueB1Threat && !isUserExplicitPlanned) {
           // Deny Hero S-Tier Utama Pembuka B1 Blue!
           score += 1.35;
           laneTag = 'Wajib Deny B1 Blue';
           proComboTag = `🚫 Cegah Blue First-Pick ${cand.name} di B1 (${kplOpenerInfo?.b1_picks || 'Top'}x B1 KPL)`;
+        } else if (isBlueB1Threat && isUserExplicitPlanned) {
+          // User accidentally picked Blue's top opener as Red's Plan A
+          score += 0.85;
+          laneTag = 'Potensi Diambil Blue B1';
+          proComboTag = `⚠️ Sarankan Ubah Plan R1: ${cand.name} prioritas First-Pick B1 Blue, pertimbangkan ban`;
+        } else if (plannedOpener && cand.hero_id === plannedOpener.hero_id) {
+          score -= 2.5;
+          laneTag = 'Simpan utk R1 Kita';
+          proComboTag = `👑 Simpan untuk R1+R2 Pick Kita!`;
         } else if (plannedOpener) {
           const counterCheck = getCounterStrengthAgainst(cand, plannedOpener);
           if (hasExplicitUserPlan && counterCheck.isCounter) {

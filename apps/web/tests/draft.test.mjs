@@ -11,6 +11,8 @@ import {
   IMMOBILE_OPENERS,
   evaluateTeamCompositionIntegrity,
   computeKplPairAdjustment,
+  computeSeriesFearlessLocks,
+  teamOnSide,
 } from '../src/engine/draftRules.ts';
 import { rankedCandidates, searchDraft, evaluatePosition } from '../src/engine/draftSearch.ts';
 import { evaluateTacticalScores, evaluateEnemyCounterExposure, reviewedHoKStatsBonuses, runTournamentInference } from '../src/engine/tournamentInference.ts';
@@ -346,4 +348,96 @@ test('AI never forces a Roam Support (Da Qiao) into Mid to draft a second Roam S
   );
   const pickedB5 = heroes.find(h => h.hero_id === dec16.heroId);
   assert.ok(pickedB5 && pickedB5.primary_lane === 'Mid' && pickedB5.primary_role !== 'Support');
+});
+
+test('user real matches Game 1 and Game 2 regression: Red phase-1 ban prioritizes Ao\'yin B1 deny, and Team-based Fearless works in Game 3', () => {
+  const byName = (n) => {
+    const h = heroes.find((x) => x.name.toLowerCase() === n.toLowerCase());
+    assert.ok(h, `Hero not found: ${n}`);
+    return h;
+  };
+
+  // Game 1 Actual
+  const g1BluePicks = ['Lapulapu', 'Zilong', 'Lorion', 'Charlotte', 'Flowborn (Marksman)'].map(byName);
+  const g1RedPicks = ['Lian Po', 'Haya', 'Ying', 'Fatih', 'Marco Polo'].map(byName);
+  const g1BlueBans = ['Guan Yu', 'Chano', 'Biron', 'Chicha'].map(byName);
+  const g1RedBans = ['Dunshan', "Ao'yin", 'Florentino', 'Dharma'].map(byName);
+
+  // Game 2 Actual (clarified ban: Red ban Florentino & Biron)
+  const g2BluePicks = ['Zhang Fei', 'Pei', 'Mai Shiranui', 'Bai Qi', 'Di Renjie'].map(byName);
+  const g2RedPicks = ['Dyadia', 'Dharma', 'Yuhuan', 'Chicha', 'Yang Jian'].map(byName);
+  const g2BlueBans = ['Lapulapu', 'Guan Yu', 'Arli', 'Augran'].map(byName);
+  const g2RedBans = ['Dunshan', "Ao'yin", 'Florentino', 'Biron'].map(byName);
+
+  // Verify that on Step 1 / Step 3 (Red Ban Phase 1), Ao'yin is in top 3 ban recommendation
+  const rRedBanStep1 = runTournamentInference([], [], [g1BlueBans[0].hero_id], [], false, false, heroes, 1, null, null, true, synergy, []);
+  const topBan1 = rRedBanStep1.recommendations.slice(0, 3).map((r) => r.hero.name);
+  assert.ok(topBan1.includes("Ao'yin"), `Expected Ao'yin in Red ban step 1 top-3 recommendations, got: ${topBan1.join(', ')}`);
+
+  // Verify that Ao'yin B1 projection does not pair with archaic Cai Yan (recency threshold filtered)
+  const rB1 = runTournamentInference([], [], [], [], true, true, heroes, 4, null, null, true, synergy, []);
+  const aoyinRec = rB1.recommendations.find((r) => r.hero.name === "Ao'yin");
+  assert.ok(aoyinRec, "Ao'yin should be recommended for B1 opener");
+  assert.ok(!aoyinRec.projection?.bestCaseScenario?.includes('Cai Yan'), `Ao'yin projection should not recommend Cai Yan, got: ${aoyinRec.projection?.bestCaseScenario}`);
+
+  // Test Series Fearless Per-Team:
+  // Game 1: Blue = Team A, Red = Team B (Red wins)
+  // Game 2: Blue = Team A, Red = Team B (Red wins)
+  // Game 3: Losing team (Team A) becomes Blue or Red. Suppose Team B (winner) is on Blue in Game 3.
+  const gamesMap = {
+    1: {
+      bluePicks: g1BluePicks,
+      redPicks: g1RedPicks,
+      blueBans: g1BlueBans,
+      redBans: g1RedBans,
+      draftStep: 18,
+      bluePlanAId: null,
+      bluePlanBId: null,
+      redPlanAId: null,
+      redPlanBId: null,
+      blueTeam: 'A',
+      winner: 'red',
+    },
+    2: {
+      bluePicks: g2BluePicks,
+      redPicks: g2RedPicks,
+      blueBans: g2BlueBans,
+      redBans: g2RedBans,
+      draftStep: 18,
+      bluePlanAId: null,
+      bluePlanBId: null,
+      redPlanAId: null,
+      redPlanBId: null,
+      blueTeam: 'A',
+      winner: 'red',
+    },
+    3: {
+      bluePicks: Array(5).fill(null),
+      redPicks: Array(5).fill(null),
+      blueBans: Array(4).fill(null),
+      redBans: Array(4).fill(null),
+      draftStep: 0,
+      bluePlanAId: null,
+      bluePlanBId: null,
+      redPlanAId: null,
+      redPlanBId: null,
+      blueTeam: 'B', // Winner of Game 2 (Team B) is now on Blue Side in Game 3!
+      winner: null,
+    },
+  };
+
+  const locksG3 = computeSeriesFearlessLocks(gamesMap, 3, true);
+
+  // Blue Side in Game 3 is Team B. Its locked heroes must be Team B's picks from Game 1 & 2 (Lian Po, Haya, Ying, Dyadia, etc.)
+  assert.ok(locksG3.blue.has(byName('Lian Po').hero_id), "Blue in Game 3 (Team B) must have Lian Po locked");
+  assert.ok(locksG3.blue.has(byName('Haya').hero_id), "Blue in Game 3 (Team B) must have Haya locked");
+  assert.ok(locksG3.blue.has(byName('Dyadia').hero_id), "Blue in Game 3 (Team B) must have Dyadia locked");
+
+  // Zilong was picked by Team A in Game 1, so Team B (now Blue) is allowed to pick Zilong in Game 3!
+  assert.ok(!locksG3.blue.has(byName('Zilong').hero_id), "Team B (on Blue) can pick Zilong since only Team A used it");
+
+  // Red Side in Game 3 is Team A. Its locked heroes must be Team A's picks from Game 1 & 2 (Lapulapu, Zilong, Zhang Fei, etc.)
+  assert.ok(locksG3.red.has(byName('Zilong').hero_id), "Red in Game 3 (Team A) must have Zilong locked");
+  assert.ok(locksG3.red.has(byName('Lapulapu').hero_id), "Red in Game 3 (Team A) must have Lapulapu locked");
+  assert.ok(!locksG3.red.has(byName('Lian Po').hero_id), "Team A (on Red) can pick Lian Po since only Team B used it");
 });

@@ -1,9 +1,9 @@
-import type { DraftFormat, GameDraftData, Hero, KplLaneRate, Lane, LaneAssignmentMap } from '../types';
+import type { DraftFormat, GameDraftData, Hero, KplLaneRate, Lane, LaneAssignmentMap, SeriesTeam } from '../types';
 import { isHeroGlobalReleased } from '../data/heroReleaseStatus';
 
 export type Side = 'blue' | 'red';
 export type ActionKind = 'ban' | 'pick';
-export type TournamentPhaseId = 'BAN_PHASE_1' | 'PICK_PHASE_1' | 'BAN_PHASE_2' | 'PICK_PHASE_2' | 'RANKED_BAN' | 'RANKED_PICK' | 'DRAFT_COMPLETE';
+export type TournamentPhaseId = 'BAN_PHASE_1' | 'PICK_PHASE_1' | 'BAN_PHASE_2' | 'PICK_PHASE_2' | 'RANKED_BAN' | 'RANKED_PICK' | 'ULTIMATE_BATTLE' | 'DRAFT_COMPLETE';
 export const IMMOBILE_OPENERS = new Set([112, 169, 142, 109, 504]);
 export function isRiskyOpener(hero: Hero): boolean {
   const tags = hero.tactical_profile?.tags;
@@ -39,6 +39,11 @@ export const RANKED_DRAFT_SEQUENCE: ReadonlyArray<{ side: Side; action: ActionKi
   { side: 'red', action: 'pick' },  // R5
 ];
 
+export const ULTIMATE_BATTLE_SEQUENCE: ReadonlyArray<{ side: Side; action: ActionKind }> = [
+  { side: 'blue', action: 'pick' }, { side: 'blue', action: 'pick' }, { side: 'blue', action: 'pick' }, { side: 'blue', action: 'pick' }, { side: 'blue', action: 'pick' },
+  { side: 'red', action: 'pick' }, { side: 'red', action: 'pick' }, { side: 'red', action: 'pick' }, { side: 'red', action: 'pick' }, { side: 'red', action: 'pick' },
+];
+
 export const TOURNAMENT_PHASES = [
   { id: 'BAN_PHASE_1' as TournamentPhaseId, label: '1. Ban fase 1', sub: 'Lindungi opener', start: 0, end: 3, isBan: true },
   { id: 'PICK_PHASE_1' as TournamentPhaseId, label: '2. Pick fase 1', sub: 'Bentuk core tim', start: 4, end: 9, isBan: false },
@@ -51,23 +56,29 @@ export const RANKED_PHASES = [
   { id: 'RANKED_PICK' as TournamentPhaseId, label: '2. Pemilihan Hero', sub: 'Bentuk komposisi tim', start: 6, end: 15, isBan: false },
 ] as const;
 
+export const ULTIMATE_PHASES = [
+  { id: 'ULTIMATE_BATTLE' as TournamentPhaseId, label: 'Ultimate Battle', sub: 'Blind Pick tanpa Ban (Boleh Mirror)', start: 0, end: 9, isBan: false },
+] as const;
+
 export const oppositeSide = (side: Side): Side => side === 'blue' ? 'red' : 'blue';
 
-export function getDraftSequence(format: DraftFormat = 'tournament'): ReadonlyArray<{ side: Side; action: ActionKind }> {
+export function getDraftSequence(format: DraftFormat = 'tournament', isUltimateBattle: boolean = false): ReadonlyArray<{ side: Side; action: ActionKind }> {
+  if (isUltimateBattle) return ULTIMATE_BATTLE_SEQUENCE;
   return format === 'ranked' ? RANKED_DRAFT_SEQUENCE : DRAFT_SEQUENCE;
 }
 
-export function getDraftPhases(format: DraftFormat = 'tournament') {
+export function getDraftPhases(format: DraftFormat = 'tournament', isUltimateBattle: boolean = false) {
+  if (isUltimateBattle) return ULTIMATE_PHASES;
   return format === 'ranked' ? RANKED_PHASES : TOURNAMENT_PHASES;
 }
 
-export const getTournamentPhase = (step: number, format: DraftFormat = 'tournament'): TournamentPhaseId => {
-  const phases = getDraftPhases(format);
+export const getTournamentPhase = (step: number, format: DraftFormat = 'tournament', isUltimateBattle: boolean = false): TournamentPhaseId => {
+  const phases = getDraftPhases(format, isUltimateBattle);
   return phases.find(p => step >= p.start && step <= p.end)?.id ?? 'DRAFT_COMPLETE';
 };
 
-export function getDraftTurn(step: number, format: DraftFormat = 'tournament') {
-  const sequence = getDraftSequence(format);
+export function getDraftTurn(step: number, format: DraftFormat = 'tournament', isUltimateBattle: boolean = false) {
+  const sequence = getDraftSequence(format, isUltimateBattle);
   const turn = sequence[step];
   return { ...(turn ?? { side: 'blue' as const, action: 'pick' as const }), stepIndex: step, isComplete: !turn };
 }
@@ -82,6 +93,7 @@ export interface DraftContext {
   onlyGlobal: boolean;
   fearless: Record<Side, number[]>;
   format?: DraftFormat;
+  isUltimateBattle?: boolean;
 }
 export interface DraftAction { heroId: number; side: Side; action: ActionKind }
 export const emptyPosition = (): DraftPosition => ({ step: 0, picks: { blue: [], red: [] }, bans: { blue: [], red: [] } });
@@ -90,11 +102,19 @@ export function isLegalHero(
   position: DraftPosition,
   heroId: number,
   context: DraftContext,
-  format: DraftFormat = context.format ?? 'tournament'
+  format: DraftFormat = context.format ?? 'tournament',
+  isUltimateBattle: boolean = context.isUltimateBattle ?? false
 ): boolean {
-  const turn = getDraftTurn(position.step, format);
+  const turn = getDraftTurn(position.step, format, isUltimateBattle);
   const hero = context.heroes.find(h => h.hero_id === heroId);
   if (turn.isComplete || !hero || heroId === 511 || (context.onlyGlobal && !isHeroGlobalReleased(hero))) return false;
+
+  // Ultimate Battle (Game 7 Peak Showdown): No bans, full pool reset, mirror picks allowed across teams
+  if (isUltimateBattle) {
+    if (turn.action !== 'pick') return false;
+    // Same team cannot pick the same hero twice
+    return !position.picks[turn.side].includes(heroId);
+  }
 
   if (turn.action === 'ban') {
     if (format === 'ranked') {
@@ -121,16 +141,87 @@ export function applyDraftAction(
   position: DraftPosition,
   action: DraftAction,
   context: DraftContext,
-  format: DraftFormat = context.format ?? 'tournament'
+  format: DraftFormat = context.format ?? 'tournament',
+  isUltimateBattle: boolean = context.isUltimateBattle ?? false
 ): DraftPosition {
-  const turn = getDraftTurn(position.step, format);
-  if (turn.side !== action.side || turn.action !== action.action || !isLegalHero(position, action.heroId, context, format)) return position;
+  const turn = getDraftTurn(position.step, format, isUltimateBattle);
+  if (turn.side !== action.side || turn.action !== action.action || !isLegalHero(position, action.heroId, context, format, isUltimateBattle)) return position;
   const field = turn.action === 'pick' ? 'picks' : 'bans';
   return { ...position, step: position.step + 1, [field]: { ...position[field], [turn.side]: [...position[field][turn.side], action.heroId] } };
 }
 
-export const createInitialGameDraft = (format: DraftFormat = 'tournament'): GameDraftData => {
-  const banSlots = format === 'ranked' ? 3 : 4;
+export const teamOnSide = (game: GameDraftData, side: Side): SeriesTeam =>
+  side === 'blue' ? (game.blueTeam ?? 'A') : (game.blueTeam === 'A' ? 'B' : 'A');
+
+export function computeSeriesFearlessLocks(
+  games: Record<number, GameDraftData>,
+  gameNumber: number,
+  fearlessEnabled: boolean = true
+): Record<Side, Set<number>> {
+  if (!fearlessEnabled) return { blue: new Set<number>(), red: new Set<number>() };
+  const curGame = games[gameNumber];
+  // In Ultimate Battle, Fearless pool is completely reset
+  if (curGame?.isUltimateBattle) {
+    return { blue: new Set<number>(), red: new Set<number>() };
+  }
+
+  const byTeam: Record<SeriesTeam, Set<number>> = { A: new Set(), B: new Set() };
+  for (let g = 1; g < gameNumber; g++) {
+    const past = games[g];
+    if (!past) continue;
+    const bTeam = teamOnSide(past, 'blue');
+    const rTeam = teamOnSide(past, 'red');
+    past.bluePicks.forEach((h) => h && byTeam[bTeam].add(h.hero_id));
+    past.redPicks.forEach((h) => h && byTeam[rTeam].add(h.hero_id));
+  }
+
+  const curBlueTeam = curGame ? teamOnSide(curGame, 'blue') : 'A';
+  const curRedTeam = curGame ? teamOnSide(curGame, 'red') : 'B';
+  return {
+    blue: byTeam[curBlueTeam],
+    red: byTeam[curRedTeam],
+  };
+}
+
+export function findSeriesFearlessConflicts(
+  games: Record<number, GameDraftData>,
+  maxGame: number = 7
+): Array<{ game: number; side: Side; heroId: number; heroName?: string }> {
+  const conflicts: Array<{ game: number; side: Side; heroId: number; heroName?: string }> = [];
+  const seenByTeam: Record<SeriesTeam, Map<number, number>> = { A: new Map(), B: new Map() };
+
+  for (let g = 1; g <= maxGame; g++) {
+    const game = games[g];
+    if (!game || game.isUltimateBattle) continue;
+    const bTeam = teamOnSide(game, 'blue');
+    const rTeam = teamOnSide(game, 'red');
+
+    for (const h of game.bluePicks) {
+      if (!h) continue;
+      if (seenByTeam[bTeam].has(h.hero_id)) {
+        conflicts.push({ game: g, side: 'blue', heroId: h.hero_id, heroName: h.name });
+      } else {
+        seenByTeam[bTeam].set(h.hero_id, g);
+      }
+    }
+    for (const h of game.redPicks) {
+      if (!h) continue;
+      if (seenByTeam[rTeam].has(h.hero_id)) {
+        conflicts.push({ game: g, side: 'red', heroId: h.hero_id, heroName: h.name });
+      } else {
+        seenByTeam[rTeam].set(h.hero_id, g);
+      }
+    }
+  }
+  return conflicts;
+}
+
+export const createInitialGameDraft = (
+  format: DraftFormat = 'tournament',
+  blueTeam: SeriesTeam = 'A',
+  isUltimateBattle: boolean = false
+): GameDraftData => {
+  const banSlots = isUltimateBattle ? 0 : (format === 'ranked' ? 3 : 4);
   return {
     bluePicks: Array(5).fill(null),
     redPicks: Array(5).fill(null),
@@ -141,6 +232,9 @@ export const createInitialGameDraft = (format: DraftFormat = 'tournament'): Game
     bluePlanBId: null,
     redPlanAId: null,
     redPlanBId: null,
+    blueTeam,
+    winner: null,
+    isUltimateBattle,
   };
 };
 
@@ -153,11 +247,12 @@ export function applyGameHero(
   game: GameDraftData,
   hero: Hero,
   context: DraftContext,
-  format: DraftFormat = context.format ?? 'tournament'
+  format: DraftFormat = context.format ?? 'tournament',
+  isUltimateBattle: boolean = game.isUltimateBattle ?? false
 ): GameDraftData {
   const position = toPosition(game);
-  const turn = getDraftTurn(position.step, format);
-  const next = applyDraftAction(position, { ...turn, heroId: hero.hero_id }, context, format);
+  const turn = getDraftTurn(position.step, format, isUltimateBattle);
+  const next = applyDraftAction(position, { ...turn, heroId: hero.hero_id }, context, format, isUltimateBattle);
   if (next === position) return game;
   const key = `${turn.side}${turn.action === 'pick' ? 'Picks' : 'Bans'}` as 'bluePicks' | 'redPicks' | 'blueBans' | 'redBans';
   const slots = [...game[key]];
@@ -302,24 +397,51 @@ export function evaluateTeamCompositionIntegrity(
   };
 }
 
+export function getPairEvidence(pairData: any): { eligible: boolean; lift: number; games: number; isRecent: boolean } {
+  if (!pairData) return { eligible: false, lift: 0, games: 0, isRecent: false };
+  const ev = pairData.evidence;
+  if (ev) {
+    const isEligible = Boolean(ev.is_active_meta || (ev.effective_games >= 12.0 && ev.recent_matches >= 8));
+    return {
+      eligible: isEligible,
+      lift: typeof ev.lift === 'number' ? ev.lift : (pairData.synergy_lift ?? 0),
+      games: ev.recent_matches ?? pairData.matches ?? 0,
+      isRecent: (ev.recent_matches ?? 0) >= 8,
+    };
+  }
+  // Fallback for legacy dataset
+  const matches = pairData.matches ?? 0;
+  const isEligible = matches >= 20;
+  return {
+    eligible: isEligible,
+    lift: pairData.synergy_lift ?? 0,
+    games: matches,
+    isRecent: false,
+  };
+}
+
 /**
- * Computes empirical KPL pair delta, rewarding proven positive synergies (>= 20 matches, >= 50% WR)
- * and penalizing strongly negative anti-synergies (>= 15 matches, < 45% WR, lift <= -0.05).
+ * Computes empirical KPL pair delta using evidence quality and recency weighting.
  */
 export function computeKplPairAdjustment(
-  pairData: { matches?: number; win_rate?: number; synergy_lift?: number } | undefined,
-  liftScale = 2.2,
-  positiveBase = 0.35
+  pairData: { matches?: number; win_rate?: number; synergy_lift?: number; evidence?: any } | undefined,
+  liftScale = 2.4,
+  positiveBase = 0.30
 ): number {
   if (!pairData) return 0;
   const matches = pairData.matches ?? 0;
   const winRate = pairData.win_rate ?? 0.5;
-  const lift = pairData.synergy_lift ?? 0;
-  if (matches >= 20 && winRate >= 0.5) {
-    return lift * liftScale + positiveBase;
+  const rawLift = pairData.synergy_lift ?? 0;
+  const evidence = getPairEvidence(pairData);
+
+  // Positive synergy strictly requires active/eligible meta evidence
+  if (evidence.eligible && evidence.lift > 0) {
+    return evidence.lift * liftScale + positiveBase;
   }
-  if (matches >= 15 && winRate < 0.45 && lift <= -0.05) {
-    return Math.max(-0.85, lift * liftScale);
+  // Negative anti-synergies: penalize whenever matches >= 15 with poor win rate (< 45%)
+  if (matches >= 15 && winRate < 0.45 && (rawLift <= -0.02 || evidence.lift < -0.02)) {
+    const penaltyLift = evidence.lift < 0 ? evidence.lift : (winRate - 0.50);
+    return Math.max(-0.85, penaltyLift * liftScale);
   }
   return 0;
 }

@@ -7,6 +7,8 @@ and exports to kpl_synergy_matrix.json.
 
 import sqlite3
 import json
+import math
+from datetime import datetime
 from collections import defaultdict
 from pathlib import Path
 
@@ -221,28 +223,54 @@ def extract_synergy():
     cursor = conn.cursor()
 
     cursor.execute("""
-    SELECT b.battle_id, b.winner_side, da.ord, da.side, da.action, da.global_hero_id
+    SELECT b.battle_id, b.winner_side, da.ord, da.side, da.action, da.global_hero_id, m.date
     FROM battles b
     JOIN draft_actions da ON b.battle_id = da.battle_id
+    JOIN matches m ON b.match_id = m.match_id
     WHERE b.is_complete = 1
     ORDER BY b.battle_id, da.ord ASC
     """)
 
     battles_actions = defaultdict(list)
     battle_winners = {}
-    for b_id, winner_side, ord_id, side, action, raw_hid in cursor.fetchall():
+    battle_dates = {}
+    for b_id, winner_side, ord_id, side, action, raw_hid, b_date in cursor.fetchall():
         hid = normalize_hid(raw_hid)
         if hid in valid_ids:
             battles_actions[b_id].append((ord_id, side, action, hid))
             battle_winners[b_id] = winner_side
+            battle_dates[b_id] = b_date
 
     hero_tempo_curves = extract_tempo_curves(cursor, valid_ids)
     hero_lane_rates = extract_lane_rates(cursor, PLAYERS_JSONL_PATH, valid_ids)
 
     conn.close()
 
+    # Precompute date weights relative to latest tournament battle
+    max_date_str = max(battle_dates.values()) if battle_dates else "2026-10-22"
+    max_date = datetime.strptime(max_date_str, "%Y-%m-%d")
+    battle_weights = {}
+    battle_is_recent24 = {}
+    for b_id, d_str in battle_dates.items():
+        try:
+            b_dt = datetime.strptime(d_str, "%Y-%m-%d")
+            days_ago = max(0, (max_date - b_dt).days)
+        except Exception:
+            days_ago = 365
+        # 12-month half-life = 365.25 days
+        weight = math.exp(- (math.log(2) * days_ago) / 365.25)
+        battle_weights[b_id] = weight
+        battle_is_recent24[b_id] = (days_ago <= 730)
+
+    # Hero single win rates (weighted) for Bayesian expected pair synergy
+    hero_weighted_games = defaultdict(float)
+    hero_weighted_wins = defaultdict(float)
+
     pair_games = defaultdict(int)
     pair_wins = defaultdict(int)
+    pair_weighted_games = defaultdict(float)
+    pair_weighted_wins = defaultdict(float)
+    pair_recent24_games = defaultdict(int)
 
     head_to_head_games = defaultdict(int)
     head_to_head_wins = defaultdict(int)
@@ -253,12 +281,19 @@ def extract_synergy():
     # Tournament Phase-Specific Statistics
     b1_picks = defaultdict(int)
     b1_wins = defaultdict(int)
+    b1_weighted_picks = defaultdict(float)
+    b1_weighted_wins = defaultdict(float)
+
     r1_r2_picks = defaultdict(int)
     r1_r2_wins = defaultdict(int)
+    r1_r2_weighted_picks = defaultdict(float)
+
     p1_bans_total = defaultdict(int)
+    p1_bans_weighted = defaultdict(float)
 
     # Pre-ban patterns in Phase 1 (ord <= 4) before picking a B1 hero (ord 5)
     blue_preban_for_b1 = defaultdict(lambda: defaultdict(int))
+    blue_preban_for_b1_weighted = defaultdict(lambda: defaultdict(float))
     # Phase 2 bans (ord >= 11) given enemy Phase 1 picks (ord 5..10)
     p2_ban_vs_enemy = defaultdict(lambda: defaultdict(int))
     # Phase 2 bans (ord >= 11) given our own Phase 1 picks (ord 5..10)
@@ -266,6 +301,8 @@ def extract_synergy():
 
     for b_id, actions in battles_actions.items():
         w_side = battle_winners[b_id]
+        bw = battle_weights.get(b_id, 1.0)
+        is_rec24 = battle_is_recent24.get(b_id, False)
 
         blue_picks = [hid for o, s, a, hid in actions if a == "pick" and s == "blue"]
         red_picks = [hid for o, s, a, hid in actions if a == "pick" and s == "red"]
@@ -277,17 +314,22 @@ def extract_synergy():
 
         for hid in blue_p1_bans + red_p1_bans:
             p1_bans_total[hid] += 1
+            p1_bans_weighted[hid] += bw
 
         if blue_p1_picks:
             b1 = blue_p1_picks[0]
             b1_picks[b1] += 1
+            b1_weighted_picks[b1] += bw
             if w_side == "blue":
                 b1_wins[b1] += 1
+                b1_weighted_wins[b1] += bw
             for b_ban in blue_p1_bans:
                 blue_preban_for_b1[b1][b_ban] += 1
+                blue_preban_for_b1_weighted[b1][b_ban] += bw
 
         for rp in red_p1_picks[:2]:
             r1_r2_picks[rp] += 1
+            r1_r2_weighted_picks[rp] += bw
             if w_side == "red":
                 r1_r2_wins[rp] += 1
 
@@ -300,6 +342,14 @@ def extract_synergy():
                 for op in our_p1:
                     p2_ban_protect_our[op][hid] += 1
 
+        # Track individual hero weighted wins/games for expected synergy baseline
+        for side_name, p_list in [("blue", blue_picks), ("red", red_picks)]:
+            is_win = (w_side == side_name)
+            for hid in p_list:
+                hero_weighted_games[hid] += bw
+                if is_win:
+                    hero_weighted_wins[hid] += bw
+
         # Pair synergy & head-to-head
         for our_side, our_p, enemy_p in [("blue", blue_picks, red_picks), ("red", red_picks, blue_picks)]:
             won = (w_side == our_side)
@@ -307,8 +357,12 @@ def extract_synergy():
                 for j in range(i + 1, len(our_p)):
                     p1, p2 = min(our_p[i], our_p[j]), max(our_p[i], our_p[j])
                     pair_games[(p1, p2)] += 1
+                    pair_weighted_games[(p1, p2)] += bw
+                    if is_rec24:
+                        pair_recent24_games[(p1, p2)] += 1
                     if won:
                         pair_wins[(p1, p2)] += 1
+                        pair_weighted_wins[(p1, p2)] += bw
                     for e in enemy_p:
                         combo_vs_enemy_games[(p1, p2, e)] += 1
                         if won:
@@ -320,11 +374,40 @@ def extract_synergy():
                     if won:
                         head_to_head_wins[(o, e)] += 1
 
-    # 1. Significant pro pairs (>= 12 matches together, both in Global 120)
+    # Individual hero baseline win rate (shrunk to 0.50 with k=20)
+    hero_baseline_wr = {}
+    for hid in valid_ids:
+        g = hero_weighted_games[hid]
+        w = hero_weighted_wins[hid]
+        hero_baseline_wr[hid] = (w + 10.0) / (g + 20.0)
+
+    # 1. Significant pro pairs (>= 12 matches together, both in Global 120, and evidence quality)
     top_pairs = {}
     for (p1, p2), total in pair_games.items():
         if total >= 12 and p1 != p2:
             wr = round(pair_wins[(p1, p2)] / total, 3)
+            w_games = pair_weighted_games[(p1, p2)]
+            w_wins = pair_weighted_wins[(p1, p2)]
+            w_wr = round(w_wins / w_games, 3) if w_games > 0 else wr
+            rec24 = pair_recent24_games[(p1, p2)]
+
+            # Expected WR from individual baselines via logit additivity
+            wr_a = max(0.01, min(0.99, hero_baseline_wr.get(p1, 0.50)))
+            wr_b = max(0.01, min(0.99, hero_baseline_wr.get(p2, 0.50)))
+            logit_a = math.log(wr_a / (1.0 - wr_a))
+            logit_b = math.log(wr_b / (1.0 - wr_b))
+            comb_logit = 0.5 * (logit_a + logit_b)
+            expected_wr = round(1.0 / (1.0 + math.exp(-comb_logit)), 3)
+
+            # Bayesian shrinkage toward expected_wr with prior weight k=25
+            k_prior = 25.0
+            shrunk_wr = round((w_wins + k_prior * expected_wr) / (w_games + k_prior), 3)
+            # Lift is empirical improvement over combined individual expectation
+            lift = round(shrunk_wr - expected_wr, 3)
+
+            # Evidence quality flag: requires effective recent presence
+            is_active_meta = (w_games >= 12.0 and rec24 >= 8)
+
             top_pairs[f"{p1}_{p2}"] = {
                 "hero1": p1,
                 "hero2": p2,
@@ -332,31 +415,56 @@ def extract_synergy():
                 "hero2_name": id_to_name[p2],
                 "matches": total,
                 "win_rate": wr,
-                "synergy_lift": round(wr - 0.50, 3)
+                "synergy_lift": lift,
+                "evidence": {
+                    "effective_games": round(w_games, 1),
+                    "recent_matches": rec24,
+                    "weighted_win_rate": w_wr,
+                    "expected_win_rate": expected_wr,
+                    "shrunk_win_rate": shrunk_wr,
+                    "lift": lift,
+                    "is_active_meta": is_active_meta
+                }
             }
 
-    # 2. First-Pick (B1 / R1-R2) Openers & Pre-Ban Matrix
+    # 2. First-Pick (B1 / R1-R2) Openers & Pre-Ban Matrix (Weighted by Recency)
     b1_opener_stats = {}
     for hid in valid_ids:
         b1_cnt = b1_picks[hid]
+        b1_w_cnt = round(b1_weighted_picks[hid], 1)
         r1_cnt = r1_r2_picks[hid]
+        r1_w_cnt = round(r1_r2_weighted_picks[hid], 1)
         p1_ban_cnt = p1_bans_total[hid]
-        if b1_cnt >= 10 or r1_cnt >= 15 or p1_ban_cnt >= 30:
+        p1_ban_w_cnt = round(p1_bans_weighted[hid], 1)
+
+        if b1_cnt >= 10 or r1_cnt >= 15 or p1_ban_cnt >= 30 or b1_w_cnt >= 6.0:
             b1_wr = round(b1_wins[hid] / b1_cnt, 3) if b1_cnt > 0 else 0.50
+            b1_w_wr = round(b1_weighted_wins[hid] / b1_weighted_picks[hid], 3) if b1_weighted_picks[hid] > 0 else b1_wr
+
             global_preban_items = [
-                (b_id, cnt) for b_id, cnt in blue_preban_for_b1[hid].items() if b_id in global_ban_ids
+                (b_id, cnt, round(blue_preban_for_b1_weighted[hid][b_id], 1))
+                for b_id, cnt in blue_preban_for_b1[hid].items() if b_id in global_ban_ids
             ]
-            top_prebans = sorted(global_preban_items, key=lambda x: x[1], reverse=True)[:8]
+            top_prebans = sorted(global_preban_items, key=lambda x: x[2], reverse=True)[:8]
             b1_opener_stats[str(hid)] = {
                 "hero_id": hid,
                 "hero_name": id_to_name[hid],
                 "b1_picks": b1_cnt,
                 "b1_win_rate": b1_wr,
+                "weighted_b1_picks": b1_w_cnt,
+                "weighted_b1_win_rate": b1_w_wr,
                 "r1_r2_picks": r1_cnt,
+                "weighted_r1_r2_picks": r1_w_cnt,
                 "p1_bans": p1_ban_cnt,
+                "weighted_p1_bans": p1_ban_w_cnt,
                 "top_prebans": [
-                    {"ban_id": b_id, "ban_name": id_to_name[b_id], "count": cnt}
-                    for b_id, cnt in top_prebans if cnt >= 5
+                    {
+                        "ban_id": b_id,
+                        "ban_name": id_to_name[b_id],
+                        "count": cnt,
+                        "weighted_count": w_cnt
+                    }
+                    for b_id, cnt, w_cnt in top_prebans if cnt >= 5 or w_cnt >= 3.0
                 ]
             }
 
