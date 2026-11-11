@@ -353,16 +353,16 @@
       ]
     },
     "frontline": {
-      "value": "ya",
+      "value": "tidak",
       "confidence": null,
       "chunk_votes": [
         {
           "chunk": 0,
-          "choice": "ya",
+          "choice": "tidak",
           "probabilities": {
-            "ya": 0.89,
-            "tidak": 0.0715,
-            "tidak_diketahui": 0.0385
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
           }
         }
       ]

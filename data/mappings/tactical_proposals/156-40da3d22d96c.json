@@ -602,16 +602,16 @@
       ]
     },
     "weak_early": {
-      "value": "ya",
+      "value": "tidak",
       "confidence": null,
       "chunk_votes": [
         {
           "chunk": 0,
-          "choice": "ya",
+          "choice": "tidak",
           "probabilities": {
-            "ya": 0.84,
-            "tidak": 0.104,
-            "tidak_diketahui": 0.056
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
           }
         }
       ]

@@ -4,26 +4,29 @@
 
 ## Key Concepts
 
-- **evaluateLaneMatchup()** (6 connections) — `apps/web/src/engine/gamePlan.ts`
-- **computeRoamContextAdjustment()** (3 connections) — `apps/web/src/engine/gamePlan.ts`
-- **evaluateSwapMacroProfile()** (3 connections) — `apps/web/src/engine/gamePlan.ts`
-- **hasKplFlexLane()** (3 connections) — `apps/web/src/engine/gamePlan.ts`
-- **getPairWinRate()** (2 connections) — `apps/web/src/engine/gamePlan.ts`
-- **scoreHeroMatchup()** (2 connections) — `apps/web/src/engine/gamePlan.ts`
+- **HeaderSortBar.tsx** (10 connections) — `apps/web/src/components/HeaderSortBar.tsx`
+- **BottomCommandDock.tsx** (7 connections) — `apps/web/src/components/BottomCommandDock.tsx`
+- **ActiveTab** (6 connections) — `apps/web/src/types.ts`
+- **navigation.ts** (6 connections) — `apps/web/src/components/ui/navigation.ts`
+- **APP_NAVIGATION** (3 connections) — `apps/web/src/components/ui/navigation.ts`
+- **Props** (2 connections) — `apps/web/src/components/HeaderSortBar.tsx`
 
 ## Relationships
 
-- [Community 17](Community_17.md) (6 shared connections)
-- [Community 24](Community_24.md) (2 shared connections)
-- [Community 21](Community_21.md) (1 shared connections)
+- [Community 3](Community_3.md) (5 shared connections)
+- [Community 0](Community_0.md) (5 shared connections)
+- [Community 12](Community_12.md) (4 shared connections)
 
 ## Source Files
 
-- `apps/web/src/engine/gamePlan.ts`
+- `apps/web/src/components/BottomCommandDock.tsx`
+- `apps/web/src/components/HeaderSortBar.tsx`
+- `apps/web/src/components/ui/navigation.ts`
+- `apps/web/src/types.ts`
 
 ## Audit Trail
 
-- EXTRACTED: 14 (100%)
+- EXTRACTED: 24 (100%)
 - INFERRED: 0 (0%)
 - AMBIGUOUS: 0 (0%)
 

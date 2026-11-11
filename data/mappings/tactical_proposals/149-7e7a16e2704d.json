@@ -454,16 +454,16 @@
       ]
     },
     "ally_move_speed_buff": {
-      "value": "ya",
+      "value": "tidak",
       "confidence": null,
       "chunk_votes": [
         {
           "chunk": 0,
-          "choice": "ya",
+          "choice": "tidak",
           "probabilities": {
-            "ya": 0.9,
-            "tidak": 0.065,
-            "tidak_diketahui": 0.035
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
           }
         }
       ]

@@ -1,7 +1,7 @@
 import { RoleLabel } from './ui/RoleIcon';
 import { LaneLabel } from './ui/LaneIcon';
 import React, { useEffect, useMemo, useState } from 'react';
-import { Hero, ItemCatalogEntry, SpellCatalogEntry } from '../types';
+import { Hero, ItemCatalogEntry, SpellCatalogEntry, TacticalTag } from '../types';
 import { X, Star, Swords, Shield, Lightbulb, BookOpen, Zap, Sparkles, ArrowRight, CheckCircle2, AlertCircle, Wrench, ShieldBan, Link2 } from 'lucide-react';
 import { AssetThumbnail } from './ui/AssetThumbnail';
 import { displayCopy } from './ui/presentation';
@@ -45,6 +45,50 @@ interface MatchupPanelProps {
   allHeroes: Hero[];
   onSelectRelatedHero: (hero: Hero) => void;
 }
+
+const FACTUAL_SKILL_TAG_GROUPS: ReadonlyArray<{
+  category: 'Mobilitas' | 'Crowd Control' | 'Utilitas Tim';
+  tone: string;
+  items: ReadonlyArray<readonly [TacticalTag, string]>;
+}> = [
+  {
+    category: 'Mobilitas',
+    tone: 'border-sky-800/60 bg-sky-950/30 text-sky-200',
+    items: [
+      ['dash', 'Dash'],
+      ['blink', 'Blink'],
+      ['leap', 'Leap'],
+      ['teleport', 'Teleport Peta'],
+    ],
+  },
+  {
+    category: 'Crowd Control',
+    tone: 'border-amber-800/60 bg-amber-950/30 text-amber-200',
+    items: [
+      ['suppress', 'Suppress'],
+      ['cc_knockup', 'Knock-up'],
+      ['cc_knockback', 'Knock-back'],
+      ['cc_pull', 'Pull / Hook'],
+      ['cc_stun', 'Stun'],
+      ['cc_root', 'Root'],
+      ['cc_silence', 'Silence'],
+      ['cc_slow', 'Slow'],
+    ],
+  },
+  {
+    category: 'Utilitas Tim',
+    tone: 'border-emerald-800/60 bg-emerald-950/30 text-emerald-200',
+    items: [
+      ['ally_heal', 'Heal Sekutu'],
+      ['ally_shield', 'Shield Sekutu'],
+      ['ally_move_speed_buff', 'Buff Speed Sekutu'],
+      ['ally_attack_speed_buff', 'Buff Attack Speed Sekutu'],
+      ['ally_damage_buff', 'Buff Damage Sekutu'],
+      ['ally_cleanse', 'Cleanse CC Sekutu'],
+      ['ally_cc_immunity', 'Imunitas CC Sekutu'],
+    ],
+  },
+];
 
 const MatchupPanel: React.FC<MatchupPanelProps> = ({ hero, allHeroes, onSelectRelatedHero }) => {
   const normalizeName = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -238,6 +282,13 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
   const selectedSpellName = hGuide?.spell || '';
   const selectedSpell = selectedSpellName ? spellCatalog.find(spell => spell.name.toLowerCase() === selectedSpellName.toLowerCase()) : undefined;
   const findItem = (name: string) => itemCatalog.find(item => item.name.toLowerCase() === name.toLowerCase()) || getItemMeta(name);
+  const heroTags = hero.tactical_profile?.tags;
+  const factualSkillGroups = heroTags
+    ? FACTUAL_SKILL_TAG_GROUPS.map((group) => ({
+        ...group,
+        matched: group.items.filter(([tag]) => heroTags[tag] === true),
+      })).filter((group) => group.matched.length > 0)
+    : [];
 
   return (
     <div className="wiki-drawer fixed inset-0 z-[70] overflow-hidden bg-black/70 backdrop-blur-sm flex justify-end transition-opacity">
@@ -632,6 +683,28 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                 </div>
                 <a className="text-xs text-slate-500 underline underline-offset-2 hover:text-slate-300" href={hero.hokstats_guide.source.url} target="_blank" rel="noreferrer">Sumber HoKStats · {hero.hokstats_guide.source.fetched_at.slice(0, 10)}</a>
               </div>}
+
+              {/* Factual Skill Mechanics */}
+              {factualSkillGroups.length > 0 && (
+                <div className="p-3 bg-[#12161F] border border-[#232A38] rounded-xl space-y-2.5">
+                  <div className="flex items-center justify-between gap-2">
+                    <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider">Mekanik Skill Terverifikasi</h4>
+                    <span className="text-[11px] text-slate-500">Faktual dari skill</span>
+                  </div>
+                  <div className="space-y-2">
+                    {factualSkillGroups.map((group) => (
+                      <div key={group.category} className="flex flex-wrap items-center gap-1.5">
+                        <span className="text-[11px] font-semibold text-slate-400 mr-1">{group.category}:</span>
+                        {group.matched.map(([tag, label]) => (
+                          <span key={tag} className={`rounded-md border px-2 py-0.5 text-xs font-semibold ${group.tone}`}>
+                            {label}
+                          </span>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Ability Descriptions */}
               <div className="space-y-2.5">

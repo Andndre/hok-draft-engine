@@ -1,6 +1,6 @@
 # Community 2
 
-> 36 nodes
+> 37 nodes
 
 ## Key Concepts
 
@@ -8,6 +8,7 @@
 - **devDependencies** (8 connections) — `apps/web/package.json`
 - **dependencies** (6 connections) — `apps/web/package.json`
 - **scripts** (6 connections) — `apps/web/package.json`
+- **react-dom** (4 connections) — `apps/web/package.json`
 - **vite** (4 connections) — `apps/web/package.json`
 - **vite.config.ts** (3 connections) — `apps/web/vite.config.ts`
 - **@tailwindcss/vite** (3 connections) — `apps/web/package.json`
@@ -28,13 +29,13 @@
 - **clsx** (2 connections) — `apps/web/package.json`
 - **tailwind-merge** (2 connections) — `apps/web/package.json`
 - **tailwindcss** (2 connections) — `apps/web/package.json`
-- **@types/react** (2 connections) — `apps/web/package.json`
-- *... and 11 more nodes in this community*
+- *... and 12 more nodes in this community*
 
 ## Relationships
 
-- [Community 0](Community_0.md) (6 shared connections)
+- [Community 0](Community_0.md) (5 shared connections)
 - [Community 23](Community_23.md) (1 shared connections)
+- [Community 3](Community_3.md) (1 shared connections)
 
 ## Source Files
 
@@ -44,7 +45,7 @@
 
 ## Audit Trail
 
-- EXTRACTED: 53 (100%)
+- EXTRACTED: 55 (100%)
 - INFERRED: 0 (0%)
 - AMBIGUOUS: 0 (0%)
 

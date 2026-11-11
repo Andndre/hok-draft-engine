@@ -1,10 +1,11 @@
 # Community 31
 
-> 20 nodes
+> 22 nodes
 
 ## Key Concepts
 
 - **check-deploy.py** (20 connections) — `.github/hostinger/check-deploy.py`
+- **hashlib** (13 connections)
 - **Dependencies** (7 connections) — `.github/hostinger/check-deploy.py`
 - **main()** (7 connections) — `.github/hostinger/check-deploy.py`
 - **verify()** (6 connections) — `.github/hostinger/check-deploy.py`
@@ -14,6 +15,7 @@
 - **sys** (3 connections)
 - **urllib_parse** (3 connections)
 - **format_github_summary()** (2 connections) — `.github/hostinger/check-deploy.py`
+- **Repository Layout** (2 connections) — `CONTRIBUTING.md`
 - **datetime** (2 connections)
 - **html_parser** (2 connections)
 - **.handle_data()** (1 connections) — `.github/hostinger/check-deploy.py`
@@ -27,20 +29,23 @@
 
 ## Relationships
 
-- [Community 26](Community_26.md) (6 shared connections)
-- [Community 10](Community_10.md) (5 shared connections)
-- [Community 22](Community_22.md) (4 shared connections)
-- [Community 7](Community_7.md) (2 shared connections)
+- [Community 10](Community_10.md) (7 shared connections)
+- [Community 26](Community_26.md) (5 shared connections)
+- [Community 22](Community_22.md) (5 shared connections)
+- [Community 7](Community_7.md) (4 shared connections)
+- [Community 4](Community_4.md) (3 shared connections)
+- [Community 13](Community_13.md) (2 shared connections)
 - [Community 14](Community_14.md) (1 shared connections)
 - [Community 32](Community_32.md) (1 shared connections)
 
 ## Source Files
 
 - `.github/hostinger/check-deploy.py`
+- `CONTRIBUTING.md`
 
 ## Audit Trail
 
-- EXTRACTED: 44 (98%)
+- EXTRACTED: 56 (98%)
 - INFERRED: 1 (2%)
 - AMBIGUOUS: 0 (0%)
 

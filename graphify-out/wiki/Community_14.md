@@ -1,6 +1,6 @@
 # Community 14
 
-> 45 nodes
+> 47 nodes
 
 ## Key Concepts
 
@@ -8,6 +8,7 @@
 - **AGENTS.md — Developer & Agent Field Manual** (7 connections) — `AGENTS.md`
 - **Contributing to HoK Draft Engine** (7 connections) — `CONTRIBUTING.md`
 - **4. Logika Domain & Batasan Taktis (CRITICAL PITFALLS)** (6 connections) — `AGENTS.md`
+- **Cara kerja mesin draft** (5 connections) — `README.md`
 - **2. Standar Lingkungan & Perkakas (Wajib Diikuti)** (4 connections) — `AGENTS.md`
 - **5. Alur Kerja & Perintah Pemeliharaan Rutin** (4 connections) — `AGENTS.md`
 - **Option B — Manual Setup** (4 connections) — `CONTRIBUTING.md`
@@ -18,7 +19,6 @@
 - **AGENTS.md** (2 connections) — `AGENTS.md`
 - **C. Hero Rilis Global vs Eksklusif CN** (2 connections) — `AGENTS.md`
 - **CONTRIBUTING.md** (2 connections) — `CONTRIBUTING.md`
-- **Repository Layout** (2 connections) — `CONTRIBUTING.md`
 - **Menjalankan aplikasi & setup contributor** (2 connections) — `README.md`
 - **1. Misi & Arsitektur Utama** (1 connections) — `AGENTS.md`
 - **6. Struktur Direktori Proyek** (1 connections) — `AGENTS.md`
@@ -29,11 +29,12 @@
 - **B. Competitive Tournament Tiers vs Casual Pub Tiers** (1 connections) — `AGENTS.md`
 - **B. Publikasi Paket Dataset ke Frontend Statis:** (1 connections) — `AGENTS.md`
 - **B. Shell & PowerShell Safety (Windows)** (1 connections) — `AGENTS.md`
-- *... and 20 more nodes in this community*
+- *... and 22 more nodes in this community*
 
 ## Relationships
 
 - [Community 3](Community_3.md) (3 shared connections)
+- [Community 0](Community_0.md) (1 shared connections)
 - [Community 31](Community_31.md) (1 shared connections)
 
 ## Source Files
@@ -44,7 +45,7 @@
 
 ## Audit Trail
 
-- EXTRACTED: 46 (96%)
+- EXTRACTED: 49 (96%)
 - INFERRED: 2 (4%)
 - AMBIGUOUS: 0 (0%)
 

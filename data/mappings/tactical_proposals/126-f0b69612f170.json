@@ -613,16 +613,16 @@
       ]
     },
     "low_damage": {
-      "value": "ya",
+      "value": "tidak",
       "confidence": null,
       "chunk_votes": [
         {
           "chunk": 0,
-          "choice": "ya",
+          "choice": "tidak",
           "probabilities": {
-            "ya": 0.86,
-            "tidak": 0.091,
-            "tidak_diketahui": 0.049
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
           }
         }
       ]

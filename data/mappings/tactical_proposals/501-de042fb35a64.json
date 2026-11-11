@@ -374,16 +374,16 @@
       ]
     },
     "engage": {
-      "value": "ya",
+      "value": "tidak",
       "confidence": null,
       "chunk_votes": [
         {
           "chunk": 0,
-          "choice": "ya",
+          "choice": "tidak",
           "probabilities": {
-            "ya": 0.87,
-            "tidak": 0.0845,
-            "tidak_diketahui": 0.0455
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
           }
         }
       ]

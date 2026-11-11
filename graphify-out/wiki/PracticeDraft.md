@@ -2,7 +2,7 @@
 
 > God node · 30 connections · `apps/web/src/components/PracticeDraft.tsx`
 
-**Community:** [Community 0](Community_0.md)
+**Community:** [Community 3](Community_3.md)
 
 ## Connections by Relation
 

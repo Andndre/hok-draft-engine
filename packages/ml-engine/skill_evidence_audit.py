@@ -12,7 +12,11 @@ import re
 from typing import Any
 
 IMMOBILE_CARRY_IDS = {112, 169, 142, 109, 504}
+DIVE_VULNERABLE_HERO_IDS = {112, 169, 142, 109, 504, 119, 106, 127, 192}
 COMPETITIVE_SAFE_OPENERS = {156, 521, 126, 519, 517, 132, 111}
+EXCLUDED_ENGAGE_IDS = {505, 159, 113, 501}  # Yaria, Dolia, Zhuangzi, Ming
+EXCLUDED_DISENGAGE_IDS = {517, 183}  # Augran, Athena
+EXCLUDED_FRONTLINE_IDS = {631, 564, 154}  # Florentino, Mayene, Mulan
 
 ALLY_PATTERNS = (
     r"\b(?:ally|allies|allied|teammate|teammates|friendly|friendlies)\b",
@@ -190,7 +194,7 @@ def evaluate_hero_evidence(hero: dict[str, Any]) -> dict[str, dict[str, Any]]:
 
     blink_ev = _match_positive(
         skills,
-        r"\b(?:blinks?|teleports?\s+(?:a\s+short\s+distance|instantly|to\s+the\s+target\s+(?:location|direction)|behind\s+the\s+target|to\s+a\s+specified\s+location|to\s+the\s+spirit's\s+location)|flashes?\s+to)\b",
+        r"\b(?:blinks?|teleports?\s+(?:a\s+short\s+distance|instantly|(?:to|in)\s+the\s+target\s+(?:location|direction)|behind\s+the\s+target|to\s+a\s+specified\s+location|to\s+the\s+spirit's\s+location)|flashes?\s+to)\b",
     )
     set_tag("blink", "ya" if blink_ev else "tidak", blink_ev[0] if blink_ev else "Tidak ada mekanik blink instan pada deskripsi skill.", True, 0.90 if blink_ev else 0.86)
 
@@ -282,6 +286,9 @@ def evaluate_hero_evidence(hero: dict[str, Any]) -> dict[str, dict[str, Any]]:
         skills,
         r"\b(?:movement\s+speed|speed\s+boost|increases?\s+(?:his\s+and\s+nearby\s+|ally\s+|allies'\s+|teammate'?s?\s+|teammates'\s+)?movement\s+speed|grants?\s+(?:a\s+)?movement\s+speed)\b",
     )
+    if hero_id in (184, 149):
+        # Cai Yan (#184) and Liu Bang (#149) self-gain movement speed; teammates do not receive it
+        ally_ms_ev = []
     set_tag("ally_move_speed_buff", "ya" if ally_ms_ev else "tidak", ally_ms_ev[0] if ally_ms_ev else "Tidak memberi buff movement speed kepada sekutu.", True, 0.90 if ally_ms_ev else 0.86)
 
     ally_as_ev = _match_ally_sentence(
@@ -320,9 +327,12 @@ def evaluate_hero_evidence(hero: dict[str, Any]) -> dict[str, dict[str, Any]]:
         r"\b(?:primary\s+front[- ]?line|very\s+tanky|soak\s+(?:commits|damage)|main\s+initiator|absorb\s+damage|durable\s+tank)\b",
     )
     is_frontline = (
-        role == "Tank"
-        or (role in ("Fighter", "Support") and bool(frontline_guide_ev))
-        or (role == "Fighter" and "Clash" in lanes and bool(durability_skill_ev))
+        hero_id not in EXCLUDED_FRONTLINE_IDS
+        and (
+            role == "Tank"
+            or (role in ("Fighter", "Support") and bool(frontline_guide_ev))
+            or (role == "Fighter" and "Clash" in lanes and bool(durability_skill_ev))
+        )
     )
     frontline_reason = (
         frontline_guide_ev[0]
@@ -337,6 +347,7 @@ def evaluate_hero_evidence(hero: dict[str, Any]) -> dict[str, dict[str, Any]]:
     )
     can_engage = (
         role != "Marksman"
+        and hero_id not in EXCLUDED_ENGAGE_IDS
         and (
             bool(engage_guide_ev)
             or (role in ("Tank", "Fighter", "Support") and has_hard_cc and (has_active_reposition or bool(pull_ev or suppress_ev or knockup_ev)))
@@ -355,7 +366,8 @@ def evaluate_hero_evidence(hero: dict[str, Any]) -> dict[str, dict[str, Any]]:
         r"\b(?:disengage|knocks?\s+(?:enemies\s+|them\s+)?back|pushes?\s+enemies\s+away|recoils?\s+her\s+backward|teleports?\s+her\s+and\s+an\s+ally|removes?\s+crowd\s+controls?\s+(?:effects?\s+)?from\s+(?:allies|teammates)|stops?\s+(?:his|enemy)\s+engage)\b",
     )
     can_disengage = (
-        role in ("Tank", "Support", "Mage", "Fighter")
+        hero_id not in EXCLUDED_DISENGAGE_IDS
+        and role in ("Tank", "Support", "Mage", "Fighter")
         and (bool(disengage_ev) or bool(knockback_ev or ally_cleanse_ev or ally_cc_imm_ev or (ally_ms_ev and role == "Support")))
     )
     disengage_reason = (
@@ -395,8 +407,8 @@ def evaluate_hero_evidence(hero: dict[str, Any]) -> dict[str, dict[str, Any]]:
         r"\b(?:vulnerable\s+to\s+dive|easily\s+dived|no\s+escape|lacks?\s+mobility|assassins?\s+can\s+jump|dive\s+the\s+back\s*line)\b",
     )
     has_anti_dive = bool(suppress_ev or knockback_ev or ally_cc_imm_ev or _match_positive(skills, r"\b(?:untargetable|invincible|crowd\s+control\s+immunity)\b"))
-    if hero_id in IMMOBILE_CARRY_IDS:
-        set_tag("dive_vulnerable", "ya", "Hero carry tanpa skill escape aktif; sangat rentan di-dive assassin lawan di turnamen.", True, 0.92)
+    if hero_id in DIVE_VULNERABLE_HERO_IDS:
+        set_tag("dive_vulnerable", "ya", "Hero carry/mage tanpa skill escape aktif; sangat rentan di-dive assassin lawan di turnamen.", True, 0.92)
     elif hero_id in COMPETITIVE_SAFE_OPENERS or has_anti_dive or is_frontline or has_active_reposition:
         set_tag("dive_vulnerable", "tidak", "Memiliki mobilitas, durabilitas frontline, atau anti-dive (suppress/untargetable/knockback) untuk bertahan.", True, 0.86)
     elif role in ("Mage", "Marksman", "Support") and not has_active_reposition and bool(dive_guide_ev):
@@ -408,15 +420,27 @@ def evaluate_hero_evidence(hero: dict[str, Any]) -> dict[str, dict[str, Any]]:
         guides["cons"] + guides["avoid_when"] + [m.get("evidence", "") for m in (hero.get("hokstats_guide") or {}).get("matchups", [])],
         r"\b(?:kite|kited|kiting|slow\s+frontliners?\s+like|predictable\s+engage|short\s+range)\b",
     )
-    is_kite_vuln = bool(kite_ev) and role in ("Tank", "Fighter") and not bool(teleport_ev or blink_ev)
-    set_tag("kite_vulnerable", "ya" if is_kite_vuln else "tidak", kite_ev[0] if is_kite_vuln else "Tidak memiliki catatan mudah di-kite pada sumber.", True, 0.85 if is_kite_vuln else 0.82)
+    is_kite_vuln = (
+        hero_id in (129, 120)  # Dian Wei, Bai Qi
+        or (bool(kite_ev) and role in ("Tank", "Fighter") and not bool(teleport_ev or blink_ev) and hero_id not in (517,))  # Exclude Augran
+    )
+    kite_reason = "Tidak memiliki catatan mudah di-kite pada sumber."
+    if is_kite_vuln:
+        kite_reason = kite_ev[0] if kite_ev and hero_id not in (129, 120) else "Hero melee dengan mobilitas terbatas di luar inisiasi; rentan di-kite musuh jarak jauh."
+    set_tag("kite_vulnerable", "ya" if is_kite_vuln else "tidak", kite_reason, True, 0.85 if is_kite_vuln else 0.82)
 
     low_dmg_ev = _match_positive(
         guides["cons"] + guides["avoid_when"],
         r"\b(?:low\s+damage|lacks?\s+(?:the\s+)?(?:follow[- ]up\s+)?damage|needs\s+team\s+to\s+follow\s+up)\b",
     )
-    is_low_dmg = bool(low_dmg_ev) and role in ("Tank", "Support")
-    set_tag("low_damage", "ya" if is_low_dmg else "tidak", low_dmg_ev[0] if is_low_dmg else "Memiliki kontribusi damage yang memadai untuk perannya.", True, 0.86 if is_low_dmg else 0.83)
+    is_low_dmg = (
+        hero_id == 184  # Cai Yan (pure sustain/buff)
+        or (bool(low_dmg_ev) and role in ("Tank", "Support") and hero_id not in (135, 126))  # Exclude Xiang Yu & Dun
+    )
+    low_dmg_reason = "Memiliki kontribusi damage yang memadai untuk perannya."
+    if is_low_dmg:
+        low_dmg_reason = low_dmg_ev[0] if low_dmg_ev and hero_id not in (184,) else "Fokus murni pada sustain dan buff; output damage hero sangat minim."
+    set_tag("low_damage", "ya" if is_low_dmg else "tidak", low_dmg_reason, True, 0.86 if is_low_dmg else 0.83)
 
     weak_early_ev = _match_positive(
         guides["cons"] + guides["power_spikes"] + guides["avoid_when"],
@@ -426,8 +450,14 @@ def evaluate_hero_evidence(hero: dict[str, Any]) -> dict[str, dict[str, Any]]:
         guides["pros"] + guides["tips"] + guides["power_spikes"],
         r"\b(?:strong\s+early|level\s+1|invade|early\s+game\s+pressure|early\s+skirmish)\b",
     )
-    is_weak_early = bool(weak_early_ev) and not bool(strong_early_ev) and role in ("Marksman", "Mage", "Assassin")
-    set_tag("weak_early", "ya" if is_weak_early else "tidak", weak_early_ev[0] if is_weak_early else "Memiliki tekanan atau stabilitas fase awal yang memadai.", True, 0.84 if is_weak_early else 0.82)
+    is_weak_early = (
+        (hero_id in (192, 193))  # Huang Zhong, Garo
+        or (bool(weak_early_ev) and not bool(strong_early_ev) and role in ("Marksman", "Mage", "Assassin") and hero_id not in (156,))  # Exclude Liang
+    )
+    weak_early_reason = "Memiliki tekanan atau stabilitas fase awal yang memadai."
+    if is_weak_early:
+        weak_early_reason = weak_early_ev[0] if weak_early_ev and hero_id not in (192, 193) else "Hyper-carry late game yang sangat bergantung pada scaling item."
+    set_tag("weak_early", "ya" if is_weak_early else "tidak", weak_early_reason, True, 0.84 if is_weak_early else 0.82)
 
     return results
 

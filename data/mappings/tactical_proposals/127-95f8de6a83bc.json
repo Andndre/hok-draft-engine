@@ -557,16 +557,16 @@
       ]
     },
     "dive_vulnerable": {
-      "value": "tidak",
+      "value": "ya",
       "confidence": null,
       "chunk_votes": [
         {
           "chunk": 0,
-          "choice": "tidak",
+          "choice": "ya",
           "probabilities": {
-            "ya": 0.049,
-            "tidak": 0.86,
-            "tidak_diketahui": 0.091
+            "ya": 0.92,
+            "tidak": 0.052,
+            "tidak_diketahui": 0.028
           }
         }
       ]

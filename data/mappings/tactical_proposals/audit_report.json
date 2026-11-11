@@ -10,8 +10,8 @@
   },
   "tag_distribution": {
     "mobility": {
-      "ya": 71,
-      "tidak": 49,
+      "ya": 72,
+      "tidak": 48,
       "tidak_diketahui": 0
     },
     "dash": {
@@ -20,8 +20,8 @@
       "tidak_diketahui": 0
     },
     "blink": {
-      "ya": 4,
-      "tidak": 116,
+      "ya": 5,
+      "tidak": 115,
       "tidak_diketahui": 0
     },
     "leap": {
@@ -75,18 +75,18 @@
       "tidak_diketahui": 0
     },
     "engage": {
-      "ya": 56,
-      "tidak": 64,
+      "ya": 52,
+      "tidak": 68,
       "tidak_diketahui": 0
     },
     "disengage": {
-      "ya": 31,
-      "tidak": 89,
+      "ya": 28,
+      "tidak": 92,
       "tidak_diketahui": 0
     },
     "frontline": {
-      "ya": 27,
-      "tidak": 93,
+      "ya": 24,
+      "tidak": 96,
       "tidak_diketahui": 0
     },
     "peel": {
@@ -105,8 +105,8 @@
       "tidak_diketahui": 0
     },
     "ally_move_speed_buff": {
-      "ya": 11,
-      "tidak": 109,
+      "ya": 9,
+      "tidak": 111,
       "tidak_diketahui": 0
     },
     "ally_attack_speed_buff": {
@@ -130,23 +130,23 @@
       "tidak_diketahui": 0
     },
     "dive_vulnerable": {
-      "ya": 6,
-      "tidak": 114,
+      "ya": 10,
+      "tidak": 110,
       "tidak_diketahui": 0
     },
     "kite_vulnerable": {
-      "ya": 13,
-      "tidak": 107,
-      "tidak_diketahui": 0
-    },
-    "low_damage": {
       "ya": 14,
       "tidak": 106,
       "tidak_diketahui": 0
     },
+    "low_damage": {
+      "ya": 13,
+      "tidak": 107,
+      "tidak_diketahui": 0
+    },
     "weak_early": {
-      "ya": 24,
-      "tidak": 96,
+      "ya": 25,
+      "tidak": 95,
       "tidak_diketahui": 0
     }
   },
@@ -177,6 +177,7 @@
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
+        "dive_vulnerable",
         "weak_early"
       ]
     },
@@ -263,7 +264,6 @@
         "ally_shield",
         "cc_slow",
         "disengage",
-        "engage",
         "low_damage",
         "peel"
       ]
@@ -345,6 +345,7 @@
       "positive_tags": [
         "ally_heal",
         "cc_slow",
+        "dive_vulnerable",
         "weak_early"
       ]
     },
@@ -358,6 +359,7 @@
         "cc_slow",
         "engage",
         "frontline",
+        "kite_vulnerable",
         "leap",
         "low_damage",
         "mobility",
@@ -425,7 +427,6 @@
         "engage",
         "frontline",
         "kite_vulnerable",
-        "low_damage",
         "peel"
       ]
     },
@@ -437,6 +438,7 @@
       "positive_tags": [
         "cc_knockup",
         "cc_slow",
+        "dive_vulnerable",
         "peel",
         "weak_early"
       ]
@@ -463,6 +465,7 @@
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
+        "kite_vulnerable",
         "leap",
         "mobility"
       ]
@@ -543,7 +546,6 @@
         "disengage",
         "engage",
         "frontline",
-        "low_damage",
         "mobility",
         "peel"
       ]
@@ -652,7 +654,6 @@
       "file": "149-7e7a16e2704d.json",
       "review_status": "approved",
       "positive_tags": [
-        "ally_move_speed_buff",
         "ally_shield",
         "cc_stun",
         "dash",
@@ -712,7 +713,6 @@
         "dash",
         "disengage",
         "engage",
-        "frontline",
         "mobility"
       ]
     },
@@ -736,8 +736,7 @@
         "cc_stun",
         "engage",
         "peel",
-        "suppress",
-        "weak_early"
+        "suppress"
       ]
     },
     {
@@ -764,7 +763,6 @@
         "cc_slow",
         "cc_stun",
         "disengage",
-        "engage",
         "low_damage",
         "peel"
       ]
@@ -1020,7 +1018,6 @@
         "cc_knockback",
         "cc_knockup",
         "dash",
-        "disengage",
         "engage",
         "mobility"
       ]
@@ -1032,9 +1029,8 @@
       "review_status": "approved",
       "positive_tags": [
         "ally_heal",
-        "ally_move_speed_buff",
         "cc_stun",
-        "disengage",
+        "low_damage",
         "peel"
       ]
     },
@@ -1075,6 +1071,8 @@
       "file": "190-ea169d3672ac.json",
       "review_status": "approved",
       "positive_tags": [
+        "blink",
+        "mobility",
         "weak_early"
       ]
     },
@@ -1103,7 +1101,9 @@
       "positive_tags": [
         "cc_slow",
         "dash",
-        "mobility"
+        "dive_vulnerable",
+        "mobility",
+        "weak_early"
       ]
     },
     {
@@ -1118,7 +1118,8 @@
         "engage",
         "frontline",
         "kite_vulnerable",
-        "mobility"
+        "mobility",
+        "weak_early"
       ]
     },
     {
@@ -1187,7 +1188,6 @@
         "ally_heal",
         "ally_move_speed_buff",
         "disengage",
-        "engage",
         "peel"
       ]
     },
@@ -1236,7 +1236,6 @@
         "ally_damage_buff",
         "ally_shield",
         "cc_knockup",
-        "engage",
         "peel"
       ]
     },
@@ -1342,9 +1341,7 @@
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
-        "cc_slow",
-        "disengage",
-        "kite_vulnerable"
+        "cc_slow"
       ]
     },
     {
@@ -1583,7 +1580,6 @@
         "cc_slow",
         "disengage",
         "engage",
-        "frontline",
         "leap",
         "mobility",
         "peel"
@@ -1675,7 +1671,6 @@
         "cc_stun",
         "dash",
         "engage",
-        "frontline",
         "mobility"
       ]
     },

@@ -398,16 +398,16 @@
       ]
     },
     "disengage": {
-      "value": "ya",
+      "value": "tidak",
       "confidence": null,
       "chunk_votes": [
         {
           "chunk": 0,
-          "choice": "ya",
+          "choice": "tidak",
           "probabilities": {
-            "ya": 0.86,
-            "tidak": 0.091,
-            "tidak_diketahui": 0.049
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
           }
         }
       ]
@@ -473,16 +473,16 @@
       ]
     },
     "ally_move_speed_buff": {
-      "value": "ya",
+      "value": "tidak",
       "confidence": null,
       "chunk_votes": [
         {
           "chunk": 0,
-          "choice": "ya",
+          "choice": "tidak",
           "probabilities": {
-            "ya": 0.9,
-            "tidak": 0.065,
-            "tidak_diketahui": 0.035
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
           }
         }
       ]
@@ -578,16 +578,16 @@
       ]
     },
     "low_damage": {
-      "value": "tidak",
+      "value": "ya",
       "confidence": null,
       "chunk_votes": [
         {
           "chunk": 0,
-          "choice": "tidak",
+          "choice": "ya",
           "probabilities": {
-            "ya": 0.0595,
-            "tidak": 0.83,
-            "tidak_diketahui": 0.1105
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
           }
         }
       ]

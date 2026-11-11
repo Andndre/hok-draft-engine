@@ -1,6 +1,6 @@
 # Community 35
 
-> 14 nodes
+> 13 nodes
 
 ## Key Concepts
 
@@ -12,7 +12,6 @@
 - **classify_tempo_profile()** (3 connections) — `packages/ml-engine/extract_kpl_synergy.py`
 - **.test_kpl_tempo_curves_and_clean_lane_rates_filter_anomalies()** (3 connections) — `packages/ml-engine/test_data_pipeline.py`
 - **Cursor** (2 connections)
-- **collections** (2 connections)
 - **Path** (1 connections)
 - **extract_kpl_synergy.py Extracts empirical tournament synergy pairs, win rates,…** (1 connections) — `packages/ml-engine/extract_kpl_synergy.py`
 - **Extract empirical pro lane distribution strictly from modern 5-distinct-lane…** (1 connections) — `packages/ml-engine/extract_kpl_synergy.py`
@@ -22,7 +21,8 @@
 ## Relationships
 
 - [Community 26](Community_26.md) (7 shared connections)
-- [Community 13](Community_13.md) (4 shared connections)
+- [Community 13](Community_13.md) (3 shared connections)
+- [Community 7](Community_7.md) (1 shared connections)
 
 ## Source Files
 
@@ -31,7 +31,7 @@
 
 ## Audit Trail
 
-- EXTRACTED: 32 (100%)
+- EXTRACTED: 31 (100%)
 - INFERRED: 0 (0%)
 - AMBIGUOUS: 0 (0%)
 

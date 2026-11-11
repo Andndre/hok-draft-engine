@@ -1,24 +1,19 @@
 # Community 0
 
-> 112 nodes
+> 85 nodes
 
 ## Key Concepts
 
-- **PracticeDraft.tsx** (62 connections) — `apps/web/src/components/PracticeDraft.tsx`
-- **App.tsx** (60 connections) — `apps/web/src/App.tsx`
 - **ui.test.mjs** (44 connections) — `apps/web/tests/ui.test.mjs`
 - **Hero** (31 connections) — `apps/web/src/types.ts`
-- **PracticeDraft()** (30 connections) — `apps/web/src/components/PracticeDraft.tsx`
-- **HeroWikiDrawer.tsx** (28 connections) — `apps/web/src/components/HeroWikiDrawer.tsx`
+- **HeroWikiDrawer.tsx** (30 connections) — `apps/web/src/components/HeroWikiDrawer.tsx`
 - **PostDraftGamePlanPanel.tsx** (26 connections) — `apps/web/src/components/PostDraftGamePlanPanel.tsx`
-- **App()** (25 connections) — `apps/web/src/App.tsx`
 - **react** (22 connections) — `apps/web/package.json`
 - **PlanSelectionModal.tsx** (21 connections) — `apps/web/src/components/PlanSelectionModal.tsx`
 - **TacticalRadarPanel.tsx** (21 connections) — `apps/web/src/components/TacticalRadarPanel.tsx`
 - **DraftSimulator.tsx** (19 connections) — `apps/web/src/components/DraftSimulator.tsx`
 - **HeroCardCompact.tsx** (18 connections) — `apps/web/src/components/HeroCardCompact.tsx`
 - **lucide-react** (18 connections) — `apps/web/package.json`
-- **Side** (16 connections) — `apps/web/src/engine/draftRules.ts`
 - **Lane** (16 connections) — `apps/web/src/types.ts`
 - **HeroThumbnail()** (16 connections) — `apps/web/src/components/ui/AssetThumbnail.tsx`
 - **HeroRosterToolbar.tsx** (16 connections) — `apps/web/src/components/HeroRosterToolbar.tsx`
@@ -29,26 +24,30 @@
 - **PlanSelectionModal()** (12 connections) — `apps/web/src/components/PlanSelectionModal.tsx`
 - **LaneLabel()** (12 connections) — `apps/web/src/components/ui/LaneIcon.tsx`
 - **plainText()** (12 connections) — `apps/web/src/components/ui/presentation.ts`
-- *... and 87 more nodes in this community*
+- **presentation.ts** (11 connections) — `apps/web/src/components/ui/presentation.ts`
+- **DropdownSelect()** (10 connections) — `apps/web/src/components/ui/DropdownSelect.tsx`
+- **DropdownSelect.tsx** (10 connections) — `apps/web/src/components/ui/DropdownSelect.tsx`
+- **HeroRoleIcons.tsx** (10 connections) — `apps/web/src/components/ui/HeroRoleIcons.tsx`
+- **HeroCardCompact()** (9 connections) — `apps/web/src/components/HeroCardCompact.tsx`
+- *... and 60 more nodes in this community*
 
 ## Relationships
 
-- [Community 3](Community_3.md) (90 shared connections)
-- [Community 12](Community_12.md) (29 shared connections)
-- [Community 17](Community_17.md) (13 shared connections)
-- [Community 6](Community_6.md) (7 shared connections)
-- [Community 2](Community_2.md) (6 shared connections)
-- [Community 24](Community_24.md) (4 shared connections)
-- [Community 21](Community_21.md) (2 shared connections)
+- [Community 3](Community_3.md) (123 shared connections)
+- [Community 12](Community_12.md) (23 shared connections)
+- [Community 17](Community_17.md) (7 shared connections)
+- [Community 2](Community_2.md) (5 shared connections)
+- [Community 8](Community_8.md) (5 shared connections)
+- [Community 6](Community_6.md) (2 shared connections)
+- [Community 24](Community_24.md) (1 shared connections)
 - [Community 23](Community_23.md) (1 shared connections)
+- [Community 14](Community_14.md) (1 shared connections)
 
 ## Source Files
 
+- `AGENTS.md`
 - `apps/web/package.json`
-- `apps/web/src/App.tsx`
-- `apps/web/src/components/BottomCommandDock.tsx`
 - `apps/web/src/components/DraftSimulator.tsx`
-- `apps/web/src/components/HeaderSortBar.tsx`
 - `apps/web/src/components/HeroCardCompact.tsx`
 - `apps/web/src/components/HeroCardDetailed.tsx`
 - `apps/web/src/components/HeroRosterToolbar.tsx`
@@ -62,13 +61,15 @@
 - `apps/web/src/components/ui/HeroRoleIcons.tsx`
 - `apps/web/src/components/ui/LaneIcon.tsx`
 - `apps/web/src/components/ui/RoleIcon.tsx`
-- `apps/web/src/components/ui/navigation.ts`
 - `apps/web/src/components/ui/presentation.ts`
+- `apps/web/src/components/ui/useDialogFocus.ts`
+- `apps/web/src/data/itemsMap.ts`
+- `apps/web/src/engine/deltaExplainer.ts`
 
 ## Audit Trail
 
-- EXTRACTED: 542 (97%)
-- INFERRED: 15 (3%)
+- EXTRACTED: 386 (96%)
+- INFERRED: 18 (4%)
 - AMBIGUOUS: 0 (0%)
 
 ---
