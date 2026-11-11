@@ -1,7 +1,7 @@
 # Graph Report - hok-draft-engine  (2026-11-12)
 
 ## Corpus Check
-- 257 files · ~1,438,775 words
+- 264 files · ~1,559,874 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 18 file(s) not represented in the graph (top: (none) 10, .csv 3, .jsonl 2)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `cbf2b8c4`
+- Built from commit: `435a4705`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -89,12 +89,12 @@
 ## Surprising Connections (you probably didn't know these)
 - `C. Hero Rilis Global vs Eksklusif CN` --references--> `isHeroGlobalReleased()`  [INFERRED]
   AGENTS.md → apps/web/src/data/heroReleaseStatus.ts
+- `Repository Layout` --references--> `verify()`  [INFERRED]
+  CONTRIBUTING.md → .github/hostinger/check-deploy.py
 - `Logika Taktis Kompetitif Utama` --references--> `evaluateEnemyCounterExposure()`  [INFERRED]
   README.md → apps/web/src/engine/tournamentInference.ts
 - `God Nodes (Abstraksi Paling Kritis):` --references--> `runTournamentInference()`  [INFERRED]
   AGENTS.md → apps/web/src/engine/tournamentInference.ts
-- `Repository Layout` --references--> `verify()`  [INFERRED]
-  CONTRIBUTING.md → .github/hostinger/check-deploy.py
 - `God Nodes (Abstraksi Paling Kritis):` --references--> `loadTournamentDataset()`  [INFERRED]
   AGENTS.md → apps/web/src/engine/heroDataLoader.ts
 
@@ -312,7 +312,7 @@ Nodes (6): attach_hokstats(), _load_json(), load_source_heroes(), global_release
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Contributing to HoK Draft Engine` connect `AGENTS.md — Developer & Agent Field Manual` to `json`?**
-  _High betweenness centrality (0.339) - this node is a cross-community bridge._
+  _High betweenness centrality (0.322) - this node is a cross-community bridge._
 - **Are the 2 inferred relationships involving `App()` (e.g. with `God Nodes (Abstraksi Paling Kritis):` and `isFlowborn()`) actually correct?**
   _`App()` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `ml-engine` to the rest of the system?**
@@ -320,7 +320,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **Should `PracticeDraft.tsx` be split into smaller, more focused modules?**
   _Cohesion score 0.058823529411764705 - nodes in this community are weakly interconnected._
 - **Why does `Repository Layout` connect `json` to `AGENTS.md — Developer & Agent Field Manual`?**
-  _High betweenness centrality (0.321) - this node is a cross-community bridge._
+  _High betweenness centrality (0.316) - this node is a cross-community bridge._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.07301587301587302 - nodes in this community are weakly interconnected._
 - **Should `compilerOptions` be split into smaller, more focused modules?**

@@ -9912,7 +9912,28 @@
       "weak_against": [],
       "synergizes": []
     },
-    "abilities": [],
+    "abilities": [
+      {
+        "type": "Passive",
+        "name": "Moving Mountain",
+        "desc": "Basic Attacks deal extra damage. While protecting a teammate and when in turret mode, Basic Attacks deal ranged damage and inflict slow."
+      },
+      {
+        "type": "Skill 1",
+        "name": "Bastion",
+        "desc": "Select a teammate: Dashes to the target, then shelters them, granting both himself and the teammate a shield. The teammate controls both heroes' movement during this time. Select an allied tower or any tower ruins: Merges with the tower, becoming a turret and gaining a shield. Becomes untargetable and recovers Health every second. Restores the same amount of Health to the tower and grants it a shield of equal strength."
+      },
+      {
+        "type": "Skill 2",
+        "name": "Collision Course",
+        "desc": "Charges forward, dealing damage and tossing back the first enemy hero hit and nearby targets. Thrown targets damage and stun nearby enemies upon landing."
+      },
+      {
+        "type": "Ultimate",
+        "name": "Allshield",
+        "desc": "Deploys a giant shield, knocking back, damaging, and slowing enemies. The shield then travels forward, launching and damaging enemies it touches while knocking down projectiles."
+      }
+    ],
     "countered_by": [
       {
         "counter_id": 105,
@@ -10118,7 +10139,48 @@
         }
       ]
     },
-    "is_global_released": true
+    "is_global_released": true,
+    "hokstats_guide": {
+      "skills": [
+        {
+          "name": "Moving Mountain",
+          "description": "Basic Attacks deal extra damage. While protecting a teammate and when in turret mode, Basic Attacks deal ranged damage and inflict slow.",
+          "type": "passive"
+        },
+        {
+          "name": "Bastion",
+          "description": "Select a teammate: Dashes to the target, then shelters them, granting both himself and the teammate a shield. The teammate controls both heroes' movement during this time. Select an allied tower or any tower ruins: Merges with the tower, becoming a turret and gaining a shield. Becomes untargetable and recovers Health every second. Restores the same amount of Health to the tower and grants it a shield of equal strength.",
+          "type": "skill1"
+        },
+        {
+          "name": "Collision Course",
+          "description": "Charges forward, dealing damage and tossing back the first enemy hero hit and nearby targets. Thrown targets damage and stun nearby enemies upon landing.",
+          "type": "skill2"
+        },
+        {
+          "name": "Allshield",
+          "description": "Deploys a giant shield, knocking back, damaging, and slowing enemies. The shield then travels forward, launching and damaging enemies it touches while knocking down projectiles.",
+          "type": "ultimate"
+        }
+      ],
+      "pick_when": [],
+      "avoid_when": [],
+      "power_spikes": [],
+      "common_mistakes": [],
+      "pros": [],
+      "cons": [],
+      "matchups": [],
+      "partners": [],
+      "build_variants": [],
+      "source": {
+        "source": "HoKStats",
+        "url": "https://hokstats.gg/heroes/dunshan/",
+        "fetched_at": "2026-11-11T22:31:12+00:00",
+        "patch_version": null,
+        "review_status": "pending",
+        "source_hash": "7f20af782cd0b090526cba2c11cfd7e6637c5a641d9b4bd2066e5fdb9150be0e"
+      }
+    }
   },
   {
     "hero_id": 577,
