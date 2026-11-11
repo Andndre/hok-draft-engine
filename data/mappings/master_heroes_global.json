@@ -18122,11 +18122,11 @@
     "name": "Kongkong'er",
     "chinese_name": "空空儿",
     "slug": "kongkonger",
-    "title": "Phantom Thief",
-    "primary_role": "Assassin",
-    "primary_lane": "Jungle",
+    "title": "Smiling Phantom Hands",
+    "primary_role": "Support",
+    "primary_lane": "Roam",
     "lanes": [
-      "Jungle"
+      "Roam"
     ],
     "tier": "A",
     "win_rate": 0.501,
@@ -18134,7 +18134,7 @@
     "ban_rate": 0.03,
     "counters": [],
     "countered_by": [],
-    "tactical_tips": "Assassin lincah dengan ilusi klon dan burst mobilitas tinggi.",
+    "tactical_tips": "Roamer ilusi berbasis trik sulap kuno (古彩戏法) yang memanfaatkan klon dan disrupsi utilitas pertarungan tim.",
     "counter_items": [],
     "portrait_asset": "/assets/heroes/550.jpg",
     "kpl_id": 550,
