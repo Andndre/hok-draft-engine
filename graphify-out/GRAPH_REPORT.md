@@ -1,7 +1,7 @@
 # Graph Report - hok-draft-engine  (2026-11-11)
 
 ## Corpus Check
-- 244 files · ~1,422,205 words
+- 244 files · ~1,422,340 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 7 file(s) not represented in the graph (top: (none) 3, .example 2, .css 1)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `6efae665`
+- Built from commit: `339f51a7`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -50,17 +50,17 @@
 7. `norm()` - 20 edges
 8. `getDraftTurn()` - 19 edges
 9. `lucide-react` - 18 edges
-10. `rankedCandidates()` - 17 edges
+10. `_clean()` - 17 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `C. Hero Rilis Global vs Eksklusif CN` --references--> `isHeroGlobalReleased()`  [INFERRED]
+  AGENTS.md → apps/web/src/data/heroReleaseStatus.ts
+- `God Nodes (Abstraksi Paling Kritis):` --references--> `isHeroGlobalReleased()`  [INFERRED]
   AGENTS.md → apps/web/src/data/heroReleaseStatus.ts
 - `Cara kerja mesin draft` --references--> `assignHeroLanes()`  [INFERRED]
   README.md → apps/web/src/engine/draftRules.ts
 - `God Nodes (Abstraksi Paling Kritis):` --references--> `runTournamentInference()`  [INFERRED]
   AGENTS.md → apps/web/src/engine/tournamentInference.ts
-- `God Nodes (Abstraksi Paling Kritis):` --references--> `isHeroGlobalReleased()`  [INFERRED]
-  AGENTS.md → apps/web/src/data/heroReleaseStatus.ts
 - `God Nodes (Abstraksi Paling Kritis):` --references--> `loadTournamentDataset()`  [INFERRED]
   AGENTS.md → apps/web/src/engine/heroDataLoader.ts
 

@@ -961,25 +961,112 @@ summary::-webkit-details-marker { display: none; }
 .swap-suggestion-card__copy small { font-size: 12px; color: #f5cf6d; line-height: 1.45; }
 .swap-clean-note, .reswap-alert {
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 12px;
+  padding: 12px 14px;
   border-radius: 12px;
   font-size: 13px;
   line-height: 1.5;
 }
 .swap-clean-note {
+  align-items: center;
+  gap: 10px;
   background: #10201a;
   border: 1px solid #265041;
   color: #a9e9cf;
 }
+.swap-clean-note svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
 .reswap-alert {
-  background: #291f12;
+  flex-direction: column;
+  gap: 10px;
+  background: #231a0f;
   border: 1px solid #6b4e1e;
   color: #fae09b;
 }
-.swap-clean-note svg, .reswap-alert svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; }
-.reswap-alert ul { margin: 4px 0 0 18px; display: flex; flex-direction: column; gap: 3px; }
+.reswap-alert__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.reswap-alert__header svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #f5cf6d;
+}
+.reswap-alert__title-wrap {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.reswap-alert__title-wrap strong {
+  font-size: 13px;
+  font-weight: 750;
+  color: #fde6a8;
+}
+.reswap-alert__summary {
+  font-size: 12px;
+  color: #e6d19c;
+  line-height: 1.45;
+}
+.reswap-alert__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr));
+  gap: 8px;
+}
+.reswap-alert__item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  padding: 8px 10px;
+  border-radius: 9px;
+  background: rgba(15, 22, 34, 0.72);
+  border: 1px solid rgba(245, 207, 109, 0.24);
+}
+.reswap-alert__item .asset-thumbnail {
+  width: 30px;
+  height: 30px;
+}
+.reswap-alert__item-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.reswap-alert__item-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.reswap-alert__item-head strong {
+  font-size: 13px;
+  color: #f8fafc;
+}
+.reswap-alert__lane-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 6px;
+  border-radius: 5px;
+  background: #3a2b14;
+  border: 1px solid rgba(245, 207, 109, 0.3);
+  color: #f5cf6d;
+  font-size: 11px;
+  font-weight: 700;
+}
+.reswap-alert__item-copy small {
+  font-size: 12px;
+  color: #e2cfa1;
+  line-height: 1.35;
+}
 .lane-matchup-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -1184,7 +1271,7 @@ summary::-webkit-details-marker { display: none; }
 .condition-box h4 svg { width: 17px; height: 17px; flex-shrink: 0; }
 .condition-box--win h4 svg { color: #b8ff01; }
 .condition-box--lose h4 svg { color: #fda4af; }
-.condition-box ul { margin: 0 0 0 18px; display: flex; flex-direction: column; gap: 7px; font-size: 13px; color: #d3dfee; line-height: 1.5; }
+.condition-box ul { list-style-type: disc; padding: 0; margin: 0 0 0 18px; display: flex; flex-direction: column; gap: 7px; font-size: 13px; color: #d3dfee; line-height: 1.5; }
 
 /* Jungle Route, Gank & Counter Checklist */
 .jungle-route-cards {

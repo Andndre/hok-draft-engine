@@ -110,6 +110,13 @@ export function PostDraftGamePlanPanel({
   };
 
   const sideName = (side: Side) => (side === 'blue' ? 'Tim Blue' : 'Tim Red');
+  const activeReswapLanes = plan.laneMatchups.filter(
+    (m): m is LaneMatchupEvaluation & { ourHero: Hero; reswapAdvice: string } =>
+      Boolean(m.ourHero && m.reswapAdvice),
+  );
+  const hasRoleMismatchReswap = activeReswapLanes.some(
+    (m) => m.lane === 'Jungle' || m.lane === 'Roam' || m.ourHero.primary_lane === 'Roam',
+  );
 
   return (
     <section className="game-plan-panel surface-panel" aria-label="Game plan dan simulator swap pasca-draft">
@@ -237,26 +244,50 @@ export function PostDraftGamePlanPanel({
                 </div>
               ))}
             </div>
-          ) : (
+          ) : activeReswapLanes.length === 0 ? (
             <div className="swap-clean-note">
               <CheckCircle2 aria-hidden="true" />
               <span>
-                Penempatan 5 lane {sideName(perspective)} sudah solid (tidak ada kalah lane parah setelah memperhitungkan konteks Roam 2v2, atau swap non-flex berbiaya lebih besar dari hasilnya). Anda tetap bebas menguji swap manual di bawah.
+                Penempatan 5 lane {sideName(perspective)} sudah solid. Anda tetap bebas menguji swap manual pada kartu di bawah.
               </span>
             </div>
-          )}
+          ) : null}
 
-          {plan.activeReswapAlerts.length > 0 && (
+          {activeReswapLanes.length > 0 && (
             <div className="reswap-alert" role="note">
-              <Timer aria-hidden="true" />
-              <div>
-                <strong>Rencana Re-Swap Menit 04:00 Aktif:</strong>
-                <ul>
-                  {plan.activeReswapAlerts.map((alertText, idx) => (
-                    <li key={idx}>{plainText(alertText)}</li>
-                  ))}
-                </ul>
+              <div className="reswap-alert__header">
+                <Timer aria-hidden="true" />
+                <div className="reswap-alert__title-wrap">
+                  <strong>Rencana Re-Swap Menit 04:00 Aktif</strong>
+                  <p className="reswap-alert__summary">
+                    {hasRoleMismatchReswap
+                      ? 'Terdapat penempatan luar peran (Jungle/Roam) atau swap taktis. Kembalikan formasi berikut agar tempo tim tidak rusak.'
+                      : 'Pertahankan tukar lane ini selama fase 00:00–04:00 untuk menghindari counter, lalu kembalikan ke lane asal setelah shield turret turun.'}
+                  </p>
+                </div>
               </div>
+              <ul className="reswap-alert__list">
+                {activeReswapLanes.map((row) => {
+                  const isRoleWarning =
+                    row.lane === 'Jungle' || row.lane === 'Roam' || row.ourHero.primary_lane === 'Roam';
+                  return (
+                    <li key={row.lane} className="reswap-alert__item">
+                      <HeroThumbnail hero={row.ourHero} />
+                      <div className="reswap-alert__item-copy">
+                        <span className="reswap-alert__item-head">
+                          <strong>{row.ourHero.name}</strong>
+                          <span className="reswap-alert__lane-tag">di {row.lane}</span>
+                        </span>
+                        <small>
+                          {isRoleWarning
+                            ? plainText(row.reswapAdvice)
+                            : `Asal ${row.ourHero.primary_lane} → balik ${row.ourHero.primary_lane} di 04:00`}
+                        </small>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
           )}
 

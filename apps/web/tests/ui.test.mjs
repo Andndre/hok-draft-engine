@@ -397,7 +397,10 @@ test('DraftSimulator swap badges keep exact 10 lane icons and PostDraftGamePlanP
   assert.ok(planHtml.includes('Winning Condition &amp; Tempo'));
   assert.ok(planHtml.includes('Pola Jungle, Gank &amp; Item'));
   assert.ok(planHtml.includes('Reset Lane'));
-  assert.ok(planHtml.includes('Rencana Re-Swap Menit 04:00 Aktif:'));
+  assert.ok(planHtml.includes('Rencana Re-Swap Menit 04:00 Aktif'));
+  assert.ok(planHtml.includes('reswap-alert__list'));
+  assert.ok(!planHtml.includes('Fase 00:00–04:00:'), 'Must not render duplicated colon-heavy boilerplate in reswap items');
+  assert.ok(!planHtml.includes('swap-clean-note'), 'Must not contradict active tactical re-swap alert with solid-lane banner');
   assert.ok(!/<button\b(?:(?!<\/button>)[\s\S])*<button\b/.test(planHtml), 'No nested interactive buttons');
   assert.ok(!/\p{Extended_Pictographic}/u.test(planHtml.replace(/<[^>]+>/g, '')), 'No decorative emoji rendered');
 

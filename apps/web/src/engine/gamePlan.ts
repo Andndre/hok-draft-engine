@@ -136,7 +136,7 @@ function evaluateSwapMacroProfile(
   const hasEscape = Boolean(
     tags?.mobility || tags?.dash || tags?.blink || tags?.leap,
   );
-  const reswapAt4 = `Fase 00:00–04:00: hindari duel counter → setelah 04:00 (shield menara habis), tukar kembali ${hero.name} ke komposisi normal.`;
+  const reswapAt4 = `Tukarkan kembali ${hero.name} ke ${hero.primary_lane} setelah 04:00 (saat shield turret habis).`;
 
   if (lane === "Jungle") {
     return {
