@@ -976,6 +976,13 @@ export function deriveWinningCondition(
     })
     .sort((a, b) => b.weight - a.weight);
 
+  const enemyDharma = enemyHeroes.find((e) => e.hero_id === 134 || e.name.toLowerCase() === 'dharma');
+  if (enemyDharma) {
+    loseConditions.unshift(
+      `Terjebak Flash-Ulti ${enemyDharma.name} ke dinding: hindari bergerombol di dekat tembok atau celah sempit tower; benturan dinding memicu stun massal dan burst finisher yang membalikkan keadaan seketika.`
+    );
+  }
+
   if (enemyThreatScores[0]?.threats.length > 0) {
     const top = enemyThreatScores[0];
     loseConditions.push(
@@ -1004,21 +1011,26 @@ export function deriveWinningCondition(
           items.push(ci);
         }
       }
+      const isDharma = enemy.hero_id === 134 || enemy.name.toLowerCase() === 'dharma';
       const risk =
-        threats.length > 0
-          ? `Meng-counter langsung ${threats.map((t) => t.name).join(", ")}`
-          : enemy.tactical_profile?.tags.suppress
-            ? "Memiliki Suppress (tidak bisa ditembus Purify)"
-            : enemy.tactical_profile?.tags.ally_heal
-              ? "Memberi sustain/heal tinggi dalam teamfight"
-              : `Power pick Tier ${enemy.tier} (${enemy.primary_lane})`;
-      const counterAction = enemy.tactical_profile?.tags.suppress
-        ? `Pancing skill suppress ${enemy.name} pada frontline atau gagalkan dengan CC jarak jauh.`
-        : enemy.tactical_profile?.tags.ally_heal
-          ? `Prioritaskan item anti-heal lebih awal & fokus burst sebelum heal berputar.`
-          : items.length > 0
-            ? `Sesuaikan build defensif/penetrasi terhadap ${enemy.name} dan pantau cooldown ultimatenya.`
-            : `Kunci pergerakan ${enemy.name} dengan CC tim sebelum ia masuk ke garis belakang.`;
+        isDharma
+          ? "Inisiasi Flash + Ulti dinding (AoE Stun & % HP Finisher)"
+          : threats.length > 0
+            ? `Meng-counter langsung ${threats.map((t) => t.name).join(", ")}`
+            : enemy.tactical_profile?.tags.suppress
+              ? "Memiliki Suppress (tidak bisa ditembus Purify)"
+              : enemy.tactical_profile?.tags.ally_heal
+                ? "Memberi sustain/heal tinggi dalam teamfight"
+                : `Power pick Tier ${enemy.tier} (${enemy.primary_lane})`;
+      const counterAction = isDharma
+        ? `Jaga spacing (jangan bergerombol di dekat dinding/tower), simpan Purify/dash reaksi terhadap Flash Dharma, dan hindari contest di choke point sempit.`
+        : enemy.tactical_profile?.tags.suppress
+          ? `Pancing skill suppress ${enemy.name} pada frontline atau gagalkan dengan CC jarak jauh.`
+          : enemy.tactical_profile?.tags.ally_heal
+            ? `Prioritaskan item anti-heal lebih awal & fokus burst sebelum heal berputar.`
+            : items.length > 0
+              ? `Sesuaikan build defensif/penetrasi terhadap ${enemy.name} dan pantau cooldown ultimatenya.`
+              : `Kunci pergerakan ${enemy.name} dengan CC tim sebelum ia masuk ke garis belakang.`;
 
       return {
         enemy,
