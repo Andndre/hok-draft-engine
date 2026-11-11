@@ -99,7 +99,7 @@ uv run 1_ingest_kpl.py   # Builds gitignored SQLite DB at data/processed/hok_dra
    - Every hero requires an explicit boolean `released` entry in `data/mappings/hero_release_status.json`.
    - ID `511` (Zhu Bajie) must remain `{ "released": false, "alias_of": 556 }` (merged into **Ata `#556`**).
 4. **Keep Python Package Lean (`uv`):**
-   - Runtime production runs zero neural/ONNX/cloud inference in the browser. Do not add heavy ML packages unless required and reviewed.
+   - Draft scoring runs deterministically in the browser without cloud APIs or external runtime dependencies. Keep Python pipeline dependencies minimal and reviewed.
 
 ---
 

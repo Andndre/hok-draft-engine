@@ -7,9 +7,9 @@ Dokumen ini disusun sebagai panduan operasional komprehensif agar setiap autonom
 
 ## 1. Misi & Arsitektur Utama
 
-`hok-draft-engine` adalah sistem simulator Draft Pick, Counter Matrix, dan Wiki Interaktif untuk **Honor of Kings (HoK Global)** dengan mesin taktis deterministik dan pencarian AI lokal. **Ekstraksi bukti skill lokal (skill evidence audit)** mengelola label taktis pada pipeline pengelola secara deterministik tanpa dependensi neural/cloud:
+`hok-draft-engine` adalah sistem simulator Draft Pick, Counter Matrix, dan Wiki Interaktif untuk **Honor of Kings (HoK Global)** dengan mesin taktis deterministik dan pencarian Minimax lokal. **Ekstraksi bukti skill lokal (skill evidence audit)** mengelola label taktis pada pipeline pengelola secara deterministik:
 1. **Zero Server Compute di Produksi:**
-   - Keputusan draft berjalan di browser melalui scorer TypeScript dan Web Worker minimax (maksimal 4 aksi, 8 kandidat per node, anggaran 1.500 ms). Tidak ada ONNX atau panggilan model neural dalam runtime produksi.
+   - Keputusan draft berjalan di browser melalui scorer TypeScript dan Web Worker minimax (maksimal 4 aksi, 8 kandidat per node, anggaran 1.500 ms) tanpa dependensi server eksternal.
    - Backend web adalah static assets (HTML/JS/CSS) yang dapat dideploy di Shared Hosting cPanel, Cloudflare Pages, atau Nginx statis.
 2. **Dual-Stack Monorepo:**
    - `packages/ml-engine/`: Pipeline Python lokal untuk ekstraksi data, audit bukti skill & review proposal profil taktis, dan kompilasi dataset berversi SHA-256 ke `apps/web/public/`.
@@ -52,7 +52,7 @@ Repositori ini telah dipetakan secara terstruktur menggunakan **`graphify`** ke 
 - **Interactive Graph:** [`graphify-out/graph.html`](graphify-out/graph.html)
 - **GraphRAG JSON:** [`graphify-out/graph.json`](graphify-out/graph.json)
 - **Executive Report:** [`graphify-out/GRAPH_REPORT.md`](graphify-out/GRAPH_REPORT.md)
-- **Agent Wiki (30 Artikel):** [`graphify-out/wiki/index.md`](graphify-out/wiki/index.md)
+- **Agent Wiki:** [`graphify-out/wiki/index.md`](graphify-out/wiki/index.md)
 
 ### Aturan Agen saat Menjelajahi Codebase:
 1. Sebelum melakukan `grep` atau membaca source code mentah secara acak, gunakan query graph:
@@ -110,7 +110,7 @@ Di masa lalu terjadi bug inversi 180 derajat karena salah menginterpretasikan ar
 - Jalankan `uv run hokstats_source.py sync` dari `packages/ml-engine` untuk mengimpor HoKStats. Matchup, hero guide, item, dan spell tetap berstatus pending sampai sumbernya direview; hash yang berubah membatalkan review lama.
 - Jangan mengedit JSON di folder datasets secara manual. Perbarui sumber di data/mappings lalu jalankan `uv run publish_data.py`. Byte artefak dilindungi oleh .gitattributes.
 - Seri latihan memakai snapshot tetap. Data baru hanya berlaku saat memulai seri berikutnya.
-- Profil taktis hero (28 tag crowd control, mobilitas, frontline/peel, dan kerentanan) diekstraksi secara deterministik dari deskripsi skill resmi dan panduan taktis melalui `skill_evidence_audit.py` (atau `tactical_profiles.py audit-batch`). Pipeline tidak lagi memerlukan model NanoJev, checkpoint safetensors, runtime PyTorch/CUDA, atau layanan AI eksternal.
+- Profil taktis hero (28 tag crowd control, mobilitas, frontline/peel, dan kerentanan) diekstraksi secara deterministik dari deskripsi skill resmi dan panduan taktis melalui `skill_evidence_audit.py` (atau `tactical_profiles.py audit-batch`) secara lokal tanpa layanan eksternal.
 - Setiap proposal taktis menyimpan sumber resmi, hash konten, dan status review. Proposal harus berstatus approved untuk dikompilasi ke dataset produksi; status pending/rejected diabaikan oleh publisher.
 - Jika data sumber hero berubah (misal revisi skill atau update patch), hash sumber berubah dan secara otomatis membatalkan approval lama hingga ditinjau kembali.
 
@@ -147,7 +147,7 @@ uv run publish_data.py
 Untuk memverifikasi bahwa rekomendasi Fase Ban dan Pick AI berjalan sesuai kaidah kompetitif:
 ```powershell
 cd packages/ml-engine
-uv run python -m unittest test_data_pipeline.py test_nanojev_provider.py test_hokstats_source.py
+uv run python -m unittest test_data_pipeline.py test_skill_evidence_audit.py test_hokstats_source.py
 # Dari apps/web: npm.cmd test dan npm.cmd run benchmark
 ```
 
@@ -163,7 +163,7 @@ hok-draft-engine/
 │   ├── graph.html                    # Visualisasi graph interaktif
 │   ├── graph.json                    # Graph data (GraphRAG format)
 │   ├── GRAPH_REPORT.md               # Laporan ringkasan topologi & komunitas
-│   └── wiki/                         # 31 artikel wiki struktur sistem
+│   └── wiki/                         # Artikel wiki struktur sistem
 ├── data/
 │   ├── raw/kpl-bp-dataset/           # 11.141 match turnamen KPL mentah
 │   ├── assets/heroes/                # 128x128 webp potret hero
@@ -173,7 +173,7 @@ hok-draft-engine/
 │       ├── hok_drafts.db             # Database SQLite KPL Fearless draft
 │       └── hero_metadata.json        # Database metadata client siap saji
 ├── packages/
-│   └── ml-engine/                    # Pipeline ekstraksi & Machine Learning (uv)
+│   └── ml-engine/                    # Pipeline ekstraksi data & audit bukti skill (uv)
 │       ├── 0_sync_global_assets.py   # Scraper Kurohiko & HOKFIRE
 │       ├── hokstats_source.py        # Importer offline hero/item/spell/matchup HoKStats
 │       ├── 1_ingest_kpl.py           # Ingestion database KPL

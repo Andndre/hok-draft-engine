@@ -1,44 +1,57 @@
 # Community 10
 
-> 10 nodes
+> 61 nodes
 
 ## Key Concepts
 
-- **Hero** (21 connections) — `apps/web/src/types.ts`
-- **TacticalRadarPanel.tsx** (12 connections) — `apps/web/src/components/TacticalRadarPanel.tsx`
-- **TacticalVector** (8 connections) — `apps/web/src/types.ts`
-- **God Nodes (Abstraksi Paling Kritis):** (7 connections) — `AGENTS.md`
-- **TournamentPhaseStrategy** (6 connections) — `apps/web/src/engine/jevInference.ts`
-- **deltaExplainer.ts** (6 connections) — `apps/web/src/engine/deltaExplainer.ts`
-- **TacticalRadarPanelProps** (5 connections) — `apps/web/src/components/TacticalRadarPanel.tsx`
-- **TacticalDelta** (5 connections) — `apps/web/src/types.ts`
-- **JevPredictionResult** (4 connections) — `apps/web/src/engine/jevInference.ts`
-- **TACTICAL_AXES** (1 connections) — `apps/web/src/components/TacticalRadarPanel.tsx`
+- **hokstats_source.py** (48 connections) — `packages/ml-engine/hokstats_source.py`
+- **re** (31 connections)
+- **parse_hero_page()** (25 connections) — `packages/ml-engine/hokstats_source.py`
+- **norm()** (20 connections) — `packages/ml-engine/hokstats_source.py`
+- **test_hokstats_source.py** (18 connections) — `packages/ml-engine/test_hokstats_source.py`
+- **_clean()** (17 connections) — `packages/ml-engine/hokstats_source.py`
+- **sync()** (16 connections) — `packages/ml-engine/hokstats_source.py`
+- **parse_counters_page()** (15 connections) — `packages/ml-engine/hokstats_source.py`
+- **parse_item_page()** (15 connections) — `packages/ml-engine/hokstats_source.py`
+- **HoKStatsImporterTests** (12 connections) — `packages/ml-engine/test_hokstats_source.py`
+- **parse_spell_page()** (12 connections) — `packages/ml-engine/hokstats_source.py`
+- **parse_hero_index()** (10 connections) — `packages/ml-engine/hokstats_source.py`
+- **stable_hash()** (8 connections) — `packages/ml-engine/hokstats_source.py`
+- **_hero_matchup_links()** (7 connections) — `packages/ml-engine/hokstats_source.py`
+- **parse_item_index()** (7 connections) — `packages/ml-engine/hokstats_source.py`
+- **resolve_hero()** (7 connections) — `packages/ml-engine/hokstats_source.py`
+- **review_catalog_record()** (7 connections) — `packages/ml-engine/hokstats_source.py`
+- **_sections()** (7 connections) — `packages/ml-engine/hokstats_source.py`
+- **build_catalogs()** (7 connections) — `packages/ml-engine/publish_data.py`
+- **.test_reviews_bind_to_source_hash_and_expire_when_imported_content_changes()** (7 connections) — `packages/ml-engine/test_hokstats_source.py`
+- **_build_variants()** (6 connections) — `packages/ml-engine/hokstats_source.py`
+- **_hero_label_id()** (6 connections) — `packages/ml-engine/hokstats_source.py`
+- **_item_link_label()** (6 connections) — `packages/ml-engine/hokstats_source.py`
+- **main()** (6 connections) — `packages/ml-engine/hokstats_source.py`
+- **_page_text()** (6 connections) — `packages/ml-engine/hokstats_source.py`
+- *... and 36 more nodes in this community*
 
 ## Relationships
 
-- [Community 3](Community_3.md) (15 shared connections)
-- [Community 13](Community_13.md) (6 shared connections)
-- [Community 0](Community_0.md) (5 shared connections)
-- [Community 12](Community_12.md) (4 shared connections)
-- [Community 15](Community_15.md) (3 shared connections)
-- [Community 11](Community_11.md) (2 shared connections)
-- [Community 7](Community_7.md) (2 shared connections)
-- [Community 17](Community_17.md) (1 shared connections)
-- [Community 14](Community_14.md) (1 shared connections)
+- [Community 26](Community_26.md) (11 shared connections)
+- [Community 22](Community_22.md) (10 shared connections)
+- [Community 4](Community_4.md) (8 shared connections)
+- [Community 7](Community_7.md) (7 shared connections)
+- [Community 31](Community_31.md) (5 shared connections)
+- [Community 1](Community_1.md) (5 shared connections)
+- [Community 32](Community_32.md) (3 shared connections)
 
 ## Source Files
 
-- `AGENTS.md`
-- `apps/web/src/components/TacticalRadarPanel.tsx`
-- `apps/web/src/engine/deltaExplainer.ts`
-- `apps/web/src/engine/jevInference.ts`
-- `apps/web/src/types.ts`
+- `packages/ml-engine/README.md`
+- `packages/ml-engine/hokstats_source.py`
+- `packages/ml-engine/publish_data.py`
+- `packages/ml-engine/test_hokstats_source.py`
 
 ## Audit Trail
 
-- EXTRACTED: 51 (89%)
-- INFERRED: 6 (11%)
+- EXTRACTED: 239 (99%)
+- INFERRED: 2 (1%)
 - AMBIGUOUS: 0 (0%)
 
 ---

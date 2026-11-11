@@ -1,30 +1,29 @@
 # Community 8
 
-> 9 nodes
+> 6 nodes
 
 ## Key Concepts
 
-- **3. Quick Start & Execution Guide** (5 connections) — `README.md`
-- **hok-draft-engine 🛡️⚡** (4 connections) — `README.md`
-- **README.md** (1 connections) — `README.md`
-- **1. Architectural Highlights** (1 connections) — `README.md`
-- **2. Monorepo Structure** (1 connections) — `README.md`
-- **A. Menjalankan ML Pipeline (Lokal):** (1 connections) — `README.md`
-- **B. Menjalankan Static Web Frontend:** (1 connections) — `README.md`
-- **C. Konfigurasi Cloudflare R2 (Opsional):** (1 connections) — `README.md`
-- **Prasyarat:** (1 connections) — `README.md`
+- **evaluateLaneMatchup()** (6 connections) — `apps/web/src/engine/gamePlan.ts`
+- **computeRoamContextAdjustment()** (3 connections) — `apps/web/src/engine/gamePlan.ts`
+- **evaluateSwapMacroProfile()** (3 connections) — `apps/web/src/engine/gamePlan.ts`
+- **hasKplFlexLane()** (3 connections) — `apps/web/src/engine/gamePlan.ts`
+- **getPairWinRate()** (2 connections) — `apps/web/src/engine/gamePlan.ts`
+- **scoreHeroMatchup()** (2 connections) — `apps/web/src/engine/gamePlan.ts`
 
 ## Relationships
 
-- No strong cross-community connections detected
+- [Community 17](Community_17.md) (6 shared connections)
+- [Community 24](Community_24.md) (2 shared connections)
+- [Community 21](Community_21.md) (1 shared connections)
 
 ## Source Files
 
-- `README.md`
+- `apps/web/src/engine/gamePlan.ts`
 
 ## Audit Trail
 
-- EXTRACTED: 8 (100%)
+- EXTRACTED: 14 (100%)
 - INFERRED: 0 (0%)
 - AMBIGUOUS: 0 (0%)
 

@@ -78,7 +78,7 @@ class DataPipelineTests(unittest.TestCase):
 
         def fixture_response(hero):
             calls.append(hero["hero_id"])
-            return {"model": "NanoJev:fixture", "answers": {tag: {"choice": "tidak_diketahui", "confidence": None} for tag in TAGS}}
+            return {"model": "Skill-Evidence:fixture", "answers": {tag: {"choice": "tidak_diketahui", "confidence": None} for tag in TAGS}}
 
         with tempfile.TemporaryDirectory() as directory:
             output_dir = Path(directory) / "proposals"

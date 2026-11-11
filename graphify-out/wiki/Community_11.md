@@ -1,32 +1,49 @@
 # Community 11
 
-> 7 nodes
+> 62 nodes
 
 ## Key Concepts
 
-- **HeroWikiDrawer.tsx** (9 connections) — `apps/web/src/components/HeroWikiDrawer.tsx`
-- **HeroWikiDrawer()** (4 connections) — `apps/web/src/components/HeroWikiDrawer.tsx`
-- **itemsMap.ts** (4 connections) — `apps/web/src/data/itemsMap.ts`
-- **getItemMeta()** (3 connections) — `apps/web/src/data/itemsMap.ts`
-- **HeroWikiDrawerProps** (2 connections) — `apps/web/src/components/HeroWikiDrawer.tsx`
-- **ItemMeta** (1 connections) — `apps/web/src/data/itemsMap.ts`
-- **ITEMS_MAP** (1 connections) — `apps/web/src/data/itemsMap.ts`
+- **validate-dataset.mjs** (76 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **abs()** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **err()** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **flush()** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **fmtBytes()** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **has()** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **info()** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **isComplete()** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **opt()** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **parseSchema()** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **pct()** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **relSize()** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **sampleList()** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **section()** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **warn()** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **actionRows** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **ALLOWED_LENS** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **anomalyLens** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **argv** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **battleIds** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **battleIndex** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **battles** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **completeHeroes** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **CSV_TABLES** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- **csvData** (1 connections) — `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
+- *... and 37 more nodes in this community*
 
 ## Relationships
 
-- [Community 3](Community_3.md) (4 shared connections)
-- [Community 10](Community_10.md) (2 shared connections)
-- [Community 0](Community_0.md) (1 shared connections)
-- [Community 15](Community_15.md) (1 shared connections)
+- [Community 41](Community_41.md) (8 shared connections)
+- [Community 57](Community_57.md) (4 shared connections)
+- [Community 23](Community_23.md) (3 shared connections)
 
 ## Source Files
 
-- `apps/web/src/components/HeroWikiDrawer.tsx`
-- `apps/web/src/data/itemsMap.ts`
+- `data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs`
 
 ## Audit Trail
 
-- EXTRACTED: 16 (100%)
+- EXTRACTED: 76 (100%)
 - INFERRED: 0 (0%)
 - AMBIGUOUS: 0 (0%)
 

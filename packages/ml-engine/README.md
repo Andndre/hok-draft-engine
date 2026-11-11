@@ -1,8 +1,8 @@
-# ML & Data Pipeline (`packages/ml-engine`)
+# Data & Audit Pipeline (`packages/ml-engine`)
 
 Local `uv`-managed Python 3.13 pipeline for tournament data ingestion, deterministic skill evidence auditing, hero/catalog maintenance, and SHA-256 dataset packaging.
 
-> Production inference runs deterministically in TypeScript + Web Worker inside `apps/web/`. There is no ONNX, PyTorch, or cloud model runtime in production or in this package's dependencies.
+> Production draft evaluation runs deterministically in TypeScript + Web Worker inside `apps/web/` with zero server compute or external API dependencies.
 
 ## Setup
 

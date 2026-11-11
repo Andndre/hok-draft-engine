@@ -1,35 +1,54 @@
 # Community 13
 
-> 7 nodes
+> 27 nodes
 
 ## Key Concepts
 
-- **jevInference.ts** (19 connections) — `apps/web/src/engine/jevInference.ts`
-- **runJevInference()** (8 connections) — `apps/web/src/engine/jevInference.ts`
-- **analyzeLaneOccupancy()** (2 connections) — `apps/web/src/engine/jevInference.ts`
-- **computeOpenerPriorityScore()** (2 connections) — `apps/web/src/engine/jevInference.ts`
-- **getInferenceSession()** (2 connections) — `apps/web/src/engine/jevInference.ts`
-- **loadKplSynergyData()** (2 connections) — `apps/web/src/engine/jevInference.ts`
-- **TournamentPhaseId** (1 connections) — `apps/web/src/engine/jevInference.ts`
+- **tactical_profiles.py** (25 connections) — `packages/ml-engine/tactical_profiles.py`
+- **test_data_pipeline.py** (25 connections) — `packages/ml-engine/test_data_pipeline.py`
+- **DataPipelineTests** (12 connections) — `packages/ml-engine/test_data_pipeline.py`
+- **approved_profiles()** (12 connections) — `packages/ml-engine/tactical_profiles.py`
+- **audit_batch_proposals()** (12 connections) — `packages/ml-engine/tactical_profiles.py`
+- **create_proposal()** (12 connections) — `packages/ml-engine/tactical_profiles.py`
+- **validate_proposal()** (12 connections) — `packages/ml-engine/tactical_profiles.py`
+- **generate_batch_proposals()** (11 connections) — `packages/ml-engine/tactical_profiles.py`
+- **source_hash()** (9 connections) — `packages/ml-engine/tactical_profiles.py`
+- **source_material()** (9 connections) — `packages/ml-engine/tactical_profiles.py`
+- **global_released_heroes()** (7 connections) — `packages/ml-engine/tactical_profiles.py`
+- **has_source_evidence()** (7 connections) — `packages/ml-engine/tactical_profiles.py`
+- **.test_current_global_roster_has_source_enriched_profiles_for_all_120_active_heroes()** (5 connections) — `packages/ml-engine/test_data_pipeline.py`
+- **.test_only_reviewed_proposals_reach_metadata_without_overwriting_domain_data()** (4 connections) — `packages/ml-engine/test_data_pipeline.py`
+- **canonical()** (3 connections) — `packages/ml-engine/tactical_profiles.py`
+- **has_text()** (3 connections) — `packages/ml-engine/tactical_profiles.py`
+- **.test_batch_proposals_use_only_released_heroes_and_skip_empty_sources()** (3 connections) — `packages/ml-engine/test_data_pipeline.py`
+- **.test_changed_sources_and_invalid_answers_reject_review()** (3 connections) — `packages/ml-engine/test_data_pipeline.py`
+- **.test_expired_approval_is_ignored_when_source_changes()** (3 connections) — `packages/ml-engine/test_data_pipeline.py`
+- **.test_hokstats_source_changes_expire_proposal_approval()** (3 connections) — `packages/ml-engine/test_data_pipeline.py`
+- **.test_historical_priors_do_not_include_holdout_games()** (2 connections) — `packages/ml-engine/test_data_pipeline.py`
+- **.test_new_hero_requires_reviewed_release_and_no_fixed_roster_size()** (2 connections) — `packages/ml-engine/test_data_pipeline.py`
+- **math** (2 connections)
+- **.setUp()** (1 connections) — `packages/ml-engine/test_data_pipeline.py`
+- **fixture_response()** (1 connections) — `packages/ml-engine/test_data_pipeline.py`
+- *... and 2 more nodes in this community*
 
 ## Relationships
 
-- [Community 10](Community_10.md) (6 shared connections)
-- [Community 7](Community_7.md) (3 shared connections)
-- [Community 3](Community_3.md) (3 shared connections)
-- [Community 12](Community_12.md) (3 shared connections)
-- [Community 17](Community_17.md) (1 shared connections)
-- [Community 2](Community_2.md) (1 shared connections)
-- [Community 0](Community_0.md) (1 shared connections)
+- [Community 32](Community_32.md) (16 shared connections)
+- [Community 26](Community_26.md) (13 shared connections)
+- [Community 7](Community_7.md) (10 shared connections)
+- [Community 1](Community_1.md) (9 shared connections)
+- [Community 35](Community_35.md) (4 shared connections)
+- [Community 22](Community_22.md) (2 shared connections)
 
 ## Source Files
 
-- `apps/web/src/engine/jevInference.ts`
+- `packages/ml-engine/tactical_profiles.py`
+- `packages/ml-engine/test_data_pipeline.py`
 
 ## Audit Trail
 
-- EXTRACTED: 26 (96%)
-- INFERRED: 1 (4%)
+- EXTRACTED: 121 (99%)
+- INFERRED: 1 (1%)
 - AMBIGUOUS: 0 (0%)
 
 ---

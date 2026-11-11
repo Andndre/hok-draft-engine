@@ -192,11 +192,11 @@
       }
     }
   ],
-  "model": "NanoJev-Evidence-Teacher-v2",
-  "provider": "nanojev",
+  "model": "Skill-Evidence-Audit-v2",
+  "provider": "evidence",
   "model_info": {
-    "provider": "nanojev",
-    "engine": "skill-evidence-teacher",
+    "provider": "evidence",
+    "engine": "skill-evidence-audit",
     "chunks": 1,
     "minimum_probability": 0.7,
     "probabilities_calibrated_for_hok": false,

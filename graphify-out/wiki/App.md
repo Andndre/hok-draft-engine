@@ -1,24 +1,33 @@
 # App()
 
-> God node · 15 connections · `apps/web/src/App.tsx`
+> God node · 25 connections · `apps/web/src/App.tsx`
 
-**Community:** [Community 3](Community_3.md)
+**Community:** [Community 0](Community_0.md)
 
 ## Connections by Relation
 
 ### calls
-- [runJevInference()](runJevInference.md) `EXTRACTED`
-- [isHeroGlobalReleased()](isHeroGlobalReleased.md) `EXTRACTED`
-- loadHeroMetadata() `EXTRACTED`
+- [PracticeDraft()](PracticeDraft.md) `EXTRACTED`
+- [runTournamentInference()](runTournamentInference.md) `EXTRACTED`
+- [getDraftTurn()](getDraftTurn.md) `EXTRACTED`
 - HeroWikiDrawer() `EXTRACTED`
+- loadTournamentDataset() `EXTRACTED`
+- isHeroGlobalReleased() `EXTRACTED`
+- assignHeroLanes() `EXTRACTED`
 - PlanSelectionModal() `EXTRACTED`
-- computeTacticalDeltas() `EXTRACTED`
-- HeaderSortBar() `EXTRACTED`
+- PostDraftGamePlanPanel() `EXTRACTED`
+- buildDefaultLaneAssignments() `EXTRACTED`
 - DraftSimulator() `EXTRACTED`
-- TacticalRadarPanel() `EXTRACTED`
 - HeroCardCompact() `EXTRACTED`
 - HeroCardDetailed() `EXTRACTED`
-- BottomCommandDock() `EXTRACTED`
+- TacticalRadarPanel() `EXTRACTED`
+- swapAssignedLanes() `EXTRACTED`
+- HeroRosterToolbar() `EXTRACTED`
+- applyGameHero() `EXTRACTED`
+- assignmentToHeroLaneMap() `EXTRACTED`
+- HeaderSortBar() `EXTRACTED`
+- computeTacticalDeltas() `EXTRACTED`
+- *…and 2 more `calls` connection(s) not listed (lowest-degree first to go)*
 
 ### contains
 - App.tsx `EXTRACTED`

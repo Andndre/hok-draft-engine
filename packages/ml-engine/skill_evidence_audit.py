@@ -432,7 +432,7 @@ def evaluate_hero_evidence(hero: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return results
 
 
-def build_evidence_response(hero: dict[str, Any], model_tag: str = "NanoJev-Evidence-Teacher-v2") -> dict[str, Any]:
+def build_evidence_response(hero: dict[str, Any], model_tag: str = "Skill-Evidence-Audit-v2") -> dict[str, Any]:
     """Build a proposal-compatible response dict from verified skill & guide evidence."""
     ev = evaluate_hero_evidence(hero)
     answers = {}
@@ -451,8 +451,8 @@ def build_evidence_response(hero: dict[str, Any], model_tag: str = "NanoJev-Evid
     return {
         "model": model_tag,
         "model_info": {
-            "provider": "nanojev",
-            "engine": "skill-evidence-teacher",
+            "provider": "evidence",
+            "engine": "skill-evidence-audit",
             "chunks": 1,
             "minimum_probability": 0.7,
             "probabilities_calibrated_for_hok": False,

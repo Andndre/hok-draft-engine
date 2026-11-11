@@ -1,35 +1,50 @@
 # Community 12
 
-> 7 nodes
+> 25 nodes
 
 ## Key Concepts
 
-- **PlanSelectionModal.tsx** (11 connections) — `apps/web/src/components/PlanSelectionModal.tsx`
-- **isHeroGlobalReleased()** (8 connections) — `apps/web/src/data/heroReleaseStatus.ts`
-- **heroReleaseStatus.ts** (7 connections) — `apps/web/src/data/heroReleaseStatus.ts`
-- **PlanSelectionModal()** (4 connections) — `apps/web/src/components/PlanSelectionModal.tsx`
-- **PlanSelectionModalProps** (2 connections) — `apps/web/src/components/PlanSelectionModal.tsx`
-- **LANES** (1 connections) — `apps/web/src/components/PlanSelectionModal.tsx`
-- **CN_ONLY_HERO_IDS** (1 connections) — `apps/web/src/data/heroReleaseStatus.ts`
+- **types.ts** (74 connections) — `apps/web/src/types.ts`
+- **GameDraftData** (3 connections) — `apps/web/src/types.ts`
+- **KplLaneRate** (3 connections) — `apps/web/src/types.ts`
+- **SwapFeasibility** (2 connections) — `apps/web/src/types.ts`
+- **SwapSuggestion** (2 connections) — `apps/web/src/types.ts`
+- **WinningConditionAnalysis** (2 connections) — `apps/web/src/types.ts`
+- **ArcanaItem** (1 connections) — `apps/web/src/types.ts`
+- **CounteredByInfo** (1 connections) — `apps/web/src/types.ts`
+- **CounterInfo** (1 connections) — `apps/web/src/types.ts`
+- **DraftSlot** (1 connections) — `apps/web/src/types.ts`
+- **HeroAbility** (1 connections) — `apps/web/src/types.ts`
+- **HeroTempoBucket** (1 connections) — `apps/web/src/types.ts`
+- **HokfireCounters** (1 connections) — `apps/web/src/types.ts`
+- **HokfireGuide** (1 connections) — `apps/web/src/types.ts`
+- **HoKStatsGuide** (1 connections) — `apps/web/src/types.ts`
+- **HoKStatsMatchup** (1 connections) — `apps/web/src/types.ts`
+- **KplMatchup** (1 connections) — `apps/web/src/types.ts`
+- **KplMatchupEntry** (1 connections) — `apps/web/src/types.ts`
+- **KplSynergyEntry** (1 connections) — `apps/web/src/types.ts`
+- **SituationalSwap** (1 connections) — `apps/web/src/types.ts`
+- **SourceAttribution** (1 connections) — `apps/web/src/types.ts`
+- **TacticalProfile** (1 connections) — `apps/web/src/types.ts`
+- **TacticalTag** (1 connections) — `apps/web/src/types.ts`
+- **Tier** (1 connections) — `apps/web/src/types.ts`
+- **TACTICAL_TAGS** (1 connections) — `apps/web/src/types.ts`
 
 ## Relationships
 
-- [Community 3](Community_3.md) (7 shared connections)
-- [Community 10](Community_10.md) (4 shared connections)
-- [Community 13](Community_13.md) (3 shared connections)
-- [Community 0](Community_0.md) (2 shared connections)
-- [Community 17](Community_17.md) (1 shared connections)
-- [Community 15](Community_15.md) (1 shared connections)
+- [Community 0](Community_0.md) (29 shared connections)
+- [Community 17](Community_17.md) (16 shared connections)
+- [Community 3](Community_3.md) (10 shared connections)
+- [Community 6](Community_6.md) (2 shared connections)
 
 ## Source Files
 
-- `apps/web/src/components/PlanSelectionModal.tsx`
-- `apps/web/src/data/heroReleaseStatus.ts`
+- `apps/web/src/types.ts`
 
 ## Audit Trail
 
-- EXTRACTED: 25 (96%)
-- INFERRED: 1 (4%)
+- EXTRACTED: 81 (100%)
+- INFERRED: 0 (0%)
 - AMBIGUOUS: 0 (0%)
 
 ---

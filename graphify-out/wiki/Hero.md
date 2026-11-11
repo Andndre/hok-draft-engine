@@ -1,8 +1,8 @@
 # Hero
 
-> God node · 21 connections · `apps/web/src/types.ts`
+> God node · 31 connections · `apps/web/src/types.ts`
 
-**Community:** [Community 10](Community_10.md)
+**Community:** [Community 0](Community_0.md)
 
 ## Connections by Relation
 
@@ -10,28 +10,38 @@
 - types.ts `EXTRACTED`
 
 ### imports
+- PracticeDraft.tsx `EXTRACTED`
 - App.tsx `EXTRACTED`
-- jevInference.ts `EXTRACTED`
-- r2ModelLoader.ts `EXTRACTED`
-- TacticalRadarPanel.tsx `EXTRACTED`
-- PlanSelectionModal.tsx `EXTRACTED`
+- gamePlan.ts `EXTRACTED`
+- draftRules.ts `EXTRACTED`
+- draftSearch.ts `EXTRACTED`
+- tournamentInference.ts `EXTRACTED`
 - HeroWikiDrawer.tsx `EXTRACTED`
+- PostDraftGamePlanPanel.tsx `EXTRACTED`
+- PlanSelectionModal.tsx `EXTRACTED`
+- TacticalRadarPanel.tsx `EXTRACTED`
+- heroDataLoader.ts `EXTRACTED`
 - DraftSimulator.tsx `EXTRACTED`
-- HeroCardDetailed.tsx `EXTRACTED`
-- heroReleaseStatus.ts `EXTRACTED`
 - HeroCardCompact.tsx `EXTRACTED`
+- AssetThumbnail.tsx `EXTRACTED`
+- HeroRoleIcons.tsx `EXTRACTED`
+- heroReleaseStatus.ts `EXTRACTED`
 - deltaExplainer.ts `EXTRACTED`
 
 ### references
-- God Nodes (Abstraksi Paling Kritis): `INFERRED`
 - TournamentPhaseStrategy `EXTRACTED`
-- TacticalRadarPanelProps `EXTRACTED`
-- JevPredictionResult `EXTRACTED`
+- God Nodes (Abstraksi Paling Kritis): `INFERRED`
+- Props `EXTRACTED`
+- TournamentPredictionResult `EXTRACTED`
+- Props `EXTRACTED`
+- DraftContext `EXTRACTED`
 - DraftSimulatorProps `EXTRACTED`
-- HeroCardCompactProps `EXTRACTED`
-- HeroCardDetailedProps `EXTRACTED`
+- HeroCardProps `EXTRACTED`
 - HeroWikiDrawerProps `EXTRACTED`
-- PlanSelectionModalProps `EXTRACTED`
+- GamePlanInput `EXTRACTED`
+- MatchupPanelProps `EXTRACTED`
+- Props `EXTRACTED`
+- TeamCompositionIntegrity `EXTRACTED`
 
 ---
 

@@ -98,7 +98,7 @@ def generate_batch_proposals(heroes, releases, output_dir, response_for_hero, re
     targets = global_released_heroes(heroes, releases)
     report = {
         "schema_version": 1,
-        "provider": "nanojev",
+        "provider": "evidence",
         "target_global_released_count": len(targets),
         "generated": [],
         "already_present": [],
@@ -126,7 +126,7 @@ def generate_batch_proposals(heroes, releases, output_dir, response_for_hero, re
             continue
 
         try:
-            proposal = create_proposal(hero, response_for_hero(hero), "nanojev")
+            proposal = create_proposal(hero, response_for_hero(hero), "evidence")
             output_path.write_text(json.dumps(proposal, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
             report["generated"].append({**entry, "file": output_path.name, "source_hash": current_hash})
         except Exception as error:
@@ -161,7 +161,7 @@ def validate_proposal(proposal, hero):
         raise ValueError("Identitas/sumber proposal berubah atau sudah kedaluwarsa; buat proposal baru.")
     if not isinstance(proposal.get("model"), str) or not proposal["model"]:
         raise ValueError("Versi model wajib dicatat.")
-    if proposal.get("provider", "nanojev") not in ("nanojev", "evidence", "typesafe"):
+    if proposal.get("provider", "evidence") not in ("evidence",):
         raise ValueError("Provider proposal tidak dikenal.")
     if set(proposal.get("tags", {})) != set(TAGS):
         raise ValueError("Label taktis tidak lengkap atau tidak dikenal.")
@@ -173,7 +173,7 @@ def validate_proposal(proposal, hero):
             raise ValueError("Confidence tidak valid.")
 
 
-def create_proposal(hero, response, provider="nanojev"):
+def create_proposal(hero, response, provider="evidence"):
     proposal = {
         "schema_version": 2, "hero_id": hero["hero_id"], "source_hash": source_hash(hero),
         "sources": source_material(hero), "model": response.get("model"), "provider": provider,
@@ -209,7 +209,7 @@ def approved_profiles(directory, heroes):
         result[hero["hero_id"]] = {
             "tags": {tag: answer["value"] == "ya" for tag, answer in proposal["tags"].items() if answer["value"] != "tidak_diketahui"},
             "source_hash": proposal["source_hash"], "model": proposal["model"], "reviewed_by": reviewer,
-            "provider": proposal.get("provider", "nanojev"),
+            "provider": proposal.get("provider", "evidence"),
         }
     return result
 
@@ -231,7 +231,7 @@ def audit_batch_proposals(heroes, releases, output_dir, reviewer="HoK-Evidence-A
         current_hash = source_hash(hero)
         output_path = output_dir / f"{hero['hero_id']}-{current_hash[:12]}.json"
         evidence_resp = build_evidence_response(hero)
-        proposal = create_proposal(hero, evidence_resp, "nanojev")
+        proposal = create_proposal(hero, evidence_resp, "evidence")
 
         unverified_tags = [
             tag for tag, detail in evidence_resp["evidence_details"].items()
@@ -285,7 +285,7 @@ def main():
     propose.add_argument("--output", type=Path, required=True)
     propose.add_argument("--model", default="Evidence-Audit-v1")
     propose.add_argument("--response-fixture", type=Path)
-    propose.add_argument("--provider", default="nanojev")
+    propose.add_argument("--provider", default="evidence")
     batch = sub.add_parser("propose-batch", help="Buat proposal pending untuk seluruh hero Global aktif.")
     batch.add_argument("--output-dir", type=Path, default=ROOT / "data/mappings/tactical_proposals")
     batch.add_argument("--report", type=Path)

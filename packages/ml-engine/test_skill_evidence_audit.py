@@ -19,7 +19,7 @@ class TacticalEvidenceTests(unittest.TestCase):
             result = subprocess.run([sys.executable, str(script), "propose", "--hero-id", "156", "--output", str(output), "--response-fixture", str(fixture)], capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stderr)
             proposal = json.loads(output.read_text(encoding="utf-8"))
-            self.assertEqual(proposal["provider"], "nanojev")
+            self.assertEqual(proposal["provider"], "evidence")
             self.assertEqual(proposal["review"]["status"], "pending")
 
     def test_batch_cli_generates_pending_proposals_for_all_released_global_heroes_offline(self):

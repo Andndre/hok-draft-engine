@@ -1,55 +1,50 @@
 # Community 1
 
-> 52 nodes
+> 22 nodes
 
 ## Key Concepts
 
-- **0_sync_global_assets.py** (18 connections) — `packages/ml-engine/0_sync_global_assets.py`
-- **json** (18 connections)
-- **build_master_database()** (11 connections) — `packages/ml-engine/0_sync_global_assets.py`
-- **1_ingest_kpl.py** (10 connections) — `packages/ml-engine/1_ingest_kpl.py`
-- **2_jev_teacher_scorer.py** (10 connections) — `packages/ml-engine/2_jev_teacher_scorer.py`
-- **pathlib** (9 connections)
-- **fetch_hokfire_icons.py** (8 connections) — `packages/ml-engine/fetch_hokfire_icons.py`
-- **extract_kpl_synergy.py** (7 connections) — `packages/ml-engine/extract_kpl_synergy.py`
-- **sqlite3** (7 connections)
-- **ingest_kpl_data()** (6 connections) — `packages/ml-engine/1_ingest_kpl.py`
-- **main()** (6 connections) — `packages/ml-engine/fetch_hokfire_icons.py`
-- **os** (6 connections)
-- **fetch_hokfire_data()** (5 connections) — `packages/ml-engine/0_sync_global_assets.py`
-- **scrape_kurohiko_hero_counters()** (5 connections) — `packages/ml-engine/0_sync_global_assets.py`
-- **download_and_process_portrait()** (4 connections) — `packages/ml-engine/0_sync_global_assets.py`
-- **scrape_kurohiko_roster()** (4 connections) — `packages/ml-engine/0_sync_global_assets.py`
-- **load_global_mapping()** (4 connections) — `packages/ml-engine/1_ingest_kpl.py`
-- **extract_synergy()** (4 connections) — `packages/ml-engine/extract_kpl_synergy.py`
-- **download_file()** (4 connections) — `packages/ml-engine/fetch_hokfire_icons.py`
-- **Client** (4 connections)
-- **extract_kpl_counters.py** (4 connections) — `packages/ml-engine/extract_kpl_counters.py`
-- **verify_simulation.py** (4 connections) — `packages/ml-engine/verify_simulation.py`
-- **httpx** (4 connections)
-- **numpy** (4 connections)
-- **load_kpl_hero_mapping()** (3 connections) — `packages/ml-engine/0_sync_global_assets.py`
-- *... and 27 more nodes in this community*
+- **evaluate_hero_evidence()** (12 connections) — `packages/ml-engine/skill_evidence_audit.py`
+- **skill_evidence_audit.py** (12 connections) — `packages/ml-engine/skill_evidence_audit.py`
+- **main()** (11 connections) — `packages/ml-engine/tactical_profiles.py`
+- **build_evidence_response()** (8 connections) — `packages/ml-engine/skill_evidence_audit.py`
+- **compact_state_for_prompt()** (6 connections) — `packages/ml-engine/skill_evidence_audit.py`
+- **clean_ability_sentences()** (5 connections) — `packages/ml-engine/skill_evidence_audit.py`
+- **Any** (5 connections)
+- **_match_ally_sentence()** (4 connections) — `packages/ml-engine/skill_evidence_audit.py`
+- **_match_positive()** (4 connections) — `packages/ml-engine/skill_evidence_audit.py`
+- **_guide_fields()** (3 connections) — `packages/ml-engine/skill_evidence_audit.py`
+- **response_for_hero()** (3 connections) — `packages/ml-engine/tactical_profiles.py`
+- **copy** (3 connections)
+- **typing** (3 connections)
+- **set_tag()** (1 connections) — `packages/ml-engine/skill_evidence_audit.py`
+- **report_progress()** (1 connections) — `packages/ml-engine/tactical_profiles.py`
+- **Deterministic skill-evidence extractor and semi-automatic proposal auditor for…** (1 connections) — `packages/ml-engine/skill_evidence_audit.py`
+- **Return skill sentences that apply `effect_pattern` specifically to an…** (1 connections) — `packages/ml-engine/skill_evidence_audit.py`
+- **Strip SHA-256 hash noise and contaminated duplicate fields for clean LLM…** (1 connections) — `packages/ml-engine/skill_evidence_audit.py`
+- **Evaluate all 28 tactical tags against explicit source evidence for a hero.…** (1 connections) — `packages/ml-engine/skill_evidence_audit.py`
+- **Return clean skill description sentences belonging to this hero only.** (1 connections) — `packages/ml-engine/skill_evidence_audit.py`
+- **Build a proposal-compatible response dict from verified skill & guide evidence.** (1 connections) — `packages/ml-engine/skill_evidence_audit.py`
+- **Return sentences where `pattern` matches and is not preceded by an…** (1 connections) — `packages/ml-engine/skill_evidence_audit.py`
 
 ## Relationships
 
-- [Community 4](Community_4.md) (10 shared connections)
-- [Community 9](Community_9.md) (2 shared connections)
+- [Community 13](Community_13.md) (9 shared connections)
+- [Community 32](Community_32.md) (6 shared connections)
+- [Community 10](Community_10.md) (5 shared connections)
+- [Community 26](Community_26.md) (2 shared connections)
+- [Community 7](Community_7.md) (1 shared connections)
+- [Community 4](Community_4.md) (1 shared connections)
 
 ## Source Files
 
-- `packages/ml-engine/0_sync_global_assets.py`
-- `packages/ml-engine/1_ingest_kpl.py`
-- `packages/ml-engine/2_jev_teacher_scorer.py`
-- `packages/ml-engine/extract_kpl_counters.py`
-- `packages/ml-engine/extract_kpl_synergy.py`
-- `packages/ml-engine/fetch_hokfire_icons.py`
-- `packages/ml-engine/verify_simulation.py`
+- `packages/ml-engine/skill_evidence_audit.py`
+- `packages/ml-engine/tactical_profiles.py`
 
 ## Audit Trail
 
-- EXTRACTED: 116 (100%)
-- INFERRED: 0 (0%)
+- EXTRACTED: 54 (96%)
+- INFERRED: 2 (4%)
 - AMBIGUOUS: 0 (0%)
 
 ---

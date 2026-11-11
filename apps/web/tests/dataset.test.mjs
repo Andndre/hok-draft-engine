@@ -36,7 +36,7 @@ test('schema v2 validates item and spell catalogs in the v17 atomic cache packag
   assert.ok(manifest.artifacts.items.sha256 && manifest.artifacts.spells.sha256);
   assert.equal(dataset.items[0].sources.hokfire.source.source, 'HOKFIRE');
 });
-test('new hero and changed Global release become usable without a model rebuild', async () => {
+test('new hero and changed Global release become usable without a code change', async () => {
   const update = await changed(data => {
     data.heroes.push({ ...data.heroes[0], hero_id: 9999, name: 'New fixture hero' });
     data.releases['9999'] = { released: true };

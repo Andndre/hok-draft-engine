@@ -1,32 +1,48 @@
 # Community 17
 
-> 5 nodes
+> 20 nodes
 
 ## Key Concepts
 
-- **BottomCommandDock.tsx** (9 connections) — `apps/web/src/components/BottomCommandDock.tsx`
-- **Lane** (7 connections) — `apps/web/src/types.ts`
-- **ActiveTab** (4 connections) — `apps/web/src/types.ts`
-- **BottomCommandDockProps** (3 connections) — `apps/web/src/components/BottomCommandDock.tsx`
-- **LANES_CONFIG** (1 connections) — `apps/web/src/components/BottomCommandDock.tsx`
+- **gamePlan.ts** (56 connections) — `apps/web/src/engine/gamePlan.ts`
+- **computeTempoComparison()** (5 connections) — `apps/web/src/engine/gamePlan.ts`
+- **LaneMatchupEvaluation** (3 connections) — `apps/web/src/types.ts`
+- **summarizeTeamTempoWithExact()** (3 connections) — `apps/web/src/engine/gamePlan.ts`
+- **KplLaneRateMap** (2 connections) — `apps/web/src/engine/draftRules.ts`
+- **CompArchetypeSummary** (2 connections) — `apps/web/src/types.ts`
+- **CounterItemInfo** (2 connections) — `apps/web/src/types.ts`
+- **GamePlanAnalysis** (2 connections) — `apps/web/src/types.ts`
+- **GankTargetPriority** (2 connections) — `apps/web/src/types.ts`
+- **HeroTempoCurve** (2 connections) — `apps/web/src/types.ts`
+- **JungleAndGankPlan** (2 connections) — `apps/web/src/types.ts`
+- **TempoCurveComparison** (2 connections) — `apps/web/src/types.ts`
+- **TempoPhaseShare** (2 connections) — `apps/web/src/types.ts`
+- **TempoProfile** (2 connections) — `apps/web/src/types.ts`
+- **TempoWindowSummary** (2 connections) — `apps/web/src/types.ts`
+- **computeRelativeTempoShare()** (2 connections) — `apps/web/src/engine/gamePlan.ts`
+- **estimateHeroTempoFromProfile()** (2 connections) — `apps/web/src/engine/gamePlan.ts`
+- **ALL_LANES** (2 connections) — `apps/web/src/engine/draftRules.ts`
+- **TempoCurveMap** (1 connections) — `apps/web/src/engine/gamePlan.ts`
+- **LANE_SWAP_PAIRS** (1 connections) — `apps/web/src/engine/gamePlan.ts`
 
 ## Relationships
 
-- [Community 3](Community_3.md) (5 shared connections)
-- [Community 0](Community_0.md) (3 shared connections)
-- [Community 10](Community_10.md) (1 shared connections)
-- [Community 12](Community_12.md) (1 shared connections)
-- [Community 13](Community_13.md) (1 shared connections)
-- [Community 15](Community_15.md) (1 shared connections)
+- [Community 12](Community_12.md) (16 shared connections)
+- [Community 0](Community_0.md) (13 shared connections)
+- [Community 24](Community_24.md) (9 shared connections)
+- [Community 3](Community_3.md) (7 shared connections)
+- [Community 8](Community_8.md) (6 shared connections)
+- [Community 21](Community_21.md) (2 shared connections)
 
 ## Source Files
 
-- `apps/web/src/components/BottomCommandDock.tsx`
+- `apps/web/src/engine/draftRules.ts`
+- `apps/web/src/engine/gamePlan.ts`
 - `apps/web/src/types.ts`
 
 ## Audit Trail
 
-- EXTRACTED: 18 (100%)
+- EXTRACTED: 75 (100%)
 - INFERRED: 0 (0%)
 - AMBIGUOUS: 0 (0%)
 
