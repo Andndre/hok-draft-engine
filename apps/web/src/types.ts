@@ -229,6 +229,8 @@ export interface TacticalDelta {
   impactDescription: string;
 }
 
+export type DraftFormat = 'tournament' | 'ranked';
+
 export interface DraftSlot {
   id: string;
   side: 'blue' | 'red';

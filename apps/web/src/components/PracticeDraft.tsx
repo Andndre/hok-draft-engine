@@ -1,7 +1,7 @@
 import { DropdownSelect } from './ui/DropdownSelect';
 import React, { useEffect, useMemo, useState } from 'react';
-import type { Hero, Lane, LaneAssignmentMap, SortMode, TournamentDataset, ViewMode } from '../types';
-import { DRAFT_SEQUENCE, applyDraftAction, emptyPosition, getDraftTurn, isLegalHero, oppositeSide } from '../engine/draftRules';
+import type { DraftFormat, Hero, Lane, LaneAssignmentMap, SortMode, TournamentDataset, ViewMode } from '../types';
+import { DRAFT_SEQUENCE, applyDraftAction, emptyPosition, getDraftSequence, getDraftTurn, isLegalHero, oppositeSide } from '../engine/draftRules';
 import type { Side } from '../engine/draftRules';
 import { createPracticeSession, practiceContext, reducePractice } from '../engine/practiceState';
 import type { PracticeEvent, PracticeSession } from '../engine/practiceState';
@@ -48,6 +48,7 @@ export function PracticeDraft(props: Props) {
   const { active, assistance, onAssistanceChange } = props;
   const [snapshot, setSnapshot] = useState(props.dataset);
   const [setupSide, setSetupSide] = useState<Side>('blue');
+  const [setupFormat, setSetupFormat] = useState<DraftFormat>('tournament');
   const [setupFearless, setSetupFearless] = useState(true);
   const [session, setSession] = useState<PracticeSession | null>(null);
   const [starting, setStarting] = useState(false);
@@ -63,9 +64,10 @@ export function PracticeDraft(props: Props) {
   useEffect(() => () => client.cancel(), [client]);
   const game = session?.games[session.gameIndex];
   const position = game?.position ?? emptyPosition();
-  const turn = getDraftTurn(position.step);
+  const format = session?.config.format ?? setupFormat;
+  const turn = getDraftTurn(position.step, format);
   const latest = !!session && session.gameIndex === session.games.length - 1;
-  const context = useMemo(() => session ? practiceContext(session, snapshot) : { heroes: snapshot.heroes, onlyGlobal: true, fearless: { blue: [], red: [] } }, [session, snapshot]);
+  const context = useMemo(() => session ? practiceContext(session, snapshot) : { heroes: snapshot.heroes, onlyGlobal: true, fearless: { blue: [], red: [] }, format: setupFormat }, [session, snapshot, setupFormat]);
   const canAct = !!session && latest && active && !turn.isComplete && turn.side === playerSide;
   const byId = useMemo(() => new Map(snapshot.heroes.map(h => [h.hero_id, h])), [snapshot]);
   const heroList = (ids: number[]) => ids.map(id => byId.get(id)!).filter(Boolean);
@@ -92,7 +94,8 @@ export function PracticeDraft(props: Props) {
     position.picks[playerSide], position.picks[oppositeSide(playerSide)], [...position.bans.blue, ...position.bans.red],
     context.fearless[playerSide], turn.action === 'pick', playerSide === 'blue', snapshot.heroes, position.step,
     game.playerPlan.a, game.playerPlan.b, true, snapshot.synergy, context.fearless[oppositeSide(playerSide)],
-  ) : null, [game, playerSide, context, snapshot]);
+    format
+  ) : null, [game, playerSide, context, snapshot, format, turn.action]);
   const recommendations = assistance && canAct ? hints?.recommendations ?? [] : [];
   const send = (event: PracticeEvent) => {
     client.cancel(); setError(''); setNotice(''); setThinking(false);
@@ -113,19 +116,19 @@ export function PracticeDraft(props: Props) {
     const tag = { sessionId: session.sessionId, revision: session.revision };
     setThinking(true); setError('');
     // Build an explicit public-state request: playerPlan is deliberately excluded.
-    void client.decide(game.position, { fearless: context.fearless, aiPlan: game.aiPlan }, tag, controller.signal).then(decision => {
+    void client.decide(game.position, { fearless: context.fearless, aiPlan: game.aiPlan, format }, tag, controller.signal).then(decision => {
       if (controller.signal.aborted) return;
       setThinking(false);
       if (decision.heroId === null) { setError('AI tidak menemukan aksi legal. Coba lagi atau reset game ini.'); return; }
-      const action = { ...getDraftTurn(game.position.step), heroId: decision.heroId };
-      if (applyDraftAction(game.position, action, context) === game.position) { setError('Pilihan AI sudah tidak tersedia. Coba lagi.'); return; }
+      const action = { ...getDraftTurn(game.position.step, format), heroId: decision.heroId };
+      if (applyDraftAction(game.position, action, context, format) === game.position) { setError('Pilihan AI sudah tidak tersedia. Coba lagi.'); return; }
       setNotice(decision.fallbackReason ?? `AI memilih ${byId.get(decision.heroId)?.name ?? 'hero'}.`);
       setSession(previous => previous ? reducePractice(previous, { type: 'commit', tag, actor: 'ai', heroId: decision.heroId! }, snapshot) : previous);
     }).catch(reason => {
       if (!controller.signal.aborted && reason?.name !== 'AbortError') { setThinking(false); setError('Keputusan AI belum tersedia. Coba lagi.'); }
     });
     return () => controller.abort();
-  }, [active, session, game, latest, playerSide, client, context, snapshot, byId]);
+  }, [active, session, game, latest, playerSide, client, context, snapshot, byId, format, turn.isComplete, turn.side]);
 
   const start = async () => {
     client.cancel(); setStarting(true); setError('');
@@ -133,13 +136,13 @@ export function PracticeDraft(props: Props) {
       const fresh = await loadTournamentDataset();
       setSnapshot(fresh);
       setLaneOverridesByKey({});
-      setSession(createPracticeSession(crypto.randomUUID(), { playerSide: setupSide, fearless: setupFearless }, fresh));
-      setNotice('Seri dimulai. Data hero dipertahankan sampai seri selesai.');
+      setSession(createPracticeSession(crypto.randomUUID(), { playerSide: setupSide, fearless: setupFormat === 'ranked' ? false : setupFearless, format: setupFormat }, fresh));
+      setNotice('Sesi dimulai. Data hero dipertahankan sampai sesi selesai.');
     } catch { setError('Data latihan belum dapat dimuat. Coba mulai lagi.'); }
     finally { setStarting(false); }
   };
   const choose = (hero: Hero) => {
-    if (!canAct || !session || !isLegalHero(position, hero.hero_id, context)) return;
+    if (!canAct || !session || !isLegalHero(position, hero.hero_id, context, format)) return;
     send({ type: 'commit', tag: { sessionId: session.sessionId, revision: session.revision }, actor: 'human', heroId: hero.hero_id });
     setWikiHero(null);
   };
@@ -160,8 +163,18 @@ export function PracticeDraft(props: Props) {
   const assistanceControl = <label className="assistance-toggle"><Lightbulb aria-hidden="true" /><span>Bantuan taktis<small>{assistance ? 'Rekomendasi dan komposisi ditampilkan' : 'Uji keputusan tanpa rekomendasi AI'}</small></span><input type="checkbox" checked={assistance} onChange={event => onAssistanceChange(event.target.checked)} /></label>;
   if (!session || !game) return <section aria-label="Pengaturan latihan" className="practice-setup surface-panel">
     <div className="practice-setup__intro"><span className="practice-setup__icon"><Gamepad2 aria-hidden="true" /></span><h2>Latihan draft melawan AI</h2><p>Pimpin ban dan pick timmu. Pilih sisi dan bantuan yang kamu perlukan; AI mengendalikan tim lawan.</p><div className="practice-setup__heroes">{snapshot.heroes.filter(hero => hero.is_global_released).slice(0, 5).map(hero => <HeroThumbnail key={hero.hero_id} hero={hero} />)}<span>{snapshot.heroes.filter(hero => hero.is_global_released).length} hero Global</span></div></div>
-    <div className="practice-setup__form"><fieldset><legend>Pilih sisi timmu</legend><div className="setup-side-options">{(['blue', 'red'] as Side[]).map(side => <label key={side} className={setupSide === side ? 'is-selected' : ''}><input type="radio" name="practice-side" value={side} checked={setupSide === side} onChange={() => setSetupSide(side)} />{side === 'blue' ? <Shield aria-hidden="true" /> : <Swords aria-hidden="true" />}<span><strong>{side === 'blue' ? 'Blue side' : 'Red side'}</strong><small>{side === 'blue' ? 'Amankan first pick' : 'Respons & last counter-pick'}</small></span></label>)}</div></fieldset>
-      <div className="setup-options">{assistanceControl}<label className="assistance-toggle"><ShieldCheck aria-hidden="true" /><span>Seri Fearless<small>Hero terpakai terkunci per tim, hingga 5 game</small></span><input type="checkbox" checked={setupFearless} onChange={event => setSetupFearless(event.target.checked)} /></label></div>
+    <div className="practice-setup__form">
+      <fieldset><legend>Format draft</legend>
+        <div className="setup-side-options">
+          <label className={setupFormat === 'tournament' ? 'is-selected' : ''}><input type="radio" name="practice-format" value="tournament" checked={setupFormat === 'tournament'} onChange={() => setSetupFormat('tournament')} /><Swords aria-hidden="true" /><span><strong>Turnamen</strong><small>4 fase (Ban 2-2, Pick 3-3, Ban 2-2, Pick 2-2)</small></span></label>
+          <label className={setupFormat === 'ranked' ? 'is-selected' : ''}><input type="radio" name="practice-format" value="ranked" checked={setupFormat === 'ranked'} onChange={() => setSetupFormat('ranked')} /><ShieldCheck aria-hidden="true" /><span><strong>Ranked</strong><small>Blind ban 3 simultan + pick standar</small></span></label>
+        </div>
+      </fieldset>
+      <fieldset><legend>Pilih sisi timmu</legend><div className="setup-side-options">{(['blue', 'red'] as Side[]).map(side => <label key={side} className={setupSide === side ? 'is-selected' : ''}><input type="radio" name="practice-side" value={side} checked={setupSide === side} onChange={() => setSetupSide(side)} />{side === 'blue' ? <Shield aria-hidden="true" /> : <Swords aria-hidden="true" />}<span><strong>{side === 'blue' ? 'Blue side' : 'Red side'}</strong><small>{side === 'blue' ? 'Amankan first pick' : 'Respons & last counter-pick'}</small></span></label>)}</div></fieldset>
+      <div className="setup-options">
+        {assistanceControl}
+        {setupFormat !== 'ranked' && <label className="assistance-toggle"><ShieldCheck aria-hidden="true" /><span>Seri Fearless<small>Hero terpakai terkunci per tim, hingga 5 game</small></span><input type="checkbox" checked={setupFearless} onChange={event => setSetupFearless(event.target.checked)} /></label>}
+      </div>
       {error && <p role="alert" className="inline-feedback inline-feedback--error"><AlertTriangle aria-hidden="true" />{error}</p>}
       <button type="button" className="ui-button ui-button--primary" onClick={() => void start()} disabled={starting}>{starting ? <LoaderCircle className="is-spinning" aria-hidden="true" /> : <Play aria-hidden="true" />}{starting ? 'Memuat data…' : 'Mulai latihan'}<ArrowRight aria-hidden="true" /></button>
     </div>
@@ -190,27 +203,30 @@ export function PracticeDraft(props: Props) {
       return next;
     });
   };
+  const banSlotsCount = session.config.format === 'ranked' ? 3 : 4;
+  const maxSteps = session.config.format === 'ranked' ? 16 : 18;
   const padded = (ids: number[], count: number) => [...heroList(ids), ...Array(Math.max(0, count - ids.length)).fill(null)];
   const canUndo = latest && game.actions.some(action => action.side === playerSide);
   const playerRadar = evaluateTacticalScores(playerHeroes, enemyHeroes);
   const enemyRadar = evaluateTacticalScores(enemyHeroes, playerHeroes);
   const unavailablePlans = new Set([...position.picks.blue, ...position.picks.red, ...position.bans.blue, ...position.bans.red, ...context.fearless[playerSide]]);
-  const previewStep = DRAFT_SEQUENCE.findIndex((step, index) => index >= position.step && step.side === playerSide);
-  const previewPosition = canAct ? position : { ...position, step: previewStep < 0 ? 18 : previewStep };
-  const rosterAction = getDraftTurn(previewPosition.step).action;
+  const draftSeq = getDraftSequence(session.config.format);
+  const previewStep = draftSeq.findIndex((step, index) => index >= position.step && step.side === playerSide);
+  const previewPosition = canAct ? position : { ...position, step: previewStep < 0 ? maxSteps : previewStep };
+  const rosterAction = getDraftTurn(previewPosition.step, session.config.format).action;
   return <section aria-label="Latihan draft aktif" className="practice-session">
-    <div className="practice-session__controls surface-panel"><div className="practice-session__heading"><div className="section-heading"><span className="section-heading__icon"><Gamepad2 aria-hidden="true" /></span><div><h2>Anda: {playerSide === 'blue' ? 'Blue' : 'Red'} · AI: {playerSide === 'blue' ? 'Red' : 'Blue'}</h2><p>Game {session.gameIndex + 1} · {session.config.fearless ? 'Seri Fearless' : 'Draft biasa'}</p></div></div>{assistanceControl}</div>
-      <div className="practice-session__actions"><DropdownSelect label="Pilih game latihan" icon={History} value={session.gameIndex} onChange={index => send({ type: 'view', index })} options={session.games.map((_, index) => ({ value: index, label: `Game ${index + 1}${index < session.games.length - 1 ? ' · ulasan' : ''}` }))} />
+    <div className="practice-session__controls surface-panel"><div className="practice-session__heading"><div className="section-heading"><span className="section-heading__icon"><Gamepad2 aria-hidden="true" /></span><div><h2>Anda: {playerSide === 'blue' ? 'Blue' : 'Red'} · AI: {playerSide === 'blue' ? 'Red' : 'Blue'}</h2><p>{session.config.format === 'ranked' ? 'Pertandingan Ranked' : `Game ${session.gameIndex + 1} · ${session.config.fearless ? 'Seri Fearless' : 'Draft biasa'}`}</p></div></div>{assistanceControl}</div>
+      <div className="practice-session__actions">{session.config.format !== 'ranked' && <DropdownSelect label="Pilih game latihan" icon={History} value={session.gameIndex} onChange={index => send({ type: 'view', index })} options={session.games.map((_, index) => ({ value: index, label: `Game ${index + 1}${index < session.games.length - 1 ? ' · ulasan' : ''}` }))} />}
         <button type="button" className={button} onClick={() => send({ type: 'undo' })} disabled={!canUndo}><Undo2 aria-hidden="true" />Urungkan</button>
         <button type="button" className={button} onClick={() => send({ type: 'reset' })} disabled={!latest}><RotateCcw aria-hidden="true" />Reset game</button>
-        <button type="button" className={button} onClick={() => { client.cancel(); setSession(null); setLaneOverridesByKey({}); setNotice(''); setError(''); }}><Settings2 aria-hidden="true" />Seri baru</button>
+        <button type="button" className={button} onClick={() => { client.cancel(); setSession(null); setLaneOverridesByKey({}); setNotice(''); setError(''); }}><Settings2 aria-hidden="true" />Sesi baru</button>
         {!turn.isComplete && latest && <button type="button" className={button} onClick={() => setPlanOpen(true)}><SlidersHorizontal aria-hidden="true" />Plan A/B</button>}
       </div>
       <div aria-live="polite" role="status" className="practice-status">{thinking ? <LoaderCircle className="is-spinning" aria-hidden="true" /> : turn.isComplete ? <CheckCircle2 aria-hidden="true" /> : <Info aria-hidden="true" />}<span>{!latest ? 'Ulasan game terdahulu. Kembali ke game terbaru untuk melanjutkan.' : turn.isComplete ? 'Draft selesai. Evaluasi komposisi tersedia di bawah.' : thinking ? 'AI sedang memilih… Kamu tetap bisa membaca wiki hero.' : canAct ? 'Giliran Anda: ' + (turn.action === 'ban' ? 'ban' : 'pick') + ' hero.' : 'Menyiapkan giliran AI…'}</span></div>
       {notice && !thinking && <p className="practice-notice">{notice}</p>}
       {error && <div role="alert" className="inline-feedback inline-feedback--error"><AlertTriangle aria-hidden="true" /><p>{error}</p><button type="button" className={button} onClick={() => send({ type: 'retry' })}><RefreshCw aria-hidden="true" />Coba lagi</button></div>}
     </div>
-    <DraftSimulator bluePicks={padded(position.picks.blue, 5)} redPicks={padded(position.picks.red, 5)} blueBans={padded(position.bans.blue, 4)} redBans={padded(position.bans.red, 4)} blueAssignedLanes={blueAssignedLanes} redAssignedLanes={redAssignedLanes} currentTurn={turn} fearlessEnabled={session.config.fearless} gameNumber={session.gameIndex + 1} onToggleFearless={() => {}} onGameNumberChange={() => {}} onResetDraft={() => {}} onUndoStep={() => {}} blueFearlessUsedHeroes={heroList(context.fearless.blue)} redFearlessUsedHeroes={heroList(context.fearless.red)} hideControls playerSide={playerSide} onInspectHero={setWikiHero} onRequestHero={canAct ? focusHeroSearch : undefined} />
+    <DraftSimulator format={session.config.format ?? 'tournament'} bluePicks={padded(position.picks.blue, 5)} redPicks={padded(position.picks.red, 5)} blueBans={padded(position.bans.blue, banSlotsCount)} redBans={padded(position.bans.red, banSlotsCount)} blueAssignedLanes={blueAssignedLanes} redAssignedLanes={redAssignedLanes} currentTurn={turn} fearlessEnabled={session.config.fearless} gameNumber={session.gameIndex + 1} onToggleFearless={() => {}} onGameNumberChange={() => {}} onResetDraft={() => {}} onUndoStep={() => {}} blueFearlessUsedHeroes={heroList(context.fearless.blue)} redFearlessUsedHeroes={heroList(context.fearless.red)} hideControls playerSide={playerSide} onInspectHero={setWikiHero} onRequestHero={canAct ? focusHeroSearch : undefined} />
     {turn.isComplete && blueHeroesList.length === 5 && redHeroesList.length === 5 && (
       <PostDraftGamePlanPanel
         key={gameKey}

@@ -16,7 +16,7 @@ export class OpponentClient {
     this.abortPending?.(); this.abortPending = null;
     this.worker?.terminate(); this.worker = null;
   }
-  decide(position: DraftPosition, settings: Pick<SearchContext, 'fearless' | 'aiPlan'>, tag: DecisionTag, signal: AbortSignal): Promise<SearchDecision> {
+  decide(position: DraftPosition, settings: Pick<SearchContext, 'fearless' | 'aiPlan'> & { format?: SearchContext['format'] }, tag: DecisionTag, signal: AbortSignal): Promise<SearchDecision> {
     if (signal.aborted) return Promise.reject(new DOMException('Dibatalkan', 'AbortError'));
     const context: SearchContext = { heroes: this.dataset.heroes, synergy: this.dataset.synergy, aiSide: this.aiSide, onlyGlobal: true, ...settings };
     return new Promise((resolve, reject) => {
@@ -44,7 +44,7 @@ export class OpponentClient {
           if (!matchesDecisionTag(data, tag)) return;
           if (data.error) fallback(); else finish(data.decision);
         };
-        this.worker.postMessage({ type: 'decide', ...tag, position, fearless: settings.fearless, aiPlan: settings.aiPlan });
+        this.worker.postMessage({ type: 'decide', ...tag, position, fearless: settings.fearless, aiPlan: settings.aiPlan, format: settings.format });
       } catch { fallback(); }
     });
   }

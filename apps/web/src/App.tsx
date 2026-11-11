@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { Hero, Lane, ActiveTab, SortMode, ViewMode, TacticalVector, TacticalDelta, GameDraftData, LaneAssignmentMap, TournamentDataset } from './types';
+import { DraftFormat, Hero, Lane, ActiveTab, SortMode, ViewMode, TacticalVector, TacticalDelta, GameDraftData, LaneAssignmentMap, TournamentDataset } from './types';
 import { loadTournamentDataset } from './engine/heroDataLoader';
 import { runTournamentInference, TournamentPredictionResult, TournamentPhaseStrategy } from './engine/tournamentInference';
 import { computeTacticalDeltas } from './engine/deltaExplainer';
@@ -31,6 +31,7 @@ export const App: React.FC = () => {
   // Navigation & Filtering
   const [activeTab, setActiveTab] = useState<ActiveTab>('draft');
   const [draftMode, setDraftMode] = useState<'simulator' | 'practice'>('simulator');
+  const [draftFormat, setDraftFormat] = useState<DraftFormat>('tournament');
   const [practiceAssistance, setPracticeAssistance] = useState(true);
   const practiceActive = activeTab === 'draft' && draftMode === 'practice';
   const [selectedLane, setSelectedLane] = useState<Lane | 'All'>('All');
@@ -67,7 +68,7 @@ export const App: React.FC = () => {
     5: createInitialGameDraft(),
   });
 
-  const currentGame = gamesData[gameNumber] || createInitialGameDraft();
+  const currentGame = gamesData[gameNumber] || createInitialGameDraft(draftFormat);
   const { bluePicks, redPicks, blueBans, redBans, draftStep, bluePlanAId, bluePlanBId, redPlanAId, redPlanBId } = currentGame;
 
   const [synergyData, setSynergyData] = useState<Record<string, any>>({});
@@ -113,11 +114,11 @@ export const App: React.FC = () => {
   };
 
   // Determine current turn in sequence
-  const currentTurn = useMemo(() => getDraftTurn(draftStep), [draftStep]);
+  const currentTurn = useMemo(() => getDraftTurn(draftStep, draftFormat), [draftStep, draftFormat]);
 
   // Fearless Draft: Accumulate heroes picked by each team in prior games (Game < gameNumber)
   const blueFearlessUnavailableIds = useMemo(() => {
-    if (!fearlessEnabled) return new Set<number>();
+    if (!fearlessEnabled || draftFormat === 'ranked') return new Set<number>();
     const set = new Set<number>();
     for (let g = 1; g < gameNumber; g++) {
       const pastGame = gamesData[g];
@@ -126,10 +127,10 @@ export const App: React.FC = () => {
       }
     }
     return set;
-  }, [gamesData, gameNumber, fearlessEnabled]);
+  }, [gamesData, gameNumber, fearlessEnabled, draftFormat]);
 
   const redFearlessUnavailableIds = useMemo(() => {
-    if (!fearlessEnabled) return new Set<number>();
+    if (!fearlessEnabled || draftFormat === 'ranked') return new Set<number>();
     const set = new Set<number>();
     for (let g = 1; g < gameNumber; g++) {
       const pastGame = gamesData[g];
@@ -138,7 +139,7 @@ export const App: React.FC = () => {
       }
     }
     return set;
-  }, [gamesData, gameNumber, fearlessEnabled]);
+  }, [gamesData, gameNumber, fearlessEnabled, draftFormat]);
 
   const blueFearlessUsedHeroes = useMemo(() => {
     return heroes.filter((h) => blueFearlessUnavailableIds.has(h.hero_id));
@@ -150,20 +151,27 @@ export const App: React.FC = () => {
 
   // Unavailable heroes in current draft for the ACTIVE TEAM:
   // - Already picked or banned in current match
+  // - In Ranked blind ban, opposing teams can ban the same hero
   // - PLUS heroes that the ACTIVE side already picked in previous games of this Fearless series!
   const currentDraftUnavailableIds = useMemo(() => {
     const ids = new Set<number>();
     bluePicks.forEach((h) => h && ids.add(h.hero_id));
     redPicks.forEach((h) => h && ids.add(h.hero_id));
-    blueBans.forEach((h) => h && ids.add(h.hero_id));
-    redBans.forEach((h) => h && ids.add(h.hero_id));
 
-    if (fearlessEnabled && currentTurn.action === 'pick') {
+    if (currentTurn.action === 'ban' && draftFormat === 'ranked') {
+      const ownBans = currentTurn.side === 'blue' ? blueBans : redBans;
+      ownBans.forEach((h) => h && ids.add(h.hero_id));
+    } else {
+      blueBans.forEach((h) => h && ids.add(h.hero_id));
+      redBans.forEach((h) => h && ids.add(h.hero_id));
+    }
+
+    if (fearlessEnabled && draftFormat !== 'ranked' && currentTurn.action === 'pick') {
       const teamFearlessSet = currentTurn.side === 'blue' ? blueFearlessUnavailableIds : redFearlessUnavailableIds;
       teamFearlessSet.forEach((id) => ids.add(id));
     }
     return ids;
-  }, [bluePicks, redPicks, blueBans, redBans, fearlessEnabled, currentTurn, blueFearlessUnavailableIds, redFearlessUnavailableIds]);
+  }, [bluePicks, redPicks, blueBans, redBans, fearlessEnabled, draftFormat, currentTurn, blueFearlessUnavailableIds, redFearlessUnavailableIds]);
 
   // Active plan IDs for the side whose turn it is
   const activeSidePlanAId = currentTurn.side === 'blue' ? bluePlanAId : redPlanAId;
@@ -206,7 +214,8 @@ export const App: React.FC = () => {
           planBId,
           onlyGlobalReleased,
           synergyData,
-          Array.from(turn.side === 'blue' ? redFearlessSet : blueFearlessSet)
+          Array.from(turn.side === 'blue' ? redFearlessSet : blueFearlessSet),
+          draftFormat
         );
 
         setEngineReady(true);
@@ -281,11 +290,26 @@ export const App: React.FC = () => {
     (updater: (prev: GameDraftData) => GameDraftData) => {
       setGamesData((prev) => ({
         ...prev,
-        [gameNumber]: updater(prev[gameNumber] || createInitialGameDraft()),
+        [gameNumber]: updater(prev[gameNumber] || createInitialGameDraft(draftFormat)),
       }));
     },
-    [gameNumber]
+    [gameNumber, draftFormat]
   );
+
+  const handleFormatChange = (newFormat: DraftFormat) => {
+    setDraftFormat(newFormat);
+    setGamesData({
+      1: createInitialGameDraft(newFormat),
+      2: createInitialGameDraft(newFormat),
+      3: createInitialGameDraft(newFormat),
+      4: createInitialGameDraft(newFormat),
+      5: createInitialGameDraft(newFormat),
+    });
+    setLaneOverridesByGame({});
+    setPreviousScores(null);
+    setDeltas([]);
+    setPrimaryInsight(newFormat === 'ranked' ? 'Format Ranked aktif (Blind Ban 3 + Pick Standar).' : 'Format Turnamen aktif (4 Fase Ban & Pick).');
+  };
 
   // Handle hero pick / ban selection
   const handleSelectHero = (hero: Hero) => {
@@ -293,16 +317,16 @@ export const App: React.FC = () => {
 
     setPreviousScores(tacticalScores);
 
-    updateCurrentDraft((prev) => applyGameHero(prev, hero, { heroes, onlyGlobal: onlyGlobalReleased, fearless: { blue: [...blueFearlessUnavailableIds], red: [...redFearlessUnavailableIds] } }));
+    updateCurrentDraft((prev) => applyGameHero(prev, hero, { heroes, onlyGlobal: onlyGlobalReleased, fearless: { blue: [...blueFearlessUnavailableIds], red: [...redFearlessUnavailableIds] }, format: draftFormat }, draftFormat));
   };
 
   // Reset Current Game Draft ONLY (preserves other games!)
   const handleResetDraft = () => {
-    updateCurrentDraft(() => createInitialGameDraft());
+    updateCurrentDraft(() => createInitialGameDraft(draftFormat));
     setLaneOverridesByGame((prev) => ({ ...prev, [gameNumber]: {} }));
     setPreviousScores(null);
     setDeltas([]);
-    setPrimaryInsight(`Draft Game ${gameNumber} di-reset. Giliran Blue Side BAN Fase 1.`);
+    setPrimaryInsight(draftFormat === 'ranked' ? 'Draft Ranked di-reset. Giliran Blind Ban.' : `Draft Game ${gameNumber} di-reset. Giliran Blue Side BAN Fase 1.`);
   };
 
   // Undo Step in Current Game
@@ -310,7 +334,7 @@ export const App: React.FC = () => {
     if (draftStep === 0) return;
     setLaneOverridesByGame((prev) => ({ ...prev, [gameNumber]: {} }));
     const prevStepIndex = draftStep - 1;
-    const prevTurn = DRAFT_SEQUENCE[prevStepIndex];
+    const prevTurn = getDraftTurn(prevStepIndex, draftFormat);
 
     const findLastOccupied = (arr: Array<Hero | null>) => {
       for (let i = arr.length - 1; i >= 0; i--) {
@@ -499,7 +523,7 @@ export const App: React.FC = () => {
         {loadError && <section role="alert" className="empty-state"><AlertTriangle aria-hidden="true" /><h2>Data hero belum dapat dimuat</h2><p>{loadError}</p><button type="button" className="ui-button ui-button--primary" onClick={() => void loadData()}><RefreshCw aria-hidden="true" />Coba lagi</button></section>}
         {dataset && <div hidden={!practiceActive}><PracticeDraft dataset={dataset} active={practiceActive} assistance={practiceAssistance} onAssistanceChange={setPracticeAssistance} selectedLane={selectedLane} onLaneChange={setSelectedLane} searchQuery={searchQuery} onSearchChange={setSearchQuery} sortMode={sortMode} onSortChange={setSortMode} viewMode={viewMode} onViewChange={setViewMode} favorites={favorites} onToggleFavorite={handleToggleFavorite} /></div>}
         {!practiceActive && <>
-          {activeTab === 'draft' && !loadError && <DraftSimulator bluePicks={bluePicks} redPicks={redPicks} blueBans={blueBans} redBans={redBans} blueAssignedLanes={blueAssignedLanes} redAssignedLanes={redAssignedLanes} currentTurn={currentTurn} fearlessEnabled={fearlessEnabled} onToggleFearless={setFearlessEnabled} gameNumber={gameNumber} onGameNumberChange={handleGameChange} onResetDraft={handleResetDraft} onUndoStep={handleUndoStep} blueFearlessUsedHeroes={blueFearlessUsedHeroes} redFearlessUsedHeroes={redFearlessUsedHeroes} onInspectHero={setWikiHero} onRequestHero={!loading ? focusHeroSearch : undefined} />}
+          {activeTab === 'draft' && !loadError && <DraftSimulator format={draftFormat} onFormatChange={handleFormatChange} bluePicks={bluePicks} redPicks={redPicks} blueBans={blueBans} redBans={redBans} blueAssignedLanes={blueAssignedLanes} redAssignedLanes={redAssignedLanes} currentTurn={currentTurn} fearlessEnabled={fearlessEnabled} onToggleFearless={setFearlessEnabled} gameNumber={gameNumber} onGameNumberChange={handleGameChange} onResetDraft={handleResetDraft} onUndoStep={handleUndoStep} blueFearlessUsedHeroes={blueFearlessUsedHeroes} redFearlessUsedHeroes={redFearlessUsedHeroes} onInspectHero={setWikiHero} onRequestHero={!loading ? focusHeroSearch : undefined} />}
           {activeTab === 'draft' && !loadError && currentTurn.isComplete && filledBlueHeroes.length === 5 && filledRedHeroes.length === 5 && (
             <PostDraftGamePlanPanel
               key={`sim-game-${gameNumber}`}

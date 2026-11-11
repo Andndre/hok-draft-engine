@@ -12,7 +12,7 @@
  *    dan peredam sinergi (100% / 55% / 10% / 0%) agar hero tidak direkomendasikan jika sudah di-counter 2-3 musuh.
  */
 
-import type { Hero, TacticalVector, Lane } from '../types';
+import type { Hero, TacticalVector, Lane, DraftFormat } from '../types';
 import { isHeroGlobalReleased } from '../data/heroReleaseStatus';
 import {
   assignHeroLanes,
@@ -910,7 +910,8 @@ export function runTournamentInference(
   planBId?: number | null,
   onlyGlobalReleased: boolean = true,
   synergyDb: Record<string, any> = {},
-  enemyFearlessUnavailableIds: number[] = []
+  enemyFearlessUnavailableIds: number[] = [],
+  format: DraftFormat = 'tournament'
 ): TournamentPredictionResult {
   const t0 = performance.now();
 
@@ -1007,7 +1008,7 @@ export function runTournamentInference(
     }
   });
 
-  const phaseId = getTournamentPhase(draftStep);
+  const phaseId = getTournamentPhase(draftStep, format);
 
   // 3. Identifikasi Opener Meta Terbaik untuk Strategi Fase 1
   const openerUnavailable = new Set([...unavailableSet, ...fearlessUnavailableIds]);
@@ -1050,15 +1051,16 @@ export function runTournamentInference(
   const planAExposure = planAHero ? evaluateEnemyCounterExposure(planAHero, enemyHeroes, b1Openers).counterCount : 0;
   const planBExposure = planBHero ? evaluateEnemyCounterExposure(planBHero, enemyHeroes, b1Openers).counterCount : 0;
 
+  const firstPickStep = format === 'ranked' ? 6 : 4;
   if (
     planAHero &&
     !openerUnavailable.has(planAHero.hero_id) &&
-    (draftStep > 4 || !isRiskyOpener(planAHero)) &&
+    (draftStep > firstPickStep || !isRiskyOpener(planAHero)) &&
     (planAExposure === 0 || (planBHero && planBExposure >= planAExposure))
   ) {
     plannedOpener = planAHero;
     activePlan = 'PLAN_A';
-  } else if (planBHero && !openerUnavailable.has(planBHero.hero_id) && (draftStep > 4 || !isRiskyOpener(planBHero))) {
+  } else if (planBHero && !openerUnavailable.has(planBHero.hero_id) && (draftStep > firstPickStep || !isRiskyOpener(planBHero))) {
     plannedOpener = planBHero;
     activePlan = 'PLAN_B';
   } else if (rankedOpeners.length > 0) {
@@ -1145,7 +1147,7 @@ export function runTournamentInference(
   for (let i = 0; i < heroes.length; i++) {
     if (maskArr[i] === 1 || phaseId === 'DRAFT_COMPLETE') continue;
     if (!isPickPhase && enemyFearlessUnavailableIds.includes(heroes[i].hero_id)) continue;
-    if ((draftStep < 4 || draftStep === 4) && isRiskyOpener(heroes[i])) continue;
+    if (draftStep <= firstPickStep && isRiskyOpener(heroes[i])) continue;
 
     const cand = heroes[i];
     const isImmobileCarry = isRiskyOpener(cand);
@@ -1158,9 +1160,9 @@ export function runTournamentInference(
     let proComboTag: string | undefined = undefined;
 
     // -------------------------------------------------------------------------
-    // FASE 1: BAN PHASE 1 (Steps 0..3) — Pre-Ban Counter & Deny First Pick
+    // FASE 1: BAN PHASE 1 (Steps 0..3 / Ranked Blind Ban) — Pre-Ban Counter & Deny First Pick
     // -------------------------------------------------------------------------
-    if (phaseId === 'BAN_PHASE_1') {
+    if (phaseId === 'BAN_PHASE_1' || phaseId === 'RANKED_BAN') {
       if (isImmobileCarry) {
         score -= 2.2;
       }
@@ -1243,9 +1245,9 @@ export function runTournamentInference(
     }
 
     // -------------------------------------------------------------------------
-    // FASE 2: PICK PHASE 1 (Steps 4..9) — Amankan Opener, Kombo KPL & Respon
+    // FASE 2: PICK PHASE 1 (Steps 4..9 / Ranked Pick Awal) — Amankan Opener, Kombo KPL & Respon
     // -------------------------------------------------------------------------
-    else if (phaseId === 'PICK_PHASE_1') {
+    else if (phaseId === 'PICK_PHASE_1' || (phaseId === 'RANKED_PICK' && ourHeroes.length < 3)) {
       const kplOpenerInfo = b1Openers[String(cand.hero_id)];
       const hasKplOpenerCredibility =
         (kplOpenerInfo?.b1_picks || 0) >= 90 || (kplOpenerInfo?.r1_r2_picks || 0) >= 180;
@@ -1266,8 +1268,8 @@ export function runTournamentInference(
         laneTag = `Opener ${cand.primary_lane}`;
       }
 
-      // Step 4 adalah First-Pick B1 Blue: Eksekusi strategi opener utama!
-      if (draftStep === 4 && plannedOpener && cand.hero_id === plannedOpener.hero_id) {
+      // Step 4 (Turnamen) / Step 6 (Ranked) adalah First-Pick B1 Blue: Eksekusi strategi opener utama!
+      if ((draftStep === 4 || (format === 'ranked' && draftStep === 6)) && plannedOpener && cand.hero_id === plannedOpener.hero_id) {
         score += 1.45 * exposure.synergyMultiplier;
         laneTag = 'B1 Target Utama';
         proComboTag =
@@ -1480,8 +1482,8 @@ export function runTournamentInference(
       score += laneFit.delta;
       laneTag = laneFit.laneTag;
 
-      // Counter Langsung ke 3-4 Hero Musuh (Bobot ekstra di Step 17 Red Last Pick!)
-      const isLastPickR5 = draftStep === 17;
+      // Counter Langsung ke 3-4 Hero Musuh (Bobot ekstra di Step 17 / Step 15 Ranked Red Last Pick!)
+      const isLastPickR5 = (format === 'ranked' ? draftStep === 15 : draftStep === 17) && !isBlueSide;
       const counterWeight = isLastPickR5 ? 0.70 : 0.50;
       const counteredEnemies: string[] = [];
 
@@ -1546,7 +1548,7 @@ export function runTournamentInference(
     // -------------------------------------------------------------------------
     // BONUS HOKSTATS & PENALTI PAPARAN COUNTER MUSUH (Fase Pick 1 & Pick 2)
     // -------------------------------------------------------------------------
-    if (phaseId === 'PICK_PHASE_1' || phaseId === 'PICK_PHASE_2') {
+    if (phaseId === 'PICK_PHASE_1' || phaseId === 'PICK_PHASE_2' || phaseId === 'RANKED_PICK') {
       const sourceBonuses = reviewedHoKStatsBonuses(cand, ourHeroes, enemyHeroes);
       score += Math.min(0.45, sourceBonuses.matchupBonus + sourceBonuses.traitBonus * exposure.synergyMultiplier);
 
@@ -1673,6 +1675,24 @@ export function runTournamentInference(
         ? 'FASE PICK 2 — RED FINAL COUNTER-PICK (R5)'
         : `FASE PICK 2 — PENUTUP KOMPOSISI (${ourVacantArr.join(' & ')})`;
     phaseObjective = `Wajib isi sisa lane kosong kita [${ourVacantArr.join(' & ')}] sambil meng-counter formasi musuh (${enemyHeroes.map((e) => e.name).join(', ')}).`;
+  } else if (phaseId === 'RANKED_BAN') {
+    phaseTitle = '1. BLIND BAN (3 HERO TERLARANG)';
+    phaseObjective = isBlueSide
+      ? 'Tentukan 3 hero prioritas ban secara simultan tanpa melihat pilihan lawan.'
+      : 'Tentukan 3 hero prioritas ban Red untuk cegah pick kunci lawan secara simultan.';
+  } else if (phaseId === 'RANKED_PICK') {
+    if (draftStep === 6) {
+      phaseTitle = '2. PEMILIHAN HERO — FIRST PICK BLUE (B1)';
+      phaseObjective = plannedOpener
+        ? `Ambil ${plannedOpener.name} (${plannedOpener.primary_lane}) sekarang sebagai first pick pembuka formasi tim!`
+        : 'Amankan hero S-Tier / opener terkuat untuk membuka formasi draft tim.';
+    } else if (draftStep === 15) {
+      phaseTitle = '2. PEMILIHAN HERO — LAST PICK COUNTER (R5)';
+      phaseObjective = `Pick terakhir penutup draft! Manfaatkan posisi R5 untuk counter komposisi lawan (${enemyHeroes.map((e) => e.name).join(', ')}).`;
+    } else {
+      phaseTitle = `2. PEMILIHAN HERO (${ourVacantArr.join(', ') || 'LENGKAP'})`;
+      phaseObjective = `Respon komposisi musuh (${enemyHeroes.map((e) => e.name).join(', ') || '-'}) dengan sinergi duet & lengkapi lane kosong (${ourVacantArr.join(', ')}).`;
+    }
   } else {
     phaseTitle = 'DRAFT SELESAI — ANALISIS KOMPOSISI FINAL';
     phaseObjective = 'Seluruh 10 hero telah dipilih. Evaluasi kekuatan 7 dimensi taktis di bawah.';

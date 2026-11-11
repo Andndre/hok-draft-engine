@@ -14,7 +14,7 @@ import {
   analyzeLaneOccupancy,
   applyDraftAction,
   computeKplPairAdjustment,
-  DRAFT_SEQUENCE,
+  getDraftSequence,
   evaluateTeamCompositionIntegrity,
   getDraftTurn,
   isLegalHero,
@@ -60,7 +60,7 @@ export interface SearchOptions {
  * Memprioritaskan hero yang mengisi lane kosong tim untuk mencegah duplikasi role di turnamen.
  */
 export function rankedCandidates(position: DraftPosition, context: SearchContext) {
-  const turn = getDraftTurn(position.step);
+  const turn = getDraftTurn(position.step, context.format);
   if (turn.isComplete) return [];
 
   const inferenceResult = runTournamentInference(
@@ -76,11 +76,12 @@ export function rankedCandidates(position: DraftPosition, context: SearchContext
     turn.side === context.aiSide ? context.aiPlan.b : null,
     context.onlyGlobal,
     context.synergy,
-    context.fearless[oppositeSide(turn.side)]
+    context.fearless[oppositeSide(turn.side)],
+    context.format
   );
 
   const legalCandidates = inferenceResult.recommendations.filter((r) =>
-    isLegalHero(position, r.hero.hero_id, context)
+    isLegalHero(position, r.hero.hero_id, context, context.format)
   );
 
   // Pada fase ban, seluruh kandidat legal dapat dipertimbangkan
@@ -250,11 +251,11 @@ export function searchDraft(
   const timeBudgetMs = Math.min(1500, Math.max(0, options.budgetMs ?? 1500));
   const deadline = startTime + timeBudgetMs;
 
-  const remainingActions = DRAFT_SEQUENCE.length - position.step;
+  const remainingActions = getDraftSequence(context.format).length - position.step;
   const maxSearchDepth = Math.min(4, remainingActions, Math.max(1, options.maxDepth ?? 4));
   const branchWidth = Math.min(8, Math.max(1, options.width ?? 8));
 
-  const rootTurn = getDraftTurn(position.step);
+  const rootTurn = getDraftTurn(position.step, context.format);
   const rootSide = rootTurn.side;
   const rootCandidates = rankedCandidates(position, context).slice(0, branchWidth);
   const primaryCandidate = rootCandidates[0];
@@ -298,7 +299,7 @@ export function searchDraft(
     decision.nodes++;
 
     const posKey = buildPositionKey(pos);
-    const currentTurn = getDraftTurn(pos.step);
+    const currentTurn = getDraftTurn(pos.step, context.format);
 
     // Kondisi terminasi leaf: kedalaman habis atau draft selesai
     if (depth <= 0 || currentTurn.isComplete) {
@@ -338,7 +339,7 @@ export function searchDraft(
         heroId: candidate.hero.hero_id,
       };
 
-      const nextPosition = applyDraftAction(pos, draftAction, context);
+      const nextPosition = applyDraftAction(pos, draftAction, context, context.format);
       const childResult = visitNode(nextPosition, depth - 1, currentAlpha, currentBeta);
 
       if (isMaximizing) {

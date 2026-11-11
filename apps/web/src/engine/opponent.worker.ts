@@ -9,12 +9,13 @@ self.onmessage = (event: MessageEvent) => {
   const request = event.data;
   if (request.type === 'init') { dataset = request.dataset; aiSide = request.aiSide; return; }
   if (request.type !== 'decide' || !dataset) return;
-  const { sessionId, revision, position, fearless, aiPlan } = request as {
+  const { sessionId, revision, position, fearless, aiPlan, format } = request as {
     sessionId: string; revision: number; position: DraftPosition;
     fearless: SearchContext['fearless']; aiPlan: SearchContext['aiPlan'];
+    format?: SearchContext['format'];
   };
   try {
-    const decision = searchDraft(position, { heroes: dataset.heroes, synergy: dataset.synergy, onlyGlobal: true, fearless, aiSide, aiPlan });
+    const decision = searchDraft(position, { heroes: dataset.heroes, synergy: dataset.synergy, onlyGlobal: true, fearless, aiSide, aiPlan, format });
     self.postMessage({ sessionId, revision, decision });
   } catch { self.postMessage({ sessionId, revision, error: 'Keputusan AI belum tersedia.' }); }
 };

@@ -1,4 +1,4 @@
-import type { TournamentDataset } from '../types';
+import type { DraftFormat, TournamentDataset } from '../types';
 import { applyDraftAction, emptyPosition, getDraftTurn, oppositeSide } from './draftRules';
 import type { DraftAction, DraftContext, DraftPosition, Side } from './draftRules';
 import { matchesDecisionTag } from './opponentClient';
@@ -6,7 +6,7 @@ import type { DecisionTag } from './opponentClient';
 import { rankedCandidates } from './draftSearch';
 import { runTournamentInference } from './tournamentInference';
 
-export interface PracticeConfig { playerSide: Side; fearless: boolean }
+export interface PracticeConfig { playerSide: Side; fearless: boolean; format?: DraftFormat }
 export interface DecisionTrace {
   actionIndex: number;
   heroId: number;
@@ -29,16 +29,16 @@ export function practiceContext(session: PracticeSession, dataset: TournamentDat
   if (session.config.fearless) for (const game of session.games.slice(0, session.gameIndex)) {
     fearless.blue.push(...game.position.picks.blue); fearless.red.push(...game.position.picks.red);
   }
-  return { heroes: dataset.heroes, onlyGlobal: true, fearless };
+  return { heroes: dataset.heroes, onlyGlobal: true, fearless, format: session.config.format };
 }
 function createGame(dataset: TournamentDataset, config: PracticeConfig, context: DraftContext): PracticeGame {
   const aiSide = oppositeSide(config.playerSide);
-  const result = runTournamentInference([], [], [], context.fearless[aiSide], false, aiSide === 'blue', dataset.heroes, 0, null, null, true, dataset.synergy, context.fearless[config.playerSide]);
+  const result = runTournamentInference([], [], [], context.fearless[aiSide], false, aiSide === 'blue', dataset.heroes, 0, null, null, true, dataset.synergy, context.fearless[config.playerSide], config.format);
   const candidates = result.phaseStrategy.candidateOpeners.filter(h => !context.fearless[aiSide].includes(h.hero_id));
   return { position: emptyPosition(), actions: [], traces: [], playerPlan: { a: null, b: null }, aiPlan: { a: candidates[0]?.hero_id ?? null, b: candidates.find(h => h.primary_lane !== candidates[0]?.primary_lane)?.hero_id ?? candidates[1]?.hero_id ?? null } };
 }
 export function createPracticeSession(sessionId: string, config: PracticeConfig, dataset: TournamentDataset): PracticeSession {
-  const context: DraftContext = { heroes: dataset.heroes, onlyGlobal: true, fearless: { blue: [], red: [] } };
+  const context: DraftContext = { heroes: dataset.heroes, onlyGlobal: true, fearless: { blue: [], red: [] }, format: config.format };
   return { sessionId, revision: 0, config, gameIndex: 0, games: [createGame(dataset, config, context)] };
 }
 export type PracticeEvent =
@@ -59,14 +59,14 @@ export function reducePractice(session: PracticeSession, event: PracticeEvent, d
   if (!latest) return session;
   if (event.type === 'commit') {
     if (!matchesDecisionTag(session, event.tag)) return session;
-    const turn = getDraftTurn(current.position.step);
+    const turn = getDraftTurn(current.position.step, session.config.format);
     if ((turn.side === session.config.playerSide) !== (event.actor === 'human')) return session;
     const action = { side: turn.side, action: turn.action, heroId: event.heroId };
-    const position = applyDraftAction(current.position, action, context);
+    const position = applyDraftAction(current.position, action, context, session.config.format);
     if (position === current.position) return session;
     const traces = [...current.traces];
     if (event.actor === 'human') {
-      const suggestions = rankedCandidates(current.position, { ...context, synergy: dataset.synergy, aiSide: session.config.playerSide, aiPlan: current.playerPlan });
+      const suggestions = rankedCandidates(current.position, { ...context, synergy: dataset.synergy, aiSide: session.config.playerSide, aiPlan: current.playerPlan, format: session.config.format });
       traces.push({ actionIndex: current.actions.length, heroId: event.heroId, alternatives: suggestions.filter(r => r.hero.hero_id !== event.heroId).slice(0, 3).map(r => ({ heroId: r.hero.hero_id, reason: r.proComboTag || r.laneTag || 'Prioritas komposisi dan meta' })) });
     }
     return replace({ ...current, position, actions: [...current.actions, action], traces });
@@ -82,10 +82,11 @@ export function reducePractice(session: PracticeSession, event: PracticeEvent, d
     while (index >= 0 && current.actions[index].side !== session.config.playerSide) index--;
     if (index < 0) return session;
     const actions = current.actions.slice(0, index);
-    const position = actions.reduce((state, action) => applyDraftAction(state, action, context), emptyPosition());
+    const position = actions.reduce((state, action) => applyDraftAction(state, action, context, session.config.format), emptyPosition());
     return replace({ ...current, position, actions, traces: current.traces.filter(trace => trace.actionIndex < index) });
   }
-  if (event.type === 'next' && current.position.step === 18 && session.games.length < 5) {
+  const maxSteps = session.config.format === 'ranked' ? 16 : 18;
+  if (event.type === 'next' && current.position.step === maxSteps && session.games.length < 5) {
     const next = { ...session, gameIndex: session.games.length, revision: session.revision + 1 };
     return { ...next, games: [...session.games, createGame(dataset, session.config, practiceContext(next, dataset))] };
   }

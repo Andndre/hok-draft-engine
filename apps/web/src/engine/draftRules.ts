@@ -1,9 +1,9 @@
-import type { GameDraftData, Hero, KplLaneRate, Lane, LaneAssignmentMap } from '../types';
+import type { DraftFormat, GameDraftData, Hero, KplLaneRate, Lane, LaneAssignmentMap } from '../types';
 import { isHeroGlobalReleased } from '../data/heroReleaseStatus';
 
 export type Side = 'blue' | 'red';
 export type ActionKind = 'ban' | 'pick';
-export type TournamentPhaseId = 'BAN_PHASE_1' | 'PICK_PHASE_1' | 'BAN_PHASE_2' | 'PICK_PHASE_2' | 'DRAFT_COMPLETE';
+export type TournamentPhaseId = 'BAN_PHASE_1' | 'PICK_PHASE_1' | 'BAN_PHASE_2' | 'PICK_PHASE_2' | 'RANKED_BAN' | 'RANKED_PICK' | 'DRAFT_COMPLETE';
 export const IMMOBILE_OPENERS = new Set([112, 169, 142, 109, 504]);
 export function isRiskyOpener(hero: Hero): boolean {
   const tags = hero.tactical_profile?.tags;
@@ -21,17 +21,54 @@ export const DRAFT_SEQUENCE: ReadonlyArray<{ side: Side; action: ActionKind }> =
   { side: 'red', action: 'pick' }, { side: 'blue', action: 'pick' },
   { side: 'blue', action: 'pick' }, { side: 'red', action: 'pick' },
 ];
+
+export const RANKED_DRAFT_SEQUENCE: ReadonlyArray<{ side: Side; action: ActionKind }> = [
+  // 3 Blue Bans + 3 Red Bans (Blind / Simultan)
+  { side: 'blue', action: 'ban' }, { side: 'blue', action: 'ban' }, { side: 'blue', action: 'ban' },
+  { side: 'red', action: 'ban' }, { side: 'red', action: 'ban' }, { side: 'red', action: 'ban' },
+  // 10 Picks
+  { side: 'blue', action: 'pick' }, // B1
+  { side: 'red', action: 'pick' },  // R1
+  { side: 'red', action: 'pick' },  // R2
+  { side: 'blue', action: 'pick' }, // B2
+  { side: 'blue', action: 'pick' }, // B3
+  { side: 'red', action: 'pick' },  // R3
+  { side: 'red', action: 'pick' },  // R4
+  { side: 'blue', action: 'pick' }, // B4
+  { side: 'blue', action: 'pick' }, // B5
+  { side: 'red', action: 'pick' },  // R5
+];
+
 export const TOURNAMENT_PHASES = [
-  { id: 'BAN_PHASE_1', label: '1. Ban fase 1', sub: 'Lindungi opener', start: 0, end: 3, isBan: true },
-  { id: 'PICK_PHASE_1', label: '2. Pick fase 1', sub: 'Bentuk core tim', start: 4, end: 9, isBan: false },
-  { id: 'BAN_PHASE_2', label: '3. Ban fase 2', sub: 'Putus kombo lawan', start: 10, end: 13, isBan: true },
-  { id: 'PICK_PHASE_2', label: '4. Pick fase 2', sub: 'Lengkapi komposisi', start: 14, end: 17, isBan: false },
+  { id: 'BAN_PHASE_1' as TournamentPhaseId, label: '1. Ban fase 1', sub: 'Lindungi opener', start: 0, end: 3, isBan: true },
+  { id: 'PICK_PHASE_1' as TournamentPhaseId, label: '2. Pick fase 1', sub: 'Bentuk core tim', start: 4, end: 9, isBan: false },
+  { id: 'BAN_PHASE_2' as TournamentPhaseId, label: '3. Ban fase 2', sub: 'Putus kombo lawan', start: 10, end: 13, isBan: true },
+  { id: 'PICK_PHASE_2' as TournamentPhaseId, label: '4. Pick fase 2', sub: 'Lengkapi komposisi', start: 14, end: 17, isBan: false },
 ] as const;
+
+export const RANKED_PHASES = [
+  { id: 'RANKED_BAN' as TournamentPhaseId, label: '1. Blind Ban', sub: 'Tentukan 3 hero dilarang', start: 0, end: 5, isBan: true },
+  { id: 'RANKED_PICK' as TournamentPhaseId, label: '2. Pemilihan Hero', sub: 'Bentuk komposisi tim', start: 6, end: 15, isBan: false },
+] as const;
+
 export const oppositeSide = (side: Side): Side => side === 'blue' ? 'red' : 'blue';
-export const getTournamentPhase = (step: number): TournamentPhaseId =>
-  TOURNAMENT_PHASES.find(p => step >= p.start && step <= p.end)?.id ?? 'DRAFT_COMPLETE';
-export function getDraftTurn(step: number) {
-  const turn = DRAFT_SEQUENCE[step];
+
+export function getDraftSequence(format: DraftFormat = 'tournament'): ReadonlyArray<{ side: Side; action: ActionKind }> {
+  return format === 'ranked' ? RANKED_DRAFT_SEQUENCE : DRAFT_SEQUENCE;
+}
+
+export function getDraftPhases(format: DraftFormat = 'tournament') {
+  return format === 'ranked' ? RANKED_PHASES : TOURNAMENT_PHASES;
+}
+
+export const getTournamentPhase = (step: number, format: DraftFormat = 'tournament'): TournamentPhaseId => {
+  const phases = getDraftPhases(format);
+  return phases.find(p => step >= p.start && step <= p.end)?.id ?? 'DRAFT_COMPLETE';
+};
+
+export function getDraftTurn(step: number, format: DraftFormat = 'tournament') {
+  const sequence = getDraftSequence(format);
+  const turn = sequence[step];
   return { ...(turn ?? { side: 'blue' as const, action: 'pick' as const }), stepIndex: step, isComplete: !turn };
 }
 
@@ -44,34 +81,83 @@ export interface DraftContext {
   heroes: Hero[];
   onlyGlobal: boolean;
   fearless: Record<Side, number[]>;
+  format?: DraftFormat;
 }
 export interface DraftAction { heroId: number; side: Side; action: ActionKind }
 export const emptyPosition = (): DraftPosition => ({ step: 0, picks: { blue: [], red: [] }, bans: { blue: [], red: [] } });
-export function isLegalHero(position: DraftPosition, heroId: number, context: DraftContext): boolean {
-  const turn = getDraftTurn(position.step);
+
+export function isLegalHero(
+  position: DraftPosition,
+  heroId: number,
+  context: DraftContext,
+  format: DraftFormat = 'tournament'
+): boolean {
+  const turn = getDraftTurn(position.step, format);
   const hero = context.heroes.find(h => h.hero_id === heroId);
   if (turn.isComplete || !hero || heroId === 511 || (context.onlyGlobal && !isHeroGlobalReleased(hero))) return false;
-  if ([...position.picks.blue, ...position.picks.red, ...position.bans.blue, ...position.bans.red].includes(heroId)) return false;
-  return turn.action !== 'pick' || !context.fearless[turn.side].includes(heroId);
+
+  if (turn.action === 'ban') {
+    if (format === 'ranked') {
+      // In Ranked blind ban, opposing teams can ban the same hero, but the same team cannot ban it twice
+      if (position.bans[turn.side].includes(heroId)) return false;
+      if (position.picks.blue.includes(heroId) || position.picks.red.includes(heroId)) return false;
+      return true;
+    }
+    // Tournament ban: no duplicates across all bans/picks
+    if ([...position.picks.blue, ...position.picks.red, ...position.bans.blue, ...position.bans.red].includes(heroId)) {
+      return false;
+    }
+    return true;
+  }
+
+  // Pick action: cannot pick any hero already picked or banned by either team
+  if ([...position.picks.blue, ...position.picks.red, ...position.bans.blue, ...position.bans.red].includes(heroId)) {
+    return false;
+  }
+  return !context.fearless[turn.side].includes(heroId);
 }
-export function applyDraftAction(position: DraftPosition, action: DraftAction, context: DraftContext): DraftPosition {
-  const turn = getDraftTurn(position.step);
-  if (turn.side !== action.side || turn.action !== action.action || !isLegalHero(position, action.heroId, context)) return position;
+
+export function applyDraftAction(
+  position: DraftPosition,
+  action: DraftAction,
+  context: DraftContext,
+  format: DraftFormat = 'tournament'
+): DraftPosition {
+  const turn = getDraftTurn(position.step, format);
+  if (turn.side !== action.side || turn.action !== action.action || !isLegalHero(position, action.heroId, context, format)) return position;
   const field = turn.action === 'pick' ? 'picks' : 'bans';
   return { ...position, step: position.step + 1, [field]: { ...position[field], [turn.side]: [...position[field][turn.side], action.heroId] } };
 }
-export const createInitialGameDraft = (): GameDraftData => ({
-  bluePicks: Array(5).fill(null), redPicks: Array(5).fill(null), blueBans: Array(4).fill(null), redBans: Array(4).fill(null),
-  draftStep: 0, bluePlanAId: null, bluePlanBId: null, redPlanAId: null, redPlanBId: null,
-});
+
+export const createInitialGameDraft = (format: DraftFormat = 'tournament'): GameDraftData => {
+  const banSlots = format === 'ranked' ? 3 : 4;
+  return {
+    bluePicks: Array(5).fill(null),
+    redPicks: Array(5).fill(null),
+    blueBans: Array(banSlots).fill(null),
+    redBans: Array(banSlots).fill(null),
+    draftStep: 0,
+    bluePlanAId: null,
+    bluePlanBId: null,
+    redPlanAId: null,
+    redPlanBId: null,
+  };
+};
+
 export function toPosition(game: GameDraftData): DraftPosition {
   const ids = (xs: Array<Hero | null>) => xs.filter((h): h is Hero => h !== null).map(h => h.hero_id);
   return { step: game.draftStep, picks: { blue: ids(game.bluePicks), red: ids(game.redPicks) }, bans: { blue: ids(game.blueBans), red: ids(game.redBans) } };
 }
-export function applyGameHero(game: GameDraftData, hero: Hero, context: DraftContext): GameDraftData {
+
+export function applyGameHero(
+  game: GameDraftData,
+  hero: Hero,
+  context: DraftContext,
+  format: DraftFormat = 'tournament'
+): GameDraftData {
   const position = toPosition(game);
-  const turn = getDraftTurn(position.step);
-  const next = applyDraftAction(position, { ...turn, heroId: hero.hero_id }, context);
+  const turn = getDraftTurn(position.step, format);
+  const next = applyDraftAction(position, { ...turn, heroId: hero.hero_id }, context, format);
   if (next === position) return game;
   const key = `${turn.side}${turn.action === 'pick' ? 'Picks' : 'Bans'}` as 'bluePicks' | 'redPicks' | 'blueBans' | 'redBans';
   const slots = [...game[key]];

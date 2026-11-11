@@ -36,9 +36,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/App.tsx": {
-    "mtime": 1794357982.4332824,
-    "seen": 1794358533.482242,
-    "ast_hash": "3b4c8bf7fe7ad7b12da1dc301dc4ea3f",
+    "mtime": 1794395857.082997,
+    "seen": 1794396010.6084805,
+    "ast_hash": "951a4cc7951446be9bc8c67c25baad9e",
     "semantic_hash": ""
   },
   "apps/web/src/components/BottomCommandDock.tsx": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/DraftSimulator.tsx": {
-    "mtime": 1794359561.9429173,
-    "seen": 1794359621.7883873,
-    "ast_hash": "1bb429494cfb721a001409c3272f365b",
+    "mtime": 1794395627.3454206,
+    "seen": 1794396010.6086442,
+    "ast_hash": "4c74baac2cbf28d4b12293d315170187",
     "semantic_hash": ""
   },
   "apps/web/src/components/HeaderSortBar.tsx": {
@@ -114,9 +114,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/types.ts": {
-    "mtime": 1794394042.366289,
-    "seen": 1794394482.867592,
-    "ast_hash": "de80449f66f56248dc772e892d896b76",
+    "mtime": 1794395191.267975,
+    "seen": 1794396010.6125488,
+    "ast_hash": "1b83c28694bbfcbfc2967f19b6f08851",
     "semantic_hash": ""
   },
   "apps/web/src/vite-env.d.ts": {
@@ -9450,9 +9450,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/engine/draftRules.ts": {
-    "mtime": 1794360378.809432,
-    "seen": 1794360531.4124455,
-    "ast_hash": "410c7474236dc8ae44f7a21ca9f7b79e",
+    "mtime": 1794395913.7513638,
+    "seen": 1794396010.6119916,
+    "ast_hash": "7a74151e22e83e1ab414645a1a975aa6",
     "semantic_hash": ""
   },
   "apps/web/src/engine/heroDataLoader.ts": {
@@ -9462,9 +9462,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/engine/tournamentInference.ts": {
-    "mtime": 1794362408.9214315,
-    "seen": 1794362826.6768107,
-    "ast_hash": "097b8c3f444e47643c43181697abf4ee",
+    "mtime": 1794395481.2991433,
+    "seen": 1794396010.612375,
+    "ast_hash": "e519b132e872e1ab9bf801379fe4bda1",
     "semantic_hash": ""
   },
   "apps/web/public/data_manifest.json": {
@@ -9516,21 +9516,21 @@
     "semantic_hash": ""
   },
   "apps/web/src/engine/draftSearch.ts": {
-    "mtime": 1794360551.8944075,
-    "seen": 1794361252.0317092,
-    "ast_hash": "7408f94c930696e9f8f7ff613d66724d",
+    "mtime": 1794395524.9298406,
+    "seen": 1794396010.6119983,
+    "ast_hash": "3f88e907eafc264826d443b1ea61fae1",
     "semantic_hash": ""
   },
   "apps/web/src/engine/opponent.worker.ts": {
-    "mtime": 1794212889.9111614,
-    "seen": 1794214437.9071088,
-    "ast_hash": "076d12cfc857b8b5d4174c8c3a07c762",
+    "mtime": 1794395534.2899227,
+    "seen": 1794396010.6123612,
+    "ast_hash": "4721d2181cea084baa6820ae24af4491",
     "semantic_hash": ""
   },
   "apps/web/src/engine/opponentClient.ts": {
-    "mtime": 1794213889.9336658,
-    "seen": 1794214437.9071105,
-    "ast_hash": "2eca1a05103ca787dea80a97a1790733",
+    "mtime": 1794395553.600063,
+    "seen": 1794396010.6123672,
+    "ast_hash": "ba98386c11ad1d13229ac2fb4a8a5a2e",
     "semantic_hash": ""
   },
   "apps/web/tests/draft.test.mjs": {
@@ -9540,15 +9540,15 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/PracticeDraft.tsx": {
-    "mtime": 1794356820.6925137,
-    "seen": 1794356982.7399404,
-    "ast_hash": "95514426bf3ecb4738f95815d1c36a93",
+    "mtime": 1794395749.1589117,
+    "seen": 1794396010.6098454,
+    "ast_hash": "f2a351f96e2840b1b29357c1b69a8eb2",
     "semantic_hash": ""
   },
   "apps/web/src/engine/practiceState.ts": {
-    "mtime": 1794214285.328341,
-    "seen": 1794214437.9071116,
-    "ast_hash": "072004741232400b70a7b05b749689b0",
+    "mtime": 1794395657.4606953,
+    "seen": 1794396010.6123717,
+    "ast_hash": "6f2793abfe92dd612e3946179ba7900f",
     "semantic_hash": ""
   },
   "apps/web/tests/benchmark.mjs": {
@@ -10785,6 +10785,12 @@
     "mtime": 1794393906.6710196,
     "seen": 1794393999.2431152,
     "ast_hash": "48e97bce71db45527d41d1804b34d969",
+    "semantic_hash": ""
+  },
+  "apps/web/tests/ranked.test.mjs": {
+    "mtime": 1794395971.1283813,
+    "seen": 1794396010.6136372,
+    "ast_hash": "815ce7a3e7403a1401a05a79504b9acd",
     "semantic_hash": ""
   },
   "apps/web/package-lock.json": {
