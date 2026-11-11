@@ -1,17 +1,17 @@
 # Graph Report - hok-draft-engine  (2026-11-12)
 
 ## Corpus Check
-- 262 files · ~1,559,389 words
+- 262 files · ~1,559,722 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 18 file(s) not represented in the graph (top: (none) 10, .csv 3, .jsonl 2)
 
 ## Summary
-- 1058 nodes · 2443 edges · 60 communities (51 shown, 9 thin omitted)
+- 1058 nodes · 2445 edges · 60 communities (51 shown, 9 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 38 edges (avg confidence: 0.89)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `4e5c66cc`
+- Built from commit: `2c8a7d23`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -70,7 +70,7 @@
 - readText
 - csvCell
 - rankedCandidates
-- Format Pertandingan: Turnamen & Ranked
+- assignHeroLanes
 - BrowserWorkerAdapter
 
 ## God Nodes (most connected - your core abstractions)
@@ -88,14 +88,14 @@
 ## Surprising Connections (you probably didn't know these)
 - `C. Hero Rilis Global vs Eksklusif CN` --references--> `isHeroGlobalReleased()`  [INFERRED]
   AGENTS.md → apps/web/src/data/heroReleaseStatus.ts
+- `Logika Taktis Kompetitif Utama` --references--> `evaluateEnemyCounterExposure()`  [INFERRED]
+  README.md → apps/web/src/engine/tournamentInference.ts
 - `God Nodes (Abstraksi Paling Kritis):` --references--> `runTournamentInference()`  [INFERRED]
   AGENTS.md → apps/web/src/engine/tournamentInference.ts
-- `God Nodes (Abstraksi Paling Kritis):` --references--> `isHeroGlobalReleased()`  [INFERRED]
-  AGENTS.md → apps/web/src/data/heroReleaseStatus.ts
 - `Repository Layout` --references--> `verify()`  [INFERRED]
   CONTRIBUTING.md → .github/hostinger/check-deploy.py
-- `God Nodes (Abstraksi Paling Kritis):` --references--> `loadTournamentDataset()`  [INFERRED]
-  AGENTS.md → apps/web/src/engine/heroDataLoader.ts
+- `God Nodes (Abstraksi Paling Kritis):` --references--> `isHeroGlobalReleased()`  [INFERRED]
+  AGENTS.md → apps/web/src/data/heroReleaseStatus.ts
 
 ## Import Cycles
 - None detected.
@@ -176,7 +176,7 @@ Nodes (37): actionRows, argv, banSlotsAll, battleCsv, battles, bpLenDist, byId, 
 
 ### Community 22 - "draftRules.ts"
 Cohesion: 0.14
-Nodes (23): ActionKind, applyDraftAction(), applyGameHero(), createInitialGameDraft(), DoublePickWindow, getCandidateLanesWithWeights(), getDraftPhases(), getDraftSequence() (+15 more)
+Nodes (21): ActionKind, applyDraftAction(), applyGameHero(), createInitialGameDraft(), DoublePickWindow, getDraftPhases(), getDraftTurn(), getTournamentPhase() (+13 more)
 
 ### Community 23 - "verify-dist.mjs"
 Cohesion: 0.14
@@ -199,8 +199,8 @@ Cohesion: 0.11
 Nodes (12): argv, DATA, db, HERE, leagues, OUT, parseLine(), playerRows (+4 more)
 
 ### Community 32 - "draftSearch.ts"
-Cohesion: 0.20
-Nodes (24): isHeroGlobalReleased(), analyzeLaneOccupancy(), assignHeroLanes(), computeKplPairAdjustment(), evaluateTeamCompositionIntegrity(), getDoublePickWindow(), getPairEvidence(), isRiskyOpener() (+16 more)
+Cohesion: 0.24
+Nodes (21): isHeroGlobalReleased(), analyzeLaneOccupancy(), computeKplPairAdjustment(), evaluateTeamCompositionIntegrity(), getDoublePickWindow(), getDraftSequence(), getPairEvidence(), isRiskyOpener() (+13 more)
 
 ### Community 33 - "collect-kpl-bp-all.mjs"
 Cohesion: 0.14
@@ -302,9 +302,9 @@ Nodes (4): parseCsvLine(), readCsv(), readJsonl(), readText()
 Cohesion: 0.25
 Nodes (14): emptyPosition(), oppositeSide(), rankedCandidates(), DecisionTag, createGame(), createPracticeSession(), DecisionTrace, practiceContext() (+6 more)
 
-### Community 60 - "Format Pertandingan: Turnamen & Ranked"
-Cohesion: 0.67
-Nodes (3): 1. Format Turnamen Kompetitif (18 Aksi / 4 Fase), 2. Format Ranked Match (16 Aksi / 2 Fase), Format Pertandingan: Turnamen & Ranked
+### Community 60 - "assignHeroLanes"
+Cohesion: 0.29
+Nodes (8): assignHeroLanes(), getCandidateLanesWithWeights(), 1. Format Turnamen Kompetitif (18 Aksi / 4 Fase), 2. Format Ranked Match (16 Aksi / 2 Fase), Cara kerja mesin draft, Diagram Arsitektur Alur Keputusan (Decision Pipeline), Format Pertandingan: Turnamen & Ranked, Logika Taktis Kompetitif Utama
 
 ## Knowledge Gaps
 - **1 isolated node(s):** `ml-engine`
@@ -314,17 +314,17 @@ Nodes (3): 1. Format Turnamen Kompetitif (18 Aksi / 4 Fase), 2. Format Ranked Ma
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `HoK Draft Engine` connect `AGENTS.md — Developer & Agent Field Manual` to `draftSearch.ts`?**
-  _High betweenness centrality (0.354) - this node is a cross-community bridge._
+- **Why does `Contributing to HoK Draft Engine` connect `AGENTS.md — Developer & Agent Field Manual` to `check-deploy.py`?**
+  _High betweenness centrality (0.350) - this node is a cross-community bridge._
 - **Are the 2 inferred relationships involving `App()` (e.g. with `God Nodes (Abstraksi Paling Kritis):` and `isFlowborn()`) actually correct?**
   _`App()` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `ml-engine` to the rest of the system?**
   _1 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `PracticeDraft.tsx` be split into smaller, more focused modules?**
   _Cohesion score 0.050082918739635156 - nodes in this community are weakly interconnected._
-- **Why does `Contributing to HoK Draft Engine` connect `AGENTS.md — Developer & Agent Field Manual` to `check-deploy.py`?**
-  _High betweenness centrality (0.353) - this node is a cross-community bridge._
+- **Why does `Repository Layout` connect `check-deploy.py` to `AGENTS.md — Developer & Agent Field Manual`?**
+  _High betweenness centrality (0.344) - this node is a cross-community bridge._
 - **Should `0_sync_global_assets.py` be split into smaller, more focused modules?**
   _Cohesion score 0.14761904761904762 - nodes in this community are weakly interconnected._
-- **Why does `Cara kerja mesin draft` connect `draftSearch.ts` to `Format Pertandingan: Turnamen & Ranked`, `AGENTS.md — Developer & Agent Field Manual`?**
-  _High betweenness centrality (0.348) - this node is a cross-community bridge._
+- **Why does `verify()` connect `check-deploy.py` to `json`?**
+  _High betweenness centrality (0.344) - this node is a cross-community bridge._

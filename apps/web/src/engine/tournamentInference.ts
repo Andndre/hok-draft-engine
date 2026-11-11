@@ -25,6 +25,7 @@ import {
   FLOWBORN_HERO_IDS,
   isFlowborn,
   getDoublePickWindow,
+  getDraftSequence,
 } from './draftRules';
 
 export type { TournamentPhaseId } from './draftRules';
@@ -524,7 +525,8 @@ export function computeDraftOutcomeProjection(
   isBlueSide: boolean = true,
   draftStep: number = 0,
   bannedHeroIds: number[] = [],
-  b1Openers: Record<string, any> = {}
+  b1Openers: Record<string, any> = {},
+  format: DraftFormat = 'tournament'
 ): DraftOutcomeProjection {
   // Skor dasar draft advantage (skala 0 - 100)
   const baseVector = isPickPhase
@@ -747,6 +749,13 @@ export function computeDraftOutcomeProjection(
     ? (draftStep <= 6 ? 'B2+B3' : 'Fase 2')
     : (draftStep === 5 ? 'R2' : 'Fase 2');
 
+  const enemySide = isBlueSide ? 'red' : 'blue';
+  const sequence = getDraftSequence(format);
+  const remainingEnemyPicks = sequence
+    .slice(draftStep + 1)
+    .filter((s) => s.side === enemySide && s.action === 'pick').length;
+  const enemyCanPickMore = enemyHeroes.length < 5 && remainingEnemyPicks > 0;
+
   // A. Periksa apakah sudah ada hero musuh di board yang secara aktif meng-counter candidate
   const activeEnemyHardCounters: string[] = [];
   const activeEnemySoftCounters: string[] = [];
@@ -765,7 +774,21 @@ export function computeDraftOutcomeProjection(
     const penalty = 15 + activeEnemyHardCounters.length * 3;
     worstCaseScore = Math.max(22, baseScore - penalty);
     const names = [...activeEnemyHardCounters, ...activeEnemySoftCounters].slice(0, 2).join(' & ');
-    worstCaseScenario = `Sudah Ter-Counter: Lawan sudah mengunci ${names} di board (-${penalty}%)`;
+    worstCaseScenario = !enemyCanPickMore
+      ? `Sudah Ter-Counter di Board: Menghadapi ${names} tanpa respon balasan musuh (-${penalty}%)`
+      : `Sudah Ter-Counter: Lawan sudah mengunci ${names} di board (-${penalty}%)`;
+  } else if (!enemyCanPickMore) {
+    // Musuh sudah tidak memiliki giliran pick balasan (lawan sudah lengkap 5 hero atau pick terakhir draft)
+    if (activeEnemySoftCounters.length === 1) {
+      riskLevel = 'RENDAH';
+      const penalty = 4;
+      worstCaseScore = Math.max(40, baseScore - penalty);
+      worstCaseScenario = `Counter Terakhir: Lawan tidak memiliki giliran pick balasan (hanya soft matchup ${activeEnemySoftCounters[0]} di board) (-${penalty}%)`;
+    } else {
+      riskLevel = 'RENDAH';
+      worstCaseScore = baseScore;
+      worstCaseScenario = 'Counter Terakhir: Lawan tidak memiliki giliran pick balasan';
+    }
   } else if (enemyVacantArr.length > 0) {
     // B. Identifikasi ancaman counter yang sudah berhasil di-ban (Pre-ban / Counter cover)
     const bannedThreatNames: string[] = [];
@@ -1865,7 +1888,8 @@ export function runTournamentInference(
       isBlueSide,
       draftStep,
       bannedHeroIds,
-      b1Openers
+      b1Openers,
+      format
     );
   }
 

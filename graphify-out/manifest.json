@@ -36,8 +36,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/App.tsx": {
-    "mtime": 1794440047.2184653,
-    "seen": 1794440205.829401,
+    "mtime": 1794440251.2155788,
+    "seen": 1794441257.4800868,
     "ast_hash": "8975227a74900db6045c6cff6c3de50d",
     "semantic_hash": ""
   },
@@ -48,8 +48,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/DraftSimulator.tsx": {
-    "mtime": 1794440083.9245594,
-    "seen": 1794440205.8295374,
+    "mtime": 1794440252.5449536,
+    "seen": 1794441257.480253,
     "ast_hash": "b3180131746cbacaa877bfa29d77ac43",
     "semantic_hash": ""
   },
@@ -84,8 +84,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/TacticalRadarPanel.tsx": {
-    "mtime": 1794439985.3241217,
-    "seen": 1794440205.8306744,
+    "mtime": 1794440253.6733153,
+    "seen": 1794441257.4814587,
     "ast_hash": "c1f07dd56f573807ebf6791fd09bc1d3",
     "semantic_hash": ""
   },
@@ -9462,9 +9462,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/engine/tournamentInference.ts": {
-    "mtime": 1794440169.805987,
-    "seen": 1794440205.8331459,
-    "ast_hash": "0e47c180a54da89686f5f0cf6e5c32d8",
+    "mtime": 1794441211.432338,
+    "seen": 1794441257.4842286,
+    "ast_hash": "a297d472b45ef264be8d492226ab4e13",
     "semantic_hash": ""
   },
   "apps/web/public/data_manifest.json": {
@@ -9564,9 +9564,9 @@
     "semantic_hash": ""
   },
   "apps/web/tests/ui.test.mjs": {
-    "mtime": 1794398768.3720245,
-    "seen": 1794410527.3517141,
-    "ast_hash": "e1f31139baae78d0cd703192850c6c72",
+    "mtime": 1794441222.9270124,
+    "seen": 1794441257.4862566,
+    "ast_hash": "a62288989e10cb22418cdf144bb7a2a1",
     "semantic_hash": ""
   },
   "apps/web/tests/verify-dist.mjs": {
@@ -10584,9 +10584,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/engine/gamePlan.ts": {
-    "mtime": 1794361289.8785143,
-    "seen": 1794362381.1624773,
-    "ast_hash": "ccd0cf46bf0ac225ed1c57a970cf9d48",
+    "mtime": 1794440676.554142,
+    "seen": 1794441257.4834652,
+    "ast_hash": "e6a52a2baa8eb978cc78f60933fab78d",
     "semantic_hash": ""
   },
   "apps/web/tests/gamePlan.test.mjs": {

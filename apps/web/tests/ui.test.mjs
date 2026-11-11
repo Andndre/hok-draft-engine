@@ -295,6 +295,38 @@ test('computeDraftOutcomeProjection produces specific hero names and lanes in Ba
     assert.strictEqual(counteredProj.riskLevel, 'TINGGI');
     assert.ok(counteredProj.worstCaseScenario.includes('Consort Yu'));
   }
+
+  // Pada Last Pick (misal Step 17 / R5, lawan sudah lengkap 5 hero walau ada vacant lane akibat komposisi musuh)
+  // AI TIDAK BOLEH memproyeksikan respon pick counter musuh!
+  const dummyEnemyFive = [
+    dataset.heroes[0],
+    dataset.heroes[1],
+    dataset.heroes[2],
+    dataset.heroes[3],
+    dataset.heroes[4],
+  ];
+  const lastPickProj = computeDraftOutcomeProjection(
+    luban,
+    true,
+    [dataset.heroes[5], dataset.heroes[6], dataset.heroes[7], dataset.heroes[8]],
+    dummyEnemyFive,
+    available,
+    new Set(['Farm']),
+    new Set(['Mid']), // Ceritanya musuh pick 2 farm laner dan 0 mid laner
+    dataset.synergy?.pairs || {},
+    evaluateTacticalScores([], []),
+    false,
+    null,
+    false, // Red side
+    17,    // Step 17 = R5 Last Pick
+    [],
+    dataset.synergy?.b1_openers || {},
+    'tournament'
+  );
+  assert.strictEqual(lastPickProj.riskLevel, 'RENDAH');
+  assert.ok(lastPickProj.worstCaseScenario.includes('Counter Terakhir') || lastPickProj.worstCaseScenario.includes('tidak memiliki giliran pick balasan'));
+  assert.ok(!lastPickProj.worstCaseScenario.includes('Musuh bisa respon'));
+  assert.ok(!lastPickProj.worstCaseScenario.includes('diproyeksikan mengunci'));
 });
 
 test('plan and wiki dialogs expose names, native controls and counter-first navigation', () => {
