@@ -341,6 +341,11 @@ test('wiki exposes HoKStats build alternatives and source-attributed item, spell
   assert.ok(factualWiki.includes('title="Memulihkan sejumlah HP untuk rekan satu tim."'));
   assert.ok(factualWiki.includes('title="Memaksa lawan menyerang hero ini dan mengunci penggunaan skill selama durasi."'));
   assert.ok(!factualWiki.includes('Dive Vulnerable') && !factualWiki.includes('Weak Early') && !factualWiki.includes('engage'));
+  const tacticsWiki = render(HeroWikiDrawer, { hero: taggedHero, onClose: noop, isFavorite: false, onToggleFavorite: noop, allHeroes: dataset.heroes, onSelectRelatedHero: noop, initialTab: 'tactics' });
+  assert.ok(tacticsWiki.includes('Peran Taktis'));
+  assert.ok(tacticsWiki.includes('Inisiator (Engage)'));
+  assert.ok(tacticsWiki.includes('Rentan Dive') && tacticsWiki.includes('Lemah Early Game'));
+  assert.ok(tacticsWiki.includes('title="Sangat rentan disergap (dive) oleh assassin karena minim mobilitas atau pertahanan mandiri."'));
   const counters = render(HeroWikiDrawer, { hero: enriched, onClose: noop, isFavorite: false, onToggleFavorite: noop, allHeroes: dataset.heroes, onSelectRelatedHero: noop, initialTab: 'counters' });
   assert.ok(counters.includes('Kuat melawan') && counters.includes('Dun') && counters.includes('HoKStats'));
   assert.ok(!counters.includes('Pending review') && !counters.includes('DITINJAU'));

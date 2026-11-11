@@ -91,6 +91,20 @@ const FACTUAL_SKILL_TAG_GROUPS: ReadonlyArray<{
   },
 ];
 
+const TACTICAL_ROLE_TAGS: ReadonlyArray<readonly [TacticalTag, string, string]> = [
+  ['frontline', 'Frontline', 'Mampu menyerap damage dan menahan garis depan tim.'],
+  ['engage', 'Inisiator (Engage)', 'Dapat membuka pertempuran dengan gap-closer atau kontrol area yang andal.'],
+  ['disengage', 'Counter-Engage / Disengage', 'Dapat membatalkan inisiasi lawan atau membantu tim mundur dengan aman.'],
+  ['peel', 'Peel / Pelindung Carry', 'Mampu melindungi rekan tim dari sergapan lawan melalui CC atau displacement.'],
+];
+
+const TACTICAL_VULNERABILITY_TAGS: ReadonlyArray<readonly [TacticalTag, string, string]> = [
+  ['dive_vulnerable', 'Rentan Dive', 'Sangat rentan disergap (dive) oleh assassin karena minim mobilitas atau pertahanan mandiri.'],
+  ['kite_vulnerable', 'Rentan Kite', 'Mudah dipermainkan dari jarak jauh karena jangkauan serangan atau mobilitas terbatas.'],
+  ['weak_early', 'Lemah Early Game', 'Ketahanan dan damage pada fase awal relatif rendah, memerlukan farming atau item core.'],
+  ['low_damage', 'Damage Rendah', 'Bukan penghasil damage utama, fokus pada utilitas tim, durabilitas, atau kontrol.'],
+];
+
 const MatchupPanel: React.FC<MatchupPanelProps> = ({ hero, allHeroes, onSelectRelatedHero }) => {
   const normalizeName = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, '');
   const idMap = new Map(allHeroes.map((item) => [item.hero_id, item]));
@@ -289,6 +303,14 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
         ...group,
         matched: group.items.filter(([tag]) => heroTags[tag] === true),
       })).filter((group) => group.matched.length > 0)
+    : [];
+
+  const tacticalRoleMatches = heroTags
+    ? TACTICAL_ROLE_TAGS.filter(([tag]) => heroTags[tag] === true)
+    : [];
+
+  const tacticalVulnerabilityMatches = heroTags
+    ? TACTICAL_VULNERABILITY_TAGS.filter(([tag]) => heroTags[tag] === true)
     : [];
 
   return (
@@ -788,6 +810,52 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
           {/* TAB 4: GAMEPLAY & TACTICS */}
           {activeWikiTab === 'tactics' && (
             <div className="space-y-4">
+              {/* Karakteristik & Peran Taktis */}
+              {(tacticalRoleMatches.length > 0 || tacticalVulnerabilityMatches.length > 0) && (
+                <div className="rounded-xl border border-[#232A38] bg-[#12161F] p-3.5 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                      Karakteristik & Peran Taktis
+                    </h4>
+                    <span className="text-[10px] text-slate-500">Audit Taktis Terverifikasi</span>
+                  </div>
+
+                  {tacticalRoleMatches.length > 0 && (
+                    <div className="space-y-1.5">
+                      <span className="text-[11px] font-semibold text-indigo-300">Peran Komposisi Tim:</span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {tacticalRoleMatches.map(([tag, label, tooltip]) => (
+                          <span
+                            key={tag}
+                            title={tooltip}
+                            className="inline-flex cursor-help items-center rounded-lg border border-indigo-800/60 bg-indigo-950/30 px-2.5 py-1 text-xs font-medium text-indigo-200 transition-colors hover:brightness-125"
+                          >
+                            {label}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {tacticalVulnerabilityMatches.length > 0 && (
+                    <div className="space-y-1.5">
+                      <span className="text-[11px] font-semibold text-rose-300">Peringatan Kelemahan (Trade-off):</span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {tacticalVulnerabilityMatches.map(([tag, label, tooltip]) => (
+                          <span
+                            key={tag}
+                            title={tooltip}
+                            className="inline-flex cursor-help items-center rounded-lg border border-rose-800/60 bg-rose-950/30 px-2.5 py-1 text-xs font-medium text-rose-200 transition-colors hover:brightness-125"
+                          >
+                            {label}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
               {/* HOKFIRE Gameplay Breakdown */}
               {hGuide && hGuide.gameplay_tips ? (
                 <div className="p-3.5 bg-[#12161F] border border-[#232A38] rounded-xl space-y-2">
