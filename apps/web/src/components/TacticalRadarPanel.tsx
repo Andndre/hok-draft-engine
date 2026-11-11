@@ -1,7 +1,7 @@
 import { LaneLabel } from './ui/LaneIcon';
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, BookOpen, ChartColumn, CheckCircle2, ChevronDown, Crosshair, Info, LoaderCircle, ShieldAlert, ShieldBan, ShieldCheck, SlidersHorizontal, Sparkles, Swords, Target, TrendingUp } from 'lucide-react';
-import type { Hero, TacticalVector, TacticalDelta } from '../types';
+import type { Hero, TacticalVector, TacticalDelta, DuetPackageOption } from '../types';
 import type { TournamentPhaseStrategy, TournamentPredictionResult } from '../engine/tournamentInference';
 import { HeroThumbnail } from './ui/AssetThumbnail';
 import { plainText } from './ui/presentation';
@@ -22,6 +22,8 @@ interface Props {
   isPickPhase: boolean;
   isComplete?: boolean;
   isWaiting?: boolean;
+  duetPackages?: DuetPackageOption[];
+  onSelectDuetPackage?: (duet: DuetPackageOption) => void;
 }
 const axes: Array<{ key: keyof TacticalVector; label: string }> = [
   { key: 'draft_advantage', label: 'Keunggulan draft' }, { key: 'early_game_pressure', label: 'Tekanan awal' },
@@ -30,20 +32,96 @@ const axes: Array<{ key: keyof TacticalVector; label: string }> = [
   { key: 'team_utility', label: 'Utilitas tim' },
 ];
 
-export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseStrategy, onOpenPlanModal, onSelectQuickPlanA, recommendations, onSelectCandidate, onInspectHero, activeSide, isPickPhase, isComplete = false, isWaiting = false }: Props) {
+export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseStrategy, onOpenPlanModal, onSelectQuickPlanA, recommendations, onSelectCandidate, onInspectHero, activeSide, isPickPhase, isComplete = false, isWaiting = false, duetPackages = [], onSelectDuetPackage }: Props) {
   const ActionIcon = isPickPhase ? Swords : ShieldBan;
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [selectedDuetIdx, setSelectedDuetIdx] = useState<number>(0);
 
   const firstHeroId = recommendations[0]?.hero.hero_id;
   useEffect(() => {
     setSelectedIndex(0);
+    setSelectedDuetIdx(0);
   }, [firstHeroId]);
 
   const activeIndex = Math.min(selectedIndex, Math.max(0, recommendations.length - 1));
   const currentRec = recommendations[activeIndex] || recommendations[0];
+  const activeDuet = duetPackages && duetPackages.length > 0 ? duetPackages[Math.min(selectedDuetIdx, duetPackages.length - 1)] : null;
 
   return <section className="tactical-panel surface-panel" aria-label="Rekomendasi dan evaluasi draft">
     <div className="tactical-panel__header"><div className="section-heading"><span className="section-heading__icon"><Sparkles aria-hidden="true" /></span><div><h2>{isComplete ? 'Evaluasi draft' : 'Rekomendasi giliran'}</h2><p>{isComplete ? 'Komposisi kedua tim sudah lengkap' : 'Prioritas taktis untuk tim aktif'}</p></div></div><span className="side-badge" data-side={activeSide}>{activeSide === 'blue' ? 'Blue' : 'Red'} · {isPickPhase ? 'Pick' : 'Ban'}</span></div>
+
+    {activeDuet && !isComplete && !isWaiting && (
+      <div className="duet-package-card" style={{ marginBottom: '1rem', padding: '0.875rem', background: 'rgba(234, 179, 8, 0.08)', border: '1px solid rgba(234, 179, 8, 0.3)', borderRadius: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#eab308' }}>
+              💡 Paket Duet Giliran Ganda
+            </span>
+          </div>
+          {duetPackages.length > 1 && (
+            <div style={{ display: 'flex', gap: '0.25rem' }}>
+              {duetPackages.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => setSelectedDuetIdx(idx)}
+                  className={`ui-button ui-button--small ${selectedDuetIdx === idx ? 'ui-button--primary' : 'ui-button--quiet'}`}
+                  style={{ padding: '0.15rem 0.5rem', fontSize: '0.75rem', minHeight: 'auto' }}
+                >
+                  #{idx + 1}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', margin: '0.5rem 0' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flex: 1, background: 'rgba(0, 0, 0, 0.2)', padding: '0.35rem 0.5rem', borderRadius: '6px' }}>
+            <HeroThumbnail hero={activeDuet.primaryHero} />
+            <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+              <strong style={{ fontSize: '0.875rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{activeDuet.primaryHero.name}</strong>
+              <small><LaneLabel lane={activeDuet.primaryLane} /></small>
+            </div>
+          </div>
+          <span style={{ fontSize: '1.1rem', fontWeight: 700, color: '#eab308' }}>+</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flex: 1, background: 'rgba(0, 0, 0, 0.2)', padding: '0.35rem 0.5rem', borderRadius: '6px' }}>
+            <HeroThumbnail hero={activeDuet.secondaryHero} />
+            <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+              <strong style={{ fontSize: '0.875rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{activeDuet.secondaryHero.name}</strong>
+              <small><LaneLabel lane={activeDuet.secondaryLane} /></small>
+            </div>
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem', fontSize: '0.75rem', margin: '0.5rem 0' }}>
+          <span style={{ background: 'rgba(255, 255, 255, 0.08)', padding: '0.15rem 0.4rem', borderRadius: '4px' }}>
+            {activeDuet.archetypeBadge}
+          </span>
+          {activeDuet.kplSynergyLabel && (
+            <span style={{ background: 'rgba(59, 130, 246, 0.15)', color: '#60a5fa', padding: '0.15rem 0.4rem', borderRadius: '4px' }}>
+              {activeDuet.kplSynergyLabel}
+            </span>
+          )}
+          {activeDuet.enemyExploitBadge && (
+            <span style={{ background: 'rgba(34, 197, 94, 0.15)', color: '#4ade80', padding: '0.15rem 0.4rem', borderRadius: '4px' }}>
+              {activeDuet.enemyExploitBadge}
+            </span>
+          )}
+        </div>
+
+        {onSelectDuetPackage && (
+          <button
+            type="button"
+            className="ui-button ui-button--primary"
+            style={{ width: '100%', marginTop: '0.5rem', justifyContent: 'center' }}
+            onClick={() => onSelectDuetPackage(activeDuet)}
+          >
+            <Swords aria-hidden="true" />
+            Pick Paket Ini ({activeDuet.primaryHero.name} + {activeDuet.secondaryHero.name})
+          </button>
+        )}
+      </div>
+    )}
 
     {recommendations.length > 1 && !isComplete && !isWaiting && (
       <div className="recommendation-tabs" role="tablist" aria-label="Pilihan prioritas rekomendasi AI">

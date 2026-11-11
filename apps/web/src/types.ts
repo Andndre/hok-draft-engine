@@ -404,6 +404,20 @@ export interface GamePlanAnalysis {
   junglePlan: JungleAndGankPlan;
 }
 
+export interface DuetPackageOption {
+  primaryHero: Hero;
+  secondaryHero: Hero;
+  combinedScore: number;
+  duetWinRate?: number;
+  kplMatches?: number;
+  synergyLift?: number;
+  archetypeBadge: string;
+  kplSynergyLabel?: string;
+  enemyExploitBadge?: string;
+  primaryLane: Lane;
+  secondaryLane: Lane;
+}
+
 export type SortMode = 'az' | 'win' | 'pick' | 'ai';
 export type ViewMode = 'compact' | 'detailed';
 export type ActiveTab = 'counter' | 'draft' | 'wiki' | 'favorites';

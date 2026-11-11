@@ -85,6 +85,41 @@ export function getDraftTurn(step: number, format: DraftFormat = 'tournament', i
   return { ...(turn ?? { side: 'blue' as const, action: 'pick' as const }), stepIndex: step, isComplete: !turn };
 }
 
+export interface DoublePickWindow {
+  isDoublePickFirst: boolean;
+  isDoublePickSecond: boolean;
+  side: Side;
+  partnerStep: number;
+}
+
+export function getDoublePickWindow(
+  step: number,
+  format: DraftFormat = 'tournament',
+  isUltimateBattle: boolean = false
+): DoublePickWindow {
+  if (isUltimateBattle) {
+    return { isDoublePickFirst: false, isDoublePickSecond: false, side: 'blue', partnerStep: -1 };
+  }
+  const sequence = getDraftSequence(format, isUltimateBattle);
+  const current = sequence[step];
+  if (!current || current.action !== 'pick') {
+    return { isDoublePickFirst: false, isDoublePickSecond: false, side: current?.side ?? 'blue', partnerStep: -1 };
+  }
+
+  const next = sequence[step + 1];
+  const isFirst = next?.side === current.side && next?.action === 'pick';
+
+  const prev = sequence[step - 1];
+  const isSecond = prev?.side === current.side && prev?.action === 'pick';
+
+  return {
+    isDoublePickFirst: Boolean(isFirst),
+    isDoublePickSecond: Boolean(isSecond),
+    side: current.side,
+    partnerStep: isFirst ? step + 1 : (isSecond ? step - 1 : -1),
+  };
+}
+
 export interface DraftPosition {
   step: number;
   picks: Record<Side, number[]>;

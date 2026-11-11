@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { DraftFormat, Hero, Lane, ActiveTab, SortMode, ViewMode, TacticalVector, TacticalDelta, GameDraftData, LaneAssignmentMap, TournamentDataset, SeriesFormat, SeriesTeam } from './types';
+import { DraftFormat, Hero, Lane, ActiveTab, SortMode, ViewMode, TacticalVector, TacticalDelta, GameDraftData, LaneAssignmentMap, TournamentDataset, SeriesFormat, SeriesTeam, DuetPackageOption } from './types';
 import { loadTournamentDataset } from './engine/heroDataLoader';
 import { runTournamentInference, TournamentPredictionResult, TournamentPhaseStrategy } from './engine/tournamentInference';
 import { computeTacticalDeltas } from './engine/deltaExplainer';
@@ -92,6 +92,7 @@ export const App: React.FC = () => {
   const [deltas, setDeltas] = useState<TacticalDelta[]>([]);
   const [primaryInsight, setPrimaryInsight] = useState<string>('');
   const [recommendations, setRecommendations] = useState<TournamentPredictionResult['recommendations']>([]);
+  const [duetPackages, setDuetPackages] = useState<DuetPackageOption[]>([]);
   const [phaseStrategy, setPhaseStrategy] = useState<TournamentPhaseStrategy | undefined>(undefined);
 
   const loadData = useCallback(async () => {
@@ -286,6 +287,7 @@ export const App: React.FC = () => {
         setEngineReady(true);
         setTacticalScores(result.tacticalScores);
         setRecommendations(result.recommendations);
+        setDuetPackages(result.duetPackages || []);
         setPhaseStrategy(result.phaseStrategy);
 
         // Compute deltas if we have a previous baseline
@@ -383,6 +385,25 @@ export const App: React.FC = () => {
     setPreviousScores(tacticalScores);
 
     updateCurrentDraft((prev) => applyGameHero(prev, hero, { heroes, onlyGlobal: onlyGlobalReleased, fearless: { blue: [...blueFearlessUnavailableIds], red: [...redFearlessUnavailableIds] }, format: draftFormat }, draftFormat));
+  };
+
+  // Handle two-hero core package selection on double-pick turns
+  const handleSelectDuetPackage = (duet: DuetPackageOption) => {
+    if (currentTurn.isComplete) return;
+    setPreviousScores(tacticalScores);
+
+    updateCurrentDraft((prev) => {
+      const ctx = {
+        heroes,
+        onlyGlobal: onlyGlobalReleased,
+        fearless: { blue: [...blueFearlessUnavailableIds], red: [...redFearlessUnavailableIds] },
+        format: draftFormat,
+        isUltimateBattle,
+      };
+      const afterFirst = applyGameHero(prev, duet.primaryHero, ctx, draftFormat, isUltimateBattle);
+      const afterSecond = applyGameHero(afterFirst, duet.secondaryHero, ctx, draftFormat, isUltimateBattle);
+      return afterSecond;
+    });
   };
 
   // Reset Current Game Draft ONLY (preserves other games!)
@@ -719,7 +740,7 @@ export const App: React.FC = () => {
                   return viewMode === 'compact' ? <HeroCardCompact key={hero.hero_id} {...shared} quickBadge={rank > 0 && rank <= 5 ? 'AI #' + rank : undefined} /> : <HeroCardDetailed key={hero.hero_id} {...shared} aiRank={rank > 0 ? rank : undefined} />;
                 })}</div>}
             </section>
-            {activeTab === 'draft' && !loading && <aside className="analysis-sidebar"><TacticalRadarPanel scores={tacticalScores} deltas={deltas} primaryInsight={primaryInsight} phaseStrategy={phaseStrategy} planAId={activeSidePlanAId} planBId={activeSidePlanBId} onOpenPlanModal={() => setIsPlanModalOpen(true)} onSelectQuickPlanA={handleSetPlanA} recommendations={recommendations} onSelectCandidate={handleSelectHero} onInspectHero={setWikiHero} activeSide={currentTurn.side} isPickPhase={currentTurn.action === 'pick'} isComplete={currentTurn.isComplete} /></aside>}
+            {activeTab === 'draft' && !loading && <aside className="analysis-sidebar"><TacticalRadarPanel scores={tacticalScores} deltas={deltas} primaryInsight={primaryInsight} phaseStrategy={phaseStrategy} planAId={activeSidePlanAId} planBId={activeSidePlanBId} onOpenPlanModal={() => setIsPlanModalOpen(true)} onSelectQuickPlanA={handleSetPlanA} recommendations={recommendations} onSelectCandidate={handleSelectHero} onInspectHero={setWikiHero} activeSide={currentTurn.side} isPickPhase={currentTurn.action === 'pick'} isComplete={currentTurn.isComplete} duetPackages={duetPackages} onSelectDuetPackage={handleSelectDuetPackage} /></aside>}
           </div>}
         </>}
       </main>

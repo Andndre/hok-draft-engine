@@ -36,9 +36,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/App.tsx": {
-    "mtime": 1794435460.8259842,
-    "seen": 1794436310.9416091,
-    "ast_hash": "42b41e7773d4260fc7c3102949778be8",
+    "mtime": 1794440047.2184653,
+    "seen": 1794440205.829401,
+    "ast_hash": "8975227a74900db6045c6cff6c3de50d",
     "semantic_hash": ""
   },
   "apps/web/src/components/BottomCommandDock.tsx": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/DraftSimulator.tsx": {
-    "mtime": 1794410606.6106923,
-    "seen": 1794434669.3160517,
-    "ast_hash": "4d090ff495ed5a428db02b76e3067411",
+    "mtime": 1794440083.9245594,
+    "seen": 1794440205.8295374,
+    "ast_hash": "b3180131746cbacaa877bfa29d77ac43",
     "semantic_hash": ""
   },
   "apps/web/src/components/HeaderSortBar.tsx": {
@@ -84,9 +84,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/TacticalRadarPanel.tsx": {
-    "mtime": 1794352297.4140942,
-    "seen": 1794356816.417251,
-    "ast_hash": "8b9c736819a5bc47e6f13fb10874908b",
+    "mtime": 1794439985.3241217,
+    "seen": 1794440205.8306744,
+    "ast_hash": "c1f07dd56f573807ebf6791fd09bc1d3",
     "semantic_hash": ""
   },
   "apps/web/src/data/heroReleaseStatus.ts": {
@@ -114,9 +114,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/types.ts": {
-    "mtime": 1794409991.0326042,
-    "seen": 1794410527.350966,
-    "ast_hash": "8b15538e7550e5eb0ec1c8c44222fe73",
+    "mtime": 1794439844.4220245,
+    "seen": 1794440205.8332999,
+    "ast_hash": "ca40eaed024acbeeec76b22bbd40c07d",
     "semantic_hash": ""
   },
   "apps/web/src/vite-env.d.ts": {
@@ -9450,9 +9450,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/engine/draftRules.ts": {
-    "mtime": 1794435461.6876512,
-    "seen": 1794436310.9450352,
-    "ast_hash": "de1ae9c4cf9f075a57d21550332f587f",
+    "mtime": 1794439856.8924727,
+    "seen": 1794440205.8322842,
+    "ast_hash": "244c31e22ed6db1c611c56ebdf3f8c45",
     "semantic_hash": ""
   },
   "apps/web/src/engine/heroDataLoader.ts": {
@@ -9462,14 +9462,14 @@
     "semantic_hash": ""
   },
   "apps/web/src/engine/tournamentInference.ts": {
-    "mtime": 1794435462.832222,
-    "seen": 1794436310.9457774,
-    "ast_hash": "8ad3ee98b0e1d1413dde84b5fb575b00",
+    "mtime": 1794440169.805987,
+    "seen": 1794440205.8331459,
+    "ast_hash": "0e47c180a54da89686f5f0cf6e5c32d8",
     "semantic_hash": ""
   },
   "apps/web/public/data_manifest.json": {
-    "mtime": 1794436283.3244545,
-    "seen": 1794436310.939542,
+    "mtime": 1794436343.3535194,
+    "seen": 1794440205.8270266,
     "ast_hash": "acde02f8d4b98ae533234128e8b9ceaa",
     "semantic_hash": ""
   },
@@ -9534,9 +9534,9 @@
     "semantic_hash": ""
   },
   "apps/web/tests/draft.test.mjs": {
-    "mtime": 1794435353.5315418,
-    "seen": 1794435427.007753,
-    "ast_hash": "9b697f3a11b0112bffab0cf58cf966be",
+    "mtime": 1794440111.1597908,
+    "seen": 1794440205.8336978,
+    "ast_hash": "63b3bee8aa08ab5d878932a3b2b6dade",
     "semantic_hash": ""
   },
   "apps/web/src/components/PracticeDraft.tsx": {
@@ -10367,12 +10367,6 @@
     "ast_hash": "b9000e363354f58ef831e6a5f0867f92",
     "semantic_hash": ""
   },
-  "data/mappings/tactical_proposals/509-0a4066fec712.json": {
-    "mtime": 1794393883.8015194,
-    "seen": 1794393999.2514899,
-    "ast_hash": "e56d578db73ff57d139454a0a36c9355",
-    "semantic_hash": ""
-  },
   "data/mappings/tactical_proposals/510-ae869f2aa4ad.json": {
     "mtime": 1794436278.0462155,
     "seen": 1794436310.952007,
@@ -10857,12 +10851,6 @@
     "mtime": 1794436278.0422165,
     "seen": 1794436310.9520013,
     "ast_hash": "da84396cac01c696196fb6105ce7e2f1",
-    "semantic_hash": ""
-  },
-  "data/mappings/tactical_proposals/509-4f331c9292b9.json": {
-    "mtime": 1794436176.8624258,
-    "seen": 1794436310.9520042,
-    "ast_hash": "9e868067db64d3e075c412eeefc27d8d",
     "semantic_hash": ""
   },
   "apps/web/package-lock.json": {

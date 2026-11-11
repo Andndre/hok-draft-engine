@@ -15,6 +15,7 @@ import {
   teamOnSide,
   FLOWBORN_HERO_IDS,
   isFlowborn,
+  getDoublePickWindow,
 } from '../src/engine/draftRules.ts';
 import { rankedCandidates, searchDraft, evaluatePosition } from '../src/engine/draftSearch.ts';
 import { evaluateTacticalScores, evaluateEnemyCounterExposure, reviewedHoKStatsBonuses, runTournamentInference } from '../src/engine/tournamentInference.ts';
@@ -513,4 +514,88 @@ test('Flowborn single-hero equivalence rule across draft, bans, and fearless', (
   flowbornIds.forEach(fid => {
     assert.ok(!g2Locks.red.has(fid), `Flowborn ${fid} must NOT be locked for Team B in Game 2`);
   });
+});
+
+test('Double-pick window detection and Duet Package Recommendations', () => {
+  // 1. Test getDoublePickWindow across tournament and ranked formats
+  // Tournament Step 4 (B1): single
+  const b1Win = getDoublePickWindow(4, 'tournament');
+  assert.equal(b1Win.isDoublePickFirst, false);
+  assert.equal(b1Win.isDoublePickSecond, false);
+
+  // Tournament Step 5 (R1): double-pick first (partner is Step 6 / R2)
+  const r1Win = getDoublePickWindow(5, 'tournament');
+  assert.equal(r1Win.isDoublePickFirst, true);
+  assert.equal(r1Win.isDoublePickSecond, false);
+  assert.equal(r1Win.partnerStep, 6);
+  assert.equal(r1Win.side, 'red');
+
+  // Tournament Step 6 (R2): double-pick second
+  const r2Win = getDoublePickWindow(6, 'tournament');
+  assert.equal(r2Win.isDoublePickFirst, false);
+  assert.equal(r2Win.isDoublePickSecond, true);
+  assert.equal(r2Win.partnerStep, 5);
+
+  // Tournament Step 7 (B2): double-pick first (partner is Step 8 / B3)
+  const b2Win = getDoublePickWindow(7, 'tournament');
+  assert.equal(b2Win.isDoublePickFirst, true);
+  assert.equal(b2Win.partnerStep, 8);
+
+  // Tournament Step 15 (B4): double-pick first (partner is Step 16 / B5)
+  const b4Win = getDoublePickWindow(15, 'tournament');
+  assert.equal(b4Win.isDoublePickFirst, true);
+  assert.equal(b4Win.partnerStep, 16);
+
+  // 2. Test runTournamentInference at Step 5 generates valid Duet Packages
+  const res = runTournamentInference(
+    [], // our: none yet
+    [509], // enemy: Dunshan
+    [140, 163, 515, 538],
+    [],
+    true,
+    false, // Red side
+    heroes,
+    5, // step 5: R1 (isDoublePickFirst = true)
+    null,
+    null,
+    true,
+    synergy,
+    [],
+    'tournament'
+  );
+
+  assert.ok(Array.isArray(res.duetPackages), 'duetPackages must be an array');
+  assert.ok(res.duetPackages.length >= 1 && res.duetPackages.length <= 3, 'Must return up to 3 duet packages');
+
+  for (const pkg of res.duetPackages) {
+    // Both heroes must be distinct
+    assert.notEqual(pkg.primaryHero.hero_id, pkg.secondaryHero.hero_id, 'Pair heroes must not be identical');
+    // Cannot contain two Flowborn roles
+    const bothFlowborn = isFlowborn(pkg.primaryHero.hero_id) && isFlowborn(pkg.secondaryHero.hero_id);
+    assert.equal(bothFlowborn, false, 'Duet cannot contain two Flowborn roles');
+    // Must have archetype badge
+    assert.ok(pkg.archetypeBadge.length > 0, 'Must have archetype badge');
+    // Primary and secondary lanes must be specified
+    assert.ok(pkg.primaryLane, 'Primary lane must be set');
+    assert.ok(pkg.secondaryLane, 'Secondary lane must be set');
+  }
+
+  // 3. Non-double pick turn (e.g. Step 4 B1) should NOT generate duet packages
+  const resB1 = runTournamentInference(
+    [],
+    [],
+    [140, 163, 515, 538],
+    [],
+    true,
+    true, // Blue side B1
+    heroes,
+    4, // Step 4: B1
+    null,
+    null,
+    true,
+    synergy,
+    [],
+    'tournament'
+  );
+  assert.deepEqual(resB1.duetPackages, [], 'Step 4 B1 single pick must not produce duet packages');
 });

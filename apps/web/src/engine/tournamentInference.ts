@@ -12,7 +12,7 @@
  *    dan peredam sinergi (100% / 55% / 10% / 0%) agar hero tidak direkomendasikan jika sudah di-counter 2-3 musuh.
  */
 
-import type { Hero, TacticalVector, Lane, DraftFormat } from '../types';
+import type { Hero, TacticalVector, Lane, DraftFormat, DuetPackageOption } from '../types';
 import { isHeroGlobalReleased } from '../data/heroReleaseStatus';
 import {
   assignHeroLanes,
@@ -24,6 +24,7 @@ import {
   getPairEvidence,
   FLOWBORN_HERO_IDS,
   isFlowborn,
+  getDoublePickWindow,
 } from './draftRules';
 
 export type { TournamentPhaseId } from './draftRules';
@@ -496,6 +497,7 @@ export interface TournamentPredictionResult {
   phaseStrategy: TournamentPhaseStrategy;
   latencyMs: number;
   engineKind: 'deterministic' | 'search';
+  duetPackages?: DuetPackageOption[];
 }
 
 /**
@@ -928,6 +930,183 @@ export function computeDraftOutcomeProjection(
     worstCaseScenario,
     riskLevel,
   };
+}
+
+/**
+ * Mengevaluasi dan menghasilkan Top 3 Rekomendasi Paket Duet (Double-Pick Recommendation)
+ * saat tim berada di langkah pertama giliran ganda (R1-R2, B2-B3, B4-B5).
+ */
+export function evaluateDuetRecommendations(
+  scoredCandidates: Array<{ hero: Hero; finalScore: number; laneTag?: string }>,
+  ourHeroes: Hero[],
+  enemyHeroes: Hero[],
+  synergyDb: Record<string, any>,
+  format: DraftFormat,
+  draftStep: number
+): DuetPackageOption[] {
+  const window = getDoublePickWindow(draftStep, format);
+  if (!window.isDoublePickFirst) return [];
+
+  // Ambil top 20 kandidat legal teratas
+  const pool = scoredCandidates.slice(0, 20);
+  if (pool.length < 2) return [];
+
+  const packages: DuetPackageOption[] = [];
+
+  // Deteksi profil kerentanan musuh yang sudah terlihat di papan
+  const enemyHasKiteVulnerable = enemyHeroes.some((e) => {
+    const profile = e.tactical_profile?.tags;
+    return profile?.mobility === false || [509, 114, 187, 107, 175].includes(e.hero_id); // Dunshan, Dian Wei, Donghuang, Bobo, Kui
+  });
+
+  const enemyHasAggressiveDivers = enemyHeroes.some((e) => {
+    const profile = e.tactical_profile?.tags;
+    return profile?.engage === true || [517, 528, 162, 193, 150, 153].includes(e.hero_id); // Augran, Lam, Nakoruru, Kaizer, Han Xin, Gao Changgong
+  });
+
+  for (let i = 0; i < pool.length; i++) {
+    const itemA = pool[i];
+    const heroA = itemA.hero;
+
+    for (let j = i + 1; j < pool.length; j++) {
+      const itemB = pool[j];
+      const heroB = itemB.hero;
+
+      // 1. Ekuivalensi Flowborn (tidak boleh 2 varian Flowborn)
+      if (isFlowborn(heroA.hero_id) && isFlowborn(heroB.hero_id)) continue;
+
+      // 2. Pemeriksaan kesesuaian lane (tidak boleh bentrok kaku di lane yang sama)
+      const aIsFlex = heroA.lanes.length > 1;
+      const bIsFlex = heroB.lanes.length > 1;
+      let laneA = heroA.primary_lane;
+      let laneB = heroB.primary_lane;
+
+      if (laneA === laneB) {
+        if (!aIsFlex && !bIsFlex) continue;
+        if (aIsFlex) {
+          const altA = heroA.lanes.find((l) => l !== laneB);
+          if (altA) laneA = altA;
+          else continue;
+        } else if (bIsFlex) {
+          const altB = heroB.lanes.find((l) => l !== laneA);
+          if (altB) laneB = altB;
+          else continue;
+        }
+      }
+
+      // 3. Sinergi Duet Turnamen KPL
+      const proPairs = synergyDb?.pairs || {};
+      const p1 = Math.min(heroA.hero_id, heroB.hero_id);
+      const p2 = Math.max(heroA.hero_id, heroB.hero_id);
+      const pairKey = `${p1}_${p2}`;
+      const pairData = proPairs[pairKey] || proPairs[`${p1}:${p2}`];
+      const pairEvidence = getPairEvidence(pairData);
+      const kplAdj = computeKplPairAdjustment(pairData);
+      let synergyBonus = kplAdj > 0 ? kplAdj * 1.5 : (kplAdj < 0 ? kplAdj * 1.2 : 0);
+
+      let kplSynergyLabel: string | undefined = undefined;
+      const matches = pairData?.matches ?? pairEvidence.games;
+      const winRate = pairData?.win_rate ?? 0.50;
+      if (pairEvidence.eligible && matches >= 20) {
+        kplSynergyLabel = `Sinergi KPL: ${(winRate * 100).toFixed(0)}% WR (${matches} match)`;
+      } else if (heroA.kpl_matchup?.synergies) {
+        const directSyn = heroA.kpl_matchup.synergies.find((s) => s.partner_id === heroB.hero_id);
+        if (directSyn && directSyn.duet_winrate >= 0.52) {
+          kplSynergyLabel = `Duet KPL: ${(directSyn.duet_winrate * 100).toFixed(0)}% WR`;
+          synergyBonus += (directSyn.duet_winrate - 0.50) * 2.0;
+        }
+      }
+
+      // 4. Keseimbangan Arketipe Komposisi
+      let archetypeScore = 0;
+      let archetypeBadge = 'Pilar Sinergi';
+
+      const aIsFrontline = heroA.primary_role === 'Tank' || (heroA.primary_role === 'Fighter' && heroA.tactical_profile?.tags.frontline);
+      const bIsFrontline = heroB.primary_role === 'Tank' || (heroB.primary_role === 'Fighter' && heroB.tactical_profile?.tags.frontline);
+      const aIsDamage = ['Marksman', 'Mage', 'Assassin'].includes(heroA.primary_role);
+      const bIsDamage = ['Marksman', 'Mage', 'Assassin'].includes(heroB.primary_role);
+
+      if ((aIsFrontline && bIsDamage) || (bIsFrontline && aIsDamage)) {
+        archetypeScore += 0.45;
+        archetypeBadge = 'Frontline Anchor + Core Carry';
+      } else if (heroA.primary_role === 'Support' || heroB.primary_role === 'Support') {
+        archetypeScore += 0.35;
+        archetypeBadge = 'Utility Support + Initiator';
+      } else if (aIsFrontline && bIsFrontline) {
+        archetypeScore += 0.20;
+        archetypeBadge = 'Dual Frontline Lockdown';
+      } else if (aIsDamage && bIsDamage) {
+        const aImmobile = isRiskyOpener(heroA);
+        const bImmobile = isRiskyOpener(heroB);
+        if (aImmobile && bImmobile) {
+          archetypeScore -= 0.70;
+          archetypeBadge = 'High Risk: Double Immobile Squishy';
+        } else {
+          archetypeScore += 0.15;
+          archetypeBadge = 'Dual Core Damage Pressure';
+        }
+      }
+
+      // 5. Responsif terhadap Celah Musuh (Kiting & Anti-Dive)
+      let exploitScore = 0;
+      let enemyExploitBadge: string | undefined = undefined;
+
+      if (enemyHasKiteVulnerable) {
+        const aHasKite = (heroA.tactical_profile?.tags.mobility || heroA.primary_role === 'Marksman') && !isRiskyOpener(heroA);
+        const bHasKite = (heroB.tactical_profile?.tags.mobility || heroB.primary_role === 'Marksman') && !isRiskyOpener(heroB);
+        if (aHasKite || bHasKite) {
+          exploitScore += 0.35;
+          enemyExploitBadge = '🎯 Keunggulan Kiting vs Musuh';
+        }
+      }
+
+      if (enemyHasAggressiveDivers) {
+        const aHasPeel = heroA.tactical_profile?.tags.peel || heroA.tactical_profile?.tags.suppress || heroA.primary_role === 'Tank';
+        const bHasPeel = heroB.tactical_profile?.tags.peel || heroB.tactical_profile?.tags.suppress || heroB.primary_role === 'Tank';
+        if (aHasPeel || bHasPeel) {
+          exploitScore += 0.35;
+          enemyExploitBadge = enemyExploitBadge ? `${enemyExploitBadge} & 🛡️ Anti-Dive` : '🛡️ Proteksi Anti-Dive';
+        }
+      }
+
+      // Penalti jika salah satu hero di-hard counter oleh musuh yang sudah ada
+      const aCountered = (heroA.countered_by || []).some((c) => enemyHeroes.some((e) => e.hero_id === c.counter_id && c.severity === 'hard'));
+      const bCountered = (heroB.countered_by || []).some((c) => enemyHeroes.some((e) => e.hero_id === c.counter_id && c.severity === 'hard'));
+      if (aCountered) exploitScore -= 0.50;
+      if (bCountered) exploitScore -= 0.50;
+
+      const combined = itemA.finalScore + itemB.finalScore + synergyBonus + archetypeScore + exploitScore;
+
+      packages.push({
+        primaryHero: itemA.finalScore >= itemB.finalScore ? heroA : heroB,
+        secondaryHero: itemA.finalScore >= itemB.finalScore ? heroB : heroA,
+        combinedScore: combined,
+        duetWinRate: pairData?.win_rate,
+        kplMatches: matches,
+        synergyLift: pairEvidence.lift,
+        archetypeBadge,
+        kplSynergyLabel,
+        enemyExploitBadge,
+        primaryLane: itemA.finalScore >= itemB.finalScore ? laneA : laneB,
+        secondaryLane: itemA.finalScore >= itemB.finalScore ? laneB : laneA,
+      });
+    }
+  }
+
+  packages.sort((a, b) => b.combinedScore - a.combinedScore);
+
+  const topPackages: DuetPackageOption[] = [];
+  const seenPairKeys = new Set<string>();
+
+  for (const pkg of packages) {
+    const key = [pkg.primaryHero.hero_id, pkg.secondaryHero.hero_id].sort().join(':');
+    if (seenPairKeys.has(key)) continue;
+    seenPairKeys.add(key);
+    topPackages.push(pkg);
+    if (topPackages.length >= 3) break;
+  }
+
+  return topPackages;
 }
 
 /**
@@ -1762,6 +1941,15 @@ export function runTournamentInference(
     phaseObjective = 'Seluruh 10 hero telah dipilih. Evaluasi kekuatan 7 dimensi taktis di bawah.';
   }
 
+  const duetPackages = evaluateDuetRecommendations(
+    scoredCandidates,
+    ourHeroes,
+    enemyHeroes,
+    synergyDb,
+    format,
+    draftStep
+  );
+
   const latencyMs = Math.round((performance.now() - t0) * 10) / 10;
 
   return {
@@ -1784,5 +1972,6 @@ export function runTournamentInference(
     },
     latencyMs,
     engineKind: 'deterministic',
+    duetPackages,
   };
 }
