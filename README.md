@@ -47,9 +47,12 @@ flowchart TD
     J --> K["Rekomendasi AI Terbaik & Variasi Utama (PV)"]
 ```
 
-### Siklus 18 Aksi Turnamen Kompetitif
+### Format Pertandingan: Turnamen & Ranked
 
-Format pertandingan mengikuti standar turnamen resmi KPL / Global:
+Aplikasi mendukung dua format draft kompetitif yang terintegrasi penuh di mode Simulator maupun Latihan vs AI:
+
+#### 1. Format Turnamen Kompetitif (18 Aksi / 4 Fase)
+Format standar turnamen resmi KPL / Global:
 
 ```mermaid
 flowchart LR
@@ -79,6 +82,11 @@ flowchart LR
         BP3 --> RP4["Red Pick R5 (Last Pick)"]
     end
 ```
+
+#### 2. Format Ranked Match (16 Aksi / 2 Fase)
+Format ranked publik Diamond+:
+- **Fase 1: Blind Ban Simultan (Langkah 0–5):** Masing-masing tim melakukan 3 ban secara tertutup tanpa mengetahui ban lawan. Kedua tim dapat mem-ban hero yang sama (cross-team overlap diizinkan, tetapi dilarang ban ganda di tim yang sama).
+- **Fase 2: Pick Bergiliran (Langkah 6–15):** Urutan pick standar: `B1` $\to$ `R1 + R2` $\to$ `B2 + B3` $\to$ `R3 + R4` $\to$ `B4 + B5` $\to$ `R5`. Hero yang di-ban oleh tim mana pun tidak dapat di-pick.
 
 ### Logika Taktis Kompetitif Utama
 
@@ -121,14 +129,15 @@ Setelah 18 aksi draft selesai (baik di mode Simulator maupun di akhir game Latih
 
 ## Simulator dan latihan
 
-- **Simulator:** pengguna mengendalikan kedua tim dan dapat mengatur Plan A/B masing-masing.
-- **Latihan vs AI:** pilih Blue atau Red; AI menjalankan ban/pick tim lawan secara otomatis. Sisi tetap sepanjang seri, maksimal lima game.
+- **Simulator:** pengguna mengendalikan kedua tim dan dapat memilih format pertandingan (**Turnamen** atau **Ranked**), serta mengatur Plan A/B masing-masing.
+- **Latihan vs AI:** pilih format (Turnamen/Ranked) dan sisi (Blue/Red); AI menjalankan ban/pick tim lawan secara otomatis. Sisi tetap sepanjang seri, maksimal lima game (Fearless tersedia pada format Turnamen).
+- **Filter Roster Hero (Global vs Global + CN):** tombol toggle di header navigasi dapat digunakan di seluruh mode (Simulator, Latihan vs AI, Counter Lookup, dan Wiki). Pengguna dapat memilih untuk fokus hanya pada hero rilis Global atau membuka katalog hero server CN.
 - **Bantuan opsional:** rekomendasi, radar, badge peringkat, dan sortir AI (serta indikator lane di papan draft) disembunyikan selama latihan berlangsung bila bantuan nonaktif. Wiki dan statistik hero tetap tersedia.
-- **Fearless per tim:** hero yang sudah dipilih suatu tim pada game sebelumnya terkunci untuk pick tim tersebut. Ban tetap mengikuti ketersediaan pada game aktif.
+- **Fearless per tim:** pada format Turnamen dengan opsi Fearless aktif, hero yang sudah dipilih suatu tim pada game sebelumnya terkunci untuk pick tim tersebut. Ban tetap mengikuti ketersediaan pada game aktif.
 - **Undo latihan:** kembali ke sebelum keputusan pemain terakhir, termasuk membuang respons AI sesudahnya (termasuk reset override lane swap). Game terdahulu menjadi ulasan setelah game berikutnya dimulai.
 - **Evaluasi akhir:** menampilkan komposisi kedua tim, panel `Game Plan & Winning Condition` beserta simulator swap lane interaktif, dan alternatif keputusan; tidak menetapkan pemenang pertandingan.
 
-Aturan bersama berada di `apps/web/src/engine/draftRules.ts`. Format aplikasi saat ini adalah **18 aksi**: empat ban awal, enam pick awal, empat ban kedua, empat pick akhir. Reset, undo, dan pergantian mode/game membatalkan keputusan AI yang tertunda. Worker tidak menerima Plan A/B pemain.
+Aturan bersama berada di `apps/web/src/engine/draftRules.ts`. Aplikasi mendukung dua format: **Turnamen (18 aksi)** dan **Ranked (16 aksi)**. Reset, undo, dan pergantian mode/game membatalkan keputusan AI yang tertunda. Worker tidak menerima Plan A/B pemain.
 
 ## Sumber dan integritas data
 
