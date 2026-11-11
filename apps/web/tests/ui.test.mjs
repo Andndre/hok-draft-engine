@@ -331,14 +331,15 @@ test('wiki exposes HoKStats build alternatives and source-attributed item, spell
       source_hash: 'fixture',
       model: 'Skill-Evidence-Audit-v2',
       reviewed_by: 'Tester',
-      tags: { cc_slow: true, ally_heal: true, engage: true, dive_vulnerable: true, weak_early: true },
+      tags: { cc_slow: true, ally_heal: true, cc_taunt: true, engage: true, dive_vulnerable: true, weak_early: true },
     },
   };
   const factualWiki = render(HeroWikiDrawer, { hero: taggedHero, onClose: noop, isFavorite: false, onToggleFavorite: noop, allHeroes: dataset.heroes, onSelectRelatedHero: noop, initialTab: 'abilities' });
   assert.ok(factualWiki.includes('Mekanik Skill Terverifikasi'));
-  assert.ok(factualWiki.includes('Slow') && factualWiki.includes('Heal Sekutu'));
+  assert.ok(factualWiki.includes('Slow') && factualWiki.includes('Heal Sekutu') && factualWiki.includes('Taunt'));
   assert.ok(factualWiki.includes('title="Memperlambat kecepatan gerak (movement speed) lawan."'));
   assert.ok(factualWiki.includes('title="Memulihkan sejumlah HP untuk rekan satu tim."'));
+  assert.ok(factualWiki.includes('title="Memaksa lawan menyerang hero ini dan mengunci penggunaan skill selama durasi."'));
   assert.ok(!factualWiki.includes('Dive Vulnerable') && !factualWiki.includes('Weak Early') && !factualWiki.includes('engage'));
   const counters = render(HeroWikiDrawer, { hero: enriched, onClose: noop, isFavorite: false, onToggleFavorite: noop, allHeroes: dataset.heroes, onSelectRelatedHero: noop, initialTab: 'counters' });
   assert.ok(counters.includes('Kuat melawan') && counters.includes('Dun') && counters.includes('HoKStats'));

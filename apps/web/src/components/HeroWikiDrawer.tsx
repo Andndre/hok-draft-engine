@@ -72,6 +72,7 @@ const FACTUAL_SKILL_TAG_GROUPS: ReadonlyArray<{
       ['cc_stun', 'Stun', 'Melumpuhkan lawan total sehingga tidak bisa bergerak atau memakai skill.'],
       ['cc_root', 'Root', 'Mengikat lawan di tempat (tidak bisa bergerak, namun masih bisa memakai skill tertentu).'],
       ['cc_silence', 'Silence', 'Membisukan lawan sehingga tidak dapat menggunakan skill selama durasi.'],
+      ['cc_taunt', 'Taunt', 'Memaksa lawan menyerang hero ini dan mengunci penggunaan skill selama durasi.'],
       ['cc_slow', 'Slow', 'Memperlambat kecepatan gerak (movement speed) lawan.'],
     ],
   },

@@ -151,7 +151,7 @@ def compact_state_for_prompt(state: dict[str, Any]) -> dict[str, Any]:
 
 
 def evaluate_hero_evidence(hero: dict[str, Any]) -> dict[str, dict[str, Any]]:
-    """Evaluate all 28 tactical tags against explicit source evidence for a hero.
+    """Evaluate all 29 tactical tags against explicit source evidence for a hero.
 
     Returns per-tag dict:
       - choice: 'ya' | 'tidak' | 'tidak_diketahui'
@@ -260,6 +260,9 @@ def evaluate_hero_evidence(hero: dict[str, Any]) -> dict[str, dict[str, Any]]:
     silence_ev = _match_positive(skills, r"\b(?:silenc(?:es?|ing|ed))\b")
     set_tag("cc_silence", "ya" if silence_ev else "tidak", silence_ev[0] if silence_ev else "Tidak ada efek silence pada skill.", True, 0.91 if silence_ev else 0.88)
 
+    taunt_ev = _match_positive(skills, r"\b(?:taunts?|taunting|taunted)\b")
+    set_tag("cc_taunt", "ya" if taunt_ev else "tidak", taunt_ev[0] if taunt_ev else "Tidak ada efek taunt pada skill.", True, 0.92 if taunt_ev else 0.88)
+
     slow_ev = _match_positive(
         skills,
         r"\b(?:slows?|slowing|slowed|inflicts?\s+(?:area\s+damage\s+and\s+)?slow|reduces?\s+(?:their\s+|enemy\s+|enemies'\s+)?movement\s+speed|reducing\s+(?:their\s+|enemy\s+)?movement\s+speed|\d+%\s+slow)\b",
@@ -317,7 +320,7 @@ def evaluate_hero_evidence(hero: dict[str, Any]) -> dict[str, dict[str, Any]]:
 
     # 4. Tactical Team Roles (frontline, engage, disengage, peel)
     # Only Tank, Fighter, or tanky Support/Roam can be Frontline (never Marksman, Assassin, or squishy Mage)
-    has_hard_cc = bool(suppress_ev or knockup_ev or knockback_ev or pull_ev or stun_ev or root_ev)
+    has_hard_cc = bool(suppress_ev or knockup_ev or knockback_ev or pull_ev or stun_ev or root_ev or taunt_ev)
     durability_skill_ev = _match_positive(
         skills,
         r"\b(?:damage\s+reduction|increases?\s+(?:physical\s+and\s+magical\s+)?defense|high\s+defense|gains?\s+a\s+shield|recovers?\s+health|restores?\s+health|max\s+health)\b",

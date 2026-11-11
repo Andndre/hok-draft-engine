@@ -63,6 +63,10 @@ class TacticalEvidenceTests(unittest.TestCase):
         liang_ev = evaluate_hero_evidence(by_id[156])
         self.assertEqual(liang_ev["suppress"]["choice"], "ya")
         self.assertEqual(liang_ev["dive_vulnerable"]["choice"], "tidak")
+        # Bai Qi (120) Skill 3 has Taunt -> cc_taunt=ya, while Liang (156) does not -> cc_taunt=tidak
+        baiqi_ev = evaluate_hero_evidence(by_id[120])
+        self.assertEqual(baiqi_ev["cc_taunt"]["choice"], "ya")
+        self.assertEqual(liang_ev["cc_taunt"]["choice"], "tidak")
         # Dolia (159) HOKFIRE ability contamination ('Lam enters Submerged state') must be filtered out
         dolia_ev = evaluate_hero_evidence(by_id[159])
         self.assertEqual(dolia_ev["leap"]["choice"], "tidak")

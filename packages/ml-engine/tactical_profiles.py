@@ -22,6 +22,7 @@ TAGS = {
     "cc_stun": "Memiliki crowd control stun.",
     "cc_root": "Memiliki crowd control root/immobilize.",
     "cc_silence": "Memiliki crowd control silence.",
+    "cc_taunt": "Memiliki crowd control taunt yang memaksa lawan menyerang.",
     "cc_slow": "Memiliki crowd control slow.",
     "engage": "Dapat memulai teamfight dengan gap closer atau crowd control yang andal.",
     "disengage": "Dapat menghentikan engage lawan atau membantu tim mundur.",

@@ -69,6 +69,11 @@
       "tidak": 115,
       "tidak_diketahui": 0
     },
+    "cc_taunt": {
+      "ya": 1,
+      "tidak": 119,
+      "tidak_diketahui": 0
+    },
     "cc_slow": {
       "ya": 82,
       "tidak": 38,
@@ -357,6 +362,7 @@
       "positive_tags": [
         "cc_pull",
         "cc_slow",
+        "cc_taunt",
         "engage",
         "frontline",
         "kite_vulnerable",

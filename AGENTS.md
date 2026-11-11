@@ -110,7 +110,7 @@ Di masa lalu terjadi bug inversi 180 derajat karena salah menginterpretasikan ar
 - Jalankan `uv run hokstats_source.py sync` dari `packages/ml-engine` untuk mengimpor HoKStats. Matchup, hero guide, item, dan spell tetap berstatus pending sampai sumbernya direview; hash yang berubah membatalkan review lama.
 - Jangan mengedit JSON di folder datasets secara manual. Perbarui sumber di data/mappings lalu jalankan `uv run publish_data.py`. Byte artefak dilindungi oleh .gitattributes.
 - Seri latihan memakai snapshot tetap. Data baru hanya berlaku saat memulai seri berikutnya.
-- Profil taktis hero (28 tag crowd control, mobilitas, frontline/peel, dan kerentanan) diekstraksi secara deterministik dari deskripsi skill resmi dan panduan taktis melalui `skill_evidence_audit.py` (atau `tactical_profiles.py audit-batch`) secara lokal tanpa layanan eksternal.
+- Profil taktis hero (29 tag crowd control, mobilitas, frontline/peel, dan kerentanan) diekstraksi secara deterministik dari deskripsi skill resmi dan panduan taktis melalui `skill_evidence_audit.py` (atau `tactical_profiles.py audit-batch`) secara lokal tanpa layanan eksternal.
 - Setiap proposal taktis menyimpan sumber resmi, hash konten, dan status review. Proposal harus berstatus approved untuk dikompilasi ke dataset produksi; status pending/rejected diabaikan oleh publisher.
 - Jika data sumber hero berubah (misal revisi skill atau update patch), hash sumber berubah dan secara otomatis membatalkan approval lama hingga ditinjau kembali.
 
@@ -179,7 +179,7 @@ hok-draft-engine/
 │       ├── 1_ingest_kpl.py           # Ingestion database KPL
 │       ├── extract_kpl_synergy.py    # Ekstraksi sinergi duet & matriks turnamen KPL
 │       ├── tactical_profiles.py      # Ekstraksi profil taktis, audit proposal batch & CLI review
-│       ├── skill_evidence_audit.py   # Parser deterministik bukti skill resmi & 28 tag taktis
+│       ├── skill_evidence_audit.py   # Parser deterministik bukti skill resmi & 29 tag taktis
 │       └── publish_data.py           # Paket produksi berversi + publikasi manifest terakhir
 └── apps/
     └── web/                          # Static Frontend SPA (Vite + React 19 + TS)

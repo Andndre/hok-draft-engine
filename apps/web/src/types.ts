@@ -194,7 +194,7 @@ export interface TacticalVector {
 
 export const TACTICAL_TAGS = [
   'mobility', 'suppress', 'engage', 'disengage', 'frontline', 'dive_vulnerable',
-  'dash', 'blink', 'leap', 'teleport', 'cc_knockup', 'cc_knockback', 'cc_pull', 'cc_stun', 'cc_root', 'cc_silence', 'cc_slow',
+  'dash', 'blink', 'leap', 'teleport', 'cc_knockup', 'cc_knockback', 'cc_pull', 'cc_stun', 'cc_root', 'cc_silence', 'cc_taunt', 'cc_slow',
   'ally_shield', 'ally_heal', 'ally_move_speed_buff', 'ally_attack_speed_buff', 'ally_damage_buff', 'ally_cleanse', 'ally_cc_immunity',
   'peel', 'kite_vulnerable', 'low_damage', 'weak_early',
 ] as const;
