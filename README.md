@@ -247,7 +247,7 @@ uv run publish_data.py
 
 Label mencakup:
 - **Mobilitas:** `mobility`, `dash`, `blink`, `leap`, `teleport`
-- **Crowd Control:** `suppress`, `cc_knockup`, `cc_knockback`, `cc_pull`, `cc_stun`, `cc_root`, `cc_silence`, `cc_slow`
+- **Crowd Control:** `suppress`, `cc_taunt`, `cc_knockup`, `cc_knockback`, `cc_pull`, `cc_stun`, `cc_root`, `cc_silence`, `cc_slow`
 - **Peran & Utilitas Tim:** `engage`, `disengage`, `frontline`, `peel`, `ally_shield`, `ally_heal`, `ally_move_speed_buff`, `ally_attack_speed_buff`, `ally_damage_buff`, `ally_cleanse`, `ally_cc_immunity`
 - **Kerentanan:** `dive_vulnerable`, `kite_vulnerable`, `low_damage`, `weak_early`
 
