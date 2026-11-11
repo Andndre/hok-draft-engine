@@ -1,12 +1,13 @@
 import { DropdownSelect } from './ui/DropdownSelect';
 import React, { useEffect, useMemo, useState } from 'react';
-import type { Hero, Lane, SortMode, TournamentDataset, ViewMode } from '../types';
+import type { Hero, Lane, LaneAssignmentMap, SortMode, TournamentDataset, ViewMode } from '../types';
 import { DRAFT_SEQUENCE, applyDraftAction, emptyPosition, getDraftTurn, isLegalHero, oppositeSide } from '../engine/draftRules';
 import type { Side } from '../engine/draftRules';
 import { createPracticeSession, practiceContext, reducePractice } from '../engine/practiceState';
 import type { PracticeEvent, PracticeSession } from '../engine/practiceState';
 import { OpponentClient } from '../engine/opponentClient';
 import { evaluateTacticalScores, runTournamentInference } from '../engine/tournamentInference';
+import { assignmentToHeroLaneMap, buildDefaultLaneAssignments, swapAssignedLanes } from '../engine/gamePlan';
 import { loadTournamentDataset } from '../engine/heroDataLoader';
 import { AlertTriangle, ArrowRight, BookOpen, ChartColumn, CheckCircle2, ChevronDown, FilterX, Gamepad2, History, Info, Layers, Lightbulb, LoaderCircle, Play, RefreshCw, RotateCcw, SearchX, Settings2, Shield, ShieldCheck, SlidersHorizontal, Swords, Undo2 } from 'lucide-react';
 import { HeroRosterToolbar } from './HeroRosterToolbar';
@@ -14,6 +15,7 @@ import { TacticalRadarPanel } from './TacticalRadarPanel';
 import { HeroThumbnail } from './ui/AssetThumbnail';
 import { focusHeroSearch, plainText } from './ui/presentation';
 import { DraftSimulator } from './DraftSimulator';
+import { PostDraftGamePlanPanel } from './PostDraftGamePlanPanel';
 import { HeroCardCompact } from './HeroCardCompact';
 import { HeroCardDetailed } from './HeroCardDetailed';
 import { HeroWikiDrawer } from './HeroWikiDrawer';
@@ -54,7 +56,9 @@ export function PracticeDraft(props: Props) {
   const [error, setError] = useState('');
   const [wikiHero, setWikiHero] = useState<Hero | null>(null);
   const [planOpen, setPlanOpen] = useState(false);
+  const [laneOverridesByKey, setLaneOverridesByKey] = useState<Record<string, { blue?: LaneAssignmentMap | null; red?: LaneAssignmentMap | null }>>({});
   const playerSide = session?.config.playerSide ?? setupSide;
+  const gameKey = session ? `${session.sessionId}-${session.gameIndex}` : '';
   const client = useMemo(() => new OpponentClient(snapshot, oppositeSide(playerSide)), [snapshot, playerSide, session?.sessionId]);
   useEffect(() => () => client.cancel(), [client]);
   const game = session?.games[session.gameIndex];
@@ -65,6 +69,23 @@ export function PracticeDraft(props: Props) {
   const canAct = !!session && latest && active && !turn.isComplete && turn.side === playerSide;
   const byId = useMemo(() => new Map(snapshot.heroes.map(h => [h.hero_id, h])), [snapshot]);
   const heroList = (ids: number[]) => ids.map(id => byId.get(id)!).filter(Boolean);
+  const blueHeroesList = useMemo(() => position.picks.blue.map(id => byId.get(id)!).filter(Boolean), [position.picks.blue, byId]);
+  const redHeroesList = useMemo(() => position.picks.red.map(id => byId.get(id)!).filter(Boolean), [position.picks.red, byId]);
+  const kplLaneRates = snapshot.synergy?.hero_lane_rates;
+  const defaultBlueAssignment = useMemo(() => buildDefaultLaneAssignments(blueHeroesList, kplLaneRates), [blueHeroesList, kplLaneRates]);
+  const defaultRedAssignment = useMemo(() => buildDefaultLaneAssignments(redHeroesList, kplLaneRates), [redHeroesList, kplLaneRates]);
+  const gameLaneOverrides = gameKey ? laneOverridesByKey[gameKey] : undefined;
+  const activeBlueAssignment = gameLaneOverrides?.blue ?? defaultBlueAssignment;
+  const activeRedAssignment = gameLaneOverrides?.red ?? defaultRedAssignment;
+  const showAssignedLanes = turn.isComplete || assistance;
+  const blueAssignedLanes = useMemo(
+    () => (showAssignedLanes ? assignmentToHeroLaneMap(activeBlueAssignment) : undefined),
+    [showAssignedLanes, activeBlueAssignment]
+  );
+  const redAssignedLanes = useMemo(
+    () => (showAssignedLanes ? assignmentToHeroLaneMap(activeRedAssignment) : undefined),
+    [showAssignedLanes, activeRedAssignment]
+  );
   const playerHeroes = heroList(position.picks[playerSide]);
   const enemyHeroes = heroList(position.picks[oppositeSide(playerSide)]);
   const hints = useMemo(() => game ? runTournamentInference(
@@ -75,6 +96,14 @@ export function PracticeDraft(props: Props) {
   const recommendations = assistance && canAct ? hints?.recommendations ?? [] : [];
   const send = (event: PracticeEvent) => {
     client.cancel(); setError(''); setNotice(''); setThinking(false);
+    if (gameKey && (event.type === 'undo' || event.type === 'reset')) {
+      setLaneOverridesByKey(prev => {
+        if (!prev[gameKey]) return prev;
+        const next = { ...prev };
+        delete next[gameKey];
+        return next;
+      });
+    }
     setSession(previous => previous ? reducePractice(previous, event, snapshot) : previous);
   };
 
@@ -103,6 +132,7 @@ export function PracticeDraft(props: Props) {
     try {
       const fresh = await loadTournamentDataset();
       setSnapshot(fresh);
+      setLaneOverridesByKey({});
       setSession(createPracticeSession(crypto.randomUUID(), { playerSide: setupSide, fearless: setupFearless }, fresh));
       setNotice('Seri dimulai. Data hero dipertahankan sampai seri selesai.');
     } catch { setError('Data latihan belum dapat dimuat. Coba mulai lagi.'); }
@@ -137,6 +167,29 @@ export function PracticeDraft(props: Props) {
     </div>
   </section>;
 
+  const handleSwapPracticeLane = (side: Side, laneA: Lane, laneB: Lane) => {
+    if (!gameKey) return;
+    setLaneOverridesByKey(prev => {
+      const cur = prev[gameKey] ?? {};
+      const base = side === 'blue' ? (cur.blue ?? defaultBlueAssignment) : (cur.red ?? defaultRedAssignment);
+      return {
+        ...prev,
+        [gameKey]: {
+          ...cur,
+          [side]: swapAssignedLanes(base, laneA, laneB),
+        },
+      };
+    });
+  };
+  const handleResetPracticeLanes = () => {
+    if (!gameKey) return;
+    setLaneOverridesByKey(prev => {
+      if (!prev[gameKey]) return prev;
+      const next = { ...prev };
+      delete next[gameKey];
+      return next;
+    });
+  };
   const padded = (ids: number[], count: number) => [...heroList(ids), ...Array(Math.max(0, count - ids.length)).fill(null)];
   const canUndo = latest && game.actions.some(action => action.side === playerSide);
   const playerRadar = evaluateTacticalScores(playerHeroes, enemyHeroes);
@@ -150,14 +203,29 @@ export function PracticeDraft(props: Props) {
       <div className="practice-session__actions"><DropdownSelect label="Pilih game latihan" icon={History} value={session.gameIndex} onChange={index => send({ type: 'view', index })} options={session.games.map((_, index) => ({ value: index, label: `Game ${index + 1}${index < session.games.length - 1 ? ' · ulasan' : ''}` }))} />
         <button type="button" className={button} onClick={() => send({ type: 'undo' })} disabled={!canUndo}><Undo2 aria-hidden="true" />Urungkan</button>
         <button type="button" className={button} onClick={() => send({ type: 'reset' })} disabled={!latest}><RotateCcw aria-hidden="true" />Reset game</button>
-        <button type="button" className={button} onClick={() => { client.cancel(); setSession(null); setNotice(''); setError(''); }}><Settings2 aria-hidden="true" />Seri baru</button>
+        <button type="button" className={button} onClick={() => { client.cancel(); setSession(null); setLaneOverridesByKey({}); setNotice(''); setError(''); }}><Settings2 aria-hidden="true" />Seri baru</button>
         {!turn.isComplete && latest && <button type="button" className={button} onClick={() => setPlanOpen(true)}><SlidersHorizontal aria-hidden="true" />Plan A/B</button>}
       </div>
       <div aria-live="polite" role="status" className="practice-status">{thinking ? <LoaderCircle className="is-spinning" aria-hidden="true" /> : turn.isComplete ? <CheckCircle2 aria-hidden="true" /> : <Info aria-hidden="true" />}<span>{!latest ? 'Ulasan game terdahulu. Kembali ke game terbaru untuk melanjutkan.' : turn.isComplete ? 'Draft selesai. Evaluasi komposisi tersedia di bawah.' : thinking ? 'AI sedang memilih… Kamu tetap bisa membaca wiki hero.' : canAct ? 'Giliran Anda: ' + (turn.action === 'ban' ? 'ban' : 'pick') + ' hero.' : 'Menyiapkan giliran AI…'}</span></div>
       {notice && !thinking && <p className="practice-notice">{notice}</p>}
       {error && <div role="alert" className="inline-feedback inline-feedback--error"><AlertTriangle aria-hidden="true" /><p>{error}</p><button type="button" className={button} onClick={() => send({ type: 'retry' })}><RefreshCw aria-hidden="true" />Coba lagi</button></div>}
     </div>
-    <DraftSimulator bluePicks={padded(position.picks.blue, 5)} redPicks={padded(position.picks.red, 5)} blueBans={padded(position.bans.blue, 4)} redBans={padded(position.bans.red, 4)} currentTurn={turn} fearlessEnabled={session.config.fearless} gameNumber={session.gameIndex + 1} onToggleFearless={() => {}} onGameNumberChange={() => {}} onResetDraft={() => {}} onUndoStep={() => {}} blueFearlessUsedHeroes={heroList(context.fearless.blue)} redFearlessUsedHeroes={heroList(context.fearless.red)} hideControls playerSide={playerSide} onInspectHero={setWikiHero} onRequestHero={canAct ? focusHeroSearch : undefined} />
+    <DraftSimulator bluePicks={padded(position.picks.blue, 5)} redPicks={padded(position.picks.red, 5)} blueBans={padded(position.bans.blue, 4)} redBans={padded(position.bans.red, 4)} blueAssignedLanes={blueAssignedLanes} redAssignedLanes={redAssignedLanes} currentTurn={turn} fearlessEnabled={session.config.fearless} gameNumber={session.gameIndex + 1} onToggleFearless={() => {}} onGameNumberChange={() => {}} onResetDraft={() => {}} onUndoStep={() => {}} blueFearlessUsedHeroes={heroList(context.fearless.blue)} redFearlessUsedHeroes={heroList(context.fearless.red)} hideControls playerSide={playerSide} onInspectHero={setWikiHero} onRequestHero={canAct ? focusHeroSearch : undefined} />
+    {turn.isComplete && blueHeroesList.length === 5 && redHeroesList.length === 5 && (
+      <PostDraftGamePlanPanel
+        key={gameKey}
+        blueHeroes={blueHeroesList}
+        redHeroes={redHeroesList}
+        synergy={snapshot.synergy}
+        defaultPerspective={playerSide}
+        blueAssignment={activeBlueAssignment}
+        redAssignment={activeRedAssignment}
+        hasCustomAssignments={Boolean(gameLaneOverrides?.blue || gameLaneOverrides?.red)}
+        onSwapLane={handleSwapPracticeLane}
+        onResetLanes={handleResetPracticeLanes}
+        onInspectHero={setWikiHero}
+      />
+    )}
     {turn.isComplete && <section aria-label="Evaluasi draft heuristik" className="practice-review surface-panel"><div className="section-heading"><span className="section-heading__icon"><ChartColumn aria-hidden="true" /></span><div><h2>Evaluasi draft heuristik</h2><p>Komposisi dan alternatif taktis, tanpa menetapkan pemenang pertandingan.</p></div></div>
       <div className="practice-review__teams">{[{ title: 'Tim Anda', radar: playerRadar }, { title: 'Tim AI', radar: enemyRadar }].map(({ title, radar }) => <div key={title}><h3>{title}</h3><dl>{axes.map(([key, label]) => <div key={key}><dt>{label}</dt><dd>{Math.round(radar[key] * 100)}/100{radar[key] < 0.48 && <span>Perlu perhatian</span>}</dd></div>)}</dl></div>)}</div>
       <details className="panel-disclosure"><summary><History aria-hidden="true" /><span>Tinjau {game.traces.length} keputusan Anda</span><ChevronDown aria-hidden="true" /></summary><ol className="decision-review">{game.traces.map(trace => <li key={trace.actionIndex}><div><span className="count-badge">{trace.actionIndex + 1}</span>{byId.get(trace.heroId) && <HeroThumbnail hero={byId.get(trace.heroId)!} />}<strong>{game.actions[trace.actionIndex].action === 'ban' ? 'Ban ' : 'Pick '}{byId.get(trace.heroId)?.name}</strong></div><p>Alternatif pada posisi saat itu:</p><ul>{trace.alternatives.map(alternative => <li key={alternative.heroId}><button type="button" onClick={() => setWikiHero(byId.get(alternative.heroId) ?? null)}>{byId.get(alternative.heroId) && <HeroThumbnail hero={byId.get(alternative.heroId)!} />}<span>{byId.get(alternative.heroId)?.name}</span><BookOpen aria-hidden="true" /></button><p>{plainText(alternative.reason)}</p></li>)}</ul></li>)}</ol></details>

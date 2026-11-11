@@ -12,10 +12,21 @@ from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 DB_PATH = ROOT_DIR / "data" / "processed" / "hok_drafts.db"
+PLAYERS_JSONL_PATH = ROOT_DIR / "data" / "raw" / "kpl-bp-dataset" / "data" / "players.jsonl"
 MAPPINGS_FILE = ROOT_DIR / "data" / "mappings" / "master_heroes_global.json"
+RELEASE_STATUS_FILE = ROOT_DIR / "data" / "mappings" / "hero_release_status.json"
 OUTPUT_FILE = ROOT_DIR / "data" / "mappings" / "kpl_synergy_matrix.json"
 WEB_OUTPUT_FILE = ROOT_DIR / "apps" / "web" / "public" / "kpl_synergy_matrix.json"
 DIST_OUTPUT_FILE = ROOT_DIR / "apps" / "web" / "dist" / "kpl_synergy_matrix.json"
+
+LANE_CN_TO_EN = {
+    "对抗路": "Clash",
+    "打野": "Jungle",
+    "中路": "Mid",
+    "发育路": "Farm",
+    "游走": "Roam",
+}
+
 
 def normalize_hid(hid: int) -> int:
     # Map Zhu Bajie (511) to Global equivalent Ata (556)
@@ -23,10 +34,188 @@ def normalize_hid(hid: int) -> int:
         return 556
     return hid
 
+
+def classify_tempo_profile(
+    total_games: int,
+    early_games: int,
+    early_wr: float,
+    mid_games: int,
+    mid_wr: float,
+    late_games: int,
+    late_wr: float,
+    min_profile_games: int = 15,
+    min_bucket_games: int = 10,
+) -> str:
+    """Classify hero KPL duration winrate profile into early/mid/late/balanced/insufficient."""
+    if total_games < min_profile_games:
+        return "insufficient"
+    if early_games >= min_bucket_games and late_games >= min_bucket_games:
+        if early_wr - late_wr >= 0.04:
+            return "early"
+        if late_wr - early_wr >= 0.04:
+            return "late"
+    if (
+        mid_games >= min_bucket_games
+        and (early_games == 0 or mid_wr - early_wr >= 0.035)
+        and (late_games == 0 or mid_wr - late_wr >= 0.035)
+    ):
+        return "mid"
+    return "balanced"
+
+
+def extract_tempo_curves(
+    cursor: sqlite3.Cursor,
+    valid_ids: set[int],
+    min_duration_sec: int = 300,
+    min_profile_games: int = 15,
+    min_bucket_games: int = 10,
+) -> dict:
+    """Extract per-hero KPL winrate curves across early (<15m), mid (15-19m), and late (>=19m) matches."""
+    cursor.execute(
+        """
+        SELECT da.global_hero_id, da.side, b.winner_side, b.duration_sec
+        FROM draft_actions da
+        JOIN battles b ON da.battle_id = b.battle_id
+        WHERE b.is_complete = 1 AND da.action = 'pick' AND b.duration_sec >= ?
+        """,
+        (min_duration_sec,),
+    )
+    stats = defaultdict(
+        lambda: {
+            "early": [0, 0],
+            "mid": [0, 0],
+            "late": [0, 0],
+            "sum_duration": 0,
+            "total": 0,
+        }
+    )
+    for raw_gid, side, winner_side, duration_sec in cursor.fetchall():
+        hid = normalize_hid(raw_gid)
+        if hid not in valid_ids:
+            continue
+        bucket = "early" if duration_sec < 900 else ("mid" if duration_sec < 1140 else "late")
+        row = stats[hid]
+        row[bucket][0] += 1
+        if side == winner_side:
+            row[bucket][1] += 1
+        row["sum_duration"] += duration_sec
+        row["total"] += 1
+
+    curves = {}
+    for hid, row in stats.items():
+        total = row["total"]
+        if total == 0:
+            continue
+        early_g, early_w = row["early"]
+        mid_g, mid_w = row["mid"]
+        late_g, late_w = row["late"]
+        early_wr = round(early_w / early_g, 3) if early_g > 0 else 0.5
+        mid_wr = round(mid_w / mid_g, 3) if mid_g > 0 else 0.5
+        late_wr = round(late_w / late_g, 3) if late_g > 0 else 0.5
+        curves[str(hid)] = {
+            "total_games": total,
+            "avg_duration_sec": round(row["sum_duration"] / total),
+            "early": {"games": early_g, "win_rate": early_wr},
+            "mid": {"games": mid_g, "win_rate": mid_wr},
+            "late": {"games": late_g, "win_rate": late_wr},
+            "profile": classify_tempo_profile(
+                total,
+                early_g,
+                early_wr,
+                mid_g,
+                mid_wr,
+                late_g,
+                late_wr,
+                min_profile_games=min_profile_games,
+                min_bucket_games=min_bucket_games,
+            ),
+        }
+    return curves
+
+
+def extract_lane_rates(
+    cursor: sqlite3.Cursor,
+    players_jsonl_path: Path,
+    valid_ids: set[int],
+    min_year: int = 2024,
+    min_games: int = 5,
+) -> dict:
+    """Extract empirical pro lane distribution strictly from modern 5-distinct-lane KPL team rosters."""
+    if not players_jsonl_path.exists():
+        return {}
+
+    cursor.execute("SELECT DISTINCT hero_cn, global_hero_id FROM draft_actions WHERE action = 'pick' AND hero_cn IS NOT NULL")
+    cn_to_gid = {hero_cn: normalize_hid(gid) for hero_cn, gid in cursor.fetchall()}
+
+    cursor.execute(
+        """
+        SELECT b.battle_id, b.winner_side
+        FROM battles b
+        JOIN matches m ON b.match_id = m.match_id
+        WHERE b.is_complete = 1 AND m.year >= ?
+        """,
+        (min_year,),
+    )
+    eligible_battles = dict(cursor.fetchall())
+
+    hero_lane_counts = defaultdict(lambda: defaultdict(lambda: [0, 0]))
+    hero_total_counts = defaultdict(int)
+
+    with players_jsonl_path.open("r", encoding="utf-8") as handle:
+        for line in handle:
+            if not line.strip():
+                continue
+            record = json.loads(line)
+            battle_id = record.get("battle_id")
+            if battle_id not in eligible_battles:
+                continue
+            winner_side = eligible_battles[battle_id]
+            players = record.get("players") or []
+            for side in ("blue", "red"):
+                roster = [p for p in players if len(p) >= 4 and p[0] == side]
+                mapped_lanes = [LANE_CN_TO_EN.get(p[3]) for p in roster]
+                if len(roster) != 5 or len({ln for ln in mapped_lanes if ln}) != 5:
+                    continue
+                for _, hero_cn, _, raw_lane in roster:
+                    hid = cn_to_gid.get(hero_cn)
+                    lane = LANE_CN_TO_EN.get(raw_lane)
+                    if hid not in valid_ids or not lane:
+                        continue
+                    hero_total_counts[hid] += 1
+                    hero_lane_counts[hid][lane][0] += 1
+                    if side == winner_side:
+                        hero_lane_counts[hid][lane][1] += 1
+
+    output = {}
+    for hid, lanes_dict in hero_lane_counts.items():
+        total = hero_total_counts[hid]
+        if total == 0:
+            continue
+        lane_entries = {
+            lane: {
+                "games": games,
+                "share": round(games / total, 3),
+                "win_rate": round(wins / games, 3),
+            }
+            for lane, (games, wins) in lanes_dict.items()
+            if games >= min_games
+        }
+        if lane_entries:
+            output[str(hid)] = lane_entries
+    return output
+
 def extract_synergy():
     master = json.load(open(MAPPINGS_FILE, encoding="utf-8"))
     valid_ids = {h["hero_id"] for h in master}
     id_to_name = {h["hero_id"]: h["name"] for h in master}
+    if RELEASE_STATUS_FILE.exists():
+        release_map = json.load(open(RELEASE_STATUS_FILE, encoding="utf-8"))
+        global_ban_ids = {
+            hid for hid in valid_ids
+            if release_map.get(str(hid), {}).get("released") is True and hid != 511
+        } or valid_ids
+    else:
+        global_ban_ids = {h["hero_id"] for h in master if h.get("is_global_released", True) and h["hero_id"] != 511} or valid_ids
 
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
@@ -46,6 +235,9 @@ def extract_synergy():
         if hid in valid_ids:
             battles_actions[b_id].append((ord_id, side, action, hid))
             battle_winners[b_id] = winner_side
+
+    hero_tempo_curves = extract_tempo_curves(cursor, valid_ids)
+    hero_lane_rates = extract_lane_rates(cursor, PLAYERS_JSONL_PATH, valid_ids)
 
     conn.close()
 
@@ -151,7 +343,10 @@ def extract_synergy():
         p1_ban_cnt = p1_bans_total[hid]
         if b1_cnt >= 10 or r1_cnt >= 15 or p1_ban_cnt >= 30:
             b1_wr = round(b1_wins[hid] / b1_cnt, 3) if b1_cnt > 0 else 0.50
-            top_prebans = sorted(blue_preban_for_b1[hid].items(), key=lambda x: x[1], reverse=True)[:6]
+            global_preban_items = [
+                (b_id, cnt) for b_id, cnt in blue_preban_for_b1[hid].items() if b_id in global_ban_ids
+            ]
+            top_prebans = sorted(global_preban_items, key=lambda x: x[1], reverse=True)[:8]
             b1_opener_stats[str(hid)] = {
                 "hero_id": hid,
                 "hero_name": id_to_name[hid],
@@ -168,7 +363,11 @@ def extract_synergy():
     # 3. Phase 2 Ban Matrix (Enemy Pick -> Best Phase 2 Bans)
     phase2_ban_matrix = {}
     for ep_hid, ban_dict in p2_ban_vs_enemy.items():
-        top_b2 = sorted(ban_dict.items(), key=lambda x: x[1], reverse=True)[:10]
+        top_b2 = sorted(
+            ((b_id, cnt) for b_id, cnt in ban_dict.items() if b_id in global_ban_ids),
+            key=lambda x: x[1],
+            reverse=True,
+        )[:10]
         filtered_b2 = [
             {"ban_id": b_id, "ban_name": id_to_name[b_id], "count": cnt}
             for b_id, cnt in top_b2 if cnt >= 8 and b_id != ep_hid
@@ -179,7 +378,11 @@ def extract_synergy():
     # 4. Phase 2 Protect Matrix (Our Pick -> Best Phase 2 Protective Bans)
     phase2_protect_matrix = {}
     for op_hid, ban_dict in p2_ban_protect_our.items():
-        top_b2 = sorted(ban_dict.items(), key=lambda x: x[1], reverse=True)[:8]
+        top_b2 = sorted(
+            ((b_id, cnt) for b_id, cnt in ban_dict.items() if b_id in global_ban_ids),
+            key=lambda x: x[1],
+            reverse=True,
+        )[:8]
         filtered_b2 = [
             {"ban_id": b_id, "ban_name": id_to_name[b_id], "count": cnt}
             for b_id, cnt in top_b2 if cnt >= 8 and b_id != op_hid
@@ -221,7 +424,9 @@ def extract_synergy():
         "phase2_ban_vs_enemy": phase2_ban_matrix,
         "phase2_ban_protect_our": phase2_protect_matrix,
         "dunshan_counters": dunshan_counters,
-        "dunshan_pair_counters": dunshan_pair_counters
+        "dunshan_pair_counters": dunshan_pair_counters,
+        "hero_tempo_curves": hero_tempo_curves,
+        "hero_lane_rates": hero_lane_rates,
     }
 
     for out_path in [OUTPUT_FILE, WEB_OUTPUT_FILE, DIST_OUTPUT_FILE]:
@@ -229,7 +434,11 @@ def extract_synergy():
             with open(out_path, "w", encoding="utf-8") as f:
                 json.dump(export_data, f, indent=2, ensure_ascii=False)
 
-    print(f"Exported {len(top_pairs)} Global pairs, {len(b1_opener_stats)} B1 openers, and {len(phase2_ban_matrix)} Phase 2 ban rules.")
+    print(
+        f"Exported {len(top_pairs)} Global pairs, {len(b1_opener_stats)} B1 openers, "
+        f"{len(phase2_ban_matrix)} Phase 2 ban rules, {len(hero_tempo_curves)} tempo curves, "
+        f"and {len(hero_lane_rates)} KPL lane profiles."
+    )
 
 if __name__ == "__main__":
     extract_synergy()

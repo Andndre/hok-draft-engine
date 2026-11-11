@@ -1,4 +1,4 @@
-import type { GameDraftData, Hero, Lane } from '../types';
+import type { GameDraftData, Hero, KplLaneRate, Lane, LaneAssignmentMap } from '../types';
 import { isHeroGlobalReleased } from '../data/heroReleaseStatus';
 
 export type Side = 'blue' | 'red';
@@ -81,18 +81,100 @@ export function applyGameHero(game: GameDraftData, hero: Hero, context: DraftCon
   return { ...game, [key]: slots, draftStep: next.step };
 }
 
-/** Maximum matching, so a flex hero never steals the sole lane of another hero. */
-export function analyzeLaneOccupancy(heroes: Hero[]): { occupiedLanes: Set<Lane>; vacantLanes: Set<Lane> } {
-  let best = new Set<Lane>();
-  const walk = (index: number, used: Set<Lane>) => {
-    if (used.size > best.size) best = new Set(used);
-    if (index === heroes.length || best.size === Math.min(5, heroes.length)) return;
-    const lanes = new Set([heroes[index].primary_lane, ...heroes[index].lanes]);
-    for (const lane of lanes) if (ALL_LANES.includes(lane) && !used.has(lane)) {
-      used.add(lane); walk(index + 1, used); used.delete(lane);
+export type KplLaneRateMap = Record<string, Partial<Record<Lane, KplLaneRate>>>;
+
+function getCandidateLanesWithWeights(
+  hero: Hero,
+  kplLaneRates?: KplLaneRateMap
+): Array<{ lane: Lane; weight: number }> {
+  const weights = new Map<Lane, number>();
+  if (ALL_LANES.includes(hero.primary_lane)) {
+    weights.set(hero.primary_lane, 100);
+  }
+  for (const lane of hero.lanes) {
+    if (ALL_LANES.includes(lane) && !weights.has(lane)) {
+      const kplStat = kplLaneRates?.[String(hero.hero_id)]?.[lane];
+      weights.set(lane, 40 + (kplStat ? kplStat.share * 10 : 0));
     }
-    walk(index + 1, used);
+  }
+  const proLanes = kplLaneRates?.[String(hero.hero_id)];
+  if (proLanes) {
+    for (const lane of ALL_LANES) {
+      const stat = proLanes[lane];
+      if (stat && stat.games >= 20 && stat.share >= 0.15 && !weights.has(lane)) {
+        weights.set(lane, 20 + stat.share * 10);
+      }
+    }
+  }
+  return [...weights.entries()]
+    .map(([lane, weight]) => ({ lane, weight }))
+    .sort((a, b) => b.weight - a.weight);
+}
+
+/**
+ * Maximum weighted bipartite matching, so a flex hero (official or high-confidence KPL)
+ * shifts cleanly without stealing another teammate's sole lane.
+ */
+export function assignHeroLanes(
+  heroes: Hero[],
+  kplLaneRates?: KplLaneRateMap
+): {
+  assignments: Map<number, Lane>;
+  byLane: LaneAssignmentMap;
+  occupiedLanes: Set<Lane>;
+  vacantLanes: Set<Lane>;
+} {
+  const candidates = heroes.slice(0, 5).map(hero => ({
+    hero,
+    options: getCandidateLanesWithWeights(hero, kplLaneRates),
+  }));
+  let bestCount = -1;
+  let bestScore = -1;
+  let bestPairs: Array<[number, Lane]> = [];
+  const used = new Set<Lane>();
+  const current: Array<[number, Lane]> = [];
+
+  const walk = (index: number, score: number) => {
+    const remainingPossible = candidates.length - index;
+    if (current.length + remainingPossible < bestCount) return;
+    if (index === candidates.length) {
+      if (current.length > bestCount || (current.length === bestCount && score > bestScore)) {
+        bestCount = current.length;
+        bestScore = score;
+        bestPairs = [...current];
+      }
+      return;
+    }
+    const { hero, options } = candidates[index];
+    for (const opt of options) {
+      if (!used.has(opt.lane)) {
+        used.add(opt.lane);
+        current.push([hero.hero_id, opt.lane]);
+        walk(index + 1, score + opt.weight);
+        current.pop();
+        used.delete(opt.lane);
+      }
+    }
+    walk(index + 1, score);
   };
-  walk(0, new Set());
-  return { occupiedLanes: best, vacantLanes: new Set(ALL_LANES.filter(l => !best.has(l))) };
+  walk(0, 0);
+
+  const assignments = new Map<number, Lane>();
+  const byLane: LaneAssignmentMap = { Clash: null, Jungle: null, Mid: null, Farm: null, Roam: null };
+  for (const [heroId, lane] of bestPairs) {
+    assignments.set(heroId, lane);
+    byLane[lane] = heroId;
+  }
+  const occupiedLanes = new Set(bestPairs.map(([, lane]) => lane));
+  const vacantLanes = new Set(ALL_LANES.filter(lane => !occupiedLanes.has(lane)));
+  return { assignments, byLane, occupiedLanes, vacantLanes };
+}
+
+/** Maximum matching, so a flex hero never steals the sole lane of another hero. */
+export function analyzeLaneOccupancy(
+  heroes: Hero[],
+  kplLaneRates?: KplLaneRateMap
+): { occupiedLanes: Set<Lane>; vacantLanes: Set<Lane> } {
+  const { occupiedLanes, vacantLanes } = assignHeroLanes(heroes, kplLaneRates);
+  return { occupiedLanes, vacantLanes };
 }

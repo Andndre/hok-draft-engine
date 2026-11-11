@@ -1,6 +1,6 @@
 # HoK Draft Engine
 
-Simulator draft, latihan melawan AI, counter lookup, dan wiki hero **Honor of Kings Global**. Frontend React/TypeScript berjalan pada static hosting; keputusan draft dihitung di browser pengguna.
+Simulator draft, latihan melawan AI, analisis game plan pasca-draft, counter lookup, dan wiki hero **Honor of Kings Global**. Frontend React/TypeScript berjalan pada static hosting; keputusan draft dihitung di browser pengguna.
 
 ## Cara kerja mesin draft
 
@@ -8,10 +8,12 @@ Sistem ini dirancang dengan pendekatan **zero-server compute di produksi**, menj
 
 | Bagian | Peran |
 |---|---|
-| Mesin Taktis TypeScript ([tournamentInference.ts](apps/web/src/engine/tournamentInference.ts)) | Menghitung bobot ranking instan dari 4 fase turnamen, presensi KPL, sinergi duet, okupansi lane, dan matriks counter. |
+| Aturan & Solver Flex Lane ([draftRules.ts](apps/web/src/engine/draftRules.ts)) | Mengunci urutan 18 aksi, validasi Fearless/Global, serta `assignHeroLanes` berbasis lane primer, flex resmi, dan distribusi flex pro KPL. |
+| Mesin Taktis TypeScript ([tournamentInference.ts](apps/web/src/engine/tournamentInference.ts)) | Menghitung bobot ranking instan dari 4 fase turnamen, presensi KPL, sinergi duet, okupansi lane fleksibel, dan matriks counter. |
 | Pencarian Minimax Web Worker ([draftSearch.ts](apps/web/src/engine/draftSearch.ts)) | Membandingkan pohon keputusan zero-sum kedua tim via Iterative Deepening Minimax (Depth 1..4, Width 8 cabang, batas 1.500 ms). |
+| Mesin Game Plan Pasca-Draft ([gamePlan.ts](apps/web/src/engine/gamePlan.ts)) | Menilai matchup 5v5 (konteks Roam 2v2 & swap `<04:00`/re-swap `04:00`), kurva tempo KPL zero-sum, syarat menang/kalah, rute jungle, anti-invade, dan prioritas gank. |
 | Pipeline Audit Bukti Skill ([skill_evidence_audit.py](packages/ml-engine/skill_evidence_audit.py)) | Ekstraksi bukti skill resmi dan panduan taktis untuk memvalidasi 28 tag mobilitas, crowd control, dan peran tim. |
-| Sinergi Empiris KPL ([extract_kpl_synergy.py](packages/ml-engine/extract_kpl_synergy.py)) | Menghitung frekuensi pick B1/R1, ban fase 1/2, dan winrate duet dari 11.141+ pertandingan KPL/KIC 2019–2026. |
+| Sinergi & Tempo Empiris KPL ([extract_kpl_synergy.py](packages/ml-engine/extract_kpl_synergy.py)) | Menghitung frekuensi pick B1/R1, ban fase 1/2 tersaring Global, winrate duet, kurva tempo (Early/Mid/Late), dan flex lane (`year >= 2024`) dari 11.141+ pertandingan KPL/KIC 2019–2026. |
 
 ### Diagram Arsitektur Alur Keputusan (Decision Pipeline)
 
@@ -97,18 +99,34 @@ flowchart LR
      - 1 counter musuh: Penalti `-0.55`, bobot sinergi KPL diredam ke **55%**.
      - 2 counter musuh: Penalti `-1.45`, bobot sinergi KPL diredam ke **10%**.
      - 3+ counter musuh: Penalti `-2.60+`, bobot sinergi KPL dipotong menjadi **0%**.
-6. **Mekanisme Deny Pick di Minimax:**
+6. **Mekanisme Deny Pick & Pemetaan Flex Dinamis:**
    - Evaluasi Minimax bekerja zero-sum: $\text{Strength}(\text{Kita}) - \text{Strength}(\text{Musuh})$.
    - Ketika AI mengambil hero kunci lawan, nilai tree musuh di masa depan anjlok drastis. Akibatnya, Minimax secara alami memprioritaskan *Deny Pick* jika langkah tersebut memberikan keuntungan posisi ganda (memperkuat tim sendiri sekaligus memotong opsi terbaik lawan).
+   - Evaluasi okupansi lane di `PICK_PHASE_1`, `BAN_PHASE_2`, `PICK_PHASE_2`, serta `draftSearch.ts` menggunakan `assignHeroLanes` sehingga hero fleksibel (seperti flex resmi atau flex pro KPL `>= 20` game dengan share `>= 15%`) otomatis menggeser penugasan tim tanpa penalti duplikasi lane palsu.
+
+## Game Plan Pasca-Draft, Winning Condition & Simulator Swap
+
+Setelah 18 aksi draft selesai (baik di mode Simulator maupun di akhir game Latihan vs AI), [`PostDraftGamePlanPanel.tsx`](apps/web/src/components/PostDraftGamePlanPanel.tsx) dan [`gamePlan.ts`](apps/web/src/engine/gamePlan.ts) menyajikan evaluasi taktis pasca-draft dari perspektif **Tim Blue** maupun **Tim Red**:
+
+1. **Peta Lane & Simulator Swap 5v5 (`00:00–04:00` + Re-Swap `04:00`):**
+   - Menugaskan 5 hero ke `Clash`, `Jungle`, `Mid`, `Farm`, `Roam` (`primer = 100`, `flex resmi = 40+`, `flex KPL = 20 + share * 10`) dan menandai kartu papan draft (`DraftSimulator.tsx`) dengan lencana `Swap` jika hero digeser dari lane primernya.
+   - Evaluasi `Mid` & `Farm` memperhitungkan perlindungan **konteks Roam 2v2** (`TERTOLONG_ROAM`) agar hero solo yang tertahan oleh dukungan Roam tidak dipaksa swap taktis yang merugikan makro.
+   - Memisahkan `PRIMARY`, `OFFICIAL_FLEX`, `KPL_PRO_FLEX`, dan `TACTICAL_SWAP`. Usulan swap taktis pra-`04:00` hanya diizinkan antar-laner (`Clash`/`Mid`/`Farm`), sedangkan pertukaran yang melibatkan `Roam` atau `Jungle` ditolak kecuali kedua hero valid flex resmi/KPL (swap manual non-flex memicu penalti makro dan label `SWAP_BERISIKO` plus instruksi re-swap setelah menit `04:00`).
+2. **Kurva Tempo KPL (Zero-Sum) & Winning Condition:**
+   - Memakai **132** kurva winrate empiris KPL (`>= 15` game valid dengan tiga jendela `Early <15m`, `Mid 15–19m`, `Late >=19m`) dengan fallback `profile_estimate` (`Estimasi Profil (KPL minim)`) untuk hero ber-sampel minim.
+   - `relativeShares` menormalisasi pangsa tempo relatif kedua tim langsung dari rata-rata winrate fase tanpa pembulatan ganda sehingga persentase dan bilah split selalu berjumlah **100%**, disertai keterangan rata-rata WR fase hero mentah (heuristik, bukan probabilitas kemenangan terkalibrasi).
+   - Merangkum arketipe komposisi, syarat menang/kalah utama, dan checklist item counter ancaman lawan.
+3. **Pola Start Jungle, Anti-Invade & Gold-Sharing Pra-04:00:**
+   - Menentukan kuadran pembukaan (`Strongside` vs `Weakside`), beralih ke protokol `SAFE_SPLIT_OR_GUARD` (*Split-Map Vertical Trade*) jika trio awal lawan berisiko invasi Lv 1–2, serta menyusun rencana *Gold-Sharing* pra-`04:00`, prioritas gank lane, dan fokus objektif `Tyrant` / `Overlord` pada menit `04:00`.
 
 ## Simulator dan latihan
 
 - **Simulator:** pengguna mengendalikan kedua tim dan dapat mengatur Plan A/B masing-masing.
 - **Latihan vs AI:** pilih Blue atau Red; AI menjalankan ban/pick tim lawan secara otomatis. Sisi tetap sepanjang seri, maksimal lima game.
-- **Bantuan opsional:** rekomendasi, radar, badge peringkat, dan sortir AI dapat disembunyikan selama latihan. Wiki dan statistik hero tetap tersedia.
+- **Bantuan opsional:** rekomendasi, radar, badge peringkat, dan sortir AI (serta indikator lane di papan draft) disembunyikan selama latihan berlangsung bila bantuan nonaktif. Wiki dan statistik hero tetap tersedia.
 - **Fearless per tim:** hero yang sudah dipilih suatu tim pada game sebelumnya terkunci untuk pick tim tersebut. Ban tetap mengikuti ketersediaan pada game aktif.
-- **Undo latihan:** kembali ke sebelum keputusan pemain terakhir, termasuk membuang respons AI sesudahnya. Game terdahulu menjadi ulasan setelah game berikutnya dimulai.
-- **Evaluasi akhir:** menampilkan komposisi kedua tim dan alternatif keputusan pada posisi saat itu; tidak menetapkan pemenang pertandingan.
+- **Undo latihan:** kembali ke sebelum keputusan pemain terakhir, termasuk membuang respons AI sesudahnya (termasuk reset override lane swap). Game terdahulu menjadi ulasan setelah game berikutnya dimulai.
+- **Evaluasi akhir:** menampilkan komposisi kedua tim, panel `Game Plan & Winning Condition` beserta simulator swap lane interaktif, dan alternatif keputusan; tidak menetapkan pemenang pertandingan.
 
 Aturan bersama berada di `apps/web/src/engine/draftRules.ts`. Format aplikasi saat ini adalah **18 aksi**: empat ban awal, enam pick awal, empat ban kedua, empat pick akhir. Reset, undo, dan pergantian mode/game membatalkan keputusan AI yang tertunda. Worker tidak menerima Plan A/B pemain.
 
@@ -226,7 +244,7 @@ npm.cmd run benchmark
 npm.cmd run build
 ```
 
-Pengujian mencakup validasi Global/Fearless, lima game tanpa pengulangan pick per tim, matching lane flex, arah counter Liang, alias Ata, batas waktu pencarian, worker aktual melalui transport Node, pembatalan, hasil kedaluwarsa, kedua sisi pemain, serta pembaruan/cache paket data.
+Pengujian mencakup validasi Global/Fearless, lima game tanpa pengulangan pick per tim, matching lane flex, arah counter Liang, alias Ata, batas waktu pencarian, worker aktual melalui transport Node, pembatalan, hasil kedaluwarsa, kedua sisi pemain, pembaruan/cache paket data, serta suite pasca-draft ([gamePlan.test.mjs](apps/web/tests/gamePlan.test.mjs) dan SSR [ui.test.mjs](apps/web/tests/ui.test.mjs): normalisasi kurva tempo 100%, konteks Roam 2v2, penolakan swap non-flex ke Roam/Jungle, dan rencana anti-invade jungle).
 
 ```powershell
 cd packages/ml-engine

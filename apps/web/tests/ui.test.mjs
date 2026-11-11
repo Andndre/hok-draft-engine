@@ -8,11 +8,13 @@ import { HeroRosterToolbar } from '../src/components/HeroRosterToolbar.tsx';
 import { HeroCardCompact } from '../src/components/HeroCardCompact.tsx';
 import { HeroCardDetailed } from '../src/components/HeroCardDetailed.tsx';
 import { DraftSimulator } from '../src/components/DraftSimulator.tsx';
+import { PostDraftGamePlanPanel } from '../src/components/PostDraftGamePlanPanel.tsx';
 import { TacticalRadarPanel } from '../src/components/TacticalRadarPanel.tsx';
 import { HeroWikiDrawer } from '../src/components/HeroWikiDrawer.tsx';
 import { PlanSelectionModal } from '../src/components/PlanSelectionModal.tsx';
 import { PracticeDraft } from '../src/components/PracticeDraft.tsx';
 import { displayCopy } from '../src/components/ui/presentation.ts';
+import { buildDefaultLaneAssignments, assignmentToHeroLaneMap, swapAssignedLanes } from '../src/engine/gamePlan.ts';
 import { evaluateTacticalScores, computeDraftOutcomeProjection } from '../src/engine/tournamentInference.ts';
 import { DropdownSelect } from '../src/components/ui/DropdownSelect.tsx';
 import { Layers } from 'lucide-react';
@@ -336,4 +338,89 @@ test('presentation cleanup preserves canonical tactical source data and image pa
   assert.equal(copy.portrait_asset, source.portrait_asset);
   assert.equal(source.reason, '🎯 Target utama');
   assert.equal(source.nested[0], '🛡️ Lindungi tim');
+});
+
+test('DraftSimulator swap badges keep exact 10 lane icons and PostDraftGamePlanPanel renders SSR without emoji or nested buttons', () => {
+  const pickByLane = (lane, skipIds = new Set()) =>
+    dataset.heroes.find(h => h.is_global_released && h.hero_id !== 511 && h.primary_lane === lane && !skipIds.has(h.hero_id));
+  const used = new Set();
+  const pickTeam = () =>
+    ['Clash', 'Jungle', 'Mid', 'Farm', 'Roam'].map(lane => {
+      const h = pickByLane(lane, used);
+      used.add(h.hero_id);
+      return h;
+    });
+  const blueTeam = pickTeam();
+  const redTeam = pickTeam();
+  const bans = dataset.heroes.filter(h => h.is_global_released && !used.has(h.hero_id)).slice(0, 8);
+
+  const defaultBlue = buildDefaultLaneAssignments(blueTeam, dataset.synergy?.hero_lane_rates);
+  const swappedBlue = swapAssignedLanes(defaultBlue, 'Mid', 'Farm');
+  const blueAssignedLanes = assignmentToHeroLaneMap(swappedBlue);
+  const redAssignedLanes = assignmentToHeroLaneMap(buildDefaultLaneAssignments(redTeam, dataset.synergy?.hero_lane_rates));
+
+  const boardHtml = render(DraftSimulator, {
+    bluePicks: blueTeam,
+    redPicks: redTeam,
+    blueBans: bans.slice(0, 4),
+    redBans: bans.slice(4, 8),
+    blueAssignedLanes,
+    redAssignedLanes,
+    currentTurn: { side: 'red', action: 'pick', stepIndex: 18, isComplete: true },
+    fearlessEnabled: true,
+    gameNumber: 1,
+    onToggleFearless: noop,
+    onGameNumberChange: noop,
+    onResetDraft: noop,
+    onUndoStep: noop,
+    onInspectHero: noop,
+  });
+  assert.ok(boardHtml.includes('Swap'));
+  const boardImages = boardHtml.match(/<img\b[^>]*>/g) ?? [];
+  assert.equal(boardImages.filter(image => !image.includes('/assets/lanes/')).length, 18);
+  assert.equal(boardImages.filter(image => image.includes('/assets/lanes/')).length, 10);
+
+  const planHtml = render(PostDraftGamePlanPanel, {
+    blueHeroes: blueTeam,
+    redHeroes: redTeam,
+    synergy: dataset.synergy,
+    defaultPerspective: 'blue',
+    blueAssignment: swappedBlue,
+    redAssignment: buildDefaultLaneAssignments(redTeam, dataset.synergy?.hero_lane_rates),
+    hasCustomAssignments: true,
+    onSwapLane: noop,
+    onResetLanes: noop,
+    onInspectHero: noop,
+  });
+  assert.ok(planHtml.includes('Game Plan &amp; Winning Condition'));
+  assert.ok(planHtml.includes('Peta Lane &amp; Swap 5v5'));
+  assert.ok(planHtml.includes('Winning Condition &amp; Tempo'));
+  assert.ok(planHtml.includes('Pola Jungle, Gank &amp; Item'));
+  assert.ok(planHtml.includes('Reset Lane'));
+  assert.ok(planHtml.includes('Rencana Re-Swap Menit 04:00 Aktif:'));
+  assert.ok(!/<button\b(?:(?!<\/button>)[\s\S])*<button\b/.test(planHtml), 'No nested interactive buttons');
+  assert.ok(!/\p{Extended_Pictographic}/u.test(planHtml.replace(/<[^>]+>/g, '')), 'No decorative emoji rendered');
+
+  const winningTabHtml = render(PostDraftGamePlanPanel, {
+    blueHeroes: blueTeam,
+    redHeroes: redTeam,
+    synergy: dataset.synergy,
+    defaultPerspective: 'blue',
+    defaultTab: 'winning',
+    blueAssignment: swappedBlue,
+    redAssignment: buildDefaultLaneAssignments(redTeam, dataset.synergy?.hero_lane_rates),
+    hasCustomAssignments: true,
+    onSwapLane: noop,
+    onResetLanes: noop,
+    onInspectHero: noop,
+  });
+  const winningPlainText = winningTabHtml.replace(/<[^>]+>/g, '');
+  assert.ok(winningPlainText.includes('Perbandingan Kurva Tempo Menang'));
+  assert.ok(winningPlainText.includes('bukan probabilitas kemenangan terkalibrasi'));
+  const pctPairs = [...winningTabHtml.matchAll(/<strong[^>]*>(\d+)% vs (\d+)%<\/strong>/g)];
+  assert.equal(pctPairs.length, 3, 'Expected Early/Mid/Late relative share percentages');
+  for (const [, oursPct, enemyPct] of pctPairs) {
+    assert.equal(Number(oursPct) + Number(enemyPct), 100, `Tempo pair ${oursPct}% vs ${enemyPct}% must sum to 100%`);
+  }
+  assert.ok(!/\p{Extended_Pictographic}/u.test(winningPlainText), 'No decorative emoji rendered on winning tab');
 });

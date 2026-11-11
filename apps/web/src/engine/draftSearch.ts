@@ -88,8 +88,9 @@ export function rankedCandidates(position: DraftPosition, context: SearchContext
 
   // Pada fase pick, utamakan kandidat yang mengisi lane yang belum terisi
   const ourHeroes = context.heroes.filter((h) => position.picks[turn.side].includes(h.hero_id));
+  const kplLaneRates = context.synergy?.hero_lane_rates;
   const laneFittingCandidates = legalCandidates.filter(
-    (r) => analyzeLaneOccupancy([...ourHeroes, r.hero]).occupiedLanes.size === ourHeroes.length + 1
+    (r) => analyzeLaneOccupancy([...ourHeroes, r.hero], kplLaneRates).occupiedLanes.size === ourHeroes.length + 1
   );
 
   return laneFittingCandidates.length > 0 ? laneFittingCandidates : legalCandidates;
@@ -134,13 +135,15 @@ export function evaluatePosition(position: DraftPosition, context: SearchContext
   const getTeamHeroes = (side: Side) =>
     position.picks[side].map((id) => heroesById.get(id)!).filter(Boolean);
 
+  const kplLaneRates = context.synergy?.hero_lane_rates;
+
   const calculateTeamStrength = (side: Side): number => {
     const ourTeam = getTeamHeroes(side);
     const enemyTeam = getTeamHeroes(oppositeSide(side));
     const b1Openers = context.synergy?.b1_openers || {};
 
     const tacticalRadar = evaluateTacticalScores(ourTeam, enemyTeam);
-    const laneCoverage = analyzeLaneOccupancy(ourTeam).occupiedLanes.size;
+    const laneCoverage = analyzeLaneOccupancy(ourTeam, kplLaneRates).occupiedLanes.size;
     const exposures = new Map(
       ourTeam.map((h) => [h.hero_id, evaluateEnemyCounterExposure(h, enemyTeam, b1Openers)])
     );
@@ -192,7 +195,7 @@ export function evaluatePosition(position: DraftPosition, context: SearchContext
     for (const hero of context.heroes) {
       if (!isLegalHero(projectedPosition, hero.hero_id, context)) continue;
       if (position.step <= 4 && isRiskyOpener(hero)) continue;
-      if (analyzeLaneOccupancy([...ourTeam, hero]).occupiedLanes.size !== ourTeam.length + 1) continue;
+      if (analyzeLaneOccupancy([...ourTeam, hero], kplLaneRates).occupiedLanes.size !== ourTeam.length + 1) continue;
 
       const exposure = evaluateEnemyCounterExposure(hero, enemyTeam, b1Openers);
       const heroValue =

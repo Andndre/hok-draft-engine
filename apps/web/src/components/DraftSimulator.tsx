@@ -2,7 +2,7 @@ import { LaneLabel } from './ui/LaneIcon';
 import { DropdownSelect } from './ui/DropdownSelect';
 import React from 'react';
 import { ArrowDown, Check, CheckCircle2, ChevronDown, History, Layers, LockKeyhole, RotateCcw, ShieldBan, ShieldCheck, Swords, Undo2, UserRound } from 'lucide-react';
-import type { Hero } from '../types';
+import type { Hero, Lane } from '../types';
 import { TOURNAMENT_PHASES } from '../engine/draftRules';
 import type { Side } from '../engine/draftRules';
 import { HeroThumbnail } from './ui/AssetThumbnail';
@@ -14,6 +14,8 @@ interface DraftSimulatorProps {
   redPicks: Array<Hero | null>;
   blueBans: Array<Hero | null>;
   redBans: Array<Hero | null>;
+  blueAssignedLanes?: Map<number, Lane>;
+  redAssignedLanes?: Map<number, Lane>;
   currentTurn: { side: Side; action: 'ban' | 'pick'; stepIndex: number; isComplete: boolean };
   fearlessEnabled: boolean;
   onToggleFearless: (value: boolean) => void;
@@ -27,7 +29,7 @@ interface DraftSimulatorProps {
   onInspectHero?: (hero: Hero) => void;
   onRequestHero?: () => void;
 }
-export function DraftSimulator({ hideControls = false, playerSide, bluePicks, redPicks, blueBans, redBans, currentTurn, fearlessEnabled, onToggleFearless, gameNumber, onGameNumberChange, onResetDraft, onUndoStep, onSelectSlot, blueFearlessUsedHeroes = [], redFearlessUsedHeroes = [], onInspectHero, onRequestHero }: DraftSimulatorProps) {
+export function DraftSimulator({ hideControls = false, playerSide, bluePicks, redPicks, blueBans, redBans, blueAssignedLanes, redAssignedLanes, currentTurn, fearlessEnabled, onToggleFearless, gameNumber, onGameNumberChange, onResetDraft, onUndoStep, onSelectSlot, blueFearlessUsedHeroes = [], redFearlessUsedHeroes = [], onInspectHero, onRequestHero }: DraftSimulatorProps) {
   const turnLabel = currentTurn.isComplete ? 'Draft selesai' : (currentTurn.side === 'blue' ? 'Blue' : 'Red') + ' · ' + (currentTurn.action === 'ban' ? 'Ban hero' : 'Pick hero');
   const TurnIcon = currentTurn.isComplete ? CheckCircle2 : currentTurn.action === 'ban' ? ShieldBan : Swords;
   const teams = [
@@ -62,9 +64,13 @@ export function DraftSimulator({ hideControls = false, playerSide, bluePicks, re
         <div className="team-picks">{team.picks.map((hero, index) => {
           const active = activeSide && currentTurn.action === 'pick' && index === team.picks.findIndex(value => value === null);
           const slotName = (team.side === 'blue' ? 'B' : 'R') + (index + 1);
-          return <button type="button" key={index} className={'pick-slot' + (hero ? ' is-filled' : '') + (active ? ' is-active' : '')} disabled={hero ? !onInspectHero : !active || !onRequestHero} aria-label={hero ? 'Lihat ' + slotName + ': ' + hero.name : slotName + (active ? ': pilih hero sekarang' : ': menunggu giliran')} onClick={() => { if (hero) onInspectHero?.(hero); else { onSelectSlot?.(team.side, 'pick', index); onRequestHero?.(); } }}>
+          const laneMap = team.side === 'blue' ? blueAssignedLanes : redAssignedLanes;
+          const assignedLane = hero ? laneMap?.get(hero.hero_id) : undefined;
+          const displayLane = assignedLane ?? hero?.primary_lane;
+          const isFlexShifted = Boolean(hero && assignedLane && assignedLane !== hero.primary_lane);
+          return <button type="button" key={index} className={'pick-slot' + (hero ? ' is-filled' : '') + (active ? ' is-active' : '')} disabled={hero ? !onInspectHero : !active || !onRequestHero} aria-label={hero ? 'Lihat ' + slotName + ': ' + hero.name + ' (' + displayLane + ')' : slotName + (active ? ': pilih hero sekarang' : ': menunggu giliran')} onClick={() => { if (hero) onInspectHero?.(hero); else { onSelectSlot?.(team.side, 'pick', index); onRequestHero?.(); } }}>
             <span className="pick-slot__portrait">{hero ? <HeroThumbnail hero={hero} /> : <UserRound aria-hidden="true" />}<span className="slot-code">{slotName}</span></span>
-            <span className="pick-slot__info"><strong>{hero?.name ?? (active ? 'Pilih hero' : slotName)}</strong><small>{hero ? <LaneLabel lane={hero.primary_lane} /> : active ? 'Giliran saat ini' : 'Menunggu'}</small></span>{active && <ArrowDown className="pick-slot__next" aria-hidden="true" />}
+            <span className="pick-slot__info"><strong>{hero?.name ?? (active ? 'Pilih hero' : slotName)}</strong><small>{hero ? <><LaneLabel lane={displayLane!} />{isFlexShifted && <span className="slot-flex-tag"> · Swap</span>}</> : active ? 'Giliran saat ini' : 'Menunggu'}</small></span>{active && <ArrowDown className="pick-slot__next" aria-hidden="true" />}
           </button>;
         })}</div>
         {fearlessEnabled && team.history.length > 0 && <details className="fearless-history"><summary><LockKeyhole aria-hidden="true" /><span>{team.history.length} hero terkunci</span><ChevronDown aria-hidden="true" /></summary><div>{team.history.map(hero => <button type="button" key={hero.hero_id} aria-label={'Lihat ' + hero.name + ', terkunci Fearless'} title={hero.name} onClick={() => onInspectHero?.(hero)} disabled={!onInspectHero}><HeroThumbnail hero={hero} /></button>)}</div></details>}

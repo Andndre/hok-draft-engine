@@ -8,6 +8,7 @@ from publish_data import build_package, publish_package, write_package
 from dataset_sources import load_source_heroes
 from tactical_profiles import TAGS, approved_profiles, create_proposal, generate_batch_proposals, global_released_heroes, has_source_evidence, source_material, validate_proposal
 from export_draft_benchmark import export, SEQUENCE
+from extract_kpl_synergy import extract_lane_rates, extract_tempo_curves
 from publish_data import MAPPINGS
 
 
@@ -149,6 +150,72 @@ class DataPipelineTests(unittest.TestCase):
             self.assertEqual(result["eligible_holdout_battles"], 1)
             self.assertEqual(result["synergy"]["b1_openers"][str(ids[4])]["b1_picks"], 1)
             self.assertTrue(all(sample["date"] >= "2024-01-01" for sample in result["positions"]))
+
+    def test_kpl_tempo_curves_and_clean_lane_rates_filter_anomalies(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            database = root / "kpl_fixture.db"
+            players_path = root / "players.jsonl"
+            conn = sqlite3.connect(database)
+            conn.executescript(
+                """
+                CREATE TABLE matches(match_id TEXT PRIMARY KEY, year INTEGER);
+                CREATE TABLE battles(battle_id TEXT PRIMARY KEY, match_id TEXT, winner_side TEXT, duration_sec INTEGER, is_complete INTEGER);
+                CREATE TABLE draft_actions(battle_id TEXT, ord INTEGER, side TEXT, action TEXT, global_hero_id INTEGER, hero_cn TEXT);
+                """
+            )
+            conn.execute("INSERT INTO matches VALUES ('m2023', 2023), ('m2025', 2025)")
+            # 1 anomaly <300s (ignored), 12 early losses + 12 late wins for hero 556 (aliased from 511 on first pick)
+            conn.execute("INSERT INTO battles VALUES ('short', 'm2025', 'blue', 240, 1)")
+            conn.execute("INSERT INTO draft_actions VALUES ('short', 5, 'blue', 'pick', 556, '八戒')")
+            rows = []
+            for idx in range(12):
+                bid_e = f"e{idx}"
+                bid_l = f"l{idx}"
+                conn.execute("INSERT INTO battles VALUES (?, 'm2025', 'red', 780, 1)", (bid_e,))
+                conn.execute("INSERT INTO battles VALUES (?, 'm2025', 'blue', 1320, 1)", (bid_l,))
+                rows.append((bid_e, 5, "blue", "pick", 511 if idx == 0 else 556, "猪八戒"))
+                rows.append((bid_l, 5, "blue", "pick", 556, "猪八戒"))
+            conn.execute("INSERT INTO battles VALUES ('dirty2025', 'm2025', 'blue', 950, 1)")
+            conn.execute("INSERT INTO battles VALUES ('old2023', 'm2023', 'blue', 950, 1)")
+            conn.executemany("INSERT INTO draft_actions VALUES (?,?,?,?,?,?)", rows)
+            for hid, cn in ((101, "A"), (102, "B"), (103, "C"), (104, "D"), (105, "E")):
+                conn.execute("INSERT INTO draft_actions VALUES ('old2023', ?, 'blue', 'pick', ?, ?)", (hid, hid, cn))
+
+            # Clean 2025 team roster in e0..e4 (5 distinct lanes), dirty duplicate-Roam in dirty2025, old year in old2023
+            jsonl_lines = []
+            clean_blue = [
+                ["blue", "猪八戒", "P1", "对抗路"],
+                ["blue", "A", "P2", "打野"],
+                ["blue", "B", "P3", "中路"],
+                ["blue", "C", "P4", "发育路"],
+                ["blue", "D", "P5", "游走"],
+            ]
+            for idx in range(5):
+                jsonl_lines.append(json.dumps({"battle_id": f"l{idx}", "players": clean_blue}, ensure_ascii=False))
+            dirty_blue = [
+                ["blue", "A", "P1", "游走"],
+                ["blue", "B", "P2", "游走"],
+                ["blue", "C", "P3", "中路"],
+                ["blue", "D", "P4", "打野"],
+                ["blue", "猪八戒", "P5", "发育路"],
+            ]
+            for idx in range(6):
+                jsonl_lines.append(json.dumps({"battle_id": "dirty2025" if idx == 0 else "old2023", "players": dirty_blue if idx == 0 else clean_blue}, ensure_ascii=False))
+            players_path.write_text("\n".join(jsonl_lines) + "\n", encoding="utf-8")
+            conn.commit()
+
+            cursor = conn.cursor()
+            curves = extract_tempo_curves(cursor, {556})
+            self.assertIn("556", curves)
+            self.assertEqual(curves["556"]["total_games"], 24)
+            self.assertEqual(curves["556"]["early"], {"games": 12, "win_rate": 0.0})
+            self.assertEqual(curves["556"]["late"], {"games": 12, "win_rate": 1.0})
+            self.assertEqual(curves["556"]["profile"], "late")
+
+            lane_rates = extract_lane_rates(cursor, players_path, {556, 101, 102, 103, 104}, min_year=2024, min_games=5)
+            self.assertEqual(lane_rates["556"], {"Clash": {"games": 5, "share": 1.0, "win_rate": 1.0}})
+            conn.close()
 
 
 if __name__ == "__main__":

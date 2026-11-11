@@ -170,3 +170,98 @@ test('worker failure uses local fallback and cancellation rejects pending reques
   await assert.rejects(client.decide(emptyPosition(), ctx, { sessionId: 'fixture', revision: 1 }, abort.signal), { name: 'AbortError' });
   client.cancel();
 });
+
+test('runTournamentInference flex reassignment in Pick Phase and enemy flex openness in BAN_PHASE_2 work consistently', () => {
+  const template = heroes.find(h => h.is_global_released === true && h.hero_id !== 511);
+  const makeHero = (hero_id, name, lane, lanes, role) => ({
+    ...template,
+    hero_id,
+    name,
+    primary_lane: lane,
+    lanes,
+    primary_role: role,
+    tier: 'A',
+    win_rate: 0.51,
+    pick_rate: 0.08,
+    ban_rate: 0.02,
+    is_global_released: true,
+    counters: [],
+    countered_by: [],
+    kpl_matchup: undefined,
+    hokstats_guide: undefined,
+    tactical_profile: undefined,
+  });
+
+  const flexClashJungle = makeHero(8101, 'FlexCJ', 'Clash', ['Clash', 'Jungle'], 'Fighter');
+  const pureMid = makeHero(8102, 'OurMid', 'Mid', ['Mid'], 'Mage');
+  const pureFarm = makeHero(8103, 'OurFarm', 'Farm', ['Farm'], 'Marksman');
+  const pureRoam = makeHero(8104, 'OurRoam', 'Roam', ['Roam'], 'Support');
+  const candPureClash = makeHero(8105, 'CandClash', 'Clash', ['Clash'], 'Fighter');
+  const candDupMid = makeHero(8106, 'CandMidDup', 'Mid', ['Mid'], 'Mage');
+
+  const enemyFlexCJ = makeHero(8201, 'EnemyFlexCJ', 'Clash', ['Clash', 'Jungle'], 'Fighter');
+  const enemyPureMid = makeHero(8202, 'EnemyMid', 'Mid', ['Mid'], 'Mage');
+  const enemyPureFarm = makeHero(8203, 'EnemyFarm', 'Farm', ['Farm'], 'Marksman');
+  const fillerRoam = makeHero(8204, 'FillerRoam', 'Roam', ['Roam'], 'Support');
+  const fillerJung = makeHero(8205, 'FillerJung', 'Jungle', ['Jungle'], 'Assassin');
+
+  const syntheticHeroes = [
+    flexClashJungle,
+    pureMid,
+    pureFarm,
+    pureRoam,
+    candPureClash,
+    candDupMid,
+    enemyFlexCJ,
+    enemyPureMid,
+    enemyPureFarm,
+    fillerRoam,
+    fillerJung,
+  ];
+  const emptySynergy = { pairs: {}, b1_openers: {}, hero_lane_rates: {} };
+
+  // Pick Phase step 16 (Blue has FlexCJ + Mid + Farm + Roam; FlexCJ slides to Jungle when CandClash enters)
+  const pickInference = runTournamentInference(
+    [flexClashJungle.hero_id, pureMid.hero_id, pureFarm.hero_id, pureRoam.hero_id],
+    [enemyFlexCJ.hero_id, enemyPureMid.hero_id, enemyPureFarm.hero_id, fillerRoam.hero_id],
+    [],
+    [],
+    true,
+    true,
+    syntheticHeroes,
+    16,
+    null,
+    null,
+    true,
+    emptySynergy
+  );
+  const clashRec = pickInference.recommendations.find(r => r.hero.hero_id === candPureClash.hero_id);
+  const dupMidRec = pickInference.recommendations.find(r => r.hero.hero_id === candDupMid.hero_id);
+  assert.ok(clashRec && dupMidRec, 'Both candidates should be scored');
+  assert.ok(!clashRec.laneTag?.includes('Sudah'), 'Flex hero slides to Jungle so Clash candidate is not penalized as duplicate');
+  assert.ok(dupMidRec.laneTag?.includes('Sudah Penuh'), 'True duplicate Mid without flex partner is flagged');
+  assert.ok(clashRec.choiceScore > dupMidRec.choiceScore, 'Flex-compatible Clash completion outscores duplicate Mid');
+
+  // BAN_PHASE_2 step 10 (Blue Ban; Red picked EnemyFlexCJ + EnemyMid + EnemyFarm, leaving Jungle/Roam open AND Clash open via flex!)
+  const banPhase2Inference = runTournamentInference(
+    [pureMid.hero_id, pureFarm.hero_id],
+    [enemyFlexCJ.hero_id, enemyPureMid.hero_id, enemyPureFarm.hero_id],
+    [],
+    [],
+    false,
+    true,
+    syntheticHeroes,
+    10,
+    null,
+    null,
+    true,
+    emptySynergy
+  );
+  const banClash = banPhase2Inference.recommendations.find(r => r.hero.hero_id === candPureClash.hero_id);
+  const banClosedMid = banPhase2Inference.recommendations.find(r => r.hero.hero_id === candDupMid.hero_id);
+  assert.ok(banClash && banClosedMid);
+  assert.ok(
+    banClash.choiceScore > banClosedMid.choiceScore,
+    'BAN_PHASE_2 values denying Clash pick because EnemyFlexCJ can flex to Jungle, unlike truly closed Mid'
+  );
+});

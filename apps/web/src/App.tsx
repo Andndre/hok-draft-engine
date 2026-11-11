@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { Hero, Lane, ActiveTab, SortMode, ViewMode, TacticalVector, TacticalDelta, GameDraftData, TournamentDataset } from './types';
+import { Hero, Lane, ActiveTab, SortMode, ViewMode, TacticalVector, TacticalDelta, GameDraftData, LaneAssignmentMap, TournamentDataset } from './types';
 import { loadTournamentDataset } from './engine/heroDataLoader';
 import { runTournamentInference, TournamentPredictionResult, TournamentPhaseStrategy } from './engine/tournamentInference';
 import { computeTacticalDeltas } from './engine/deltaExplainer';
+import { assignmentToHeroLaneMap, buildDefaultLaneAssignments, swapAssignedLanes } from './engine/gamePlan';
 import { AlertTriangle, BookOpen, FilterX, Gamepad2, RefreshCw, SearchX, SlidersHorizontal, Star } from 'lucide-react';
 import { HeroRosterToolbar } from './components/HeroRosterToolbar';
 import { focusHeroSearch } from './components/ui/presentation';
@@ -12,12 +13,14 @@ import { HeroCardDetailed } from './components/HeroCardDetailed';
 import { BottomCommandDock } from './components/BottomCommandDock';
 import { PracticeDraft } from './components/PracticeDraft';
 import { DraftSimulator } from './components/DraftSimulator';
+import { PostDraftGamePlanPanel } from './components/PostDraftGamePlanPanel';
 import { TacticalRadarPanel } from './components/TacticalRadarPanel';
 import { HeroWikiDrawer } from './components/HeroWikiDrawer';
 import { PlanSelectionModal } from './components/PlanSelectionModal';
 import { isHeroGlobalReleased } from './data/heroReleaseStatus';
 
-import { DRAFT_SEQUENCE, getDraftTurn, createInitialGameDraft, applyGameHero } from './engine/draftRules';
+import { assignHeroLanes, DRAFT_SEQUENCE, getDraftTurn, createInitialGameDraft, applyGameHero } from './engine/draftRules';
+import type { Side } from './engine/draftRules';
 
 export const App: React.FC = () => {
   const [dataset, setDataset] = useState<TournamentDataset | null>(null);
@@ -35,6 +38,7 @@ export const App: React.FC = () => {
   const [sortMode, setSortMode] = useState<SortMode>('ai');
   const [viewMode, setViewMode] = useState<ViewMode>('compact');
   const [onlyGlobalReleased, setOnlyGlobalReleased] = useState<boolean>(true);
+  const [laneOverridesByGame, setLaneOverridesByGame] = useState<Record<number, { blue?: LaneAssignmentMap | null; red?: LaneAssignmentMap | null }>>({});
 
   // Favorites (persisted in localStorage)
   const [favorites, setFavorites] = useState<Set<number>>(() => {
@@ -295,6 +299,7 @@ export const App: React.FC = () => {
   // Reset Current Game Draft ONLY (preserves other games!)
   const handleResetDraft = () => {
     updateCurrentDraft(() => createInitialGameDraft());
+    setLaneOverridesByGame((prev) => ({ ...prev, [gameNumber]: {} }));
     setPreviousScores(null);
     setDeltas([]);
     setPrimaryInsight(`Draft Game ${gameNumber} di-reset. Giliran Blue Side BAN Fase 1.`);
@@ -303,6 +308,7 @@ export const App: React.FC = () => {
   // Undo Step in Current Game
   const handleUndoStep = () => {
     if (draftStep === 0) return;
+    setLaneOverridesByGame((prev) => ({ ...prev, [gameNumber]: {} }));
     const prevStepIndex = draftStep - 1;
     const prevTurn = DRAFT_SEQUENCE[prevStepIndex];
 
@@ -374,6 +380,58 @@ export const App: React.FC = () => {
     });
   };
 
+  const kplLaneRates = synergyData?.hero_lane_rates;
+  const filledBlueHeroes = useMemo(() => bluePicks.filter((h): h is Hero => h !== null), [bluePicks]);
+  const filledRedHeroes = useMemo(() => redPicks.filter((h): h is Hero => h !== null), [redPicks]);
+
+  const defaultBlueAssignment = useMemo(
+    () => buildDefaultLaneAssignments(filledBlueHeroes, kplLaneRates),
+    [filledBlueHeroes, kplLaneRates]
+  );
+  const defaultRedAssignment = useMemo(
+    () => buildDefaultLaneAssignments(filledRedHeroes, kplLaneRates),
+    [filledRedHeroes, kplLaneRates]
+  );
+
+  const gameLaneOverrides = laneOverridesByGame[gameNumber];
+  const activeBlueAssignment = currentTurn.isComplete
+    ? gameLaneOverrides?.blue ?? defaultBlueAssignment
+    : defaultBlueAssignment;
+  const activeRedAssignment = currentTurn.isComplete
+    ? gameLaneOverrides?.red ?? defaultRedAssignment
+    : defaultRedAssignment;
+
+  const blueAssignedLanes = useMemo(
+    () =>
+      currentTurn.isComplete
+        ? assignmentToHeroLaneMap(activeBlueAssignment)
+        : assignHeroLanes(filledBlueHeroes, kplLaneRates).assignments,
+    [currentTurn.isComplete, activeBlueAssignment, filledBlueHeroes, kplLaneRates]
+  );
+  const redAssignedLanes = useMemo(
+    () =>
+      currentTurn.isComplete
+        ? assignmentToHeroLaneMap(activeRedAssignment)
+        : assignHeroLanes(filledRedHeroes, kplLaneRates).assignments,
+    [currentTurn.isComplete, activeRedAssignment, filledRedHeroes, kplLaneRates]
+  );
+
+  const handleSwapSimulatorLane = (side: Side, laneA: Lane, laneB: Lane) => {
+    const base = side === 'blue' ? activeBlueAssignment : activeRedAssignment;
+    const swapped = swapAssignedLanes(base, laneA, laneB);
+    setLaneOverridesByGame((prev) => ({
+      ...prev,
+      [gameNumber]: {
+        ...(prev[gameNumber] || {}),
+        [side]: swapped,
+      },
+    }));
+  };
+
+  const handleResetSimulatorLanes = () => {
+    setLaneOverridesByGame((prev) => ({ ...prev, [gameNumber]: {} }));
+  };
+
   // Filter & Sort Heroes for the main grid
   const filteredAndSortedHeroes = useMemo(() => {
     let result = [...heroes];
@@ -441,7 +499,22 @@ export const App: React.FC = () => {
         {loadError && <section role="alert" className="empty-state"><AlertTriangle aria-hidden="true" /><h2>Data hero belum dapat dimuat</h2><p>{loadError}</p><button type="button" className="ui-button ui-button--primary" onClick={() => void loadData()}><RefreshCw aria-hidden="true" />Coba lagi</button></section>}
         {dataset && <div hidden={!practiceActive}><PracticeDraft dataset={dataset} active={practiceActive} assistance={practiceAssistance} onAssistanceChange={setPracticeAssistance} selectedLane={selectedLane} onLaneChange={setSelectedLane} searchQuery={searchQuery} onSearchChange={setSearchQuery} sortMode={sortMode} onSortChange={setSortMode} viewMode={viewMode} onViewChange={setViewMode} favorites={favorites} onToggleFavorite={handleToggleFavorite} /></div>}
         {!practiceActive && <>
-          {activeTab === 'draft' && !loadError && <DraftSimulator bluePicks={bluePicks} redPicks={redPicks} blueBans={blueBans} redBans={redBans} currentTurn={currentTurn} fearlessEnabled={fearlessEnabled} onToggleFearless={setFearlessEnabled} gameNumber={gameNumber} onGameNumberChange={handleGameChange} onResetDraft={handleResetDraft} onUndoStep={handleUndoStep} blueFearlessUsedHeroes={blueFearlessUsedHeroes} redFearlessUsedHeroes={redFearlessUsedHeroes} onInspectHero={setWikiHero} onRequestHero={!loading ? focusHeroSearch : undefined} />}
+          {activeTab === 'draft' && !loadError && <DraftSimulator bluePicks={bluePicks} redPicks={redPicks} blueBans={blueBans} redBans={redBans} blueAssignedLanes={blueAssignedLanes} redAssignedLanes={redAssignedLanes} currentTurn={currentTurn} fearlessEnabled={fearlessEnabled} onToggleFearless={setFearlessEnabled} gameNumber={gameNumber} onGameNumberChange={handleGameChange} onResetDraft={handleResetDraft} onUndoStep={handleUndoStep} blueFearlessUsedHeroes={blueFearlessUsedHeroes} redFearlessUsedHeroes={redFearlessUsedHeroes} onInspectHero={setWikiHero} onRequestHero={!loading ? focusHeroSearch : undefined} />}
+          {activeTab === 'draft' && !loadError && currentTurn.isComplete && filledBlueHeroes.length === 5 && filledRedHeroes.length === 5 && (
+            <PostDraftGamePlanPanel
+              key={`sim-game-${gameNumber}`}
+              blueHeroes={filledBlueHeroes}
+              redHeroes={filledRedHeroes}
+              synergy={synergyData}
+              defaultPerspective="blue"
+              blueAssignment={activeBlueAssignment}
+              redAssignment={activeRedAssignment}
+              hasCustomAssignments={Boolean(gameLaneOverrides?.blue || gameLaneOverrides?.red)}
+              onSwapLane={handleSwapSimulatorLane}
+              onResetLanes={handleResetSimulatorLanes}
+              onInspectHero={setWikiHero}
+            />
+          )}
           {!loadError && <div className={activeTab === 'draft' ? 'draft-workspace' : ''}>
             <section className="hero-roster" id="hero-roster" aria-label="Katalog hero" aria-busy={loading}>
               <HeroRosterToolbar title={activeTab === 'favorites' ? 'Hero favorit' : activeTab === 'draft' ? 'Pilih hero untuk ' + (currentTurn.action === 'ban' ? 'ban' : 'pick') : 'Jelajahi hero'} count={filteredAndSortedHeroes.length} searchQuery={searchQuery} onSearchChange={setSearchQuery} selectedLane={selectedLane} onLaneChange={setSelectedLane} sortMode={sortMode} onSortChange={setSortMode} viewMode={viewMode} onViewChange={setViewMode} hideAiSort={activeTab !== 'draft'} />

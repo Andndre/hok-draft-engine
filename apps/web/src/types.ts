@@ -249,6 +249,153 @@ export interface GameDraftData {
   redPlanBId: number | null;
 }
 
+export type LaneAssignmentMap = Record<Lane, number | null>;
+export type SwapFeasibility = 'PRIMARY' | 'OFFICIAL_FLEX' | 'KPL_PRO_FLEX' | 'TACTICAL_SWAP';
+export type TempoProfile = 'early' | 'mid' | 'late' | 'balanced' | 'insufficient';
+
+export interface HeroTempoBucket {
+  games: number;
+  win_rate: number;
+}
+
+export interface HeroTempoCurve {
+  total_games: number;
+  avg_duration_sec: number;
+  early: HeroTempoBucket;
+  mid: HeroTempoBucket;
+  late: HeroTempoBucket;
+  profile: TempoProfile;
+}
+
+export interface KplLaneRate {
+  games: number;
+  share: number;
+  win_rate: number;
+}
+
+export interface LaneMatchupEvaluation {
+  lane: Lane;
+  ourHero: Hero | null;
+  enemyHero: Hero | null;
+  soloScore: number;
+  contextualScore: number;
+  verdict: 'UNGGUL' | 'TERTOLONG_ROAM' | 'SEIMBANG' | 'KALAH' | 'SWAP_BERISIKO';
+  swapFeasibility: SwapFeasibility;
+  macroCost: number;
+  reasons: string[];
+  roamContextNote?: string;
+  macroSwapNote?: string;
+  reswapAdvice?: string;
+}
+
+export interface SwapSuggestion {
+  laneA: Lane;
+  laneB: Lane;
+  heroA: Hero;
+  heroB: Hero;
+  teamSide: 'our' | 'enemy';
+  matchupGain: number;
+  macroCost: number;
+  netBenefit: number;
+  title: string;
+  rationale: string;
+  reswapAdvice?: string;
+}
+
+export interface TempoWindowSummary {
+  earlyScore: number;
+  midScore: number;
+  lateScore: number;
+  avgDurationMinutes: number;
+  kplSampleCount: number;
+  profileEstimatedCount: number;
+  dominantWindow: 'EARLY' | 'MID' | 'LATE';
+  heroes: Array<{
+    hero: Hero;
+    profile: TempoProfile;
+    sourceKind: 'kpl_empirical' | 'profile_estimate';
+    totalGames: number;
+    earlyWr: number;
+    midWr: number;
+    lateWr: number;
+  }>;
+}
+
+export interface TempoPhaseShare {
+  oursShare: number;
+  enemyShare: number;
+  ourAvgPct: number;
+  enemyAvgPct: number;
+}
+
+export interface TempoCurveComparison {
+  ours: TempoWindowSummary;
+  enemy: TempoWindowSummary;
+  relativeShares: {
+    early: TempoPhaseShare;
+    mid: TempoPhaseShare;
+    late: TempoPhaseShare;
+  };
+  windowVerdict: string;
+}
+
+export interface CompArchetypeSummary {
+  id: string;
+  label: string;
+  summary: string;
+}
+
+export interface WinningConditionAnalysis {
+  archetype: CompArchetypeSummary;
+  enemyArchetype: CompArchetypeSummary;
+  winConditions: string[];
+  loseConditions: string[];
+  counterChecklist: Array<{
+    enemy: Hero;
+    risk: string;
+    recommendedItems: CounterItemInfo[];
+    counterAction: string;
+  }>;
+}
+
+export interface GankTargetPriority {
+  lane: Lane;
+  targetEnemy: Hero;
+  ourLaner: Hero | null;
+  priorityScore: number;
+  priorityLabel: 'PRIORITAS #1' | 'SEKUNDER' | 'SITUASIONAL';
+  setupSummary: string;
+}
+
+export interface JungleAndGankPlan {
+  ourSide: 'blue' | 'red';
+  ourJungler: Hero | null;
+  strongSide: 'Farm' | 'Clash';
+  weakSide: 'Farm' | 'Clash';
+  startQuadrant: string;
+  openingPosture: 'INVADE_OR_CONTEST' | 'SAFE_SPLIT_OR_GUARD' | 'STANDARD_FULL_CLEAR';
+  openingSummary: string;
+  invadeRiskReasons: string[];
+  trioGoldSharingPlan: string;
+  objectiveFocusAt4Min: {
+    primaryObjective: 'Tyrant' | 'Overlord';
+    reason: string;
+  };
+  gankPriorities: GankTargetPriority[];
+}
+
+export interface GamePlanAnalysis {
+  ourSide: 'blue' | 'red';
+  ourAssignment: LaneAssignmentMap;
+  enemyAssignment: LaneAssignmentMap;
+  laneMatchups: LaneMatchupEvaluation[];
+  swapSuggestions: SwapSuggestion[];
+  activeReswapAlerts: string[];
+  tempo: TempoCurveComparison;
+  winningCondition: WinningConditionAnalysis;
+  junglePlan: JungleAndGankPlan;
+}
+
 export type SortMode = 'az' | 'win' | 'pick' | 'ai';
 export type ViewMode = 'compact' | 'detailed';
 export type ActiveTab = 'counter' | 'draft' | 'wiki' | 'favorites';
