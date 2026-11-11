@@ -27,13 +27,14 @@ const dataset = { heroes: read(manifest.artifacts.heroes.file), synergy: read(ma
 const hero = dataset.heroes.find(hero => hero.is_global_released);
 const controls = { selectedLane: 'All', onLaneChange: noop, searchQuery: '', onSearchChange: noop, sortMode: 'ai', onSortChange: noop, viewMode: 'compact', onViewChange: noop };
 
-test('practice removes AI sorting without assistance and locks the Global roster', () => {
+test('practice removes AI sorting without assistance and allows toggling Global roster', () => {
   const hidden = render(HeroRosterToolbar, { ...controls, count: 120, hideAiSort: true });
   assert.ok(!hidden.includes('Skor AI'));
   assert.ok(hidden.includes('aria-label="Urutkan hero: Nama A–Z"'));
   assert.ok(render(HeroRosterToolbar, { ...controls, count: 120 }).includes('Skor AI'));
-  const header = render(HeaderSortBar, { activeTab: 'draft', onTabChange: noop, engineReady: true, favoriteCount: 0, onlyGlobalReleased: true, onToggleGlobalReleased: noop, globalLocked: true });
-  assert.match(header, /<button[^>]*disabled[^>]*aria-pressed="true"/);
+  const header = render(HeaderSortBar, { activeTab: 'draft', onTabChange: noop, engineReady: true, favoriteCount: 0, onlyGlobalReleased: true, onToggleGlobalReleased: noop, globalLocked: false });
+  assert.ok(!header.includes('disabled'));
+  assert.match(header, /<button[^>]*aria-pressed="true"/);
 });
 
 test('custom dropdown exposes one full trigger and a named list with the current choice', () => {

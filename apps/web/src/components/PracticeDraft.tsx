@@ -36,6 +36,7 @@ interface Props {
   viewMode: ViewMode;
   favorites: Set<number>;
   onToggleFavorite: (id: number) => void;
+  onlyGlobalReleased?: boolean;
 }
 const button = 'ui-button ui-button--quiet';
 const axes = [
@@ -62,12 +63,13 @@ export function PracticeDraft(props: Props) {
   const gameKey = session ? `${session.sessionId}-${session.gameIndex}` : '';
   const client = useMemo(() => new OpponentClient(snapshot, oppositeSide(playerSide)), [snapshot, playerSide, session?.sessionId]);
   useEffect(() => () => client.cancel(), [client]);
+  const onlyGlobal = props.onlyGlobalReleased ?? true;
   const game = session?.games[session.gameIndex];
   const position = game?.position ?? emptyPosition();
   const format = session?.config.format ?? setupFormat;
   const turn = getDraftTurn(position.step, format);
   const latest = !!session && session.gameIndex === session.games.length - 1;
-  const context = useMemo(() => session ? practiceContext(session, snapshot) : { heroes: snapshot.heroes, onlyGlobal: true, fearless: { blue: [], red: [] }, format: setupFormat }, [session, snapshot, setupFormat]);
+  const context = useMemo(() => session ? practiceContext(session, snapshot) : { heroes: snapshot.heroes, onlyGlobal, fearless: { blue: [], red: [] }, format: setupFormat }, [session, snapshot, onlyGlobal, setupFormat]);
   const canAct = !!session && latest && active && !turn.isComplete && turn.side === playerSide;
   const byId = useMemo(() => new Map(snapshot.heroes.map(h => [h.hero_id, h])), [snapshot]);
   const heroList = (ids: number[]) => ids.map(id => byId.get(id)!).filter(Boolean);
@@ -139,7 +141,7 @@ export function PracticeDraft(props: Props) {
       const fresh = await loadTournamentDataset();
       setSnapshot(fresh);
       setLaneOverridesByKey({});
-      setSession(createPracticeSession(crypto.randomUUID(), { playerSide: setupSide, fearless: setupFormat === 'ranked' ? false : setupFearless, format: setupFormat }, fresh));
+      setSession(createPracticeSession(crypto.randomUUID(), { playerSide: setupSide, fearless: setupFormat === 'ranked' ? false : setupFearless, format: setupFormat, onlyGlobal }, fresh));
       setNotice('Sesi dimulai. Data hero dipertahankan sampai sesi selesai.');
     } catch { setError('Data latihan belum dapat dimuat. Coba mulai lagi.'); }
     finally { setStarting(false); }
@@ -152,7 +154,7 @@ export function PracticeDraft(props: Props) {
   const filtered = useMemo(() => {
     const query = props.searchQuery.trim().toLowerCase();
     const rank = new Map((assistance && canAct ? hints?.recommendations ?? [] : []).map((r, index) => [r.hero.hero_id, index]));
-    const rows = snapshot.heroes.filter(h => h.is_global_released === true && h.hero_id !== 511)
+    const rows = snapshot.heroes.filter(h => (!onlyGlobal || h.is_global_released === true) && h.hero_id !== 511)
       .filter(h => props.selectedLane === 'All' || h.primary_lane === props.selectedLane || h.lanes.includes(props.selectedLane))
       .filter(h => !query || `${h.name} ${h.primary_role} ${h.primary_lane}`.toLowerCase().includes(query));
     return rows.sort((a, b) => {
@@ -161,7 +163,7 @@ export function PracticeDraft(props: Props) {
       if (props.sortMode === 'pick') return b.pick_rate - a.pick_rate;
       return a.name.localeCompare(b.name);
     });
-  }, [snapshot, props.searchQuery, props.selectedLane, props.sortMode, assistance, canAct, hints]);
+  }, [snapshot, onlyGlobal, props.searchQuery, props.selectedLane, props.sortMode, assistance, canAct, hints]);
 
   const assistanceControl = <label className="assistance-toggle"><Lightbulb aria-hidden="true" /><span>Bantuan taktis<small>{assistance ? 'Rekomendasi dan komposisi ditampilkan' : 'Uji keputusan tanpa rekomendasi AI'}</small></span><input type="checkbox" checked={assistance} onChange={event => onAssistanceChange(event.target.checked)} /></label>;
   if (!session || !game) return <section aria-label="Pengaturan latihan" className="practice-setup surface-panel">
@@ -251,7 +253,7 @@ export function PracticeDraft(props: Props) {
       {latest && session.games.length < 5 && <button type="button" className="ui-button ui-button--primary" onClick={() => send({ type: 'next' })}><Layers aria-hidden="true" />Lanjut game {session.games.length + 1}<ArrowRight aria-hidden="true" /></button>}
     </section>}
     <div className={assistance && !turn.isComplete && latest ? 'draft-workspace' : ''}>
-      <section className="hero-roster" aria-label="Roster latihan Global"><HeroRosterToolbar title="Roster Global" count={filtered.length} searchQuery={props.searchQuery} onSearchChange={props.onSearchChange} selectedLane={props.selectedLane} onLaneChange={props.onLaneChange} sortMode={props.sortMode} onSortChange={props.onSortChange} viewMode={props.viewMode} onViewChange={props.onViewChange} hideAiSort={!assistance} active={active} />
+      <section className="hero-roster" aria-label={onlyGlobal ? 'Roster latihan Global' : 'Roster latihan Global & CN'}><HeroRosterToolbar title={onlyGlobal ? 'Roster Global' : 'Roster Global + CN'} count={filtered.length} searchQuery={props.searchQuery} onSearchChange={props.onSearchChange} selectedLane={props.selectedLane} onLaneChange={props.onLaneChange} sortMode={props.sortMode} onSortChange={props.onSortChange} viewMode={props.viewMode} onViewChange={props.onViewChange} hideAiSort={!assistance} active={active} />
         {!filtered.length ? <div className="empty-state"><SearchX aria-hidden="true" /><h3>Hero tidak ditemukan</h3><p>Ubah pencarian atau bersihkan filter lane yang aktif.</p><button type="button" className={button} onClick={() => { props.onSearchChange(''); props.onLaneChange('All'); }}><FilterX aria-hidden="true" />Bersihkan filter</button></div> : <div className={'hero-grid' + (props.viewMode === 'detailed' ? ' hero-grid--detailed' : '')}>{filtered.map(hero => {
           const legal = isLegalHero(previewPosition, hero.hero_id, context, format);
           const rec = recommendations.find(r => r.hero.hero_id === hero.hero_id);
@@ -289,6 +291,6 @@ export function PracticeDraft(props: Props) {
       {assistance && !turn.isComplete && latest && hints && <aside className="analysis-sidebar"><TacticalRadarPanel scores={playerRadar} phaseStrategy={hints.phaseStrategy} recommendations={recommendations} isWaiting={!canAct} onSelectCandidate={choose} onInspectHero={setWikiHero} activeSide={playerSide} isPickPhase={turn.action === 'pick'} onOpenPlanModal={() => setPlanOpen(true)} onSelectQuickPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} /></aside>}
     </div>
     <HeroWikiDrawer hero={wikiHero} onClose={() => setWikiHero(null)} isFavorite={!!wikiHero && props.favorites.has(wikiHero.hero_id)} onToggleFavorite={props.onToggleFavorite} onPickForDraft={canAct && wikiHero && isLegalHero(position, wikiHero.hero_id, context, format) ? choose : undefined} draftActionLabel={turn.action === 'ban' ? 'Ban hero ini' : 'Pick hero ini'} allHeroes={snapshot.heroes} onSelectRelatedHero={setWikiHero} itemCatalog={snapshot.items} spellCatalog={snapshot.spells} />
-    <PlanSelectionModal isOpen={planOpen && latest} onClose={() => setPlanOpen(false)} heroes={snapshot.heroes} currentPlanAId={game.playerPlan.a} currentPlanBId={game.playerPlan.b} onSelectPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} onSelectPlanB={heroId => send({ type: 'plan', plan: 'b', heroId })} activeSide={playerSide} unavailableHeroIds={unavailablePlans} recommendedOpeners={assistance ? hints?.phaseStrategy.candidateOpeners ?? [] : []} onlyGlobalReleased />
+    <PlanSelectionModal isOpen={planOpen && latest} onClose={() => setPlanOpen(false)} heroes={snapshot.heroes} currentPlanAId={game.playerPlan.a} currentPlanBId={game.playerPlan.b} onSelectPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} onSelectPlanB={heroId => send({ type: 'plan', plan: 'b', heroId })} activeSide={playerSide} unavailableHeroIds={unavailablePlans} recommendedOpeners={assistance ? hints?.phaseStrategy.candidateOpeners ?? [] : []} onlyGlobalReleased={onlyGlobal} />
   </section>;
 }

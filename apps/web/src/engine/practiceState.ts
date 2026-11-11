@@ -6,7 +6,7 @@ import type { DecisionTag } from './opponentClient';
 import { rankedCandidates } from './draftSearch';
 import { runTournamentInference } from './tournamentInference';
 
-export interface PracticeConfig { playerSide: Side; fearless: boolean; format?: DraftFormat }
+export interface PracticeConfig { playerSide: Side; fearless: boolean; format?: DraftFormat; onlyGlobal?: boolean }
 export interface DecisionTrace {
   actionIndex: number;
   heroId: number;
@@ -29,16 +29,16 @@ export function practiceContext(session: PracticeSession, dataset: TournamentDat
   if (session.config.fearless) for (const game of session.games.slice(0, session.gameIndex)) {
     fearless.blue.push(...game.position.picks.blue); fearless.red.push(...game.position.picks.red);
   }
-  return { heroes: dataset.heroes, onlyGlobal: true, fearless, format: session.config.format };
+  return { heroes: dataset.heroes, onlyGlobal: session.config.onlyGlobal ?? true, fearless, format: session.config.format };
 }
 function createGame(dataset: TournamentDataset, config: PracticeConfig, context: DraftContext): PracticeGame {
   const aiSide = oppositeSide(config.playerSide);
-  const result = runTournamentInference([], [], [], context.fearless[aiSide], false, aiSide === 'blue', dataset.heroes, 0, null, null, true, dataset.synergy, context.fearless[config.playerSide], config.format);
+  const result = runTournamentInference([], [], [], context.fearless[aiSide], false, aiSide === 'blue', dataset.heroes, 0, null, null, context.onlyGlobal, dataset.synergy, context.fearless[config.playerSide], config.format);
   const candidates = result.phaseStrategy.candidateOpeners.filter(h => !context.fearless[aiSide].includes(h.hero_id));
   return { position: emptyPosition(), actions: [], traces: [], playerPlan: { a: null, b: null }, aiPlan: { a: candidates[0]?.hero_id ?? null, b: candidates.find(h => h.primary_lane !== candidates[0]?.primary_lane)?.hero_id ?? candidates[1]?.hero_id ?? null } };
 }
 export function createPracticeSession(sessionId: string, config: PracticeConfig, dataset: TournamentDataset): PracticeSession {
-  const context: DraftContext = { heroes: dataset.heroes, onlyGlobal: true, fearless: { blue: [], red: [] }, format: config.format };
+  const context: DraftContext = { heroes: dataset.heroes, onlyGlobal: config.onlyGlobal ?? true, fearless: { blue: [], red: [] }, format: config.format };
   return { sessionId, revision: 0, config, gameIndex: 0, games: [createGame(dataset, config, context)] };
 }
 export type PracticeEvent =
