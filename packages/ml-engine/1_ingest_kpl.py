@@ -106,8 +106,11 @@ def ingest_kpl_data():
     draft_actions_csv = RAW_DIR / "draft-actions.csv"
 
     if not battles_csv.exists() or not draft_actions_csv.exists():
-        print(f" Error: {battles_csv} or {draft_actions_csv} not found! Check data/raw/kpl-bp-dataset.")
-        return
+        raise SystemExit(
+            f"Error: {battles_csv} or {draft_actions_csv} not found. "
+            "Initialize the KPL dataset submodule with 'git submodule update --init --depth 1' "
+            "or run 'uv run ../../scripts/setup.py --data-only'."
+        )
 
     # Ingest battles & match metadata
     print(f" [1/3] Parsing battles metadata from {battles_csv}...")

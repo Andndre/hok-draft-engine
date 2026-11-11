@@ -12,13 +12,13 @@ Dokumen ini disusun sebagai panduan operasional komprehensif agar setiap autonom
    - Keputusan draft berjalan di browser melalui scorer TypeScript dan Web Worker minimax (maksimal 4 aksi, 8 kandidat per node, anggaran 1.500 ms). Tidak ada ONNX atau panggilan model neural dalam runtime produksi.
    - Backend web adalah static assets (HTML/JS/CSS) yang dapat dideploy di Shared Hosting cPanel, Cloudflare Pages, atau Nginx statis.
 2. **Dual-Stack Monorepo:**
-   - `packages/ml-engine/`: Pipeline Python lokal untuk ekstraksi data, audit bukti skill & review proposal profil taktis, dan publikasi dataset berversi ke S3/R2.
+   - `packages/ml-engine/`: Pipeline Python lokal untuk ekstraksi data, audit bukti skill & review proposal profil taktis, dan kompilasi dataset berversi SHA-256 ke `apps/web/public/`.
    - `apps/web/`: Single Page Application (SPA) berbasis Vite, React 19, TypeScript, dan Tailwind CSS.
 3. **Multi-Source Data Ingestion:**
    - Data 120 hero Global dari `https://hok.kurohiko.id/` (alasan taktis lokal & counter matrix).
    - Data statistik tier Diamond+ dari `https://www.hokfire.com/` (builds, arcana, tier resmi S/A/B/C/D).
    - Panduan skill, preset build alternatif, detail item/spell, dan matchup editorial dari HoKStats melalui importer offline. Sumber ini tetap terpisah, beratribusi, dan memerlukan review untuk memengaruhi scorer.
-   - Data empiris 11.141+ pertandingan turnamen profesional (KPL / KIC 2019–2026) dari dataset Fire-Phoenixs (frekuensi pick B1/R1, ban fase 1/2, dan duet winrate).
+   - Data empiris 11.141+ game turnamen profesional (KPL & cup pro CN 2019–2026) dari submodule `data/raw/kpl-bp-dataset` ([Fire-Phoenixs/kpl-bp-dataset](https://github.com/Fire-Phoenixs/kpl-bp-dataset), frekuensi pick B1/R1, ban fase 1/2, dan duet winrate).
 
 ---
 
@@ -32,7 +32,7 @@ Setiap agen yang mengeksekusi perintah shell **WAJIB** mematuhi aturan berikut:
 - Eksekusi skrip modul: `cd packages/ml-engine && uv run <script.py>`.
 - Eksekusi skrip ad-hoc / lepas: Gunakan flag `--with`:
   ```powershell
-  uv run --with boto3 python scratch/sync_s3.py
+  uv run --with httpx python scratch/check_source.py
   ```
 - Eksekusi CLI global: Jalankan instan via `uvx <package>` atau terisolasi via `uv tool install <package>`.
 
@@ -41,12 +41,8 @@ Setiap agen yang mengeksekusi perintah shell **WAJIB** mematuhi aturan berikut:
 - **DILARANG** memasukkan teks multiline markdown atau teks panjang dengan format kompleks secara inline ke parameter CLI (misal: `gh pr create --body "..."`). Karakter `$`, backtick, dan escape sequence dapat terdistorsi oleh parser PowerShell.
 - **WAJIB** menulis ke file temporary terlebih dahulu (`temp_body.md`), jalankan dengan argumen file (`--body-file "temp_body.md"`), lalu hapus file temporary setelah selesai.
 
-### C. Local Dev Stack & Object Storage
+### C. Local Dev Stack
 - Local dev stack web server dan database dikelola via **EnvKit** (`https://hok-draft-engine.test/`).
-- S3 Object Storage lokal (RustFS / MinIO) berjalan di:
-  - Endpoint: `http://127.0.0.1:9000`
-  - Bucket: `hok-draft-engine`
-  - Access Key: `rustfsadmin` | Secret: `rustfsadmin`
 
 ---
 
@@ -141,12 +137,10 @@ npm.cmd run build
 # Vite menyalin public assets ke dist secara otomatis.
 ```
 
-### B. Sinkronisasi Data Produksi ke R2 / S3:
+### B. Publikasi Paket Dataset ke Frontend Statis:
 ```powershell
 cd packages/ml-engine
 uv run publish_data.py
-# Opsional: publikasi object storage, manifest diunggah terakhir
-uv run publish_data.py --publish
 ```
 
 ### C. Menjalankan Uji Simulasi Draft AI:

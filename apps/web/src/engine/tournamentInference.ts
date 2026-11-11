@@ -3,7 +3,7 @@
  * @description Mesin inferensi taktis deterministik 4-fase turnamen Honor of Kings (HoK Global).
  *
  * Menggabungkan 6 lapisan sinyal taktis kompetitif:
- * 1. Data empiris 11.141+ match turnamen resmi KPL/KIC (frekuensi B1 opener, R1-R2 pick, dan ban fase 1/2).
+ * 1. Data empiris 11.141+ game turnamen resmi KPL & CN Pro (Fire-Phoenixs/kpl-bp-dataset: frekuensi B1 opener, R1-R2 pick, dan ban fase 1/2).
  * 2. Matriks sinergi duet profesional (KPL pairs dengan >= 20 match dan winrate >= 50%).
  * 3. Matriks counter terarah (Kurohiko priors, HOKFIRE matchup, dan KPL pre-ban history).
  * 4. Analisis lane vacancy & flex lane (memastikan tidak terjadi duplikasi role di turnamen).

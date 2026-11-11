@@ -1,5 +1,5 @@
 {
-  "source": "KPL & KIC Pro Tournament Ban/Pick Dataset (11,141 matches, Global 120 Filtered)",
+  "source": "KPL & CN Pro Tournament Ban/Pick Dataset (11,141 games, Fire-Phoenixs/kpl-bp-dataset; Global Ban Filtered)",
   "total_pro_pairs": 3103,
   "pairs": {
     "127_130": {

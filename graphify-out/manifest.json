@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "apps/web/public/kpl_synergy_matrix.json": {
-    "mtime": 1794356941.059601,
-    "seen": 1794356982.7388115,
-    "ast_hash": "01474e42ca5221738fbadc66a1d58874",
+    "mtime": 1794362194.6366186,
+    "seen": 1794362381.1523938,
+    "ast_hash": "6ac6dada7e610ad1892895ff86bfe590",
     "semantic_hash": ""
   },
   "apps/web/src/App.tsx": {
@@ -132,9 +132,9 @@
     "semantic_hash": ""
   },
   "apps/web/vite.config.ts": {
-    "mtime": 1794210677.600549,
-    "seen": 1794210867.5010147,
-    "ast_hash": "667d767a80e5fb86873e2099aa6de519",
+    "mtime": 1794362237.5345306,
+    "seen": 1794362381.1660855,
+    "ast_hash": "718d381f99a933be92d0b257071171bc",
     "semantic_hash": ""
   },
   "data/mappings/arcana_hokfire.json": {
@@ -168,9 +168,9 @@
     "semantic_hash": ""
   },
   "data/mappings/kpl_synergy_matrix.json": {
-    "mtime": 1794356941.0120912,
-    "seen": 1794356982.7465816,
-    "ast_hash": "01474e42ca5221738fbadc66a1d58874",
+    "mtime": 1794362194.592201,
+    "seen": 1794362381.1690905,
+    "ast_hash": "6ac6dada7e610ad1892895ff86bfe590",
     "semantic_hash": ""
   },
   "data/mappings/skills_hokfire.json": {
@@ -186,21 +186,21 @@
     "semantic_hash": ""
   },
   "packages/ml-engine/1_ingest_kpl.py": {
-    "mtime": 1794180063.7871354,
-    "seen": 1794208404.7745993,
-    "ast_hash": "59e805a548f0d42a0ec2ccc1b9b1c36e",
+    "mtime": 1794362409.124518,
+    "seen": 1794362826.6909654,
+    "ast_hash": "360e7877eb836c649a0aa2bc3fe89d17",
     "semantic_hash": ""
   },
   "packages/ml-engine/extract_kpl_counters.py": {
-    "mtime": 1794188429.9579246,
-    "seen": 1794208404.7746043,
-    "ast_hash": "a394a14a97261a74feb4b862b78f918c",
+    "mtime": 1794362409.230297,
+    "seen": 1794362826.6911275,
+    "ast_hash": "55397f9716ee24fbf82c66a7bb57de20",
     "semantic_hash": ""
   },
   "packages/ml-engine/extract_kpl_synergy.py": {
-    "mtime": 1794357982.8632524,
-    "seen": 1794358533.511376,
-    "ast_hash": "2d6279724ee93402e7ca1d0c32603787",
+    "mtime": 1794362409.350931,
+    "seen": 1794362826.6911302,
+    "ast_hash": "8e73fe795faaab7887f5d05882e2baad",
     "semantic_hash": ""
   },
   "packages/ml-engine/fetch_hokfire_icons.py": {
@@ -210,15 +210,15 @@
     "semantic_hash": ""
   },
   "packages/ml-engine/pyproject.toml": {
-    "mtime": 1794180421.73789,
-    "seen": 1794208404.7746089,
-    "ast_hash": "0de4547097e0ed6534e01f39f5a767a8",
+    "mtime": 1794362736.3936296,
+    "seen": 1794362826.6912928,
+    "ast_hash": "5c6c1761e8c72e850cf5ae856e03dfa4",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1794358850.7141776,
-    "seen": 1794359621.8108847,
-    "ast_hash": "49a6e1349e4dc3a9cec97da6a3116873",
+    "mtime": 1794362774.412565,
+    "seen": 1794362826.6919637,
+    "ast_hash": "5ee5b25ef02c52474693826d74dfb146",
     "semantic_hash": ""
   },
   "apps/web/index.html": {
@@ -228,9 +228,9 @@
     "semantic_hash": ""
   },
   "packages/ml-engine/README.md": {
-    "mtime": 1794179863.974011,
-    "seen": 1794208404.774674,
-    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "mtime": 1794362778.0445492,
+    "seen": 1794362826.6925423,
+    "ast_hash": "f1b15bb2f87834c579face23dcb77808",
     "semantic_hash": ""
   },
   "apps/web/public/assets/abilities/105-0.png": {
@@ -9438,9 +9438,9 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1794349386.8945663,
-    "seen": 1794349426.6017427,
-    "ast_hash": "e971b95e4b422d209f49eb1c8748f9d3",
+    "mtime": 1794362771.7211368,
+    "seen": 1794362826.6918092,
+    "ast_hash": "f99934e86b9eded6729aa07ac8bbdadb",
     "semantic_hash": ""
   },
   "packages/ml-engine/verify_simulation.py": {
@@ -9456,45 +9456,27 @@
     "semantic_hash": ""
   },
   "apps/web/src/engine/heroDataLoader.ts": {
-    "mtime": 1794238202.2050736,
-    "seen": 1794238239.2831857,
-    "ast_hash": "ffc792eaa954f2a41731964f9344cbe8",
+    "mtime": 1794362764.726006,
+    "seen": 1794362826.6765883,
+    "ast_hash": "325bbfccadc00139610fcffe7a129cdf",
     "semantic_hash": ""
   },
   "apps/web/src/engine/tournamentInference.ts": {
-    "mtime": 1794360553.6889064,
-    "seen": 1794361252.032081,
-    "ast_hash": "b0c2036ac1925d7b3a396e93bc4ddb9d",
+    "mtime": 1794362408.9214315,
+    "seen": 1794362826.6768107,
+    "ast_hash": "097b8c3f444e47643c43181697abf4ee",
     "semantic_hash": ""
   },
   "apps/web/public/data_manifest.json": {
-    "mtime": 1794358409.859263,
-    "seen": 1794358533.479401,
-    "ast_hash": "350ad086d092cbe101e68041347771e8",
-    "semantic_hash": ""
-  },
-  "apps/web/public/datasets/cd93ce3919397697/hero_metadata.json": {
-    "mtime": 1794211183.4848092,
-    "seen": 1794211357.2446527,
-    "ast_hash": "b861d1516294e2d9198da729df749e6c",
-    "semantic_hash": ""
-  },
-  "apps/web/public/datasets/cd93ce3919397697/hero_release_status.json": {
-    "mtime": 1794211183.4858193,
-    "seen": 1794211357.2446551,
-    "ast_hash": "38f12bfbc30b456d0fa62b21e8dbd83e",
-    "semantic_hash": ""
-  },
-  "apps/web/public/datasets/cd93ce3919397697/kpl_synergy_matrix.json": {
-    "mtime": 1794211183.4858193,
-    "seen": 1794211357.244658,
-    "ast_hash": "0dd6e641131c83ca43338d58d47687da",
+    "mtime": 1794362195.3187714,
+    "seen": 1794362381.1518617,
+    "ast_hash": "1b7f647d827584c57362579e30420913",
     "semantic_hash": ""
   },
   "apps/web/tests/dataset.test.mjs": {
-    "mtime": 1794231521.0618808,
-    "seen": 1794232200.0464425,
-    "ast_hash": "08b0f89347583c0ba1437d474ce17bf0",
+    "mtime": 1794362766.6295342,
+    "seen": 1794362826.6773045,
+    "ast_hash": "f74168c829cbe03ce0141055617b881a",
     "semantic_hash": ""
   },
   "apps/web/tests/register.mjs": {
@@ -9516,9 +9498,9 @@
     "semantic_hash": ""
   },
   "packages/ml-engine/publish_data.py": {
-    "mtime": 1794240404.217625,
-    "seen": 1794240549.2045603,
-    "ast_hash": "25dacbbd4b9890775ba0e96d40114e13",
+    "mtime": 1794362740.0065317,
+    "seen": 1794362826.6912901,
+    "ast_hash": "35f9db21d7093ede638d4b83711a714f",
     "semantic_hash": ""
   },
   "packages/ml-engine/tactical_profiles.py": {
@@ -9528,9 +9510,9 @@
     "semantic_hash": ""
   },
   "packages/ml-engine/test_data_pipeline.py": {
-    "mtime": 1794356067.5258937,
-    "seen": 1794356816.4542425,
-    "ast_hash": "a23c196791de2a94e321de947a6e5226",
+    "mtime": 1794362743.59145,
+    "seen": 1794362826.69145,
+    "ast_hash": "85d98940dc2f9d80e62e2a408ba7a26b",
     "semantic_hash": ""
   },
   "apps/web/src/engine/draftSearch.ts": {
@@ -9582,8 +9564,8 @@
     "semantic_hash": ""
   },
   "apps/web/tests/ui.test.mjs": {
-    "mtime": 1794361199.1275504,
-    "seen": 1794361252.0329506,
+    "mtime": 1794361291.2629972,
+    "seen": 1794362381.1654572,
     "ast_hash": "f819745a8fa50010a76f6d4d5cf8aef7",
     "semantic_hash": ""
   },
@@ -9815,36 +9797,6 @@
     "ast_hash": "a81c7bb6900fdf6a85cb02b33f6b1a26",
     "semantic_hash": ""
   },
-  "apps/web/public/datasets/0e84c75922e2399e/hero_metadata.json": {
-    "mtime": 1794231486.7486398,
-    "seen": 1794232200.0437057,
-    "ast_hash": "b861d1516294e2d9198da729df749e6c",
-    "semantic_hash": ""
-  },
-  "apps/web/public/datasets/0e84c75922e2399e/hero_release_status.json": {
-    "mtime": 1794231486.7496407,
-    "seen": 1794232200.0437074,
-    "ast_hash": "38f12bfbc30b456d0fa62b21e8dbd83e",
-    "semantic_hash": ""
-  },
-  "apps/web/public/datasets/0e84c75922e2399e/item_catalog.json": {
-    "mtime": 1794231486.7496407,
-    "seen": 1794232200.0437098,
-    "ast_hash": "b14b48b1c75c5699f6ef01415428bd2c",
-    "semantic_hash": ""
-  },
-  "apps/web/public/datasets/0e84c75922e2399e/kpl_synergy_matrix.json": {
-    "mtime": 1794231486.7496407,
-    "seen": 1794232200.0437114,
-    "ast_hash": "0dd6e641131c83ca43338d58d47687da",
-    "semantic_hash": ""
-  },
-  "apps/web/public/datasets/0e84c75922e2399e/spell_catalog.json": {
-    "mtime": 1794231486.7506895,
-    "seen": 1794232200.043713,
-    "ast_hash": "554ea0ef8ea16fdf85b35516ca0a62f0",
-    "semantic_hash": ""
-  },
   "data/mappings/hokstats_aliases.json": {
     "mtime": 1794230964.3733144,
     "seen": 1794232200.0477133,
@@ -9863,30 +9815,6 @@
     "ast_hash": "5b4690cc6768fb192291f48f3c18155c",
     "semantic_hash": ""
   },
-  "apps/web/public/datasets/75b24c6f4bc4ce4a/hero_release_status.json": {
-    "mtime": 1794237194.5199237,
-    "seen": 1794237304.6689098,
-    "ast_hash": "38f12bfbc30b456d0fa62b21e8dbd83e",
-    "semantic_hash": ""
-  },
-  "apps/web/public/datasets/75b24c6f4bc4ce4a/item_catalog.json": {
-    "mtime": 1794237194.5211122,
-    "seen": 1794237304.6689126,
-    "ast_hash": "e4878e92d6eb841ae84c5a834b473944",
-    "semantic_hash": ""
-  },
-  "apps/web/public/datasets/75b24c6f4bc4ce4a/kpl_synergy_matrix.json": {
-    "mtime": 1794237194.5199237,
-    "seen": 1794237304.6689153,
-    "ast_hash": "0dd6e641131c83ca43338d58d47687da",
-    "semantic_hash": ""
-  },
-  "apps/web/public/datasets/75b24c6f4bc4ce4a/spell_catalog.json": {
-    "mtime": 1794237194.5211122,
-    "seen": 1794237304.6689181,
-    "ast_hash": "ae1cd6206f75ac7770de8e3af4097b6a",
-    "semantic_hash": ""
-  },
   "data/mappings/hokstats_coverage.json": {
     "mtime": 1794237125.4480028,
     "seen": 1794237304.675076,
@@ -9903,30 +9831,6 @@
     "mtime": 1794237125.447479,
     "seen": 1794237304.6750815,
     "ast_hash": "e0c13cdec8e00372a4ccd65c17eed8e6",
-    "semantic_hash": ""
-  },
-  "apps/web/public/datasets/54943c26b4fcf999/hero_release_status.json": {
-    "mtime": 1794238472.5654023,
-    "seen": 1794239328.5805073,
-    "ast_hash": "38f12bfbc30b456d0fa62b21e8dbd83e",
-    "semantic_hash": ""
-  },
-  "apps/web/public/datasets/54943c26b4fcf999/item_catalog.json": {
-    "mtime": 1794238472.5654023,
-    "seen": 1794239328.5805097,
-    "ast_hash": "53cce0f0ccd9d379dae4fc8cf60293cd",
-    "semantic_hash": ""
-  },
-  "apps/web/public/datasets/54943c26b4fcf999/kpl_synergy_matrix.json": {
-    "mtime": 1794238472.564399,
-    "seen": 1794239328.5805116,
-    "ast_hash": "0dd6e641131c83ca43338d58d47687da",
-    "semantic_hash": ""
-  },
-  "apps/web/public/datasets/54943c26b4fcf999/spell_catalog.json": {
-    "mtime": 1794238472.5654023,
-    "seen": 1794239328.5805137,
-    "ast_hash": "48e97bce71db45527d41d1804b34d969",
     "semantic_hash": ""
   },
   "data/mappings/hokstats_catalog_reviews.json": {
@@ -9951,30 +9855,6 @@
     "mtime": 1794240237.2250087,
     "seen": 1794240549.203957,
     "ast_hash": "604718787d87e91a57bd24b8bf0c5d78",
-    "semantic_hash": ""
-  },
-  "apps/web/public/datasets/e3219284e299f8ae/hero_release_status.json": {
-    "mtime": 1794345213.804286,
-    "seen": 1794345287.437518,
-    "ast_hash": "38f12bfbc30b456d0fa62b21e8dbd83e",
-    "semantic_hash": ""
-  },
-  "apps/web/public/datasets/e3219284e299f8ae/item_catalog.json": {
-    "mtime": 1794345213.804286,
-    "seen": 1794345287.4375212,
-    "ast_hash": "53cce0f0ccd9d379dae4fc8cf60293cd",
-    "semantic_hash": ""
-  },
-  "apps/web/public/datasets/e3219284e299f8ae/kpl_synergy_matrix.json": {
-    "mtime": 1794345213.8027766,
-    "seen": 1794345287.4375236,
-    "ast_hash": "0dd6e641131c83ca43338d58d47687da",
-    "semantic_hash": ""
-  },
-  "apps/web/public/datasets/e3219284e299f8ae/spell_catalog.json": {
-    "mtime": 1794345213.804286,
-    "seen": 1794345287.4375265,
-    "ast_hash": "48e97bce71db45527d41d1804b34d969",
     "semantic_hash": ""
   },
   "data/mappings/tactical_proposals/105-4285759a8db5.json": {
@@ -10721,39 +10601,15 @@
     "ast_hash": "6e29d9c33ba4687d9984ea6b6b675e3a",
     "semantic_hash": ""
   },
-  "apps/web/public/datasets/9cca81359c50ab40/hero_release_status.json": {
-    "mtime": 1794356765.0701096,
-    "seen": 1794356816.4146118,
-    "ast_hash": "38f12bfbc30b456d0fa62b21e8dbd83e",
-    "semantic_hash": ""
-  },
-  "apps/web/public/datasets/9cca81359c50ab40/item_catalog.json": {
-    "mtime": 1794356765.0701096,
-    "seen": 1794356816.414617,
-    "ast_hash": "53cce0f0ccd9d379dae4fc8cf60293cd",
-    "semantic_hash": ""
-  },
-  "apps/web/public/datasets/9cca81359c50ab40/kpl_synergy_matrix.json": {
-    "mtime": 1794356765.0701096,
-    "seen": 1794356816.4146206,
-    "ast_hash": "55d2718e7681f19e3520c282c78f2743",
-    "semantic_hash": ""
-  },
-  "apps/web/public/datasets/9cca81359c50ab40/spell_catalog.json": {
-    "mtime": 1794356765.0711071,
-    "seen": 1794356816.4146242,
-    "ast_hash": "48e97bce71db45527d41d1804b34d969",
-    "semantic_hash": ""
-  },
   "apps/web/src/components/PostDraftGamePlanPanel.tsx": {
-    "mtime": 1794361193.4693322,
-    "seen": 1794361252.0303297,
+    "mtime": 1794361289.1550417,
+    "seen": 1794362381.1594415,
     "ast_hash": "0c1344f82156b9a2fd6ce2d0512287fb",
     "semantic_hash": ""
   },
   "apps/web/src/engine/gamePlan.ts": {
-    "mtime": 1794361196.7244017,
-    "seen": 1794361252.0317132,
+    "mtime": 1794361289.8785143,
+    "seen": 1794362381.1624773,
     "ast_hash": "ccd0cf46bf0ac225ed1c57a970cf9d48",
     "semantic_hash": ""
   },
@@ -10761,6 +10617,186 @@
     "mtime": 1794358389.7376742,
     "seen": 1794358533.4860077,
     "ast_hash": "7d70d5420dd02187fc731407e69ac250",
+    "semantic_hash": ""
+  },
+  ".github/hostinger/build_artifact.py": {
+    "mtime": 1794362273.4639733,
+    "seen": 1794362381.1512694,
+    "ast_hash": "b3d3bbc55630c75f885d9fc1f94a6393",
+    "semantic_hash": ""
+  },
+  ".github/hostinger/check-deploy.py": {
+    "mtime": 1794362273.46709,
+    "seen": 1794362381.1512866,
+    "ast_hash": "9ce3cfbe0209d2f9c56b0e7bdbcf0050",
+    "semantic_hash": ""
+  },
+  ".github/hostinger/deploy.py": {
+    "mtime": 1794362273.466079,
+    "seen": 1794362381.151293,
+    "ast_hash": "fa1aec8d49527318d12922b5f8a4b526",
+    "semantic_hash": ""
+  },
+  ".github/hostinger/measure.py": {
+    "mtime": 1794362273.46709,
+    "seen": 1794362381.1512983,
+    "ast_hash": "cd89e12f4a7f17c25544815a370b4204",
+    "semantic_hash": ""
+  },
+  ".github/hostinger/profile.json": {
+    "mtime": 1794362294.568673,
+    "seen": 1794362381.1513038,
+    "ast_hash": "ec3efada523b43502ddf555edbbb4f06",
+    "semantic_hash": ""
+  },
+  ".github/hostinger/remote-deploy.sh": {
+    "mtime": 1794362273.4685838,
+    "seen": 1794362381.1513076,
+    "ast_hash": "c09e9a57c938d74d09b824da6e7567fe",
+    "semantic_hash": ""
+  },
+  ".github/workflows/deploy.yml": {
+    "mtime": 1794362300.8517096,
+    "seen": 1794362381.1513112,
+    "ast_hash": "d7be66764ecc1d30a95c97a11dfc56ba",
+    "semantic_hash": ""
+  },
+  "apps/web/public/datasets/bf518b4b94efc1d4/hero_release_status.json": {
+    "mtime": 1794362195.3177717,
+    "seen": 1794362381.1518714,
+    "ast_hash": "38f12bfbc30b456d0fa62b21e8dbd83e",
+    "semantic_hash": ""
+  },
+  "apps/web/public/datasets/bf518b4b94efc1d4/item_catalog.json": {
+    "mtime": 1794362195.3177717,
+    "seen": 1794362381.1518767,
+    "ast_hash": "53cce0f0ccd9d379dae4fc8cf60293cd",
+    "semantic_hash": ""
+  },
+  "apps/web/public/datasets/bf518b4b94efc1d4/kpl_synergy_matrix.json": {
+    "mtime": 1794362195.3177717,
+    "seen": 1794362381.1518812,
+    "ast_hash": "ecb6efeb607c2765bdd8fc3e077657c3",
+    "semantic_hash": ""
+  },
+  "apps/web/public/datasets/bf518b4b94efc1d4/spell_catalog.json": {
+    "mtime": 1794362195.3187714,
+    "seen": 1794362381.1518848,
+    "ast_hash": "48e97bce71db45527d41d1804b34d969",
+    "semantic_hash": ""
+  },
+  "data/raw/kpl-bp-dataset/.github/workflows/validate.yml": {
+    "mtime": 1794179634.8912165,
+    "seen": 1794362381.1900253,
+    "ast_hash": "5e035a6fd167581ceac85c277ca7dc37",
+    "semantic_hash": ""
+  },
+  "data/raw/kpl-bp-dataset/data/heroes.json": {
+    "mtime": 1794179634.9502702,
+    "seen": 1794362381.19003,
+    "ast_hash": "1dd8dcdd727db9c6be6a7a3aa4c6d805",
+    "semantic_hash": ""
+  },
+  "data/raw/kpl-bp-dataset/data/leagues.json": {
+    "mtime": 1794179634.9507751,
+    "seen": 1794362381.1900344,
+    "ast_hash": "062ddf8a2c8e92e6b7e6e208f2cc80a2",
+    "semantic_hash": ""
+  },
+  "data/raw/kpl-bp-dataset/data/provenance/source-leagues.json": {
+    "mtime": 1794179634.9598236,
+    "seen": 1794362381.1900375,
+    "ast_hash": "3b38a4e42ad21f7bef6df4bb999f479b",
+    "semantic_hash": ""
+  },
+  "data/raw/kpl-bp-dataset/data/stats/hero-stats-all.json": {
+    "mtime": 1794179634.9608352,
+    "seen": 1794362381.1900413,
+    "ast_hash": "82b7e5df3ee218124deca14e541ac91b",
+    "semantic_hash": ""
+  },
+  "data/raw/kpl-bp-dataset/data/stats/hero-stats-by-league.json": {
+    "mtime": 1794179634.961835,
+    "seen": 1794362381.1900444,
+    "ast_hash": "1bb208ee948c5428ddd65bbde232c1ee",
+    "semantic_hash": ""
+  },
+  "data/raw/kpl-bp-dataset/data/stats/hero-stats-by-year.json": {
+    "mtime": 1794179634.961835,
+    "seen": 1794362381.190048,
+    "ast_hash": "1e2e5ecb57837e5f0754bd43023bf953",
+    "semantic_hash": ""
+  },
+  "data/raw/kpl-bp-dataset/data/stats/summary.json": {
+    "mtime": 1794179634.961835,
+    "seen": 1794362381.190051,
+    "ast_hash": "3a6d2ca9413133e3193b30150f1db88f",
+    "semantic_hash": ""
+  },
+  "data/raw/kpl-bp-dataset/data/stats/team-stats.json": {
+    "mtime": 1794179634.961835,
+    "seen": 1794362381.1900542,
+    "ast_hash": "25f4c848466940977520e3b944e9b659",
+    "semantic_hash": ""
+  },
+  "data/raw/kpl-bp-dataset/scripts/build-kpl-db.mjs": {
+    "mtime": 1794179634.963342,
+    "seen": 1794362381.190058,
+    "ast_hash": "5788f918b53c9d0485e8c57090bcc145",
+    "semantic_hash": ""
+  },
+  "data/raw/kpl-bp-dataset/scripts/collect-kpl-bp-all.mjs": {
+    "mtime": 1794179634.963342,
+    "seen": 1794362381.1900609,
+    "ast_hash": "56e906ec6ff585773295cb094863d449",
+    "semantic_hash": ""
+  },
+  "data/raw/kpl-bp-dataset/scripts/load-sqlite.mjs": {
+    "mtime": 1794179634.963342,
+    "seen": 1794362381.1900644,
+    "ast_hash": "a58d04c9e5b32f0623cb42edf23cc25f",
+    "semantic_hash": ""
+  },
+  "data/raw/kpl-bp-dataset/scripts/validate-dataset.mjs": {
+    "mtime": 1794179634.963342,
+    "seen": 1794362381.1900675,
+    "ast_hash": "655d76de9bda52c9dcd13ba486a554bc",
+    "semantic_hash": ""
+  },
+  "scripts/setup.py": {
+    "mtime": 1794362229.6264355,
+    "seen": 1794362381.1920698,
+    "ast_hash": "7e8fb201ac5f56e3009c000b411f52c4",
+    "semantic_hash": ""
+  },
+  "CONTRIBUTING.md": {
+    "mtime": 1794362234.3008482,
+    "seen": 1794362381.1920798,
+    "ast_hash": "964544216f82386e4b55f5f9a7680103",
+    "semantic_hash": ""
+  },
+  "data/raw/kpl-bp-dataset/README.md": {
+    "mtime": 1794179634.8922243,
+    "seen": 1794362381.1922567,
+    "ast_hash": "336486b95535dcab168bdf73b1e7c97c",
+    "semantic_hash": ""
+  },
+  "data/raw/kpl-bp-dataset/docs/fields.md": {
+    "mtime": 1794179634.961835,
+    "seen": 1794362381.192262,
+    "ast_hash": "1626ef7b91df23121249ae4a86576e84",
+    "semantic_hash": ""
+  },
+  "data/raw/kpl-bp-dataset/docs/source.md": {
+    "mtime": 1794179634.9628336,
+    "seen": 1794362381.1922653,
+    "ast_hash": "d64f9171cf894bfa7381e92dc6dce214",
+    "semantic_hash": ""
+  },
+  "data/raw/kpl-bp-dataset/docs/stats.md": {
+    "mtime": 1794179634.9628336,
+    "seen": 1794362381.1922686,
+    "ast_hash": "24a8cb1324746b72c064ad24dd3d1c62",
     "semantic_hash": ""
   },
   "apps/web/package-lock.json": {

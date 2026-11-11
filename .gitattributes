@@ -1,3 +1,4 @@
 # Dataset checksums refer to exact UTF-8 bytes, including line endings.
 apps/web/public/datasets/** -text
 apps/web/public/data_manifest.json text eol=lf
+*.sh text eol=lf

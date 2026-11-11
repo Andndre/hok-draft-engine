@@ -1,0 +1,37 @@
+{
+  "profile": "static-vite",
+  "output_dir": "apps/web/dist",
+  "web_root": ".",
+  "immutable_dirs": [
+    "chunks",
+    "datasets"
+  ],
+  "protected_paths": [
+    ".env*",
+    ".htaccess",
+    ".git",
+    ".github",
+    "node_modules",
+    ".hostinger-ci",
+    "deploy-diagnostics",
+    "frontend-artifact",
+    "uploads",
+    ".well-known"
+  ],
+  "keep_releases": 3,
+  "retention_days": 7,
+  "max_retained_files": 10000,
+  "max_retained_bytes": 536870912,
+  "php_version": "8.3",
+  "migrate": false,
+  "maintenance": false,
+  "require_build_artifact": true,
+  "php_web_user": "auto",
+  "deploy_url": "https://hok.agungandre.my.id",
+  "page_contains": "",
+  "max_assets": 6,
+  "package_manager": "npm",
+  "build_command": "npm --prefix apps/web run build",
+  "rsync_bwlimit": "0",
+  "force_vendor_sync": false
+}

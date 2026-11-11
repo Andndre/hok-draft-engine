@@ -10,6 +10,11 @@ OUT_PUBLIC_PATH = BASE_DIR / "apps" / "web" / "public" / "kpl_counter_matrix.jso
 OUT_DIST_PATH = BASE_DIR / "apps" / "web" / "dist" / "kpl_counter_matrix.json"
 
 def main():
+    if not DB_PATH.exists():
+        raise SystemExit(
+            f"Error: {DB_PATH} not found. Run 'uv run 1_ingest_kpl.py' "
+            "or 'uv run ../../scripts/setup.py --data-only' first."
+        )
     print(f"Connecting to KPL database: {DB_PATH}")
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
@@ -143,12 +148,10 @@ def main():
     # Save to JSON outputs
     print(f"Writing KPL counter matrix to {OUT_PUBLIC_PATH}...")
     OUT_MAPPING_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with open(OUT_MAPPING_PATH, "w", encoding="utf-8") as f:
-        json.dump(kpl_profiles, f, indent=2)
-    with open(OUT_PUBLIC_PATH, "w", encoding="utf-8") as f:
-        json.dump(kpl_profiles, f, indent=2)
-    with open(OUT_DIST_PATH, "w", encoding="utf-8") as f:
-        json.dump(kpl_profiles, f, indent=2)
+    for out_path in (OUT_MAPPING_PATH, OUT_PUBLIC_PATH, OUT_DIST_PATH):
+        if out_path.parent.exists():
+            with open(out_path, "w", encoding="utf-8") as f:
+                json.dump(kpl_profiles, f, indent=2)
 
     # 4. Enrich hero_metadata.json with direct kpl_matchup object for seamless client UI rendering
     for h in heroes:
@@ -163,12 +166,11 @@ def main():
                 "best_matchups": prof["best_matchups"]
             }
 
-    with open(HERO_META_PATH, "w", encoding="utf-8") as f:
-        json.dump(heroes, f, indent=2)
-    with open(BASE_DIR / "apps" / "web" / "dist" / "hero_metadata.json", "w", encoding="utf-8") as f:
-        json.dump(heroes, f, indent=2)
-    with open(BASE_DIR / "data" / "mappings" / "master_heroes_global.json", "w", encoding="utf-8") as f:
-        json.dump(heroes, f, indent=2)
+    dist_meta_path = BASE_DIR / "apps" / "web" / "dist" / "hero_metadata.json"
+    for meta_out in (HERO_META_PATH, dist_meta_path, BASE_DIR / "data" / "mappings" / "master_heroes_global.json"):
+        if meta_out.parent.exists():
+            with open(meta_out, "w", encoding="utf-8") as f:
+                json.dump(heroes, f, indent=2)
 
     print("=== FINISHED KPL COUNTER MATRIX EXTRACTION ===")
 

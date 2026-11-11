@@ -13,7 +13,7 @@ Sistem ini dirancang dengan pendekatan **zero-server compute di produksi**, menj
 | Pencarian Minimax Web Worker ([draftSearch.ts](apps/web/src/engine/draftSearch.ts)) | Membandingkan pohon keputusan zero-sum kedua tim via Iterative Deepening Minimax (Depth 1..4, Width 8 cabang, batas 1.500 ms). |
 | Mesin Game Plan Pasca-Draft ([gamePlan.ts](apps/web/src/engine/gamePlan.ts)) | Menilai matchup 5v5 (konteks Roam 2v2 & swap `<04:00`/re-swap `04:00`), kurva tempo KPL zero-sum, syarat menang/kalah, rute jungle, anti-invade, dan prioritas gank. |
 | Pipeline Audit Bukti Skill ([skill_evidence_audit.py](packages/ml-engine/skill_evidence_audit.py)) | Ekstraksi bukti skill resmi dan panduan taktis untuk memvalidasi 28 tag mobilitas, crowd control, dan peran tim. |
-| Sinergi & Tempo Empiris KPL ([extract_kpl_synergy.py](packages/ml-engine/extract_kpl_synergy.py)) | Menghitung frekuensi pick B1/R1, ban fase 1/2 tersaring Global, winrate duet, kurva tempo (Early/Mid/Late), dan flex lane (`year >= 2024`) dari 11.141+ pertandingan KPL/KIC 2019–2026. |
+| Sinergi & Tempo Empiris KPL ([extract_kpl_synergy.py](packages/ml-engine/extract_kpl_synergy.py)) | Menghitung frekuensi pick B1/R1, ban fase 1/2 tersaring Global, winrate duet, kurva tempo (Early/Mid/Late), dan flex lane (`year >= 2024`) dari 11.141+ game turnamen pro KPL & CN 2019–2026 ([Fire-Phoenixs/kpl-bp-dataset](https://github.com/Fire-Phoenixs/kpl-bp-dataset)). |
 
 ### Diagram Arsitektur Alur Keputusan (Decision Pipeline)
 
@@ -135,15 +135,31 @@ Aturan bersama berada di `apps/web/src/engine/draftRules.ts`. Format aplikasi sa
 - **Kurohiko:** katalog hero, relasi counter, dan alasan taktis komunitas.
 - **HOKFIRE:** statistik, build, arcana, skill, dan referensi matchup.
 - **HoKStats:** panduan skill/draft, preset build alternatif, detail item/spell, dan matchup editorial. Data disimpan terpisah dari HOKFIRE/KPL dan tidak otomatis menjadi sinyal ranking sebelum ditinjau.
-- **Dataset KPL/KIC:** frekuensi opener, ban, serta sinergi empiris. Data historis CN tidak otomatis mewakili meta Global saat ini.
+- **Dataset KPL/CN Pro ([Fire-Phoenixs/kpl-bp-dataset](https://github.com/Fire-Phoenixs/kpl-bp-dataset)):** frekuensi opener, ban, serta sinergi empiris (submodule `data/raw/kpl-bp-dataset`, CC BY-NC 4.0). Data historis CN tidak otomatis mewakili meta Global saat ini.
 
 `hero.counters` berisi hero **yang di-counter oleh hero tersebut**. `hero.countered_by` berisi hero **yang meng-counter hero tersebut**. Arah ini tidak boleh dibalik.
 
 Status rilis ditinjau di `data/mappings/hero_release_status.json`. Hero tanpa status eksplisit belum dapat digunakan. ID 511 tetap menjadi alias tidak aktif untuk **Ata 556**. Hero immobile yang ditandai sebagai opener berisiko tidak masuk rekomendasi B1 atau ban fase pertama.
 
-## Menjalankan aplikasi
+## Menjalankan aplikasi & setup contributor
 
-Gunakan Node.js 24+ dan Python yang dikelola melalui **uv**. Python pipeline mengikuti versi pada `packages/ml-engine/pyproject.toml`.
+Gunakan **Git**, **Node.js 24+**, dan **Python 3.13+** yang dikelola melalui **[`uv`](https://docs.astral.sh/uv/)** (ikuti [`packages/ml-engine/pyproject.toml`](packages/ml-engine/pyproject.toml)).
+
+### Clone & Bootstrap Cepat
+
+Data mentah turnamen berada pada Git submodule [`data/raw/kpl-bp-dataset`](data/raw/kpl-bp-dataset). Untuk contributor penuh maupun frontend-only, lihat panduan lengkap di **[CONTRIBUTING.md](CONTRIBUTING.md)**.
+
+```powershell
+# Clone beserta submodule dataset KPL
+git clone --recurse-submodules https://github.com/Andndre/hok-draft-engine.git
+cd hok-draft-engine
+
+# Atau jika sudah terlanjur clone biasa:
+uv run scripts/setup.py --verify
+
+# Contributor UI saja (tanpa perlu Python/uv atau dataset mentah 39.5 MB):
+uv run scripts/setup.py --web-only --verify
+```
 
 ```powershell
 cd apps/web
@@ -155,7 +171,7 @@ npm.cmd run build
 npm.cmd run preview
 ```
 
-Deploy isi `apps/web/dist/` ke static hosting. Distribusi produksi tidak memuat ONNX/WASM. Jika memakai domain data tersendiri, set `VITE_R2_PUBLIC_URL` pada environment build dan izinkan origin frontend melalui CORS object storage.
+Deploy isi `apps/web/dist/` ke static hosting (atau otomatis ke Hostinger via `.github/workflows/deploy.yml`). Distribusi produksi tidak memuat ONNX/WASM dan menyajikan dataset + aset gambar langsung dari origin yang sama (`chunks/` dan `datasets/` immutable). Lihat [`LICENSE`](LICENSE) dan [`NOTICE`](NOTICE) untuk lisensi kode (MIT) serta atribusi dataset turunan KPL (CC BY-NC 4.0).
 
 ## Memperbarui hero dan metadata
 
@@ -183,12 +199,9 @@ Importer mempertahankan review hanya selama hash sumber cocok. Relasi `strong_ag
 ```powershell
 cd packages/ml-engine
 uv run publish_data.py
-
-# Opsional: unggah ke endpoint S3/RustFS/R2 yang sudah dikonfigurasi
-uv run publish_data.py --publish
 ```
 
-`publish_data.py` menghasilkan manifest schema v2 dan folder `datasets/<versi>/` di public. Paket berisi metadata hero, sinergi, status rilis, katalog item, dan katalog spell; semua artefak divalidasi dengan SHA-256. Artefak berversi diunggah terlebih dahulu; manifest menjadi pointer yang diunggah terakhir. Aset hero juga disinkronkan sebelum manifest.
+`publish_data.py` menghasilkan manifest schema v2 dan folder `datasets/<versi>/` di `apps/web/public/`. Paket berisi metadata hero, sinergi, status rilis, katalog item, dan katalog spell; semua artefak divalidasi dengan SHA-256 dan disebar secara atomik oleh workflow deploy statis.
 
 Browser memeriksa manifest saat aplikasi dibuka, memvalidasi seluruh artefak, lalu menyimpan satu paket lengkap pada cache IndexedDB `tournament_dataset_v17`. Tidak ada fetch HoKStats atau panggilan inferensi model saat runtime. Jika pembaruan gagal, browser memakai paket valid terakhir atau paket bawaan. Jangan mengedit artefak hasil publikasi secara manual karena checksum akan berubah.
 

@@ -1,7 +1,7 @@
 """extract_kpl_synergy.py
 Extracts empirical tournament synergy pairs, win rates, counter matchups,
 Phase 1 First-Pick (B1/R1) openers + Pre-Ban patterns, and Phase 2 Counter/Combo-Denial Bans
-from 11,141 matches in hok_drafts.db (filtered strictly to the 120 Global Heroes)
+from 11,141 games in hok_drafts.db (Fire-Phoenixs/kpl-bp-dataset, KPL & CN pro cups; Global ban filters)
 and exports to kpl_synergy_matrix.json.
 """
 
@@ -417,7 +417,7 @@ def extract_synergy():
                 }
 
     export_data = {
-        "source": "KPL & KIC Pro Tournament Ban/Pick Dataset (11,141 matches, Global 120 Filtered)",
+        "source": "KPL & CN Pro Tournament Ban/Pick Dataset (11,141 games, Fire-Phoenixs/kpl-bp-dataset; Global Ban Filtered)",
         "total_pro_pairs": len(top_pairs),
         "pairs": top_pairs,
         "b1_openers": b1_opener_stats,

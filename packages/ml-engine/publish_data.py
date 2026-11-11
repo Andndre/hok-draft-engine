@@ -1,9 +1,7 @@
-"""Build a versioned production dataset. --publish uploads artifacts before the manifest."""
+"""Build a versioned immutable dataset package and update data_manifest.json."""
 import argparse
 import hashlib
 import json
-import mimetypes
-import os
 from pathlib import Path
 from tactical_profiles import approved_profiles
 from dataset_sources import attach_hokstats, load_source_heroes
@@ -106,22 +104,10 @@ def write_package(destination, manifest, texts):
     temporary.replace(destination / "data_manifest.json")
 
 
-def publish_package(client, bucket, directory, manifest, asset_directory=None):
-    # Assets must exist before clients can observe the newly released heroes.
-    if asset_directory:
-        for asset in sorted(asset_directory.rglob("*")):
-            if asset.is_file():
-                client.upload_file(str(asset), bucket, "assets/" + asset.relative_to(asset_directory).as_posix(), ExtraArgs={"ContentType": mimetypes.guess_type(asset.name)[0] or "application/octet-stream"})
-    for artifact in manifest["artifacts"].values():
-        client.upload_file(str(directory / artifact["file"]), bucket, artifact["file"], ExtraArgs={"ContentType": "application/json", "CacheControl": "public, max-age=31536000, immutable"})
-    client.upload_file(str(directory / "data_manifest.json"), bucket, "data_manifest.json", ExtraArgs={"ContentType": "application/json", "CacheControl": "no-cache"})
-
-
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=PUBLIC)
     parser.add_argument("--proposals", type=Path, default=MAPPINGS / "tactical_proposals")
-    parser.add_argument("--publish", action="store_true")
     args = parser.parse_args()
     synergy = json.loads((MAPPINGS / "kpl_synergy_matrix.json").read_text(encoding="utf-8"))
     releases = json.loads((MAPPINGS / "hero_release_status.json").read_text(encoding="utf-8"))
@@ -136,18 +122,6 @@ def main():
     manifest, texts = build_package(source_heroes, synergy, releases, approved_profiles(args.proposals, source_heroes), items, spells)
     write_package(args.output, manifest, texts)
     print(f"Dataset {manifest['dataset_version']}: {manifest['hero_count']} heroes, artifacts verified by SHA-256")
-    if args.publish:
-        from dotenv import load_dotenv
-        import boto3
-        from botocore.config import Config
-        load_dotenv(Path(__file__).parent / ".env")
-        required = ("R2_ENDPOINT_URL", "R2_ACCESS_KEY_ID", "R2_SECRET_ACCESS_KEY", "R2_BUCKET_NAME")
-        if not all(os.getenv(key) for key in required):
-            parser.error("Konfigurasi object storage belum lengkap.")
-        endpoint = os.environ["R2_ENDPOINT_URL"]
-        client = boto3.client("s3", endpoint_url=endpoint, aws_access_key_id=os.environ["R2_ACCESS_KEY_ID"], aws_secret_access_key=os.environ["R2_SECRET_ACCESS_KEY"], region_name="auto" if "r2.cloudflarestorage.com" in endpoint else "us-east-1", config=Config(signature_version="s3v4", s3={"addressing_style": "path"}))
-        publish_package(client, os.environ["R2_BUCKET_NAME"], args.output, manifest, PUBLIC / "assets")
-        print("Published: manifest uploaded last.")
 
 
 if __name__ == "__main__":

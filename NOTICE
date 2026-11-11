@@ -1,0 +1,48 @@
+NOTICE — Data Provenance, Attribution & Disclaimers
+===================================================
+
+hok-draft-engine is an independent, unofficial, non-commercial community tool for
+Honor of Kings (Global) draft analysis and practice. It is not affiliated with,
+endorsed by, sponsored by, or officially connected with Tencent Holdings Ltd.,
+TiMi Studio Group, Level Infinite, or the King Pro League (KPL).
+
+1. Professional Tournament Ban/Pick Dataset (`Fire-Phoenixs/kpl-bp-dataset`)
+---------------------------------------------------------------------------
+- Upstream Repository: https://github.com/Fire-Phoenixs/kpl-bp-dataset
+- Upstream Curated Work License: Creative Commons Attribution-NonCommercial 4.0
+  International (CC BY-NC 4.0) — https://creativecommons.org/licenses/by-nc/4.0/
+- Factual Match Data Ownership: Tencent / Honor of Kings esports organizers
+  (collected from public Tencent tournament endpoints on pvp.qq.com / smoba.qq.com).
+- Modifications Performed in This Repository:
+  * Normalized Chinese hero IDs to catalog IDs, including merging Zhu Bajie
+    (#511) into Global equivalent Ata (#556).
+  * Filtered Phase 1 & Phase 2 ban recommendations to Global-released heroes via
+    `data/mappings/hero_release_status.json` while retaining historical pro pairs,
+    openers, tempo curves, and modern (`year >= 2024`) clean 5-lane role shares.
+  * Generated `data/mappings/kpl_synergy_matrix.json`,
+    `data/mappings/kpl_counter_matrix.json`, and SHA-256 versioned dataset
+    packages under `apps/web/public/datasets/`.
+- Non-Commercial Restriction: Any redistribution or derivative use of the
+  KPL-derived dataset files MUST retain attribution to both
+  https://github.com/Fire-Phoenixs/kpl-bp-dataset and the public Tencent esports
+  data source, indicate changes made, and MUST NOT be used for commercial purposes.
+
+2. Hero Rosters, Stats, Counters, Builds & Guide Sources
+--------------------------------------------------------
+- Kurohiko (https://hok.kurohiko.id/): Global hero catalog, primary roles,
+  directional counter matrix, and Indonesian tactical counter commentary.
+- HOKFIRE (https://www.hokfire.com/): Diamond+ statistics, tier benchmarks,
+  recommended item/arcana presets, skill/item catalogs, and lane icons.
+- HoKStats (https://hokstats.gg/): Offline-imported editorial hero guides,
+  item/spell details, and matchup notes, gated behind explicit review hashes
+  (`data/mappings/hokstats_*_reviews.json`).
+
+3. Game Trademarks & Visual Assets
+----------------------------------
+- All Honor of Kings hero portraits, skill icons, ability icons, item artwork,
+  arcana icons, and in-game terminology (`data/assets/`, `apps/web/public/assets/`)
+  belong to Tencent / TiMi Studio Group / Level Infinite. Used solely for
+  non-commercial educational, analytical, and companion simulation reference.
+- If a rights holder requests removal or modification of specific source records
+  or assets, open an issue in this repository and the maintainers will promptly
+  comply.

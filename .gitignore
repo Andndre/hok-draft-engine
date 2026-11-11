@@ -1,5 +1,6 @@
 # Data & Datasets
-data/raw/
+data/raw/*
+!data/raw/kpl-bp-dataset
 data/processed/
 *.db
 *.sqlite
@@ -29,6 +30,9 @@ node_modules/
 apps/web/node_modules/
 apps/web/dist/
 apps/web/.vite/
+frontend-artifact/
+deploy-diagnostics/
+.github/hostinger/.node-cache-runtime
 
 # OS & Editor
 .DS_Store

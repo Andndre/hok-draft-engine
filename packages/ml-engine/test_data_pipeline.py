@@ -4,7 +4,7 @@ import tempfile
 import unittest
 import sqlite3
 from pathlib import Path
-from publish_data import build_package, publish_package, write_package
+from publish_data import build_package, write_package
 from dataset_sources import load_source_heroes
 from tactical_profiles import TAGS, approved_profiles, create_proposal, generate_batch_proposals, global_released_heroes, has_source_evidence, source_material, validate_proposal
 from export_draft_benchmark import export, SEQUENCE
@@ -105,24 +105,20 @@ class DataPipelineTests(unittest.TestCase):
         self.assertTrue(all(has_source_evidence(hero) for hero in targets))
         self.assertTrue(any("HoKStats" in [source["source"] for source in source_material(hero)] for hero in targets))
 
-    def test_manifest_last_and_failed_artifact_never_publishes_pointer(self):
-        manifest, texts = build_package([self.hero], {}, self.releases)
+    def test_immutable_collision_leaves_existing_manifest_intact(self):
+        manifest_v1, texts_v1 = build_package([self.hero], {}, self.releases)
+        manifest_v2, texts_v2 = build_package([{**self.hero, "name": "Ata v2"}], {}, self.releases)
         with tempfile.TemporaryDirectory() as directory:
-            write_package(Path(directory), manifest, texts)
-            calls = []
-            class FakeStorage:
-                def upload_file(self, file, bucket, key, **kwargs):
-                    calls.append(key)
-            publish_package(FakeStorage(), "fixture", Path(directory), manifest)
-            self.assertEqual(calls[-1], "data_manifest.json")
-            calls.clear()
-            class BrokenStorage:
-                def upload_file(self, file, bucket, key, **kwargs):
-                    calls.append(key)
-                    raise OSError("Fixture upload interrupted")
-            with self.assertRaises(OSError):
-                publish_package(BrokenStorage(), "fixture", Path(directory), manifest)
-            self.assertNotIn("data_manifest.json", calls)
+            dest = Path(directory)
+            write_package(dest, manifest_v1, texts_v1)
+            original_manifest = (dest / "data_manifest.json").read_bytes()
+            # Simulate hash/content collision on an immutable artifact before manifest update.
+            artifact_path = dest / manifest_v2["artifacts"]["heroes"]["file"]
+            artifact_path.parent.mkdir(parents=True, exist_ok=True)
+            artifact_path.write_bytes(b"corrupted-existing-artifact")
+            with self.assertRaises(ValueError):
+                write_package(dest, manifest_v2, texts_v2)
+            self.assertEqual((dest / "data_manifest.json").read_bytes(), original_manifest)
 
     def test_new_hero_requires_reviewed_release_and_no_fixed_roster_size(self):
         new_hero = {**self.hero, "hero_id": 9000, "name": "New fixture"}
