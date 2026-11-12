@@ -132,7 +132,7 @@ export interface DraftContext {
   format?: DraftFormat;
   isUltimateBattle?: boolean;
 }
-export interface DraftAction { heroId: number; side: Side; action: ActionKind }
+export interface DraftAction { heroId: number; side: Side; action: ActionKind; secondHeroId?: number }
 export const emptyPosition = (): DraftPosition => ({ step: 0, picks: { blue: [], red: [] }, bans: { blue: [], red: [] } });
 
 export function isLegalHero(

@@ -10,6 +10,7 @@ export interface PracticeConfig { playerSide: Side; fearless: boolean; format?: 
 export interface DecisionTrace {
   actionIndex: number;
   heroId: number;
+  partnerHeroId?: number;
   alternatives: Array<{ heroId: number; reason: string }>;
 }
 export interface PracticeGame {
@@ -43,9 +44,20 @@ export function createPracticeSession(sessionId: string, config: PracticeConfig,
 }
 export type PracticeEvent =
   | { type: 'commit'; tag: DecisionTag; actor: 'human' | 'ai'; heroId: number }
+  | { type: 'commit-duet'; tag: DecisionTag; actor: 'human'; heroIds: [number, number] }
   | { type: 'undo' | 'reset' | 'next' | 'retry' }
   | { type: 'view'; index: number }
   | { type: 'plan'; plan: 'a' | 'b'; heroId: number | null };
+
+function applyPracticeAction(position: DraftPosition, action: DraftAction, context: DraftContext, format: DraftFormat = context.format ?? 'tournament'): DraftPosition {
+  const next = applyDraftAction(position, { side: action.side, action: action.action, heroId: action.heroId }, context, format);
+  if (next === position) return position;
+  if (action.secondHeroId === undefined) return next;
+  const turn = getDraftTurn(next.step, format);
+  if (turn.action !== 'pick' || turn.side !== action.side) return next;
+  const after = applyDraftAction(next, { side: turn.side, action: turn.action, heroId: action.secondHeroId }, context, format);
+  return after === next ? next : after;
+}
 
 export function reducePractice(session: PracticeSession, event: PracticeEvent, dataset: TournamentDataset): PracticeSession {
   const current = session.games[session.gameIndex];
@@ -71,6 +83,24 @@ export function reducePractice(session: PracticeSession, event: PracticeEvent, d
     }
     return replace({ ...current, position, actions: [...current.actions, action], traces });
   }
+  if (event.type === 'commit-duet') {
+    if (!matchesDecisionTag(session, event.tag)) return session;
+    if (event.heroIds.length !== 2) return session;
+    const turn = getDraftTurn(current.position.step, session.config.format);
+    if (turn.action !== 'pick' || turn.side !== session.config.playerSide) return session;
+    const [primaryId, secondaryId] = event.heroIds;
+    // Atomic: both picks must be legal before anything is applied.
+    const probe = applyDraftAction(current.position, { side: turn.side, action: 'pick', heroId: primaryId }, context, session.config.format);
+    if (probe === current.position) return session;
+    const partnerTurn = getDraftTurn(probe.step, session.config.format);
+    if (partnerTurn.action !== 'pick' || partnerTurn.side !== turn.side) return session;
+    const position = applyDraftAction(probe, { side: partnerTurn.side, action: partnerTurn.action, heroId: secondaryId }, context, session.config.format);
+    if (position === probe) return session;
+    const options = rankedCandidates(current.position, { ...context, synergy: dataset.synergy, aiSide: session.config.playerSide, aiPlan: current.playerPlan, format: session.config.format });
+    const alternatives = options.filter(r => r.hero.hero_id !== primaryId && r.hero.hero_id !== secondaryId).slice(0, 3).map(r => ({ heroId: r.hero.hero_id, reason: r.proComboTag || r.laneTag || 'Prioritas komposisi dan meta' }));
+    const action: DraftAction = { side: turn.side, action: 'pick', heroId: primaryId, secondHeroId: secondaryId };
+    return replace({ ...current, position, actions: [...current.actions, action], traces: [...current.traces, { actionIndex: current.actions.length, heroId: primaryId, partnerHeroId: secondaryId, alternatives }] });
+  }
   if (event.type === 'plan') {
     if (event.heroId !== null && !dataset.heroes.some(h => h.hero_id === event.heroId && h.is_global_released === true)) return session;
     return replace({ ...current, playerPlan: { ...current.playerPlan, [event.plan]: event.heroId } });
@@ -82,7 +112,7 @@ export function reducePractice(session: PracticeSession, event: PracticeEvent, d
     while (index >= 0 && current.actions[index].side !== session.config.playerSide) index--;
     if (index < 0) return session;
     const actions = current.actions.slice(0, index);
-    const position = actions.reduce((state, action) => applyDraftAction(state, action, context, session.config.format), emptyPosition());
+    const position = actions.reduce((state, action) => applyPracticeAction(state, action, context, session.config.format), emptyPosition());
     return replace({ ...current, position, actions, traces: current.traces.filter(trace => trace.actionIndex < index) });
   }
   const maxSteps = session.config.format === 'ranked' ? 16 : 18;

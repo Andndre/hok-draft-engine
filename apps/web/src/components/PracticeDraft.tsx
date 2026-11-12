@@ -1,10 +1,10 @@
 import { DropdownSelect } from './ui/DropdownSelect';
 import React, { useEffect, useMemo, useState } from 'react';
-import type { DraftFormat, Hero, Lane, LaneAssignmentMap, SortMode, TournamentDataset, ViewMode } from '../types';
+import type { DraftFormat, DuetPackageOption, Hero, Lane, LaneAssignmentMap, SortMode, TournamentDataset, ViewMode } from '../types';
 import { DRAFT_SEQUENCE, applyDraftAction, emptyPosition, getDraftSequence, getDraftTurn, isLegalHero, oppositeSide } from '../engine/draftRules';
 import type { Side } from '../engine/draftRules';
 import { createPracticeSession, practiceContext, reducePractice } from '../engine/practiceState';
-import type { PracticeEvent, PracticeSession } from '../engine/practiceState';
+import type { DecisionTrace, PracticeEvent, PracticeSession } from '../engine/practiceState';
 import { OpponentClient } from '../engine/opponentClient';
 import { evaluateTacticalScores, runTournamentInference } from '../engine/tournamentInference';
 import { assignmentToHeroLaneMap, buildDefaultLaneAssignments, swapAssignedLanes } from '../engine/gamePlan';
@@ -102,6 +102,7 @@ export function PracticeDraft(props: Props) {
     format
   ) : null, [game, playerSide, context, snapshot, format, turn.action, activeBans]);
   const recommendations = assistance && canAct ? hints?.recommendations ?? [] : [];
+  const duetPackages = assistance && canAct ? hints?.duetPackages ?? [] : [];
   const send = (event: PracticeEvent) => {
     client.cancel(); setError(''); setNotice(''); setThinking(false);
     if (gameKey && (event.type === 'undo' || event.type === 'reset')) {
@@ -150,6 +151,10 @@ export function PracticeDraft(props: Props) {
     if (!canAct || !session || !isLegalHero(position, hero.hero_id, context, format)) return;
     send({ type: 'commit', tag: { sessionId: session.sessionId, revision: session.revision }, actor: 'human', heroId: hero.hero_id });
     setWikiHero(null);
+  };
+  const handleSelectDuetPackage = (duet: DuetPackageOption) => {
+    if (!canAct || !session) return;
+    send({ type: 'commit-duet', tag: { sessionId: session.sessionId, revision: session.revision }, actor: 'human', heroIds: [duet.primaryHero.hero_id, duet.secondaryHero.hero_id] });
   };
   const filtered = useMemo(() => {
     const query = props.searchQuery.trim().toLowerCase();
@@ -208,6 +213,20 @@ export function PracticeDraft(props: Props) {
       return next;
     });
   };
+  const renderTrace = (trace: DecisionTrace) => {
+    const hero = byId.get(trace.heroId);
+    const partner = trace.partnerHeroId === undefined ? undefined : byId.get(trace.partnerHeroId);
+    return <li key={trace.actionIndex}>
+      <div>
+        <span className="count-badge">{trace.actionIndex + 1}</span>
+        {hero && <HeroThumbnail hero={hero} />}
+        {partner && <HeroThumbnail hero={partner} />}
+        <strong>{game.actions[trace.actionIndex]?.action === 'ban' ? 'Ban ' : 'Pick '}{hero?.name}{partner ? ` + ${partner.name}` : ''}</strong>
+      </div>
+      <p>Alternatif pada posisi saat itu:</p>
+      <ul>{trace.alternatives.map(alternative => <li key={alternative.heroId}><button type="button" onClick={() => setWikiHero(byId.get(alternative.heroId) ?? null)}>{byId.get(alternative.heroId) && <HeroThumbnail hero={byId.get(alternative.heroId)!} />}<span>{byId.get(alternative.heroId)?.name}</span><BookOpen aria-hidden="true" /></button><p>{plainText(alternative.reason)}</p></li>)}</ul>
+    </li>;
+  };
   const banSlotsCount = session.config.format === 'ranked' ? 3 : 4;
   const maxSteps = session.config.format === 'ranked' ? 16 : 18;
   const padded = (ids: number[], count: number) => [...heroList(ids), ...Array(Math.max(0, count - ids.length)).fill(null)];
@@ -249,7 +268,7 @@ export function PracticeDraft(props: Props) {
     )}
     {turn.isComplete && <section aria-label="Evaluasi draft heuristik" className="practice-review surface-panel"><div className="section-heading"><span className="section-heading__icon"><ChartColumn aria-hidden="true" /></span><div><h2>Evaluasi draft heuristik</h2><p>Komposisi dan alternatif taktis, tanpa menetapkan pemenang pertandingan.</p></div></div>
       <div className="practice-review__teams">{[{ title: 'Tim Anda', radar: playerRadar }, { title: 'Tim AI', radar: enemyRadar }].map(({ title, radar }) => <div key={title}><h3>{title}</h3><dl>{axes.map(([key, label]) => <div key={key}><dt>{label}</dt><dd>{Math.round(radar[key] * 100)}/100{radar[key] < 0.48 && <span>Perlu perhatian</span>}</dd></div>)}</dl></div>)}</div>
-      <details className="panel-disclosure"><summary><History aria-hidden="true" /><span>Tinjau {game.traces.length} keputusan Anda</span><ChevronDown aria-hidden="true" /></summary><ol className="decision-review">{game.traces.map(trace => <li key={trace.actionIndex}><div><span className="count-badge">{trace.actionIndex + 1}</span>{byId.get(trace.heroId) && <HeroThumbnail hero={byId.get(trace.heroId)!} />}<strong>{game.actions[trace.actionIndex].action === 'ban' ? 'Ban ' : 'Pick '}{byId.get(trace.heroId)?.name}</strong></div><p>Alternatif pada posisi saat itu:</p><ul>{trace.alternatives.map(alternative => <li key={alternative.heroId}><button type="button" onClick={() => setWikiHero(byId.get(alternative.heroId) ?? null)}>{byId.get(alternative.heroId) && <HeroThumbnail hero={byId.get(alternative.heroId)!} />}<span>{byId.get(alternative.heroId)?.name}</span><BookOpen aria-hidden="true" /></button><p>{plainText(alternative.reason)}</p></li>)}</ul></li>)}</ol></details>
+      <details className="panel-disclosure"><summary><History aria-hidden="true" /><span>Tinjau {game.traces.length} keputusan Anda</span><ChevronDown aria-hidden="true" /></summary><ol className="decision-review">{game.traces.map(renderTrace)}</ol></details>
       {latest && session.games.length < 5 && <button type="button" className="ui-button ui-button--primary" onClick={() => send({ type: 'next' })}><Layers aria-hidden="true" />Lanjut game {session.games.length + 1}<ArrowRight aria-hidden="true" /></button>}
     </section>}
     <div className={assistance && !turn.isComplete && latest ? 'draft-workspace' : ''}>
@@ -288,7 +307,7 @@ export function PracticeDraft(props: Props) {
           return props.viewMode === 'compact' ? <HeroCardCompact key={hero.hero_id} {...shared} quickBadge={rank > 0 && rank <= 5 ? 'AI #' + rank : undefined} /> : <HeroCardDetailed key={hero.hero_id} {...shared} aiRank={rank > 0 ? rank : undefined} />;
         })}</div>}
       </section>
-      {assistance && !turn.isComplete && latest && hints && <aside className="analysis-sidebar"><TacticalRadarPanel scores={playerRadar} phaseStrategy={hints.phaseStrategy} recommendations={recommendations} isWaiting={!canAct} onSelectCandidate={choose} onInspectHero={setWikiHero} activeSide={playerSide} isPickPhase={turn.action === 'pick'} onOpenPlanModal={() => setPlanOpen(true)} onSelectQuickPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} /></aside>}
+      {assistance && !turn.isComplete && latest && hints && <aside className="analysis-sidebar"><TacticalRadarPanel scores={playerRadar} phaseStrategy={hints.phaseStrategy} recommendations={recommendations} duetPackages={duetPackages} onSelectDuetPackage={handleSelectDuetPackage} isWaiting={!canAct} onSelectCandidate={choose} onInspectHero={setWikiHero} activeSide={playerSide} isPickPhase={turn.action === 'pick'} onOpenPlanModal={() => setPlanOpen(true)} onSelectQuickPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} /></aside>}
     </div>
     <HeroWikiDrawer hero={wikiHero} onClose={() => setWikiHero(null)} isFavorite={!!wikiHero && props.favorites.has(wikiHero.hero_id)} onToggleFavorite={props.onToggleFavorite} onPickForDraft={canAct && wikiHero && isLegalHero(position, wikiHero.hero_id, context, format) ? choose : undefined} draftActionLabel={turn.action === 'ban' ? 'Ban hero ini' : 'Pick hero ini'} allHeroes={snapshot.heroes} onSelectRelatedHero={setWikiHero} itemCatalog={snapshot.items} spellCatalog={snapshot.spells} />
     <PlanSelectionModal isOpen={planOpen && latest} onClose={() => setPlanOpen(false)} heroes={snapshot.heroes} currentPlanAId={game.playerPlan.a} currentPlanBId={game.playerPlan.b} onSelectPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} onSelectPlanB={heroId => send({ type: 'plan', plan: 'b', heroId })} activeSide={playerSide} unavailableHeroIds={unavailablePlans} recommendedOpeners={assistance ? hints?.phaseStrategy.candidateOpeners ?? [] : []} onlyGlobalReleased={onlyGlobal} />
