@@ -1,7 +1,7 @@
 # Graph Report - hok-draft-engine  (2026-11-12)
 
 ## Corpus Check
-- 262 files · ~1,562,149 words
+- 262 files · ~1,562,407 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 18 file(s) not represented in the graph (top: (none) 10, .csv 3, .jsonl 2)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `d66e3454`
+- Built from commit: `aafddc84`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -80,8 +80,8 @@
 1. `Hero` - 31 edges
 2. `PracticeDraft()` - 31 edges
 3. `App()` - 29 edges
-4. `runTournamentInference()` - 25 edges
-5. `parse_hero_page()` - 25 edges
+4. `parse_hero_page()` - 25 edges
+5. `runTournamentInference()` - 25 edges
 6. `getDraftTurn()` - 22 edges
 7. `react` - 22 edges
 8. `norm()` - 20 edges
@@ -91,14 +91,14 @@
 ## Surprising Connections (you probably didn't know these)
 - `C. Hero Rilis Global vs Eksklusif CN` --references--> `isHeroGlobalReleased()`  [INFERRED]
   AGENTS.md → apps/web/src/data/heroReleaseStatus.ts
-- `Logika Taktis Kompetitif Utama` --references--> `evaluateEnemyCounterExposure()`  [INFERRED]
-  README.md → apps/web/src/engine/tournamentInference.ts
 - `God Nodes (Abstraksi Paling Kritis):` --references--> `Hero`  [INFERRED]
   AGENTS.md → apps/web/src/types.ts
 - `God Nodes (Abstraksi Paling Kritis):` --references--> `TacticalVector`  [INFERRED]
   AGENTS.md → apps/web/src/types.ts
-- `God Nodes (Abstraksi Paling Kritis):` --references--> `App()`  [INFERRED]
-  AGENTS.md → apps/web/src/App.tsx
+- `Repository Layout` --references--> `verify()`  [INFERRED]
+  CONTRIBUTING.md → .github/hostinger/check-deploy.py
+- `Logika Taktis Kompetitif Utama` --references--> `evaluateEnemyCounterExposure()`  [INFERRED]
+  README.md → apps/web/src/engine/tournamentInference.ts
 
 ## Import Cycles
 - None detected.
@@ -334,16 +334,16 @@ Nodes (8): assignHeroLanes(), getCandidateLanesWithWeights(), 1. Format Turnamen
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Contributing to HoK Draft Engine` connect `AGENTS.md — Developer & Agent Field Manual` to `check-deploy.py`?**
-  _High betweenness centrality (0.342) - this node is a cross-community bridge._
+  _High betweenness centrality (0.326) - this node is a cross-community bridge._
 - **Are the 2 inferred relationships involving `App()` (e.g. with `God Nodes (Abstraksi Paling Kritis):` and `isFlowborn()`) actually correct?**
   _`App()` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `ml-engine` to the rest of the system?**
   _1 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `HeroWikiDrawer.tsx` be split into smaller, more focused modules?**
   _Cohesion score 0.11384615384615385 - nodes in this community are weakly interconnected._
-- **Why does `Repository Layout` connect `check-deploy.py` to `AGENTS.md — Developer & Agent Field Manual`?**
-  _High betweenness centrality (0.335) - this node is a cross-community bridge._
+- **Why does `HoK Draft Engine` connect `AGENTS.md — Developer & Agent Field Manual` to `assignHeroLanes`?**
+  _High betweenness centrality (0.323) - this node is a cross-community bridge._
 - **Should `0_sync_global_assets.py` be split into smaller, more focused modules?**
   _Cohesion score 0.14761904761904762 - nodes in this community are weakly interconnected._
-- **Why does `verify()` connect `check-deploy.py` to `json`?**
-  _High betweenness centrality (0.335) - this node is a cross-community bridge._
+- **Why does `Cara kerja mesin draft` connect `assignHeroLanes` to `AGENTS.md — Developer & Agent Field Manual`?**
+  _High betweenness centrality (0.318) - this node is a cross-community bridge._

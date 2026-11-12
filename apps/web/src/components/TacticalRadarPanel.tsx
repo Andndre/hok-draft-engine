@@ -71,23 +71,23 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
 
     {activeDuet && !isComplete && !isWaiting && (
       <div className="duet-package-card" style={{ marginBottom: '1rem', padding: '0.875rem', background: 'rgba(234, 179, 8, 0.08)', border: '1px solid rgba(234, 179, 8, 0.3)', borderRadius: '10px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#eab308' }}>
-              💡 Paket Duet Giliran Ganda
-            </span>
-          </div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.5rem' }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#eab308', whiteSpace: 'nowrap' }}>
+            💡 PAKET DUET
+          </span>
           {duetPackages.length > 1 && (
-            <div style={{ display: 'flex', gap: '0.25rem' }}>
+            <div style={{ display: 'flex', gap: '0.25rem', flexShrink: 0, marginLeft: 'auto' }}>
               {duetPackages.map((_, idx) => (
                 <button
                   key={idx}
                   type="button"
                   onClick={() => setSelectedDuetIdx(idx)}
                   className={`ui-button ui-button--small ${selectedDuetIdx === idx ? 'ui-button--primary' : 'ui-button--quiet'}`}
-                  style={{ padding: '0.15rem 0.5rem', fontSize: '0.75rem', minHeight: 'auto' }}
+                  style={{ padding: '0.15rem 0.5rem', fontSize: '0.75rem', minHeight: 'auto', whiteSpace: 'nowrap', flexShrink: 0 }}
+                  aria-label={`Paket #${idx + 1}`}
+                  title={`Paket #${idx + 1}`}
                 >
-                  Paket #{idx + 1}
+                  #{idx + 1}
                 </button>
               ))}
             </div>
@@ -156,10 +156,10 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
               aria-selected={isSelected}
               className={'rec-tab' + (isSelected ? ' is-active' : '')}
               onClick={() => setSelectedIndex(index)}
-              title={`${rec.hero.name} (Rekomendasi #${index + 1})`}
+              title={`Rekomendasi #${index + 1}: ${rec.hero.name}`}
               aria-label={`Rekomendasi #${index + 1}: ${rec.hero.name}`}
             >
-              <span className="rec-tab__rank">Rekomendasi #{index + 1}</span>
+              <span className="rec-tab__rank">#{index + 1}</span>
               <span className="rec-tab__name">{rec.hero.name}</span>
             </button>
           );
@@ -175,7 +175,6 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
           <h3>{currentRec.hero.name}</h3>
           <p><LaneLabel lane={currentRec.hero.primary_lane} /> · Tier {currentRec.hero.tier}</p>
         </div>
-        <span className="recommendation-rank">#{activeIndex + 1}</span>
       </div>
 
       <p className="recommendation-reason">

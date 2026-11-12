@@ -84,9 +84,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/TacticalRadarPanel.tsx": {
-    "mtime": 1794467078.5390372,
-    "seen": 1794467582.254154,
-    "ast_hash": "dda658efc857fb3a22469d0724d7df87",
+    "mtime": 1794468296.6338453,
+    "seen": 1794468700.0788708,
+    "ast_hash": "ee27442735d2e13c09c75270abafc017",
     "semantic_hash": ""
   },
   "apps/web/src/data/heroReleaseStatus.ts": {
@@ -9564,9 +9564,9 @@
     "semantic_hash": ""
   },
   "apps/web/tests/ui.test.mjs": {
-    "mtime": 1794467549.9453042,
-    "seen": 1794467582.2571974,
-    "ast_hash": "1d5365c25aec8ce5976ecfcf6e442fcc",
+    "mtime": 1794468563.9962199,
+    "seen": 1794468700.0815363,
+    "ast_hash": "e80f0ba7fbc2d43a3399b9de11788980",
     "semantic_hash": ""
   },
   "apps/web/tests/verify-dist.mjs": {

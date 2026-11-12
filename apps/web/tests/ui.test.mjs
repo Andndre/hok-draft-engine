@@ -126,7 +126,8 @@ test('duet package card renders only when the radar panel receives packages', ()
     onSelectDuetPackage: noop,
   };
   const html = render(TacticalRadarPanel, base);
-  assert.ok(html.includes('Paket Duet Giliran Ganda'));
+  assert.ok(html.includes('💡 PAKET DUET'), 'Compact single-line duet header title');
+  assert.ok(!html.includes('Paket Duet Giliran Ganda'), 'Legacy two-line header wording must be gone');
   assert.ok(html.includes('Pick Paket Ini'));
   assert.ok(html.includes(primary.name) && html.includes(secondary.name));
   assert.ok(html.includes('Frontline Anchor + Core Carry'));
@@ -136,11 +137,13 @@ test('duet package card renders only when the radar panel receives packages', ()
   assert.ok(html.includes(`Pick Paket Ini (${primary.name} + ${secondary.name})`));
 
   const withoutPackages = render(TacticalRadarPanel, { ...base, duetPackages: undefined, onSelectDuetPackage: undefined });
-  assert.ok(!withoutPackages.includes('Paket Duet Giliran Ganda'));
+  assert.ok(!withoutPackages.includes('PAKET DUET'));
   assert.ok(!withoutPackages.includes('Pick Paket Ini'));
 
-  // 1. LABEL SEPARATION: duet tabs read "Paket #N", single-pick tabs read "Rekomendasi #N".
-  // Two packages are needed for the duet tab strip to render.
+  // 1. LABEL SEPARATION (compact contract): duet tabs show bare "#N" as visible text — the word
+  //    "Paket" lives only in aria-label/title. The card header is the compact "💡 PAKET DUET".
+  //    Single-pick tabs show rank "#N" + hero name visibly; "Rekomendasi #N: <Hero>" lives only
+  //    in aria-label/title. Two packages are needed for the duet tab strip to render.
   const [third, fourth] = dataset.heroes.filter(h => h.is_global_released).slice(2, 4);
   const pkg2 = { ...pkg, primaryHero: third, secondaryHero: fourth, primaryLane: third.primary_lane, secondaryLane: fourth.primary_lane };
   const rankedRecs = [
@@ -152,12 +155,48 @@ test('duet package card renders only when the radar panel receives packages', ()
   const duetCardEnd = dualHtml.indexOf('recommendation-tabs');
   assert.ok(duetCardStart >= 0 && duetCardEnd > duetCardStart, 'Fixture sanity: duet card and recommendation tabs both render');
   const duetSlice = dualHtml.slice(duetCardStart, duetCardEnd);
-  const simpleButtons = [...duetSlice.matchAll(/<button\b[^>]*>([^<]*)<\/button>/g)].map(m => m[1]);
-  assert.deepEqual(simpleButtons, ['Paket #1', 'Paket #2'], 'Duet tab labels must read "Paket #N", never a bare "#N"');
+  assert.ok(duetSlice.includes('💡 PAKET DUET'), 'Duet card header shows the compact PAKET DUET title');
+  assert.ok(!duetSlice.includes('Paket Duet Giliran Ganda'), 'Legacy wrapped header wording must be gone');
+  assert.match(duetSlice, /white-space:nowrap"[^>]*>💡 PAKET DUET<\/span>/, 'PAKET DUET header must not wrap');
+  const duetButtons = [...duetSlice.matchAll(/<button\b([^>]*)>([^<]*)<\/button>/g)].map(m => ({ attrs: m[1], text: m[2] }));
+  assert.deepEqual(duetButtons.map(b => b.text), ['#1', '#2'], 'Duet tab visible labels must be the bare "#N", never "Paket #N"');
+  assert.ok(
+    duetButtons[0].attrs.includes('aria-label="Paket #1"') && duetButtons[0].attrs.includes('title="Paket #1"'),
+    'First duet tab keeps the accessible name "Paket #1"'
+  );
+  assert.ok(
+    duetButtons[1].attrs.includes('aria-label="Paket #2"') && duetButtons[1].attrs.includes('title="Paket #2"'),
+    'Second duet tab keeps the accessible name "Paket #2"'
+  );
+  assert.ok(
+    !duetButtons.map(b => b.text).join(' ').includes('Paket'),
+    'The word "Paket" must not appear in visible duet tab text'
+  );
 
-  // Single-pick tabs carry the "Rekomendasi #N" label.
+  // Single-pick tabs: visible rank span "#N" + hero name; the word "Rekomendasi" survives only in
+  // aria-label/title ("Rekomendasi #N: <HeroName>") — regression guard for the horizontal scroll.
   const tabbedHtml = render(TacticalRadarPanel, { ...base, recommendations: rankedRecs });
-  assert.ok(tabbedHtml.includes('Rekomendasi #1') && tabbedHtml.includes('Rekomendasi #2'));
+  const tabsStart = tabbedHtml.indexOf('recommendation-tabs');
+  assert.ok(tabsStart >= 0, 'Fixture sanity: recommendation tabs render');
+  const tabsSlice = tabbedHtml.slice(tabsStart, tabbedHtml.indexOf('primary-recommendation', tabsStart));
+  assert.ok(
+    tabsSlice.includes('class="rec-tab__rank">#1<') && tabsSlice.includes('class="rec-tab__rank">#2<'),
+    'Tabs render compact rank spans #1/#2'
+  );
+  const attrEscape = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;');
+  for (const [rank, tabHero] of [[1, primary], [2, secondary]]) {
+    const accessibleName = `Rekomendasi #${rank}: ${attrEscape(tabHero.name)}`;
+    assert.ok(
+      tabsSlice.includes(`aria-label="${accessibleName}"`) && tabsSlice.includes(`title="${accessibleName}"`),
+      `Tab #${rank} keeps the accessible name "Rekomendasi #${rank}: ${tabHero.name}"`
+    );
+  }
+  const visibleTabText = tabsSlice.replace(/<[^>]+>/g, '');
+  assert.ok(
+    !visibleTabText.includes('Rekomendasi'),
+    'The word "Rekomendasi" must not appear in visible tab text (repeated-label scroll regression guard)'
+  );
+  assert.ok(visibleTabText.includes('#1') && visibleTabText.includes('#2'), 'Visible tab text shows the bare ranks');
 
   // 2. RANK BADGE: package members render their single-pick rank (#1/#2) when present
   //    in `recommendations`, and the neutral "—" badge when absent.
