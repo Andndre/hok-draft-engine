@@ -41,8 +41,20 @@ Setiap agen yang mengeksekusi perintah shell **WAJIB** mematuhi aturan berikut:
 - **DILARANG** memasukkan teks multiline markdown atau teks panjang dengan format kompleks secara inline ke parameter CLI (misal: `gh pr create --body "..."`). Karakter `$`, backtick, dan escape sequence dapat terdistorsi oleh parser PowerShell.
 - **WAJIB** menulis ke file temporary terlebih dahulu (`temp_body.md`), jalankan dengan argumen file (`--body-file "temp_body.md"`), lalu hapus file temporary setelah selesai.
 
-### C. Local Dev Stack
-- Local dev stack web server dan database dikelola via **EnvKit** (`https://hok-draft-engine.test/`).
+### C. Local Dev Stack (bebas tooling — jangan asumsikan tool tertentu)
+- Proyek ini **tidak punya backend atau server aplikasi**. `apps/web` adalah SPA statis (Vite + React) dan `packages/ml-engine` adalah pipeline Python lokal yang menulis SQLite. Tidak ada PHP, tidak ada database server, tidak ada proses long-running.
+- **Development frontend (jalur utama, tanpa tooling khusus):**
+  ```powershell
+  cd apps/web
+  npm ci
+  npm run dev        # http://localhost:3000 (port diatur di vite.config.ts)
+  ```
+- **Verifikasi build produksi:** `cd apps/web && npm run build` → menghasilkan `apps/web/dist/` dan menjalankan `tests/verify-dist.mjs`. Ini satu-satunya artefak yang perlu disajikan untuk uji manual.
+- **Menyajikan `dist/` boleh pakai apa saja:** `npx serve dist`, `python -m http.server`, nginx/apache, cPanel, Cloudflare Pages, atau local dev stack pihak ketiga (Flock, EnvKit, Herd, Laragon, Laravel Sail, dsb.) **jika contributor memang memakainya**. Jangan menulis instruksi yang mengharuskan salah satu tool tersebut, dan jangan menganggap URL `*.test` selalu tersedia.
+- Bila menyajikan `dist/` di luar `npm run dev`, pertahankan header dari `vite.config.ts` (`Cross-Origin-Opener-Policy: same-origin`, `Cross-Origin-Embedder-Policy: credentialless`) agar perilaku `crossOriginIsolated` sama.
+- Worker minimax hanya berjalan di secure context — `localhost`/`127.0.0.1` aman, membuka `index.html` langsung via `file://` tidak didukung.
+- Database proyek hanyalah **SQLite** hasil pipeline di `data/processed/hok_drafts.db` (gitignored, dibangun ulang dengan `uv run 1_ingest_kpl.py`). MySQL/Postgres dari tool lokal tidak dipakai.
+- Saat melaporkan masalah, sebutkan tool/versi yang dipakai (`npm`, `uv`, port, URL lokal) agar bisa direproduksi di mesin lain.
 
 ---
 
