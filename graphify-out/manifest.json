@@ -84,9 +84,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/TacticalRadarPanel.tsx": {
-    "mtime": 1794440253.6733153,
-    "seen": 1794441257.4814587,
-    "ast_hash": "c1f07dd56f573807ebf6791fd09bc1d3",
+    "mtime": 1794467078.5390372,
+    "seen": 1794467582.254154,
+    "ast_hash": "dda658efc857fb3a22469d0724d7df87",
     "semantic_hash": ""
   },
   "apps/web/src/data/heroReleaseStatus.ts": {
@@ -9438,9 +9438,9 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1794394041.5982838,
-    "seen": 1794394482.8807137,
-    "ast_hash": "853a96246d30f7b03aa0d829c498d35e",
+    "mtime": 1794444294.331107,
+    "seen": 1794465778.6789222,
+    "ast_hash": "1ba2fe09afbee586ec5edaf00e9e0a28",
     "semantic_hash": ""
   },
   "packages/ml-engine/verify_simulation.py": {
@@ -9450,9 +9450,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/engine/draftRules.ts": {
-    "mtime": 1794439856.8924727,
-    "seen": 1794440205.8322842,
-    "ast_hash": "244c31e22ed6db1c611c56ebdf3f8c45",
+    "mtime": 1794465255.2324605,
+    "seen": 1794465778.657737,
+    "ast_hash": "40a68df7de14743b837c6da7326f485e",
     "semantic_hash": ""
   },
   "apps/web/src/engine/heroDataLoader.ts": {
@@ -9462,9 +9462,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/engine/tournamentInference.ts": {
-    "mtime": 1794441211.432338,
-    "seen": 1794441257.4842286,
-    "ast_hash": "a297d472b45ef264be8d492226ab4e13",
+    "mtime": 1794467225.713376,
+    "seen": 1794467582.256213,
+    "ast_hash": "50577f0d0c49068e299d1208dd1e2caa",
     "semantic_hash": ""
   },
   "apps/web/public/data_manifest.json": {
@@ -9534,21 +9534,21 @@
     "semantic_hash": ""
   },
   "apps/web/tests/draft.test.mjs": {
-    "mtime": 1794440111.1597908,
-    "seen": 1794440205.8336978,
-    "ast_hash": "63b3bee8aa08ab5d878932a3b2b6dade",
+    "mtime": 1794467504.5894358,
+    "seen": 1794467582.2566946,
+    "ast_hash": "b3f042ce34b2b4a4e1cb998d1b043076",
     "semantic_hash": ""
   },
   "apps/web/src/components/PracticeDraft.tsx": {
-    "mtime": 1794398766.945568,
-    "seen": 1794410527.3492982,
-    "ast_hash": "28bfa6253f6203b7da074e1fe8e4f1d3",
+    "mtime": 1794465304.7652082,
+    "seen": 1794465778.6560683,
+    "ast_hash": "58314e9c3863ddede01cc70a3298467a",
     "semantic_hash": ""
   },
   "apps/web/src/engine/practiceState.ts": {
-    "mtime": 1794398767.8759687,
-    "seen": 1794410527.3508854,
-    "ast_hash": "e897529e2683fa3fbfc7166e683b684b",
+    "mtime": 1794465323.8869376,
+    "seen": 1794465778.6584973,
+    "ast_hash": "346b488cfde436286915995c1c08a1bf",
     "semantic_hash": ""
   },
   "apps/web/tests/benchmark.mjs": {
@@ -9558,15 +9558,15 @@
     "semantic_hash": ""
   },
   "apps/web/tests/practice.test.mjs": {
-    "mtime": 1794211813.322119,
-    "seen": 1794214437.9071245,
-    "ast_hash": "8a47a984757ff9c724b8dd0f218dac85",
+    "mtime": 1794465526.0986533,
+    "seen": 1794465778.65961,
+    "ast_hash": "d079a2796983f83bb5d683d7a90120a9",
     "semantic_hash": ""
   },
   "apps/web/tests/ui.test.mjs": {
-    "mtime": 1794441222.9270124,
-    "seen": 1794441257.4862566,
-    "ast_hash": "a62288989e10cb22418cdf144bb7a2a1",
+    "mtime": 1794467549.9453042,
+    "seen": 1794467582.2571974,
+    "ast_hash": "1d5365c25aec8ce5976ecfcf6e442fcc",
     "semantic_hash": ""
   },
   "apps/web/tests/verify-dist.mjs": {

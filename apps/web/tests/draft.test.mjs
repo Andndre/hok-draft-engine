@@ -580,6 +580,98 @@ test('Double-pick window detection and Duet Package Recommendations', () => {
     assert.ok(pkg.secondaryLane, 'Secondary lane must be set');
   }
 
+  // 2b. POOL CONSISTENCY + LEGALITY: duet members must be a subset of the single-pick
+  //     top-10 recommendations, and must never be picked/banned heroes on this board.
+  const resBanIds = new Set([140, 163, 515, 538]);
+  const resTop10 = res.recommendations.slice(0, 10).map(r => r.hero.hero_id);
+  for (const pkg of res.duetPackages) {
+    assert.ok(
+      resTop10.includes(pkg.primaryHero.hero_id),
+      `Duet primary ${pkg.primaryHero.name} must appear in the top-10 single-pick recommendations`
+    );
+    assert.ok(
+      resTop10.includes(pkg.secondaryHero.hero_id),
+      `Duet secondary ${pkg.secondaryHero.name} must appear in the top-10 single-pick recommendations`
+    );
+    assert.equal(pkg.primaryHero.hero_id === 509 || pkg.secondaryHero.hero_id === 509, false, 'Enemy pick Dunshan must not appear in a duet package');
+    for (const bannedId of resBanIds) {
+      assert.equal(pkg.primaryHero.hero_id === bannedId || pkg.secondaryHero.hero_id === bannedId, false, `Banned hero ${bannedId} must not appear in a duet package`);
+    }
+  }
+
+  // 2c. DETERMINISM: identical inputs must produce identical packages (order, ids, lanes, score).
+  const resAgain = runTournamentInference(
+    [], // our: none yet
+    [509], // enemy: Dunshan
+    [140, 163, 515, 538],
+    [],
+    true,
+    false, // Red side
+    heroes,
+    5, // step 5: R1 (isDoublePickFirst = true)
+    null,
+    null,
+    true,
+    synergy,
+    [],
+    'tournament'
+  );
+  assert.equal(resAgain.duetPackages.length, res.duetPackages.length, 'Deterministic re-run must emit the same number of duet packages');
+  for (let i = 0; i < res.duetPackages.length; i++) {
+    const a = res.duetPackages[i];
+    const b = resAgain.duetPackages[i];
+    assert.equal(a.primaryHero.hero_id, b.primaryHero.hero_id, `Package ${i} primary must be stable`);
+    assert.equal(a.secondaryHero.hero_id, b.secondaryHero.hero_id, `Package ${i} secondary must be stable`);
+    assert.equal(a.primaryLane, b.primaryLane, `Package ${i} primary lane must be stable`);
+    assert.equal(a.secondaryLane, b.secondaryLane, `Package ${i} secondary lane must be stable`);
+    assert.equal(a.archetypeBadge, b.archetypeBadge, `Package ${i} archetype badge must be stable`);
+    assert.ok(Math.abs(a.combinedScore - b.combinedScore) <= 1e-9, `Package ${i} combinedScore must be deterministic (got ${a.combinedScore} vs ${b.combinedScore})`);
+  }
+
+  // 2d. LANE AVAILABILITY on a mid-draft board: Step 15 (B4, double-pick first) with three
+  //     existing Blue picks and four Red picks. The duet lanes must be two DISTINCT lanes
+  //     that are still VACANT for our team, computed with the SAME lane helper the engine
+  //     uses (evaluateTeamCompositionIntegrity -> assignHeroLanes via kpl lane weights).
+  const byLaneName = (n) => {
+    const h = heroes.find(x => x.name === n);
+    assert.ok(h, `Hero not found: ${n}`);
+    return h;
+  };
+  const bluePicks15 = ['Kaizer', 'Marco Polo', 'Liang'].map(byLaneName);
+  const redPicks15 = ['Lady Zhen', 'Lapulapu', 'Yixing', 'Fang'].map(byLaneName);
+  const res15 = runTournamentInference(
+    bluePicks15.map(h => h.hero_id),
+    redPicks15.map(h => h.hero_id),
+    [140, 163, 515, 538],
+    [],
+    true,
+    true,
+    heroes,
+    15, // step 15: B4 (isDoublePickFirst = true, partner B5)
+    null,
+    null,
+    true,
+    synergy,
+    [],
+    'tournament'
+  );
+  const kplLaneRates = synergy?.hero_lane_rates || {};
+  // Same derivation as the engine: our occupied lanes come from assignHeroLanes through
+  // evaluateTeamCompositionIntegrity over our current picks.
+  const ourOccupiedLanes = evaluateTeamCompositionIntegrity(bluePicks15, kplLaneRates).laneState.occupiedLanes;
+  assert.equal(ourOccupiedLanes.size, 3, 'Fixture sanity: three picks with distinct primary lanes occupy three lanes');
+  const pickedIds15 = new Set([...bluePicks15, ...redPicks15].map(h => h.hero_id));
+  const bans15 = new Set([140, 163, 515, 538]);
+  const top10Step15 = res15.recommendations.slice(0, 10).map(r => r.hero.hero_id);
+  for (const pkg of res15.duetPackages) {
+    assert.notEqual(pkg.primaryLane, pkg.secondaryLane, 'Duet members must occupy two distinct lanes');
+    assert.equal(ourOccupiedLanes.has(pkg.primaryLane), false, `Duet primary lane ${pkg.primaryLane} must still be vacant for our team`);
+    assert.equal(ourOccupiedLanes.has(pkg.secondaryLane), false, `Duet secondary lane ${pkg.secondaryLane} must still be vacant for our team`);
+    assert.equal(pickedIds15.has(pkg.primaryHero.hero_id) || pickedIds15.has(pkg.secondaryHero.hero_id), false, 'No package member may already be picked');
+    assert.equal(bans15.has(pkg.primaryHero.hero_id) || bans15.has(pkg.secondaryHero.hero_id), false, 'No package member may be banned');
+    assert.ok(top10Step15.includes(pkg.primaryHero.hero_id) && top10Step15.includes(pkg.secondaryHero.hero_id), 'Step-15 duet members must also come from the single-pick top-10');
+  }
+
   // 3. Non-double pick turn (e.g. Step 4 B1) should NOT generate duet packages
   const resB1 = runTournamentInference(
     [],

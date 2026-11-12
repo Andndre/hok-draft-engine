@@ -38,14 +38,33 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
   const [selectedDuetIdx, setSelectedDuetIdx] = useState<number>(0);
 
   const firstHeroId = recommendations[0]?.hero.hero_id;
+  const duetSignature = duetPackages.map(p => `${p.primaryHero.hero_id}:${p.secondaryHero.hero_id}`).join('|');
   useEffect(() => {
     setSelectedIndex(0);
-    setSelectedDuetIdx(0);
   }, [firstHeroId]);
+  useEffect(() => {
+    setSelectedDuetIdx(0);
+  }, [duetSignature]);
 
   const activeIndex = Math.min(selectedIndex, Math.max(0, recommendations.length - 1));
   const currentRec = recommendations[activeIndex] || recommendations[0];
-  const activeDuet = duetPackages && duetPackages.length > 0 ? duetPackages[Math.min(selectedDuetIdx, duetPackages.length - 1)] : null;
+  const clampedDuetIdx = Math.min(selectedDuetIdx, Math.max(0, duetPackages.length - 1));
+  const activeDuet = duetPackages.length > 0 ? duetPackages[clampedDuetIdx] : null;
+
+  function SingleRankBadge({ heroId, recs }: { heroId: number; recs: Props['recommendations'] }) {
+    const idx = recs.findIndex(r => r.hero.hero_id === heroId);
+    const rank = idx >= 0 ? idx + 1 : null;
+    return (
+      <span
+        role="status"
+        aria-label={rank ? `Peringkat rekomendasi tunggal #${rank}` : 'Tidak ada di rekomendasi tunggal'}
+        title={rank ? `Peringkat rekomendasi tunggal #${rank}` : 'Tidak ada di rekomendasi tunggal'}
+        style={{ marginLeft: 'auto', background: 'rgba(255, 255, 255, 0.08)', padding: '0.15rem 0.4rem', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 700, color: rank ? '#c8f542' : '#94a3b8', whiteSpace: 'nowrap' }}
+      >
+        {rank ? `#${rank}` : '—'}
+      </span>
+    );
+  }
 
   return <section className="tactical-panel surface-panel" aria-label="Rekomendasi dan evaluasi draft">
     <div className="tactical-panel__header"><div className="section-heading"><span className="section-heading__icon"><Sparkles aria-hidden="true" /></span><div><h2>{isComplete ? 'Evaluasi draft' : 'Rekomendasi giliran'}</h2><p>{isComplete ? 'Komposisi kedua tim sudah lengkap' : 'Prioritas taktis untuk tim aktif'}</p></div></div><span className="side-badge" data-side={activeSide}>{activeSide === 'blue' ? 'Blue' : 'Red'} · {isPickPhase ? 'Pick' : 'Ban'}</span></div>
@@ -68,7 +87,7 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
                   className={`ui-button ui-button--small ${selectedDuetIdx === idx ? 'ui-button--primary' : 'ui-button--quiet'}`}
                   style={{ padding: '0.15rem 0.5rem', fontSize: '0.75rem', minHeight: 'auto' }}
                 >
-                  #{idx + 1}
+                  Paket #{idx + 1}
                 </button>
               ))}
             </div>
@@ -78,18 +97,20 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', margin: '0.5rem 0' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flex: 1, background: 'rgba(0, 0, 0, 0.2)', padding: '0.35rem 0.5rem', borderRadius: '6px' }}>
             <HeroThumbnail hero={activeDuet.primaryHero} />
-            <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0, flex: 1 }}>
               <strong style={{ fontSize: '0.875rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{activeDuet.primaryHero.name}</strong>
               <small><LaneLabel lane={activeDuet.primaryLane} /></small>
             </div>
+            <SingleRankBadge heroId={activeDuet.primaryHero.hero_id} recs={recommendations} />
           </div>
           <span style={{ fontSize: '1.1rem', fontWeight: 700, color: '#eab308' }}>+</span>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flex: 1, background: 'rgba(0, 0, 0, 0.2)', padding: '0.35rem 0.5rem', borderRadius: '6px' }}>
             <HeroThumbnail hero={activeDuet.secondaryHero} />
-            <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0, flex: 1 }}>
               <strong style={{ fontSize: '0.875rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{activeDuet.secondaryHero.name}</strong>
               <small><LaneLabel lane={activeDuet.secondaryLane} /></small>
             </div>
+            <SingleRankBadge heroId={activeDuet.secondaryHero.hero_id} recs={recommendations} />
           </div>
         </div>
 
@@ -135,9 +156,10 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
               aria-selected={isSelected}
               className={'rec-tab' + (isSelected ? ' is-active' : '')}
               onClick={() => setSelectedIndex(index)}
-              title={`${rec.hero.name} (Peringkat #${index + 1})`}
+              title={`${rec.hero.name} (Rekomendasi #${index + 1})`}
+              aria-label={`Rekomendasi #${index + 1}: ${rec.hero.name}`}
             >
-              <span className="rec-tab__rank">#{index + 1}</span>
+              <span className="rec-tab__rank">Rekomendasi #{index + 1}</span>
               <span className="rec-tab__name">{rec.hero.name}</span>
             </button>
           );
@@ -149,7 +171,7 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
       <div className="primary-recommendation__identity">
         <HeroThumbnail hero={currentRec.hero} />
         <div>
-          <span className="eyebrow">{activeIndex === 0 ? 'Prioritas pertama' : `Alternatif prioritas #${activeIndex + 1}`}</span>
+          <span className="eyebrow">Rekomendasi #{activeIndex + 1}</span>
           <h3>{currentRec.hero.name}</h3>
           <p><LaneLabel lane={currentRec.hero.primary_lane} /> · Tier {currentRec.hero.tier}</p>
         </div>

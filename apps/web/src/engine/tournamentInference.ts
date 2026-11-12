@@ -970,9 +970,31 @@ export function evaluateDuetRecommendations(
   const window = getDoublePickWindow(draftStep, format);
   if (!window.isDoublePickFirst) return [];
 
-  // Ambil top 20 kandidat legal teratas
-  const pool = scoredCandidates.slice(0, 20);
+  // Bobot lane-fit duet, diselaraskan dengan `evaluatePickLaneFit` di fase pick (bukan model lane baru).
+  const DUET_POOL_SIZE = 10;
+  const LANE_OPEN_BONUS = 0.50;
+  const LANE_FLEX_PENALTY = -0.15;
+  const LANE_DUPLICATE_PENALTY = -1.60;
+  const LANE_SUPPORT_ANOMALY_PENALTY = -2.40;
+
+  // Pool duet harus berasal dari kandidat single-pick teratas. `scoredCandidates` masih
+  // dalam urutan dataset (alfabetis), jadi salin lalu urutkan dengan medan skor yang sama
+  // dengan ranking single-pick (finalScore), dengan tie-break hero_id agar deterministik.
+  const pool = [...scoredCandidates]
+    .filter(
+      (item) =>
+        Boolean(item?.hero) &&
+        Number.isFinite(item.finalScore) &&
+        !ourHeroes.some((h) => h.hero_id === item.hero.hero_id) &&
+        !enemyHeroes.some((h) => h.hero_id === item.hero.hero_id)
+    )
+    .sort((a, b) => b.finalScore - a.finalScore || a.hero.hero_id - b.hero.hero_id)
+    .slice(0, DUET_POOL_SIZE);
   if (pool.length < 2) return [];
+
+  // Komposisi 5 hero tidak menyisakan ruang untuk dua pick tambahan; jangan pernah
+  // mengiklankan paket duet yang akan membuang salah satu hero dari matching lane.
+  if (ourHeroes.length > 3) return [];
 
   const packages: DuetPackageOption[] = [];
 
@@ -987,6 +1009,28 @@ export function evaluateDuetRecommendations(
     return profile?.engage === true || [517, 528, 162, 193, 150, 153].includes(e.hero_id); // Augran, Lam, Nakoruru, Kaizer, Han Xin, Gao Changgong
   });
 
+  // ===========================================================================
+  // Konteks papan untuk validasi lane paket duet (memakai helper lane yang sama
+  // dengan evaluasi pick tunggal: assignHeroLanes via evaluateTeamCompositionIntegrity).
+  // ===========================================================================
+  const kplLaneRates = synergyDb?.hero_lane_rates || {};
+  const ourBaseIntegrity = evaluateTeamCompositionIntegrity(ourHeroes, kplLaneRates);
+  const ourOccupiedLanes = ourBaseIntegrity.laneState.occupiedLanes;
+
+  // Delta lane-fit untuk satu hero pada satu konteks papan. Mencerminkan keputusan
+  // `evaluatePickLaneFit` (lane utama bebas > flex > duplikat/tidak dapat lane).
+  const laneFitDelta = (
+    cand: Hero,
+    integrity: ReturnType<typeof evaluateTeamCompositionIntegrity>
+  ): number => {
+    const assigned = integrity.laneState.assignments.get(cand.hero_id);
+    if (!assigned) return LANE_DUPLICATE_PENALTY;
+    if (integrity.displacedSupports.some((h) => h.hero_id === cand.hero_id)) {
+      return LANE_SUPPORT_ANOMALY_PENALTY;
+    }
+    return assigned === cand.primary_lane ? LANE_OPEN_BONUS : LANE_FLEX_PENALTY;
+  };
+
   for (let i = 0; i < pool.length; i++) {
     const itemA = pool[i];
     const heroA = itemA.hero;
@@ -995,27 +1039,44 @@ export function evaluateDuetRecommendations(
       const itemB = pool[j];
       const heroB = itemB.hero;
 
+      // 0. Filter defensif legalitas (mask upstream sudah menangani ban/fearless/rilis Global).
+      if (heroA.hero_id === heroB.hero_id) continue;
+      if (ourHeroes.some((h) => h.hero_id === heroA.hero_id || h.hero_id === heroB.hero_id)) continue;
+      if (enemyHeroes.some((h) => h.hero_id === heroA.hero_id || h.hero_id === heroB.hero_id)) continue;
+
       // 1. Ekuivalensi Flowborn (tidak boleh 2 varian Flowborn)
       if (isFlowborn(heroA.hero_id) && isFlowborn(heroB.hero_id)) continue;
 
-      // 2. Pemeriksaan kesesuaian lane (tidak boleh bentrok kaku di lane yang sama)
-      const aIsFlex = heroA.lanes.length > 1;
-      const bIsFlex = heroB.lanes.length > 1;
-      let laneA = heroA.primary_lane;
-      let laneB = heroB.primary_lane;
+      // 2. Urutan pick dalam paket: hero berskor lebih tinggi = pick pertama.
+      const aIsFirst =
+        itemA.finalScore > itemB.finalScore ||
+        (itemA.finalScore === itemB.finalScore && heroA.hero_id < heroB.hero_id);
+      const first = aIsFirst ? { item: itemA, hero: heroA } : { item: itemB, hero: heroB };
+      const second = aIsFirst ? { item: itemB, hero: heroB } : { item: itemA, hero: heroA };
 
-      if (laneA === laneB) {
-        if (!aIsFlex && !bIsFlex) continue;
-        if (aIsFlex) {
-          const altA = heroA.lanes.find((l) => l !== laneB);
-          if (altA) laneA = altA;
-          else continue;
-        } else if (bIsFlex) {
-          const altB = heroB.lanes.find((l) => l !== laneA);
-          if (altB) laneB = altB;
-          else continue;
-        }
-      }
+      // 2b. Validasi lane terhadap papan: kedua hero harus menempati dua lane yang MASIH
+      //    KOSONG pada komposisi kita, tanpa menggeser pick yang sudah ada dan tanpa
+      //    memunculkan anomali dua Support/Roam.
+      const withPairIntegrity = evaluateTeamCompositionIntegrity(
+        [...ourHeroes, first.hero, second.hero],
+        kplLaneRates
+      );
+      const firstLane = withPairIntegrity.laneState.assignments.get(first.hero.hero_id);
+      const secondLane = withPairIntegrity.laneState.assignments.get(second.hero.hero_id);
+      if (!firstLane || !secondLane || firstLane === secondLane) continue;
+      if (ourOccupiedLanes.has(firstLane) || ourOccupiedLanes.has(secondLane)) continue;
+
+      const displacesExistingPick = ourHeroes.some(
+        (oh) =>
+          withPairIntegrity.laneState.assignments.get(oh.hero_id) !==
+          ourBaseIntegrity.laneState.assignments.get(oh.hero_id)
+      );
+      if (displacesExistingPick) continue;
+
+      const createsSupportAnomaly =
+        withPairIntegrity.displacedSupports.length > ourBaseIntegrity.displacedSupports.length ||
+        withPairIntegrity.duplicateRoamSupports > ourBaseIntegrity.duplicateRoamSupports;
+      if (createsSupportAnomaly) continue;
 
       // 3. Sinergi Duet Turnamen KPL
       const proPairs = synergyDb?.pairs || {};
@@ -1098,11 +1159,24 @@ export function evaluateDuetRecommendations(
       if (aCountered) exploitScore -= 0.50;
       if (bCountered) exploitScore -= 0.50;
 
-      const combined = itemA.finalScore + itemB.finalScore + synergyBonus + archetypeScore + exploitScore;
+      // 6. Skor kontekstual: hero kedua dinilai ulang dengan hero pertama sudah di papan.
+      //    Snapshot `finalScore` dihitung terhadap `ourHeroes` saja, jadi selisih lane-fit
+      //    (helper lane yang sama) antara papan + hero pertama vs papan awal diterapkan.
+      //    Paparan counter musuh tidak berubah karena himpunan musuh tidak berubah.
+      const secondBaselineIntegrity = evaluateTeamCompositionIntegrity(
+        [...ourHeroes, second.hero],
+        kplLaneRates
+      );
+      const contextualSecondScore =
+        second.item.finalScore +
+        (laneFitDelta(second.hero, withPairIntegrity) - laneFitDelta(second.hero, secondBaselineIntegrity));
+
+      const combined =
+        first.item.finalScore + contextualSecondScore + synergyBonus + archetypeScore + exploitScore;
 
       packages.push({
-        primaryHero: itemA.finalScore >= itemB.finalScore ? heroA : heroB,
-        secondaryHero: itemA.finalScore >= itemB.finalScore ? heroB : heroA,
+        primaryHero: first.hero,
+        secondaryHero: second.hero,
         combinedScore: combined,
         duetWinRate: pairData?.win_rate,
         kplMatches: matches,
@@ -1110,13 +1184,20 @@ export function evaluateDuetRecommendations(
         archetypeBadge,
         kplSynergyLabel,
         enemyExploitBadge,
-        primaryLane: itemA.finalScore >= itemB.finalScore ? laneA : laneB,
-        secondaryLane: itemA.finalScore >= itemB.finalScore ? laneB : laneA,
+        primaryLane: firstLane,
+        secondaryLane: secondLane,
       });
     }
   }
 
-  packages.sort((a, b) => b.combinedScore - a.combinedScore);
+  packages.sort(
+    (a, b) =>
+      b.combinedScore - a.combinedScore ||
+      Math.min(a.primaryHero.hero_id, a.secondaryHero.hero_id) -
+        Math.min(b.primaryHero.hero_id, b.secondaryHero.hero_id) ||
+      Math.max(a.primaryHero.hero_id, a.secondaryHero.hero_id) -
+        Math.max(b.primaryHero.hero_id, b.secondaryHero.hero_id)
+  );
 
   const topPackages: DuetPackageOption[] = [];
   const seenPairKeys = new Set<string>();

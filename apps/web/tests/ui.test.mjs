@@ -99,6 +99,84 @@ test('recommendations use thumbnails and separate detail/action controls without
   assert.ok(!waiting.includes('is-spinning'));
 });
 
+test('duet package card renders only when the radar panel receives packages', () => {
+  const [primary, secondary] = dataset.heroes.filter(hero => hero.is_global_released).slice(0, 2);
+  assert.notEqual(primary.hero_id, secondary.hero_id);
+  const pkg = {
+    primaryHero: primary,
+    secondaryHero: secondary,
+    combinedScore: 87.5,
+    duetWinRate: 0.58,
+    kplMatches: 24,
+    synergyLift: 0.04,
+    archetypeBadge: 'Frontline Anchor + Core Carry',
+    kplSynergyLabel: 'Sinergi KPL: 58% WR (24 match)',
+    enemyExploitBadge: 'Menahan dive musuh',
+    primaryLane: primary.primary_lane,
+    secondaryLane: secondary.primary_lane,
+  };
+  const base = {
+    scores: evaluateTacticalScores([], []),
+    recommendations: [{ hero, proComboTag: 'Prioritas pertama', laneTag: '' }],
+    onSelectCandidate: noop,
+    onInspectHero: noop,
+    activeSide: 'red',
+    isPickPhase: true,
+    duetPackages: [pkg],
+    onSelectDuetPackage: noop,
+  };
+  const html = render(TacticalRadarPanel, base);
+  assert.ok(html.includes('Paket Duet Giliran Ganda'));
+  assert.ok(html.includes('Pick Paket Ini'));
+  assert.ok(html.includes(primary.name) && html.includes(secondary.name));
+  assert.ok(html.includes('Frontline Anchor + Core Carry'));
+  assert.ok(html.includes('Sinergi KPL: 58% WR (24 match)'));
+  assert.ok(html.includes('Menahan dive musuh'));
+  assert.ok(html.includes(primary.portrait_asset) && html.includes(secondary.portrait_asset));
+  assert.ok(html.includes(`Pick Paket Ini (${primary.name} + ${secondary.name})`));
+
+  const withoutPackages = render(TacticalRadarPanel, { ...base, duetPackages: undefined, onSelectDuetPackage: undefined });
+  assert.ok(!withoutPackages.includes('Paket Duet Giliran Ganda'));
+  assert.ok(!withoutPackages.includes('Pick Paket Ini'));
+
+  // 1. LABEL SEPARATION: duet tabs read "Paket #N", single-pick tabs read "Rekomendasi #N".
+  // Two packages are needed for the duet tab strip to render.
+  const [third, fourth] = dataset.heroes.filter(h => h.is_global_released).slice(2, 4);
+  const pkg2 = { ...pkg, primaryHero: third, secondaryHero: fourth, primaryLane: third.primary_lane, secondaryLane: fourth.primary_lane };
+  const rankedRecs = [
+    { hero: primary, proComboTag: 'Prioritas pertama', laneTag: '' },
+    { hero: secondary, proComboTag: 'Alternatif solid', laneTag: '' },
+  ];
+  const dualHtml = render(TacticalRadarPanel, { ...base, recommendations: rankedRecs, duetPackages: [pkg, pkg2] });
+  const duetCardStart = dualHtml.indexOf('duet-package-card');
+  const duetCardEnd = dualHtml.indexOf('recommendation-tabs');
+  assert.ok(duetCardStart >= 0 && duetCardEnd > duetCardStart, 'Fixture sanity: duet card and recommendation tabs both render');
+  const duetSlice = dualHtml.slice(duetCardStart, duetCardEnd);
+  const simpleButtons = [...duetSlice.matchAll(/<button\b[^>]*>([^<]*)<\/button>/g)].map(m => m[1]);
+  assert.deepEqual(simpleButtons, ['Paket #1', 'Paket #2'], 'Duet tab labels must read "Paket #N", never a bare "#N"');
+
+  // Single-pick tabs carry the "Rekomendasi #N" label.
+  const tabbedHtml = render(TacticalRadarPanel, { ...base, recommendations: rankedRecs });
+  assert.ok(tabbedHtml.includes('Rekomendasi #1') && tabbedHtml.includes('Rekomendasi #2'));
+
+  // 2. RANK BADGE: package members render their single-pick rank (#1/#2) when present
+  //    in `recommendations`, and the neutral "—" badge when absent.
+  const rankedBadgesHtml = render(TacticalRadarPanel, { ...base, recommendations: rankedRecs });
+  assert.ok(rankedBadgesHtml.includes('Peringkat rekomendasi tunggal #1'), 'Primary member shows its single-pick rank #1');
+  assert.ok(rankedBadgesHtml.includes('Peringkat rekomendasi tunggal #2'), 'Secondary member shows its single-pick rank #2');
+  const outsider = dataset.heroes.filter(h => h.is_global_released)[2];
+  const neutralBadgesHtml = render(TacticalRadarPanel, { ...base, recommendations: [{ hero: outsider, proComboTag: '', laneTag: '' }] });
+  assert.equal(
+    (neutralBadgesHtml.match(/aria-label="Tidak ada di rekomendasi tunggal"/g) ?? []).length,
+    2,
+    'Both package members outside the single-pick recommendations render the neutral badge'
+  );
+
+  // NOTE (stale-tab reset): the SSR harness (renderToStaticMarkup) never runs useEffect,
+  // and every render() call mounts a fresh instance, so the duet-tab reset on a changing
+  // package-list signature cannot be observed here. Not asserted in this harness.
+});
+
 test('recommendation panel renders top candidate tabs and outcome projections', () => {
   const altHero = { ...hero, hero_id: 9999, name: 'Alt Hero' };
   const projection = {
