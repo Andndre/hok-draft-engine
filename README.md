@@ -186,7 +186,6 @@ Aturan bersama berada di `apps/web/src/engine/draftRules.ts`. Aplikasi mendukung
 - **Tidak ada ground truth identitas untuk draft kedua** di corpus — hanya konsistensi lintas-frame.
 - **Cara HoK me-layout ulang pada aspect ratio berbeda tidak diketahui.** Satu-satunya bukti adalah simulasi crop/pad/resize mekanis dari satu frame nyata. Perangkat kedua yang nyata — atau memaksa `adb shell wm size 1080x2340` dan memainkan satu draft — akan menjawabnya.
 - Hero splash di tengah, kolom ikon skill, dan strip bawah-tengah **bukan** slot pick dan tidak boleh di-match demikian.
-- Reference set hanya mencakup potret base; HoK juga merilis skin (layar VS-loading menyebutnya eksplisit).
 
 Kontrak corpus dan struktur `data/vision-corpus/` (gitignored; hanya `README.md` yang ter-track) dijelaskan di [`data/vision-corpus/README.md`](data/vision-corpus/README.md).
 
