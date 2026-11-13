@@ -41,6 +41,8 @@ import { HeroThumbnail } from './ui/AssetThumbnail';
 import { LaneLabel } from './ui/LaneIcon';
 import { TacticalRadarPanel } from './TacticalRadarPanel';
 import { evaluateTacticalScores } from '../engine/tournamentInference';
+import { PostDraftGamePlanPanel } from './PostDraftGamePlanPanel';
+import { buildDefaultLaneAssignments, assignmentToHeroLaneMap } from '../engine/gamePlan';
 
 interface VisionPanelProps {
   heroes: Hero[];
@@ -1418,6 +1420,29 @@ export function VisionPanel({
                       ))}
                     </div>
                   </section>
+                );
+              })()}
+
+              {lastResult && lastResult.position.picks.blue.length === 5 && lastResult.position.picks.red.length === 5 && (() => {
+                const heroById = new Map(heroes.map(h => [h.hero_id, h]));
+                const blueHeroes = lastResult.position.picks.blue.map(id => heroById.get(id)).filter((h): h is Hero => Boolean(h));
+                const redHeroes = lastResult.position.picks.red.map(id => heroById.get(id)).filter((h): h is Hero => Boolean(h));
+                if (blueHeroes.length !== 5 || redHeroes.length !== 5) return null;
+                const kplLaneRates = (synergyData as any)?.hero_lane_rates;
+                const defaultBlueAssignment = buildDefaultLaneAssignments(blueHeroes, kplLaneRates);
+                const defaultRedAssignment = buildDefaultLaneAssignments(redHeroes, kplLaneRates);
+                return (
+                  <PostDraftGamePlanPanel
+                    blueHeroes={blueHeroes}
+                    redHeroes={redHeroes}
+                    synergy={synergyData ?? {}}
+                    blueAssignment={defaultBlueAssignment}
+                    redAssignment={defaultRedAssignment}
+                    hasCustomAssignments={false}
+                    onSwapLane={() => {}}
+                    onResetLanes={() => {}}
+                    onInspectHero={() => {}}
+                  />
                 );
               })()}
 
