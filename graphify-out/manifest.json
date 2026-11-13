@@ -36,9 +36,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/App.tsx": {
-    "mtime": 1794479229.6669269,
-    "seen": 1794501599.7386754,
-    "ast_hash": "adc99c65f1ccc6c7517cb85ceecb1ae4",
+    "mtime": 1794544583.6193485,
+    "seen": 1794600210.846186,
+    "ast_hash": "0277337b37f7dcaf878e0bdc502fd448",
     "semantic_hash": ""
   },
   "apps/web/src/components/BottomCommandDock.tsx": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/DraftSimulator.tsx": {
-    "mtime": 1794440252.5449536,
-    "seen": 1794441257.480253,
-    "ast_hash": "b3180131746cbacaa877bfa29d77ac43",
+    "mtime": 1794541295.5889409,
+    "seen": 1794600210.8462913,
+    "ast_hash": "fbab99f314c117de778fb967723c11a3",
     "semantic_hash": ""
   },
   "apps/web/src/components/HeaderSortBar.tsx": {
@@ -84,9 +84,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/TacticalRadarPanel.tsx": {
-    "mtime": 1794468296.6338453,
-    "seen": 1794468700.0788708,
-    "ast_hash": "ee27442735d2e13c09c75270abafc017",
+    "mtime": 1794537299.3223968,
+    "seen": 1794600210.8469973,
+    "ast_hash": "47aeed39ca5bc7e9e976eafbd041b752",
     "semantic_hash": ""
   },
   "apps/web/src/data/heroReleaseStatus.ts": {
@@ -216,9 +216,9 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1794520956.4050996,
-    "seen": 1794523679.5653348,
-    "ast_hash": "0c07f08d61a0cc2cdacf16c90dbf80af",
+    "mtime": 1794564816.9986508,
+    "seen": 1794600210.8692043,
+    "ast_hash": "02509d5126c1c1a430f4aca9abdde9ea",
     "semantic_hash": ""
   },
   "apps/web/index.html": {
@@ -9450,9 +9450,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/engine/draftRules.ts": {
-    "mtime": 1794465255.2324605,
-    "seen": 1794465778.657737,
-    "ast_hash": "40a68df7de14743b837c6da7326f485e",
+    "mtime": 1794541225.7984493,
+    "seen": 1794600210.8480496,
+    "ast_hash": "19afec690343c5c003dd1f9ff5a86787",
     "semantic_hash": ""
   },
   "apps/web/src/engine/heroDataLoader.ts": {
@@ -9540,15 +9540,15 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/PracticeDraft.tsx": {
-    "mtime": 1794465304.7652082,
-    "seen": 1794465778.6560683,
-    "ast_hash": "58314e9c3863ddede01cc70a3298467a",
+    "mtime": 1794541256.1685114,
+    "seen": 1794600210.8469944,
+    "ast_hash": "30da643be8986ef2e7b64693bb550b0b",
     "semantic_hash": ""
   },
   "apps/web/src/engine/practiceState.ts": {
-    "mtime": 1794465323.8869376,
-    "seen": 1794465778.6584973,
-    "ast_hash": "346b488cfde436286915995c1c08a1bf",
+    "mtime": 1794541238.6160235,
+    "seen": 1794600210.848528,
+    "ast_hash": "b4f3b9c54f953f2154443dd90cdbc73a",
     "semantic_hash": ""
   },
   "apps/web/tests/benchmark.mjs": {
@@ -10782,9 +10782,9 @@
     "semantic_hash": ""
   },
   "apps/web/tests/ranked.test.mjs": {
-    "mtime": 1794396517.125672,
-    "seen": 1794396551.7704287,
-    "ast_hash": "6c3aacc1cb211bcefc6a67186d4d26eb",
+    "mtime": 1794541327.2442315,
+    "seen": 1794600210.8509753,
+    "ast_hash": "86ee5764fb58864ff3d45981b28457f5",
     "semantic_hash": ""
   },
   "apps/web/public/datasets/3c904e8cd2998de6/hero_release_status.json": {
@@ -10866,15 +10866,15 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/VisionPanel.tsx": {
-    "mtime": 1794534075.3274772,
-    "seen": 1794534296.822913,
-    "ast_hash": "651483fccc29090d47695da3855ee5b8",
+    "mtime": 1794564350.7453017,
+    "seen": 1794600210.8470023,
+    "ast_hash": "8b1ad57b0c7a6c60f3a93101cab57ce1",
     "semantic_hash": ""
   },
   "apps/web/src/engine/visionAdapter.ts": {
-    "mtime": 1794472467.7915235,
-    "seen": 1794477741.0302186,
-    "ast_hash": "679771e35d1277c7637a74ef98a45996",
+    "mtime": 1794537434.971853,
+    "seen": 1794600210.8486247,
+    "ast_hash": "5646cc3f66cce8199a2dc06e539e92bc",
     "semantic_hash": ""
   },
   "apps/web/src/vision/capture.ts": {
@@ -10902,9 +10902,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/vision/pipeline.ts": {
-    "mtime": 1794533972.0262027,
-    "seen": 1794534296.8259928,
-    "ast_hash": "087f55268eea28a4162ea135199d9b74",
+    "mtime": 1794564289.5791664,
+    "seen": 1794600210.8493085,
+    "ast_hash": "4885b9058311f3f30c55b1503eb01874",
     "semantic_hash": ""
   },
   "apps/web/src/vision/referenceSet.ts": {
@@ -10920,9 +10920,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/vision/types.ts": {
-    "mtime": 1794523035.1877358,
-    "seen": 1794523679.5434945,
-    "ast_hash": "40edb13debf75a279686b4e96c8dd607",
+    "mtime": 1794562042.538003,
+    "seen": 1794600210.8494992,
+    "ast_hash": "0eb9f94a4e43bd76d24e48ae1e63434f",
     "semantic_hash": ""
   },
   "apps/web/tests/fixtures/vision/annotations.json": {
@@ -11028,9 +11028,9 @@
     "semantic_hash": ""
   },
   "apps/web/tests/vision-runtime.test.mjs": {
-    "mtime": 1794534040.0950804,
-    "seen": 1794534296.8285382,
-    "ast_hash": "870af36785e55fec9dc1b2acf6661457",
+    "mtime": 1794562211.0174975,
+    "seen": 1794600210.851542,
+    "ast_hash": "cbe754dc049f5cdb4b97853df0beb7da",
     "semantic_hash": ""
   },
   "packages/ml-engine/calibrate_vision_regions.py": {
@@ -11040,9 +11040,27 @@
     "semantic_hash": ""
   },
   "apps/web/src/vision/manualLayout.ts": {
-    "mtime": 1794532344.4506795,
-    "seen": 1794534296.825864,
-    "ast_hash": "b3ed7fb34096dbf413da323032d4ee03",
+    "mtime": 1794540375.2388213,
+    "seen": 1794600210.84921,
+    "ast_hash": "3972fec23a303fbc524f76325f7af6d9",
+    "semantic_hash": ""
+  },
+  "apps/web/src/components/VisionHeroPickerModal.tsx": {
+    "mtime": 1794562109.6791103,
+    "seen": 1794600210.847,
+    "ast_hash": "f02ce54b35d3d1ba0ea67d0cf9e6a123",
+    "semantic_hash": ""
+  },
+  "commit_msg.txt": {
+    "mtime": 1794539371.851338,
+    "seen": 1794600210.8693023,
+    "ast_hash": "e257847419a706763f7cb35d6b0d92e5",
+    "semantic_hash": ""
+  },
+  "graphify_out.txt": {
+    "mtime": 1794600208.505369,
+    "seen": 1794600210.8697813,
+    "ast_hash": "89e9888555471507997ff6e2880ff5cd",
     "semantic_hash": ""
   },
   "apps/web/package-lock.json": {
