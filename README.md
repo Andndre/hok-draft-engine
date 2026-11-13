@@ -188,8 +188,6 @@ Aturan bersama berada di `apps/web/src/engine/draftRules.ts`. Aplikasi mendukung
 - Slot L1 (Haya, 521) marginal: skor terkalibrasi 0.560 terhadap threshold 0.55, jadi sering abstain. Kemungkinan art skin.
 - Hero splash di tengah, kolom ikon skill, dan strip bawah-tengah **bukan** slot pick dan tidak boleh di-match demikian.
 - Reference set hanya mencakup potret base; HoK juga merilis skin (layar VS-loading menyebutnya eksplisit).
-- **Verdict content-rect di-cache per ukuran surface.** Memindahkan atau men-zoom gambar di dalam jendela mirror tanpa mengubah ukuran jendela meninggalkan rect basi — ubah ukuran jendela (atau restart share) agar pencarian berjalan lagi.
-- **Lattice solver sengaja tidak mereproduksi jitter refinement NCC per-slot** (rect referensi slot 0 setinggi 154 px vs family 147 px), jadi jalur solver mencapai 0.5513 di tempat jalur terkalibrasi mencapai 0.5712 — keduanya teridentifikasi. Diskover jumlah baris tidak bisa melebihi family 5 hari ini; papan hipotetis 6 baris akan berakhir untrusted alih-alih salah ter-layout diam-diam. Jika game suatu saat merilis lebih dari 3 ban per sisi, profil akan membawa 18/20 slot — perubahan bentuk output yang **belum** diadaptasi oleh observer.
 
 Kontrak corpus dan struktur `data/vision-corpus/` (gitignored; hanya `README.md` yang ter-track) dijelaskan di [`data/vision-corpus/README.md`](data/vision-corpus/README.md).
 
