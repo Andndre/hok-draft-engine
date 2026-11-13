@@ -517,7 +517,7 @@ test('unlocked picks are ALWAYS re-matched; locked picks are memoised', () => {
 
 test('the pipeline resets the match cache on restart, on a changed ban crop, and on stop()', () => {
   const errors = [];
-  const pipeline = new VisionPipeline({ heroes: [], side: 'red', manualLayout: defaultManualLayoutConfig(3) }, { onError: message => errors.push(message) });
+  const pipeline = new VisionPipeline({ heroes: [], side: 'red', manualLayout: defaultManualLayoutConfig(3), autoDetect: true }, { onError: message => errors.push(message) });
   Object.defineProperty(pipeline, 'capture', { value: { status: 'running', stop: () => {} } });
   const matcher = countingMatcher([{ heroId: 507, score: 0.9, abstained: false, candidates: [] }]);
   Object.defineProperty(pipeline, 'matcher', { value: matcher });

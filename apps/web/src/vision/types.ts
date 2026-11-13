@@ -136,3 +136,20 @@ export interface SlotObservation {
 
 /** A full snapshot of the captured draft board at one instant. */
 export interface DraftObservation { ts: number; screen: 'draft' | 'unknown'; slots: SlotObservation[]; side: VisionSide }
+
+/** Manual detection: a committed pick action in the user-controlled sequence. */
+export interface PickAction { slotIndex: number; side: VisionSide; heroId: number; score: number; locked: boolean; at: number }
+
+/** Manual detection: a pre-selection (portrait visible but not committed). */
+export interface PreSelection { slotIndex: number; side: VisionSide; heroId: number; score: number; at: number }
+
+/** Manual detection: a ban identity that survived as an estimate. */
+export interface BanEstimate { slotIndex: number; side: VisionSide; heroId: number; score: number; at: number }
+
+/** Manual detection state exposed to the UI. */
+export interface ManualDetectionState {
+  pickActions: PickAction[];
+  preSelections: Array<PreSelection>;
+  banEstimates: Array<BanEstimate>;
+  lastPickActionSlot: number | null;
+}

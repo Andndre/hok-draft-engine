@@ -37,6 +37,7 @@ import {
   type ManualLayoutConfig,
 } from '../vision/manualLayout';
 import { unidentifiedBansBreakdownMessage } from '../vision/observer';
+import { VisionHeroPickerModal } from './VisionHeroPickerModal';
 import { HeroThumbnail } from './ui/AssetThumbnail';
 import { LaneLabel } from './ui/LaneIcon';
 import { TacticalRadarPanel } from './TacticalRadarPanel';
@@ -249,10 +250,12 @@ interface VisionDetectedBoardProps {
   advisorIsUltimateBattle: boolean;
   currentTurn?: { side: Side; action: 'ban' | 'pick'; stepIndex: number; isComplete: boolean };
   onInspectHero?: (hero: Hero) => void;
+  onSlotClick?: (side: VisionSide, kind: VisionSlotKind, displayIndex: number) => void;
+  onSlotDoubleClick?: (side: VisionSide, kind: VisionSlotKind, displayIndex: number) => void;
 }
 
 /** Render the mirrored detected draft board using the compact simulator layout while preserving committed/pre-selected/ban-estimate distinctions. */
-export function VisionDetectedBoard({ slotsByTeam, ownSide, advisorIsUltimateBattle, currentTurn, onInspectHero }: VisionDetectedBoardProps) {
+export function VisionDetectedBoard({ slotsByTeam, ownSide, advisorIsUltimateBattle, currentTurn, onInspectHero, onSlotClick, onSlotDoubleClick }: VisionDetectedBoardProps) {
   const orderedSides: VisionSide[] = ownSide === 'red' ? ['red', 'blue'] : ['blue', 'red'];
   const teams = orderedSides.map(side => ({
     side,
@@ -306,8 +309,9 @@ export function VisionDetectedBoard({ slotsByTeam, ownSide, advisorIsUltimateBat
                           key={index}
                           type="button"
                           className={`ban-slot${active ? ' is-active' : ''}${slot.abstained ? ' is-ban-unverified' : ''}${slot.hero ? ' is-estimated' : ''}`}
-                          disabled={!slot.hero || !onInspectHero}
-                          onClick={() => slot.hero && onInspectHero?.(slot.hero)}
+                          disabled={!slot.hero || (!onSlotClick && !onInspectHero)}
+                          onClick={() => { if (slot.hero && onSlotClick) onSlotClick(team.side, 'ban', index); else if (slot.hero) onInspectHero?.(slot.hero); }}
+                          onDoubleClick={() => { if (slot.hero && onSlotDoubleClick) onSlotDoubleClick(team.side, 'ban', index); }}
                           title={slot.hero ? `${slot.hero.name} (perkiraan, bisa salah)` : slot.abstained ? 'Terisi (identitas tidak terverifikasi)' : `Ban ${index + 1}${active ? ' (giliran saat ini)' : ''}`}
                           aria-label={slot.hero ? `Ban ${index + 1}: ${slot.hero.name} (perkiraan, bisa salah)` : slot.abstained ? `Ban ${index + 1}: terisi, identitas tidak terverifikasi` : `Ban ${index + 1}: kosong${active ? ', giliran saat ini' : ''}`}
                         >
@@ -338,8 +342,9 @@ export function VisionDetectedBoard({ slotsByTeam, ownSide, advisorIsUltimateBat
                       key={index}
                       type="button"
                       className={`pick-slot${slot.hero && isCommitted ? ' is-filled' : ''}${isPreselected ? ' is-preselected' : ''}${slot.abstained ? ' is-unrecognized' : ''}${active ? ' is-active' : ''}`}
-                      disabled={!slot.hero || !onInspectHero}
-                      onClick={() => slot.hero && onInspectHero?.(slot.hero)}
+                      disabled={!slot.hero || (!onSlotClick && !onInspectHero)}
+                      onClick={() => { if (slot.hero && onSlotClick) onSlotClick(team.side, 'pick', index); else if (slot.hero) onInspectHero?.(slot.hero); }}
+                      onDoubleClick={() => { if (slot.hero && onSlotDoubleClick) onSlotDoubleClick(team.side, 'pick', index); }}
                       title={slot.hero ? `${slot.hero.name}${isPreselected ? ' (pra-pilih, bisa berubah)' : ` (${slot.hero.primary_lane})`}` : active ? `${slotCode}: giliran pick saat ini` : undefined}
                       aria-label={slot.hero ? (isCommitted ? `Pick ${index + 1}: ${slot.hero.name}` : `Pick ${index + 1}: ${slot.hero.name} — pra-pilih, belum terkunci, masih bisa berubah`) : slot.abstained ? `Pick ${index + 1}: tidak dikenali` : `Pick ${index + 1}: kosong${active ? ', giliran saat ini' : ''}`}
                     >
@@ -419,7 +424,17 @@ export function VisionPanel({
   const [showOverlay, setShowOverlay] = useState(true);
   const [overlayRevision, setOverlayRevision] = useState(0);
   const [settingsOpen, setSettingsOpen] = useState(true);
+  const [interactionMode, setInteractionMode] = useState<'detect' | 'edit'>('detect');
+  const [manualState, setManualState] = useState<{
+    pickActions: Array<{ slotIndex: number; side: VisionSide; heroId: number; score: number; locked: boolean; at: number }>;
+    preSelections: Array<{ slotIndex: number; side: VisionSide; heroId: number; score: number; at: number }>;
+    banEstimates: Array<{ slotIndex: number; side: VisionSide; heroId: number; score: number; at: number }>;
+    lastPickActionSlot: number | null;
+  }>({ pickActions: [], preSelections: [], banEstimates: [], lastPickActionSlot: null });
+  const [pickerSlot, setPickerSlot] = useState<number | null>(null);
+  const [pickerOpen, setPickerOpen] = useState(false);
   const [hoveredTarget, setHoveredTarget] = useState<string | null>(null);
+  const [hoveredSlotIndex, setHoveredSlotIndex] = useState<number | null>(null);
   const [manualConfig, setManualConfig] = useState<ManualLayoutConfig>(() =>
     loadManualLayoutConfig(advisorFormat === 'ranked' ? 3 : 5)
   );
@@ -457,6 +472,7 @@ export function VisionPanel({
   const handleDeletePreset = (name: string) => {
     persistPresets(presets.filter(p => p.name !== name));
   };
+  const dragOccurredRef = useRef(false);
   const dragRef = useRef<{
     target: 'pick-top-left' | 'pick-bottom-left' | 'pick-top-right' | 'ban-first-left' | 'ban-last-left' | 'ban-first-right' | 'resize-pick' | 'resize-ban';
     startX: number;
@@ -537,6 +553,7 @@ export function VisionPanel({
       }
     );
     pipelineRef.current = pipeline;
+    setManualState(pipeline.getManualState());
     return () => {
       pipeline.stop();
       pipelineRef.current = null;
@@ -675,7 +692,43 @@ export function VisionPanel({
         for (const slot of manualSurfaceSlots) {
           drawSlotOverlay(ctx, slot.rect, slot, 'manual');
         }
-        {
+        if (interactionMode === 'detect') {
+          ctx.save();
+          const turn = lastResult ? getDraftTurn(lastResult.step, advisorFormat, advisorIsUltimateBattle) : undefined;
+          const expectedSide = turn?.side;
+          const expectedKind = turn?.action === 'ban' ? 'ban' : 'pick';
+          for (const slot of manualSurfaceSlots) {
+            if (slot.side !== expectedSide || slot.kind !== expectedKind) continue;
+            const filled = slot.kind === 'pick'
+              ? (manualState.pickActions.some(a => a.slotIndex === slot.index) || manualState.preSelections.some(p => p.slotIndex === slot.index))
+              : manualState.banEstimates.some(b => b.slotIndex === slot.index);
+            if (filled) continue;
+            ctx.strokeStyle = slot.side === 'blue' ? '#60a5fa' : '#f87171';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([4, 4]);
+            ctx.strokeRect(slot.rect.x - 1, slot.rect.y - 1, slot.rect.w + 2, slot.rect.h + 2);
+          }
+          if (manualState.lastPickActionSlot !== null) {
+            const slot = manualSurfaceSlots.find(s => s.index === manualState.lastPickActionSlot);
+            if (slot) {
+              ctx.strokeStyle = '#ffffff';
+              ctx.lineWidth = 3;
+              ctx.setLineDash([6, 4]);
+              ctx.strokeRect(slot.rect.x - 1, slot.rect.y - 1, slot.rect.w + 2, slot.rect.h + 2);
+            }
+          }
+          for (const pre of manualState.preSelections) {
+            const slot = manualSurfaceSlots.find(s => s.index === pre.slotIndex);
+            if (slot) {
+              ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+              ctx.lineWidth = 2;
+              ctx.setLineDash([]);
+              ctx.strokeRect(slot.rect.x - 1, slot.rect.y - 1, slot.rect.w + 2, slot.rect.h + 2);
+            }
+          }
+          ctx.restore();
+        }
+        if (interactionMode === 'edit') {
           const anchorSlots = [
             { slot: manualSurfaceSlots.find(s => s.kind === 'pick' && s.index === 0), label: 'Geser P1' },
             { slot: manualSurfaceSlots.find(s => s.kind === 'pick' && s.index === 5), label: 'Geser Pusat Pick Kanan' },
@@ -710,10 +763,11 @@ export function VisionPanel({
         }
       }
     }
-  }, [lastObservation, layoutStatus, showOverlay, side, overlayRevision, manualConfig]);
+  }, [lastObservation, layoutStatus, showOverlay, side, overlayRevision, manualConfig, interactionMode, manualState, lastResult, advisorFormat, advisorIsUltimateBattle]);
 
   const handleCanvasPointerDown = useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
     if (!canvasRef.current) return;
+    if (interactionMode !== 'edit') return;
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
     if (rect.width <= 0 || rect.height <= 0) return;
@@ -762,6 +816,13 @@ export function VisionPanel({
     if (rect.width <= 0 || rect.height <= 0) return;
     const px = ((e.clientX - rect.left) / rect.width) * canvas.width;
     const py = ((e.clientY - rect.top) / rect.height) * canvas.height;
+
+    if (interactionMode === 'detect') {
+      const slots = buildManualRegionProfile(manualConfig, canvas.width, canvas.height).slots;
+      const slot = slots.find(s => px >= s.rect.x && px <= s.rect.x + s.rect.w && py >= s.rect.y && py <= s.rect.y + s.rect.h) ?? null;
+      setHoveredSlotIndex(slot ? slot.index : null);
+      return;
+    }
 
     if (drag) {
       const dx = (e.clientX - rect.left) / rect.width - drag.startX;
@@ -842,10 +903,12 @@ export function VisionPanel({
     else if (hit(bLast)) target = 'ban-last-left';
     else if (hit(b1Right)) target = 'ban-first-right';
     setHoveredTarget(target);
-  }, [manualConfig]);
+  }, [manualConfig, interactionMode]);
 
   const handleCanvasPointerUp = useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
     if (dragRef.current) {
+      dragOccurredRef.current = true;
+      setTimeout(() => { dragOccurredRef.current = false; }, 0);
       if (canvasRef.current?.hasPointerCapture(e.pointerId)) {
         canvasRef.current.releasePointerCapture(e.pointerId);
       }
@@ -856,6 +919,80 @@ export function VisionPanel({
     }
     setHoveredTarget(null);
   }, []);
+
+  const findManualSlotAt = useCallback((px: number, py: number) => {
+    const slots = buildManualRegionProfile(manualConfig, canvasRef.current?.width ?? 0, canvasRef.current?.height ?? 0).slots;
+    return slots.find(slot => px >= slot.rect.x && px <= slot.rect.x + slot.rect.w && py >= slot.rect.y && py <= slot.rect.y + slot.rect.h) ?? null;
+  }, [manualConfig]);
+
+  const handleCanvasClick = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (interactionMode !== 'detect') return;
+    if (dragOccurredRef.current) return;
+    const canvas = canvasRef.current;
+    const pipeline = pipelineRef.current;
+    if (!canvas || !pipeline) return;
+    if (e.detail !== 1) return;
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return;
+    const px = ((e.clientX - rect.left) / rect.width) * canvas.width;
+    const py = ((e.clientY - rect.top) / rect.height) * canvas.height;
+    const slot = findManualSlotAt(px, py);
+    if (!slot) return;
+    if (!pipeline.isSlotFilled(slot.index)) return;
+    void (async () => {
+      await pipeline.clickSlot(slot.index);
+      setManualState(pipeline.getManualState());
+    })();
+  }, [findManualSlotAt, interactionMode]);
+
+  const handleCanvasDoubleClick = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (interactionMode !== 'detect') return;
+    const canvas = canvasRef.current;
+    const pipeline = pipelineRef.current;
+    if (!canvas || !pipeline) return;
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return;
+    const px = ((e.clientX - rect.left) / rect.width) * canvas.width;
+    const py = ((e.clientY - rect.top) / rect.height) * canvas.height;
+    const slot = findManualSlotAt(px, py);
+    if (!slot) return;
+    const ownPickEmpty = slot.kind === 'pick' && slot.side === side && !pipeline.isSlotFilled(slot.index);
+    if (!pipeline.isSlotFilled(slot.index) && !ownPickEmpty) return;
+    setPickerSlot(slot.index);
+    setPickerOpen(true);
+  }, [findManualSlotAt, interactionMode, side]);
+
+  const handleBoardSlotClick = useCallback((slotSide: VisionSide, kind: VisionSlotKind, displayIndex: number, double = false) => {
+    if (interactionMode !== 'detect') return;
+    const pipeline = pipelineRef.current;
+    if (!pipeline) return;
+    const banCount = manualConfig.ban.countPerSide;
+    const slotIndex = kind === 'pick'
+      ? (slotSide === 'red' ? displayIndex : 5 + displayIndex)
+      : (slotSide === 'red' ? 10 + displayIndex : 10 + banCount + displayIndex);
+    const ownPickEmpty = kind === 'pick' && slotSide === side && !pipeline.isSlotFilled(slotIndex);
+    if (!pipeline.isSlotFilled(slotIndex) && !ownPickEmpty) return;
+    if (double) {
+      if (ownPickEmpty || pipeline.isSlotFilled(slotIndex)) {
+        setPickerSlot(slotIndex);
+        setPickerOpen(true);
+      }
+      return;
+    }
+    void (async () => {
+      await pipeline.clickSlot(slotIndex);
+      setManualState(pipeline.getManualState());
+    })();
+  }, [manualConfig]);
+
+  const handlePickerSelect = useCallback((heroId: number) => {
+    const pipeline = pipelineRef.current;
+    if (!pipeline || pickerSlot === null) return;
+    pipeline.updateSlotFromModal(pickerSlot, heroId);
+    setManualState(pipeline.getManualState());
+    setPickerOpen(false);
+    setPickerSlot(null);
+  }, [pickerSlot]);
 
   const detectedSlotsByTeam = useMemo(
     () => mapObservationToTeamSlots(lastObservation, heroes, advisorFormat, manualConfig.ban.countPerSide),
@@ -879,6 +1016,8 @@ export function VisionPanel({
       advisorIsUltimateBattle={advisorIsUltimateBattle}
       currentTurn={currentTurn}
       onInspectHero={onInspectHero}
+        onSlotClick={(s, k, i) => handleBoardSlotClick(s, k, i, false)}
+        onSlotDoubleClick={(s, k, i) => handleBoardSlotClick(s, k, i, true)}
     />
   );
 
@@ -1112,6 +1251,35 @@ export function VisionPanel({
               <div className="vision-preview__header">
                 <span className="vision-preview__title"><Scan aria-hidden="true" />Pratinjau layar &amp; overlay slot</span>
                 <div className="vision-preview__header-actions">
+                  <select
+                    aria-label="Pilih preset layout"
+                    value=""
+                    onChange={(e) => { if (e.target.value) handleLoadPreset(e.target.value); }}
+                    className="vision-settings__input"
+                  >
+                    <option value="">Preset…</option>
+                    {presets.map(p => <option key={p.name} value={p.name}>{p.name}</option>)}
+                  </select>
+                  <div className="vision-mode-toggle" role="tablist" aria-label="Mode interaksi">
+                    <button
+                      type="button"
+                      role="tab"
+                      aria-selected={interactionMode === 'detect'}
+                      className={interactionMode === 'detect' ? 'is-selected' : ''}
+                      onClick={() => setInteractionMode('detect')}
+                    >
+                      Deteksi Slot
+                    </button>
+                    <button
+                      type="button"
+                      role="tab"
+                      aria-selected={interactionMode === 'edit'}
+                      className={interactionMode === 'edit' ? 'is-selected' : ''}
+                      onClick={() => setInteractionMode('edit')}
+                    >
+                      Edit Kotak
+                    </button>
+                  </div>
                   <label className="vision-preview__toggle">
                     <input
                       type="checkbox"
@@ -1127,12 +1295,14 @@ export function VisionPanel({
                 <canvas
                   ref={canvasRef}
                   className="vision-preview__canvas"
-                  style={{ cursor: dragRef.current ? (dragRef.current.target.startsWith('resize') ? 'nwse-resize' : 'grabbing') : (hoveredTarget?.startsWith('resize') ? 'nwse-resize' : hoveredTarget ? 'grab' : 'default'), touchAction: 'none' }}
-                  onPointerDown={handleCanvasPointerDown}
+                  style={{ cursor: interactionMode === 'detect' ? (hoveredSlotIndex !== null ? 'pointer' : 'default') : (dragRef.current ? (dragRef.current.target.startsWith('resize') ? 'nwse-resize' : 'grabbing') : (hoveredTarget?.startsWith('resize') ? 'nwse-resize' : hoveredTarget ? 'grab' : 'default')), touchAction: 'none' }}
+                  onClick={handleCanvasClick}
+                   onDoubleClick={handleCanvasDoubleClick}
+                   onPointerDown={handleCanvasPointerDown}
                   onPointerMove={handleCanvasPointerMove}
                   onPointerUp={handleCanvasPointerUp}
                   onPointerCancel={handleCanvasPointerUp}
-                  onPointerLeave={() => setHoveredTarget(null)}
+                  onPointerLeave={() => { setHoveredTarget(null); setHoveredSlotIndex(null); }}
                   aria-label="Pratinjau layar dengan overlay slot draft"
                 />
               </div>
@@ -1145,6 +1315,13 @@ export function VisionPanel({
               <aside className="vision-settings-panel" aria-label="Pengaturan slot">
                 <div className="vision-settings__head">
                   <h3><SlidersHorizontal aria-hidden="true" />Pengaturan Slot</h3>
+                  <button
+                    type="button"
+                    className={`ui-button ui-button--small ui-button--quiet ${interactionMode === 'edit' ? 'is-selected' : ''}`}
+                    onClick={() => setInteractionMode(mode => mode === 'edit' ? 'detect' : 'edit')}
+                  >
+                    {interactionMode === 'edit' ? 'Selesai Edit' : 'Edit Kotak'}
+                  </button>
                   <button
                     type="button"
                     className="ui-button ui-button--small ui-button--quiet"
@@ -1455,10 +1632,10 @@ export function VisionPanel({
 
           {!lastObservation && status === 'running' && (
             <div className="vision-state vision-state--pending">
-              <LoaderCircle className="is-spinning" aria-hidden="true" />
+              <Scan aria-hidden="true" />
               <div>
-                <strong>Memproses frame pertama…</strong>
-                <p>Deteksi slot sedang berjalan.</p>
+                <strong>Deteksi manual siap</strong>
+                <p>Klik slot di pratinjau atau papan untuk mendeteksi hero. Klik slot terakhir untuk undo, double-click untuk ganti hero.</p>
               </div>
             </div>
           )}
@@ -1471,6 +1648,16 @@ export function VisionPanel({
           <span>Draft selesai terdeteksi.</span>
         </div>
       )}
+
+      <VisionHeroPickerModal
+        isOpen={pickerOpen}
+        onClose={() => { setPickerOpen(false); setPickerSlot(null); }}
+        heroes={heroes}
+        onlyGlobalReleased={onlyGlobalReleased}
+        unavailableHeroIds={new Set(manualState.pickActions.map(a => a.heroId).concat(manualState.banEstimates.map(b => b.heroId)))}
+        onSelect={handlePickerSelect}
+        title={pickerSlot !== null && pickerSlot < 10 ? 'Pilih hero untuk slot pick' : 'Pilih hero untuk slot ban'}
+      />
     </section>
   );
 }

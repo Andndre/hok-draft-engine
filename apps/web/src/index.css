@@ -1512,6 +1512,9 @@ summary::-webkit-details-marker { display: none; }
 .vision-preview__title { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 650; color: #c9d6ea; }
 .vision-preview__title svg { width: 16px; height: 16px; color: #93c5fd; }
 .vision-preview__toggle { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; color: #c9d6ea; }
+.vision-mode-toggle { display: inline-flex; border: 1px solid rgba(255,255,255,0.12); border-radius: 999px; overflow: hidden; }
+.vision-mode-toggle button { background: transparent; color: #c9d6ea; border: 0; padding: 6px 10px; font-size: 12px; cursor: pointer; }
+.vision-mode-toggle button.is-selected { background: rgba(59,130,246,0.25); color: #ffffff; }
 .vision-preview__toggle input { width: 16px; height: 16px; accent-color: #b8ff01; flex-shrink: 0; }
 .vision-preview__canvas-wrap { overflow: auto; max-width: 100%; border-radius: 12px; border: 1px solid #293648; background: #0c121b; }
 .vision-preview__canvas { display: block; max-width: 100%; height: auto; }

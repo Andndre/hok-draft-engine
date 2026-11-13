@@ -15,7 +15,7 @@ import { DraftObserver } from './observer';
 import { computeVisionRecommendation } from '../engine/visionAdapter';
 import { getDraftSequence } from '../engine/draftRules';
 import type { DraftFormat, Hero } from '../types';
-import type { CaptureFrame, GrayImage, MatchResult, Rect, SlotObservation, DraftObservation, VisionSide, RegionProfile, SlotRegion, RgbaPlane, SurfaceSlotRect } from './types';
+import type { CaptureFrame, GrayImage, MatchResult, Rect, SlotObservation, DraftObservation, VisionSide, RegionProfile, SlotRegion, RgbaPlane, SurfaceSlotRect, PickAction, PreSelection, BanEstimate, ManualDetectionState } from './types';
 import type { ObserverResult } from './observer';
 import type { VisionRecommendation } from '../engine/visionAdapter';
 
@@ -98,6 +98,8 @@ export interface VisionPipelineOptions {
   maxWidth?: number;
   /** Optional manual grid layout. This is the ONLY geometry source in production; without it the pipeline reports 'not-calibrated'. */
   manualLayout?: ManualLayoutConfig | null;
+  /** Enable legacy automatic full-board detection. Manual-only mode is the default. */
+  autoDetect?: boolean;
 }
 
 /**
@@ -314,6 +316,7 @@ export class VisionPipeline {
   private readonly events: VisionPipelineEvents;
   private readonly options: Required<Pick<VisionPipelineOptions, 'format' | 'onlyGlobal' | 'isUltimateBattle'>> &
     Omit<VisionPipelineOptions, 'format' | 'onlyGlobal' | 'isUltimateBattle'>;  private statusValue: VisionPipelineStatus = 'idle';
+  private autoDetect = false;
   private matcher: HeroMatcher | null = null;
   private observer: DraftObserver | null = null;
   private frameCount = 0;
@@ -327,6 +330,12 @@ export class VisionPipeline {
   private lastColourCheckAt: number | null = null;
   private lastSideCheckValue: SideCrossCheck | null = null;
   private lastProfileVersion: string | null = null;
+  private currentProfile: RegionProfile | null = null;
+  private publishedInitialManualObservation = false;
+  private pickActions: PickAction[] = [];
+  private preSelections = new Map<number, PreSelection>();
+  private banEstimates = new Map<number, BanEstimate>();
+  private lastPickActionSlot: number | null = null;
   /** Last resolution-mismatch message emitted; deduplicates per-frame reporting. */
   private lastResolutionIssue: string | null = null;
   /** Last LayoutStatus emitted through onLayout (change-detection key). */
@@ -346,6 +355,7 @@ export class VisionPipeline {
     // window still resolves the layout and slot rects are scaled onto it.
     this.capture = new CaptureSource({ fps: options.fps ?? 3, maxWidth: options.maxWidth ?? 2800 });
     this.events = events;
+    this.autoDetect = options.autoDetect ?? false;
     this.options = {
       ...options,
       format: options.format ?? 'tournament',
@@ -384,6 +394,7 @@ export class VisionPipeline {
     this.events.onPermission?.(true);
     await this.ensureMatcher();
     if (this.statusValue === 'error') return;
+    this.rebuildObserver();
     this.setStatus('running');
   }
 
@@ -391,6 +402,12 @@ export class VisionPipeline {
   stop(): void {
     this.capture.stop();
     this.frameCount = 0;
+    this.pickActions = [];
+    this.preSelections.clear();
+    this.banEstimates.clear();
+    this.lastPickActionSlot = null;
+    this.currentProfile = null;
+    this.publishedInitialManualObservation = false;
     this.firstFilledAt.clear();
     this.firstLockedAt.clear();
     this.lockedSlots.clear();
@@ -682,6 +699,334 @@ export class VisionPipeline {
     return null;
   }
 
+  /** Current manual detection state for the UI. */
+  getManualState(): ManualDetectionState {
+    return {
+      pickActions: [...this.pickActions],
+      preSelections: [...this.preSelections.values()],
+      banEstimates: [...this.banEstimates.values()],
+      lastPickActionSlot: this.lastPickActionSlot,
+    };
+  }
+
+  /** Whether a slot crop is visibly filled (not blank). */
+  isSlotFilled(slotIndex: number): boolean {
+    const profile = this.currentProfile;
+    const frame = this.lastFrameValue;
+    if (!profile || !frame) return false;
+    const regions = resolveSlotSides(profile, this.options.side);
+    const region = regions.find(r => r.index === slotIndex);
+    if (!region) return false;
+    const scaled = scaleRect(region.rect, profile.resolution.width, profile.resolution.height, frame.width, frame.height);
+    const crop = cropGray(frame.gray, scaled);
+    return !isBlankSlot(crop);
+  }
+
+  /** Undo the last committed pick action. */
+  undoLastPick(): boolean {
+    if (this.lastPickActionSlot === null) return false;
+    const index = this.pickActions.findIndex(action => action.slotIndex === this.lastPickActionSlot);
+    if (index < 0) return false;
+    this.pickActions.splice(index, 1);
+    const remaining = this.pickActions
+      .slice()
+      .sort((a, b) => b.at - a.at);
+    this.lastPickActionSlot = remaining.length > 0 ? remaining[0].slotIndex : null;
+    this.publishManualObservation();
+    return true;
+  }
+
+  /** Refresh a ban slot identity from the current frame. */
+  async refreshBan(slotIndex: number): Promise<MatchResult | null> {
+    await this.ensureMatcher();
+    if (!this.matcher || !this.currentProfile || !this.lastFrameValue) return null;
+    const regions = resolveSlotSides(this.currentProfile, this.options.side);
+    const region = regions.find(r => r.index === slotIndex && r.kind === 'ban');
+    if (!region) return null;
+    const scaled = scaleRect(region.rect, this.currentProfile.resolution.width, this.currentProfile.resolution.height, this.lastFrameValue.width, this.lastFrameValue.height);
+    const crop = cropGray(this.lastFrameValue.gray, scaled);
+    if (isBlankSlot(crop)) return null;
+    const rgba = this.lastFrameValue.rgba
+      ? cropRgba({ data: this.lastFrameValue.rgba, width: this.lastFrameValue.width, height: this.lastFrameValue.height }, scaled)
+      : undefined;
+    const match = this.matcher.match(crop, { kind: 'ban', banPadlock: true, rgba });
+    if (!match.abstained && match.heroId !== null) {
+      this.banEstimates.set(slotIndex, {
+        slotIndex,
+        side: region.side,
+        heroId: match.heroId,
+        score: match.score,
+        at: Date.now(),
+      });
+      this.publishManualObservation();
+    }
+    return match;
+  }
+
+  /** Apply a manually chosen hero to a slot. */
+  updateSlotFromModal(slotIndex: number, heroId: number): void {
+    if (!this.currentProfile) return;
+    const regions = resolveSlotSides(this.currentProfile, this.options.side);
+    const region = regions.find(r => r.index === slotIndex);
+    if (!region) return;
+    if (region.kind === 'ban') {
+      this.banEstimates.set(slotIndex, {
+        slotIndex,
+        side: region.side,
+        heroId,
+        score: 1,
+        at: Date.now(),
+      });
+      this.publishManualObservation();
+      return;
+    }
+    const expected = this.expectedTurn();
+    const isExpected = expected !== null && expected.side === region.side && expected.action === 'pick';
+    const isOwn = region.side === this.options.side;
+    if (isExpected || isOwn) {
+      if (isExpected) {
+        const existingIndex = this.pickActions.findIndex(action => action.slotIndex === slotIndex);
+        const action: PickAction = {
+          slotIndex,
+          side: region.side,
+          heroId,
+          score: 1,
+          locked: true,
+          at: Date.now(),
+        };
+        if (existingIndex >= 0) this.pickActions[existingIndex] = action;
+        else this.pickActions.push(action);
+        this.preSelections.delete(slotIndex);
+        this.lastPickActionSlot = slotIndex;
+      } else {
+        this.preSelections.set(slotIndex, {
+          slotIndex,
+          side: region.side,
+          heroId,
+          score: 1,
+          at: Date.now(),
+        });
+      }
+      this.publishManualObservation();
+    }
+  }
+
+  /** Single-click handling for a slot. */
+  async clickSlot(slotIndex: number): Promise<{ action: string; heroId: number | null; score: number; abstained: boolean; locked?: boolean; reason?: string }> {
+    await this.ensureMatcher();
+    if (!this.matcher || !this.currentProfile || !this.lastFrameValue || !this.observer) {
+      return { action: 'error', heroId: null, score: 0, abstained: true, reason: 'advisor not ready' };
+    }
+    const regions = resolveSlotSides(this.currentProfile, this.options.side);
+    const region = regions.find(r => r.index === slotIndex);
+    if (!region) return { action: 'error', heroId: null, score: 0, abstained: true, reason: 'unknown slot' };
+    const scaled = scaleRect(region.rect, this.currentProfile.resolution.width, this.currentProfile.resolution.height, this.lastFrameValue.width, this.lastFrameValue.height);
+    const crop = cropGray(this.lastFrameValue.gray, scaled);
+    if (isBlankSlot(crop)) return { action: 'blank', heroId: null, score: 0, abstained: false };
+
+    if (region.kind === 'ban') {
+      const match = await this.refreshBan(slotIndex);
+      return {
+        action: match && !match.abstained ? 'updated' : 'abstained',
+        heroId: match && !match.abstained ? match.heroId : null,
+        score: match ? match.score : 0,
+        abstained: !match || match.abstained,
+      };
+    }
+
+    const expected = this.expectedTurn();
+    const isExpected = expected !== null && expected.side === region.side && expected.action === 'pick';
+    const isOwn = region.side === this.options.side;
+    const isLastCommitted = this.lastPickActionSlot === slotIndex && this.pickActions.some(action => action.slotIndex === slotIndex);
+
+    if (isLastCommitted) {
+      this.undoLastPick();
+      return { action: 'undone', heroId: null, score: 0, abstained: false };
+    }
+
+    const badge = this.lastFrameValue.rgba
+      ? detectSlotLockBadge({ data: this.lastFrameValue.rgba, width: this.lastFrameValue.width, height: this.lastFrameValue.height }, scaled, region.side)
+      : false;
+    const rgba = this.lastFrameValue.rgba
+      ? cropRgba({ data: this.lastFrameValue.rgba, width: this.lastFrameValue.width, height: this.lastFrameValue.height }, scaled)
+      : undefined;
+    const match = this.matcher.match(crop, { kind: 'pick', rgba });
+
+    if (this.preSelections.has(slotIndex)) {
+      if (isExpected) {
+        const heroId = match.abstained ? this.preSelections.get(slotIndex)!.heroId : (match.heroId ?? this.preSelections.get(slotIndex)!.heroId);
+        const existingIndex = this.pickActions.findIndex(action => action.slotIndex === slotIndex);
+        const action: PickAction = { slotIndex, side: region.side, heroId, score: match.score, locked: true, at: Date.now() };
+        if (existingIndex >= 0) this.pickActions[existingIndex] = action;
+        else this.pickActions.push(action);
+        this.preSelections.delete(slotIndex);
+        this.lastPickActionSlot = slotIndex;
+        this.publishManualObservation();
+        return { action: 'committed', heroId, score: match.score, abstained: false, locked: true };
+      }
+      if (match.abstained) {
+        return { action: 'abstained', heroId: null, score: match.score, abstained: true };
+      }
+      this.preSelections.set(slotIndex, { slotIndex, side: region.side, heroId: match.heroId!, score: match.score, at: Date.now() });
+      this.publishManualObservation();
+      return { action: 'updated', heroId: match.heroId, score: match.score, abstained: false, locked: false };
+    }
+
+    if (isExpected) {
+      if (match.abstained) {
+        if (badge) {
+          return { action: 'abstained', heroId: null, score: match.score, abstained: true };
+        }
+        return { action: 'abstained', heroId: null, score: match.score, abstained: true };
+      }
+      const action: PickAction = { slotIndex, side: region.side, heroId: match.heroId!, score: match.score, locked: true, at: Date.now() };
+      this.pickActions.push(action);
+      this.lastPickActionSlot = slotIndex;
+      this.publishManualObservation();
+      return { action: 'committed', heroId: match.heroId, score: match.score, abstained: false, locked: true };
+    }
+
+    if (isOwn && !isExpected) {
+      if (match.abstained) return { action: 'abstained', heroId: null, score: match.score, abstained: true };
+      this.preSelections.set(slotIndex, { slotIndex, side: region.side, heroId: match.heroId!, score: match.score, at: Date.now() });
+      this.publishManualObservation();
+      return { action: 'preselection', heroId: match.heroId, score: match.score, abstained: false, locked: false };
+    }
+
+    if (!isOwn && isExpected && !badge) {
+      return { action: 'rejected', heroId: null, score: match.score, abstained: false, reason: 'enemy pick not locked' };
+    }
+
+    return { action: 'rejected', heroId: null, score: match.score, abstained: false, reason: 'not your turn' };
+  }
+
+  private expectedTurn(): { side: VisionSide; action: 'ban' | 'pick' } | null {
+    if (!this.observer) return null;
+    const sequence = getDraftSequence(this.options.format, this.options.isUltimateBattle);
+    const step = this.observer.position.step;
+    if (step < 0 || step >= sequence.length) return null;
+    const turn = sequence[step];
+    return { side: turn.side, action: turn.action };
+  }
+
+  private publishManualObservation(): void {
+    if (!this.observer) return;
+    const profile = this.currentProfile;
+    if (!profile) return;
+    const regions = resolveSlotSides(profile, this.options.side);
+    const now = Date.now();
+    const slotTimes = new Map<number, number>();
+    for (const action of this.pickActions) slotTimes.set(action.slotIndex, action.at);
+    for (const pre of this.preSelections.values()) slotTimes.set(pre.slotIndex, pre.at);
+    for (const ban of this.banEstimates.values()) slotTimes.set(ban.slotIndex, ban.at);
+
+    const groups = new Map<string, SlotObservation[]>();
+    const groupOrder: string[] = [];
+    for (const region of regions) {
+      const key = `${region.side}:${region.kind}`;
+      if (!groups.has(key)) {
+        groups.set(key, []);
+        groupOrder.push(key);
+      }
+    }
+
+    const occupiedByGroup = new Map<string, Array<{ slot: SlotObservation; at: number }>>();
+    const emptyByGroup = new Map<string, SlotObservation[]>();
+    for (const key of groupOrder) {
+      occupiedByGroup.set(key, []);
+      emptyByGroup.set(key, []);
+    }
+
+    for (const region of regions) {
+      const key = `${region.side}:${region.kind}`;
+      let heroId: number | null = null;
+      let score = 0;
+      let abstained = false;
+      let locked: boolean | undefined;
+      let estimated: boolean | undefined;
+
+      if (region.kind === 'ban') {
+        const ban = this.banEstimates.get(region.index);
+        if (ban) {
+          heroId = ban.heroId;
+          score = ban.score;
+          estimated = true;
+        }
+      } else {
+        const committed = this.pickActions.find(action => action.slotIndex === region.index);
+        const pre = this.preSelections.get(region.index);
+        if (committed) {
+          heroId = committed.heroId;
+          score = committed.score;
+          locked = true;
+        } else if (pre) {
+          heroId = pre.heroId;
+          score = pre.score;
+          locked = false;
+        }
+      }
+
+      const slot: SlotObservation = {
+        index: region.index,
+        side: region.side,
+        kind: region.kind,
+        heroId,
+        score,
+        abstained,
+      };
+      if (region.kind === 'pick') slot.locked = locked;
+      if (region.kind === 'ban' && estimated) slot.estimated = true;
+
+      if (heroId !== null) {
+        occupiedByGroup.get(key)!.push({ slot, at: slotTimes.get(region.index) ?? now });
+      } else {
+        emptyByGroup.get(key)!.push(slot);
+      }
+    }
+
+    const slots: SlotObservation[] = [];
+    for (const key of groupOrder) {
+      const occupied = occupiedByGroup.get(key)!.sort((a, b) => a.at - b.at).map(item => item.slot);
+      const empty = emptyByGroup.get(key)!;
+      slots.push(...occupied, ...empty);
+    }
+
+    const preSelectionSlots = new Set(this.preSelections.keys());
+    const observerSlots = slots.map(slot => {
+      if (slot.kind !== 'pick' || !preSelectionSlots.has(slot.index)) return slot;
+      return { ...slot, heroId: null, score: 0, locked: undefined };
+    });
+    const observerObservation: DraftObservation = {
+      ts: now,
+      screen: 'draft',
+      slots: observerSlots,
+      side: this.options.side,
+    };
+    const result = this.observer.ingest(observerObservation);
+    const observation: DraftObservation = {
+      ts: now,
+      screen: 'draft',
+      slots,
+      side: this.options.side,
+    };
+    this.events.onObservation?.(observation, result);
+    if (result.changed || this.frameCount <= 1) {
+      const recommendation = computeVisionRecommendation({
+        position: result.position,
+        heroes: this.options.heroes,
+        side: this.options.side,
+        format: this.options.format,
+        isUltimateBattle: this.options.isUltimateBattle,
+        synergyDb: this.options.synergyDb,
+        planAId: this.options.planAId,
+        planBId: this.options.planBId,
+        onlyGlobal: this.options.onlyGlobal,
+        fearless: this.options.fearless,
+      });
+      this.events.onRecommendation?.(recommendation);
+    }
+  }
+
   private handleFrame(frame: { gray: GrayImage; width: number; height: number; ts: number; rgba?: Uint8ClampedArray | Uint8Array }): void {
     if (this.capture.status !== 'running') return;
     this.frameCount += 1;
@@ -708,7 +1053,15 @@ export class VisionPipeline {
       return;
     }
     const profile = layout.profile;
+    this.currentProfile = profile;
     this.lastResolutionIssue = null;
+    if (!this.autoDetect) {
+      if (!this.publishedInitialManualObservation) {
+        this.publishedInitialManualObservation = true;
+        this.publishManualObservation();
+      }
+      return;
+    }
 
     if (this.statusValue === 'not-calibrated') {
       this.setStatus('running');
