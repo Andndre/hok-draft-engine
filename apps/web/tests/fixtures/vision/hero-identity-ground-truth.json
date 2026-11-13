@@ -1,0 +1,24 @@
+{
+  "description": "Ground-truth identitas hero untuk frame 078 corpus vision (2800x1260, draft ranked HoK Global, klien Indonesia). Kolom kiri = tim sendiri (operator tim MERAH pada sesi ini), kolom kanan = lawan (BIRU). Sepuluh slot pick terisi penuh pada frame ini; identitas dicocokkan secara visual terhadap 120 potret referensi yang dipublikasi.",
+  "frame": 78,
+  "resolution": { "width": 2800, "height": 1260 },
+  "columnSemantics": {
+    "left": "kolom tim sendiri (own team) — ber-tint merah pada sesi ini",
+    "right": "kolom lawan (opponent) — ber-tint biru pada sesi ini",
+    "note": "Layout geometris identik untuk operator biru; hanya warna tint (dan dengan itu side absolut) yang bercermin."
+  },
+  "slots": [
+    { "column": "left", "row": 1, "slotIndexInProfile": 0, "hero_id": 521, "hero_name": "Haya", "idStatus": "uncertain", "confidence": "medium — kemungkinan SKIN: thumbnail T1 di baris bawah identik piksel dengan L1, dan L1 hanya 'same face/hair, slight tone difference' pada analisis pertama" },
+    { "column": "left", "row": 2, "slotIndexInProfile": 1, "hero_id": 177, "hero_name": "Chano", "idStatus": "solid", "confidence": "high" },
+    { "column": "left", "row": 3, "slotIndexInProfile": 2, "hero_id": 121, "hero_name": "Mi Yue", "idStatus": "solid", "confidence": "medium-high" },
+    { "column": "left", "row": 4, "slotIndexInProfile": 3, "hero_id": 167, "hero_name": "Wukong", "idStatus": "uncertain", "confidence": "medium-high — analisis kedua menandai L4 (fire demon) sebagai kandidat non-default art" },
+    { "column": "left", "row": 5, "slotIndexInProfile": 4, "hero_id": 108, "hero_name": "Mozi", "idStatus": "uncertain", "confidence": "medium-high — analisis kedua menandai L5 (teal crystal armour) sebagai kandidat non-default art; slot ini juga terobservasi berganti hero (pre-selection ular biru di frame 062)" },
+    { "column": "right", "row": 1, "slotIndexInProfile": 5, "hero_id": 114, "hero_name": "Liu Shan", "idStatus": "solid", "confidence": "high" },
+    { "column": "right", "row": 2, "slotIndexInProfile": 6, "hero_id": 156, "hero_name": "Liang", "idStatus": "solid", "confidence": "high" },
+    { "column": "right", "row": 3, "slotIndexInProfile": 7, "hero_id": 155, "hero_name": "Erin", "idStatus": "solid", "confidence": "medium-high" },
+    { "column": "right", "row": 4, "slotIndexInProfile": 8, "hero_id": 533, "hero_name": "Agudo", "idStatus": "solid", "confidence": "medium-high" },
+    { "column": "right", "row": 5, "slotIndexInProfile": 9, "hero_id": 503, "hero_name": "Biron", "idStatus": "solid", "confidence": "high" }
+  ],
+  "confidenceNote": "DUA analisis independen KONFLIK soal skin: analisis pertama menyimpulkan semua slot memakai ilustrasi dasar; analisis kedua menemukan T1 (thumbnail skin di baris bawah-tengah) identik piksel dengan L1 dan menandai L1/L4/L5 sebagai kemungkinan tile non-default. L1/L4/L5 diberi idStatus 'uncertain': kecocokan matcher di sana bisa false-positive skin-vs-base. Setiap id diverifikasi ada di apps/web/public/datasets/035accf090d3eece/hero_metadata.json dengan nama yang cocok.",
+  "excludes": "Slot ban sengaja dihilangkan: ikon ban sirkular 64px tertutup overlay gembok (~40% area) dan 4 dari 6 ikon tidak dapat diidentifikasi secara visual. Ban diverifikasi geometrinya saja (occupancy), bukan identitasnya."
+}

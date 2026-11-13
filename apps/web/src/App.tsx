@@ -4,7 +4,7 @@ import { loadTournamentDataset } from './engine/heroDataLoader';
 import { runTournamentInference, TournamentPredictionResult, TournamentPhaseStrategy } from './engine/tournamentInference';
 import { computeTacticalDeltas } from './engine/deltaExplainer';
 import { assignmentToHeroLaneMap, buildDefaultLaneAssignments, swapAssignedLanes } from './engine/gamePlan';
-import { AlertTriangle, BookOpen, FilterX, Gamepad2, RefreshCw, SearchX, SlidersHorizontal, Star } from 'lucide-react';
+import { AlertTriangle, BookOpen, FilterX, Gamepad2, RefreshCw, Scan, SearchX, SlidersHorizontal, Star } from 'lucide-react';
 import { HeroRosterToolbar } from './components/HeroRosterToolbar';
 import { focusHeroSearch } from './components/ui/presentation';
 import { HeaderSortBar } from './components/HeaderSortBar';
@@ -15,12 +15,17 @@ import { PracticeDraft } from './components/PracticeDraft';
 import { DraftSimulator } from './components/DraftSimulator';
 import { PostDraftGamePlanPanel } from './components/PostDraftGamePlanPanel';
 import { TacticalRadarPanel } from './components/TacticalRadarPanel';
+import { VisionPanel, visionFormatMismatchReason } from './components/VisionPanel';
+import type { VisionApplyResult } from './components/VisionPanel';
 import { HeroWikiDrawer } from './components/HeroWikiDrawer';
 import { PlanSelectionModal } from './components/PlanSelectionModal';
 import { isHeroGlobalReleased } from './data/heroReleaseStatus';
 
-import { assignHeroLanes, DRAFT_SEQUENCE, getDraftTurn, createInitialGameDraft, applyGameHero, computeSeriesFearlessLocks, findSeriesFearlessConflicts, teamOnSide, FLOWBORN_HERO_IDS, isFlowborn } from './engine/draftRules';
-import type { Side } from './engine/draftRules';
+import { assignHeroLanes, DRAFT_SEQUENCE, getDraftTurn, createInitialGameDraft, applyGameHero, computeSeriesFearlessLocks, findSeriesFearlessConflicts, teamOnSide, FLOWBORN_HERO_IDS, isFlowborn, toPosition } from './engine/draftRules';
+import type { DraftPosition, Side } from './engine/draftRules';
+
+/** Draft format the Live Advisor follows; it is tied to the calibrated ranked region profile, independent of the simulator's draftFormat. */
+const VISION_ADVISOR_FORMAT: DraftFormat = 'ranked';
 
 export const App: React.FC = () => {
   const [dataset, setDataset] = useState<TournamentDataset | null>(null);
@@ -30,10 +35,11 @@ export const App: React.FC = () => {
 
   // Navigation & Filtering
   const [activeTab, setActiveTab] = useState<ActiveTab>('draft');
-  const [draftMode, setDraftMode] = useState<'simulator' | 'practice'>('simulator');
+  const [draftMode, setDraftMode] = useState<'simulator' | 'practice' | 'vision'>('simulator');
   const [draftFormat, setDraftFormat] = useState<DraftFormat>('tournament');
   const [practiceAssistance, setPracticeAssistance] = useState(true);
   const practiceActive = activeTab === 'draft' && draftMode === 'practice';
+  const visionActive = activeTab === 'draft' && draftMode === 'vision';
   const [selectedLane, setSelectedLane] = useState<Lane | 'All'>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortMode, setSortMode] = useState<SortMode>('ai');
@@ -485,6 +491,11 @@ export const App: React.FC = () => {
     setPrimaryInsight(targetIsUltimate ? 'Game 7: Ultimate Battle (Blind Pick 0 Ban, Mirror Hero Legal).' : `Beralih ke Game ${game} dalam Seri Fearless Draft.`);
   };
 
+  // Switch from Live Advisor back to the simulator view so the user can see the applied board.
+  const handleSwitchToSimulator = useCallback(() => {
+    setDraftMode('simulator');
+  }, []);
+
   // Record winner of current game
   const handleRecordWinner = (winnerSide: 'blue' | 'red') => {
     updateCurrentDraft((prev) => ({
@@ -495,6 +506,58 @@ export const App: React.FC = () => {
     const winningName = winningTeam === 'A' ? teamAName : teamBName;
     setPrimaryInsight(`Hasil Game ${gameNumber} dicatat: ${winningName} (${winnerSide.toUpperCase()}) menang.`);
   };
+
+  // Apply a detected live-board position into the simulator by replaying every detected action through applyGameHero.
+  // The advisor's format is independent of the simulator's, so refuse to apply while they disagree — the ranked
+  // sequence (16 steps) and the tournament sequence (18 steps) make any cross-format step comparison meaningless.
+  const handleApplyVisionToSimulator = useCallback((detectedPosition: DraftPosition): VisionApplyResult => {
+    if (draftFormat !== VISION_ADVISOR_FORMAT) {
+      return { ok: false, reason: visionFormatMismatchReason(VISION_ADVISOR_FORMAT) };
+    }
+    let outcome: VisionApplyResult = { ok: false, reason: 'Tidak dapat menerapkan posisi.' };
+    updateCurrentDraft((prevGame) => {
+      const currentPosition = toPosition(prevGame);
+      if (currentPosition.step >= detectedPosition.step) {
+        outcome = { ok: false, reason: 'Simulator sudah melewati posisi terdeteksi.' };
+        return prevGame;
+      }
+      let game = prevGame;
+      let appliedCount = 0;
+      const ctx = {
+        heroes,
+        onlyGlobal: onlyGlobalReleased,
+        fearless: { blue: [...blueFearlessUnavailableIds], red: [...redFearlessUnavailableIds] },
+        format: draftFormat,
+        isUltimateBattle,
+      };
+      for (let step = currentPosition.step; step < detectedPosition.step; step += 1) {
+        const turn = getDraftTurn(step, draftFormat, isUltimateBattle);
+        const field = turn.action === 'pick' ? 'picks' : 'bans';
+        const slotsKey = `${turn.side}${field === 'picks' ? 'Picks' : 'Bans'}` as const;
+        const filledCount = game[slotsKey].filter(Boolean).length;
+        const heroId = detectedPosition[field][turn.side][filledCount];
+        const hero = heroes.find(h => h.hero_id === heroId);
+        if (!hero) {
+          outcome = { ok: false, reason: `Hero tidak dikenali pada langkah ${step + 1}.` };
+          break;
+        }
+        const next = applyGameHero(game, hero, ctx, draftFormat, isUltimateBattle);
+        if (next === game) {
+          outcome = { ok: false, reason: `Aksi ditolak pada langkah ${step + 1} (hero tidak legal).` };
+          break;
+        }
+        game = next;
+        appliedCount += 1;
+      }
+      if (appliedCount > 0) {
+        outcome = { ok: true, appliedCount, newStep: toPosition(game).step };
+      } else if (!outcome.ok && outcome.reason === 'Tidak dapat menerapkan posisi.') {
+        outcome = { ok: false, reason: 'Tidak ada aksi baru yang dapat diterapkan.' };
+      }
+      return game;
+    });
+    return outcome;
+  }, [heroes, onlyGlobalReleased, blueFearlessUnavailableIds, redFearlessUnavailableIds, draftFormat, isUltimateBattle, updateCurrentDraft]);
 
   // Swap sides for current game (only when draft hasn't started)
   const handleSwapSides = () => {
@@ -648,13 +711,13 @@ export const App: React.FC = () => {
       <a href="#main-content" className="skip-link">Lewati ke konten utama</a>
       <HeaderSortBar activeTab={activeTab} onTabChange={setActiveTab} engineReady={engineReady} globalLocked={false} onlyGlobalReleased={onlyGlobalReleased} onToggleGlobalReleased={() => setOnlyGlobalReleased(value => !value)} favoriteCount={favorites.size} />
       <main className="app-main" id="main-content" tabIndex={-1}>
-        <div className="page-heading"><div><h1>{activeTab === 'draft' ? 'Ruang draft' : activeTab === 'counter' ? 'Cari matchup hero' : activeTab === 'wiki' ? 'Wiki & tier hero' : 'Hero favorit'}</h1><p>{activeTab === 'draft' ? (draftMode === 'practice' ? 'Pilih sisi, susun strategi, lalu uji keputusanmu melawan AI.' : 'Atur kedua tim dan cari pilihan terbaik untuk setiap giliran.') : activeTab === 'counter' ? 'Buka hero untuk melihat ancaman, target empuk, dan sinerginya.' : activeTab === 'wiki' ? 'Pelajari skill, build item, arcana, dan statistik hero Global.' : 'Simpan hero dari wiki untuk mengaksesnya kembali dengan cepat.'}</p></div>
-          {activeTab === 'draft' && <nav className="mode-switch" aria-label="Mode draft"><button type="button" aria-pressed={draftMode === 'simulator'} onClick={() => setDraftMode('simulator')}><SlidersHorizontal aria-hidden="true" />Simulator</button><button type="button" aria-pressed={draftMode === 'practice'} onClick={() => setDraftMode('practice')}><Gamepad2 aria-hidden="true" />Latihan vs AI</button></nav>}
+        <div className="page-heading"><div><h1>{activeTab === 'draft' ? 'Ruang draft' : activeTab === 'counter' ? 'Cari matchup hero' : activeTab === 'wiki' ? 'Wiki & tier hero' : 'Hero favorit'}</h1><p>{activeTab === 'draft' ? (draftMode === 'practice' ? 'Pilih sisi, susun strategi, lalu uji keputusanmu melawan AI.' : draftMode === 'vision' ? 'Pantau layar draft secara langsung dan lihat rekomendasi read-only.' : 'Atur kedua tim dan cari pilihan terbaik untuk setiap giliran.') : activeTab === 'counter' ? 'Buka hero untuk melihat ancaman, target empuk, dan sinerginya.' : activeTab === 'wiki' ? 'Pelajari skill, build item, arcana, dan statistik hero Global.' : 'Simpan hero dari wiki untuk mengaksesnya kembali dengan cepat.'}</p></div>
+          {activeTab === 'draft' && <nav className="mode-switch" aria-label="Mode draft"><button type="button" aria-pressed={draftMode === 'simulator'} onClick={() => setDraftMode('simulator')}><SlidersHorizontal aria-hidden="true" />Simulator</button><button type="button" aria-pressed={draftMode === 'practice'} onClick={() => setDraftMode('practice')}><Gamepad2 aria-hidden="true" />Latihan vs AI</button><button type="button" aria-pressed={draftMode === 'vision'} onClick={() => setDraftMode('vision')}><Scan aria-hidden="true" />Live Advisor</button></nav>}
         </div>
         {loadError && <section role="alert" className="empty-state"><AlertTriangle aria-hidden="true" /><h2>Data hero belum dapat dimuat</h2><p>{loadError}</p><button type="button" className="ui-button ui-button--primary" onClick={() => void loadData()}><RefreshCw aria-hidden="true" />Coba lagi</button></section>}
         {dataset && <div hidden={!practiceActive}><PracticeDraft dataset={dataset} active={practiceActive} onlyGlobalReleased={onlyGlobalReleased} assistance={practiceAssistance} onAssistanceChange={setPracticeAssistance} selectedLane={selectedLane} onLaneChange={setSelectedLane} searchQuery={searchQuery} onSearchChange={setSearchQuery} sortMode={sortMode} onSortChange={setSortMode} viewMode={viewMode} onViewChange={setViewMode} favorites={favorites} onToggleFavorite={handleToggleFavorite} /></div>}
         {!practiceActive && <>
-          {activeTab === 'draft' && !loadError && (
+          {activeTab === 'draft' && !loadError && draftMode !== 'vision' && (
             <DraftSimulator
               format={draftFormat}
               onFormatChange={handleFormatChange}
@@ -689,7 +752,26 @@ export const App: React.FC = () => {
               fearlessConflicts={fearlessConflicts}
             />
           )}
-          {activeTab === 'draft' && !loadError && currentTurn.isComplete && filledBlueHeroes.length === 5 && filledRedHeroes.length === 5 && (
+          {activeTab === 'draft' && !loadError && draftMode === 'vision' && (
+            <VisionPanel
+              heroes={heroes}
+              synergyData={synergyData}
+              advisorFormat={VISION_ADVISOR_FORMAT}
+              simulatorFormat={draftFormat}
+              onlyGlobalReleased={onlyGlobalReleased}
+              fearlessLocks={{ blue: blueFearlessUnavailableIds, red: redFearlessUnavailableIds }}
+              bluePlanAId={bluePlanAId}
+              bluePlanBId={bluePlanBId}
+              redPlanAId={redPlanAId}
+              redPlanBId={redPlanBId}
+              isUltimateBattle={isUltimateBattle}
+              currentGamePosition={toPosition(currentGame)}
+              onApplyToSimulator={handleApplyVisionToSimulator}
+              onSwitchToSimulator={handleSwitchToSimulator}
+              onInspectHero={setWikiHero}
+            />
+          )}
+          {activeTab === 'draft' && !loadError && !visionActive && currentTurn.isComplete && filledBlueHeroes.length === 5 && filledRedHeroes.length === 5 && (
             <PostDraftGamePlanPanel
               key={`sim-game-${gameNumber}`}
               blueHeroes={filledBlueHeroes}
@@ -704,7 +786,7 @@ export const App: React.FC = () => {
               onInspectHero={setWikiHero}
             />
           )}
-          {!loadError && <div className={activeTab === 'draft' ? 'draft-workspace' : ''}>
+          {!loadError && !visionActive && <div className={activeTab === 'draft' ? 'draft-workspace' : ''}>
             <section className="hero-roster" id="hero-roster" aria-label="Katalog hero" aria-busy={loading}>
               <HeroRosterToolbar title={activeTab === 'favorites' ? 'Hero favorit' : activeTab === 'draft' ? 'Pilih hero untuk ' + (currentTurn.action === 'ban' ? 'ban' : 'pick') : 'Jelajahi hero'} count={filteredAndSortedHeroes.length} searchQuery={searchQuery} onSearchChange={setSearchQuery} selectedLane={selectedLane} onLaneChange={setSelectedLane} sortMode={sortMode} onSortChange={setSortMode} viewMode={viewMode} onViewChange={setViewMode} hideAiSort={activeTab !== 'draft'} />
               {loading ? <div className="hero-grid" role="status" aria-label="Memuat katalog hero"><span className="sr-only">Memuat database hero…</span>{Array.from({ length: 12 }, (_, index) => <div key={index} className="roster-skeleton" aria-hidden="true" />)}</div>

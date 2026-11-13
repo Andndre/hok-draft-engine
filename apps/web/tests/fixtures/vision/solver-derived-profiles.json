@@ -1,0 +1,1226 @@
+{
+ "description": "RegionProfile yang diturunkan otomatis oleh src/vision/layoutSolver.ts (solveLayout) dari frame corpus untuk pengukuran akurasi matcher dengan geometri solver vs profil terkalibrasi. Regenerasi: node apps/web/scripts/derive-vision-profile.mjs --frame <png> --out <json>. Identitas draft #1 diverifikasi terhadap hero-identity-ground-truth.json (frame 78); draft #2 tidak punya ground truth.",
+ "generatedFromCorpus": "data/vision-corpus",
+ "profiles": [
+  {
+   "scenario": "b",
+   "derivedFrom": "074_bp.png",
+   "solveScale": 1,
+   "crop": null,
+   "confidence": 0.9591424385846288,
+   "source": "combined",
+   "diagnostics": {
+    "tileCandidates": 8,
+    "badgesFound": 10,
+    "banCircles": 4,
+    "directSlots": 21,
+    "rightColumnMirrored": false,
+    "notes": []
+   },
+   "profile": {
+    "version": "solver-2800x1260",
+    "resolution": {
+     "width": 2800,
+     "height": 1260
+    },
+    "ownSide": "red",
+    "slots": [
+     {
+      "index": 0,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 184,
+       "y": 135.2807881773399,
+       "w": 147.72413793103448,
+       "h": 147.72413793103448
+      }
+     },
+     {
+      "index": 1,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 184,
+       "y": 339.2807881773399,
+       "w": 147.72413793103448,
+       "h": 147.72413793103448
+      }
+     },
+     {
+      "index": 2,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 184,
+       "y": 543.2807881773399,
+       "w": 147.72413793103448,
+       "h": 147.72413793103448
+      }
+     },
+     {
+      "index": 3,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 184,
+       "y": 747.2807881773399,
+       "w": 147.72413793103448,
+       "h": 147.72413793103448
+      }
+     },
+     {
+      "index": 4,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 184,
+       "y": 951.2807881773399,
+       "w": 147.72413793103448,
+       "h": 147.72413793103448
+      }
+     },
+     {
+      "index": 5,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 2488,
+       "y": 135.2807881773399,
+       "w": 147.72413793103448,
+       "h": 147.72413793103448
+      }
+     },
+     {
+      "index": 6,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 2488,
+       "y": 339.2807881773399,
+       "w": 147.72413793103448,
+       "h": 147.72413793103448
+      }
+     },
+     {
+      "index": 7,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 2488,
+       "y": 543.2807881773399,
+       "w": 147.72413793103448,
+       "h": 147.72413793103448
+      }
+     },
+     {
+      "index": 8,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 2488,
+       "y": 747.2807881773399,
+       "w": 147.72413793103448,
+       "h": 147.72413793103448
+      }
+     },
+     {
+      "index": 9,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 2488,
+       "y": 951.2807881773399,
+       "w": 147.72413793103448,
+       "h": 147.72413793103448
+      }
+     },
+     {
+      "index": 10,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+       "x": 172,
+       "y": 12,
+       "w": 64,
+       "h": 68
+      }
+     },
+     {
+      "index": 11,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+       "x": 258,
+       "y": 12,
+       "w": 64,
+       "h": 68
+      }
+     },
+     {
+      "index": 12,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+       "x": 344,
+       "y": 12,
+       "w": 64,
+       "h": 68
+      }
+     },
+     {
+      "index": 13,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+       "x": 2392,
+       "y": 12,
+       "w": 64,
+       "h": 68
+      }
+     },
+     {
+      "index": 14,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+       "x": 2478,
+       "y": 12,
+       "w": 64,
+       "h": 68
+      }
+     },
+     {
+      "index": 15,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+       "x": 2564,
+       "y": 12,
+       "w": 64,
+       "h": 68
+      }
+     }
+    ],
+    "anchors": []
+   }
+  },
+  {
+   "scenario": "c",
+   "derivedFrom": "252_bp.png",
+   "solveScale": 1,
+   "crop": null,
+   "confidence": 0.915656618001701,
+   "source": "combined",
+   "diagnostics": {
+    "tileCandidates": 13,
+    "badgesFound": 10,
+    "banCircles": 3,
+    "directSlots": 19,
+    "rightColumnMirrored": false,
+    "notes": []
+   },
+   "profile": {
+    "version": "solver-2800x1260",
+    "resolution": {
+     "width": 2800,
+     "height": 1260
+    },
+    "ownSide": "red",
+    "slots": [
+     {
+      "index": 0,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 184,
+       "y": 143.5287356321839,
+       "w": 146.27586206896552,
+       "h": 146.27586206896552
+      }
+     },
+     {
+      "index": 1,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 184,
+       "y": 345.52873563218395,
+       "w": 146.27586206896552,
+       "h": 146.27586206896552
+      }
+     },
+     {
+      "index": 2,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 184,
+       "y": 547.5287356321838,
+       "w": 146.27586206896552,
+       "h": 146.27586206896552
+      }
+     },
+     {
+      "index": 3,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 184,
+       "y": 749.5287356321838,
+       "w": 146.27586206896552,
+       "h": 146.27586206896552
+      }
+     },
+     {
+      "index": 4,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 184,
+       "y": 951.528735632184,
+       "w": 146.27586206896552,
+       "h": 146.27586206896552
+      }
+     },
+     {
+      "index": 5,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 2488,
+       "y": 143.5287356321839,
+       "w": 146.27586206896552,
+       "h": 146.27586206896552
+      }
+     },
+     {
+      "index": 6,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 2488,
+       "y": 340,
+       "w": 140,
+       "h": 144
+      }
+     },
+     {
+      "index": 7,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 2488,
+       "y": 547.5287356321838,
+       "w": 146.27586206896552,
+       "h": 146.27586206896552
+      }
+     },
+     {
+      "index": 8,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 2488,
+       "y": 749.5287356321838,
+       "w": 146.27586206896552,
+       "h": 146.27586206896552
+      }
+     },
+     {
+      "index": 9,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 2488,
+       "y": 951.528735632184,
+       "w": 146.27586206896552,
+       "h": 146.27586206896552
+      }
+     },
+     {
+      "index": 10,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+       "x": 176,
+       "y": 14,
+       "w": 58,
+       "h": 66
+      }
+     },
+     {
+      "index": 11,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+       "x": 250,
+       "y": 14,
+       "w": 58,
+       "h": 66
+      }
+     },
+     {
+      "index": 12,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+       "x": 324,
+       "y": 14,
+       "w": 58,
+       "h": 66
+      }
+     },
+     {
+      "index": 13,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+       "x": 2418,
+       "y": 14,
+       "w": 58,
+       "h": 66
+      }
+     },
+     {
+      "index": 14,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+       "x": 2492,
+       "y": 14,
+       "w": 58,
+       "h": 66
+      }
+     },
+     {
+      "index": 15,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+       "x": 2566,
+       "y": 14,
+       "w": 58,
+       "h": 66
+      }
+     }
+    ],
+    "anchors": []
+   }
+  },
+  {
+   "scenario": "d1",
+   "derivedFrom": "074_bp.png",
+   "solveScale": 0.7,
+   "crop": null,
+   "confidence": 0.8971788306974336,
+   "source": "combined",
+   "diagnostics": {
+    "tileCandidates": 9,
+    "badgesFound": 10,
+    "banCircles": 3,
+    "directSlots": 20,
+    "rightColumnMirrored": false,
+    "notes": []
+   },
+   "profile": {
+    "version": "solver-1960x882",
+    "resolution": {
+     "width": 1960,
+     "height": 882
+    },
+    "ownSide": "red",
+    "slots": [
+     {
+      "index": 0,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 129,
+       "y": 95.83374384236453,
+       "w": 103.1896551724138,
+       "h": 103.1896551724138
+      }
+     },
+     {
+      "index": 1,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 129,
+       "y": 238.33374384236456,
+       "w": 103.1896551724138,
+       "h": 103.1896551724138
+      }
+     },
+     {
+      "index": 2,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 129,
+       "y": 380.8337438423645,
+       "w": 103.1896551724138,
+       "h": 103.1896551724138
+      }
+     },
+     {
+      "index": 3,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 129,
+       "y": 523.3337438423646,
+       "w": 103.1896551724138,
+       "h": 103.1896551724138
+      }
+     },
+     {
+      "index": 4,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 129,
+       "y": 665.8337438423646,
+       "w": 103.1896551724138,
+       "h": 103.1896551724138
+      }
+     },
+     {
+      "index": 5,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 1740,
+       "y": 95.83374384236453,
+       "w": 103.1896551724138,
+       "h": 103.1896551724138
+      }
+     },
+     {
+      "index": 6,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 1740,
+       "y": 238.33374384236456,
+       "w": 103.1896551724138,
+       "h": 103.1896551724138
+      }
+     },
+     {
+      "index": 7,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 1740,
+       "y": 380.8337438423645,
+       "w": 103.1896551724138,
+       "h": 103.1896551724138
+      }
+     },
+     {
+      "index": 8,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 1740,
+       "y": 523.3337438423646,
+       "w": 103.1896551724138,
+       "h": 103.1896551724138
+      }
+     },
+     {
+      "index": 9,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 1740,
+       "y": 665.8337438423646,
+       "w": 103.1896551724138,
+       "h": 103.1896551724138
+      }
+     },
+     {
+      "index": 10,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+       "x": 120,
+       "y": 9,
+       "w": 45,
+       "h": 48
+      }
+     },
+     {
+      "index": 11,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+       "x": 180.75,
+       "y": 9,
+       "w": 45,
+       "h": 48
+      }
+     },
+     {
+      "index": 12,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+       "x": 241.5,
+       "y": 9,
+       "w": 45,
+       "h": 48
+      }
+     },
+     {
+      "index": 13,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+       "x": 1673.5,
+       "y": 9,
+       "w": 45,
+       "h": 48
+      }
+     },
+     {
+      "index": 14,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+       "x": 1734.25,
+       "y": 9,
+       "w": 45,
+       "h": 48
+      }
+     },
+     {
+      "index": 15,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+       "x": 1795,
+       "y": 9,
+       "w": 45,
+       "h": 48
+      }
+     }
+    ],
+    "anchors": []
+   }
+  },
+  {
+   "scenario": "d2",
+   "derivedFrom": "074_bp.png",
+   "solveScale": 0.5,
+   "crop": null,
+   "confidence": 0.9441539476163556,
+   "source": "combined",
+   "diagnostics": {
+    "tileCandidates": 8,
+    "badgesFound": 10,
+    "banCircles": 4,
+    "directSlots": 21,
+    "rightColumnMirrored": false,
+    "notes": []
+   },
+   "profile": {
+    "version": "solver-1400x630",
+    "resolution": {
+     "width": 1400,
+     "height": 630
+    },
+    "ownSide": "red",
+    "slots": [
+     {
+      "index": 0,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 91,
+       "y": 68.23727422003283,
+       "w": 73.62068965517241,
+       "h": 73.62068965517241
+      }
+     },
+     {
+      "index": 1,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 91,
+       "y": 169.9039408866995,
+       "w": 73.62068965517241,
+       "h": 73.62068965517241
+      }
+     },
+     {
+      "index": 2,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 91,
+       "y": 271.57060755336613,
+       "w": 73.62068965517241,
+       "h": 73.62068965517241
+      }
+     },
+     {
+      "index": 3,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 91,
+       "y": 373.2372742200328,
+       "w": 73.62068965517241,
+       "h": 73.62068965517241
+      }
+     },
+     {
+      "index": 4,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 91,
+       "y": 474.9039408866995,
+       "w": 73.62068965517241,
+       "h": 73.62068965517241
+      }
+     },
+     {
+      "index": 5,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 1244,
+       "y": 68.23727422003283,
+       "w": 73.62068965517241,
+       "h": 73.62068965517241
+      }
+     },
+     {
+      "index": 6,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 1244,
+       "y": 169.9039408866995,
+       "w": 73.62068965517241,
+       "h": 73.62068965517241
+      }
+     },
+     {
+      "index": 7,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 1244,
+       "y": 271.57060755336613,
+       "w": 73.62068965517241,
+       "h": 73.62068965517241
+      }
+     },
+     {
+      "index": 8,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 1244,
+       "y": 373.2372742200328,
+       "w": 73.62068965517241,
+       "h": 73.62068965517241
+      }
+     },
+     {
+      "index": 9,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 1244,
+       "y": 474.9039408866995,
+       "w": 73.62068965517241,
+       "h": 73.62068965517241
+      }
+     },
+     {
+      "index": 10,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+       "x": 86,
+       "y": 6,
+       "w": 32,
+       "h": 34
+      }
+     },
+     {
+      "index": 11,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+       "x": 129,
+       "y": 6,
+       "w": 32,
+       "h": 34
+      }
+     },
+     {
+      "index": 12,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+       "x": 172,
+       "y": 6,
+       "w": 32,
+       "h": 34
+      }
+     },
+     {
+      "index": 13,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+       "x": 1196,
+       "y": 6,
+       "w": 32,
+       "h": 34
+      }
+     },
+     {
+      "index": 14,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+       "x": 1239,
+       "y": 6,
+       "w": 32,
+       "h": 34
+      }
+     },
+     {
+      "index": 15,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+       "x": 1282,
+       "y": 6,
+       "w": 32,
+       "h": 34
+      }
+     }
+    ],
+    "anchors": []
+   }
+  },
+  {
+   "scenario": "e",
+   "derivedFrom": "074_bp.png (center-cropped to 19.5:9 = 2730x1260)",
+   "solveScale": 1,
+   "crop": "19.5:9 center",
+   "confidence": 0.9561298347809509,
+   "source": "combined",
+   "diagnostics": {
+    "tileCandidates": 8,
+    "badgesFound": 10,
+    "banCircles": 4,
+    "directSlots": 21,
+    "rightColumnMirrored": false,
+    "notes": []
+   },
+   "profile": {
+    "version": "solver-2730x1260",
+    "resolution": {
+     "width": 2730,
+     "height": 1260
+    },
+    "ownSide": "red",
+    "slots": [
+     {
+      "index": 0,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 148,
+       "y": 134.99507389162562,
+       "w": 147.72413793103448,
+       "h": 147.72413793103448
+      }
+     },
+     {
+      "index": 1,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 148,
+       "y": 338.99507389162557,
+       "w": 147.72413793103448,
+       "h": 147.72413793103448
+      }
+     },
+     {
+      "index": 2,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 148,
+       "y": 542.9950738916257,
+       "w": 147.72413793103448,
+       "h": 147.72413793103448
+      }
+     },
+     {
+      "index": 3,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 148,
+       "y": 746.9950738916257,
+       "w": 147.72413793103448,
+       "h": 147.72413793103448
+      }
+     },
+     {
+      "index": 4,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 148,
+       "y": 950.9950738916257,
+       "w": 147.72413793103448,
+       "h": 147.72413793103448
+      }
+     },
+     {
+      "index": 5,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 2452,
+       "y": 134.99507389162562,
+       "w": 147.72413793103448,
+       "h": 147.72413793103448
+      }
+     },
+     {
+      "index": 6,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 2452,
+       "y": 338.99507389162557,
+       "w": 147.72413793103448,
+       "h": 147.72413793103448
+      }
+     },
+     {
+      "index": 7,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 2452,
+       "y": 542.9950738916257,
+       "w": 147.72413793103448,
+       "h": 147.72413793103448
+      }
+     },
+     {
+      "index": 8,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 2452,
+       "y": 746.9950738916257,
+       "w": 147.72413793103448,
+       "h": 147.72413793103448
+      }
+     },
+     {
+      "index": 9,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 2452,
+       "y": 950.9950738916257,
+       "w": 147.72413793103448,
+       "h": 147.72413793103448
+      }
+     },
+     {
+      "index": 10,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+       "x": 136,
+       "y": 12,
+       "w": 68,
+       "h": 68
+      }
+     },
+     {
+      "index": 11,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+       "x": 222,
+       "y": 12,
+       "w": 68,
+       "h": 68
+      }
+     },
+     {
+      "index": 12,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+       "x": 308,
+       "y": 12,
+       "w": 68,
+       "h": 68
+      }
+     },
+     {
+      "index": 13,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+       "x": 2354,
+       "y": 12,
+       "w": 68,
+       "h": 68
+      }
+     },
+     {
+      "index": 14,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+       "x": 2440,
+       "y": 12,
+       "w": 68,
+       "h": 68
+      }
+     },
+     {
+      "index": 15,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+       "x": 2526,
+       "y": 12,
+       "w": 68,
+       "h": 68
+      }
+     }
+    ],
+    "anchors": []
+   }
+  },
+  {
+   "scenario": "f",
+   "derivedFrom": "031_bp.png",
+   "solveScale": 1,
+   "crop": null,
+   "confidence": 0.670380116959064,
+   "source": "combined",
+   "diagnostics": {
+    "tileCandidates": 11,
+    "badgesFound": 0,
+    "banCircles": 4,
+    "directSlots": 7,
+    "rightColumnMirrored": true,
+    "notes": [
+     "kolom kanan diekstrapolasi dari simetri cermin (tanpa bukti langsung)"
+    ]
+   },
+   "profile": {
+    "version": "solver-2800x1260",
+    "resolution": {
+     "width": 2800,
+     "height": 1260
+    },
+    "ownSide": "red",
+    "slots": [
+     {
+      "index": 0,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 184,
+       "y": 136,
+       "w": 148,
+       "h": 148
+      }
+     },
+     {
+      "index": 1,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 184,
+       "y": 340,
+       "w": 148,
+       "h": 148
+      }
+     },
+     {
+      "index": 2,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 184,
+       "y": 542.3984674329503,
+       "w": 146.75862068965517,
+       "h": 146.75862068965517
+      }
+     },
+     {
+      "index": 3,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 184,
+       "y": 744,
+       "w": 148,
+       "h": 148
+      }
+     },
+     {
+      "index": 4,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+       "x": 184,
+       "y": 947.7318007662835,
+       "w": 146.75862068965517,
+       "h": 146.75862068965517
+      }
+     },
+     {
+      "index": 5,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 2469.2413793103447,
+       "y": 137.06513409961687,
+       "w": 146.75862068965517,
+       "h": 146.75862068965517
+      }
+     },
+     {
+      "index": 6,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 2469.2413793103447,
+       "y": 339.7318007662835,
+       "w": 146.75862068965517,
+       "h": 146.75862068965517
+      }
+     },
+     {
+      "index": 7,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 2469.2413793103447,
+       "y": 542.3984674329503,
+       "w": 146.75862068965517,
+       "h": 146.75862068965517
+      }
+     },
+     {
+      "index": 8,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 2469.2413793103447,
+       "y": 745.0651340996169,
+       "w": 146.75862068965517,
+       "h": 146.75862068965517
+      }
+     },
+     {
+      "index": 9,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+       "x": 2469.2413793103447,
+       "y": 947.7318007662835,
+       "w": 146.75862068965517,
+       "h": 146.75862068965517
+      }
+     },
+     {
+      "index": 10,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+       "x": 174,
+       "y": 8,
+       "w": 72,
+       "h": 72
+      }
+     },
+     {
+      "index": 11,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+       "x": 259,
+       "y": 8,
+       "w": 72,
+       "h": 72
+      }
+     },
+     {
+      "index": 12,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+       "x": 344,
+       "y": 8,
+       "w": 72,
+       "h": 72
+      }
+     },
+     {
+      "index": 13,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+       "x": 2384,
+       "y": 8,
+       "w": 72,
+       "h": 72
+      }
+     },
+     {
+      "index": 14,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+       "x": 2469,
+       "y": 8,
+       "w": 72,
+       "h": 72
+      }
+     },
+     {
+      "index": 15,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+       "x": 2554,
+       "y": 8,
+       "w": 72,
+       "h": 72
+      }
+     }
+    ],
+    "anchors": []
+   }
+  }
+ ]
+}

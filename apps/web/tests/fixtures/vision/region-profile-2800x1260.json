@@ -1,0 +1,257 @@
+{
+  "version": "hok-ranked-2800x1260-v1",
+  "resolution": {
+    "width": 2800,
+    "height": 1260
+  },
+  "ownSide": "red",
+  "slots": [
+    {
+      "index": 0,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+        "x": 186,
+        "y": 142,
+        "w": 148,
+        "h": 154
+      }
+    },
+    {
+      "index": 1,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+        "x": 183,
+        "y": 343,
+        "w": 146,
+        "h": 150
+      }
+    },
+    {
+      "index": 2,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+        "x": 183,
+        "y": 543,
+        "w": 147,
+        "h": 147
+      }
+    },
+    {
+      "index": 3,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+        "x": 183,
+        "y": 746,
+        "w": 147,
+        "h": 147
+      }
+    },
+    {
+      "index": 4,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+        "x": 183,
+        "y": 950,
+        "w": 147,
+        "h": 147
+      }
+    },
+    {
+      "index": 5,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+        "x": 2485,
+        "y": 137,
+        "w": 146,
+        "h": 147
+      }
+    },
+    {
+      "index": 6,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+        "x": 2476,
+        "y": 341,
+        "w": 149,
+        "h": 151
+      }
+    },
+    {
+      "index": 7,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+        "x": 2494,
+        "y": 555,
+        "w": 137,
+        "h": 147
+      }
+    },
+    {
+      "index": 8,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+        "x": 2485,
+        "y": 746,
+        "w": 146,
+        "h": 147
+      }
+    },
+    {
+      "index": 9,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+        "x": 2485,
+        "y": 950,
+        "w": 146,
+        "h": 147
+      }
+    },
+    {
+      "index": 10,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+        "x": 173,
+        "y": 15,
+        "w": 64,
+        "h": 64
+      }
+    },
+    {
+      "index": 11,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+        "x": 258,
+        "y": 15,
+        "w": 64,
+        "h": 64
+      }
+    },
+    {
+      "index": 12,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+        "x": 345,
+        "y": 15,
+        "w": 64,
+        "h": 64
+      }
+    },
+    {
+      "index": 13,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+        "x": 2391,
+        "y": 14,
+        "w": 66,
+        "h": 64
+      }
+    },
+    {
+      "index": 14,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+        "x": 2478,
+        "y": 14,
+        "w": 66,
+        "h": 64
+      }
+    },
+    {
+      "index": 15,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+        "x": 2564,
+        "y": 14,
+        "w": 66,
+        "h": 64
+      }
+    }
+  ],
+  "anchors": [
+    {
+      "label": "banner_text",
+      "rect": {
+        "x": 1125,
+        "y": 41,
+        "w": 549,
+        "h": 42
+      }
+    },
+    {
+      "label": "skill_button",
+      "rect": {
+        "x": 2030,
+        "y": 15,
+        "w": 175,
+        "h": 75
+      }
+    },
+    {
+      "label": "left_team_column",
+      "rect": {
+        "x": 150,
+        "y": 125,
+        "w": 495,
+        "h": 1020
+      }
+    },
+    {
+      "label": "right_team_column",
+      "rect": {
+        "x": 2320,
+        "y": 130,
+        "w": 335,
+        "h": 975
+      }
+    },
+    {
+      "label": "left_ban_strip",
+      "rect": {
+        "x": 165,
+        "y": 8,
+        "w": 255,
+        "h": 80
+      }
+    },
+    {
+      "label": "right_ban_strip",
+      "rect": {
+        "x": 2385,
+        "y": 8,
+        "w": 250,
+        "h": 80
+      }
+    },
+    {
+      "label": "bottom_button_row",
+      "rect": {
+        "x": 160,
+        "y": 1130,
+        "w": 800,
+        "h": 90
+      }
+    }
+  ],
+  "captureCompatibility": {
+    "anyCaptureSizeWithSameAspectRatio": true,
+    "aspectRatio": 2.2222,
+    "note": "Profil ini berlaku untuk tangkapan live berukuran berapa pun dengan rasio aspek yang sama (20:9, toleransi relatif 1% via resolveRegionProfileTolerant): rect slot di-skala proporsional dari ruang resolusi 2800x1260 ke ruang frame oleh pipeline (scaleRect). Contoh scrcpy yang sah: 2800x1260 (skala 1.0), 1960x882 (0.7), 1400x630 (0.5). Jangan pernah me-letterbox gambar perangkat di dalam permukaan tangkapan — crop akan salah.",
+    "accuracyScalesMeasured": [1.0, 0.7, 0.5]
+  }
+}

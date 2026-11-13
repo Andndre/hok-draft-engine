@@ -16,7 +16,7 @@ interface Props {
   onOpenPlanModal?: () => void;
   onSelectQuickPlanA?: (heroId: number | null) => void;
   recommendations: TournamentPredictionResult['recommendations'];
-  onSelectCandidate: (hero: Hero) => void;
+  onSelectCandidate?: (hero: Hero) => void;
   onInspectHero?: (hero: Hero) => void;
   activeSide: 'blue' | 'red';
   isPickPhase: boolean;
@@ -214,7 +214,7 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
 
       <div className="primary-recommendation__actions">
         {onInspectHero && <button type="button" className="ui-button ui-button--quiet" onClick={() => onInspectHero(currentRec.hero)}><BookOpen aria-hidden="true" />Detail</button>}
-        <button type="button" className={'ui-button ' + (isPickPhase ? 'ui-button--primary' : 'ui-button--ban')} onClick={() => onSelectCandidate(currentRec.hero)}><ActionIcon aria-hidden="true" />{isPickPhase ? 'Pick ' : 'Ban '}{currentRec.hero.name}<ArrowRight aria-hidden="true" /></button>
+        {onSelectCandidate && <button type="button" className={'ui-button ' + (isPickPhase ? 'ui-button--primary' : 'ui-button--ban')} onClick={() => onSelectCandidate(currentRec.hero)}><ActionIcon aria-hidden="true" />{isPickPhase ? 'Pick ' : 'Ban '}{currentRec.hero.name}<ArrowRight aria-hidden="true" /></button>}
       </div>
     </div>}
 

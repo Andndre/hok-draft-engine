@@ -1,0 +1,121 @@
+{
+  "description": "Ground truth manual dari satu sesi draft HoK Global (Indonesia, 2800x1260 landscape). Dibaca oleh evaluate-vision-corpus.mjs sebagai acuan waktu, bukan sebagai identitas hero. Perbarui ketiga: timeline terverifikasi piksel (bukan mata) mengoreksi rentang pengukuran — ukur DRAFT window saja (028-078 dan 222-256).",
+  "device": { "resolution": { "width": 2800, "height": 1260 } },
+  "sides": { "blue": "right", "red": "left" },
+  "phases": [
+    { "from": 28, "to": 36, "phase": "BAN1", "note": "fase ban; frame 035 menampilkan hasil ban di tengah layar (CATATAN: rentang lama dari catatan operator; untuk pengukuran gunakan draftWindows)" },
+    { "from": 37, "to": 42, "phase": "PICK1", "note": "B1 (blue di sisi kanan layar)" },
+    { "from": 43, "to": 49, "phase": "PICK1", "note": "dua pick merah (R1 & R2); R2 terkunci di frame 047" },
+    { "from": 50, "to": 56, "phase": "PICK1", "note": "pick pemain (R1) terkunci di frame 050; lanjut B2 & B3" }
+  ],
+  "locks": [
+    { "frame": 47, "side": "red", "slot": 2 },
+    { "frame": 50, "side": "red", "slot": 1 }
+  ],
+  "contentFrames": { "from": 1, "to": 391 },
+  "portraitFrame": { "frame": 27, "note": "menampilkan lane assignment pemain (mid) — UI pick menampakkannya" },
+  "timeline": [
+    { "from": 1, "to": 23, "kind": "lobby", "note": "matchmaking room / lobby — 'LAGI CARI LAWAN…', panel teman; BUKAN draft" },
+    { "from": 24, "to": 27, "kind": "transition", "note": "WARNING screen, countdown match-found, frame hitam, loading lane" },
+    { "from": 28, "to": 78, "kind": "draft", "note": "DRAFT #1 — window draft ranked pertama" },
+    { "from": 79, "to": 96, "kind": "vs-loading", "note": "VS loading screen — foto profil + KARTU SKIN EKSPLISIT dengan nama skin" },
+    { "from": 97, "to": 189, "kind": "match", "note": "gameplay in-match" },
+    { "from": 190, "to": 205, "kind": "post-match", "note": "defeat + layar pasca-match" },
+    { "from": 206, "to": 219, "kind": "lobby", "note": "lobby lagi" },
+    { "from": 220, "to": 221, "kind": "transition", "note": "transisi menuju draft kedua" },
+    { "from": 222, "to": 256, "kind": "draft", "note": "DRAFT #2 — draft ranked kedua yang independen" },
+    { "from": 257, "to": 263, "kind": "vs-loading", "note": "VS loading lagi (kartu skin)" },
+    { "from": 264, "to": 280, "kind": "match", "note": "gameplay in-match kedua" },
+    { "from": 281, "to": 391, "kind": "unknown", "note": "di luar segmen yang diverifikasi analisis ketiga; frame 392+ layar mati" }
+  ],
+  "draftWindows": [
+    {
+      "from": 28,
+      "to": 78,
+      "label": "DRAFT #1",
+      "ban": {
+        "progression": [
+          { "from": 28, "to": 30, "count": 0 },
+          { "from": 31, "to": 32, "count": 1 },
+          { "from": 33, "to": 34, "count": 2 },
+          { "from": 35, "to": 78, "count": 6 }
+        ],
+        "note": "035-036 membawa overlay 'Hasil Ban'"
+      },
+      "pick": {
+        "progression": [
+          { "from": 28, "to": 42, "count": 0 },
+          { "from": 43, "to": 45, "count": 1, "note": "1 lock = Pemain 1 lawan" },
+          { "from": 46, "to": 48, "count": 2 },
+          { "from": 49, "to": 49, "count": null, "note": "tidak disebutkan analisis ketiga; transisi antara 2 (048) dan 4 (050)" },
+          { "from": 50, "to": 57, "count": 4 },
+          { "from": 58, "to": 58, "count": 5 },
+          { "from": 59, "to": 59, "count": 6 },
+          { "from": 60, "to": 60, "count": 7 },
+          { "from": 61, "to": 62, "count": 8 },
+          { "from": 63, "to": 64, "count": 9 },
+          { "from": 65, "to": 78, "count": 10 }
+        ],
+        "note": "FULL 10/10 pada 065-078"
+      }
+    },
+    {
+      "from": 222,
+      "to": 256,
+      "label": "DRAFT #2",
+      "ban": {
+        "progression": [
+          { "from": 222, "to": 227, "count": null, "note": "partial; sisi sendiri capai 3 di 224, sisi lawan masih kosong sampai 226 — blind ban tidak ketat simultan" },
+          { "from": 228, "to": 256, "count": 6 }
+        ],
+        "note": "228 = overlay 'Hasil Ban'"
+      },
+      "pick": {
+        "progression": [
+          { "from": 222, "to": 229, "count": 0 },
+          { "from": 230, "to": 230, "count": 2 },
+          { "from": 234, "to": 234, "count": 3, "approximate": true },
+          { "from": 240, "to": 240, "count": 6 },
+          { "from": 244, "to": 244, "count": 8 },
+          { "from": 247, "to": 247, "count": 9 },
+          { "from": 250, "to": 256, "count": 10 }
+        ],
+        "note": "FULL 10/10 pada 250-256; frame antar langkah tidak semua disebutkan"
+      }
+    }
+  ],
+  "overlayFrames": [
+    { "frames": [32, 33, 34], "note": "banner saran 'Cepat Ban …!' menutupi sebagian board" },
+    { "frames": [35, 36], "note": "overlay hasil 'Hasil Ban' menutupi grid hero" },
+    { "frames": [50, 51, 52, 53, 54], "note": "animasi pick-reveal layar penuh (seni terang / adegan bulan) menutupi board" },
+    { "frames": [72], "note": "header timer 'Penyesuaian Terakhir 00:17' (tanpa perubahan slot)" },
+    { "frames": [78], "note": "prompt 'Udah Siap Bantai-Bantai?'" }
+  ],
+  "exclusionCandidates": [32, 33, 34, 35, 36, 50, 51, 52, 53, 54],
+  "skinCrossValidation": {
+    "source": "Teks on-screen di frame VS loading (081-096, 259-263): kartu hero menampilkan NAMA SKIN eksplisit — bukan inferensi visual",
+    "pairs": [
+      { "skin": "Prodigious Goalie", "hero": "Liu Shan", "hero_id": 114 },
+      { "skin": "Maven Coach", "hero": "Liang", "hero_id": 156 },
+      { "skin": "Ballerina", "hero": "Erin", "hero_id": 155 },
+      { "skin": "River Spirits", "hero": "Agudo", "hero_id": 533 },
+      { "skin": "Agent Warshadow", "hero": "Biron", "hero_id": 503 },
+      { "skin": "Viking Marauder", "hero": "Chano", "hero_id": 177 },
+      { "skin": "Nocturne Diviner", "hero": "Mi Yue", "hero_id": 121 },
+      { "skin": "Vaquero", "hero": "Wukong", "hero_id": 167 },
+      { "skin": "Starlight Muse", "hero": "Daji", "hero_id": 109 },
+      { "skin": "Masters of the Sky", "hero": "Dunshan", "hero_id": null },
+      { "skin": "Prodigious Defense", "hero": "Xiang Yu", "hero_id": null },
+      { "skin": "Radiant Allure", "hero": "Fuju", "hero_id": null }
+    ],
+    "note": "Delapan pasangan (Chano 177, Mi Yue 121, Wukong 167, Liu Shan 114, Liang 156, Erin 155, Agudo 533, Biron 503) mengonfirmasi tabel identitas di hero-identity-ground-truth.json; hero_id null = id belum diverifikasi, jangan dipakai."
+  },
+  "caveats": [
+    "Urutan INDEX slot dalam satu sisi (mis. slot 1 vs slot 2 di sisi merah) masih kesimpulan, bukan hasil verifikasi visual satu per satu.",
+    "Batas antar fase bergeser plus-minus 1 frame dari penulisan di atas.",
+    "Belum ada ground truth identitas hero per frame: evaluasi saat ini hanya mengukur stabilitas temporal dan konsistensi lintas-frame, BUKAN kebenaran id hero.",
+    "Kunci 'phases'/'locks' adalah catatan operator LAMA dan hanya berlaku untuk DRAFT #1; untuk pengukuran gunakan 'timeline' + 'draftWindows' yang terverifikasi piksel. Pengukuran di luar 028-078 dan 222-256 (lobby/VS/match) menghasilkan angka tanpa arti.",
+    "DRAFT #2 tidak punya ground truth identitas — hanya konsistensi internal (stabilitas, tanpa duplikat) yang bisa dinilai.",
+    "Urutan pengisian ban kedua sisi TIDAK ketat simultan di DRAFT #2 (sisi sendiri 3/3 di 224, lawan kosong sampai 226) — jangan anggap itu error."
+  ]
+}

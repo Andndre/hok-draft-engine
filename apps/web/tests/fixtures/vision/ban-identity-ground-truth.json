@@ -1,0 +1,35 @@
+{
+  "description": "Ground-truth identitas ban untuk DRAFT #1 corpus vision (2800x1260, draft ranked HoK Global, klien Indonesia). Enam ikon ban sirkular 64 px di strip atas: strip KIRI = tim MERAH, strip KANAN = tim BIRU, urutan strip kiri-ke-kanan.",
+  "source": "operator — identitas dilaporkan langsung oleh operator sesi, BUKAN hasil inferensi visual. Anggap otoritatif untuk sesi corpus ini saja.",
+  "session": {
+    "draft": 1,
+    "frames": { "from": 28, "to": 78 },
+    "banFilledFrom": 37,
+    "note": "Progression ban draft #1 (annotations.json.draftWindows): 6/6 ban terisi mulai frame 035; frame 035-036 membawa overlay 'Hasil Ban' dan berada di daftar exclude harness, sehingga pengukuran identitas ban memakai frame >= 037."
+  },
+  "resolution": { "width": 2800, "height": 1260 },
+  "strips": [
+    {
+      "side": "red",
+      "stripPosition": "left",
+      "slots": [
+        { "slotIndexInProfile": 10, "stripOrder": 1, "hero_id": 507, "hero_name": "Li Xin" },
+        { "slotIndexInProfile": 11, "stripOrder": 2, "hero_id": 195, "hero_name": "Xuance" },
+        { "slotIndexInProfile": 12, "stripOrder": 3, "hero_id": 109, "hero_name": "Daji" }
+      ]
+    },
+    {
+      "side": "blue",
+      "stripPosition": "right",
+      "slots": [
+        { "slotIndexInProfile": 13, "stripOrder": 1, "hero_id": 509, "hero_name": "Dunshan" },
+        { "slotIndexInProfile": 14, "stripOrder": 2, "hero_id": 116, "hero_name": "Arke" },
+        { "slotIndexInProfile": 15, "stripOrder": 3, "hero_id": 146, "hero_name": "Luna" }
+      ]
+    }
+  ],
+  "idResolution": "Semua nama di-resolve ke hero_id dari apps/web/public/datasets/035accf090d3eece/hero_metadata.json berdasarkan hero_name (Li Xin=507, Xuance=195, Daji=109, Dunshan=509, Arke=116, Luna=146); tidak ada id yang ditebak. 'Xuan Ce (Xuance)' operator = 'Xuance' dataset; 'Dunshan (leftmost)' = slot strip paling kiri (index 13).",
+  "falsePositiveNote": "Bacaan live lama yang salah — ban merah terbaca 'Ying' #538 — terkonfirmasi operator adalah Xuan Ce #195. NCC referensi-vs-referensi Ying vs Xuan Ce hanya 0.17; kebingungannya hidup di crop 64 px tertutup padlock, bukan di art referensi.",
+  "scope": "DRAFT #2 (frame 222-256) TIDAK punya ground truth ban — jangan pakai berkas ini untuk menilai draft #2.",
+  "usage": "Dibaca evaluate-vision-corpus.mjs untuk melaporkan akurasi identitas ban per ikon (recognized id + score vs hero_id di sini). Identitas ban tetap estimated/soft di jalur live: tidak pernah masuk posisi draft."
+}

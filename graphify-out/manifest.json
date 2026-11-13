@@ -36,9 +36,9 @@
     "semantic_hash": ""
   },
   "apps/web/src/App.tsx": {
-    "mtime": 1794440251.2155788,
-    "seen": 1794441257.4800868,
-    "ast_hash": "8975227a74900db6045c6cff6c3de50d",
+    "mtime": 1794479229.6669269,
+    "seen": 1794501599.7386754,
+    "ast_hash": "adc99c65f1ccc6c7517cb85ceecb1ae4",
     "semantic_hash": ""
   },
   "apps/web/src/components/BottomCommandDock.tsx": {
@@ -216,9 +216,9 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1794399469.125876,
-    "seen": 1794410527.3700283,
-    "ast_hash": "a642024130131d71072509c70fbf0d7b",
+    "mtime": 1794520956.4050996,
+    "seen": 1794523679.5653348,
+    "ast_hash": "0c07f08d61a0cc2cdacf16c90dbf80af",
     "semantic_hash": ""
   },
   "apps/web/index.html": {
@@ -9438,9 +9438,9 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1794444294.331107,
-    "seen": 1794465778.6789222,
-    "ast_hash": "1ba2fe09afbee586ec5edaf00e9e0a28",
+    "mtime": 1794532848.6846235,
+    "seen": 1794534296.8476121,
+    "ast_hash": "2f7f8ab51e1ed8bdc2777cdfa6993a2f",
     "semantic_hash": ""
   },
   "packages/ml-engine/verify_simulation.py": {
@@ -10851,6 +10851,198 @@
     "mtime": 1794436278.0422165,
     "seen": 1794436310.9520013,
     "ast_hash": "da84396cac01c696196fb6105ce7e2f1",
+    "semantic_hash": ""
+  },
+  "apps/web/scripts/evaluate-vision-corpus.mjs": {
+    "mtime": 1794526262.1040287,
+    "seen": 1794526497.3388047,
+    "ast_hash": "f2e645478468806fe46069f4ff8ac7f8",
+    "semantic_hash": ""
+  },
+  "apps/web/scripts/png-decode.mjs": {
+    "mtime": 1794482491.2527237,
+    "seen": 1794501599.7386734,
+    "ast_hash": "9364ee217dd458ad47d82eacd2243416",
+    "semantic_hash": ""
+  },
+  "apps/web/src/components/VisionPanel.tsx": {
+    "mtime": 1794534075.3274772,
+    "seen": 1794534296.822913,
+    "ast_hash": "651483fccc29090d47695da3855ee5b8",
+    "semantic_hash": ""
+  },
+  "apps/web/src/engine/visionAdapter.ts": {
+    "mtime": 1794472467.7915235,
+    "seen": 1794477741.0302186,
+    "ast_hash": "679771e35d1277c7637a74ef98a45996",
+    "semantic_hash": ""
+  },
+  "apps/web/src/vision/capture.ts": {
+    "mtime": 1794484039.9893541,
+    "seen": 1794501599.741465,
+    "ast_hash": "5e538368aadd50e1ca3d8f14efe1d6c8",
+    "semantic_hash": ""
+  },
+  "apps/web/src/vision/geometry.ts": {
+    "mtime": 1794526508.6281958,
+    "seen": 1794526615.4938707,
+    "ast_hash": "71457516a99ee57dfd172d733c3c0970",
+    "semantic_hash": ""
+  },
+  "apps/web/src/vision/heroMatcher.ts": {
+    "mtime": 1794530529.6171374,
+    "seen": 1794534296.8258572,
+    "ast_hash": "093ce99ab4a1bff74ada26020595cdbc",
+    "semantic_hash": ""
+  },
+  "apps/web/src/vision/observer.ts": {
+    "mtime": 1794517433.3463752,
+    "seen": 1794520695.2205384,
+    "ast_hash": "e336442118321434b628adffbc32fdee",
+    "semantic_hash": ""
+  },
+  "apps/web/src/vision/pipeline.ts": {
+    "mtime": 1794533972.0262027,
+    "seen": 1794534296.8259928,
+    "ast_hash": "087f55268eea28a4162ea135199d9b74",
+    "semantic_hash": ""
+  },
+  "apps/web/src/vision/referenceSet.ts": {
+    "mtime": 1794524558.0254338,
+    "seen": 1794524656.2054186,
+    "ast_hash": "9fa4918beba91e09f3aaab882cd4cc84",
+    "semantic_hash": ""
+  },
+  "apps/web/src/vision/regionMap.ts": {
+    "mtime": 1794533962.2367013,
+    "seen": 1794534296.8261347,
+    "ast_hash": "9ccabecd243d2910aa4a8fecc9689615",
+    "semantic_hash": ""
+  },
+  "apps/web/src/vision/types.ts": {
+    "mtime": 1794523035.1877358,
+    "seen": 1794523679.5434945,
+    "ast_hash": "40edb13debf75a279686b4e96c8dd607",
+    "semantic_hash": ""
+  },
+  "apps/web/tests/fixtures/vision/annotations.json": {
+    "mtime": 1794482844.6957743,
+    "seen": 1794501599.7419362,
+    "ast_hash": "9ba6975b4eb24df8726a2252471a4a41",
+    "semantic_hash": ""
+  },
+  "apps/web/tests/png-decode.test.mjs": {
+    "mtime": 1794482938.5475073,
+    "seen": 1794501599.7421257,
+    "ast_hash": "7191a2e5054842b4aaca5082af4a659a",
+    "semantic_hash": ""
+  },
+  "apps/web/tests/vision-adapter.test.mjs": {
+    "mtime": 1794472537.3378012,
+    "seen": 1794477741.0314517,
+    "ast_hash": "355721abe4ae54dc9c467de26971b323",
+    "semantic_hash": ""
+  },
+  "apps/web/tests/vision-observer.test.mjs": {
+    "mtime": 1794517477.7724476,
+    "seen": 1794520695.2221255,
+    "ast_hash": "82f4530792db85ded1998d079fc4410e",
+    "semantic_hash": ""
+  },
+  "apps/web/tests/vision-ui.test.mjs": {
+    "mtime": 1794534001.8934672,
+    "seen": 1794534296.8285418,
+    "ast_hash": "f2d6777a7368fcf30c3b9b772b34094b",
+    "semantic_hash": ""
+  },
+  "apps/web/tests/vision.test.mjs": {
+    "mtime": 1794533984.692917,
+    "seen": 1794534296.8285446,
+    "ast_hash": "87d686b225ce1a3478f2908a863112e1",
+    "semantic_hash": ""
+  },
+  "packages/ml-engine/build_vision_contact_sheet.py": {
+    "mtime": 1794472918.8516738,
+    "seen": 1794477741.045693,
+    "ast_hash": "02d23e34fe3f1c52376b29453259c37f",
+    "semantic_hash": ""
+  },
+  "packages/ml-engine/capture_vision_corpus.py": {
+    "mtime": 1794471102.7746117,
+    "seen": 1794477741.0456963,
+    "ast_hash": "c710dcdeb16151dffa0878cea5377fbd",
+    "semantic_hash": ""
+  },
+  "packages/ml-engine/convert_reference_images.py": {
+    "mtime": 1794477590.20198,
+    "seen": 1794477741.045699,
+    "ast_hash": "2330475faedfd6716a34ece1698ab63a",
+    "semantic_hash": ""
+  },
+  "data/vision-corpus/README.md": {
+    "mtime": 1794471139.4622693,
+    "seen": 1794477741.047865,
+    "ast_hash": "9e2b76796c1bb694cbb8cb66a0ba6e7c",
+    "semantic_hash": ""
+  },
+  "apps/web/scripts/h264-fidelity.mjs": {
+    "mtime": 1794489912.1663349,
+    "seen": 1794501599.738671,
+    "ast_hash": "23a12b90763ec0e1f5204af2774c91b7",
+    "semantic_hash": ""
+  },
+  "apps/web/src/vision/badgeLock.ts": {
+    "mtime": 1794484022.2087595,
+    "seen": 1794501599.7414615,
+    "ast_hash": "82f12ae8f613c92ccc665b8d08080304",
+    "semantic_hash": ""
+  },
+  "apps/web/tests/fixtures/vision/ban-identity-ground-truth.json": {
+    "mtime": 1794498662.9255347,
+    "seen": 1794501599.74194,
+    "ast_hash": "32028d86f5606de2aec1d7229a57a34f",
+    "semantic_hash": ""
+  },
+  "apps/web/tests/fixtures/vision/hero-identity-ground-truth.json": {
+    "mtime": 1794479700.6462562,
+    "seen": 1794501599.741943,
+    "ast_hash": "c9e2bc90c2eb3e87e3dbe1ff81907b0c",
+    "semantic_hash": ""
+  },
+  "apps/web/tests/fixtures/vision/region-profile-2800x1260.json": {
+    "mtime": 1794485104.1380167,
+    "seen": 1794501599.7419453,
+    "ast_hash": "1886864d041623bc9dc67b7ff299aae5",
+    "semantic_hash": ""
+  },
+  "apps/web/tests/fixtures/vision/region-profile-2800x1260.json.fillorder.json": {
+    "mtime": 1794480629.0263445,
+    "seen": 1794501599.7419488,
+    "ast_hash": "2edf9a53ad2df7cf6a6e8b5498832660",
+    "semantic_hash": ""
+  },
+  "apps/web/tests/fixtures/vision/solver-derived-profiles.json": {
+    "mtime": 1794490356.9580443,
+    "seen": 1794501599.741952,
+    "ast_hash": "ae0fa84c2102c7bc91650681ead098bc",
+    "semantic_hash": ""
+  },
+  "apps/web/tests/vision-runtime.test.mjs": {
+    "mtime": 1794534040.0950804,
+    "seen": 1794534296.8285382,
+    "ast_hash": "870af36785e55fec9dc1b2acf6661457",
+    "semantic_hash": ""
+  },
+  "packages/ml-engine/calibrate_vision_regions.py": {
+    "mtime": 1794480494.0083647,
+    "seen": 1794501599.7561471,
+    "ast_hash": "1681ac3985ff6baaf6058ab775e66323",
+    "semantic_hash": ""
+  },
+  "apps/web/src/vision/manualLayout.ts": {
+    "mtime": 1794532344.4506795,
+    "seen": 1794534296.825864,
+    "ast_hash": "b3ed7fb34096dbf413da323032d4ee03",
     "semantic_hash": ""
   },
   "apps/web/package-lock.json": {

@@ -1,0 +1,952 @@
+{
+  "profile": "hok-ranked-2800x1260-v1",
+  "resolution": {
+    "width": 2800,
+    "height": 1260
+  },
+  "note": "firstFilledFrame = frame pertama dengan std crop > 4.0 (aturan blank runtime pipeline.ts). firstChevronFrame = frame pertama badge kunci berwarna tim muncul di bawah slot (sinyal LOCK; potret tanpa badge bisa berupa pre-selection yang masih berubah).",
+  "slots": [
+    {
+      "index": 0,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+        "x": 186,
+        "y": 142,
+        "w": 148,
+        "h": 154
+      },
+      "verified": true,
+      "firstFilledFrame": 28,
+      "firstChevronFrame": 43,
+      "stability": 1.0,
+      "meanScore": 0.5624148148148148,
+      "maxScore": 0.5637,
+      "modalHeroId": 521,
+      "heroCounts": {
+        "521": 27
+      }
+    },
+    {
+      "index": 1,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+        "x": 183,
+        "y": 343,
+        "w": 146,
+        "h": 150
+      },
+      "verified": true,
+      "firstFilledFrame": 28,
+      "firstChevronFrame": 44,
+      "stability": 1.0,
+      "meanScore": 0.7678303030303031,
+      "maxScore": 0.7756,
+      "modalHeroId": 177,
+      "heroCounts": {
+        "177": 33
+      }
+    },
+    {
+      "index": 2,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+        "x": 183,
+        "y": 543,
+        "w": 147,
+        "h": 147
+      },
+      "verified": true,
+      "firstFilledFrame": 28,
+      "firstChevronFrame": 59,
+      "stability": 1.0,
+      "meanScore": 0.8547111111111111,
+      "maxScore": 0.8548,
+      "modalHeroId": 121,
+      "heroCounts": {
+        "121": 18
+      }
+    },
+    {
+      "index": 3,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+        "x": 183,
+        "y": 746,
+        "w": 147,
+        "h": 147
+      },
+      "verified": true,
+      "firstFilledFrame": 28,
+      "firstChevronFrame": 59,
+      "stability": 1.0,
+      "meanScore": 0.8185100000000001,
+      "maxScore": 0.8458,
+      "modalHeroId": 167,
+      "heroCounts": {
+        "167": 20
+      }
+    },
+    {
+      "index": 4,
+      "side": "red",
+      "kind": "pick",
+      "rect": {
+        "x": 183,
+        "y": 950,
+        "w": 147,
+        "h": 147
+      },
+      "verified": false,
+      "firstFilledFrame": 28,
+      "firstChevronFrame": 66,
+      "stability": 0.6785714285714286,
+      "meanScore": 0.7526107142857142,
+      "maxScore": 0.9024,
+      "modalHeroId": 175,
+      "heroCounts": {
+        "175": 19,
+        "108": 9
+      }
+    },
+    {
+      "index": 5,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+        "x": 2485,
+        "y": 137,
+        "w": 146,
+        "h": 147
+      },
+      "verified": true,
+      "firstFilledFrame": 28,
+      "firstChevronFrame": 40,
+      "stability": 1.0,
+      "meanScore": 0.8681472222222222,
+      "maxScore": 0.8729,
+      "modalHeroId": 114,
+      "heroCounts": {
+        "114": 36
+      }
+    },
+    {
+      "index": 6,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+        "x": 2476,
+        "y": 341,
+        "w": 149,
+        "h": 151
+      },
+      "verified": true,
+      "firstFilledFrame": 28,
+      "firstChevronFrame": 50,
+      "stability": 1.0,
+      "meanScore": 0.7388130434782608,
+      "maxScore": 0.7401,
+      "modalHeroId": 156,
+      "heroCounts": {
+        "156": 23
+      }
+    },
+    {
+      "index": 7,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+        "x": 2494,
+        "y": 555,
+        "w": 137,
+        "h": 147
+      },
+      "verified": true,
+      "firstFilledFrame": 28,
+      "firstChevronFrame": 50,
+      "stability": 1.0,
+      "meanScore": 0.6814041666666667,
+      "maxScore": 0.6818,
+      "modalHeroId": 155,
+      "heroCounts": {
+        "155": 24
+      }
+    },
+    {
+      "index": 8,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+        "x": 2485,
+        "y": 746,
+        "w": 146,
+        "h": 147
+      },
+      "verified": true,
+      "firstFilledFrame": 28,
+      "firstChevronFrame": 62,
+      "stability": 1.0,
+      "meanScore": 0.8751142857142857,
+      "maxScore": 0.9083,
+      "modalHeroId": 533,
+      "heroCounts": {
+        "533": 14
+      }
+    },
+    {
+      "index": 9,
+      "side": "blue",
+      "kind": "pick",
+      "rect": {
+        "x": 2485,
+        "y": 950,
+        "w": 146,
+        "h": 147
+      },
+      "verified": false,
+      "firstFilledFrame": 28,
+      "firstChevronFrame": 62,
+      "stability": 0.875,
+      "meanScore": 0.8229125,
+      "maxScore": 0.9291,
+      "modalHeroId": 503,
+      "heroCounts": {
+        "126": 2,
+        "503": 14
+      }
+    },
+    {
+      "index": 10,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+        "x": 173,
+        "y": 15,
+        "w": 64,
+        "h": 64
+      },
+      "verified": false,
+      "firstFilledFrame": 28,
+      "firstChevronFrame": null,
+      "stability": null,
+      "meanScore": null,
+      "maxScore": null,
+      "modalHeroId": null,
+      "heroCounts": {}
+    },
+    {
+      "index": 11,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+        "x": 258,
+        "y": 15,
+        "w": 64,
+        "h": 64
+      },
+      "verified": false,
+      "firstFilledFrame": 28,
+      "firstChevronFrame": null,
+      "stability": null,
+      "meanScore": null,
+      "maxScore": null,
+      "modalHeroId": null,
+      "heroCounts": {}
+    },
+    {
+      "index": 12,
+      "side": "red",
+      "kind": "ban",
+      "rect": {
+        "x": 345,
+        "y": 15,
+        "w": 64,
+        "h": 64
+      },
+      "verified": false,
+      "firstFilledFrame": 28,
+      "firstChevronFrame": null,
+      "stability": null,
+      "meanScore": null,
+      "maxScore": null,
+      "modalHeroId": null,
+      "heroCounts": {}
+    },
+    {
+      "index": 13,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+        "x": 2391,
+        "y": 14,
+        "w": 66,
+        "h": 64
+      },
+      "verified": false,
+      "firstFilledFrame": 28,
+      "firstChevronFrame": null,
+      "stability": null,
+      "meanScore": null,
+      "maxScore": null,
+      "modalHeroId": null,
+      "heroCounts": {}
+    },
+    {
+      "index": 14,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+        "x": 2478,
+        "y": 14,
+        "w": 66,
+        "h": 64
+      },
+      "verified": false,
+      "firstFilledFrame": 28,
+      "firstChevronFrame": null,
+      "stability": null,
+      "meanScore": null,
+      "maxScore": null,
+      "modalHeroId": null,
+      "heroCounts": {}
+    },
+    {
+      "index": 15,
+      "side": "blue",
+      "kind": "ban",
+      "rect": {
+        "x": 2564,
+        "y": 14,
+        "w": 66,
+        "h": 64
+      },
+      "verified": false,
+      "firstFilledFrame": 28,
+      "firstChevronFrame": null,
+      "stability": null,
+      "meanScore": null,
+      "maxScore": null,
+      "modalHeroId": null,
+      "heroCounts": {}
+    }
+  ],
+  "colourSide": {
+    "banPhase": {
+      "left": {
+        "warm": 104621.4,
+        "cool": 9.1,
+        "saturated": 107912.8
+      },
+      "right": {
+        "warm": 0.0,
+        "cool": 107223.4,
+        "saturated": 107240.0
+      }
+    },
+    "pickPhase": {
+      "left": {
+        "warm": 64951.3,
+        "cool": 19596.5,
+        "saturated": 101962.2
+      },
+      "right": {
+        "warm": 39516.0,
+        "cool": 56939.0,
+        "saturated": 103058.1
+      }
+    },
+    "leftReadsRed": true,
+    "rightReadsBlue": true,
+    "ownSide": "red",
+    "note": "warna disampel pada fase ban (placeholder polos tanpa potret); fase pick tercemar warna potret hero itu sendiri"
+  },
+  "placeholderDiagnostics": [
+    {
+      "index": 0,
+      "side": "red",
+      "frame": 32,
+      "std": 14.05,
+      "blankPerRuntimeRule": false,
+      "matcherAbstained": true,
+      "matcherHeroId": null,
+      "matcherScore": 0.4
+    },
+    {
+      "index": 1,
+      "side": "red",
+      "frame": 32,
+      "std": 14.12,
+      "blankPerRuntimeRule": false,
+      "matcherAbstained": true,
+      "matcherHeroId": null,
+      "matcherScore": 0.409
+    },
+    {
+      "index": 2,
+      "side": "red",
+      "frame": 32,
+      "std": 25.66,
+      "blankPerRuntimeRule": false,
+      "matcherAbstained": true,
+      "matcherHeroId": null,
+      "matcherScore": 0.4458
+    },
+    {
+      "index": 3,
+      "side": "red",
+      "frame": 32,
+      "std": 14.69,
+      "blankPerRuntimeRule": false,
+      "matcherAbstained": true,
+      "matcherHeroId": null,
+      "matcherScore": 0.4317
+    },
+    {
+      "index": 4,
+      "side": "red",
+      "frame": 32,
+      "std": 25.47,
+      "blankPerRuntimeRule": false,
+      "matcherAbstained": true,
+      "matcherHeroId": null,
+      "matcherScore": 0.4444
+    },
+    {
+      "index": 5,
+      "side": "blue",
+      "frame": 32,
+      "std": 9.35,
+      "blankPerRuntimeRule": false,
+      "matcherAbstained": true,
+      "matcherHeroId": null,
+      "matcherScore": 0.4782
+    },
+    {
+      "index": 6,
+      "side": "blue",
+      "frame": 32,
+      "std": 9.77,
+      "blankPerRuntimeRule": false,
+      "matcherAbstained": true,
+      "matcherHeroId": null,
+      "matcherScore": 0.4335
+    },
+    {
+      "index": 7,
+      "side": "blue",
+      "frame": 32,
+      "std": 20.89,
+      "blankPerRuntimeRule": false,
+      "matcherAbstained": true,
+      "matcherHeroId": null,
+      "matcherScore": 0.3702
+    },
+    {
+      "index": 8,
+      "side": "blue",
+      "frame": 32,
+      "std": 10.24,
+      "blankPerRuntimeRule": false,
+      "matcherAbstained": true,
+      "matcherHeroId": null,
+      "matcherScore": 0.4664
+    },
+    {
+      "index": 9,
+      "side": "blue",
+      "frame": 32,
+      "std": 10.21,
+      "blankPerRuntimeRule": false,
+      "matcherAbstained": true,
+      "matcherHeroId": null,
+      "matcherScore": 0.4315
+    }
+  ],
+  "banGeometry": [
+    {
+      "index": 10,
+      "detectedBlob": [
+        172,
+        14,
+        66,
+        66
+      ],
+      "usedSeed": [
+        173,
+        15,
+        64,
+        64
+      ],
+      "blobMinusSeedDelta": [
+        -1,
+        -1,
+        2,
+        2
+      ]
+    },
+    {
+      "index": 11,
+      "detectedBlob": [
+        258,
+        14,
+        65,
+        65
+      ],
+      "usedSeed": [
+        258,
+        15,
+        64,
+        64
+      ],
+      "blobMinusSeedDelta": [
+        0,
+        -1,
+        1,
+        1
+      ]
+    },
+    {
+      "index": 12,
+      "detectedBlob": [
+        344,
+        14,
+        66,
+        66
+      ],
+      "usedSeed": [
+        345,
+        15,
+        64,
+        64
+      ],
+      "blobMinusSeedDelta": [
+        -1,
+        -1,
+        2,
+        2
+      ]
+    },
+    {
+      "index": 13,
+      "detectedBlob": [
+        2389,
+        11,
+        66,
+        69
+      ],
+      "usedSeed": [
+        2391,
+        14,
+        66,
+        64
+      ],
+      "blobMinusSeedDelta": [
+        -2,
+        -3,
+        0,
+        5
+      ]
+    },
+    {
+      "index": 14,
+      "detectedBlob": [
+        2475,
+        12,
+        66,
+        66
+      ],
+      "usedSeed": [
+        2478,
+        14,
+        66,
+        64
+      ],
+      "blobMinusSeedDelta": [
+        -3,
+        -2,
+        0,
+        2
+      ]
+    },
+    {
+      "index": 15,
+      "detectedBlob": [
+        2565,
+        14,
+        61,
+        64
+      ],
+      "usedSeed": [
+        2564,
+        14,
+        66,
+        64
+      ],
+      "blobMinusSeedDelta": [
+        1,
+        0,
+        -5,
+        0
+      ]
+    }
+  ],
+  "frame78Identity": {
+    "frame": 78,
+    "slots": [
+      {
+        "index": 0,
+        "side": "red",
+        "recognised": 521,
+        "score": 0.5624,
+        "abstained": false,
+        "bestCandidate": 1,
+        "top3": [
+          [
+            521,
+            0.5624
+          ],
+          [
+            538,
+            0.4139
+          ],
+          [
+            179,
+            0.3984
+          ]
+        ],
+        "groundTruth": 521,
+        "groundTruthName": "Haya",
+        "groundTruthStatus": "uncertain",
+        "match": true,
+        "status": "WEAK (score 0.56; GT uncertain)"
+      },
+      {
+        "index": 1,
+        "side": "red",
+        "recognised": 177,
+        "score": 0.7744,
+        "abstained": false,
+        "bestCandidate": 1,
+        "top3": [
+          [
+            177,
+            0.7744
+          ],
+          [
+            631,
+            0.4357
+          ],
+          [
+            141,
+            0.4074
+          ]
+        ],
+        "groundTruth": 177,
+        "groundTruthName": "Chano",
+        "groundTruthStatus": "solid",
+        "match": true,
+        "status": "SOLID"
+      },
+      {
+        "index": 2,
+        "side": "red",
+        "recognised": 121,
+        "score": 0.8544,
+        "abstained": false,
+        "bestCandidate": 11,
+        "top3": [
+          [
+            121,
+            0.8544
+          ],
+          [
+            170,
+            0.3124
+          ],
+          [
+            518,
+            0.2307
+          ]
+        ],
+        "groundTruth": 121,
+        "groundTruthName": "Mi Yue",
+        "groundTruthStatus": "solid",
+        "match": true,
+        "status": "SOLID"
+      },
+      {
+        "index": 3,
+        "side": "red",
+        "recognised": 167,
+        "score": 0.8181,
+        "abstained": false,
+        "bestCandidate": 11,
+        "top3": [
+          [
+            167,
+            0.8181
+          ],
+          [
+            120,
+            0.391
+          ],
+          [
+            166,
+            0.2634
+          ]
+        ],
+        "groundTruth": 167,
+        "groundTruthName": "Wukong",
+        "groundTruthStatus": "uncertain",
+        "match": true,
+        "status": "WEAK (score 0.82; GT uncertain)"
+      },
+      {
+        "index": 4,
+        "side": "red",
+        "recognised": 108,
+        "score": 0.7842,
+        "abstained": false,
+        "bestCandidate": 11,
+        "top3": [
+          [
+            108,
+            0.7842
+          ],
+          [
+            129,
+            0.1959
+          ],
+          [
+            544,
+            0.1601
+          ]
+        ],
+        "groundTruth": 108,
+        "groundTruthName": "Mozi",
+        "groundTruthStatus": "uncertain",
+        "match": true,
+        "status": "WEAK (score 0.78; GT uncertain)"
+      },
+      {
+        "index": 5,
+        "side": "blue",
+        "recognised": 114,
+        "score": 0.8707,
+        "abstained": false,
+        "bestCandidate": 11,
+        "top3": [
+          [
+            114,
+            0.8707
+          ],
+          [
+            531,
+            0.4123
+          ],
+          [
+            127,
+            0.3934
+          ]
+        ],
+        "groundTruth": 114,
+        "groundTruthName": "Liu Shan",
+        "groundTruthStatus": "solid",
+        "match": true,
+        "status": "SOLID"
+      },
+      {
+        "index": 6,
+        "side": "blue",
+        "recognised": 156,
+        "score": 0.7399,
+        "abstained": false,
+        "bestCandidate": 11,
+        "top3": [
+          [
+            156,
+            0.7399
+          ],
+          [
+            525,
+            0.4191
+          ],
+          [
+            581,
+            0.341
+          ]
+        ],
+        "groundTruth": 156,
+        "groundTruthName": "Liang",
+        "groundTruthStatus": "solid",
+        "match": true,
+        "status": "SOLID"
+      },
+      {
+        "index": 7,
+        "side": "blue",
+        "recognised": 155,
+        "score": 0.6814,
+        "abstained": false,
+        "bestCandidate": 2,
+        "top3": [
+          [
+            155,
+            0.6814
+          ],
+          [
+            558,
+            0.2402
+          ],
+          [
+            527,
+            0.2236
+          ]
+        ],
+        "groundTruth": 155,
+        "groundTruthName": "Erin",
+        "groundTruthStatus": "solid",
+        "match": true,
+        "status": "SOLID"
+      },
+      {
+        "index": 8,
+        "side": "blue",
+        "recognised": 533,
+        "score": 0.9076,
+        "abstained": false,
+        "bestCandidate": 11,
+        "top3": [
+          [
+            533,
+            0.9076
+          ],
+          [
+            536,
+            0.4455
+          ],
+          [
+            182,
+            0.3735
+          ]
+        ],
+        "groundTruth": 533,
+        "groundTruthName": "Agudo",
+        "groundTruthStatus": "solid",
+        "match": true,
+        "status": "SOLID"
+      },
+      {
+        "index": 9,
+        "side": "blue",
+        "recognised": 503,
+        "score": 0.8093,
+        "abstained": false,
+        "bestCandidate": 11,
+        "top3": [
+          [
+            503,
+            0.8093
+          ],
+          [
+            193,
+            0.3951
+          ],
+          [
+            564,
+            0.3564
+          ]
+        ],
+        "groundTruth": 503,
+        "groundTruthName": "Biron",
+        "groundTruthStatus": "solid",
+        "match": true,
+        "status": "SOLID"
+      }
+    ],
+    "accuracy": "10/10 vs GT",
+    "accuracyNote": "solid=7, weak=3, unresolved/mismatch=0. GT L1/L4/L5 berstatus uncertain (kemungkinan skin): kecocokan di sana bisa false-positive skin-vs-base.",
+    "distinct": true
+  },
+  "anchors": [
+    {
+      "label": "banner_text",
+      "draftPresentRatio": 1.0,
+      "draftMeanStd": 37.39
+    },
+    {
+      "label": "skill_button",
+      "draftPresentRatio": 0.961,
+      "draftMeanStd": 21.74
+    },
+    {
+      "label": "left_team_column",
+      "draftPresentRatio": 1.0,
+      "draftMeanStd": 37.03
+    },
+    {
+      "label": "right_team_column",
+      "draftPresentRatio": 1.0,
+      "draftMeanStd": 38.09
+    },
+    {
+      "label": "left_ban_strip",
+      "draftPresentRatio": 0.941,
+      "draftMeanStd": 68.87
+    },
+    {
+      "label": "right_ban_strip",
+      "draftPresentRatio": 1.0,
+      "draftMeanStd": 55.97
+    },
+    {
+      "label": "bottom_button_row",
+      "draftPresentRatio": 1.0,
+      "draftMeanStd": 38.42
+    }
+  ],
+  "derivedPickOrder": {
+    "byLockSignal": [
+      5,
+      0,
+      1,
+      6,
+      7,
+      2,
+      3,
+      8,
+      9,
+      4
+    ],
+    "groupNormalized": [
+      5,
+      0,
+      1,
+      6,
+      7,
+      2,
+      3,
+      8,
+      9,
+      4
+    ],
+    "expected": [
+      5,
+      0,
+      1,
+      6,
+      7,
+      2,
+      3,
+      8,
+      9,
+      4
+    ],
+    "matchesExpectedSequenceRaw": true,
+    "matchesExpectedSequenceGroupLevel": true,
+    "expectedPattern": "right-1 -> left-1+left-2 -> right-2+right-3 -> left-3+left-4 -> right-4+right-5 -> left-5 (= RANKED_DRAFT_SEQUENCE B1, R1+R2, B2+B3, R3+R4, B4+B5, R5)"
+  }
+}

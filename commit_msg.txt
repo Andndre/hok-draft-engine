@@ -1,0 +1,11 @@
+feat: Live Draft Advisor (manual grid) + vision layer
+
+Add in-browser Live Draft Advisor that reads HoK Ranked Ban&Pick screen
+from a mirrored window, recognises heroes per slot, mirrors board into
+simulator, recommends next pick (read-only, no input injection).
+
+- Manual grid is the only production geometry source; auto-detection removed.
+- Ban identity via circle-masked NCC + chroma: 222/222 (100%).
+- Locked-pick translation retry for missed picks (Erin).
+- Vision module, adapter, panel, third draft mode 'vision'.
+- Corpus tooling, fixtures, docs.
