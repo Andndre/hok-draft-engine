@@ -1423,11 +1423,11 @@ export function VisionPanel({
                 );
               })()}
 
-              {lastResult && lastResult.position.step >= getDraftSequence(advisorFormat, advisorIsUltimateBattle).length && (() => {
+              {lastResult && currentTurn?.isComplete && (() => {
                 const heroById = new Map(heroes.map(h => [h.hero_id, h]));
                 const blueHeroes = lastResult.position.picks.blue.map(id => heroById.get(id)).filter((h): h is Hero => Boolean(h));
                 const redHeroes = lastResult.position.picks.red.map(id => heroById.get(id)).filter((h): h is Hero => Boolean(h));
-                if (blueHeroes.length !== 5 || redHeroes.length !== 5) return null;
+                if (blueHeroes.length === 0 && redHeroes.length === 0) return null;
                 const kplLaneRates = (synergyData as any)?.hero_lane_rates;
                 const defaultBlueAssignment = buildDefaultLaneAssignments(blueHeroes, kplLaneRates);
                 const defaultRedAssignment = buildDefaultLaneAssignments(redHeroes, kplLaneRates);
