@@ -973,7 +973,7 @@ export function VisionPanel({
           <span className="section-heading__icon"><Monitor aria-hidden="true" /></span>
           <div>
             <h2>Live Draft Advisor</h2>
-            <p>Advisor mengikuti format layar live (Ranked: blind ban 3 + 10 pick = 16 aksi) dan terpisah dari mode simulator. Simulator tidak diubah otomatis.</p>
+            <p>Advisor mengikuti format layar live (Ranked: blind ban 3–5 + 10 pick) dan terpisah dari mode simulator. Simulator tidak diubah otomatis.</p>
           </div>
         </div>
         <div className="vision-panel__controls">
