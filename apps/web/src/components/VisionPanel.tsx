@@ -1423,7 +1423,7 @@ export function VisionPanel({
                 );
               })()}
 
-              {lastResult && lastResult.position.picks.blue.length === 5 && lastResult.position.picks.red.length === 5 && (() => {
+              {lastResult && lastResult.position.step >= getDraftSequence(advisorFormat, advisorIsUltimateBattle).length && (() => {
                 const heroById = new Map(heroes.map(h => [h.hero_id, h]));
                 const blueHeroes = lastResult.position.picks.blue.map(id => heroById.get(id)).filter((h): h is Hero => Boolean(h));
                 const redHeroes = lastResult.position.picks.red.map(id => heroById.get(id)).filter((h): h is Hero => Boolean(h));
@@ -1448,37 +1448,6 @@ export function VisionPanel({
 
               <div className="vision-actions">
                 {renderRecommendation()}
-                <div className="vision-apply">
-                  <button
-                    type="button"
-                    className="ui-button ui-button--primary"
-                    aria-disabled={applyState.disabled}
-                    onClick={handleApply}
-                  >
-                    <ArrowRight aria-hidden="true" />Terapkan ke Simulator
-                  </button>
-                  {applyFeedback?.type === 'success' && (
-                    <div className="vision-apply-success" role="status">
-                      <CheckCircle2 aria-hidden="true" />
-                      <div>
-                        <strong>Papan diterapkan ke simulator</strong>
-                        <p>{applyFeedback.appliedCount} aksi ditambahkan · langkah {applyFeedback.newStep}/{getDraftSequence(advisorFormat, advisorIsUltimateBattle).length}</p>
-                      </div>
-                      <button type="button" className="ui-button ui-button--small ui-button--quiet" onClick={() => onSwitchToSimulator?.()}>
-                        Lihat di Simulator
-                      </button>
-                    </div>
-                  )}
-                  {applyFeedback?.type === 'error' && (
-                    <div className="vision-apply-error" role="alert">
-                      <AlertTriangle aria-hidden="true" />
-                      <div>
-                        <strong>Tidak dapat menerapkan</strong>
-                        <p>{applyFeedback.reason}</p>
-                      </div>
-                    </div>
-                  )}
-                </div>
               </div>
             </>
           )}
