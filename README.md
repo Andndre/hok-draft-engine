@@ -182,7 +182,6 @@ Aturan bersama berada di `apps/web/src/engine/draftRules.ts`. Aplikasi mendukung
 ### Belum terbukti (batasan)
 
 - Jalur live **belum pernah dilatihkan terhadap capture `getDisplayMedia` nyata dari jendela scrcpy**. Uji live pertama mengonfirmasi alur end-to-end dan identitas hero, tetapi jalur capture-nya sendiri baru terverifikasi melalui stand-in ffmpeg H.264 yang terkontrol. Semua pengukuran berasal dari PNG `adb exec-out screencap` yang di-round-trip melalui ffmpeg H.264 sebagai stand-in terkontrol untuk jalur live.
-- **Tidak ada ground truth identitas untuk draft kedua** di corpus — hanya konsistensi lintas-frame.
 - **Cara HoK me-layout ulang pada aspect ratio berbeda tidak diketahui.** Satu-satunya bukti adalah simulasi crop/pad/resize mekanis dari satu frame nyata. Perangkat kedua yang nyata — atau memaksa `adb shell wm size 1080x2340` dan memainkan satu draft — akan menjawabnya.
 - Hero splash di tengah, kolom ikon skill, dan strip bawah-tengah **bukan** slot pick dan tidak boleh di-match demikian.
 
