@@ -1436,6 +1436,7 @@ export function VisionPanel({
                     blueHeroes={blueHeroes}
                     redHeroes={redHeroes}
                     synergy={synergyData ?? {}}
+                    defaultPerspective={side === 'blue' ? 'blue' : 'red'}
                     blueAssignment={defaultBlueAssignment}
                     redAssignment={defaultRedAssignment}
                     hasCustomAssignments={false}
