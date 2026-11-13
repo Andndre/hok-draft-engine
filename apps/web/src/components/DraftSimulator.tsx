@@ -42,6 +42,8 @@ interface DraftSimulatorProps {
   teamBName?: string;
   isUltimateBattle?: boolean;
   fearlessConflicts?: Array<{ game: number; side: Side; heroId: number; heroName?: string }>;
+  rankedBanCount?: 3 | 4 | 5;
+  onRankedBanCountChange?: (n: 3 | 4 | 5) => void;
 }
 export function DraftSimulator({
   format = 'tournament',
@@ -78,8 +80,10 @@ export function DraftSimulator({
   teamBName = 'Tim B',
   isUltimateBattle = false,
   fearlessConflicts = [],
+  rankedBanCount = 3,
+  onRankedBanCountChange,
 }: DraftSimulatorProps) {
-  const maxSteps = isUltimateBattle ? 10 : (format === 'ranked' ? 16 : 18);
+  const maxSteps = isUltimateBattle ? 10 : (format === 'ranked' ? 2 * rankedBanCount + 10 : 18);
   const turnLabel = currentTurn.isComplete
     ? 'Draft selesai'
     : (currentTurn.side === 'blue' ? 'Blue' : 'Red') + ' · ' + (currentTurn.action === 'ban' ? 'Ban hero' : 'Pick hero');
@@ -135,6 +139,19 @@ export function DraftSimulator({
                 options={[
                   { value: 'tournament', label: 'Turnamen' },
                   { value: 'ranked', label: 'Ranked' },
+                ]}
+              />
+            )}
+            {format === 'ranked' && onRankedBanCountChange && (
+              <DropdownSelect
+                label="Ban per tim"
+                icon={ShieldBan}
+                value={rankedBanCount}
+                onChange={(val) => onRankedBanCountChange(Number(val) as 3 | 4 | 5)}
+                options={[
+                  { value: 3, label: '3' },
+                  { value: 4, label: '4' },
+                  { value: 5, label: '5' },
                 ]}
               />
             )}

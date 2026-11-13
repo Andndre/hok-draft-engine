@@ -51,6 +51,7 @@ export function PracticeDraft(props: Props) {
   const [setupSide, setSetupSide] = useState<Side>('blue');
   const [setupFormat, setSetupFormat] = useState<DraftFormat>('tournament');
   const [setupFearless, setSetupFearless] = useState(true);
+  const [setupBanCount, setSetupBanCount] = useState<3 | 4 | 5>(3);
   const [session, setSession] = useState<PracticeSession | null>(null);
   const [starting, setStarting] = useState(false);
   const [thinking, setThinking] = useState(false);
@@ -142,7 +143,7 @@ export function PracticeDraft(props: Props) {
       const fresh = await loadTournamentDataset();
       setSnapshot(fresh);
       setLaneOverridesByKey({});
-      setSession(createPracticeSession(crypto.randomUUID(), { playerSide: setupSide, fearless: setupFormat === 'ranked' ? false : setupFearless, format: setupFormat, onlyGlobal }, fresh));
+      setSession(createPracticeSession(crypto.randomUUID(), { playerSide: setupSide, fearless: setupFormat === 'ranked' ? false : setupFearless, format: setupFormat, onlyGlobal, rankedBanCount: setupFormat === 'ranked' ? setupBanCount : undefined }, fresh));
       setNotice('Sesi dimulai. Data hero dipertahankan sampai sesi selesai.');
     } catch { setError('Data latihan belum dapat dimuat. Coba mulai lagi.'); }
     finally { setStarting(false); }
@@ -181,6 +182,7 @@ export function PracticeDraft(props: Props) {
         </div>
       </fieldset>
       <fieldset><legend>Pilih sisi timmu</legend><div className="setup-side-options">{(['blue', 'red'] as Side[]).map(side => <label key={side} className={setupSide === side ? 'is-selected' : ''}><input type="radio" name="practice-side" value={side} checked={setupSide === side} onChange={() => setSetupSide(side)} />{side === 'blue' ? <Shield aria-hidden="true" /> : <Swords aria-hidden="true" />}<span><strong>{side === 'blue' ? 'Blue side' : 'Red side'}</strong><small>{side === 'blue' ? 'Amankan first pick' : 'Respons & last counter-pick'}</small></span></label>)}</div></fieldset>
+      {setupFormat === 'ranked' && <fieldset><legend>Jumlah ban per tim</legend><div className="setup-side-options">{([3, 4, 5] as const).map(n => <label key={n} className={setupBanCount === n ? 'is-selected' : ''}><input type="radio" name="practice-bancount" value={n} checked={setupBanCount === n} onChange={() => setSetupBanCount(n)} /><span><strong>{n}</strong><small>{n} ban</small></span></label>)}</div></fieldset>}
       <div className="setup-options">
         {assistanceControl}
         {setupFormat !== 'ranked' && <label className="assistance-toggle"><ShieldCheck aria-hidden="true" /><span>Seri Fearless<small>Hero terpakai terkunci per tim, hingga 5 game</small></span><input type="checkbox" checked={setupFearless} onChange={event => setSetupFearless(event.target.checked)} /></label>}
@@ -227,8 +229,9 @@ export function PracticeDraft(props: Props) {
       <ul>{trace.alternatives.map(alternative => <li key={alternative.heroId}><button type="button" onClick={() => setWikiHero(byId.get(alternative.heroId) ?? null)}>{byId.get(alternative.heroId) && <HeroThumbnail hero={byId.get(alternative.heroId)!} />}<span>{byId.get(alternative.heroId)?.name}</span><BookOpen aria-hidden="true" /></button><p>{plainText(alternative.reason)}</p></li>)}</ul>
     </li>;
   };
-  const banSlotsCount = session.config.format === 'ranked' ? 3 : 4;
-  const maxSteps = session.config.format === 'ranked' ? 16 : 18;
+  const rankedBanCount = session.config.rankedBanCount ?? 3;
+  const banSlotsCount = session.config.format === 'ranked' ? rankedBanCount : 4;
+  const maxSteps = session.config.format === 'ranked' ? 2 * rankedBanCount + 10 : 18;
   const padded = (ids: number[], count: number) => [...heroList(ids), ...Array(Math.max(0, count - ids.length)).fill(null)];
   const canUndo = latest && game.actions.some(action => action.side === playerSide);
   const playerRadar = evaluateTacticalScores(playerHeroes, enemyHeroes);

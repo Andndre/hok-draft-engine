@@ -2,8 +2,6 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
-  RANKED_DRAFT_SEQUENCE,
-  RANKED_PHASES,
   getDraftSequence,
   getDraftPhases,
   getTournamentPhase,

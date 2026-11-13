@@ -22,7 +22,7 @@ export interface ManualLayoutConfig {
     size: number;
   };
   ban: {
-    countPerSide: 3 | 5;
+    countPerSide: 3 | 4 | 5;
     leftX: number;
     rightX: number;
     mirrorX: boolean;
@@ -40,7 +40,7 @@ function clamp(value: number, min: number, max: number): number {
 }
 
 /** Default normalized anchors seeded from the calibrated 2800x1260 Ranked layout. */
-export function defaultManualLayoutConfig(countPerSide: 3 | 5 = 3): ManualLayoutConfig {
+export function defaultManualLayoutConfig(countPerSide: 3 | 4 | 5 = 3): ManualLayoutConfig {
   // Anchors are the MEASURED calibrated rects of the Ranked 2800x1260 profile
   // (tests/fixtures/vision/region-profile-2800x1260.json), normalized to the
   // frame: pick column x 183 / 2485, rows 142 -> 950, tile 147; ban icons at
@@ -74,7 +74,8 @@ export function defaultManualLayoutConfig(countPerSide: 3 | 5 = 3): ManualLayout
 
 /** Clamp all fields of a ManualLayoutConfig into safe normalized bounds. */
 export function sanitizeManualLayoutConfig(raw: Partial<ManualLayoutConfig> | null | undefined): ManualLayoutConfig {
-  const base = defaultManualLayoutConfig(raw?.ban?.countPerSide === 5 ? 5 : 3);
+  const c = raw?.ban?.countPerSide;
+  const base = defaultManualLayoutConfig(c === 3 || c === 4 || c === 5 ? c : 3);
   if (!raw) return base;
   const pick = raw.pick ?? base.pick;
   const ban = raw.ban ?? base.ban;
@@ -95,7 +96,7 @@ export function sanitizeManualLayoutConfig(raw: Partial<ManualLayoutConfig> | nu
       size: clamp(Number.isFinite(pick.size) ? pick.size : base.pick.size, 0.04, 0.22),
     },
     ban: {
-      countPerSide: ban.countPerSide === 5 ? 5 : 3,
+      countPerSide: ban.countPerSide === 3 || ban.countPerSide === 4 || ban.countPerSide === 5 ? ban.countPerSide : 3,
       leftX: clamp(Number.isFinite(ban.leftX) ? ban.leftX : base.ban.leftX, 0, 0.45),
       rightX: clamp(Number.isFinite(ban.rightX) ? ban.rightX : base.ban.rightX, 0.5, 0.98),
       mirrorX: typeof ban.mirrorX === 'boolean' ? ban.mirrorX : base.ban.mirrorX,
@@ -197,7 +198,7 @@ export function buildManualRegionProfile(
 }
 
 /** Load saved manual layout config from localStorage, or fall back to defaults. */
-export function loadManualLayoutConfig(countPerSide: 3 | 5 = 3): ManualLayoutConfig {
+export function loadManualLayoutConfig(countPerSide: 3 | 4 | 5 = 3): ManualLayoutConfig {
   try {
     if (typeof localStorage === 'undefined') return defaultManualLayoutConfig(countPerSide);
     const raw = localStorage.getItem(STORAGE_KEY);

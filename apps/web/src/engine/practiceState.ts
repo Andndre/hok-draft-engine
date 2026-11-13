@@ -6,7 +6,7 @@ import type { DecisionTag } from './opponentClient';
 import { rankedCandidates } from './draftSearch';
 import { runTournamentInference } from './tournamentInference';
 
-export interface PracticeConfig { playerSide: Side; fearless: boolean; format?: DraftFormat; onlyGlobal?: boolean }
+export interface PracticeConfig { playerSide: Side; fearless: boolean; format?: DraftFormat; onlyGlobal?: boolean; rankedBanCount?: 3 | 4 | 5 }
 export interface DecisionTrace {
   actionIndex: number;
   heroId: number;
@@ -30,7 +30,7 @@ export function practiceContext(session: PracticeSession, dataset: TournamentDat
   if (session.config.fearless) for (const game of session.games.slice(0, session.gameIndex)) {
     fearless.blue.push(...game.position.picks.blue); fearless.red.push(...game.position.picks.red);
   }
-  return { heroes: dataset.heroes, onlyGlobal: session.config.onlyGlobal ?? true, fearless, format: session.config.format };
+  return { heroes: dataset.heroes, onlyGlobal: session.config.onlyGlobal ?? true, fearless, format: session.config.format, rankedBanCount: session.config.rankedBanCount ?? 3 };
 }
 function createGame(dataset: TournamentDataset, config: PracticeConfig, context: DraftContext): PracticeGame {
   const aiSide = oppositeSide(config.playerSide);
@@ -39,7 +39,7 @@ function createGame(dataset: TournamentDataset, config: PracticeConfig, context:
   return { position: emptyPosition(), actions: [], traces: [], playerPlan: { a: null, b: null }, aiPlan: { a: candidates[0]?.hero_id ?? null, b: candidates.find(h => h.primary_lane !== candidates[0]?.primary_lane)?.hero_id ?? candidates[1]?.hero_id ?? null } };
 }
 export function createPracticeSession(sessionId: string, config: PracticeConfig, dataset: TournamentDataset): PracticeSession {
-  const context: DraftContext = { heroes: dataset.heroes, onlyGlobal: config.onlyGlobal ?? true, fearless: { blue: [], red: [] }, format: config.format };
+  const context: DraftContext = { heroes: dataset.heroes, onlyGlobal: config.onlyGlobal ?? true, fearless: { blue: [], red: [] }, format: config.format, rankedBanCount: config.rankedBanCount ?? 3 };
   return { sessionId, revision: 0, config, gameIndex: 0, games: [createGame(dataset, config, context)] };
 }
 export type PracticeEvent =
@@ -71,7 +71,7 @@ export function reducePractice(session: PracticeSession, event: PracticeEvent, d
   if (!latest) return session;
   if (event.type === 'commit') {
     if (!matchesDecisionTag(session, event.tag)) return session;
-    const turn = getDraftTurn(current.position.step, session.config.format);
+    const turn = getDraftTurn(current.position.step, session.config.format, false, session.config.rankedBanCount ?? 3);
     if ((turn.side === session.config.playerSide) !== (event.actor === 'human')) return session;
     const action = { side: turn.side, action: turn.action, heroId: event.heroId };
     const position = applyDraftAction(current.position, action, context, session.config.format);
@@ -86,13 +86,13 @@ export function reducePractice(session: PracticeSession, event: PracticeEvent, d
   if (event.type === 'commit-duet') {
     if (!matchesDecisionTag(session, event.tag)) return session;
     if (event.heroIds.length !== 2) return session;
-    const turn = getDraftTurn(current.position.step, session.config.format);
+    const turn = getDraftTurn(current.position.step, session.config.format, false, session.config.rankedBanCount ?? 3);
     if (turn.action !== 'pick' || turn.side !== session.config.playerSide) return session;
     const [primaryId, secondaryId] = event.heroIds;
     // Atomic: both picks must be legal before anything is applied.
     const probe = applyDraftAction(current.position, { side: turn.side, action: 'pick', heroId: primaryId }, context, session.config.format);
     if (probe === current.position) return session;
-    const partnerTurn = getDraftTurn(probe.step, session.config.format);
+    const partnerTurn = getDraftTurn(probe.step, session.config.format, false, session.config.rankedBanCount ?? 3);
     if (partnerTurn.action !== 'pick' || partnerTurn.side !== turn.side) return session;
     const position = applyDraftAction(probe, { side: partnerTurn.side, action: partnerTurn.action, heroId: secondaryId }, context, session.config.format);
     if (position === probe) return session;
@@ -115,7 +115,7 @@ export function reducePractice(session: PracticeSession, event: PracticeEvent, d
     const position = actions.reduce((state, action) => applyPracticeAction(state, action, context, session.config.format), emptyPosition());
     return replace({ ...current, position, actions, traces: current.traces.filter(trace => trace.actionIndex < index) });
   }
-  const maxSteps = session.config.format === 'ranked' ? 16 : 18;
+  const maxSteps = session.config.format === 'ranked' ? 2 * (session.config.rankedBanCount ?? 3) + 10 : 18;
   if (event.type === 'next' && current.position.step === maxSteps && session.games.length < 5) {
     const next = { ...session, gameIndex: session.games.length, revision: session.revision + 1 };
     return { ...next, games: [...session.games, createGame(dataset, session.config, practiceContext(next, dataset))] };

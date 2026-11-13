@@ -1155,7 +1155,7 @@ export function VisionPanel({
                 <div className="vision-settings__row">
                   <span className="vision-settings__label">Ban per tim</span>
                   <div className="vision-settings__pills">
-                    {([3, 5] as const).map(count => (
+                    {([3, 4, 5] as const).map(count => (
                       <button
                         key={count}
                         type="button"

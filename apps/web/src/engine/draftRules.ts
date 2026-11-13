@@ -24,22 +24,24 @@ export const DRAFT_SEQUENCE: ReadonlyArray<{ side: Side; action: ActionKind }> =
   { side: 'blue', action: 'pick' }, { side: 'red', action: 'pick' },
 ];
 
-export const RANKED_DRAFT_SEQUENCE: ReadonlyArray<{ side: Side; action: ActionKind }> = [
-  // 3 Blue Bans + 3 Red Bans (Blind / Simultan)
-  { side: 'blue', action: 'ban' }, { side: 'blue', action: 'ban' }, { side: 'blue', action: 'ban' },
-  { side: 'red', action: 'ban' }, { side: 'red', action: 'ban' }, { side: 'red', action: 'ban' },
-  // 10 Picks
-  { side: 'blue', action: 'pick' }, // B1
-  { side: 'red', action: 'pick' },  // R1
-  { side: 'red', action: 'pick' },  // R2
-  { side: 'blue', action: 'pick' }, // B2
-  { side: 'blue', action: 'pick' }, // B3
-  { side: 'red', action: 'pick' },  // R3
-  { side: 'red', action: 'pick' },  // R4
-  { side: 'blue', action: 'pick' }, // B4
-  { side: 'blue', action: 'pick' }, // B5
-  { side: 'red', action: 'pick' },  // R5
-];
+export function getRankedDraftSequence(banCount: 3 | 4 | 5 = 3): ReadonlyArray<{ side: Side; action: ActionKind }> {
+  const bans: { side: Side; action: ActionKind }[] = [];
+  for (let i = 0; i < banCount; i += 1) bans.push({ side: 'blue', action: 'ban' });
+  for (let i = 0; i < banCount; i += 1) bans.push({ side: 'red', action: 'ban' });
+  return [
+    ...bans,
+    { side: 'blue', action: 'pick' },
+    { side: 'red', action: 'pick' },
+    { side: 'red', action: 'pick' },
+    { side: 'blue', action: 'pick' },
+    { side: 'blue', action: 'pick' },
+    { side: 'red', action: 'pick' },
+    { side: 'red', action: 'pick' },
+    { side: 'blue', action: 'pick' },
+    { side: 'blue', action: 'pick' },
+    { side: 'red', action: 'pick' },
+  ];
+}
 
 export const ULTIMATE_BATTLE_SEQUENCE: ReadonlyArray<{ side: Side; action: ActionKind }> = [
   { side: 'blue', action: 'pick' }, { side: 'blue', action: 'pick' }, { side: 'blue', action: 'pick' }, { side: 'blue', action: 'pick' }, { side: 'blue', action: 'pick' },
@@ -53,10 +55,15 @@ export const TOURNAMENT_PHASES = [
   { id: 'PICK_PHASE_2' as TournamentPhaseId, label: '4. Pick fase 2', sub: 'Lengkapi komposisi', start: 14, end: 17, isBan: false },
 ] as const;
 
-export const RANKED_PHASES = [
-  { id: 'RANKED_BAN' as TournamentPhaseId, label: '1. Blind Ban', sub: 'Tentukan 3 hero dilarang', start: 0, end: 5, isBan: true },
-  { id: 'RANKED_PICK' as TournamentPhaseId, label: '2. Pemilihan Hero', sub: 'Bentuk komposisi tim', start: 6, end: 15, isBan: false },
-] as const;
+export function getRankedPhases(banCount: 3 | 4 | 5 = 3) {
+  const banEnd = banCount * 2 - 1;
+  const pickStart = banCount * 2;
+  const pickEnd = pickStart + 9;
+  return [
+    { id: 'RANKED_BAN' as TournamentPhaseId, label: '1. Blind Ban', sub: `Tentukan ${banCount} hero dilarang`, start: 0, end: banEnd, isBan: true },
+    { id: 'RANKED_PICK' as TournamentPhaseId, label: '2. Pemilihan Hero', sub: 'Bentuk komposisi tim', start: pickStart, end: pickEnd, isBan: false },
+  ] as const;
+}
 
 export const ULTIMATE_PHASES = [
   { id: 'ULTIMATE_BATTLE' as TournamentPhaseId, label: 'Ultimate Battle', sub: 'Blind Pick tanpa Ban (Boleh Mirror)', start: 0, end: 9, isBan: false },
@@ -64,23 +71,23 @@ export const ULTIMATE_PHASES = [
 
 export const oppositeSide = (side: Side): Side => side === 'blue' ? 'red' : 'blue';
 
-export function getDraftSequence(format: DraftFormat = 'tournament', isUltimateBattle: boolean = false): ReadonlyArray<{ side: Side; action: ActionKind }> {
+export function getDraftSequence(format: DraftFormat = 'tournament', isUltimateBattle: boolean = false, rankedBanCount: 3 | 4 | 5 = 3): ReadonlyArray<{ side: Side; action: ActionKind }> {
   if (isUltimateBattle) return ULTIMATE_BATTLE_SEQUENCE;
-  return format === 'ranked' ? RANKED_DRAFT_SEQUENCE : DRAFT_SEQUENCE;
+  return format === 'ranked' ? getRankedDraftSequence(rankedBanCount) : DRAFT_SEQUENCE;
 }
 
-export function getDraftPhases(format: DraftFormat = 'tournament', isUltimateBattle: boolean = false) {
+export function getDraftPhases(format: DraftFormat = 'tournament', isUltimateBattle: boolean = false, rankedBanCount: 3 | 4 | 5 = 3) {
   if (isUltimateBattle) return ULTIMATE_PHASES;
-  return format === 'ranked' ? RANKED_PHASES : TOURNAMENT_PHASES;
+  return format === 'ranked' ? getRankedPhases(rankedBanCount) : TOURNAMENT_PHASES;
 }
 
-export const getTournamentPhase = (step: number, format: DraftFormat = 'tournament', isUltimateBattle: boolean = false): TournamentPhaseId => {
-  const phases = getDraftPhases(format, isUltimateBattle);
+export const getTournamentPhase = (step: number, format: DraftFormat = 'tournament', isUltimateBattle: boolean = false, rankedBanCount: 3 | 4 | 5 = 3): TournamentPhaseId => {
+  const phases = getDraftPhases(format, isUltimateBattle, rankedBanCount);
   return phases.find(p => step >= p.start && step <= p.end)?.id ?? 'DRAFT_COMPLETE';
 };
 
-export function getDraftTurn(step: number, format: DraftFormat = 'tournament', isUltimateBattle: boolean = false) {
-  const sequence = getDraftSequence(format, isUltimateBattle);
+export function getDraftTurn(step: number, format: DraftFormat = 'tournament', isUltimateBattle: boolean = false, rankedBanCount: 3 | 4 | 5 = 3) {
+  const sequence = getDraftSequence(format, isUltimateBattle, rankedBanCount);
   const turn = sequence[step];
   return { ...(turn ?? { side: 'blue' as const, action: 'pick' as const }), stepIndex: step, isComplete: !turn };
 }
@@ -95,12 +102,13 @@ export interface DoublePickWindow {
 export function getDoublePickWindow(
   step: number,
   format: DraftFormat = 'tournament',
-  isUltimateBattle: boolean = false
+  isUltimateBattle: boolean = false,
+  rankedBanCount: 3 | 4 | 5 = 3
 ): DoublePickWindow {
   if (isUltimateBattle) {
     return { isDoublePickFirst: false, isDoublePickSecond: false, side: 'blue', partnerStep: -1 };
   }
-  const sequence = getDraftSequence(format, isUltimateBattle);
+  const sequence = getDraftSequence(format, isUltimateBattle, rankedBanCount);
   const current = sequence[step];
   if (!current || current.action !== 'pick') {
     return { isDoublePickFirst: false, isDoublePickSecond: false, side: current?.side ?? 'blue', partnerStep: -1 };
@@ -131,6 +139,7 @@ export interface DraftContext {
   fearless: Record<Side, number[]>;
   format?: DraftFormat;
   isUltimateBattle?: boolean;
+  rankedBanCount?: 3 | 4 | 5;
 }
 export interface DraftAction { heroId: number; side: Side; action: ActionKind; secondHeroId?: number }
 export const emptyPosition = (): DraftPosition => ({ step: 0, picks: { blue: [], red: [] }, bans: { blue: [], red: [] } });
@@ -183,9 +192,10 @@ export function applyDraftAction(
   action: DraftAction,
   context: DraftContext,
   format: DraftFormat = context.format ?? 'tournament',
-  isUltimateBattle: boolean = context.isUltimateBattle ?? false
+  isUltimateBattle: boolean = context.isUltimateBattle ?? false,
+  rankedBanCount: 3 | 4 | 5 = context.rankedBanCount ?? 3
 ): DraftPosition {
-  const turn = getDraftTurn(position.step, format, isUltimateBattle);
+  const turn = getDraftTurn(position.step, format, isUltimateBattle, rankedBanCount);
   if (turn.side !== action.side || turn.action !== action.action || !isLegalHero(position, action.heroId, context, format, isUltimateBattle)) return position;
   const field = turn.action === 'pick' ? 'picks' : 'bans';
   return { ...position, step: position.step + 1, [field]: { ...position[field], [turn.side]: [...position[field][turn.side], action.heroId] } };
@@ -274,9 +284,10 @@ export function findSeriesFearlessConflicts(
 export const createInitialGameDraft = (
   format: DraftFormat = 'tournament',
   blueTeam: SeriesTeam = 'A',
-  isUltimateBattle: boolean = false
+  isUltimateBattle: boolean = false,
+  rankedBanCount: 3 | 4 | 5 = 3
 ): GameDraftData => {
-  const banSlots = isUltimateBattle ? 0 : (format === 'ranked' ? 3 : 4);
+  const banSlots = isUltimateBattle ? 0 : (format === 'ranked' ? rankedBanCount : 4);
   return {
     bluePicks: Array(5).fill(null),
     redPicks: Array(5).fill(null),

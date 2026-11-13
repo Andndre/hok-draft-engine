@@ -37,6 +37,7 @@ export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<ActiveTab>('draft');
   const [draftMode, setDraftMode] = useState<'simulator' | 'practice' | 'vision'>('simulator');
   const [draftFormat, setDraftFormat] = useState<DraftFormat>('tournament');
+  const [rankedBanCount, setRankedBanCount] = useState<3 | 4 | 5>(3);
   const [practiceAssistance, setPracticeAssistance] = useState(true);
   const practiceActive = activeTab === 'draft' && draftMode === 'practice';
   const visionActive = activeTab === 'draft' && draftMode === 'vision';
@@ -78,7 +79,7 @@ export const App: React.FC = () => {
     7: createInitialGameDraft('tournament', 'A', false),
   });
 
-  const currentGame = gamesData[gameNumber] || createInitialGameDraft(draftFormat, 'A', false);
+  const currentGame = gamesData[gameNumber] || createInitialGameDraft(draftFormat, 'A', false, draftFormat === 'ranked' ? rankedBanCount : 3);
   const { bluePicks, redPicks, blueBans, redBans, draftStep, bluePlanAId, bluePlanBId, redPlanAId, redPlanBId, blueTeam, winner: currentGameWinner, isUltimateBattle } = currentGame;
 
   const [synergyData, setSynergyData] = useState<Record<string, any>>({});
@@ -363,7 +364,7 @@ export const App: React.FC = () => {
     (updater: (prev: GameDraftData) => GameDraftData) => {
       setGamesData((prev) => ({
         ...prev,
-        [gameNumber]: updater(prev[gameNumber] || createInitialGameDraft(draftFormat)),
+        [gameNumber]: updater(prev[gameNumber] || createInitialGameDraft(draftFormat, 'A', false, draftFormat === 'ranked' ? rankedBanCount : 3)),
       }));
     },
     [gameNumber, draftFormat]
@@ -372,11 +373,11 @@ export const App: React.FC = () => {
   const handleFormatChange = (newFormat: DraftFormat) => {
     setDraftFormat(newFormat);
     setGamesData({
-      1: createInitialGameDraft(newFormat),
-      2: createInitialGameDraft(newFormat),
-      3: createInitialGameDraft(newFormat),
-      4: createInitialGameDraft(newFormat),
-      5: createInitialGameDraft(newFormat),
+      1: createInitialGameDraft(newFormat, 'A', false, newFormat === 'ranked' ? rankedBanCount : 3),
+      2: createInitialGameDraft(newFormat, 'A', false, newFormat === 'ranked' ? rankedBanCount : 3),
+      3: createInitialGameDraft(newFormat, 'A', false, newFormat === 'ranked' ? rankedBanCount : 3),
+      4: createInitialGameDraft(newFormat, 'A', false, newFormat === 'ranked' ? rankedBanCount : 3),
+      5: createInitialGameDraft(newFormat, 'A', false, newFormat === 'ranked' ? rankedBanCount : 3),
     });
     setLaneOverridesByGame({});
     setPreviousScores(null);
@@ -414,7 +415,7 @@ export const App: React.FC = () => {
 
   // Reset Current Game Draft ONLY (preserves other games!)
   const handleResetDraft = () => {
-    updateCurrentDraft(() => createInitialGameDraft(draftFormat));
+    updateCurrentDraft(() => createInitialGameDraft(draftFormat, 'A', false, draftFormat === 'ranked' ? rankedBanCount : 3));
     setLaneOverridesByGame((prev) => ({ ...prev, [gameNumber]: {} }));
     setPreviousScores(null);
     setDeltas([]);
@@ -750,6 +751,8 @@ export const App: React.FC = () => {
               teamBName={teamBName}
               isUltimateBattle={isUltimateBattle}
               fearlessConflicts={fearlessConflicts}
+              rankedBanCount={rankedBanCount}
+              onRankedBanCountChange={setRankedBanCount}
             />
           )}
           {activeTab === 'draft' && !loadError && draftMode === 'vision' && (
