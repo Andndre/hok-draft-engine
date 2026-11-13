@@ -185,7 +185,6 @@ Aturan bersama berada di `apps/web/src/engine/draftRules.ts`. Aplikasi mendukung
 - **Advisor kini mengidentifikasi 4 dari 6 ban pada sesi terukur** (jalur match khusus ban, lihat "Hasil terukur") dan abstain pada sisanya by design, tetapi identitas ban tetap estimasi dan **tidak pernah diterapkan ke draft state** — hero yang di-ban tidak masuk posisi. Arahnya aman: ban yang salah tidak akan pernah diam-diam menghapus hero dari pool rekomendasi, dan ban yang abstain paling banyak menghilangkan satu counter-hint.
 - **Tidak ada ground truth identitas untuk draft kedua** di corpus — hanya konsistensi lintas-frame.
 - **Cara HoK me-layout ulang pada aspect ratio berbeda tidak diketahui.** Satu-satunya bukti adalah simulasi crop/pad/resize mekanis dari satu frame nyata. Perangkat kedua yang nyata — atau memaksa `adb shell wm size 1080x2340` dan memainkan satu draft — akan menjawabnya.
-- Slot L1 (Haya, 521) marginal: skor terkalibrasi 0.560 terhadap threshold 0.55, jadi sering abstain. Kemungkinan art skin.
 - Hero splash di tengah, kolom ikon skill, dan strip bawah-tengah **bukan** slot pick dan tidak boleh di-match demikian.
 - Reference set hanya mencakup potret base; HoK juga merilis skin (layar VS-loading menyebutnya eksplisit).
 
