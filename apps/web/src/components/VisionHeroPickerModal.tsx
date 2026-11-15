@@ -4,6 +4,7 @@ import type { Hero } from '../types';
 import { isHeroGlobalReleased } from '../data/heroReleaseStatus';
 import { HeroThumbnail } from './ui/AssetThumbnail';
 import { useDialogFocus } from './ui/useDialogFocus';
+import { searchHeroes } from '../heroSearch';
 
 interface Props {
   isOpen: boolean;
@@ -34,10 +35,8 @@ export function VisionHeroPickerModal({
   }, [isOpen]);
 
   const filtered = useMemo(() => {
-    return heroes
-      .filter(hero => !onlyGlobalReleased || isHeroGlobalReleased(hero))
-      .filter(hero => !search.trim() || (hero.name + ' ' + hero.primary_role).toLowerCase().includes(search.toLowerCase().trim()))
-      .sort((a, b) => a.name.localeCompare(b.name));
+    const rows = heroes.filter(hero => !onlyGlobalReleased || isHeroGlobalReleased(hero));
+    return searchHeroes(rows, search, (a, b) => a.name.localeCompare(b.name));
   }, [heroes, onlyGlobalReleased, search]);
 
   if (!isOpen) return null;

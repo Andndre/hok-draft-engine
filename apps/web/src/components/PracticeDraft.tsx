@@ -14,6 +14,7 @@ import { HeroRosterToolbar } from './HeroRosterToolbar';
 import { TacticalRadarPanel } from './TacticalRadarPanel';
 import { HeroThumbnail } from './ui/AssetThumbnail';
 import { focusHeroSearch, plainText } from './ui/presentation';
+import { searchHeroes, firstSelectableHero } from '../heroSearch';
 import { DraftSimulator } from './DraftSimulator';
 import { PostDraftGamePlanPanel } from './PostDraftGamePlanPanel';
 import { HeroCardCompact } from './HeroCardCompact';
@@ -153,22 +154,28 @@ export function PracticeDraft(props: Props) {
     send({ type: 'commit', tag: { sessionId: session.sessionId, revision: session.revision }, actor: 'human', heroId: hero.hero_id });
     setWikiHero(null);
   };
+  // Roster selection: hand the search field back focused with its query highlighted so the
+  // next hero can be typed immediately (tapping a result drops keyboard focus on mobile).
+  const chooseFromRoster = (hero: Hero) => {
+    choose(hero);
+    if (props.searchQuery.trim()) focusHeroSearch({ select: true });
+  };
   const handleSelectDuetPackage = (duet: DuetPackageOption) => {
     if (!canAct || !session) return;
     send({ type: 'commit-duet', tag: { sessionId: session.sessionId, revision: session.revision }, actor: 'human', heroIds: [duet.primaryHero.hero_id, duet.secondaryHero.hero_id] });
   };
   const filtered = useMemo(() => {
-    const query = props.searchQuery.trim().toLowerCase();
     const rank = new Map((assistance && canAct ? hints?.recommendations ?? [] : []).map((r, index) => [r.hero.hero_id, index]));
     const rows = snapshot.heroes.filter(h => (!onlyGlobal || h.is_global_released === true) && h.hero_id !== 511)
-      .filter(h => props.selectedLane === 'All' || h.primary_lane === props.selectedLane || h.lanes.includes(props.selectedLane))
-      .filter(h => !query || `${h.name} ${h.primary_role} ${h.primary_lane}`.toLowerCase().includes(query));
-    return rows.sort((a, b) => {
+      .filter(h => props.selectedLane === 'All' || h.primary_lane === props.selectedLane || h.lanes.includes(props.selectedLane));
+    const compare = (a: Hero, b: Hero) => {
       if (props.sortMode === 'ai' && assistance && canAct) return (rank.get(a.hero_id) ?? 999) - (rank.get(b.hero_id) ?? 999) || a.name.localeCompare(b.name);
       if (props.sortMode === 'win') return b.win_rate - a.win_rate;
       if (props.sortMode === 'pick') return b.pick_rate - a.pick_rate;
       return a.name.localeCompare(b.name);
-    });
+    };
+    // Typo-, apostrophe- and skip-tolerant query: relevance first, sort mode breaks ties.
+    return searchHeroes(rows, props.searchQuery, compare);
   }, [snapshot, onlyGlobal, props.searchQuery, props.selectedLane, props.sortMode, assistance, canAct, hints]);
 
   const assistanceControl = <label className="assistance-toggle"><Lightbulb aria-hidden="true" /><span>Bantuan taktis<small>{assistance ? 'Rekomendasi dan komposisi ditampilkan' : 'Uji keputusan tanpa rekomendasi AI'}</small></span><input type="checkbox" checked={assistance} onChange={event => onAssistanceChange(event.target.checked)} /></label>;
@@ -241,6 +248,13 @@ export function PracticeDraft(props: Props) {
   const previewStep = draftSeq.findIndex((step, index) => index >= position.step && step.side === playerSide);
   const previewPosition = canAct ? position : { ...position, step: previewStep < 0 ? maxSteps : previewStep };
   const rosterAction = getDraftTurn(previewPosition.step, session.config.format).action;
+  // Enter in the search field commits the first legal result, so "type a name, press Enter"
+  // works without tapping (and without dismissing the mobile keyboard).
+  const confirmSearch = () => {
+    if (!canAct || !props.searchQuery.trim()) return;
+    const first = firstSelectableHero(filtered, (hero) => isLegalHero(previewPosition, hero.hero_id, context, format));
+    if (first) chooseFromRoster(first);
+  };
   return <section aria-label="Latihan draft aktif" className="practice-session">
     <div className="practice-session__controls surface-panel"><div className="practice-session__heading"><div className="section-heading"><span className="section-heading__icon"><Gamepad2 aria-hidden="true" /></span><div><h2>Anda: {playerSide === 'blue' ? 'Blue' : 'Red'} · AI: {playerSide === 'blue' ? 'Red' : 'Blue'}</h2><p>{session.config.format === 'ranked' ? 'Pertandingan Ranked' : `Game ${session.gameIndex + 1} · ${session.config.fearless ? 'Seri Fearless' : 'Draft biasa'}`}</p></div></div>{assistanceControl}</div>
       <div className="practice-session__actions">{session.config.format !== 'ranked' && <DropdownSelect label="Pilih game latihan" icon={History} value={session.gameIndex} onChange={index => send({ type: 'view', index })} options={session.games.map((_, index) => ({ value: index, label: `Game ${index + 1}${index < session.games.length - 1 ? ' · ulasan' : ''}` }))} />}
@@ -253,7 +267,7 @@ export function PracticeDraft(props: Props) {
       {notice && !thinking && <p className="practice-notice">{notice}</p>}
       {error && <div role="alert" className="inline-feedback inline-feedback--error"><AlertTriangle aria-hidden="true" /><p>{error}</p><button type="button" className={button} onClick={() => send({ type: 'retry' })}><RefreshCw aria-hidden="true" />Coba lagi</button></div>}
     </div>
-    <DraftSimulator format={session.config.format ?? 'tournament'} bluePicks={padded(position.picks.blue, 5)} redPicks={padded(position.picks.red, 5)} blueBans={padded(position.bans.blue, banSlotsCount)} redBans={padded(position.bans.red, banSlotsCount)} blueAssignedLanes={blueAssignedLanes} redAssignedLanes={redAssignedLanes} currentTurn={turn} fearlessEnabled={session.config.fearless} gameNumber={session.gameIndex + 1} onToggleFearless={() => {}} onGameNumberChange={() => {}} onResetDraft={() => {}} onUndoStep={() => {}} blueFearlessUsedHeroes={heroList(context.fearless.blue)} redFearlessUsedHeroes={heroList(context.fearless.red)} hideControls playerSide={playerSide} onInspectHero={setWikiHero} onRequestHero={canAct ? focusHeroSearch : undefined} />
+    <DraftSimulator format={session.config.format ?? 'tournament'} bluePicks={padded(position.picks.blue, 5)} redPicks={padded(position.picks.red, 5)} blueBans={padded(position.bans.blue, banSlotsCount)} redBans={padded(position.bans.red, banSlotsCount)} blueAssignedLanes={blueAssignedLanes} redAssignedLanes={redAssignedLanes} currentTurn={turn} fearlessEnabled={session.config.fearless} gameNumber={session.gameIndex + 1} onToggleFearless={() => {}} onGameNumberChange={() => {}} onResetDraft={() => {}} onUndoStep={() => {}} blueFearlessUsedHeroes={heroList(context.fearless.blue)} redFearlessUsedHeroes={heroList(context.fearless.red)} hideControls playerSide={playerSide} onInspectHero={setWikiHero} onRequestHero={canAct ? () => focusHeroSearch({ select: true }) : undefined} />
     {turn.isComplete && blueHeroesList.length === 5 && redHeroesList.length === 5 && (
       <PostDraftGamePlanPanel
         key={gameKey}
@@ -275,7 +289,7 @@ export function PracticeDraft(props: Props) {
       {latest && session.games.length < 5 && <button type="button" className="ui-button ui-button--primary" onClick={() => send({ type: 'next' })}><Layers aria-hidden="true" />Lanjut game {session.games.length + 1}<ArrowRight aria-hidden="true" /></button>}
     </section>}
     <div className={assistance && !turn.isComplete && latest ? 'draft-workspace' : ''}>
-      <section className="hero-roster" aria-label={onlyGlobal ? 'Roster latihan Global' : 'Roster latihan Global & CN'}><HeroRosterToolbar title={onlyGlobal ? 'Roster Global' : 'Roster Global + CN'} count={filtered.length} searchQuery={props.searchQuery} onSearchChange={props.onSearchChange} selectedLane={props.selectedLane} onLaneChange={props.onLaneChange} sortMode={props.sortMode} onSortChange={props.onSortChange} viewMode={props.viewMode} onViewChange={props.onViewChange} hideAiSort={!assistance} active={active} />
+      <section className="hero-roster" aria-label={onlyGlobal ? 'Roster latihan Global' : 'Roster latihan Global & CN'}><HeroRosterToolbar title={onlyGlobal ? 'Roster Global' : 'Roster Global + CN'} count={filtered.length} searchQuery={props.searchQuery} onSearchChange={props.onSearchChange} onConfirmSearch={confirmSearch} selectedLane={props.selectedLane} onLaneChange={props.onLaneChange} sortMode={props.sortMode} onSortChange={props.onSortChange} viewMode={props.viewMode} onViewChange={props.onViewChange} hideAiSort={!assistance} active={active} />
         {!filtered.length ? <div className="empty-state"><SearchX aria-hidden="true" /><h3>Hero tidak ditemukan</h3><p>Ubah pencarian atau bersihkan filter lane yang aktif.</p><button type="button" className={button} onClick={() => { props.onSearchChange(''); props.onLaneChange('All'); }}><FilterX aria-hidden="true" />Bersihkan filter</button></div> : <div className={'hero-grid' + (props.viewMode === 'detailed' ? ' hero-grid--detailed' : '')}>{filtered.map(hero => {
           const legal = isLegalHero(previewPosition, hero.hero_id, context, format);
           const rec = recommendations.find(r => r.hero.hero_id === hero.hero_id);
@@ -298,7 +312,7 @@ export function PracticeDraft(props: Props) {
           const shared = {
             hero,
             onClick: setWikiHero,
-            onSelect: choose,
+            onSelect: chooseFromRoster,
             isUnavailable,
             unavailableLabel,
             selectionDisabled: !canAct,

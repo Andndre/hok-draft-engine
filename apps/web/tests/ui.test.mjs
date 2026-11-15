@@ -13,7 +13,7 @@ import { TacticalRadarPanel } from '../src/components/TacticalRadarPanel.tsx';
 import { HeroWikiDrawer } from '../src/components/HeroWikiDrawer.tsx';
 import { PlanSelectionModal } from '../src/components/PlanSelectionModal.tsx';
 import { PracticeDraft } from '../src/components/PracticeDraft.tsx';
-import { displayCopy } from '../src/components/ui/presentation.ts';
+import { displayCopy, focusHeroSearch } from '../src/components/ui/presentation.ts';
 import { buildDefaultLaneAssignments, assignmentToHeroLaneMap, swapAssignedLanes } from '../src/engine/gamePlan.ts';
 import { evaluateTacticalScores, computeDraftOutcomeProjection } from '../src/engine/tournamentInference.ts';
 import { DropdownSelect } from '../src/components/ui/DropdownSelect.tsx';
@@ -499,6 +499,54 @@ test('wiki exposes HoKStats build alternatives and source-attributed item, spell
   const counters = render(HeroWikiDrawer, { hero: enriched, onClose: noop, isFavorite: false, onToggleFavorite: noop, allHeroes: dataset.heroes, onSelectRelatedHero: noop, initialTab: 'counters' });
   assert.ok(counters.includes('Kuat melawan') && counters.includes('Dun') && counters.includes('HoKStats'));
   assert.ok(!counters.includes('Pending review') && !counters.includes('DITINJAU'));
+});
+
+test('focusHeroSearch hands the roster query back for re-typing and skips hidden fields', () => {
+  const el = {
+    value: 'liang',
+    focused: 0,
+    selected: 0,
+    scrolled: [],
+    rect: { width: 240, height: 48, top: 520, bottom: 568 },
+    getBoundingClientRect() { return this.rect; },
+    scrollIntoView(options) { this.scrolled.push(options); },
+    focus() { this.focused += 1; },
+    select() { this.selected += 1; },
+  };
+  const previous = { document: globalThis.document, window: globalThis.window, matchMedia: globalThis.matchMedia };
+  globalThis.document = { getElementById: id => (id === 'hero-search' ? el : null) };
+  globalThis.window = { innerHeight: 800 };
+  globalThis.matchMedia = () => ({ matches: false });
+  try {
+    assert.equal(focusHeroSearch({ select: true }), true);
+    assert.equal(el.focused, 1);
+    assert.equal(el.selected, 1, 'Tapping a search result must highlight the query so the next keystroke replaces it');
+    assert.deepEqual(el.scrolled, [], 'A visible search field is never scrolled away from the list');
+    assert.equal(focusHeroSearch(), true);
+    assert.equal(el.selected, 1, 'Plain focus keeps the caret instead of re-selecting');
+    el.rect = { width: 240, height: 48, top: 1200, bottom: 1248 };
+    assert.equal(focusHeroSearch({ select: true }), true);
+    assert.deepEqual(el.scrolled, [{ block: 'center', behavior: 'smooth' }], 'Off-screen field is brought back into view');
+    el.rect = { width: 0, height: 0, top: 0, bottom: 0 };
+    assert.equal(focusHeroSearch({ select: true }), false, 'The hidden toolbar of an inactive mode/tab is never focused');
+    assert.equal(el.focused, 3);
+    globalThis.document = { getElementById: () => null };
+    assert.equal(focusHeroSearch(), false);
+  } finally {
+    for (const key of ['document', 'window', 'matchMedia']) {
+      if (previous[key] === undefined) delete globalThis[key];
+      else globalThis[key] = previous[key];
+    }
+  }
+});
+
+test('roster search field is ready for mobile hero typing', () => {
+  const input = (render(HeroRosterToolbar, { ...controls, count: 120 }).match(/<input[^>]*>/) ?? [''])[0];
+  assert.ok(input.includes('id="hero-search"'));
+  assert.match(input, /enterkeyhint="search"/i);
+  assert.match(input, /autocapitalize="off"|autocapitalize="none"/i);
+  assert.match(input, /autocorrect="off"/i);
+  assert.match(input, /spellcheck="false"/i);
 });
 
 test('presentation cleanup preserves canonical tactical source data and image paths', () => {

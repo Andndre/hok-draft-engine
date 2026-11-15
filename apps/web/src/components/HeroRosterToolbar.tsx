@@ -17,13 +17,15 @@ interface Props {
   onViewChange: (mode: ViewMode) => void;
   hideAiSort?: boolean;
   active?: boolean;
+  /** Enter in the search field confirms the first available result (draft action). */
+  onConfirmSearch?: () => void;
 }
 const lanes = [
   { id: 'All', name: 'Semua' }, { id: 'Clash', name: 'Clash' },
   { id: 'Jungle', name: 'Jungle' }, { id: 'Mid', name: 'Mid' },
   { id: 'Farm', name: 'Farm' }, { id: 'Roam', name: 'Roam' },
 ] as const;
-export function HeroRosterToolbar({ title = 'Pilih hero', count, searchQuery, onSearchChange, selectedLane, onLaneChange, sortMode, onSortChange, viewMode, onViewChange, hideAiSort = false, active = true }: Props) {
+export function HeroRosterToolbar({ title = 'Pilih hero', count, searchQuery, onSearchChange, selectedLane, onLaneChange, sortMode, onSortChange, viewMode, onViewChange, hideAiSort = false, active = true, onConfirmSearch }: Props) {
   const search = useRef<HTMLInputElement>(null);
   useEffect(() => {
     if (!active) return;
@@ -48,7 +50,7 @@ export function HeroRosterToolbar({ title = 'Pilih hero', count, searchQuery, on
     </div>
     <div className="roster-toolbar__search-row">
       <div className="search-field"><Search aria-hidden="true" /><label className="sr-only" htmlFor={active ? 'hero-search' : undefined}>Cari hero</label>
-        <input ref={search} id={active ? 'hero-search' : undefined} type="search" autoComplete="off" value={searchQuery} onChange={event => onSearchChange(event.target.value)} placeholder="Cari nama hero atau counter…" />
+        <input ref={search} id={active ? 'hero-search' : undefined} type="search" autoComplete="off" autoCapitalize="off" autoCorrect="off" spellCheck={false} enterKeyHint="search" value={searchQuery} onChange={event => onSearchChange(event.target.value)} onKeyDown={event => { if (event.key !== 'Enter' || event.nativeEvent.isComposing) return; event.preventDefault(); onConfirmSearch?.(); }} placeholder="Cari nama hero atau counter…" />
         {searchQuery ? <button type="button" aria-label="Hapus pencarian" title="Hapus pencarian" onClick={() => { onSearchChange(''); search.current?.focus(); }}><X aria-hidden="true" /></button> : <kbd aria-hidden="true">/</kbd>}
       </div>
       <DropdownSelect<SortMode> label="Urutkan hero" value={effectiveSort} onChange={onSortChange} icon={SortIcon}

@@ -6,6 +6,7 @@ import type { Hero, Lane } from '../types';
 import { isHeroGlobalReleased } from '../data/heroReleaseStatus';
 import { HeroThumbnail } from './ui/AssetThumbnail';
 import { useDialogFocus } from './ui/useDialogFocus';
+import { searchHeroes } from '../heroSearch';
 
 interface Props {
   isOpen: boolean;
@@ -28,10 +29,11 @@ export function PlanSelectionModal({ isOpen, onClose, heroes, currentPlanAId, cu
   const titleId = useId(), searchId = useId();
   useEffect(() => { if (isOpen) { setSlot('A'); setSearch(''); setLane('All'); } }, [isOpen]);
   const ranked = useMemo(() => new Set(recommendedOpeners.map(hero => hero.hero_id)), [recommendedOpeners]);
-  const filtered = useMemo(() => heroes.filter(hero => !onlyGlobalReleased || isHeroGlobalReleased(hero))
-    .filter(hero => lane === 'All' || hero.lanes.includes(lane) || hero.primary_lane === lane)
-    .filter(hero => !search.trim() || (hero.name + ' ' + hero.primary_role).toLowerCase().includes(search.toLowerCase().trim()))
-    .sort((a, b) => Number(ranked.has(b.hero_id)) - Number(ranked.has(a.hero_id)) || a.name.localeCompare(b.name)), [heroes, onlyGlobalReleased, lane, search, ranked]);
+  const filtered = useMemo(() => {
+    const rows = heroes.filter(hero => !onlyGlobalReleased || isHeroGlobalReleased(hero))
+      .filter(hero => lane === 'All' || hero.lanes.includes(lane) || hero.primary_lane === lane);
+    return searchHeroes(rows, search, (a, b) => Number(ranked.has(b.hero_id)) - Number(ranked.has(a.hero_id)) || a.name.localeCompare(b.name));
+  }, [heroes, onlyGlobalReleased, lane, search, ranked]);
   if (!isOpen) return null;
   const choose = (hero: Hero) => {
     if (unavailableHeroIds.has(hero.hero_id)) return;

@@ -7,6 +7,7 @@ import { assignmentToHeroLaneMap, buildDefaultLaneAssignments, swapAssignedLanes
 import { AlertTriangle, BookOpen, FilterX, Gamepad2, RefreshCw, Scan, SearchX, SlidersHorizontal, Star } from 'lucide-react';
 import { HeroRosterToolbar } from './components/HeroRosterToolbar';
 import { focusHeroSearch } from './components/ui/presentation';
+import { searchHeroes, firstSelectableHero } from './heroSearch';
 import { HeaderSortBar } from './components/HeaderSortBar';
 import { HeroCardCompact } from './components/HeroCardCompact';
 import { HeroCardDetailed } from './components/HeroCardDetailed';
@@ -394,6 +395,13 @@ export const App: React.FC = () => {
     updateCurrentDraft((prev) => applyGameHero(prev, hero, { heroes, onlyGlobal: onlyGlobalReleased, fearless: { blue: [...blueFearlessUnavailableIds], red: [...redFearlessUnavailableIds] }, format: draftFormat }, draftFormat));
   };
 
+  // Roster selection: after a pick/ban from a filtered result list, hand the search
+  // field back focused with its query highlighted so the next name can be typed at once.
+  const handleRosterSelectHero = (hero: Hero) => {
+    handleSelectHero(hero);
+    if (searchQuery.trim()) focusHeroSearch({ select: true });
+  };
+
   // Handle two-hero core package selection on double-pick turns
   const handleSelectDuetPackage = (duet: DuetPackageOption) => {
     if (currentTurn.isComplete) return;
@@ -667,18 +675,6 @@ export const App: React.FC = () => {
       );
     }
 
-    // Filter by Search Query
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase().trim();
-      result = result.filter(
-        (h) =>
-          h.name.toLowerCase().includes(q) ||
-          h.chinese_name.toLowerCase().includes(q) ||
-          h.primary_role.toLowerCase().includes(q) ||
-          h.counters.some((c) => c.target_name.toLowerCase().includes(q))
-      );
-    }
-
     // Filter by Tab (Favorites / Counter)
     if (activeTab === 'favorites') {
       result = result.filter((h) => favorites.has(h.hero_id));
@@ -688,24 +684,30 @@ export const App: React.FC = () => {
     const recMap = new Map<number, number>();
     recommendations.forEach((rec, idx) => recMap.set(rec.hero.hero_id, idx + 1));
 
-    // Sort
-    if (sortMode === 'ai' && activeTab === 'draft') {
-      result.sort((a, b) => {
+    const compare = (a: Hero, b: Hero) => {
+      if (sortMode === 'ai' && activeTab === 'draft') {
         const rankA = recMap.get(a.hero_id) ?? 999;
         const rankB = recMap.get(b.hero_id) ?? 999;
         if (rankA !== rankB) return rankA - rankB;
         return b.win_rate - a.win_rate;
-      });
-    } else if (sortMode === 'win') {
-      result.sort((a, b) => b.win_rate - a.win_rate);
-    } else if (sortMode === 'pick') {
-      result.sort((a, b) => b.pick_rate - a.pick_rate);
-    } else if (sortMode === 'az' || sortMode === 'ai') {
-      result.sort((a, b) => a.name.localeCompare(b.name));
-    }
+      }
+      if (sortMode === 'win') return b.win_rate - a.win_rate;
+      if (sortMode === 'pick') return b.pick_rate - a.pick_rate;
+      return a.name.localeCompare(b.name);
+    };
 
-    return result;
+    // A typed query (typo-, apostrophe- and skip-tolerant) always ranks by relevance
+    // first; the chosen sort mode only breaks ties between equally good matches.
+    return searchHeroes(result, searchQuery, compare);
   }, [heroes, selectedLane, searchQuery, activeTab, favorites, recommendations, sortMode, onlyGlobalReleased]);
+
+  // Enter in the search field commits the first result that is still legal. Skipping the
+  // taken ones keeps "type a name, press Enter" working after earlier bans and picks.
+  const handleConfirmHeroSearch = () => {
+    if (activeTab !== 'draft' || currentTurn.isComplete || !searchQuery.trim()) return;
+    const first = firstSelectableHero(filteredAndSortedHeroes, (hero) => !currentDraftUnavailableIds.has(hero.hero_id));
+    if (first) handleRosterSelectHero(first);
+  };
 
   return (
     <div className="app-shell">
@@ -738,7 +740,7 @@ export const App: React.FC = () => {
               blueFearlessUsedHeroes={blueFearlessUsedHeroes}
               redFearlessUsedHeroes={redFearlessUsedHeroes}
               onInspectHero={setWikiHero}
-              onRequestHero={!loading ? focusHeroSearch : undefined}
+              onRequestHero={!loading ? () => focusHeroSearch({ select: true }) : undefined}
               seriesFormat={seriesFormat}
               onSeriesFormatChange={setSeriesFormat}
               blueTeamName={blueTeam === 'A' ? teamAName : teamBName}
@@ -791,7 +793,7 @@ export const App: React.FC = () => {
           )}
           {!loadError && !visionActive && <div className={activeTab === 'draft' ? 'draft-workspace' : ''}>
             <section className="hero-roster" id="hero-roster" aria-label="Katalog hero" aria-busy={loading}>
-              <HeroRosterToolbar title={activeTab === 'favorites' ? 'Hero favorit' : activeTab === 'draft' ? 'Pilih hero untuk ' + (currentTurn.action === 'ban' ? 'ban' : 'pick') : 'Jelajahi hero'} count={filteredAndSortedHeroes.length} searchQuery={searchQuery} onSearchChange={setSearchQuery} selectedLane={selectedLane} onLaneChange={setSelectedLane} sortMode={sortMode} onSortChange={setSortMode} viewMode={viewMode} onViewChange={setViewMode} hideAiSort={activeTab !== 'draft'} />
+              <HeroRosterToolbar title={activeTab === 'favorites' ? 'Hero favorit' : activeTab === 'draft' ? 'Pilih hero untuk ' + (currentTurn.action === 'ban' ? 'ban' : 'pick') : 'Jelajahi hero'} count={filteredAndSortedHeroes.length} searchQuery={searchQuery} onSearchChange={setSearchQuery} onConfirmSearch={handleConfirmHeroSearch} selectedLane={selectedLane} onLaneChange={setSelectedLane} sortMode={sortMode} onSortChange={setSortMode} viewMode={viewMode} onViewChange={setViewMode} hideAiSort={activeTab !== 'draft'} />
               {loading ? <div className="hero-grid" role="status" aria-label="Memuat katalog hero"><span className="sr-only">Memuat database hero…</span>{Array.from({ length: 12 }, (_, index) => <div key={index} className="roster-skeleton" aria-hidden="true" />)}</div>
                 : !filteredAndSortedHeroes.length ? <div className="empty-state">{activeTab === 'favorites' && !favorites.size ? <Star aria-hidden="true" /> : <SearchX aria-hidden="true" />}<h3>{activeTab === 'favorites' && !favorites.size ? 'Belum ada hero favorit' : 'Hero tidak ditemukan'}</h3><p>{activeTab === 'favorites' && !favorites.size ? 'Buka wiki hero, lalu simpan ke favorit.' : 'Coba nama lain atau hapus filter lane yang aktif.'}</p><button type="button" className="ui-button ui-button--quiet" onClick={() => { setSearchQuery(''); setSelectedLane('All'); if (activeTab === 'favorites' && !favorites.size) setActiveTab('wiki'); }}>{activeTab === 'favorites' && !favorites.size ? <BookOpen aria-hidden="true" /> : <FilterX aria-hidden="true" />}{activeTab === 'favorites' && !favorites.size ? 'Jelajahi hero' : 'Bersihkan filter'}</button></div>
                 : <div className={'hero-grid' + (viewMode === 'detailed' ? ' hero-grid--detailed' : '')}>{filteredAndSortedHeroes.map(hero => {
@@ -815,7 +817,7 @@ export const App: React.FC = () => {
                     isUnavailable,
                     unavailableLabel,
                     onClick: setWikiHero,
-                    onSelect: activeTab === 'draft' ? handleSelectHero : undefined,
+                    onSelect: activeTab === 'draft' ? handleRosterSelectHero : undefined,
                     selectionDisabled: currentTurn.isComplete,
                     action: currentTurn.action,
                     aiRank: rank > 0 ? rank : undefined,
