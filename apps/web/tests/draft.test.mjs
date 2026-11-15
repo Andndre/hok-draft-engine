@@ -18,7 +18,7 @@ import {
   getDoublePickWindow,
 } from '../src/engine/draftRules.ts';
 import { rankedCandidates, searchDraft, evaluatePosition } from '../src/engine/draftSearch.ts';
-import { evaluateTacticalScores, evaluateEnemyCounterExposure, reviewedHoKStatsBonuses, runTournamentInference } from '../src/engine/tournamentInference.ts';
+import { evaluateTacticalScores, evaluateEnemyCounterExposure, reviewedHoKStatsBonuses, runTournamentInference, kplPresenceOf } from '../src/engine/tournamentInference.ts';
 import { matchesDecisionTag, OpponentClient } from '../src/engine/opponentClient.ts';
 
 const read = p => JSON.parse(readFileSync(new URL('../public/' + p, import.meta.url), 'utf8'));
@@ -111,6 +111,79 @@ test('default Phase 1 ban avoids blind Liang/Shouyue tunnel-vision and penalizes
   const r1AfterAoyin = runTournamentInference([], [519], [521, 156, 517, 126], [], true, false, heroes, 5, null, null, true, synergy);
   const top10Ids = r1AfterAoyin.recommendations.slice(0, 10).map(r => r.hero.hero_id);
   assert.equal(top10Ids.includes(507), false, 'Pub-only Li Xin (0 KPL matches) is never recommended as R1 tournament opener');
+});
+test('Phase 1 ban never targets a hero the planned opener already counters (Ao\'yin cancels Marco Polo ult)', () => {
+  const aoyin = heroes.find(h => h.hero_id === 519);
+  const marco = heroes.find(h => h.hero_id === 132);
+  assert.ok(aoyin.counters.some(c => c.target_id === marco.hero_id), 'Ao\'yin knockback counter atas Marco Polo berasal dari kurasi data');
+  assert.ok(marco.countered_by.some(c => c.counter_id === aoyin.hero_id && c.severity === 'hard'), 'relasi ter-invert ke countered_by Marco Polo');
+
+  const ban = runTournamentInference([], [], [], [], false, true, heroes, 0, null, null, true, synergy);
+  const opener = heroes.find(h => h.hero_id === ban.phaseStrategy.plannedOpener?.hero_id);
+  assert.ok(opener, 'opener default tersedia');
+  const beatenIds = new Set(opener.counters.map(c => c.target_id));
+  const wasted = ban.recommendations.slice(0, 5).filter(r => beatenIds.has(r.hero.hero_id));
+  assert.deepEqual(wasted.map(r => r.hero.name), [], 'slot ban tidak boleh dihabiskan untuk hero yang sudah di-counter opener sendiri');
+  const marcoRec = ban.recommendations.find(r => r.hero.hero_id === marco.hero_id);
+  assert.ok(marcoRec.choiceScore < 0, 'Marco Polo turun tajam saat opener kita Ao\'yin');
+  assert.match(marcoRec.proComboTag ?? '', /sudah meng-counter/);
+});
+test('KPL opener priority reads recency-weighted presence, not all-time counts', () => {
+  // Artifact KPL membawa dua versi hitungan. Mesin harus memakai yang berbobot 12 bulan,
+  // karena hitungan all-time membuat hero era lama (Dun, Kaizer, Marco Polo) tetap dinilai
+  // sekuat hero meta sekarang. Lihat kplPresenceOf(). Dataset lama tanpa field berbobot
+  // tetap berjalan identik lewat fallback.
+  const stat = (b1, r1, p1, opts = {}) => ({
+    hero_id: opts.id ?? 0,
+    b1_picks: b1, r1_r2_picks: r1, p1_bans: p1, b1_win_rate: opts.wr ?? 0.5,
+    ...(opts.weighted ? {
+      weighted_b1_picks: opts.wb1 ?? b1,
+      weighted_r1_r2_picks: opts.wr1 ?? r1,
+      weighted_p1_bans: opts.wp1 ?? p1,
+      weighted_b1_win_rate: opts.wwr ?? opts.wr ?? 0.5,
+    } : {}),
+  });
+
+  // Medan sintetis: satu hero dominan sekarang, satu hero jaya di masa lalu.
+  const field = {
+    1: stat(400, 400, 800, { id: 1, weighted: true, wb1: 400, wr1: 400, wp1: 800, wwr: 0.5 }),
+    // hero 2: 300 pick all-time tapi hanya 30 di 12 bulan terakhir (era-faded)
+    2: stat(300, 300, 600, { id: 2, weighted: true, wb1: 30, wr1: 30, wp1: 60, wwr: 0.44 }),
+    3: stat(100, 100, 200, { id: 3, weighted: true, wb1: 100, wr1: 100, wp1: 200, wwr: 0.5 }),
+  };
+  const faded = kplPresenceOf(2, field);
+  const current = kplPresenceOf(1, field);
+  assert.ok(faded && current, 'presence tersedia untuk kedua hero');
+  assert.ok(faded.shareRatio < current.shareRatio * 0.25, 'hero era-faded jatuh jauh di bawah hero meta sekarang');
+  assert.ok(faded.b1 < 300, 'hitungan all-time hero faded diturunkan ke padanan meta sekarang');
+  assert.ok(faded.b1WinRate < faded.fieldB1WinRate, 'winrate B1 di bawah baseline medan untuk hero yang kalah sebagai first pick');
+
+  // Tanpa field berbobot: perilaku identik dengan versi lama (tidak ada regresi dataset lama).
+  const legacy = { 7: stat(120, 90, 40, { id: 7 }) };
+  const legacyPresence = kplPresenceOf(7, legacy);
+  assert.equal(legacyPresence.shareRatio, 1, 'hero tunggal mengisi seluruh medan');
+  assert.equal(legacyPresence.b1, 120, 'tanpa field berbobot hitungan all-time dipakai apa adanya');
+  assert.equal(legacyPresence.b1WinRate, null, 'field berbobot wajib ada sebelum winrate B1 dipakai');
+});
+
+test('an all-time-only ban record cannot resurrect a hero who left the draft meta', () => {
+  // Marco Polo: 167 B1 all-time tapi 2,6 di 12 bulan terakhir. Ambang all-time `b1_picks >= 160`
+  // dulu menaruhnya di 10 besar ban fase 1 sisi Red.
+  const redBan = runTournamentInference([], [], [], [], false, false, heroes, 0, null, null, true, synergy);
+  const top10 = redBan.recommendations.slice(0, 10).map(r => r.hero.name);
+  assert.equal(top10.includes('Marco Polo'), false, 'Marco Polo tidak lagi muncul di 10 besar ban fase 1 Red');
+});
+
+test('current-meta openers outrank era-faded ones at B1', () => {
+  const b1 = runTournamentInference([], [], [], [], true, true, heroes, 4, null, null, true, synergy);
+  const rankOf = (name) => b1.recommendations.findIndex(r => r.hero.name === name) + 1;
+  const currentMeta = ['Ao\'yin', 'Dunshan'];
+  const eraFaded = ['Dun', 'Kaizer'];
+  const worstCurrent = Math.max(...currentMeta.map(rankOf));
+  const bestFaded = Math.min(...eraFaded.map(rankOf));
+  assert.ok(worstCurrent < bestFaded, `opener meta sekarang (${currentMeta.join(', ')}) harus di atas hero era-faded (${eraFaded.join(', ')})`);
+  // Tetap bisa direkomendasikan: perbaikan ini mengoreksi bobot, bukan memblokir hero.
+  assert.ok(rankOf('Dun') <= 12 && rankOf('Kaizer') <= 12, 'Dun/Kaizer tetap muncul di papan rekomendasi sesuai konteks');
 });
 test('minimax follows consecutive Red picks and completes bounded iterative deepening', () => {
   const ctx = context(), position = advance(emptyPosition(), ctx, 5);

@@ -263,12 +263,208 @@ export function reviewedHoKStatsBonuses(
 // =============================================================================
 
 /**
+ * Presensi KPL seorang hero, dinormalkan terhadap medan meta SAAT INI.
+ *
+ * `kpl_synergy_matrix.json` membawa dua versi hitungan untuk setiap hero:
+ * all-time (`b1_picks`, `r1_r2_picks`, `p1_bans`) dan berbobot recency 12 bulan
+ * (`weighted_b1_picks`, `weighted_r1_r2_picks`, `weighted_p1_bans`). Versi berbobot
+ * sebelumnya tidak pernah dibaca mesin, sehingga hero yang ramai di era 2019–2022
+ * (Dun 290× B1 → 50,4 berbobot; Kaizer 137× → 25,9) tetap dinilai sekuat hero meta
+ * sekarang, dan ambang all-time seperti `b1_picks >= 160` masih memunculkan hero
+ * yang sudah lama hilang dari draft (Marco Polo 167 all-time → 2,6 berbobot).
+ */
+export interface KplPresence {
+  /** Padanan hitungan all-time — menjaga arti ambang batas lama (`< 60`, `>= 160`, dst.). */
+  b1: number;
+  r1r2: number;
+  p1Bans: number;
+  total: number;
+  /** Hitungan berbobot recency (12 bulan) apa adanya, untuk ditampilkan di UI. */
+  b1Recent: number;
+  r1r2Recent: number;
+  p1BansRecent: number;
+  /** 1.0 = presensi meta saat ini setara hero terkuat di medan; 0.25 = seperempatnya. */
+  shareRatio: number;
+  /** Porsi presensi B1 + ban fase 1 (relevan untuk First Pick blue). */
+  shareRatioBlue: number;
+  /** Porsi presensi R1-R2 + B1 + ban fase 1 (relevan untuk respon merah). */
+  shareRatioRed: number;
+  /** Winrate B1 yang di-shrink ke 50% (null bila sampel berbobot terlalu tipis). */
+  b1WinRate: number | null;
+  /** Sampel B1 berbobot yang mendasari `b1WinRate`. */
+  b1Games: number;
+  /** Rata-rata winrate B1 medan (baseline pembanding), null bila tidak ada sampel. */
+  fieldB1WinRate: number | null;
+  /** True bila artifact membawa field berbobot (dataset lama tidak punya). */
+  weightedField: boolean;
+}
+
+/** Bobot satuan presensi: B1 paling berharga, lalu R1-R2, lalu ban fase 1 (~18% nilai pick). */
+const KPL_UNIT_WEIGHT_B1 = 1.2;
+const KPL_UNIT_WEIGHT_R1R2 = 0.9;
+const KPL_UNIT_WEIGHT_P1BAN = 0.1625;
+/** Jumlah game B1 berbobot minimal sebelum winrate dipakai, plus prior penyusut ke 50%. */
+const KPL_B1_WIN_MIN_GAMES = 8;
+const KPL_B1_WIN_PRIOR_GAMES = 20;
+
+const KPL_PRESENCE_CACHE = new WeakMap<object, Map<number, KplPresence>>();
+
+/**
+ * Membangun tabel presensi KPL untuk seluruh hero dalam satu artifact.
+ *
+ * Dua hal yang dilakukan di sini:
+ * 1. Memilih hitungan berbobot bila tersedia, lalu menskalakannya kembali ke satuan
+ *    all-time (`× totalAllTime / totalWeighted`) supaya semua ambang batas lama tetap
+ *    berarti tanpa perlu dituning ulang. Bila artifact belum punya field berbobot,
+ *    skala = 1 dan perilakunya identik dengan versi sebelumnya.
+ * 2. Menyimpan `shareRatio` = porsi presensi hero terhadap hero terkuat di medan saat ini,
+ *    sehingga bonus presensi punya sebaran nyata (formula lama menjenuh di cap 0,85 untuk
+ *    hampir semua hero dengan > 550 pick, sehingga yang tersisa hanya winrate kasual).
+ */
+function buildKplPresenceTable(b1Openers: Record<string, any>): Map<number, KplPresence> {
+  const entries: Array<{ id: number; stat: any }> = [];
+  for (const [key, stat] of Object.entries(b1Openers || {})) {
+    const id = Number(stat?.hero_id ?? key);
+    if (Number.isFinite(id)) entries.push({ id, stat });
+  }
+
+  let weightedField = false;
+  const totals = { rawB1: 0, rawR1: 0, rawP1: 0, wB1: 0, wR1: 0, wP1: 0 };
+  for (const { stat } of entries) {
+    if (!stat) continue;
+    // Skala all-time → berbobot hanya diturunkan dari hero yang MEMANG membawa kedua versi,
+    // supaya artifact campuran tidak menghasilkan rasio yang bias.
+    if (typeof stat.weighted_b1_picks !== 'number') continue;
+    weightedField = true;
+    totals.rawB1 += stat.b1_picks || 0;
+    totals.rawR1 += stat.r1_r2_picks || 0;
+    totals.rawP1 += stat.p1_bans || 0;
+    totals.wB1 += stat.weighted_b1_picks || 0;
+    totals.wR1 += stat.weighted_r1_r2_picks || 0;
+    totals.wP1 += stat.weighted_p1_bans || 0;
+  }
+
+  const scale = (raw: number, weighted: number) =>
+    weightedField && weighted > 0 && raw > 0 ? raw / weighted : 1;
+  const scaleB1 = scale(totals.rawB1, totals.wB1);
+  const scaleR1 = scale(totals.rawR1, totals.wR1);
+  const scaleP1 = scale(totals.rawP1, totals.wP1);
+
+  const drafts: Array<{ id: number; units: number; blueUnits: number; redUnits: number; row: KplPresence }> = [];
+  let fieldB1WinWeighted = 0;
+  let fieldB1WinNumerator = 0;
+  for (const { id, stat } of entries) {
+    const pick = (key: string, fallback: number, s: number) => {
+      const weightedCount = stat?.[`weighted_${key}`];
+      if (weightedField && typeof weightedCount === 'number') return weightedCount * s;
+      return fallback / (s || 1);
+    };
+    const b1 = weightedField
+      ? pick('b1_picks', stat?.b1_picks || 0, scaleB1)
+      : stat?.b1_picks || 0;
+    const r1r2 = weightedField
+      ? pick('r1_r2_picks', stat?.r1_r2_picks || 0, scaleR1)
+      : stat?.r1_r2_picks || 0;
+    const p1Bans = weightedField
+      ? pick('p1_bans', stat?.p1_bans || 0, scaleP1)
+      : stat?.p1_bans || 0;
+
+    const b1Recent = weightedField && typeof stat?.weighted_b1_picks === 'number'
+      ? stat.weighted_b1_picks
+      : b1;
+    const r1r2Recent = weightedField && typeof stat?.weighted_r1_r2_picks === 'number'
+      ? stat.weighted_r1_r2_picks
+      : r1r2;
+    const p1BansRecent = weightedField && typeof stat?.weighted_p1_bans === 'number'
+      ? stat.weighted_p1_bans
+      : p1Bans;
+
+    const wB1 = b1Recent;
+    const wR1 = r1r2Recent;
+    const wP1 = p1BansRecent;
+    const banUnits = wP1 * KPL_UNIT_WEIGHT_P1BAN;
+    const units = wB1 * KPL_UNIT_WEIGHT_B1 + wR1 * KPL_UNIT_WEIGHT_R1R2 + banUnits;
+    // Pemilihan pertama (B1) dinilai dari rekam jejak first-pick, respon merah (R1-R2) dari pick reaktif.
+    const blueUnits = wB1 * KPL_UNIT_WEIGHT_B1 + banUnits;
+    const redUnits = wR1 * KPL_UNIT_WEIGHT_R1R2 + wB1 * 0.6 + banUnits;
+
+    let b1WinRate: number | null = null;
+    if (weightedField && wB1 >= KPL_B1_WIN_MIN_GAMES) {
+      const observed = typeof stat?.weighted_b1_win_rate === 'number'
+        ? stat.weighted_b1_win_rate
+        : typeof stat?.b1_win_rate === 'number'
+          ? stat.b1_win_rate
+          : null;
+      if (observed !== null) {
+        b1WinRate = (observed * wB1 + 0.5 * KPL_B1_WIN_PRIOR_GAMES) / (wB1 + KPL_B1_WIN_PRIOR_GAMES);
+        fieldB1WinWeighted += wB1;
+        fieldB1WinNumerator += observed * wB1;
+      }
+    }
+
+    drafts.push({
+      id,
+      units,
+      blueUnits,
+      redUnits,
+      row: {
+        b1,
+        r1r2,
+        p1Bans,
+        total: b1 + r1r2 + p1Bans,
+        b1Recent,
+        r1r2Recent,
+        p1BansRecent,
+        shareRatio: 0,
+        shareRatioBlue: 0,
+        shareRatioRed: 0,
+        b1WinRate,
+        b1Games: wB1,
+        fieldB1WinRate: null,
+        weightedField,
+      },
+    });
+  }
+
+  const topUnits = drafts.reduce((max, d) => Math.max(max, d.units), 0);
+  const topBlue = drafts.reduce((max, d) => Math.max(max, d.blueUnits), 0);
+  const topRed = drafts.reduce((max, d) => Math.max(max, d.redUnits), 0);
+  const fieldB1WinRate = fieldB1WinWeighted > 0 ? fieldB1WinNumerator / fieldB1WinWeighted : null;
+  const table = new Map<number, KplPresence>();
+  for (const { id, units, blueUnits, redUnits, row } of drafts) {
+    row.shareRatio = topUnits > 0 ? units / topUnits : 0;
+    row.shareRatioBlue = topBlue > 0 ? blueUnits / topBlue : 0;
+    row.shareRatioRed = topRed > 0 ? redUnits / topRed : 0;
+    row.fieldB1WinRate = fieldB1WinRate;
+    table.set(id, row);
+  }
+  return table;
+}
+
+/** Presensi KPL hero (di-cache per objek `b1Openers`, jadi gratis saat dipanggil ribuan kali). */
+export function kplPresenceOf(
+  heroId: number,
+  b1Openers: Record<string, any> = {}
+): KplPresence | null {
+  if (!b1Openers || typeof b1Openers !== 'object') return null;
+  let table = KPL_PRESENCE_CACHE.get(b1Openers);
+  if (!table) {
+    table = buildKplPresenceTable(b1Openers);
+    KPL_PRESENCE_CACHE.set(b1Openers, table);
+  }
+  return table.get(heroId) ?? null;
+}
+
+/**
  * Menghitung kualitas dasar turnamen hero (Presensi KPL + Tier + Winrate).
  *
  * Catatan Kompetitif:
  * - Tier Diamond+ kasual (HOKFIRE) menganggap hero seperti Li Xin split-push sebagai S-tier.
  *   Namun di KPL, Li Xin memiliki 0 pertandingan. Fungsi ini membatasi tier bonus dan memberi sanksi
  *   pada hero pub-only agar tidak direkomendasikan pada pick pembuka Fase 1 (B1/R1/R2).
+ * - Bonus presensi memakai porsi meta SAAT INI (recency-weighted), bukan hitungan all-time.
+ *   Tanpa ini, cap lama 0,85 membuat hampir semua hero berpresensi tinggi jenuh dan yang
+ *   membedakan mereka hanya winrate/pickrate Diamond+ — sumber bias ke hero pub-stomper.
  */
 export function computeTournamentBaseQuality(
   hero: Hero,
@@ -276,20 +472,22 @@ export function computeTournamentBaseQuality(
   draftStep: number = 5,
   synergyMultiplier: number = 1.0
 ): number {
-  const kplStat = b1Openers[String(hero.hero_id)];
-  const b1Count = kplStat?.b1_picks || 0;
-  const r1Count = kplStat?.r1_r2_picks || 0;
-  const p1Bans = kplStat?.p1_bans || 0;
-  const totalKplPresence = b1Count + r1Count + p1Bans;
+  const kpl = kplPresenceOf(hero.hero_id, b1Openers);
+  const b1Count = kpl?.b1 ?? 0;
+  const r1Count = kpl?.r1r2 ?? 0;
+  const p1Bans = kpl?.p1Bans ?? 0;
+  const totalKplPresence = kpl?.total ?? 0;
 
   let tierBonus = { S: 0.35, A: 0.20, B: 0.05, C: -0.10, D: -0.25 }[hero.tier] ?? 0.0;
   if (totalKplPresence < 50) {
     tierBonus = Math.min(tierBonus, 0.05);
   }
 
-  // Bonus presensi empiris turnamen KPL
-  const kplPresenceBonus =
-    Math.min(0.85, (b1Count * 1.2 + r1Count * 0.9) / 650 + (p1Bans * 0.35) / 1400) * synergyMultiplier;
+  // Bonus presensi empiris turnamen KPL — porsi meta sekarang, cap lama dipertahankan
+  // sebagai plafon agar skala skor tidak bergeser untuk hero terkuat di medan.
+  const kplPresenceBonus = (kpl?.weightedField
+    ? 0.85 * kpl.shareRatio
+    : Math.min(0.85, (b1Count * 1.2 + r1Count * 0.9) / 650 + (p1Bans * 0.35) / 1400)) * synergyMultiplier;
 
   // Penalti hero kasual tanpa presensi turnamen
   const nonTournamentPenalty = totalKplPresence === 0 ? -0.35 : totalKplPresence < 40 ? -0.15 : 0.0;
@@ -310,6 +508,11 @@ export function computeTournamentBaseQuality(
 
 /**
  * Menghitung skor prioritas pembuka (Opener Priority) untuk First Pick B1 atau respon R1+R2.
+ *
+ * Dua sinyal presensi dipakai, keduanya recency-weighted:
+ * - `shareRatio`: seberapa besar porsi hero ini di meta draft SEKARANG (bukan all-time).
+ * - `b1WinRate`: apakah hero ini benar-benar menang saat di-first-pick, di-shrink ke 50%
+ *   supaya sampel kecil tidak menghasilkan penalti ekstrem.
  */
 function computeOpenerPriorityScore(
   hero: Hero,
@@ -317,11 +520,11 @@ function computeOpenerPriorityScore(
   forBlueSide: boolean,
   onlyGlobal: boolean = true
 ): number {
-  const kplStat = b1Openers[String(hero.hero_id)];
-  const b1Count = kplStat?.b1_picks || 0;
-  const r1Count = kplStat?.r1_r2_picks || 0;
-  const p1Bans = kplStat?.p1_bans || 0;
-  const totalKplPresence = b1Count + r1Count + p1Bans;
+  const kpl = kplPresenceOf(hero.hero_id, b1Openers);
+  const b1Count = kpl?.b1 ?? 0;
+  const r1Count = kpl?.r1r2 ?? 0;
+  const p1Bans = kpl?.p1Bans ?? 0;
+  const totalKplPresence = kpl?.total ?? 0;
 
   let tierWeight = { S: 0.55, A: 0.30, B: 0.10, C: -0.15, D: -0.40 }[hero.tier] ?? 0;
   if (totalKplPresence < 50) {
@@ -340,9 +543,19 @@ function computeOpenerPriorityScore(
   // Hero channeled suppress (Liang) adalah situational lockdown, bukan blind B1 opener
   const blindSuppressAdjustment = hero.tactical_profile?.tags.suppress === true ? -0.30 : 0;
 
-  const kplOpenerBonus = forBlueSide
-    ? Math.min(0.75, b1Count / 260) + Math.min(0.30, p1Bans / 2000)
-    : Math.min(0.75, r1Count / 350 + b1Count / 500) + Math.min(0.30, p1Bans / 2000);
+  const kplOpenerBonus = kpl?.weightedField
+    ? 0.75 * (forBlueSide ? kpl.shareRatioBlue : kpl.shareRatioRed)
+    : forBlueSide
+      ? Math.min(0.75, b1Count / 260) + Math.min(0.30, p1Bans / 2000)
+      : Math.min(0.75, r1Count / 350 + b1Count / 500) + Math.min(0.30, p1Bans / 2000);
+
+  // Rekam jejak First Pick: hero yang kalah saat di-B1 tidak layak jadi opener buta.
+  // Baseline-nya rata-rata medan (sisi biru menang > 50% di B1), bukan 50% mentah.
+  const b1OutcomeTerm =
+    kpl?.b1WinRate != null && kpl.fieldB1WinRate != null
+      ? Math.max(-0.35, Math.min(0.35, (kpl.b1WinRate - kpl.fieldB1WinRate) * 3.0))
+      : 0;
+
   const banRateBonus = Math.min(0.25, (hero.ban_rate || 0) * 4.0);
   const flexBonus = hero.lanes.length > 1 ? 0.10 : 0;
 
@@ -351,6 +564,7 @@ function computeOpenerPriorityScore(
     hero.pick_rate * 2.0 +
     tierWeight +
     kplOpenerBonus +
+    b1OutcomeTerm +
     banRateBonus +
     flexBonus +
     blindSuppressAdjustment +
@@ -1451,6 +1665,22 @@ export function runTournamentInference(
     };
   };
 
+  /**
+   * Helper: apakah `opener` justru meng-counter `cand` (salah satu arah relasi).
+   * Ban untuk hero seperti ini sia-sia: kita justru ingin lawan mengambil matchup itu.
+   */
+  const getOpenerAdvantageAgainst = (
+    cand: Hero,
+    opener: Hero
+  ): { countered: boolean; severity: 'hard' | 'soft' | null } => {
+    const direct = opener.counters?.find((c) => c.target_id === cand.hero_id);
+    const reverse = cand.countered_by?.find((c) => c.counter_id === opener.hero_id);
+    return {
+      countered: Boolean(direct || reverse),
+      severity: direct?.severity || reverse?.severity || null,
+    };
+  };
+
   // Cek counter apa saja dari `plannedOpener` yang sudah berhasil di-ban pada sesi draft ini
   const bannedOpenerCounters: string[] = [];
   if (plannedOpener) {
@@ -1506,9 +1736,9 @@ export function runTournamentInference(
       if (isImmobileCarry) {
         score -= 2.2;
       }
-      const kplOpenerInfo = b1Openers[String(cand.hero_id)];
-      const p1BansCount = kplOpenerInfo?.p1_bans || 0;
-      const totalKplPresence = (kplOpenerInfo?.b1_picks || 0) + (kplOpenerInfo?.r1_r2_picks || 0) + p1BansCount;
+      const kplOpenerInfo = kplPresenceOf(cand.hero_id, b1Openers);
+      const p1BansCount = kplOpenerInfo?.p1Bans ?? 0;
+      const totalKplPresence = kplOpenerInfo?.total ?? 0;
       const isCompetitiveSTier = cand.tier === 'S' && totalKplPresence >= 50;
 
       if (isBlueSide) {
@@ -1520,7 +1750,14 @@ export function runTournamentInference(
           proComboTag = `👑 Simpan untuk First-Pick B1 Kita!`;
         } else if (plannedOpener) {
           const counterCheck = getCounterStrengthAgainst(cand, plannedOpener);
-          if (hasExplicitUserPlan && counterCheck.isCounter) {
+          const openerAdvantage = getOpenerAdvantageAgainst(cand, plannedOpener);
+          if (openerAdvantage.countered && !counterCheck.isCounter) {
+            // 2A-0. Opener kita justru meng-counter hero ini: mem-ban-nya membuang slot ban
+            // dan menghilangkan matchup yang menguntungkan kita.
+            score -= openerAdvantage.severity === 'hard' ? 1.30 : 0.70;
+            laneTag = `Bukan Ancaman ${plannedOpener.name}`;
+            proComboTag = `🛡️ ${plannedOpener.name} sudah meng-counter ${cand.name} — ban ini sia-sia`;
+          } else if (hasExplicitUserPlan && counterCheck.isCounter) {
             // 2A. Pengguna mengunci Plan A/B: utamakan ban hard counter terhadap hero tersebut
             const prebanBoost = Math.min(0.55, counterCheck.counterWeight / 160);
             score += 1.25 + prebanBoost;
@@ -1538,7 +1775,7 @@ export function runTournamentInference(
                 Math.min(0.40, (cand.ban_rate || 0) * 6.5);
               score += metaThreatBoost;
               laneTag = 'Ancaman R1+R2 Red';
-              proComboTag = `🚫 Meta Threat R1+R2 (${p1BansCount}x Phase-1 Ban KPL)`;
+              proComboTag = `🚫 Meta Threat R1+R2 (${Math.round(kplOpenerInfo?.p1BansRecent ?? 0)}x Phase-1 Ban · 12 bln)`;
             }
             if (counterCheck.isCounter && (p1BansCount >= 80 || isCompetitiveSTier || (cand.tier === 'A' && totalKplPresence >= 50))) {
               score += 0.35 + Math.min(0.20, counterCheck.counterWeight / 220);
@@ -1560,7 +1797,7 @@ export function runTournamentInference(
           // Deny Hero S-Tier Utama Pembuka B1 Blue!
           score += 1.35;
           laneTag = 'Wajib Deny B1 Blue';
-          proComboTag = `🚫 Cegah Blue First-Pick ${cand.name} di B1 (${kplOpenerInfo?.b1_picks || 'Top'}x B1 KPL)`;
+          proComboTag = `🚫 Cegah Blue First-Pick ${cand.name} di B1 (${Math.round(kplOpenerInfo?.b1Recent ?? 0)}x B1 / 12 bln)`;
         } else if (isBlueB1Threat && isUserExplicitPlanned) {
           // User accidentally picked Blue's top opener as Red's Plan A
           score += 0.85;
@@ -1572,17 +1809,22 @@ export function runTournamentInference(
           proComboTag = `👑 Simpan untuk R1+R2 Pick Kita!`;
         } else if (plannedOpener) {
           const counterCheck = getCounterStrengthAgainst(cand, plannedOpener);
-          if (hasExplicitUserPlan && counterCheck.isCounter) {
+          const openerAdvantage = getOpenerAdvantageAgainst(cand, plannedOpener);
+          if (openerAdvantage.countered && !counterCheck.isCounter) {
+            score -= openerAdvantage.severity === 'hard' ? 1.30 : 0.70;
+            laneTag = `Bukan Ancaman ${plannedOpener.name}`;
+            proComboTag = `🛡️ ${plannedOpener.name} sudah meng-counter ${cand.name} — ban ini sia-sia`;
+          } else if (hasExplicitUserPlan && counterCheck.isCounter) {
             score += 1.05 + Math.min(0.40, counterCheck.counterWeight / 180);
             laneTag = `Counter ${plannedOpener.name}`;
             proComboTag = `🛡️ Amankan R1+R2 ${plannedOpener.name}: Ban Counter Utama`;
-          } else if (isCompetitiveSTier || (kplOpenerInfo?.b1_picks || 0) >= 160 || p1BansCount >= 500) {
+          } else if (isCompetitiveSTier || (kplOpenerInfo?.b1 ?? 0) >= 160 || p1BansCount >= 500) {
             score +=
               (isCompetitiveSTier ? 0.55 : 0.25) +
-              Math.min(0.45, (kplOpenerInfo?.b1_picks || 0) / 400) +
+              Math.min(0.45, (kplOpenerInfo?.b1 ?? 0) / 400) +
               Math.min(0.35, p1BansCount / 1200);
             laneTag = 'Ancaman B1 Blue';
-            proComboTag = `🚫 Potensi First-Pick B1 Blue (${kplOpenerInfo?.b1_picks || 0}x B1 KPL)`;
+            proComboTag = `🚫 Potensi First-Pick B1 Blue (${Math.round(kplOpenerInfo?.b1Recent ?? 0)}x B1 / 12 bln)`;
           } else if (counterCheck.isCounter) {
             score += 0.45 + Math.min(0.25, counterCheck.counterWeight / 220);
             laneTag = `Counter ${plannedOpener.name}`;
@@ -1596,9 +1838,9 @@ export function runTournamentInference(
     // FASE 2: PICK PHASE 1 (Steps 4..9 / Ranked Pick Awal) — Amankan Opener, Kombo KPL & Respon
     // -------------------------------------------------------------------------
     else if (phaseId === 'PICK_PHASE_1' || (phaseId === 'RANKED_PICK' && ourHeroes.length < 3)) {
-      const kplOpenerInfo = b1Openers[String(cand.hero_id)];
+      const kplOpenerInfo = kplPresenceOf(cand.hero_id, b1Openers);
       const hasKplOpenerCredibility =
-        (kplOpenerInfo?.b1_picks || 0) >= 90 || (kplOpenerInfo?.r1_r2_picks || 0) >= 180;
+        (kplOpenerInfo?.b1 ?? 0) >= 90 || (kplOpenerInfo?.r1r2 ?? 0) >= 180;
       // Pemeriksaan Okupansi Lane dengan Flex Reassignment & Guard Support Role
       if (ourHeroes.length > 0) {
         const laneFit = evaluatePickLaneFit(
@@ -1632,10 +1874,10 @@ export function runTournamentInference(
         score += openerBoost;
         if (
           !proComboTag &&
-          ((kplOpenerInfo?.b1_picks || 0) >= 80 || (kplOpenerInfo?.r1_r2_picks || 0) >= 180) &&
+          ((kplOpenerInfo?.b1 ?? 0) >= 80 || (kplOpenerInfo?.r1r2 ?? 0) >= 180) &&
           exposure.counterCount === 0
         ) {
-          proComboTag = `👑 Prioritas Pembuka Turnamen (${kplOpenerInfo.b1_picks}x B1 / ${kplOpenerInfo.r1_r2_picks}x R1-R2 KPL)`;
+          proComboTag = `👑 Prioritas Pembuka Turnamen (${Math.round(kplOpenerInfo?.b1Recent ?? 0)}x B1 / ${Math.round(kplOpenerInfo?.r1r2Recent ?? 0)}x R1-R2 · 12 bln terakhir)`;
         }
       } else if (draftStep === 4 && isImmobileCarry && cand.hero_id !== plannedOpener?.hero_id) {
         score -= 2.0;

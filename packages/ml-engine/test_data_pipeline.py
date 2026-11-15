@@ -5,7 +5,7 @@ import unittest
 import sqlite3
 from pathlib import Path
 from publish_data import build_package, write_package
-from dataset_sources import load_source_heroes
+from dataset_sources import apply_counter_overrides, load_source_heroes
 from tactical_profiles import TAGS, approved_profiles, create_proposal, generate_batch_proposals, global_released_heroes, has_source_evidence, source_material, validate_proposal
 from export_draft_benchmark import export, SEQUENCE
 from extract_kpl_synergy import extract_lane_rates, extract_tempo_curves
@@ -104,6 +104,22 @@ class DataPipelineTests(unittest.TestCase):
         self.assertEqual(len({hero["hero_id"] for hero in targets}), 120)
         self.assertTrue(all(has_source_evidence(hero) for hero in targets))
         self.assertTrue(any("HoKStats" in [source["source"] for source in source_material(hero)] for hero in targets))
+
+    def test_curated_counter_overrides_merge_both_directions_once(self):
+        heroes = [
+            {"hero_id": 519, "name": "Ao'yin", "counters": [], "countered_by": []},
+            {"hero_id": 132, "name": "Marco Polo", "counters": [], "countered_by": []},
+        ]
+        relation = {"counter_id": 519, "target_id": 132, "severity": "hard", "reason": "Knockback skill 3 memutus ultimate."}
+        merged = apply_counter_overrides(heroes, [relation])
+        self.assertEqual(merged[0]["counters"], [{"target_id": 132, "target_name": "Marco Polo", "severity": "hard", "reason": relation["reason"]}])
+        self.assertEqual(merged[1]["countered_by"], [{"counter_id": 519, "counter_name": "Ao'yin", "severity": "hard", "reason": relation["reason"]}])
+        self.assertEqual(heroes[0]["counters"], [], "kurasi tidak boleh memutasi roster sumber")
+        again = apply_counter_overrides(merged, [relation])
+        self.assertEqual(len(again[0]["counters"]), 1)
+        self.assertEqual(len(again[1]["countered_by"]), 1)
+        with self.assertRaises(ValueError):
+            apply_counter_overrides(heroes, [{**relation, "target_id": 9999}])
 
     def test_immutable_collision_leaves_existing_manifest_intact(self):
         manifest_v1, texts_v1 = build_package([self.hero], {}, self.releases)

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "note": "Kurasi matchup yang tidak muncul di artikel counter Kurohiko. Dibaca oleh dataset_sources.load_source_heroes(), jadi berlaku untuk publish_data.py dan pembuatan proposal taktis. Setiap entri wajib menyebut alasan mekanis (skill/CC), bukan opini tier, dan ditambahkan ke kedua arah (counters + countered_by) secara idempoten.",
+  "relations": [
+    {
+      "counter_id": 519,
+      "target_id": 132,
+      "severity": "hard",
+      "reason": "Knockback skill 3 Ao'yin memutus kanal ultimate Marco Polo, dan Marco Polo tidak punya cara menembus CC beruntun. Begitu ultinya ter-cancel, damage inti timnya hilang.",
+      "reviewed_by": "Draft engine curation",
+      "reviewed_at": "2026-11-16"
+    }
+  ]
+}
