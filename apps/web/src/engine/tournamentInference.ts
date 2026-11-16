@@ -456,15 +456,64 @@ export function kplPresenceOf(
 }
 
 /**
- * Menghitung kualitas dasar turnamen hero (Presensi KPL + Tier + Winrate).
+ * Estimasi kekuatan kompetitif hero (0..1) untuk simulasi tournament.
+ *
+ * YANG TIDAK DIPAKAI: "tier" S/A/B/C dari HoK Camp. Itu **popularity band per
+ * posisi** — seberapa sering hero dipakai/dibanned di ladder — bukan tier
+ * kekuatan. Sumber resminya sendiri menulis: "Popularity is not a strength tier
+ * list." Buktinya di data kita: Angela & Daji punya band S (paling dipilih) tetapi
+ * winrate KPL-nya hanya ~44-46%; Arli band B justru winrate KPL ~51%.
+ *
+ * YANG DIPAKAI:
+ * - Winrate KPL pro (populasi yang disimulasikan), dishrink ke 50% sesuai ukuran
+ *   sampel supaya hero dengan 5 pick tidak dapat nilai ekstrem.
+ * - Bila sampel KPL tipis, sisanya diisi winrate ranked (Diamond+) dengan bobot
+ *   confidence yang sama. Winrate ranked sudah membawa label sumbernya sendiri
+ *   (`win_rate_source`), jadi tidak tercampur diam-diam.
+ */
+export function competitiveStrength(hero: Hero): number {
+  const PRIOR = 40;
+  // Winrate KPL berbobot recency (12 bulan) dipakai lebih dulu; all-time jadi cadangan.
+  const matches = hero.kpl_weighted_matches ?? hero.kpl_matches ?? 0;
+  const kplWr = hero.kpl_weighted_win_rate ?? hero.kpl_win_rate;
+  const kplShrunk =
+    kplWr != null && matches > 0 ? (kplWr * matches + 0.5 * PRIOR) / (matches + PRIOR) : null;
+  const kplWeight = kplShrunk != null ? matches / (matches + PRIOR) : 0;
+  // Kalau winrate hero justru berasal dari KPL, jangan dihitung dua kali.
+  const rankedWeight =
+    hero.win_rate_source === 'kpl'
+      ? 0
+      : (1 - kplWeight) * (hero.win_rate_source === 'ranked' ? 1 : 0.35);
+  const neutral = Math.max(0, 1 - kplWeight - rankedWeight);
+  return (
+    kplWeight * (kplShrunk ?? 0.5) +
+    rankedWeight * (hero.win_rate ?? 0.5) +
+    neutral * 0.5
+  );
+}
+
+/**
+
+/**
+ * Kekuatan kompetitif hero dalam persen — dipakai untuk teks rekomendasi yang
+ * lebih jujur daripada "Tier S" (yang sebenarnya cuma popularitas).
+ */
+export function candidateStrengthPct(hero: Hero): number {
+  return competitiveStrength(hero) * 100;
+}
+
+/**
+ * Menghitung kualitas dasar turnamen hero (Presensi KPL + Kekuatan Kompetitif).
  *
  * Catatan Kompetitif:
- * - Tier Diamond+ kasual (HOKFIRE) menganggap hero seperti Li Xin split-push sebagai S-tier.
- *   Namun di KPL, Li Xin memiliki 0 pertandingan. Fungsi ini membatasi tier bonus dan memberi sanksi
- *   pada hero pub-only agar tidak direkomendasikan pada pick pembuka Fase 1 (B1/R1/R2).
- * - Bonus presensi memakai porsi meta SAAT INI (recency-weighted), bukan hitungan all-time.
- *   Tanpa ini, cap lama 0,85 membuat hampir semua hero berpresensi tinggi jenuh dan yang
- *   membedakan mereka hanya winrate/pickrate Diamond+ — sumber bias ke hero pub-stomper.
+ * - Popularity band resmi TIDAK dipakai di sini. Band S hanya berarti "sering
+ *   dipilih", dan hero yang sering dipilih belum tentu kuat diPAREN tournament resmi
+ *   (lihat `competitiveStrength()`).
+ * - Winrate yang dipakai adalah winrate KPL pro (populasi simulator), dishrink
+ *   menurut ukuran sampel, dengan fallback winrate ranked untuk hero yang belum
+ *   pernah tampil di KPL.
+ * - Hero tanpa presensi turnamen tetap disanksi agar tidak direkomendasikan
+ *   pada pick pembuka Fase 1 (B1/R1/R2).
  */
 export function computeTournamentBaseQuality(
   hero: Hero,
@@ -478,11 +527,6 @@ export function computeTournamentBaseQuality(
   const p1Bans = kpl?.p1Bans ?? 0;
   const totalKplPresence = kpl?.total ?? 0;
 
-  let tierBonus = { S: 0.35, A: 0.20, B: 0.05, C: -0.10, D: -0.25 }[hero.tier] ?? 0.0;
-  if (totalKplPresence < 50) {
-    tierBonus = Math.min(tierBonus, 0.05);
-  }
-
   // Bonus presensi empiris turnamen KPL — porsi meta sekarang, cap lama dipertahankan
   // sebagai plafon agar skala skor tidak bergeser untuk hero terkuat di medan.
   const kplPresenceBonus = (kpl?.weightedField
@@ -493,12 +537,12 @@ export function computeTournamentBaseQuality(
   const nonTournamentPenalty = totalKplPresence === 0 ? -0.35 : totalKplPresence < 40 ? -0.15 : 0.0;
   const earlyNonOpenerPenalty = draftStep >= 4 && draftStep <= 6 && b1Count + r1Count < 60 ? -0.60 : 0.0;
 
-  const rawWrDelta = (hero.win_rate - 0.48) * 1.5;
-  const adjustedWrDelta = rawWrDelta > 0 ? rawWrDelta * synergyMultiplier : rawWrDelta;
+  // Kekuatan kompetitif (KPL pro > ranked, dishrink) menggantikan bonus "tier".
+  const strengthDelta = (competitiveStrength(hero) - 0.5) * 6.5;
+  const adjustedStrengthDelta = strengthDelta > 0 ? strengthDelta * synergyMultiplier : strengthDelta;
 
   return (
-    adjustedWrDelta +
-    tierBonus +
+    adjustedStrengthDelta +
     hero.pick_rate * 1.8 +
     kplPresenceBonus +
     nonTournamentPenalty +
@@ -525,11 +569,6 @@ function computeOpenerPriorityScore(
   const r1Count = kpl?.r1r2 ?? 0;
   const p1Bans = kpl?.p1Bans ?? 0;
   const totalKplPresence = kpl?.total ?? 0;
-
-  let tierWeight = { S: 0.55, A: 0.30, B: 0.10, C: -0.15, D: -0.40 }[hero.tier] ?? 0;
-  if (totalKplPresence < 50) {
-    tierWeight = Math.min(tierWeight, 0.0);
-  }
 
   // Penalti carry statis & hero tanpa kredibilitas turnamen
   let openerPenalty = 0;
@@ -559,10 +598,12 @@ function computeOpenerPriorityScore(
   const banRateBonus = Math.min(0.25, (hero.ban_rate || 0) * 4.0);
   const flexBonus = hero.lanes.length > 1 ? 0.10 : 0;
 
+  // Kekuatan kompetitif menggantikan bonus "tier" (popularity band bukan kekuatan).
+  const strengthTerm = (competitiveStrength(hero) - 0.5) * 9.8;
+
   return (
-    (hero.win_rate - 0.48) * 1.8 +
+    strengthTerm +
     hero.pick_rate * 2.0 +
-    tierWeight +
     kplOpenerBonus +
     b1OutcomeTerm +
     banRateBonus +
@@ -752,8 +793,9 @@ export function computeDraftOutcomeProjection(
   // hero Tier S / A pro openers memiliki tournament equity lebih tinggi dari pub Diamond biasa.
   const isEarlyPhasePick = isPickPhase && (draftStep <= 8 || ourHeroes.length <= 1);
   if (isEarlyPhasePick) {
-    if (candidate.tier === 'S') baseScore = Math.max(54, baseScore + 5);
-    else if (candidate.tier === 'A') baseScore = Math.max(52, baseScore + 3);
+    const candidateStrength = competitiveStrength(candidate);
+    if (candidateStrength >= 0.53) baseScore = Math.max(54, baseScore + 5);
+    else if (candidateStrength >= 0.515) baseScore = Math.max(52, baseScore + 3);
   }
 
   if (!isPickPhase) {
@@ -773,10 +815,7 @@ export function computeDraftOutcomeProjection(
           !(isBlueSide && draftStep <= 3 && plannedOpener && a.hero_id === plannedOpener.hero_id) &&
           (a.primary_lane === effectiveLane || a.lanes.includes(effectiveLane))
       )
-      .sort((a, b) => {
-        const tierRank = (t: string) => (t === 'S' ? 4 : t === 'A' ? 3 : t === 'B' ? 2 : 1);
-        return (tierRank(b.tier) * 0.15 + b.win_rate) - (tierRank(a.tier) * 0.15 + a.win_rate);
-      });
+      .sort((a, b) => competitiveStrength(b) - competitiveStrength(a));
 
     const alt1 = openAlternatives[0];
     const alt2 = openAlternatives[1];
@@ -822,9 +861,9 @@ export function computeDraftOutcomeProjection(
     } else if (enemyComboPartner) {
       bestCaseScore = Math.min(95, baseScore + 8);
       bestCaseScenario = `Putus Kombo KPL: Mematikan duet maut ${enemyComboPartner.name} + ${candidate.name} (${Math.round(enemyComboWr * 100)}% WR, +8% keunggulan)`;
-    } else if (candidate.tier === 'S' || candidate.win_rate >= 0.52) {
+    } else if (competitiveStrength(candidate) >= 0.52) {
       bestCaseScore = Math.min(93, baseScore + 6);
-      bestCaseScenario = `Deny S-Tier: Menghapus power-pick ${candidate.name} (${effectiveLane}) dari ${enemyTargetSlot} (+6%)`;
+      bestCaseScenario = `Deny Power Pick: Menghapus ${candidate.name} (kekuatan ${Math.round(candidateStrengthPct(candidate))}%, ${effectiveLane}) dari ${enemyTargetSlot} (+6%)`;
     } else {
       bestCaseScore = Math.min(92, baseScore + 5);
       bestCaseScenario = `Kunci Jalur: Mempersempit pool ${effectiveLane} lawan dan mengamankan tempo draft (+5%)`;
@@ -835,19 +874,20 @@ export function computeDraftOutcomeProjection(
     let worstCaseScenario = '';
     let riskLevel: 'RENDAH' | 'SEDANG' | 'TINGGI' = 'RENDAH';
 
-    if (alt1 && (alt1.tier === 'S' || alt1.tier === 'A' || alt1.win_rate >= 0.51)) {
-      const penalty = alt1.tier === 'S' ? 8 : 6;
+    if (alt1 && competitiveStrength(alt1) >= 0.51) {
+      const alt1Strength = competitiveStrength(alt1);
+      const penalty = alt1Strength >= 0.53 ? 8 : 6;
       worstCaseScore = Math.max(25, baseScore - penalty);
-      if (alt2 && (alt2.tier === 'S' || alt2.tier === 'A')) {
+      if (alt2 && competitiveStrength(alt2) >= 0.51) {
         worstCaseScenario = `Pivot Lawan: Ban ${candidate.name} menyisakan ${alt1.name} atau ${alt2.name} open di ${effectiveLane} (-${penalty}%)`;
       } else {
-        worstCaseScenario = `Pivot Lawan: Lawan masih bisa mengamankan ${alt1.name} (Tier ${alt1.tier}, ${Math.round(alt1.win_rate * 100)}% WR) di ${effectiveLane} (-${penalty}%)`;
+        worstCaseScenario = `Pivot Lawan: Lawan masih bisa mengamankan ${alt1.name} (kekuatan ${Math.round(candidateStrengthPct(alt1))}%) di ${effectiveLane} (-${penalty}%)`;
       }
-      riskLevel = alt1.tier === 'S' ? 'SEDANG' : 'RENDAH';
+      riskLevel = alt1Strength >= 0.53 ? 'SEDANG' : 'RENDAH';
     } else if (alt1) {
       const penalty = 4;
       worstCaseScore = Math.max(30, baseScore - penalty);
-      worstCaseScenario = `Lane Terkunci: Opsi pengganti lawan di ${effectiveLane} turun ke ${alt1.name} (Tier ${alt1.tier}) (-${penalty}%)`;
+      worstCaseScenario = `Lane Terkunci: Opsi pengganti lawan di ${effectiveLane} turun ke ${alt1.name} (kekuatan ${Math.round(candidateStrengthPct(alt1))}%) (-${penalty}%)`;
       riskLevel = 'RENDAH';
     } else {
       worstCaseScore = baseScore;
@@ -1739,7 +1779,12 @@ export function runTournamentInference(
       const kplOpenerInfo = kplPresenceOf(cand.hero_id, b1Openers);
       const p1BansCount = kplOpenerInfo?.p1Bans ?? 0;
       const totalKplPresence = kplOpenerInfo?.total ?? 0;
-      const isCompetitiveSTier = cand.tier === 'S' && totalKplPresence >= 50;
+      // "Meta threat" ditentukan dari bukti, bukan popularity band: hero yang kuat
+      // (kekuatan kompetitif tinggi) DAN dipakai luas di meta (shareRatio).
+      const candStrength = competitiveStrength(cand);
+      const metaShare = kplOpenerInfo?.shareRatio ?? 0;
+      const isCompetitiveSTier = candStrength >= 0.53 && totalKplPresence >= 50 && metaShare >= 0.2;
+      const isSolidMeta = candStrength >= 0.515 && totalKplPresence >= 50;
 
       if (isBlueSide) {
         // SISI BLUE (Keuntungan First-Pick B1):
@@ -1770,14 +1815,14 @@ export function runTournamentInference(
             // 2B. Prioritaskan ancaman meta R1+R2 Red
             if (p1BansCount >= 120 || cand.ban_rate >= 0.025 || isCompetitiveSTier) {
               const metaThreatBoost =
-                (isCompetitiveSTier ? 0.50 : cand.tier === 'A' && totalKplPresence >= 50 ? 0.25 : 0.10) +
+                (isCompetitiveSTier ? 0.50 : isSolidMeta ? 0.25 : 0.10) +
                 Math.min(0.65, p1BansCount / 850) +
                 Math.min(0.40, (cand.ban_rate || 0) * 6.5);
               score += metaThreatBoost;
               laneTag = 'Ancaman R1+R2 Red';
               proComboTag = `🚫 Meta Threat R1+R2 (${Math.round(kplOpenerInfo?.p1BansRecent ?? 0)}x Phase-1 Ban · 12 bln)`;
             }
-            if (counterCheck.isCounter && (p1BansCount >= 80 || isCompetitiveSTier || (cand.tier === 'A' && totalKplPresence >= 50))) {
+            if (counterCheck.isCounter && (p1BansCount >= 80 || isCompetitiveSTier || isSolidMeta)) {
               score += 0.35 + Math.min(0.20, counterCheck.counterWeight / 220);
               laneTag = `Counter ${plannedOpener.name}`;
               proComboTag = `🎯 Amankan B1 ${plannedOpener.name} & Deny Meta R1+R2`;

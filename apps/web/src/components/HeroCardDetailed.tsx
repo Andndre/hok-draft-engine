@@ -32,7 +32,12 @@ export function HeroCardDetailed({
     <article className={'hero-card hero-card--detailed' + (isSelected ? ' is-selected' : '') + (isUnavailable ? ' is-unavailable' : '') + (showHoverCard ? ' has-hovercard-open' : '')}>
       <button type="button" className="hero-card__cover" onClick={() => onClick(hero)} aria-label={'Buka wiki ' + hero.name}>
         <HeroThumbnail hero={hero} className="hero-card__portrait" />
-        <span className={'tier-label tier-' + hero.tier}>{hero.tier}</span>
+        <span
+          className={'tier-label tier-' + (hero.popularity_band ?? 'C')}
+          title="Popularitas di HoK Camp (seberapa sering dipilih/dibanned) — bukan tier kekuatan"
+        >
+          {hero.popularity_band ?? '—'}
+        </span>
         {aiRank !== undefined && aiRank <= 5 && (
           <div className="hero-card__ai-group" onClick={(e) => e.stopPropagation()}>
             <button
@@ -52,7 +57,12 @@ export function HeroCardDetailed({
                 <div className="tactical-hovercard__header">
                   <span className="tactical-hovercard__rank">AI #{aiRank}</span>
                   <strong>{hero.name}</strong>
-                  <span className={'tier-label tier-' + hero.tier}>{hero.tier}</span>
+                  <span
+                    className={'tier-label tier-' + (hero.popularity_band ?? 'C')}
+                    title="Popularitas di HoK Camp (seberapa sering dipilih/dibanned) — bukan tier kekuatan"
+                  >
+                    {hero.popularity_band ?? '—'}
+                  </span>
                 </div>
                 {recommendationReason && (
                   <p className="tactical-hovercard__reason">{plainText(recommendationReason)}</p>

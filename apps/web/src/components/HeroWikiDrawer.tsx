@@ -341,7 +341,12 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                 className="absolute top-0 left-0 w-6 h-6 bg-[#EF4444] flex items-start justify-start p-0.5"
                 style={{ clipPath: 'polygon(0 0, 100% 0, 0 100%)' }}
               >
-                <span className="text-xs font-black text-black">{hero.tier}</span>
+                <span
+                  className="text-xs font-black text-black"
+                  title="Popularitas di HoK Camp (seberapa sering dipilih/dibanned) — bukan tier kekuatan"
+                >
+                  {hero.popularity_band ?? '—'}
+                </span>
               </div>
             </div>
 

@@ -20,7 +20,7 @@ import type {
 } from "../types";
 import { ALL_LANES, assignHeroLanes, oppositeSide } from "./draftRules";
 import type { KplLaneRateMap, Side } from "./draftRules";
-import { evaluateTacticalScores } from "./tournamentInference";
+import { evaluateTacticalScores, competitiveStrength } from "./tournamentInference";
 
 export type TempoCurveMap = Record<string, HeroTempoCurve>;
 
@@ -971,7 +971,10 @@ export function deriveWinningCondition(
         threats,
         weight:
           threats.length * 2 +
-          (enemy.tier === "S" ? 1.5 : enemy.tier === "A" ? 0.8 : 0),
+          // Power pick ditentukan dari kontestasi (ban rate) + kekuatan kompetitif,
+          // bukan dari popularity band resmi.
+          (enemy.ban_rate ?? 0) * 20 +
+          Math.max(0, competitiveStrength(enemy) - 0.5) * 6,
       };
     })
     .sort((a, b) => b.weight - a.weight);
@@ -1021,7 +1024,7 @@ export function deriveWinningCondition(
               ? "Memiliki Suppress (tidak bisa ditembus Purify)"
               : enemy.tactical_profile?.tags.ally_heal
                 ? "Memberi sustain/heal tinggi dalam teamfight"
-                : `Power pick Tier ${enemy.tier} (${enemy.primary_lane})`;
+                : `Power pick (pop ${enemy.popularity_band ?? '—'}, ${enemy.primary_lane})`;
       const counterAction = isDharma
         ? `Jaga spacing (jangan bergerombol di dekat dinding/tower), simpan Purify/dash reaksi terhadap Flash Dharma, dan hindari contest di choke point sempit.`
         : enemy.tactical_profile?.tags.suppress

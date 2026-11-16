@@ -11,7 +11,6 @@
       "Jungle",
       "Farm"
     ],
-    "tier": "C",
     "win_rate": 0.5226,
     "pick_rate": 0.0045,
     "ban_rate": 0.0004,
@@ -340,7 +339,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4942,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 1469,
+    "kpl_weighted_win_rate": 0.4746,
+    "kpl_weighted_matches": 331.82
   },
   {
     "hero_id": 545,
@@ -353,7 +356,6 @@
     "lanes": [
       "Farm"
     ],
-    "tier": "B",
     "win_rate": 0.5135,
     "pick_rate": 0.0087,
     "ban_rate": 0.0004,
@@ -622,7 +624,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4765,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 170,
+    "kpl_weighted_win_rate": 0.4761,
+    "kpl_weighted_matches": 64.96
   },
   {
     "hero_id": 514,
@@ -635,7 +641,6 @@
     "lanes": [
       "Clash"
     ],
-    "tier": "B",
     "win_rate": 0.5028,
     "pick_rate": 0.0097,
     "ban_rate": 0.0008,
@@ -947,7 +952,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5392,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 586,
+    "kpl_weighted_win_rate": 0.5522,
+    "kpl_weighted_matches": 115.78
   },
   {
     "hero_id": 142,
@@ -960,7 +969,6 @@
     "lanes": [
       "Mid"
     ],
-    "tier": "B",
     "win_rate": 0.5148,
     "pick_rate": 0.0229,
     "ban_rate": 0.0298,
@@ -1280,7 +1288,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4421,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "S",
+    "kpl_matches": 674,
+    "kpl_weighted_win_rate": 0.4625,
+    "kpl_weighted_matches": 283.16
   },
   {
     "hero_id": 640,
@@ -1293,7 +1305,6 @@
     "lanes": [
       "Roam"
     ],
-    "tier": "C",
     "win_rate": 0.4951,
     "pick_rate": 0.0043,
     "ban_rate": 0.0012,
@@ -1393,7 +1404,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": null,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 0,
+    "kpl_weighted_win_rate": null,
+    "kpl_weighted_matches": 0.0
   },
   {
     "hero_id": 519,
@@ -1406,7 +1421,6 @@
     "lanes": [
       "Farm"
     ],
-    "tier": "S",
     "win_rate": 0.4856,
     "pick_rate": 0.0147,
     "ban_rate": 0.0533,
@@ -1719,7 +1733,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4958,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "S",
+    "kpl_matches": 1202,
+    "kpl_weighted_win_rate": 0.4988,
+    "kpl_weighted_matches": 573.58
   },
   {
     "hero_id": 116,
@@ -1732,7 +1750,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "B",
     "win_rate": 0.5214,
     "pick_rate": 0.006,
     "ban_rate": 0.0078,
@@ -1912,7 +1929,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": null,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 0,
+    "kpl_weighted_win_rate": null,
+    "kpl_weighted_matches": 0.0
   },
   {
     "hero_id": 199,
@@ -1925,7 +1946,6 @@
     "lanes": [
       "Farm"
     ],
-    "tier": "B",
     "win_rate": 0.469,
     "pick_rate": 0.0078,
     "ban_rate": 0.0034,
@@ -2327,7 +2347,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5092,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 2767,
+    "kpl_weighted_win_rate": 0.5006,
+    "kpl_weighted_matches": 555.44
   },
   {
     "hero_id": 166,
@@ -2341,7 +2365,6 @@
       "Clash",
       "Jungle"
     ],
-    "tier": "A",
     "win_rate": 0.4999,
     "pick_rate": 0.0143,
     "ban_rate": 0.0014,
@@ -2525,7 +2548,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.0,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "A",
+    "kpl_matches": 1,
+    "kpl_weighted_win_rate": 0.0,
+    "kpl_weighted_matches": 0.03
   },
   {
     "hero_id": 556,
@@ -2539,7 +2566,6 @@
       "Clash",
       "Jungle"
     ],
-    "tier": "C",
     "win_rate": 0.5331,
     "pick_rate": 0.0066,
     "ban_rate": 0.0006,
@@ -2862,7 +2888,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": null,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 0,
+    "kpl_weighted_win_rate": null,
+    "kpl_weighted_matches": 0.0
   },
   {
     "hero_id": 183,
@@ -2875,7 +2905,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "C",
     "win_rate": 0.5468,
     "pick_rate": 0.0008,
     "ban_rate": 0.0001,
@@ -3025,7 +3054,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 4,
+    "kpl_weighted_win_rate": 0.4949,
+    "kpl_weighted_matches": 0.06
   },
   {
     "hero_id": 517,
@@ -3039,7 +3072,6 @@
       "Jungle",
       "Clash"
     ],
-    "tier": "S",
     "win_rate": 0.4695,
     "pick_rate": 0.0125,
     "ban_rate": 0.0482,
@@ -3369,7 +3401,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5279,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "S",
+    "kpl_matches": 985,
+    "kpl_weighted_win_rate": 0.5123,
+    "kpl_weighted_matches": 448.3
   },
   {
     "hero_id": 120,
@@ -3382,7 +3418,6 @@
     "lanes": [
       "Clash"
     ],
-    "tier": "C",
     "win_rate": 0.5138,
     "pick_rate": 0.0043,
     "ban_rate": 0.0005,
@@ -3719,7 +3754,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5249,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 543,
+    "kpl_weighted_win_rate": 0.5187,
+    "kpl_weighted_matches": 112.65
   },
   {
     "hero_id": 503,
@@ -3732,7 +3771,6 @@
     "lanes": [
       "Clash"
     ],
-    "tier": "B",
     "win_rate": 0.4795,
     "pick_rate": 0.0082,
     "ban_rate": 0.0009,
@@ -4063,7 +4101,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5216,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 1737,
+    "kpl_weighted_win_rate": 0.5203,
+    "kpl_weighted_matches": 641.13
   },
   {
     "hero_id": 646,
@@ -4076,7 +4118,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "C",
     "win_rate": 0.5189,
     "pick_rate": 0.0055,
     "ban_rate": 0.0007,
@@ -4179,7 +4220,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": null,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 0,
+    "kpl_weighted_win_rate": null,
+    "kpl_weighted_matches": 0.0
   },
   {
     "hero_id": 184,
@@ -4192,7 +4237,6 @@
     "lanes": [
       "Roam"
     ],
-    "tier": "A",
     "win_rate": 0.5043,
     "pick_rate": 0.0128,
     "ban_rate": 0.0186,
@@ -4548,7 +4592,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5257,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "A",
+    "kpl_matches": 487,
+    "kpl_weighted_win_rate": 0.5484,
+    "kpl_weighted_matches": 55.91
   },
   {
     "hero_id": 515,
@@ -4562,7 +4610,6 @@
       "Mid",
       "Jungle"
     ],
-    "tier": "A",
     "win_rate": 0.517,
     "pick_rate": 0.05,
     "ban_rate": 0.02,
@@ -4753,7 +4800,10 @@
     "win_rate_source": "unknown",
     "kpl_win_rate": 0.4828,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "kpl_matches": 408,
+    "kpl_weighted_win_rate": 0.4993,
+    "kpl_weighted_matches": 122.01
   },
   {
     "hero_id": 177,
@@ -4767,7 +4817,6 @@
       "Farm",
       "Jungle"
     ],
-    "tier": "C",
     "win_rate": 0.5012,
     "pick_rate": 0.0064,
     "ban_rate": 0.0007,
@@ -5048,7 +5097,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5041,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 859,
+    "kpl_weighted_win_rate": 0.5018,
+    "kpl_weighted_matches": 423.65
   },
   {
     "hero_id": 536,
@@ -5061,7 +5114,6 @@
     "lanes": [
       "Clash"
     ],
-    "tier": "B",
     "win_rate": 0.4995,
     "pick_rate": 0.0081,
     "ban_rate": 0.0007,
@@ -5360,7 +5412,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4736,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 1609,
+    "kpl_weighted_win_rate": 0.4745,
+    "kpl_weighted_matches": 636.25
   },
   {
     "hero_id": 144,
@@ -5373,7 +5429,6 @@
     "lanes": [
       "Clash"
     ],
-    "tier": "B",
     "win_rate": 0.495,
     "pick_rate": 0.02,
     "ban_rate": 0.01,
@@ -5399,7 +5454,10 @@
     "win_rate_source": "unknown",
     "kpl_win_rate": 0.4,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "kpl_matches": 5,
+    "kpl_weighted_win_rate": 0.0343,
+    "kpl_weighted_matches": 0.76
   },
   {
     "hero_id": 172,
@@ -5413,7 +5471,6 @@
       "Clash",
       "Jungle"
     ],
-    "tier": "A",
     "win_rate": 0.5064,
     "pick_rate": 0.015,
     "ban_rate": 0.0037,
@@ -5756,7 +5813,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4622,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "A",
+    "kpl_matches": 357,
+    "kpl_weighted_win_rate": 0.4589,
+    "kpl_weighted_matches": 228.94
   },
   {
     "hero_id": 506,
@@ -5769,7 +5830,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "C",
     "win_rate": 0.5179,
     "pick_rate": 0.0023,
     "ban_rate": 0.0001,
@@ -5922,7 +5982,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5143,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 35,
+    "kpl_weighted_win_rate": 0.5014,
+    "kpl_weighted_matches": 0.39
   },
   {
     "hero_id": 174,
@@ -5935,7 +5999,6 @@
     "lanes": [
       "Farm"
     ],
-    "tier": "A",
     "win_rate": 0.519,
     "pick_rate": 0.015,
     "ban_rate": 0.0018,
@@ -6328,7 +6391,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4826,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "A",
+    "kpl_matches": 1262,
+    "kpl_weighted_win_rate": 0.4887,
+    "kpl_weighted_matches": 164.95
   },
   {
     "hero_id": 191,
@@ -6342,7 +6409,6 @@
       "Roam",
       "Mid"
     ],
-    "tier": "B",
     "win_rate": 0.4923,
     "pick_rate": 0.0093,
     "ban_rate": 0.0049,
@@ -6705,7 +6771,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4948,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 1358,
+    "kpl_weighted_win_rate": 0.4894,
+    "kpl_weighted_matches": 176.18
   },
   {
     "hero_id": 188,
@@ -6718,7 +6788,6 @@
     "lanes": [
       "Clash"
     ],
-    "tier": "A",
     "win_rate": 0.505,
     "pick_rate": 0.02,
     "ban_rate": 0.01,
@@ -6799,7 +6868,10 @@
     "win_rate_source": "unknown",
     "kpl_win_rate": 0.3676,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "kpl_matches": 68,
+    "kpl_weighted_win_rate": 0.3696,
+    "kpl_weighted_matches": 49.9
   },
   {
     "hero_id": 109,
@@ -6812,7 +6884,6 @@
     "lanes": [
       "Mid"
     ],
-    "tier": "C",
     "win_rate": 0.513,
     "pick_rate": 0.0228,
     "ban_rate": 0.0426,
@@ -7041,7 +7112,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.2,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "S",
+    "kpl_matches": 5,
+    "kpl_weighted_win_rate": 0.2949,
+    "kpl_weighted_matches": 1.42
   },
   {
     "hero_id": 537,
@@ -7055,7 +7130,6 @@
       "Clash",
       "Jungle"
     ],
-    "tier": "B",
     "win_rate": 0.4806,
     "pick_rate": 0.0,
     "ban_rate": 0.0,
@@ -7389,7 +7463,11 @@
     "win_rate_source": "kpl",
     "kpl_win_rate": 0.4806,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 695,
+    "kpl_weighted_win_rate": 0.4793,
+    "kpl_weighted_matches": 356.33
   },
   {
     "hero_id": 134,
@@ -7402,7 +7480,6 @@
     "lanes": [
       "Clash"
     ],
-    "tier": "C",
     "win_rate": 0.5217,
     "pick_rate": 0.0022,
     "ban_rate": 0.0001,
@@ -7710,7 +7787,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5145,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 519,
+    "kpl_weighted_win_rate": 0.487,
+    "kpl_weighted_matches": 185.17
   },
   {
     "hero_id": 133,
@@ -7723,7 +7804,6 @@
     "lanes": [
       "Farm"
     ],
-    "tier": "B",
     "win_rate": 0.5125,
     "pick_rate": 0.0077,
     "ban_rate": 0.0002,
@@ -8086,7 +8166,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4937,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 1829,
+    "kpl_weighted_win_rate": 0.4685,
+    "kpl_weighted_matches": 320.53
   },
   {
     "hero_id": 129,
@@ -8099,7 +8183,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "B",
     "win_rate": 0.5082,
     "pick_rate": 0.0104,
     "ban_rate": 0.0031,
@@ -8323,7 +8406,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4028,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 72,
+    "kpl_weighted_win_rate": 0.3983,
+    "kpl_weighted_matches": 21.46
   },
   {
     "hero_id": 141,
@@ -8337,7 +8424,6 @@
       "Mid",
       "Clash"
     ],
-    "tier": "B",
     "win_rate": 0.4836,
     "pick_rate": 0.0084,
     "ban_rate": 0.001,
@@ -8604,7 +8690,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4706,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 85,
+    "kpl_weighted_win_rate": 0.4317,
+    "kpl_weighted_matches": 6.53
   },
   {
     "hero_id": 159,
@@ -8617,7 +8707,6 @@
     "lanes": [
       "Roam"
     ],
-    "tier": "A",
     "win_rate": 0.4604,
     "pick_rate": 0.0183,
     "ban_rate": 0.0051,
@@ -8933,7 +9022,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4608,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "A",
+    "kpl_matches": 803,
+    "kpl_weighted_win_rate": 0.4639,
+    "kpl_weighted_matches": 277.72
   },
   {
     "hero_id": 187,
@@ -8947,7 +9040,6 @@
       "Roam",
       "Clash"
     ],
-    "tier": "S",
     "win_rate": 0.4771,
     "pick_rate": 0.0078,
     "ban_rate": 0.0322,
@@ -9349,7 +9441,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.524,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "S",
+    "kpl_matches": 521,
+    "kpl_weighted_win_rate": 0.5288,
+    "kpl_weighted_matches": 38.11
   },
   {
     "hero_id": 119,
@@ -9362,7 +9458,6 @@
     "lanes": [
       "Mid"
     ],
-    "tier": "C",
     "win_rate": 0.4993,
     "pick_rate": 0.0066,
     "ban_rate": 0.0011,
@@ -9573,7 +9668,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4032,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 62,
+    "kpl_weighted_win_rate": 0.3575,
+    "kpl_weighted_matches": 7.25
   },
   {
     "hero_id": 126,
@@ -9588,7 +9687,6 @@
       "Roam",
       "Jungle"
     ],
-    "tier": "A",
     "win_rate": 0.5365,
     "pick_rate": 0.0204,
     "ban_rate": 0.0056,
@@ -9956,7 +10054,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4827,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "A",
+    "kpl_matches": 2138,
+    "kpl_weighted_win_rate": 0.4893,
+    "kpl_weighted_matches": 458.47
   },
   {
     "hero_id": 509,
@@ -9969,7 +10071,6 @@
     "lanes": [
       "Roam"
     ],
-    "tier": "B",
     "win_rate": 0.5076,
     "pick_rate": 0.0,
     "ban_rate": 0.0,
@@ -10324,7 +10425,10 @@
     "win_rate_source": "kpl",
     "kpl_win_rate": 0.5076,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "kpl_matches": 1255,
+    "kpl_weighted_win_rate": 0.5371,
+    "kpl_weighted_matches": 303.21
   },
   {
     "hero_id": 577,
@@ -10337,7 +10441,6 @@
     "lanes": [
       "Roam"
     ],
-    "tier": "A",
     "win_rate": 0.4849,
     "pick_rate": 0.0111,
     "ban_rate": 0.0103,
@@ -10631,7 +10734,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4805,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "A",
+    "kpl_matches": 922,
+    "kpl_weighted_win_rate": 0.4774,
+    "kpl_weighted_matches": 493.61
   },
   {
     "hero_id": 155,
@@ -10644,7 +10751,6 @@
     "lanes": [
       "Farm"
     ],
-    "tier": "A",
     "win_rate": 0.5143,
     "pick_rate": 0.0148,
     "ban_rate": 0.0016,
@@ -10982,7 +11088,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5391,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "A",
+    "kpl_matches": 460,
+    "kpl_weighted_win_rate": 0.5419,
+    "kpl_weighted_matches": 291.68
   },
   {
     "hero_id": 173,
@@ -10996,7 +11106,6 @@
       "Farm",
       "Jungle"
     ],
-    "tier": "B",
     "win_rate": 0.5046,
     "pick_rate": 0.01,
     "ban_rate": 0.0004,
@@ -11308,7 +11417,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5021,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 721,
+    "kpl_weighted_win_rate": 0.5213,
+    "kpl_weighted_matches": 50.84
   },
   {
     "hero_id": 128,
@@ -11322,7 +11435,6 @@
       "Clash",
       "Jungle"
     ],
-    "tier": "C",
     "win_rate": 0.5197,
     "pick_rate": 0.0043,
     "ban_rate": 0.0005,
@@ -11649,7 +11761,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4902,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 1226,
+    "kpl_weighted_win_rate": 0.5247,
+    "kpl_weighted_matches": 509.62
   },
   {
     "hero_id": 542,
@@ -11662,7 +11778,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "C",
     "win_rate": 0.5114,
     "pick_rate": 0.0044,
     "ban_rate": 0.0007,
@@ -11952,7 +12067,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4837,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 306,
+    "kpl_weighted_win_rate": 0.4855,
+    "kpl_weighted_matches": 111.78
   },
   {
     "hero_id": 631,
@@ -11965,7 +12084,6 @@
     "lanes": [
       "Clash"
     ],
-    "tier": "B",
     "win_rate": 0.502,
     "pick_rate": 0.0,
     "ban_rate": 0.0,
@@ -11995,7 +12113,11 @@
     "win_rate_source": "legacy",
     "kpl_win_rate": null,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 0,
+    "kpl_weighted_win_rate": null,
+    "kpl_weighted_matches": 0.0
   },
   {
     "hero_id": 583,
@@ -12008,7 +12130,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "B",
     "win_rate": 0.495,
     "pick_rate": 0.0,
     "ban_rate": 0.0,
@@ -12045,7 +12166,10 @@
     "win_rate_source": "legacy",
     "kpl_win_rate": 0.6667,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "kpl_matches": 3,
+    "kpl_weighted_win_rate": 0.6481,
+    "kpl_weighted_matches": 2.23
   },
   {
     "hero_id": 582,
@@ -12058,7 +12182,6 @@
     "lanes": [
       "Mid"
     ],
-    "tier": "C",
     "win_rate": 0.5167,
     "pick_rate": 0.0054,
     "ban_rate": 0.0007,
@@ -12178,7 +12301,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5319,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 47,
+    "kpl_weighted_win_rate": 0.4618,
+    "kpl_weighted_matches": 11.88
   },
   {
     "hero_id": 584,
@@ -12191,7 +12318,6 @@
     "lanes": [
       "Farm"
     ],
-    "tier": "B",
     "win_rate": 0.5186,
     "pick_rate": 0.0102,
     "ban_rate": 0.0006,
@@ -12493,7 +12619,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4545,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 143,
+    "kpl_weighted_win_rate": 0.4159,
+    "kpl_weighted_matches": 83.83
   },
   {
     "hero_id": 585,
@@ -12506,7 +12636,6 @@
     "lanes": [
       "Roam"
     ],
-    "tier": "B",
     "win_rate": 0.4935,
     "pick_rate": 0.0,
     "ban_rate": 0.0,
@@ -12658,7 +12787,10 @@
     "win_rate_source": "kpl",
     "kpl_win_rate": 0.4935,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "kpl_matches": 77,
+    "kpl_weighted_win_rate": 0.4889,
+    "kpl_weighted_matches": 59.34
   },
   {
     "hero_id": 581,
@@ -12672,7 +12804,6 @@
       "Clash",
       "Jungle"
     ],
-    "tier": "B",
     "win_rate": 0.4817,
     "pick_rate": 0.0077,
     "ban_rate": 0.0013,
@@ -12939,7 +13070,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5045,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 674,
+    "kpl_weighted_win_rate": 0.5123,
+    "kpl_weighted_matches": 327.44
   },
   {
     "hero_id": 139,
@@ -12952,7 +13087,6 @@
     "lanes": [
       "Clash"
     ],
-    "tier": "C",
     "win_rate": 0.5253,
     "pick_rate": 0.0045,
     "ban_rate": 0.0008,
@@ -13309,7 +13443,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5101,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 792,
+    "kpl_weighted_win_rate": 0.5508,
+    "kpl_weighted_matches": 102.65
   },
   {
     "hero_id": 182,
@@ -13322,7 +13460,6 @@
     "lanes": [
       "Mid"
     ],
-    "tier": "C",
     "win_rate": 0.5039,
     "pick_rate": 0.0046,
     "ban_rate": 0.0012,
@@ -13676,7 +13813,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4372,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 597,
+    "kpl_weighted_win_rate": 0.4218,
+    "kpl_weighted_matches": 93.57
   },
   {
     "hero_id": 115,
@@ -13689,7 +13830,6 @@
     "lanes": [
       "Mid"
     ],
-    "tier": "C",
     "win_rate": 0.5097,
     "pick_rate": 0.0046,
     "ban_rate": 0.0006,
@@ -13841,7 +13981,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.25,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 4,
+    "kpl_weighted_win_rate": 0.2744,
+    "kpl_weighted_matches": 1.58
   },
   {
     "hero_id": 153,
@@ -13854,7 +13998,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "B",
     "win_rate": 0.4954,
     "pick_rate": 0.0056,
     "ban_rate": 0.0072,
@@ -14255,7 +14398,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5041,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 724,
+    "kpl_weighted_win_rate": 0.5158,
+    "kpl_weighted_matches": 43.0
   },
   {
     "hero_id": 508,
@@ -14268,7 +14415,6 @@
     "lanes": [
       "Farm"
     ],
-    "tier": "A",
     "win_rate": 0.5235,
     "pick_rate": 0.0119,
     "ban_rate": 0.0023,
@@ -14661,7 +14807,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5025,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "A",
+    "kpl_matches": 802,
+    "kpl_weighted_win_rate": 0.507,
+    "kpl_weighted_matches": 72.35
   },
   {
     "hero_id": 110,
@@ -14674,7 +14824,6 @@
     "lanes": [
       "Mid"
     ],
-    "tier": "B",
     "win_rate": 0.5134,
     "pick_rate": 0.0082,
     "ban_rate": 0.0004,
@@ -14998,7 +15147,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4725,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 1310,
+    "kpl_weighted_win_rate": 0.4732,
+    "kpl_weighted_matches": 251.96
   },
   {
     "hero_id": 548,
@@ -15011,7 +15164,6 @@
     "lanes": [
       "Farm"
     ],
-    "tier": "S",
     "win_rate": 0.531,
     "pick_rate": 0.11,
     "ban_rate": 0.15,
@@ -15202,7 +15354,10 @@
     "win_rate_source": "unknown",
     "kpl_win_rate": 0.5107,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "kpl_matches": 1594,
+    "kpl_weighted_win_rate": 0.5253,
+    "kpl_weighted_matches": 646.73
   },
   {
     "hero_id": 140,
@@ -15215,7 +15370,6 @@
     "lanes": [
       "Clash"
     ],
-    "tier": "C",
     "win_rate": 0.4868,
     "pick_rate": 0.0037,
     "ban_rate": 0.0011,
@@ -15548,7 +15702,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5361,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 1897,
+    "kpl_weighted_win_rate": 0.552,
+    "kpl_weighted_matches": 444.94
   },
   {
     "hero_id": 189,
@@ -15561,7 +15719,6 @@
     "lanes": [
       "Roam"
     ],
-    "tier": "C",
     "win_rate": 0.5207,
     "pick_rate": 0.0025,
     "ban_rate": 0.0027,
@@ -15891,7 +16048,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5601,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 291,
+    "kpl_weighted_win_rate": 0.6055,
+    "kpl_weighted_matches": 16.79
   },
   {
     "hero_id": 150,
@@ -15904,7 +16065,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "C",
     "win_rate": 0.4957,
     "pick_rate": 0.0044,
     "ban_rate": 0.0016,
@@ -16076,7 +16236,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.3478,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 23,
+    "kpl_weighted_win_rate": 0.2493,
+    "kpl_weighted_matches": 4.17
   },
   {
     "hero_id": 521,
@@ -16089,7 +16253,6 @@
     "lanes": [
       "Mid"
     ],
-    "tier": "S",
     "win_rate": 0.502,
     "pick_rate": 0.0092,
     "ban_rate": 0.0299,
@@ -16410,7 +16573,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5212,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "S",
+    "kpl_matches": 827,
+    "kpl_weighted_win_rate": 0.5309,
+    "kpl_weighted_matches": 367.22
   },
   {
     "hero_id": 563,
@@ -16424,7 +16591,6 @@
       "Mid",
       "Clash"
     ],
-    "tier": "B",
     "win_rate": 0.4792,
     "pick_rate": 0.0102,
     "ban_rate": 0.0024,
@@ -16711,7 +16877,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5177,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 311,
+    "kpl_weighted_win_rate": 0.5076,
+    "kpl_weighted_matches": 116.35
   },
   {
     "hero_id": 169,
@@ -16724,7 +16894,6 @@
     "lanes": [
       "Farm"
     ],
-    "tier": "B",
     "win_rate": 0.4871,
     "pick_rate": 0.0277,
     "ban_rate": 0.0019,
@@ -17126,7 +17295,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.499,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "S",
+    "kpl_matches": 509,
+    "kpl_weighted_win_rate": 0.4736,
+    "kpl_weighted_matches": 108.17
   },
   {
     "hero_id": 192,
@@ -17139,7 +17312,6 @@
     "lanes": [
       "Farm"
     ],
-    "tier": "C",
     "win_rate": 0.5081,
     "pick_rate": 0.0046,
     "ban_rate": 0.0002,
@@ -17464,7 +17636,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4727,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 421,
+    "kpl_weighted_win_rate": 0.4482,
+    "kpl_weighted_matches": 48.98
   },
   {
     "hero_id": 540,
@@ -17478,7 +17654,6 @@
       "Mid",
       "Roam"
     ],
-    "tier": "A",
     "win_rate": 0.511,
     "pick_rate": 0.04,
     "ban_rate": 0.06,
@@ -17669,7 +17844,10 @@
     "win_rate_source": "unknown",
     "kpl_win_rate": 0.436,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "kpl_matches": 211,
+    "kpl_weighted_win_rate": 0.3741,
+    "kpl_weighted_matches": 32.94
   },
   {
     "hero_id": 531,
@@ -17682,7 +17860,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "C",
     "win_rate": 0.4599,
     "pick_rate": 0.0042,
     "ban_rate": 0.0016,
@@ -18005,7 +18182,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5232,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 2007,
+    "kpl_weighted_win_rate": 0.5228,
+    "kpl_weighted_matches": 349.04
   },
   {
     "hero_id": 193,
@@ -18019,7 +18200,6 @@
       "Clash",
       "Jungle"
     ],
-    "tier": "A",
     "win_rate": 0.5118,
     "pick_rate": 0.0159,
     "ban_rate": 0.0016,
@@ -18433,7 +18613,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4967,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "A",
+    "kpl_matches": 1367,
+    "kpl_weighted_win_rate": 0.4977,
+    "kpl_weighted_matches": 376.32
   },
   {
     "hero_id": 550,
@@ -18446,7 +18630,6 @@
     "lanes": [
       "Roam"
     ],
-    "tier": "A",
     "win_rate": 0.501,
     "pick_rate": 0.05,
     "ban_rate": 0.03,
@@ -18637,7 +18820,10 @@
     "win_rate_source": "unknown",
     "kpl_win_rate": 0.5352,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "kpl_matches": 383,
+    "kpl_weighted_win_rate": 0.5359,
+    "kpl_weighted_matches": 200.4
   },
   {
     "hero_id": 190,
@@ -18651,7 +18837,6 @@
       "Mid",
       "Jungle"
     ],
-    "tier": "A",
     "win_rate": 0.4942,
     "pick_rate": 0.0142,
     "ban_rate": 0.0022,
@@ -18826,7 +19011,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.3889,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "A",
+    "kpl_matches": 18,
+    "kpl_weighted_win_rate": 0.5344,
+    "kpl_weighted_matches": 2.8
   },
   {
     "hero_id": 175,
@@ -18839,7 +19028,6 @@
     "lanes": [
       "Roam"
     ],
-    "tier": "B",
     "win_rate": 0.4998,
     "pick_rate": 0.0099,
     "ban_rate": 0.0045,
@@ -19186,7 +19374,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5385,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 195,
+    "kpl_weighted_win_rate": 0.5319,
+    "kpl_weighted_matches": 132.88
   },
   {
     "hero_id": 111,
@@ -19199,7 +19391,6 @@
     "lanes": [
       "Farm"
     ],
-    "tier": "A",
     "win_rate": 0.4779,
     "pick_rate": 0.0194,
     "ban_rate": 0.0009,
@@ -19615,7 +19806,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5062,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "A",
+    "kpl_matches": 1946,
+    "kpl_weighted_win_rate": 0.5075,
+    "kpl_weighted_matches": 349.78
   },
   {
     "hero_id": 127,
@@ -19628,7 +19823,6 @@
     "lanes": [
       "Mid"
     ],
-    "tier": "B",
     "win_rate": 0.5116,
     "pick_rate": 0.0104,
     "ban_rate": 0.0005,
@@ -19967,7 +20161,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5701,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 628,
+    "kpl_weighted_win_rate": 0.5543,
+    "kpl_weighted_matches": 201.01
   },
   {
     "hero_id": 528,
@@ -19980,7 +20178,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "A",
     "win_rate": 0.4861,
     "pick_rate": 0.0103,
     "ban_rate": 0.0047,
@@ -20339,7 +20536,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5216,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "A",
+    "kpl_matches": 903,
+    "kpl_weighted_win_rate": 0.5108,
+    "kpl_weighted_matches": 51.17
   },
   {
     "hero_id": 168,
@@ -20352,7 +20553,6 @@
     "lanes": [
       "Roam"
     ],
-    "tier": "C",
     "win_rate": 0.5518,
     "pick_rate": 0.0049,
     "ban_rate": 0.0004,
@@ -20647,7 +20847,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5018,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 831,
+    "kpl_weighted_win_rate": 0.4587,
+    "kpl_weighted_matches": 87.66
   },
   {
     "hero_id": 131,
@@ -20660,7 +20864,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "B",
     "win_rate": 0.5227,
     "pick_rate": 0.0068,
     "ban_rate": 0.0017,
@@ -20856,7 +21059,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4167,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 12,
+    "kpl_weighted_win_rate": 0.6598,
+    "kpl_weighted_matches": 1.1
   },
   {
     "hero_id": 507,
@@ -20869,7 +21076,6 @@
     "lanes": [
       "Clash"
     ],
-    "tier": "S",
     "win_rate": 0.5224,
     "pick_rate": 0.0186,
     "ban_rate": 0.0132,
@@ -21054,7 +21260,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "S",
+    "kpl_matches": 30,
+    "kpl_weighted_win_rate": 0.5087,
+    "kpl_weighted_matches": 4.34
   },
   {
     "hero_id": 105,
@@ -21068,7 +21278,6 @@
       "Clash",
       "Roam"
     ],
-    "tier": "B",
     "win_rate": 0.5077,
     "pick_rate": 0.0088,
     "ban_rate": 0.001,
@@ -21441,7 +21650,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4722,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 1544,
+    "kpl_weighted_win_rate": 0.4803,
+    "kpl_weighted_matches": 158.64
   },
   {
     "hero_id": 156,
@@ -21455,7 +21668,6 @@
       "Mid",
       "Roam"
     ],
-    "tier": "S",
     "win_rate": 0.5102,
     "pick_rate": 0.0078,
     "ban_rate": 0.049,
@@ -21838,7 +22050,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5406,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "S",
+    "kpl_matches": 825,
+    "kpl_weighted_win_rate": 0.5265,
+    "kpl_weighted_matches": 179.23
   },
   {
     "hero_id": 149,
@@ -21852,7 +22068,6 @@
       "Clash",
       "Roam"
     ],
-    "tier": "C",
     "win_rate": 0.4933,
     "pick_rate": 0.0026,
     "ban_rate": 0.0001,
@@ -22179,7 +22394,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4405,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 529,
+    "kpl_weighted_win_rate": 0.4134,
+    "kpl_weighted_matches": 43.26
   },
   {
     "hero_id": 170,
@@ -22192,7 +22411,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "C",
     "win_rate": 0.547,
     "pick_rate": 0.0044,
     "ban_rate": 0.0005,
@@ -22374,7 +22592,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5714,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 7,
+    "kpl_weighted_win_rate": 0.4036,
+    "kpl_weighted_matches": 4.91
   },
   {
     "hero_id": 114,
@@ -22387,7 +22609,6 @@
     "lanes": [
       "Roam"
     ],
-    "tier": "B",
     "win_rate": 0.4924,
     "pick_rate": 0.0085,
     "ban_rate": 0.0011,
@@ -22533,7 +22754,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.3043,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 23,
+    "kpl_weighted_win_rate": 0.1806,
+    "kpl_weighted_matches": 2.09
   },
   {
     "hero_id": 635,
@@ -22546,7 +22771,6 @@
     "lanes": [
       "Mid"
     ],
-    "tier": "B",
     "win_rate": 0.5044,
     "pick_rate": 0.0057,
     "ban_rate": 0.0067,
@@ -22647,7 +22871,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": null,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 0,
+    "kpl_weighted_win_rate": null,
+    "kpl_weighted_matches": 0.0
   },
   {
     "hero_id": 123,
@@ -22660,7 +22888,6 @@
     "lanes": [
       "Clash"
     ],
-    "tier": "A",
     "win_rate": 0.4851,
     "pick_rate": 0.0118,
     "ban_rate": 0.0014,
@@ -23091,7 +23318,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5109,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "A",
+    "kpl_matches": 1419,
+    "kpl_weighted_win_rate": 0.5317,
+    "kpl_weighted_matches": 96.07
   },
   {
     "hero_id": 547,
@@ -23104,7 +23335,6 @@
     "lanes": [
       "Farm"
     ],
-    "tier": "A",
     "win_rate": 0.5266,
     "pick_rate": 0.0155,
     "ban_rate": 0.0019,
@@ -23270,7 +23500,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.6667,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "A",
+    "kpl_matches": 18,
+    "kpl_weighted_win_rate": 0.6651,
+    "kpl_weighted_matches": 17.05
   },
   {
     "hero_id": 525,
@@ -23283,7 +23517,6 @@
     "lanes": [
       "Roam"
     ],
-    "tier": "S",
     "win_rate": 0.525,
     "pick_rate": 0.12,
     "ban_rate": 0.45,
@@ -23474,7 +23707,10 @@
     "win_rate_source": "unknown",
     "kpl_win_rate": 0.532,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "kpl_matches": 2128,
+    "kpl_weighted_win_rate": 0.5321,
+    "kpl_weighted_matches": 419.53
   },
   {
     "hero_id": 112,
@@ -23487,7 +23723,6 @@
     "lanes": [
       "Farm"
     ],
-    "tier": "B",
     "win_rate": 0.5356,
     "pick_rate": 0.024,
     "ban_rate": 0.0031,
@@ -23871,7 +24106,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.516,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "S",
+    "kpl_matches": 1002,
+    "kpl_weighted_win_rate": 0.5185,
+    "kpl_weighted_matches": 180.23
   },
   {
     "hero_id": 146,
@@ -23884,7 +24123,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "B",
     "win_rate": 0.4884,
     "pick_rate": 0.0058,
     "ban_rate": 0.0032,
@@ -24235,7 +24473,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.496,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 631,
+    "kpl_weighted_win_rate": 0.4805,
+    "kpl_weighted_matches": 53.46
   },
   {
     "hero_id": 518,
@@ -24248,7 +24490,6 @@
     "lanes": [
       "Clash"
     ],
-    "tier": "S",
     "win_rate": 0.519,
     "pick_rate": 0.07,
     "ban_rate": 0.18,
@@ -24439,7 +24680,10 @@
     "win_rate_source": "unknown",
     "kpl_win_rate": 0.5073,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "kpl_matches": 1652,
+    "kpl_weighted_win_rate": 0.4738,
+    "kpl_weighted_matches": 370.95
   },
   {
     "hero_id": 549,
@@ -24452,7 +24696,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "A",
     "win_rate": 0.5,
     "pick_rate": 0.02,
     "ban_rate": 0.01,
@@ -24478,7 +24721,10 @@
     "win_rate_source": "unknown",
     "kpl_win_rate": 0.4412,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "kpl_matches": 34,
+    "kpl_weighted_win_rate": 0.4479,
+    "kpl_weighted_matches": 30.7
   },
   {
     "hero_id": 157,
@@ -24491,7 +24737,6 @@
     "lanes": [
       "Mid"
     ],
-    "tier": "B",
     "win_rate": 0.4856,
     "pick_rate": 0.0077,
     "ban_rate": 0.0016,
@@ -24838,7 +25083,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5189,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 1958,
+    "kpl_weighted_win_rate": 0.5104,
+    "kpl_weighted_matches": 407.09
   },
   {
     "hero_id": 132,
@@ -24851,7 +25100,6 @@
     "lanes": [
       "Farm"
     ],
-    "tier": "A",
     "win_rate": 0.4988,
     "pick_rate": 0.0212,
     "ban_rate": 0.003,
@@ -25280,7 +25528,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4964,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "A",
+    "kpl_matches": 1370,
+    "kpl_weighted_win_rate": 0.4542,
+    "kpl_weighted_matches": 62.29
   },
   {
     "hero_id": 564,
@@ -25293,7 +25545,6 @@
     "lanes": [
       "Clash"
     ],
-    "tier": "C",
     "win_rate": 0.4823,
     "pick_rate": 0.0059,
     "ban_rate": 0.001,
@@ -25568,7 +25819,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4976,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 838,
+    "kpl_weighted_win_rate": 0.4884,
+    "kpl_weighted_matches": 187.13
   },
   {
     "hero_id": 527,
@@ -25581,7 +25836,6 @@
     "lanes": [
       "Clash"
     ],
-    "tier": "A",
     "win_rate": 0.505,
     "pick_rate": 0.06,
     "ban_rate": 0.04,
@@ -25772,7 +26026,10 @@
     "win_rate_source": "kpl",
     "kpl_win_rate": 0.506,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "kpl_matches": 1172,
+    "kpl_weighted_win_rate": 0.528,
+    "kpl_weighted_matches": 209.79
   },
   {
     "hero_id": 524,
@@ -25785,7 +26042,6 @@
     "lanes": [
       "Farm"
     ],
-    "tier": "C",
     "win_rate": 0.5359,
     "pick_rate": 0.0043,
     "ban_rate": 0.0001,
@@ -26091,7 +26347,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5065,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 928,
+    "kpl_weighted_win_rate": 0.4956,
+    "kpl_weighted_matches": 54.07
   },
   {
     "hero_id": 198,
@@ -26105,7 +26365,6 @@
       "Jungle",
       "Clash"
     ],
-    "tier": "C",
     "win_rate": 0.5158,
     "pick_rate": 0.0022,
     "ban_rate": 0.0002,
@@ -26440,7 +26699,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4966,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 890,
+    "kpl_weighted_win_rate": 0.4546,
+    "kpl_weighted_matches": 208.26
   },
   {
     "hero_id": 121,
@@ -26454,7 +26717,6 @@
       "Clash",
       "Jungle"
     ],
-    "tier": "B",
     "win_rate": 0.4975,
     "pick_rate": 0.0072,
     "ban_rate": 0.0071,
@@ -26847,7 +27109,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4935,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 154,
+    "kpl_weighted_win_rate": 0.415,
+    "kpl_weighted_matches": 56.08
   },
   {
     "hero_id": 504,
@@ -26860,7 +27126,6 @@
     "lanes": [
       "Mid"
     ],
-    "tier": "B",
     "win_rate": 0.4909,
     "pick_rate": 0.0197,
     "ban_rate": 0.0197,
@@ -27044,7 +27309,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.0,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "S",
+    "kpl_matches": 1,
+    "kpl_weighted_win_rate": 0.0,
+    "kpl_weighted_matches": 0.1
   },
   {
     "hero_id": 501,
@@ -27057,7 +27326,6 @@
     "lanes": [
       "Roam"
     ],
-    "tier": "C",
     "win_rate": 0.5024,
     "pick_rate": 0.0047,
     "ban_rate": 0.0003,
@@ -27361,7 +27629,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4612,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 490,
+    "kpl_weighted_win_rate": 0.4703,
+    "kpl_weighted_matches": 83.84
   },
   {
     "hero_id": 108,
@@ -27375,7 +27647,6 @@
       "Mid",
       "Roam"
     ],
-    "tier": "A",
     "win_rate": 0.4981,
     "pick_rate": 0.0124,
     "ban_rate": 0.0107,
@@ -27743,7 +28014,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4552,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "A",
+    "kpl_matches": 648,
+    "kpl_weighted_win_rate": 0.4399,
+    "kpl_weighted_matches": 143.17
   },
   {
     "hero_id": 154,
@@ -27756,7 +28031,6 @@
     "lanes": [
       "Clash"
     ],
-    "tier": "C",
     "win_rate": 0.5127,
     "pick_rate": 0.0039,
     "ban_rate": 0.0004,
@@ -28025,7 +28299,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4159,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 113,
+    "kpl_weighted_win_rate": 0.3885,
+    "kpl_weighted_matches": 10.92
   },
   {
     "hero_id": 130,
@@ -28038,7 +28316,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "B",
     "win_rate": 0.5116,
     "pick_rate": 0.011,
     "ban_rate": 0.0019,
@@ -28409,7 +28686,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.482,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 610,
+    "kpl_weighted_win_rate": 0.47,
+    "kpl_weighted_matches": 101.03
   },
   {
     "hero_id": 162,
@@ -28422,7 +28703,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "B",
     "win_rate": 0.5106,
     "pick_rate": 0.0069,
     "ban_rate": 0.0008,
@@ -28742,7 +29022,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4952,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 1250,
+    "kpl_weighted_win_rate": 0.5177,
+    "kpl_weighted_matches": 95.91
   },
   {
     "hero_id": 180,
@@ -28756,7 +29040,6 @@
       "Clash",
       "Jungle"
     ],
-    "tier": "C",
     "win_rate": 0.5207,
     "pick_rate": 0.0052,
     "ban_rate": 0.0009,
@@ -29095,7 +29378,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4794,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 388,
+    "kpl_weighted_win_rate": 0.4835,
+    "kpl_weighted_matches": 160.87
   },
   {
     "hero_id": 179,
@@ -29108,7 +29395,6 @@
     "lanes": [
       "Mid"
     ],
-    "tier": "B",
     "win_rate": 0.5141,
     "pick_rate": 0.0082,
     "ban_rate": 0.0038,
@@ -29446,7 +29732,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5318,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 613,
+    "kpl_weighted_win_rate": 0.5413,
+    "kpl_weighted_matches": 314.13
   },
   {
     "hero_id": 529,
@@ -29459,7 +29749,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "A",
     "win_rate": 0.51,
     "pick_rate": 0.03,
     "ban_rate": 0.02,
@@ -29650,7 +29939,10 @@
     "win_rate_source": "unknown",
     "kpl_win_rate": 0.4633,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "kpl_matches": 341,
+    "kpl_weighted_win_rate": 0.3903,
+    "kpl_weighted_matches": 9.62
   },
   {
     "hero_id": 502,
@@ -29663,7 +29955,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "C",
     "win_rate": 0.5327,
     "pick_rate": 0.0031,
     "ban_rate": 0.0011,
@@ -29968,7 +30259,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4965,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 1283,
+    "kpl_weighted_win_rate": 0.5009,
+    "kpl_weighted_matches": 328.82
   },
   {
     "hero_id": 534,
@@ -29981,7 +30276,6 @@
     "lanes": [
       "Roam"
     ],
-    "tier": "C",
     "win_rate": 0.5352,
     "pick_rate": 0.0053,
     "ban_rate": 0.0003,
@@ -30273,7 +30567,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4737,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 399,
+    "kpl_weighted_win_rate": 0.4655,
+    "kpl_weighted_matches": 76.85
   },
   {
     "hero_id": 513,
@@ -30286,7 +30584,6 @@
     "lanes": [
       "Mid"
     ],
-    "tier": "B",
     "win_rate": 0.4783,
     "pick_rate": 0.008,
     "ban_rate": 0.0007,
@@ -30614,7 +30911,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5208,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 409,
+    "kpl_weighted_win_rate": 0.5313,
+    "kpl_weighted_matches": 27.14
   },
   {
     "hero_id": 312,
@@ -30627,7 +30928,6 @@
     "lanes": [
       "Mid"
     ],
-    "tier": "S",
     "win_rate": 0.512,
     "pick_rate": 0.095,
     "ban_rate": 0.05,
@@ -30818,7 +31118,10 @@
     "win_rate_source": "kpl",
     "kpl_win_rate": 0.5111,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "kpl_matches": 3052,
+    "kpl_weighted_win_rate": 0.5003,
+    "kpl_weighted_matches": 724.65
   },
   {
     "hero_id": 523,
@@ -30831,7 +31134,6 @@
     "lanes": [
       "Mid"
     ],
-    "tier": "C",
     "win_rate": 0.5083,
     "pick_rate": 0.0059,
     "ban_rate": 0.0026,
@@ -31133,7 +31435,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5273,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 1079,
+    "kpl_weighted_win_rate": 0.4655,
+    "kpl_weighted_matches": 152.12
   },
   {
     "hero_id": 196,
@@ -31146,7 +31452,6 @@
     "lanes": [
       "Farm"
     ],
-    "tier": "B",
     "win_rate": 0.5158,
     "pick_rate": 0.0081,
     "ban_rate": 0.0009,
@@ -31474,7 +31779,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5027,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 750,
+    "kpl_weighted_win_rate": 0.4822,
+    "kpl_weighted_matches": 207.2
   },
   {
     "hero_id": 137,
@@ -31488,7 +31797,6 @@
       "Jungle",
       "Mid"
     ],
-    "tier": "C",
     "win_rate": 0.4622,
     "pick_rate": 0.0025,
     "ban_rate": 0.0002,
@@ -31706,7 +32014,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.375,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 8,
+    "kpl_weighted_win_rate": 0.3211,
+    "kpl_weighted_matches": 0.18
   },
   {
     "hero_id": 194,
@@ -31720,7 +32032,6 @@
       "Roam",
       "Clash"
     ],
-    "tier": "S",
     "win_rate": 0.518,
     "pick_rate": 0.082,
     "ban_rate": 0.095,
@@ -31911,7 +32222,10 @@
     "win_rate_source": "unknown",
     "kpl_win_rate": 0.4681,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "kpl_matches": 1224,
+    "kpl_weighted_win_rate": 0.4827,
+    "kpl_weighted_matches": 516.0
   },
   {
     "hero_id": 118,
@@ -31924,7 +32238,6 @@
     "lanes": [
       "Roam"
     ],
-    "tier": "C",
     "win_rate": 0.5026,
     "pick_rate": 0.004,
     "ban_rate": 0.0003,
@@ -32283,7 +32596,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4969,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 1304,
+    "kpl_weighted_win_rate": 0.4747,
+    "kpl_weighted_matches": 110.64
   },
   {
     "hero_id": 510,
@@ -32297,7 +32614,6 @@
       "Clash",
       "Jungle"
     ],
-    "tier": "B",
     "win_rate": 0.4842,
     "pick_rate": 0.0086,
     "ban_rate": 0.0003,
@@ -32609,7 +32925,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4783,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 437,
+    "kpl_weighted_win_rate": 0.4718,
+    "kpl_weighted_matches": 115.16
   },
   {
     "hero_id": 151,
@@ -32622,7 +32942,6 @@
     "lanes": [
       "Clash"
     ],
-    "tier": "A",
     "win_rate": 0.502,
     "pick_rate": 0.03,
     "ban_rate": 0.01,
@@ -32804,7 +33123,10 @@
     "win_rate_source": "unknown",
     "kpl_win_rate": 0.4938,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "kpl_matches": 160,
+    "kpl_weighted_win_rate": 0.4989,
+    "kpl_weighted_matches": 111.69
   },
   {
     "hero_id": 186,
@@ -32817,7 +33139,6 @@
     "lanes": [
       "Roam"
     ],
-    "tier": "S",
     "win_rate": 0.522,
     "pick_rate": 0.08,
     "ban_rate": 0.22,
@@ -33008,7 +33329,10 @@
     "win_rate_source": "unknown",
     "kpl_win_rate": 0.5089,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "kpl_matches": 2358,
+    "kpl_weighted_win_rate": 0.5137,
+    "kpl_weighted_matches": 450.73
   },
   {
     "hero_id": 163,
@@ -33022,7 +33346,6 @@
       "Jungle",
       "Clash"
     ],
-    "tier": "C",
     "win_rate": 0.512,
     "pick_rate": 0.0039,
     "ban_rate": 0.0002,
@@ -33334,7 +33657,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4846,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 1393,
+    "kpl_weighted_win_rate": 0.5202,
+    "kpl_weighted_matches": 249.25
   },
   {
     "hero_id": 558,
@@ -33348,7 +33675,6 @@
       "Clash",
       "Jungle"
     ],
-    "tier": "C",
     "win_rate": 0.5016,
     "pick_rate": 0.0066,
     "ban_rate": 0.0006,
@@ -33653,7 +33979,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4588,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 340,
+    "kpl_weighted_win_rate": 0.4616,
+    "kpl_weighted_matches": 188.45
   },
   {
     "hero_id": 138,
@@ -33666,7 +33996,6 @@
     "lanes": [
       "Mid"
     ],
-    "tier": "B",
     "win_rate": 0.45,
     "pick_rate": 0.0,
     "ban_rate": 0.0,
@@ -33710,7 +34039,10 @@
     "win_rate_source": "kpl",
     "kpl_win_rate": 0.45,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "kpl_matches": 20,
+    "kpl_weighted_win_rate": 0.4489,
+    "kpl_weighted_matches": 19.53
   },
   {
     "hero_id": 152,
@@ -33724,7 +34056,6 @@
       "Mid",
       "Roam"
     ],
-    "tier": "A",
     "win_rate": 0.5122,
     "pick_rate": 0.0195,
     "ban_rate": 0.0061,
@@ -34103,7 +34434,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4877,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "A",
+    "kpl_matches": 1632,
+    "kpl_weighted_win_rate": 0.5138,
+    "kpl_weighted_matches": 295.44
   },
   {
     "hero_id": 136,
@@ -34116,7 +34451,6 @@
     "lanes": [
       "Mid"
     ],
-    "tier": "A",
     "win_rate": 0.528,
     "pick_rate": 0.04,
     "ban_rate": 0.02,
@@ -34307,7 +34641,10 @@
     "win_rate_source": "unknown",
     "kpl_win_rate": 0.4712,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "kpl_matches": 416,
+    "kpl_weighted_win_rate": 0.4836,
+    "kpl_weighted_matches": 270.02
   },
   {
     "hero_id": 167,
@@ -34320,7 +34657,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "A",
     "win_rate": 0.4974,
     "pick_rate": 0.0146,
     "ban_rate": 0.0028,
@@ -34539,7 +34875,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "A",
+    "kpl_matches": 6,
+    "kpl_weighted_win_rate": 0.4153,
+    "kpl_weighted_matches": 0.3
   },
   {
     "hero_id": 117,
@@ -34553,7 +34893,6 @@
       "Clash",
       "Jungle"
     ],
-    "tier": "C",
     "win_rate": 0.5066,
     "pick_rate": 0.0041,
     "ban_rate": 0.0003,
@@ -34709,7 +35048,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.3158,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 19,
+    "kpl_weighted_win_rate": 0.1673,
+    "kpl_weighted_matches": 6.43
   },
   {
     "hero_id": 135,
@@ -34723,7 +35066,6 @@
       "Clash",
       "Roam"
     ],
-    "tier": "B",
     "win_rate": 0.5072,
     "pick_rate": 0.0079,
     "ban_rate": 0.0004,
@@ -35080,7 +35422,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4933,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 448,
+    "kpl_weighted_win_rate": 0.4775,
+    "kpl_weighted_matches": 90.2
   },
   {
     "hero_id": 106,
@@ -35093,7 +35439,6 @@
     "lanes": [
       "Mid"
     ],
-    "tier": "A",
     "win_rate": 0.487,
     "pick_rate": 0.0185,
     "ban_rate": 0.0015,
@@ -35445,7 +35790,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4913,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "A",
+    "kpl_matches": 576,
+    "kpl_weighted_win_rate": 0.4952,
+    "kpl_weighted_matches": 372.47
   },
   {
     "hero_id": 195,
@@ -35458,7 +35807,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "C",
     "win_rate": 0.5289,
     "pick_rate": 0.002,
     "ban_rate": 0.0003,
@@ -35608,7 +35956,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4348,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 46,
+    "kpl_weighted_win_rate": 0.3023,
+    "kpl_weighted_matches": 1.46
   },
   {
     "hero_id": 178,
@@ -35622,7 +35974,6 @@
       "Clash",
       "Jungle"
     ],
-    "tier": "C",
     "win_rate": 0.509,
     "pick_rate": 0.0042,
     "ban_rate": 0.0003,
@@ -35945,7 +36296,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5226,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 509,
+    "kpl_weighted_win_rate": 0.5183,
+    "kpl_weighted_matches": 289.23
   },
   {
     "hero_id": 125,
@@ -35958,7 +36313,6 @@
     "lanes": [
       "Clash"
     ],
-    "tier": "C",
     "win_rate": 0.4904,
     "pick_rate": 0.0046,
     "ban_rate": 0.0017,
@@ -36184,7 +36538,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.3895,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 95,
+    "kpl_weighted_win_rate": 0.3024,
+    "kpl_weighted_matches": 17.71
   },
   {
     "hero_id": 522,
@@ -36198,7 +36556,6 @@
       "Jungle",
       "Clash"
     ],
-    "tier": "C",
     "win_rate": 0.5143,
     "pick_rate": 0.0056,
     "ban_rate": 0.0004,
@@ -36509,7 +36866,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4628,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 484,
+    "kpl_weighted_win_rate": 0.436,
+    "kpl_weighted_matches": 35.73
   },
   {
     "hero_id": 505,
@@ -36522,7 +36883,6 @@
     "lanes": [
       "Roam"
     ],
-    "tier": "A",
     "win_rate": 0.4848,
     "pick_rate": 0.0115,
     "ban_rate": 0.0121,
@@ -36815,7 +37175,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.474,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "A",
+    "kpl_matches": 154,
+    "kpl_weighted_win_rate": 0.4454,
+    "kpl_weighted_matches": 4.33
   },
   {
     "hero_id": 538,
@@ -36828,7 +37192,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "B",
     "win_rate": 0.5293,
     "pick_rate": 0.009,
     "ban_rate": 0.0011,
@@ -37114,7 +37477,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4652,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 402,
+    "kpl_weighted_win_rate": 0.4813,
+    "kpl_weighted_matches": 143.4
   },
   {
     "hero_id": 197,
@@ -37127,7 +37494,6 @@
     "lanes": [
       "Mid"
     ],
-    "tier": "C",
     "win_rate": 0.5184,
     "pick_rate": 0.0069,
     "ban_rate": 0.0004,
@@ -37402,7 +37768,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.4796,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 1301,
+    "kpl_weighted_win_rate": 0.4532,
+    "kpl_weighted_matches": 171.93
   },
   {
     "hero_id": 176,
@@ -37417,7 +37787,6 @@
       "Roam",
       "Jungle"
     ],
-    "tier": "C",
     "win_rate": 0.5118,
     "pick_rate": 0.0048,
     "ban_rate": 0.0002,
@@ -37715,7 +38084,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5239,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 731,
+    "kpl_weighted_win_rate": 0.5176,
+    "kpl_weighted_matches": 221.78
   },
   {
     "hero_id": 171,
@@ -37728,7 +38101,6 @@
     "lanes": [
       "Roam"
     ],
-    "tier": "A",
     "win_rate": 0.5009,
     "pick_rate": 0.0111,
     "ban_rate": 0.0036,
@@ -38083,7 +38455,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5009,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "A",
+    "kpl_matches": 2278,
+    "kpl_weighted_win_rate": 0.5174,
+    "kpl_weighted_matches": 511.2
   },
   {
     "hero_id": 544,
@@ -38097,7 +38473,6 @@
       "Jungle",
       "Clash"
     ],
-    "tier": "A",
     "win_rate": 0.514,
     "pick_rate": 0.06,
     "ban_rate": 0.05,
@@ -38288,7 +38663,10 @@
     "win_rate_source": "unknown",
     "kpl_win_rate": 0.5231,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "kpl_matches": 455,
+    "kpl_weighted_win_rate": 0.4871,
+    "kpl_weighted_matches": 93.1
   },
   {
     "hero_id": 124,
@@ -38301,7 +38679,6 @@
     "lanes": [
       "Mid"
     ],
-    "tier": "C",
     "win_rate": 0.5106,
     "pick_rate": 0.0052,
     "ban_rate": 0.0002,
@@ -38619,7 +38996,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.494,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 1160,
+    "kpl_weighted_win_rate": 0.4793,
+    "kpl_weighted_matches": 52.57
   },
   {
     "hero_id": 113,
@@ -38632,7 +39013,6 @@
     "lanes": [
       "Roam"
     ],
-    "tier": "B",
     "win_rate": 0.5017,
     "pick_rate": 0.0066,
     "ban_rate": 0.0104,
@@ -38989,7 +39369,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5514,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 243,
+    "kpl_weighted_win_rate": 0.544,
+    "kpl_weighted_matches": 53.31
   },
   {
     "hero_id": 107,
@@ -39002,7 +39386,6 @@
     "lanes": [
       "Jungle"
     ],
-    "tier": "C",
     "win_rate": 0.5262,
     "pick_rate": 0.0061,
     "ban_rate": 0.0002,
@@ -39314,7 +39697,11 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.53,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "C",
+    "kpl_matches": 934,
+    "kpl_weighted_win_rate": 0.5848,
+    "kpl_weighted_matches": 210.48
   },
   {
     "hero_id": 148,
@@ -39328,7 +39715,6 @@
       "Mid",
       "Roam"
     ],
-    "tier": "B",
     "win_rate": 0.5106,
     "pick_rate": 0.0083,
     "ban_rate": 0.001,
@@ -39627,6 +40013,10 @@
     "win_rate_source": "ranked",
     "kpl_win_rate": 0.5123,
     "ranked_stats_as_of": "20260605",
-    "ranked_stats_bracket": "Diamond and above"
+    "ranked_stats_bracket": "Diamond and above",
+    "popularity_band": "B",
+    "kpl_matches": 1015,
+    "kpl_weighted_win_rate": 0.539,
+    "kpl_weighted_matches": 127.32
   }
 ]

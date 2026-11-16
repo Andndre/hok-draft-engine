@@ -161,17 +161,23 @@ def fetch_hokfire_data(client: httpx.Client):
                 br_m = re.search(r'\bbanRate:\s*([0-9.]+)', b)
                 ban_rate = float(br_m.group(1)) if br_m else None
 
-                tier_str = tier_letters[trank] if trank is not None and trank < len(tier_letters) else "B"
+                tier_str = tier_letters[trank] if trank is not None and trank < len(tier_letters) else None
 
+                # "tRank" di snapshot resmi = POPULARITY BAND per posisi (S/A/B/C),
+                # BUKAN tier kekuatan. Sumber resminya sendiri menulis: "Popularity is
+                # not a strength tier list." karena hero populer bisa saja lemah
+                # (Angela/Daji paling dipilih tapi lemah di turnamen resmi).
+                # Karena itu band disimpan terpisah dan TIDAK dipakai sebagai sinyal kekuatan.
+                #
                 # Hero tanpa data ranked resmi TIDAK boleh diberi angka pengganti:
                 # 0,035 pick / 0,010 ban dulu dipakai sebagai placeholder dan membuat
-                # hero baru tampakbery prensa (Dunshan, Wang Wei, Devara, Florentino,
-                # Flowborn). Tanpa observasi berarti "tidak ada data", bukan 3,5%.
+                # hero baru tampak lebih kuat dari kenyataan (Dunshan, Wang Wei, Devara,
+                # Florentino, Flowborn). Tanpa observasi berarti 0, bukan 3,5%.
                 stats_by_id[hid] = {
                     "name": name,
                     "position": pos,
                     "lane": LANE_MAP.get(pos, "Mid"),
-                    "tier": tier_str,
+                    "popularity_band": tier_str,
                     "win_rate": round(win_rate, 4) if win_rate is not None else None,
                     "pick_rate": round(show_rate, 4) if show_rate is not None else None,
                     "ban_rate": round(ban_rate, 4) if ban_rate is not None else None
@@ -391,25 +397,41 @@ def download_and_process_portrait(client: httpx.Client, img_url: str, hero_id: i
     return rel_path
 
 def load_kpl_win_rates() -> Dict[int, Dict[str, Any]]:
+    """Winrate KPL per hero: all-time + recency-weighted (half-life 12 bulan).
+
+    Versi berbobot dipakai untuk menilai kekuatan hero di meta SEKARANG, supaya
+    hero yang sudah lama tidak dihukum (atau dil distorsikan) oleh data 2019-2021.
+    """
     stats = {}
     db_path = ROOT_DIR / "data" / "processed" / "hok_drafts.db"
     if db_path.exists():
         import sqlite3
+        from datetime import datetime
         conn = sqlite3.connect(db_path)
         cur = conn.cursor()
         cur.execute("""
-        SELECT da.global_hero_id, b.winner_side, da.side
+        SELECT b.battle_id, b.winner_side, da.side, da.global_hero_id, m.date
         FROM battles b
         JOIN draft_actions da ON b.battle_id = da.battle_id
+        JOIN matches m ON b.match_id = m.match_id
         WHERE da.action = 'pick' AND b.is_complete = 1
         """)
-        for hid, w_side, side in cur.fetchall():
-            if hid not in stats:
-                stats[hid] = {"matches": 0, "wins": 0}
-            stats[hid]["matches"] += 1
-            if w_side == side:
-                stats[hid]["wins"] += 1
+        battle_rows = cur.fetchall()
         conn.close()
+        max_date = datetime.strptime(max(row[4] for row in battle_rows), "%Y-%m-%d")
+        for b_id, w_side, side, hid, b_date in battle_rows:
+            if hid is None:
+                continue
+            if hid not in stats:
+                stats[hid] = {"matches": 0, "wins": 0, "weighted_matches": 0.0, "weighted_wins": 0.0}
+            row = stats[hid]
+            won = 1 if w_side == side else 0
+            row["matches"] += 1
+            row["wins"] += won
+            battle_date = datetime.strptime(b_date, "%Y-%m-%d")
+            weight = math.exp(-math.log(2) * max(0, (max_date - battle_date).days) / 365.25)
+            row["weighted_matches"] += weight
+            row["weighted_wins"] += weight * won
     return stats
 
 def build_master_database():
@@ -466,14 +488,24 @@ def build_master_database():
             
         portrait_rel = download_and_process_portrait(client, hero["img_url"], hid)
         
-        tier = stat.get("tier") or build.get("tier") or "A"
+        # Band popularitas resmi: BUKAN tier kekuatan, hanya indikasi seberapa sering
+        # hero dipakai/dibanned di ladder. Dipakai untuk konteks ban, bukan untuk skor.
+        popularity_band = stat.get("popularity_band")
         # Win rate ranked (Diamond+, snapshot resmi) > win rate KPL pro > tidak ada data.
-        # Populasi kedua TIDAK sama dengan ranked, jadi sumbernya dicatat eksplisit
-        # lewat `win_rate_source` supaya tidak diam-diam tercampur di skoring.
+        # Populasi KPL TIDAK sama dengan ranked, jadi sumbernya dicatat eksplisit lewat
+        # `win_rate_source` supaya tidak diam-diam tercampur di skoring.
         kpl_data = kpl_wr_map.get(hid)
         kpl_win_rate = None
+        kpl_matches = 0
         if kpl_data and kpl_data["matches"] > 0:
             kpl_win_rate = round(kpl_data["wins"] / kpl_data["matches"], 4)
+            kpl_matches = int(kpl_data["matches"])
+        if kpl_data and kpl_data.get("weighted_matches", 0) > 0:
+            kpl_weighted_win_rate = round(kpl_data["weighted_wins"] / kpl_data["weighted_matches"], 4)
+            kpl_weighted_matches = round(float(kpl_data["weighted_matches"]), 2)
+        else:
+            kpl_weighted_win_rate = None
+            kpl_weighted_matches = 0.0
         ranked_win_rate = stat.get("win_rate")
         if ranked_win_rate is not None:
             win_rate = ranked_win_rate
@@ -536,10 +568,13 @@ def build_master_database():
             "primary_role": role,
             "primary_lane": primary_lane,
             "lanes": lanes,
-            "tier": tier,
+            "popularity_band": popularity_band,
             "win_rate": win_rate,
             "win_rate_source": win_rate_source,
             "kpl_win_rate": kpl_win_rate,
+            "kpl_matches": kpl_matches,
+            "kpl_weighted_win_rate": kpl_weighted_win_rate,
+            "kpl_weighted_matches": kpl_weighted_matches,
             "ranked_stats_as_of": stats_meta.get("updated"),
             "ranked_stats_bracket": stats_meta.get("bracket"),
             "pick_rate": pick_rate if pick_rate is not None else 0.0,

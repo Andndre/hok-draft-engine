@@ -132,20 +132,28 @@ Di masa lalu terjadi bug inversi 180 derajat karena salah menginterpretasikan ar
 - **Setiap relasi counter wajib punya provenance (`source`).** `kurohiko` = kartu "Counter alami" di halaman `hok.kurohiko.id/hero/<slug>` (maks. ±5 hero per halaman, sebagian alasannya masih "Alasan belum ada"); `curation` = kurasi manual repositori (`data/mappings/hero_counter_overrides.json`) berdasarkan alasan mekanis dari teks skill. Wiki **tidak boleh** mencredit relasi kurasi ke artikel Kurohiko — `HeroWikiDrawer.tsx` membaca `entry.source` dan menampilkan label "Kurasi" tanpa tautan untuk yang kurasi.
 - **Arah kartu Kurohiko:** kartu pada halaman hero X berarti hero-hero yang **MENG-COUNTER X**, jadi masuk ke `X.countered_by`; `X.counters` dibangun dengan pembalikan relasi. Skrip sinkronisasi `0_sync_global_assets.py` pernah menulis kartu ke `counters` (pembalik 180°) sementara datanya sudah dikoreksi manual — sekarang skrip memakai arah yang benar dan punya self-check simetri. Invarian: setiap `h.counters[x]` harus punya pasangan `x.countered_by[h]` dengan alasan identik (dicek `test_master_counter_relations_are_mirrored_in_both_directions`).
 
-### B. Competitive Tournament Tiers vs Casual Pub Tiers
+### B. Popularity Band ≠ Tier Kekuatan (WAJIB DIPAHAMI)
+- Field `tier` (S/A/B/C) yang dulu dipakai mesin **salah konsep**: itu **popularity band per posisi** dari HoK Camp (snapshot `stats.js`, field `tRank`), artinya "seberapa sering hero dipilih/dibanned di ladder". Sumber resminya sendiri menulis: *"Popularity is not a strength tier list."*
+- Bukti di data kita: Angela & Daji punya band **S** (paling dipilih) tetapi winrate KPL-nya **~46–47%**; Guan Yu & Zilong band **C** justru winrate KPL **~54–58%** dengan ribuan pick. Bandar popup ≠ kuat, dan **band S tidak boleh jadi acuan kekuatan**.
+- Karena itu field di dataset kini bernama **`popularity_band`** (bukan `tier`) dan **tidak boleh dipakai sebagai sinyal kekuatan** di mana pun. Ia hanya konteks: seberapa kontesatif hero di ladder.
+- Kekuatan competitive dihitung oleh `competitiveStrength()` di [`tournamentInference.ts`](apps/web/src/engine/tournamentInference.ts): winrate **KPL pro** (populasi simulator) recency-weighted 12 bulan, dishrink ke 50% sesuai ukuran sampel, diisi sisa bobotnya dengan winrate **ranked** (Diamond+) untuk hero yang belum pernah tampil di KPL. Populasi tidak pernah dicampur diam-diam — `win_rate_source` menandainya.
+- Di UI, badge band diberi tooltip "Popularitas di HoK Camp — bukan tier kekuatan". Jangan menulis "Tier S" untuk hal ini.
+- **Tidak ada sumber tier kekuatan resmi yang bisa dipakai.** `hokfire.com/assets/data.js` memuat tier sebagai *placeholder* ("Balance/tier values are placeholder") — jangan dipakai sebagai fallback.
+
+### C. Competitive Tournament Tiers vs Casual Pub Tiers
 - Hero carry tanpa skill mobilitas / escape (**Luban No.7 [112], Hou Yi [169], Angela [142], Daji [109], Milady [504]**) memiliki winrate tinggi di public ranked match karena musuh kasual tidak tahu cara dive.
 - Namun di turnamen resmi (dan di Global tanpa Master Luban [525]), hero-hero ini adalah **Tier B atau C**.
 - **DILARANG** merekomendasikan Luban No.7 atau hero immobile ini sebagai First Pick (Blue B1) atau Ban Prioritas Fase 1. Di [`apps/web/src/engine/tournamentInference.ts`](apps/web/src/engine/tournamentInference.ts), terdapat penalti khusus `openerPenalty = -2.5` dan sanksi `-2.0` pada Step 0–4 untuk mencegah anomali ini.
 - Meta Openers sah untuk B1 First Pick: **Liang, Haya, Dun, Ao'yin, Augran, Marco Polo, Lady Sun**.
 - **Jangan pernah menargetkan ban ke hero yang justru sudah dik-counter oleh opener kita.** `getOpenerAdvantageAgainst()` di [`tournamentInference.ts`](apps/web/src/engine/tournamentInference.ts) memberi penalti `-1.30` (hard) / `-0.70` (soft) pada Fase Ban 1 Blue maupun Red. Contoh nyata: knockback skill 3 **Ao'yin** memutus kanal ultimate **Marco Polo**, jadi mem-ban Marco Polo saat opener kita Ao'yin hanya membuang slot ban. Relasi matchup yang tidak termuat di artikel counter Kurohiko dikurasi di `data/mappings/hero_counter_overrides.json`; `dataset_sources.load_source_heroes()` menggabungkannya ke `counters` + `countered_by` secara idempoten sebelum `publish_data.py`, sehingga resync roster tidak menghapusnya.
 
-### C. Hero Rilis Global vs Eksklusif CN
+### D. Hero Rilis Global vs Eksklusif CN
 - HoK Global belum merilis seluruh hero dari King's Glory (CN).
 - Status rilis setiap hero ditinjau di `data/mappings/hero_release_status.json`, lalu diterbitkan dalam dataset. `isHeroGlobalReleased()` membaca flag dataset; status yang belum diketahui ditolak. ID 511 selalu merupakan alias tidak aktif untuk Ata 556.
 - **Zhu Bajie (#511)** telah di-merge ke **Ata (#556)** di Global Server. Seluruh data 1.701 match KPL dan sinergi duet turnamen telah dialihkan ke ID 556. ID 511 tidak aktif di katalog.
 - Toggle `🌐 Rilis Global (Aktif)` di UI wajib memfilter hero non-global agar tidak muncul di rekomendasi draft.
 
-### D. Paket Data dan Cache
+### E. Paket Data dan Cache
 - Loader memeriksa `data_manifest.json` saat aplikasi dibuka dan memvalidasi SHA-256 seluruh artefak sebelum mengaktifkan paket.
 - Manifest schema v2 dan cache `tournament_dataset_v17` menyimpan paket hero, sinergi, status rilis, item, dan spell; versi dataset berubah otomatis ketika isi artefak berubah.
 - Jalankan `uv run hokstats_source.py sync` dari `packages/ml-engine` untuk mengimpor HoKStats. Matchup, hero guide, item, dan spell tetap berstatus pending sampai sumbernya direview; hash yang berubah membatalkan review lama.
@@ -159,9 +167,10 @@ Di masa lalu terjadi bug inversi 180 derajat karena salah menginterpretasikan ar
   1. **Jangan pernah** memberi angka pengganti pada hero tanpa data (dulu `pick_rate = 0.035`, `ban_rate = 0.010`; enam hero baru — Devara, Dunshan, Florentino, Flowborn Assassin/Roamer, Wang Wei — mendapat bonus palsu +0,063 di skoring). Tanpa observasi berarti 0, bukan 3,5%.
   2. Winrate ranked (`win_rate_source: "ranked"`) > winrate KPL pro (`"kpl"`) > tidak ada (`"none"`). Populasi KPL **berbeda** dari ranked, jadi jangan samarkan; field `win_rate_source` + `kpl_win_rate` + `ranked_stats_as_of`/`ranked_stats_bracket` wajib terbit di dataset agar kebusukan sumbernya terlihat.
   3. `win_rate == 0.5` **bukan** penanda "tidak ada data" (hero dengan winrate asli 0,5 pernah tertimpa winrate KPL).
+- **Winrate KPL punya dua versi.** `kpl_win_rate`/`kpl_matches` = all-time (2019-2026); `kpl_weighted_win_rate`/`kpl_weighted_matches` = recency 12 bulan (half-life 365,25 hari, bobot yang sama dengan `extract_kpl_synergy.py`). Untuk menilai kekuatan hero **pakai yang berbobot**; all-time hanya cadangan. Besarnya beda: 25 hero bergeser > 3pp, hampir semua karena sampel tipis (mis. Li Bai 12 pick) — itu alasan penyusutan sampel wajib ada.
 - **Snapshot ranked saat ini basi.** `assets/stats.js` yang dipakai sinkronisasi bertanggal `20260605`, sedangkan sumber resmi diperbarui mingguan. Jalur pembaruan yang praktis: `hokstats.gg/official-popularity/` (mirror HoK Camp, 120 hero, win/pick/ban + popularity band per lane, HTML statis dengan `data-popularity-entry`/`data-official-metric`) — pola scraping yang sama dengan importer hokstats yang sudah ada. Endpoint resmi `getranklist` menolak POST dari origin luar dan proxy HOKFIRE `/api/getranklist` balas 502.
 
-### E. Invarian Latihan dan Pencarian
+### F. Invarian Latihan dan Pencarian
 - Urutan 18 aksi, fase, dan validasi terpusat di draftRules.ts. Terapkan aksi melalui fungsi bersama, termasuk dari kartu, rekomendasi, dan drawer.
 - AI hanya menerima state publik, riwayat Fearless, dan Plan A/B miliknya; jangan kirim rencana pemain ke worker.
 - Setiap hasil worker harus cocok dengan sessionId dan revision. Reset, undo, atau pergantian mode/game membatalkan pekerjaan tertunda.
@@ -169,7 +178,7 @@ Di masa lalu terjadi bug inversi 180 derajat karena salah menginterpretasikan ar
 - Bantuan nonaktif menyembunyikan rekomendasi, badge, sortir AI, radar, dan petunjuk taktis selama draft. Wiki tetap dapat dibaca.
 - Skor radar dan ranking adalah heuristik, bukan probabilitas kemenangan terkalibrasi.
 
-### F. Invarian Lapisan Vision (Live Draft Advisor)
+### G. Invarian Lapisan Vision (Live Draft Advisor)
 Sebelas invariant berikut adalah alasan fitur ini aman; agen selanjutnya dilarang melanggarnya:
 1. **Read-only. Tidak pernah inject input ke game.** Anti-cheat memperlakukan input sintetis sebagai automation; auto-play di luar scope.
 2. **Advisor adalah proyeksi layar.** `DraftObserver` membangun ulang posisi dari nol pada setiap observasi dan tidak pernah men-patch-nya inkremental — observasi yang lebih pendek harus menyusutkan posisi.

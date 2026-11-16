@@ -173,7 +173,7 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
         <div>
           <span className="eyebrow">Rekomendasi #{activeIndex + 1}</span>
           <h3>{currentRec.hero.name}</h3>
-          <p><LaneLabel lane={currentRec.hero.primary_lane} /> · Tier {currentRec.hero.tier}</p>
+          <p><LaneLabel lane={currentRec.hero.primary_lane} /> · Pop {currentRec.hero.popularity_band ?? '—'}</p>
         </div>
       </div>
 

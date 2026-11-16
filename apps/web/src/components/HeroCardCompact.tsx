@@ -64,7 +64,12 @@ export function HeroCardCompact({
           <span className="hero-card__stats">
             <TrendingUp aria-hidden="true" />
             {(hero.win_rate * 100).toFixed(1)}%
-            <span className={'tier-label tier-' + hero.tier}>{hero.tier}</span>
+            <span
+              className={'tier-label tier-' + (hero.popularity_band ?? 'C')}
+              title="Popularitas di HoK Camp (seberapa sering dipilih/dibanned) — bukan tier kekuatan"
+            >
+              {hero.popularity_band ?? '—'}
+            </span>
             {hero.is_global_released === false && <span className="muted-badge">CN</span>}
           </span>
         </span>
@@ -91,7 +96,12 @@ export function HeroCardCompact({
                 <div className="tactical-hovercard__header">
                   <span className="tactical-hovercard__rank">{quickBadge}</span>
                   <strong>{hero.name}</strong>
-                  <span className={'tier-label tier-' + hero.tier}>{hero.tier}</span>
+                  <span
+                    className={'tier-label tier-' + (hero.popularity_band ?? 'C')}
+                    title="Popularitas di HoK Camp (seberapa sering dipilih/dibanned) — bukan tier kekuatan"
+                  >
+                    {hero.popularity_band ?? '—'}
+                  </span>
                 </div>
                 {recommendationReason && (
                   <p className="tactical-hovercard__reason">{plainText(recommendationReason)}</p>

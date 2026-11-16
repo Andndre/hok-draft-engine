@@ -172,12 +172,23 @@ export interface Hero {
   primary_role: Role;
   primary_lane: Lane;
   lanes: Lane[];
-  tier: Tier;
+  /**
+   * Band popularitas resmi HoK Camp (S/A/B/C) per posisi — BUKAN tier kekuatan.
+   * Artinya: seberapa sering hero dipakai/dibanned di ladder. Sumber resmi menulis
+   * "Popularity is not a strength tier list." Jangan dipakai sebagai sinyal kekuatan;
+   * pakai `competitiveStrength()` (KPL pro + ranked) di mesin.
+   */
+  popularity_band?: 'S' | 'A' | 'B' | 'C' | null;
   win_rate: number;
   /** Sumber win rate: `ranked` (snapshot resmi Diamond+), `kpl` (pro tournament), `legacy`/`none`/`unknown`. */
   win_rate_source?: 'ranked' | 'kpl' | 'legacy' | 'none' | 'unknown';
   /** Winrate hero di turnaround pro (KPL), bila ada — populasi berbeda dari ranked. */
   kpl_win_rate?: number | null;
+  /** Jumlah pick hero di KPL (ukuran sampel untuk penyusutan winrate KPL). */
+  kpl_matches?: number | null;
+  /** Winrate KPL recency-weighted (half-life 12 bulan) — ukuran sampel efektif. */
+  kpl_weighted_win_rate?: number | null;
+  kpl_weighted_matches?: number | null;
   /** Tanggal snapshot statistik ranked yang dipakai (YYYYMMDD). */
   ranked_stats_as_of?: string | null;
   /** Bracket ladder yang dipakai snapshot tersebut. */

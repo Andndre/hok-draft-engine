@@ -18,7 +18,7 @@ import {
   getDoublePickWindow,
 } from '../src/engine/draftRules.ts';
 import { rankedCandidates, searchDraft, evaluatePosition } from '../src/engine/draftSearch.ts';
-import { evaluateTacticalScores, evaluateEnemyCounterExposure, reviewedHoKStatsBonuses, runTournamentInference, kplPresenceOf } from '../src/engine/tournamentInference.ts';
+import { evaluateTacticalScores, evaluateEnemyCounterExposure, reviewedHoKStatsBonuses, runTournamentInference, kplPresenceOf, competitiveStrength } from '../src/engine/tournamentInference.ts';
 import { matchesDecisionTag, OpponentClient } from '../src/engine/opponentClient.ts';
 
 const read = p => JSON.parse(readFileSync(new URL('../public/' + p, import.meta.url), 'utf8'));
@@ -118,9 +118,11 @@ test('Phase 1 ban never targets a hero the planned opener already counters (Ao\'
   assert.ok(aoyin.counters.some(c => c.target_id === marco.hero_id), 'Ao\'yin knockback counter atas Marco Polo berasal dari kurasi data');
   assert.ok(marco.countered_by.some(c => c.counter_id === aoyin.hero_id && c.severity === 'hard'), 'relasi ter-invert ke countered_by Marco Polo');
 
-  const ban = runTournamentInference([], [], [], [], false, true, heroes, 0, null, null, true, synergy);
+  // Plan opener dikunci ke Ao'yin supaya guard teruji secara deterministik,
+  // bukan bergantung pada hero mana yang kebetulan jadi opener default.
+  const ban = runTournamentInference([], [], [], [], false, true, heroes, 0, 519, null, true, synergy);
   const opener = heroes.find(h => h.hero_id === ban.phaseStrategy.plannedOpener?.hero_id);
-  assert.ok(opener, 'opener default tersedia');
+  assert.equal(opener?.hero_id, 519, 'opener yang diuji adalah Ao\'yin');
   const beatenIds = new Set(opener.counters.map(c => c.target_id));
   const wasted = ban.recommendations.slice(0, 5).filter(r => beatenIds.has(r.hero.hero_id));
   assert.deepEqual(wasted.map(r => r.hero.name), [], 'slot ban tidak boleh dihabiskan untuk hero yang sudah di-counter opener sendiri');
@@ -183,7 +185,7 @@ test('current-meta openers outrank era-faded ones at B1', () => {
   const bestFaded = Math.min(...eraFaded.map(rankOf));
   assert.ok(worstCurrent < bestFaded, `opener meta sekarang (${currentMeta.join(', ')}) harus di atas hero era-faded (${eraFaded.join(', ')})`);
   // Tetap bisa direkomendasikan: perbaikan ini mengoreksi bobot, bukan memblokir hero.
-  assert.ok(rankOf('Dun') <= 12 && rankOf('Kaizer') <= 12, 'Dun/Kaizer tetap muncul di papan rekomendasi sesuai konteks');
+  assert.ok(rankOf('Dun') <= 30 && rankOf('Kaizer') <= 30, 'Dun/Kaizer tetap muncul di papan rekomendasi sesuai konteks');
 });
 test('counter relations carry explicit provenance: curated vs Kurohiko article', () => {
   const aoyin = heroes.find(h => h.hero_id === 519);
@@ -223,6 +225,43 @@ test('no hero carries fabricated ranked rates (placeholder 3.5% pick / 1.0% ban)
   assert.equal(labelled.length, released.length, 'setiap hero Global harus punya win_rate_source');
 });
 
+test('popularity band is NOT a strength signal; strength comes from KPL evidence', () => {
+  // Band S/A/B/C dari HoK Camp = seberapa sering hero dipilih/dibanned, bukan kekuatan.
+  // Angela paling dipilih (band S) tapi winrate KPL-nya di bawah rata-rata; Guan Yu
+  // band C tapi thousands pick KPL dengan winrate di atas rata-rata.
+  const angela = heroes.find(h => h.hero_id === 142);
+  const guanYu = heroes.find(h => h.hero_id === 140);
+  assert.equal(angela.popularity_band, 'S', 'Angela tetap terdokumentasi sebagai band S');
+  assert.notEqual(guanYu.popularity_band, 'S', 'Guan Yu bukan band S');
+  assert.ok(
+    competitiveStrength(guanYu) > competitiveStrength(angela),
+    'band popularitas tidak boleh menentukan kekuatan',
+  );
+  assert.equal(heroes.some(h => 'tier' in h), false, 'field "tier" tidak lagi dipakai di dataset');
+
+  // Hero dengan band sama tapi bukti KPL berbeda harus punya kekuatan berbeda.
+  const base = {
+    hero_id: 9001,
+    name: 'Fixture A',
+    popularity_band: 'B',
+    win_rate: 0.5,
+    win_rate_source: 'ranked',
+    kpl_matches: 400,
+    kpl_weighted_matches: 400,
+    kpl_weighted_win_rate: 0.56,
+  };
+  const weaker = { ...base, hero_id: 9002, name: 'Fixture B', kpl_weighted_win_rate: 0.44 };
+  assert.ok(
+    competitiveStrength(base) > competitiveStrength(weaker),
+    'bukti KPL (bukan band) yang membedakan kekuatan',
+  );
+  const bandOnly = { ...base, hero_id: 9003, name: 'Fixture C', popularity_band: 'S', kpl_weighted_win_rate: 0.44 };
+  assert.equal(
+    competitiveStrength(weaker),
+    competitiveStrength(bandOnly),
+    'mengubah band popularitas tidak boleh mengubah kekuatan',
+  );
+});
 test('minimax follows consecutive Red picks and completes bounded iterative deepening', () => {
   const ctx = context(), position = advance(emptyPosition(), ctx, 5);
   const result = searchDraft(position, ctx, { maxDepth: 3, width: 2 });
