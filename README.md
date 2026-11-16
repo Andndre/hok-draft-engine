@@ -8,43 +8,49 @@ Sistem ini dirancang dengan pendekatan **zero-server compute di produksi**, menj
 
 | Bagian | Peran |
 |---|---|
-| Aturan & Solver Flex Lane ([draftRules.ts](apps/web/src/engine/draftRules.ts)) | Mengunci urutan 18 aksi, validasi Fearless/Global, serta `assignHeroLanes` berbasis lane primer, flex resmi, dan distribusi flex pro KPL. |
-| Mesin Taktis TypeScript ([tournamentInference.ts](apps/web/src/engine/tournamentInference.ts)) | Menghitung bobot ranking instan dari 4 fase turnamen, presensi KPL, sinergi duet, okupansi lane fleksibel, dan matriks counter. |
-| Pencarian Minimax Web Worker ([draftSearch.ts](apps/web/src/engine/draftSearch.ts)) | Membandingkan pohon keputusan zero-sum kedua tim via Iterative Deepening Minimax (Depth 1..4, Width 8 cabang, batas 1.500 ms). |
-| Mesin Game Plan Pasca-Draft ([gamePlan.ts](apps/web/src/engine/gamePlan.ts)) | Menilai matchup 5v5 (konteks Roam 2v2 & swap `<04:00`/re-swap `04:00`), kurva tempo KPL zero-sum, syarat menang/kalah, rute jungle, anti-invade, dan prioritas gank. |
-| Pipeline Audit Bukti Skill ([skill_evidence_audit.py](packages/ml-engine/skill_evidence_audit.py)) | Ekstraksi bukti skill resmi dan panduan taktis untuk memvalidasi 29 tag mobilitas, crowd control, dan peran tim. |
-| Sinergi & Tempo Empiris KPL ([extract_kpl_synergy.py](packages/ml-engine/extract_kpl_synergy.py)) | Menghitung frekuensi pick B1/R1, ban fase 1/2 tersaring Global, winrate duet, kurva tempo (Early/Mid/Late), dan flex lane (`year >= 2024`) dari 11.141+ game turnamen pro KPL & CN 2019–2026 ([Fire-Phoenixs/kpl-bp-dataset](https://github.com/Fire-Phoenixs/kpl-bp-dataset)). |
+| Aturan & Solver Flex Lane ([draftRules.ts](apps/web/src/engine/draftRules.ts)) | Urutan 18 aksi turnamen / 16 aksi ranked, validasi Fearless/Global, `isOpenerPickSlot`, dan `assignHeroLanes` (primer, flex resmi, flex pro KPL). |
+| Mesin Taktis TypeScript ([tournamentInference.ts](apps/web/src/engine/tournamentInference.ts)) | Kekuatan kompetitif Bayesian (KPL 12 bulan), rekam jejak pembuka B1 hierarkis, okupansi lane, matriks counter terarah, dan penyaring kandidat legal. |
+| Penyelaras Rekomendasi Solver ([advisorRanking.ts](apps/web/src/engine/advisorRanking.ts)) | Menyelaraskan seluruh rekomendasi UI dengan nilai posisi solver Minimax (Head Alpha-Beta + Tail 1-ply); Pilihan Solver = Kartu #1. |
+| Pencarian Minimax Web Worker ([draftSearch.ts](apps/web/src/engine/draftSearch.ts)) | Evaluasi pohon zero-sum `Strength(Kita) - Strength(Musuh)` via Minimax Alpha-Beta (Depth 1..4; batas 1.500 ms lawan / 8.000 ms advisor). |
+| Mesin Game Plan Pasca-Draft ([gamePlan.ts](apps/web/src/engine/gamePlan.ts)) | Matchup 5v5 pasca-draft, kurva tempo KPL zero-sum, syarat menang/kalah, rute jungle, dan prioritas gank. |
+| Pipeline Audit Bukti Skill ([skill_evidence_audit.py](packages/ml-engine/skill_evidence_audit.py)) | Ekstraksi 29 tag mobilitas, crowd control, dan utilitas dari deskripsi skill resmi secara deterministik lokal. |
+| Sinergi Empiris KPL ([extract_kpl_synergy.py](packages/ml-engine/extract_kpl_synergy.py)) | Frekuensi pick/ban, winrate duet, tempo, dan flex lane dari 11.141+ game pro KPL & CN 2019–2026. |
 
 ### Diagram Arsitektur Alur Keputusan (Decision Pipeline)
 
 ```mermaid
 flowchart TD
     subgraph ClientState["1. State Giliran Draft (Client)"]
-        A["Input Turn (Step 0..17, Blue / Red)"] --> B["Analisis Okupansi Lane & Fearless BP"]
+        A["Input Giliran: Step 0..17, Sisi Blue / Red"] --> B["Analisis Okupansi Lane & Fearless BP"]
         B --> C["Evaluasi Paparan Counter Lawan (Exposure)"]
     end
 
-    subgraph InferenceEngine["2. Mesin Inferensi Taktis (tournamentInference.ts)"]
+    subgraph InferenceEngine["2. Filter Legalitas & Penskoringan Kandidat (tournamentInference.ts)"]
         C --> D{"Deteksi 4 Fase Turnamen"}
-        D -->|Fase 1: Ban 1| E1["Pre-Ban Counter B1 / Deny S-Tier"]
-        D -->|Fase 2: Pick 1| E2["Amankan Opener B1 & Sinergi Duet KPL"]
-        D -->|Fase 3: Ban 2| E3["Putus Kombo Lane Kosong Musuh & Proteksi Core"]
-        D -->|Fase 4: Pick 2| E4["Penutup Lane Kosong & R5 Counter-Pick"]
-        
-        E1 --> F["Normalisasi Skor Softmax"]
+        D -->|Fase 1: Ban 1| E1["Pre-Ban Counter Opener & Deny Kontestasi"]
+        D -->|Fase 2: Pick 1| E2["Opener B1 / Respon R1-R2 & Sinergi Duet KPL"]
+        D -->|Fase 3: Ban 2| E3["Putus Kombo Lane Kosong Lawan (Anti-Wasted Ban)"]
+        D -->|Fase 4: Pick 2| E4["Penutup Komposisi Lane & Counter R5"]
+
+        E1 --> F["Kandidat Legal Terfilter Lane & Role"]
         E2 --> F
         E3 --> F
         E4 --> F
     end
 
-    subgraph SearchWorker["3. Pencarian Minimax (draftSearch.ts @ Web Worker)"]
-        F --> G["Shortlist 8 Kandidat Teratas (Width 8)"]
-        G --> H["Iterative Deepening Minimax (Depth 1..4)"]
-        H --> I["Evaluasi Posisi Asimetris: Strength(Kita) - Strength(Musuh)"]
-        I --> J["Alpha-Beta Pruning (Batas Waktu 1.500 ms)"]
+    subgraph SearchWorker["3. Penyelarasan Game-Theoretic Minimax (draftSearch.ts @ Web Worker)"]
+        F --> G{"Cek Slot Pembuka Buta?"}
+        G -->|Kedua Sisi Belum Pick| H1["Blind Opener: Depth 1 (Kunci Rekam Jejak B1)"]
+        G -->|Lawan Punya Pick| H2["Pencarian Penuh: Iterative Deepening Depth 1..4"]
+        H1 --> I["Head Pass: Alpha-Beta 8 Cabang Teratas"]
+        H2 --> I
+        I --> J["Tail Pass: Evaluasi 1-Ply Respons Lawan untuk Sisa Kandidat"]
     end
 
-    J --> K["Rekomendasi AI Terbaik & Variasi Utama (PV)"]
+    subgraph UIOutput["4. Output Rekomendasi Terpadu (advisorRanking.ts)"]
+        J --> K["Urutkan Seluruh Rekomendasi berdasar Nilai Solver"]
+        K --> L["Kartu #1 = Pilihan Solver (Kecuali Plan A/B Terkunci)"]
+    end
 ```
 
 ### Format Pertandingan: Turnamen & Ranked
@@ -55,32 +61,30 @@ Aplikasi mendukung dua format draft kompetitif yang terintegrasi penuh di mode S
 Format standar turnamen resmi KPL / Global:
 
 ```mermaid
-flowchart LR
+flowchart TD
     subgraph P1["Fase 1: Ban 1 (Langkah 0-3)"]
-        B1["Blue Ban 1"] --> R1["Red Ban 1"]
-        R1 --> B2["Blue Ban 2"]
-        B2 --> R2["Red Ban 2"]
+        direction LR
+        B1["Blue Ban 1"] --> R1["Red Ban 1"] --> B2["Blue Ban 2"] --> R2["Red Ban 2"]
     end
 
     subgraph P2["Fase 2: Pick 1 (Langkah 4-9)"]
-        R2 --> BP1["Blue Pick B1"]
-        BP1 --> RP1["Red Pick R1+R2"]
-        RP1 --> BP2["Blue Pick B2+B3"]
-        BP2 --> RP2["Red Pick R3"]
+        direction LR
+        BP1["Blue Pick B1"] --> RP1["Red Pick R1+R2"] --> BP2["Blue Pick B2+B3"] --> RP2["Red Pick R3"]
     end
 
     subgraph P3["Fase 3: Ban 2 (Langkah 10-13)"]
-        RP2 --> RB1["Red Ban 3"]
-        RB1 --> BB1["Blue Ban 3"]
-        BB1 --> RB2["Red Ban 4"]
-        RB2 --> BB2["Blue Ban 4"]
+        direction LR
+        RB1["Red Ban 3"] --> BB1["Blue Ban 3"] --> RB2["Red Ban 4"] --> BB2["Blue Ban 4"]
     end
 
     subgraph P4["Fase 4: Pick 2 (Langkah 14-17)"]
-        BB2 --> RP3["Red Pick R4"]
-        RP3 --> BP3["Blue Pick B4+B5"]
-        BP3 --> RP4["Red Pick R5 (Last Pick)"]
+        direction LR
+        RP3["Red Pick R4"] --> BP3["Blue Pick B4+B5"] --> RP4["Red Pick R5 (Last Pick)"]
     end
+
+    R2 --> BP1
+    RP2 --> RB1
+    BB2 --> RP3
 ```
 
 #### 2. Format Ranked Match (16 Aksi / 2 Fase)
@@ -88,103 +92,70 @@ Format ranked publik Diamond+:
 - **Fase 1: Blind Ban Simultan (Langkah 0–5):** Masing-masing tim melakukan 3 ban secara tertutup tanpa mengetahui ban lawan. Kedua tim dapat mem-ban hero yang sama (cross-team overlap diizinkan, tetapi dilarang ban ganda di tim yang sama).
 - **Fase 2: Pick Bergiliran (Langkah 6–15):** Urutan pick standar: `B1` $\to$ `R1 + R2` $\to$ `B2 + B3` $\to$ `R3 + R4` $\to$ `B4 + B5` $\to$ `R5`. Hero yang di-ban oleh tim mana pun tidak dapat di-pick.
 
-### Logika Taktis Kompetitif Utama
+### Logika Taktis & Matematis Utama
 
-1. **Fase Ban 1 (Pre-Ban & Deny First Pick):**
-   - **Sisi Blue:** Mengamankan First-Pick B1 (Plan A/B). Blue dilarang mem-ban opener rencananya sendiri, melainkan mem-ban hero hard counter alaminya berdasarkan data pre-ban turnamen KPL.
-   - **Sisi Red:** Karena Blue memegang First-Pick B1, Red fokus mem-ban S-Tier opener Blue (*Deny B1 Blue*) atau mengamankan core respon R1+R2 miliknya.
-2. **Fase Pick 1 (Opener & Sinergi KPL):**
-   - **Filter Anti-Immobile Carry:** Hero carry tanpa skill escape (Luban No.7, Hou Yi, Angela, Daji, Milady) dikenakan penalti keras `-2.0` sampai `-2.5` agar tidak direkomendasikan pada pick pembuka (B1/R1/R2) karena sangat rentan terhadap komposisi dive turnamen.
-   - **Sinergi Duet KPL:** Menghitung bonus `synergy_lift` untuk pasangan hero yang memiliki riwayat $\ge 20$ match dan winrate $\ge 50\%$ di KPL.
-3. **Fase Ban 2 (Break Enemy Combo & Strictly Lane-Aware):**
-   - Musuh telah memiliki 3 hero di Fase 1 (menyisakan 2 lane kosong). Mesin menyisir kandidat hero yang *bisa mengisi 2 lane kosong musuh* dan memiliki sinergi tinggi dengan 3 hero musuh yang sudah ada, lalu merekomendasikan ban untuk memutus kombo tersebut sebelum musuh sempat melengkapinya.
-   - Penalti keras `-2.40` diberikan jika pengguna mencoba mem-ban hero di lane yang sudah diisi musuh (*anti-wasted ban*).
-4. **Fase Pick 2 (Penutup Komposisi & Counter Pick):**
-   - Memastikan sisa lane kosong terisi tanpa duplikasi role.
-   - Langkah 17 (Red Pick R5) mendapat bobot counter tertinggi (`+0.70`) sebagai *Last Counter-Pick* penutup draft.
-5. **Peredam Paparan Counter Musuh (`evaluateEnemyCounterExposure`):**
-   - Mencegah algoritma memaksakan rekomendasi hero bersinergi tinggi jika hero tersebut menjadi target empuk musuh:
-     - 1 counter musuh: Penalti `-0.55`, bobot sinergi KPL diredam ke **55%**.
-     - 2 counter musuh: Penalti `-1.45`, bobot sinergi KPL diredam ke **10%**.
-     - 3+ counter musuh: Penalti `-2.60+`, bobot sinergi KPL dipotong menjadi **0%**.
-6. **Mekanisme Deny Pick & Pemetaan Flex Dinamis:**
-   - Evaluasi Minimax bekerja zero-sum: $\text{Strength}(\text{Kita}) - \text{Strength}(\text{Musuh})$.
-   - Ketika AI mengambil hero kunci lawan, nilai tree musuh di masa depan anjlok drastis. Akibatnya, Minimax secara alami memprioritaskan *Deny Pick* jika langkah tersebut memberikan keuntungan posisi ganda (memperkuat tim sendiri sekaligus memotong opsi terbaik lawan).
-   - Evaluasi okupansi lane di `PICK_PHASE_1`, `BAN_PHASE_2`, `PICK_PHASE_2`, serta `draftSearch.ts` menggunakan `assignHeroLanes` sehingga hero fleksibel (seperti flex resmi atau flex pro KPL `>= 20` game dengan share `>= 15%`) otomatis menggeser penugasan tim tanpa penalti duplikasi lane palsu.
+1. **Kekuatan Kompetitif Bayesian Murni:**
+   - Popularity band (`popularity_band` S/A/B/C) dan `pick_rate` dari HoK Camp **tidak digunakan sebagai kekuatan** (band S hanya mencerminkan frekuensi pick ladder kasual).
+   - Kekuatan dihitung via penyusutan Bayesian (*Bayesian shrinkage*) terhadap data pro KPL 12 bulan terakhir:
+     $$kplShrunk = \frac{WR_{KPL} \times N_{matches} + 0.5 \times 40}{N_{matches} + 40}$$
+   - Sisa bobot diisi winrate ranked Diamond+ hanya bila sampel KPL belum mencukupi.
+
+2. **Rekam Jejak First-Pick B1 & Pemotongan Kedalaman Pembuka Buta:**
+   - Opener dinilai dari efektivitas saat benar-benar di-first-pick di KPL (model hierarkis):
+     $$posterior\_B1 = \frac{WR_{B1} \times n_{B1} + WR_{overall\_shrunk} \times 40}{n_{B1} + 40}$$
+     $$b1RecordTerm = (posterior\_B1 - WR_{field\_B1}) \times 6.3$$
+   - **Pemotongan Kedalaman B1 Buta (`BLIND_OPENER_MAX_DEPTH = 1`):** Saat kedua tim belum memiliki pick (papan kosong), kedalaman Minimax dipotong ke 1 ply agar rekam jejak empiris B1 KPL menjadi penentu utama (menghilangkan bias minimax yang selalu memenangkan Tank tebal akibat proyeksi spekulatif 3-ply).
+
+3. **Filter Anti-Immobile Carry & Aturan Ban:**
+   - Hero carry tanpa skill escape (Luban No.7, Hou Yi, Angela, Daji, Milady) dikenakan penalti keras `-2.5` di slot pembuka (B1/R1/R2).
+   - Fase Ban 1: Blue mem-ban counter alami opener rencananya (dilarang mem-ban hero yang *sudah di-counter* oleh opener sendiri dengan penalti `-1.30`). Red mem-ban hero kontestasi tinggi milik Blue.
+   - Fase Ban 2: Menyisir 2 lane kosong musuh untuk memutus kombo sinergi duet (penalti `-2.40` untuk *wasted ban* di lane yang sudah diisi musuh).
+
+4. **Peredam Paparan Counter Musuh (`evaluateEnemyCounterExposure`):**
+   - Bobot sinergi duet diredam jika hero terpapar counter musuh di papan: 1 counter (diredam ke 55%), 2 counter (diredam ke 10%), 3+ counter (ditiadakan / 0%).
+
+5. **Penyelarasan Total Rekomendasi ([advisorRanking.ts](apps/web/src/engine/advisorRanking.ts)):**
+   - Seluruh daftar rekomendasi diurutkan oleh nilai posisi solver Minimax (`orderRecommendationsBySolver`), mencapai kesesuaian **80,5%** dengan keputusan AI lawan (dan **100%** di B1 buta). Pilihan solver selalu menjadi Kartu #1 di antarmuka (kecuali pengguna mengunci Plan A/B manual).
 
 ## Game Plan Pasca-Draft, Winning Condition & Simulator Swap
 
-Setelah 18 aksi draft selesai (baik di mode Simulator maupun di akhir game Latihan vs AI), [`PostDraftGamePlanPanel.tsx`](apps/web/src/components/PostDraftGamePlanPanel.tsx) dan [`gamePlan.ts`](apps/web/src/engine/gamePlan.ts) menyajikan evaluasi taktis pasca-draft dari perspektif **Tim Blue** maupun **Tim Red**:
+Setelah draft selesai, panel Game Plan ([`PostDraftGamePlanPanel.tsx`](apps/web/src/components/PostDraftGamePlanPanel.tsx) & [`gamePlan.ts`](apps/web/src/engine/gamePlan.ts)) menyajikan evaluasi makro 5v5 untuk kedua tim:
 
 1. **Peta Lane & Simulator Swap 5v5 (`00:00–04:00` + Re-Swap `04:00`):**
-   - Menugaskan 5 hero ke `Clash`, `Jungle`, `Mid`, `Farm`, `Roam` (`primer = 100`, `flex resmi = 40+`, `flex KPL = 20 + share * 10`) dan menandai kartu papan draft (`DraftSimulator.tsx`) dengan lencana `Swap` jika hero digeser dari lane primernya.
-   - Evaluasi `Mid` & `Farm` memperhitungkan perlindungan **konteks Roam 2v2** (`TERTOLONG_ROAM`) agar hero solo yang tertahan oleh dukungan Roam tidak dipaksa swap taktis yang merugikan makro.
-   - Memisahkan `PRIMARY`, `OFFICIAL_FLEX`, `KPL_PRO_FLEX`, dan `TACTICAL_SWAP`. Usulan swap taktis pra-`04:00` hanya diizinkan antar-laner (`Clash`/`Mid`/`Farm`), sedangkan pertukaran yang melibatkan `Roam` atau `Jungle` ditolak kecuali kedua hero valid flex resmi/KPL (swap manual non-flex memicu penalti makro dan label `SWAP_BERISIKO` plus instruksi re-swap setelah menit `04:00`).
+   - Menugaskan hero ke `Clash`, `Jungle`, `Mid`, `Farm`, `Roam` berbasis lane primer, flex resmi, dan distribusi empiris KPL.
+   - Melindungi laner solo via konteks Roam 2v2 dan membatasi swap taktis pra-`04:00` hanya antar-laner (swap non-flex ke Roam/Jungle dicegah agar tidak merusak makro tim).
 2. **Kurva Tempo KPL (Zero-Sum) & Winning Condition:**
-   - Memakai **132** kurva winrate empiris KPL (`>= 15` game valid dengan tiga jendela `Early <15m`, `Mid 15–19m`, `Late >=19m`) dengan fallback `profile_estimate` (`Estimasi Profil (KPL minim)`) untuk hero ber-sampel minim.
-   - `relativeShares` menormalisasi pangsa tempo relatif kedua tim langsung dari rata-rata winrate fase tanpa pembulatan ganda sehingga persentase dan bilah split selalu berjumlah **100%**, disertai keterangan rata-rata WR fase hero mentah (heuristik, bukan probabilitas kemenangan terkalibrasi).
-   - Merangkum arketipe komposisi, syarat menang/kalah utama, dan checklist item counter ancaman lawan.
-3. **Pola Start Jungle, Anti-Invade & Gold-Sharing Pra-04:00:**
-   - Menentukan kuadran pembukaan (`Strongside` vs `Weakside`), beralih ke protokol `SAFE_SPLIT_OR_GUARD` (*Split-Map Vertical Trade*) jika trio awal lawan berisiko invasi Lv 1–2, serta menyusun rencana *Gold-Sharing* pra-`04:00`, prioritas gank lane, dan fokus objektif `Tyrant` / `Overlord` pada menit `04:00`.
+   - Memakai 132 kurva winrate empiris KPL (fase *Early* `<15m`, *Mid* `15–19m`, *Late* `≥19m`) yang dinormalisasi relatif 100% antar kedua tim.
+   - Merangkum arketipe komposisi, syarat menang/kalah kunci, dan checklist item counter ancaman lawan.
+3. **Pola Start Jungle, Anti-Invade & Gold-Sharing:**
+   - Menentukan kuadran pembuka Jungle (*Strongside* vs *Weakside*), antisipasi invasi Lv 1–2, alokasi gold lane pra-`04:00`, dan prioritas objektif Tyrant/Overlord pada menit `04:00`.
 
 ## Simulator dan latihan
 
-- **Simulator:** pengguna mengendalikan kedua tim dan dapat memilih format pertandingan (**Turnamen** atau **Ranked**), serta mengatur Plan A/B masing-masing.
-- **Latihan vs AI:** pilih format (Turnamen/Ranked) dan sisi (Blue/Red); AI menjalankan ban/pick tim lawan secara otomatis. Sisi tetap sepanjang seri, maksimal lima game (Fearless tersedia pada format Turnamen).
-- **Filter Roster Hero (Global vs Global + CN):** tombol toggle di header navigasi dapat digunakan di seluruh mode (Simulator, Latihan vs AI, Counter Lookup, dan Wiki). Pengguna dapat memilih untuk fokus hanya pada hero rilis Global atau membuka katalog hero server CN.
-- **Bantuan opsional:** rekomendasi, radar, badge peringkat, dan sortir AI (serta indikator lane di papan draft) disembunyikan selama latihan berlangsung bila bantuan nonaktif. Wiki dan statistik hero tetap tersedia.
-- **Fearless per tim:** pada format Turnamen dengan opsi Fearless aktif, hero yang sudah dipilih suatu tim pada game sebelumnya terkunci untuk pick tim tersebut. Ban tetap mengikuti ketersediaan pada game aktif.
-- **Undo latihan:** kembali ke sebelum keputusan pemain terakhir, termasuk membuang respons AI sesudahnya (termasuk reset override lane swap). Game terdahulu menjadi ulasan setelah game berikutnya dimulai.
-- **Evaluasi akhir:** menampilkan komposisi kedua tim, panel `Game Plan & Winning Condition` beserta simulator swap lane interaktif, dan alternatif keputusan; tidak menetapkan pemenang pertandingan.
-
-Aturan bersama berada di `apps/web/src/engine/draftRules.ts`. Aplikasi mendukung dua format: **Turnamen (18 aksi)** dan **Ranked (16 aksi)**. Reset, undo, dan pergantian mode/game membatalkan keputusan AI yang tertunda. Worker tidak menerima Plan A/B pemain.
+- **Simulator:** Mengendalikan kedua tim (format Turnamen atau Ranked) serta mengatur Plan A/B masing-masing.
+- **Latihan vs AI:** Bertanding melawan bot AI (pilihan sisi Blue/Red, maksimal 5 game). Format Turnamen mendukung aturan *Fearless BP* (hero yang sudah dipakai terkunci untuk game berikutnya).
+- **Mode Bantuan:** Toggle bantuan opsional (rekomendasi, radar taktis, badge peringkat) dapat dimatikan untuk simulasi latihan mandiri.
+- **Filter Global:** Membatasi katalog hanya pada hero yang sudah resmi rilis di server Global.
 
 ## Live Draft Advisor (membaca layar BP HoK Global)
 
-**Live Draft Advisor** adalah lapisan computer vision in-browser yang membaca layar draft **Ranked** Honor of Kings Global dari jendela Android yang di-mirror via scrcpy, mengenali potret hero mana yang menempati slot mana, memirror board terdeteksi ke simulator, dan menyarankan pick berikutnya. Seluruhnya berjalan di browser — tanpa server, tanpa Python saat runtime.
+**Live Draft Advisor** adalah lapisan computer vision in-browser yang membaca layar draft **Ranked** Honor of Kings Global dari jendela Android yang di-mirror via scrcpy, memetakan potret hero ke papan simulator, dan menyarankan pick berikutnya secara instan tanpa ketergantungan server/Python runtime.
 
-**Read-only, tanpa injeksi input.** Advisor tidak pernah mengirim input ke game. Input sintetis (adb/scrcpy) dianggap automation oleh anti-cheat game, sehingga auto-play sepenuhnya di luar scope. UI menyatakan hal ini secara permanen.
+> [!NOTE]
+> **Read-only, tanpa injeksi input.** Advisor tidak pernah mengirim input ke game (menghindari deteksi otomasi / anti-cheat).
 
-### Cara menjalankan
+### Cara Menjalankan
 
-1. Mirror perangkat:
+1. Mirror perangkat via scrcpy (hindari `--fullscreen` di monitor 16:9 agar tidak letterbox):
    ```powershell
-   # Mirror the phone (scrcpy 5.0.1): borderless, 20:9 client area, always on top
    scrcpy --window-width=1920 --window-height=864 --always-on-top --window-border=less
    ```
-   Jangan pakai `--fullscreen` di monitor 16:9 — gambar device akan letterbox, pemeriksaan aspect menolaknya, dan advisor melaporkan mismatch. Jangan juga pass `--max-size`; scrcpy sudah meng-encode di resolusi native perangkat.
-2. Jalankan dev server di secure context (`getDisplayMedia` menuntut `https` atau `localhost`):
-   ```powershell
-   cd apps\web
-   npm.cmd run dev        # http://localhost:3000
-   ```
-3. Buka tab **Draft** → mode **Live Advisor** → **Mulai** → pilih share jendela scrcpy.
-4. Periksa overlay: setiap slot digambar sebagai kotak di preview — slot pick garis solid, slot ban dashed, semua berlabel (`B1`…`R5`, `ban B1`…`ban R3`). Operator wajib memastikan kotak jatuh tepat di slot layar.
-5. Format draft simulator harus **Ranked** agar tombol "Terapkan ke Simulator" berfungsi; selain itu panel menolak dengan alasan eksplisit.
+2. Jalankan aplikasi web di secure context (`http://localhost:3000`).
+3. Buka tab **Draft** → mode **Live Advisor** → **Mulai** → pilih jendela scrcpy.
+4. Sesuaikan grid overlay: seret titik anchor hingga kotak preview (garis solid = pick, garis putus-putus = ban) tepat menutupi slot hero di layar.
+5. Klik **"Terapkan ke Simulator"** (format simulator harus Ranked) untuk menyinkronkan board terdeteksi ke mesin rekomendasi.
 
-### Yang ditampilkan panel
-
-- Toggle sisi (side), tombol mulai/henti share layar, preview frame dengan overlay slot, dan status layout (terkalibrasi atau "belum terkalibrasi" selama masa trust berjalan).
-- Peringatan cross-check sisi: sisi yang terdeteksi dari layar hanya menghasilkan warning; toggle manual operator tetap otoritatif.
-- Board draft terdeteksi, rekomendasi pick berikutnya (dari `runTournamentInference`, jalur yang sama dengan Simulator/Latihan), dan tombol apply-to-simulator via jalur aksi bersama `draftRules.ts`.
-- Slot pick hanya dianggap committed saat `locked === true`. Slot yang berisi hero dengan `locked === false` **atau `undefined`** dirender sebagai pra-pilih: outline dashed, palet muted, chip "Pilih Dulu" dan catatan "bisa berubah", dengan aria-label "… pra-pilih, belum terkunci, masih bisa berubah". Memperlakukan `undefined` sebagai belum committed adalah arah yang aman.
-- Identitas ban kini sering dapat diidentifikasi (jalur match khusus ban, ambang `banMinScore = 0.72` / `banMinMargin = 0.10`; slot pick tetap 0.55/0.04), tetapi tetap dirender sebagai estimasi: nama italic muted, chip "perkiraan", tanpa badge confidence, aria-label "… (perkiraan, bisa salah)". Identitas ban tidak pernah masuk ke draft state.
-- Nota ban di panel memisahkan dua kategori secara eksplisit — `observer.ts` mengekspos `abstainedBans` dan `estimatedBans` di samping `unidentifiedBans` (yang tetap gabungan keduanya dan menjaga semantik replay tidak berubah: ban perkiraan tetap memajukan step dan **tidak pernah masuk posisi**). Nota berbunyi, mis. `4 ban teridentifikasi (perkiraan) · 2 ban tidak teridentifikasi — semua ban tetap di luar posisi draft`, dengan varian semua-abstain `2 ban tidak teridentifikasi — semua ban tetap di luar posisi draft`, varian semua-perkiraan `4 ban teridentifikasi (perkiraan) — semua ban tetap di luar posisi draft`, dan tidak ada yang dirender saat tidak ada ban yang tak terpercaya.
-
-### Hasil terukur
-
-- **Profil terkalibrasi (2800×1260):** 10/10 identitas hero benar pada frame 078; 9/10 pada frame 065 (item ke-10 adalah pre-selection terdokumentasi yang settle dua frame kemudian); **0 pelanggaran duplikat hero di 76 frame** spanning dua draft lengkap; identitas pick **392/760** slot-frame; stabilitas temporal slot pick 88–100% per slot.
-- **H.264 / path capture:** pada default scrcpy (H.264, 8 Mbps, native encode) pengenalan **identik dengan baseline raw-PNG** di setiap ukuran jendela yang diuji (native 2800×1260, 1920×864, 1400×630). Deviasi piksel per-slot terburuk ≈ 0.9% dari 255 dengan NCC ≥ 0.985. Degradasi mulai sekitar 1 Mbps (slot ban false-fill) dan identitas pick baru pecah dekat 0.25 Mbps.
-- **Scale capture:** akurasi pick identik pada 1.0 / 0.7 / 0.5.
-- **Layout otomatis (perangkat tanpa profil terkalibrasi):** solver menurunkan satu lattice reguler dari bukti terdeteksi (kandidat tile dan ikon ban) — pitch + fase baris di-fit dengan RANSAC, ukuran tile diambil dari placeholder yang benar-benar terlihat atau dari rasio tile÷pitch profil terkalibrasi (bebas resolusi), jumlah strip ban didiskover dari posisi ikon (tidak di-hardcode). Jalur ini hanya dipakai sebagai harness pengukuran offline; produksi memakai grid manual.
-
-### Belum terbukti (batasan)
-
-- Jalur live **belum pernah dilatihkan terhadap capture `getDisplayMedia` nyata dari jendela scrcpy**. Uji live pertama mengonfirmasi alur end-to-end dan identitas hero, tetapi jalur capture-nya sendiri baru terverifikasi melalui stand-in ffmpeg H.264 yang terkontrol. Semua pengukuran berasal dari PNG `adb exec-out screencap` yang di-round-trip melalui ffmpeg H.264 sebagai stand-in terkontrol untuk jalur live.
-- **Cara HoK me-layout ulang pada aspect ratio berbeda tidak diketahui.** Satu-satunya bukti adalah simulasi crop/pad/resize mekanis dari satu frame nyata. Perangkat kedua yang nyata — atau memaksa `adb shell wm size 1080x2340` dan memainkan satu draft — akan menjawabnya.
-- Hero splash di tengah, kolom ikon skill, dan strip bawah-tengah **bukan** slot pick dan tidak boleh di-match demikian.
-
-Kontrak corpus dan struktur `data/vision-corpus/` (gitignored; hanya `README.md` yang ter-track) dijelaskan di [`data/vision-corpus/README.md`](data/vision-corpus/README.md).
+Slot pick membedakan status pra-pilih (*preselected*) dan terkunci (*committed*). Detail teknis matcher NCC/dHash, kalibrasi resolusi, dan batasan aspect ratio didokumentasikan di [`AGENTS.md`](AGENTS.md) (§2.D).
 
 ## Sumber dan integritas data
 
@@ -328,17 +299,8 @@ Benchmark membandingkan baseline dengan pencarian pada fixture taktis dan posisi
 
 Data lokal KPL 2025–2026 memakai 20 aksi. Exporter menyaring pertandingan yang cocok dengan format aplikasi 18 aksi dan roster Global; cutoff default 2024 menyediakan holdout kompatibel. Benchmark tidak mengubah aturan aplikasi menjadi 20 aksi.
 
-### Harness vision (Live Draft Advisor)
+### Pengujian harness vision (offline)
 
-```powershell
-cd D:\hok-draft-engine\packages\ml-engine
-uv run convert_reference_images.py --out C:\Users\Andndre\AppData\Local\Temp\opencode\ref-png
-uv run calibrate_vision_regions.py --corpus D:\hok-draft-engine\data\vision-corpus --reference C:\Users\Andndre\AppData\Local\Temp\opencode\ref-png --out D:\hok-draft-engine\apps\web\tests\fixtures\vision\region-profile-2800x1260.json
-node D:\hok-draft-engine\apps\web\scripts\evaluate-vision-corpus.mjs --corpus D:\hok-draft-engine\data\vision-corpus --profile D:\hok-draft-engine\apps\web\tests\fixtures\vision\region-profile-2800x1260.json --reference C:\Users\Andndre\AppData\Local\Temp\opencode\ref-png --annotations D:\hok-draft-engine\apps\web\tests\fixtures\vision\annotations.json --ranges "28-78,222-256" --exclude "32-36,50-54"
-```
-
-`evaluate-vision-corpus.mjs` mengukur identitas hero per slot terhadap anotasi (`annotations.json`, `hero-identity-ground-truth.json`, `ban-identity-ground-truth.json` — identitas ban draft #1 yang diberikan operator), pelanggaran duplikat hero, dan stabilitas temporal slot pick dengan profil region terkalibrasi. Slot ban di-match dengan `kind: 'ban'` persis seperti jalur live, memakai ambang ban bawaan `HeroMatcher` (`banMinScore = 0.72`, `banMinMargin = 0.10` — hasil pengukuran, bukan selera) dan melaporkan **tabel akurasi ban per-ikon** alih-alih membiarkannya implisit di angka abstensi agregat; pemeriksaan duplikatnya di-scope ke slot pick karena identitas ban adalah estimasi dan tidak boleh menyamar sebagai pelanggaran legalitas pick. `h264-fidelity.mjs` mengukur degradasi H.264 terhadap corpus mentah (shells out ke ffmpeg); Corpus `data/vision-corpus/` gitignored dan harus di-capture lokal (`capture_vision_corpus.py`) sebelum perintah ini dapat berjalan.
-
-Hasil acuan dengan profil terkalibrasi 2800×1260: 10/10 identitas hero pada frame 078; 9/10 pada frame 065 (pre-selection terdokumentasi yang settle dua frame kemudian); 0 pelanggaran duplikat di 76 frame (identitas pick 392/760 slot-frame); stabilitas temporal slot pick 88–100% per slot; akurasi pick identik pada capture scale 1.0 / 0.7 / 0.5; identitas ban **148/222 = 66.7% ban slot-frame benar, 0 identifikasi salah, 74 abstain** (4 dari 6 ban teridentifikasi di seluruh 37 frame — root cause kegagalan lama: ikon ban circle-masked dengan padlock yang menutup ~40% lingkaran, bukan resolusi). Replay melalui jalur solver (87 frame draft-window, 45 solver-trusted): identitas pick 279/450 → 308/450 dengan 0 pelanggaran duplikat; angka jalur terkalibrasi tidak berubah sama sekali.
+Harness evaluasi offline untuk computer vision (`evaluate-vision-corpus.mjs`) menggunakan corpus frame ground-truth lokal yang di-gitignore (`data/vision-corpus/`). Dokumentasi lengkap perintah kalibrasi dan metrik akurasi internal didokumentasikan di [`data/vision-corpus/README.md`](data/vision-corpus/README.md) dan [`AGENTS.md`](AGENTS.md) (§2.D).
 
 Panduan agen berada di [AGENTS.md](AGENTS.md). Navigasi arsitektur dapat dimulai dari [knowledge graph](graphify-out/graph.html). Jalankan `graphify update .` setelah mengubah sumber TypeScript/Python.
