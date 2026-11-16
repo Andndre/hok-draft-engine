@@ -28,6 +28,7 @@ import {
   computeTournamentBaseQuality,
   runTournamentInference,
 } from './tournamentInference';
+import type { TournamentRecommendation } from './tournamentInference';
 
 /** Konteks pencarian Minimax untuk AI lawan */
 export interface SearchContext extends DraftContext {
@@ -102,8 +103,32 @@ export function rankedCandidates(position: DraftPosition, context: SearchContext
   // Pada fase pick, utamakan kandidat yang mengisi lane kosong tanpa memaksa Support keluar dari Roam
   const ourHeroes = context.heroes.filter((h) => position.picks[turn.side].includes(h.hero_id));
   const kplLaneRates = context.synergy?.hero_lane_rates;
+  return pickPhaseCandidates(legalCandidates, ourHeroes, kplLaneRates);
+}
+
+/**
+ * Kandidat yang layak dipilih pada fase pick.
+ *
+ * Prioritasnya:
+ * 1. Kandidat yang mengisi LANE UTAMA yang belum terisi (dan lolos aturan
+ *    integritas komposisi) — inilah yang terlihat pemain di papan.
+ * 2. Kandidat yang mengisi lane utama meski aturan integritas menolak.
+ * 3. Kandidat yang menambah okupansi lane menurut model integritas (boleh flex:
+ *    Bai Qi main Jungle di 26% match KPL).
+ * 4. Semua kandidat sebagai fallback.
+ *
+ * Fungsi ini dipakai bersama oleh mesin (`rankedCandidates`) dan UI, supaya
+ * rekomendasi yang dilihat pengguna persis kandidat yang benar-benar consider
+ * mesin — bukan sheet mentah yang bisa menyebut hero yang lane-nya sudah penuh.
+ */
+export function pickPhaseCandidates(
+  candidates: TournamentRecommendation[],
+  ourHeroes: Hero[],
+  kplLaneRates: Record<string, any> | undefined
+): TournamentRecommendation[] {
+  if (ourHeroes.length === 0) return candidates;
   const baseIntegrity = evaluateTeamCompositionIntegrity(ourHeroes, kplLaneRates);
-  const healthyLaneFittingCandidates = legalCandidates.filter((r) => {
+  const healthyLaneFittingCandidates = candidates.filter((r) => {
     const nextIntegrity = evaluateTeamCompositionIntegrity([...ourHeroes, r.hero], kplLaneRates);
     return (
       nextIntegrity.laneState.occupiedLanes.size === ourHeroes.length + 1 &&
@@ -127,7 +152,7 @@ export function rankedCandidates(position: DraftPosition, context: SearchContext
     return healthyPrimaryLaneCandidates;
   }
 
-  const primaryLaneCandidates = legalCandidates.filter((r) => fillsMissingPrimaryLane(r.hero));
+  const primaryLaneCandidates = candidates.filter((r) => fillsMissingPrimaryLane(r.hero));
   if (primaryLaneCandidates.length > 0) {
     return primaryLaneCandidates;
   }
@@ -136,11 +161,11 @@ export function rankedCandidates(position: DraftPosition, context: SearchContext
     return healthyLaneFittingCandidates;
   }
 
-  const laneFittingCandidates = legalCandidates.filter(
+  const laneFittingCandidates = candidates.filter(
     (r) => analyzeLaneOccupancy([...ourHeroes, r.hero], kplLaneRates).occupiedLanes.size === ourHeroes.length + 1
   );
 
-  return laneFittingCandidates.length > 0 ? laneFittingCandidates : legalCandidates;
+  return laneFittingCandidates.length > 0 ? laneFittingCandidates : candidates;
 }
 
 /**

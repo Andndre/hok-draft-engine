@@ -2,6 +2,9 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { DraftFormat, Hero, Lane, ActiveTab, SortMode, ViewMode, TacticalVector, TacticalDelta, GameDraftData, LaneAssignmentMap, TournamentDataset, SeriesFormat, SeriesTeam, DuetPackageOption } from './types';
 import { loadTournamentDataset } from './engine/heroDataLoader';
 import { runTournamentInference, TournamentPredictionResult, TournamentPhaseStrategy } from './engine/tournamentInference';
+import { pickPhaseCandidates } from './engine/draftSearch';
+import type { SearchContext } from './engine/draftSearch';
+import { rankRecommendationsByPosition } from './engine/advisorRanking';
 import { computeTacticalDeltas } from './engine/deltaExplainer';
 import { assignmentToHeroLaneMap, buildDefaultLaneAssignments, swapAssignedLanes } from './engine/gamePlan';
 import { AlertTriangle, BookOpen, FilterX, Gamepad2, RefreshCw, Scan, SearchX, SlidersHorizontal, Star } from 'lucide-react';
@@ -294,7 +297,48 @@ export const App: React.FC = () => {
 
         setEngineReady(true);
         setTacticalScores(result.tacticalScores);
-        setRecommendations(result.recommendations);
+        // Rekomendasi yang dilihat pengguna harus persis kandidat yang consider mesin.
+        // Sheet mentah bisa menyebut hero yang lane-nya sudah penuh (mis. dua Clash
+        // tanpa jungler) — padahal mesin tidak akan pernah memilihnya. Kandidat
+        //considered didahulukan; sisanya tetap tampil agar semua hero punya peringkat.
+        const engineCandidates =
+          turn.action === 'pick'
+            ? pickPhaseCandidates(result.recommendations, ourPicks.filter(Boolean) as Hero[], synergyData?.hero_lane_rates)
+            : result.recommendations;
+        const engineIds = new Set(engineCandidates.map((rec) => rec.hero.hero_id));
+        const laneOrdered =
+          engineCandidates.length === result.recommendations.length
+            ? result.recommendations
+            : [...engineCandidates, ...result.recommendations.filter((rec) => !engineIds.has(rec.hero.hero_id))];
+        // Urutan akhir mengikuti EVALUATOR POSISI milik solver (game theory), bukan
+        // skor heuristik per-hero: diukur, sheet dan solver hanya cocok di 19,5%
+        // posisi pick, dan 63,4% setelah kandidat diurutkan ulang dengan evaluator
+        // yang sama. Plan A/B yang dikunci pengguna tetap didahulukan.
+        const advisorContext: SearchContext = {
+          heroes: allH,
+          onlyGlobal: onlyGlobalReleased,
+          fearless: { blue: Array.from(blueFearlessSet), red: Array.from(redFearlessSet) },
+          format: draftFormat,
+          synergy: synergyData,
+          aiSide: turn.side,
+          aiPlan: { a: planAId ?? null, b: planBId ?? null },
+        };
+        const advisorPosition: DraftPosition = {
+          step: turn.stepIndex,
+          picks: {
+            blue: bPicks.filter(Boolean).map((h) => h!.hero_id),
+            red: rPicks.filter(Boolean).map((h) => h!.hero_id),
+          },
+          bans: {
+            blue: bBans.filter(Boolean).map((h) => h!.hero_id),
+            red: rBans.filter(Boolean).map((h) => h!.hero_id),
+          },
+        };
+        setRecommendations(
+          turn.action === 'pick'
+            ? rankRecommendationsByPosition(laneOrdered, advisorPosition, advisorContext, { lockedPlanHeroId: planAId })
+            : laneOrdered,
+        );
         setDuetPackages(result.duetPackages || []);
         setPhaseStrategy(result.phaseStrategy);
 

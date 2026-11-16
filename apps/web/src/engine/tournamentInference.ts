@@ -791,6 +791,9 @@ export interface TournamentPredictionResult {
   duetPackages?: DuetPackageOption[];
 }
 
+/** Satu baris rekomendasi dari sheet inferensi (dipakai bersama oleh mesin & UI). */
+export type TournamentRecommendation = TournamentPredictionResult['recommendations'][number];
+
 /**
  * Menghitung estimasi proyeksi hasil akhir draft (Best Case & Worst Case) untuk satu kandidat hero.
  *

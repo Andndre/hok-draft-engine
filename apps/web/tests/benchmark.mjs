@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { analyzeLaneOccupancy, emptyPosition, getDraftTurn, IMMOBILE_OPENERS, isLegalHero } from '../src/engine/draftRules.ts';
 import { rankedCandidates, searchDraft } from '../src/engine/draftSearch.ts';
+import { measureSheetSearchAgreement } from './sheetSearchAgreement.mjs';
 const read = p => JSON.parse(readFileSync(new URL('../public/' + p, import.meta.url), 'utf8'));
 const manifest = read('data_manifest.json');
 const heroes = read(manifest.artifacts.heroes.file);
@@ -43,5 +44,22 @@ if (historical) {
     max_elapsed_ms: Math.max(...rows.map(r => r.elapsed_ms)), limitations: historical.limitations, rows,
   };
 }
+// Metrik agreement: seberapa sering top-1 lembar rekomendasi (runTournamentInference)
+// sama dengan top-1 pencarian minimax (searchDraft) pada posisi draft yang sama.
+// Diukur dari 4 trajektori draft legal + B1 buta, semua langkah pick (41 posisi).
+const agreement = measureSheetSearchAgreement({ heroes, synergy });
+summary.sheet_search_agreement = {
+  sheet_search_agreement_rate: agreement.sheet_search_agreement_rate,
+  sample_size: agreement.sample_size,
+  agreements: agreement.agreements,
+  disagreements: agreement.disagreements,
+  trajectories: agreement.trajectories,
+  search_options: agreement.search_options,
+  by_step: agreement.by_step,
+  gap_distribution: agreement.gap_distribution,
+  planned_opener: agreement.planned_opener,
+  support_roam_clustering: agreement.support_roam_clustering,
+  worst_disagreements: agreement.worst_disagreements,
+};
 if (argument('--output')) writeFileSync(resolve(argument('--output')), JSON.stringify(summary, null, 2) + '\n');
 console.log(JSON.stringify(summary, null, 2));

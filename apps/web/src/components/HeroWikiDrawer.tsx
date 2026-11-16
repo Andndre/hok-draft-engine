@@ -2,7 +2,7 @@ import { RoleLabel } from './ui/RoleIcon';
 import { LaneLabel } from './ui/LaneIcon';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Hero, ItemCatalogEntry, SpellCatalogEntry, TacticalTag } from '../types';
-import { X, Star, Swords, Shield, Lightbulb, BookOpen, Zap, Sparkles, ArrowRight, CheckCircle2, AlertCircle, Wrench, ShieldBan, Link2 } from 'lucide-react';
+import { X, Star, Swords, Shield, Lightbulb, BookOpen, Zap, Sparkles, ArrowRight, CheckCircle2, AlertCircle, Wrench, ShieldBan, Link2, Info } from 'lucide-react';
 import { AssetThumbnail } from './ui/AssetThumbnail';
 import { displayCopy } from './ui/presentation';
 import { useDialogFocus } from './ui/useDialogFocus';
@@ -38,6 +38,7 @@ interface MatchupCardData {
   avatar?: string;
   evidence: MatchupEvidenceLine[];
   hasSourceConflict?: boolean;
+  measured?: MeasuredEvidenceView;
 }
 
 interface MatchupPanelProps {
@@ -45,6 +46,38 @@ interface MatchupPanelProps {
   allHeroes: Hero[];
   onSelectRelatedHero: (hero: Hero) => void;
 }
+
+type MeasuredVerdict = 'confirmed' | 'contradicted' | 'inconclusive';
+
+interface MeasuredEvidenceView {
+  delta: number;
+  weighted_delta?: number;
+  n: number;
+  n_eff?: number;
+  verdict: MeasuredVerdict;
+}
+
+const formatIdNumber = (value: number, fractionDigits = 1) =>
+  value.toLocaleString('id-ID', { minimumFractionDigits: fractionDigits, maximumFractionDigits: fractionDigits });
+
+const formatDelta = (delta: number) => {
+  const sign = delta > 0 ? '+' : delta < 0 ? '−' : '';
+  return `${sign}${formatIdNumber(Math.abs(delta) * 100, 1)}`;
+};
+
+const resolveMeasuredVerdict = (delta: number, group: 'danger' | 'favorable'): MeasuredVerdict => {
+  if (group === 'danger') {
+    if (delta <= -0.02) return 'confirmed';
+    if (delta >= 0.02) return 'contradicted';
+    return 'inconclusive';
+  }
+  if (delta >= 0.02) return 'confirmed';
+  if (delta <= -0.02) return 'contradicted';
+  return 'inconclusive';
+};
+
+const hasOpposingWeightedDelta = (delta: number, weightedDelta?: number): boolean =>
+  weightedDelta != null && Math.sign(weightedDelta) !== Math.sign(delta) && Math.abs(weightedDelta) >= 0.02;
 
 const FACTUAL_SKILL_TAG_GROUPS: ReadonlyArray<{
   category: 'Mobilitas' | 'Crowd Control' | 'Utilitas Tim';
@@ -174,6 +207,80 @@ const MatchupPanel: React.FC<MatchupPanelProps> = ({ hero, allHeroes, onSelectRe
     if (favorableEntry) favorableEntry.hasSourceConflict = true;
   }
 
+  const attachMeasured = (
+    group: Map<string, MatchupCardData>,
+    direction: 'danger' | 'favorable'
+  ) => {
+    for (const entry of group.values()) {
+      const related = entry.heroId == null ? nameMap.get(normalizeName(entry.name)) : idMap.get(entry.heroId);
+      const opponentId = related?.hero_id ?? entry.heroId;
+      const opponentName = related?.name || entry.name;
+      const found =
+        hero.measured_counters?.find(
+          (m) =>
+            (opponentId != null && m.target_id === opponentId) ||
+            normalizeName(m.target_name) === normalizeName(opponentName)
+        ) ||
+        hero.measured_countered_by?.find(
+          (m) =>
+            (opponentId != null && m.counter_id === opponentId) ||
+            normalizeName(m.counter_name) === normalizeName(opponentName)
+        );
+      if (found) {
+        entry.measured = {
+          delta: found.delta,
+          weighted_delta: found.weighted_delta,
+          n: found.n,
+          n_eff: found.n_eff,
+          verdict: resolveMeasuredVerdict(found.delta, direction),
+        };
+      }
+    }
+  };
+
+  attachMeasured(danger, 'danger');
+  attachMeasured(favorable, 'favorable');
+
+  const curatedKeys = new Set<string>([...danger.keys(), ...favorable.keys()]);
+  const measuredOnly = new Map<string, MatchupCardData & { delta: number; weighted_delta?: number; n: number; n_eff?: number }>();
+
+  const addMeasuredOnly = (
+    key: string,
+    entry: MatchupCardData & { delta: number; weighted_delta?: number; n: number; n_eff?: number }
+  ) => {
+    if (!curatedKeys.has(key) && !measuredOnly.has(key)) measuredOnly.set(key, entry);
+  };
+
+  hero.measured_counters?.forEach((m) => {
+    const related = idMap.get(m.target_id) || nameMap.get(normalizeName(m.target_name));
+    const key = related ? `hero:${related.hero_id}` : `name:${normalizeName(m.target_name)}`;
+    addMeasuredOnly(key, {
+      heroId: related?.hero_id ?? null,
+      name: related?.name || m.target_name,
+      avatar: related?.portrait_asset,
+      evidence: [],
+      delta: m.delta,
+      weighted_delta: m.weighted_delta,
+      n: m.n,
+      n_eff: m.n_eff,
+    });
+  });
+
+  hero.measured_countered_by?.forEach((m) => {
+    const related = idMap.get(m.counter_id) || nameMap.get(normalizeName(m.counter_name));
+    const key = related ? `hero:${related.hero_id}` : `name:${normalizeName(m.counter_name)}`;
+    addMeasuredOnly(key, {
+      heroId: related?.hero_id ?? null,
+      name: related?.name || m.counter_name,
+      avatar: related?.portrait_asset,
+      evidence: [],
+      delta: m.delta,
+      weighted_delta: m.weighted_delta,
+      n: m.n,
+      n_eff: m.n_eff,
+    });
+  });
+
   kpl?.synergies?.forEach((item) => add(partners, item.partner_id, item.partner_name, {
     source: 'KPL', detail: `${item.wins}W · ${item.losses}L · ${item.total_matches} game bersama`, metric: `${(item.duet_winrate * 100).toFixed(1)}% WR`,
   }, item.partner_avatar));
@@ -190,7 +297,7 @@ const MatchupPanel: React.FC<MatchupPanelProps> = ({ hero, allHeroes, onSelectRe
     { title: 'Kuat melawan', hint: 'Target yang menguntungkan', rows: favorable, tone: 'text-emerald-300', icon: <Swords className="h-4 w-4" aria-hidden="true" /> },
     { title: 'Rekan sinergi', hint: 'Hero dengan kombinasi yang disarankan', rows: partners, tone: 'text-indigo-300', icon: <Link2 className="h-4 w-4" aria-hidden="true" /> },
   ];
-  const hasRows = groups.some((group) => group.rows.size > 0);
+  const hasRows = groups.some((group) => group.rows.size > 0) || measuredOnly.size > 0;
 
   return (
     <section className="rounded-xl border border-[#263142] bg-[#121824] p-4 space-y-4">
@@ -252,6 +359,30 @@ const MatchupPanel: React.FC<MatchupPanelProps> = ({ hero, allHeroes, onSelectRe
                           {item.meta && <span className="font-medium text-slate-300">{item.meta} · </span>}{item.detail}
                         </p>
                       ))}
+                      {entry.measured && (
+                        <p className="flex flex-wrap items-center gap-2 text-xs">
+                          <span className={`inline-flex items-center gap-1 rounded-md border px-2 py-0.5 font-medium tabular-nums ${
+                            entry.measured.verdict === 'confirmed'
+                              ? 'border-emerald-800/50 bg-emerald-950/30 text-emerald-300'
+                              : entry.measured.verdict === 'contradicted'
+                              ? 'border-rose-800/50 bg-rose-950/30 text-rose-300'
+                              : 'border-slate-700 bg-slate-800/40 text-slate-300'
+                          }`}>
+                            {entry.measured.verdict === 'confirmed' && <CheckCircle2 className="h-3 w-3" aria-hidden="true" />}
+                            {entry.measured.verdict === 'contradicted' && <AlertCircle className="h-3 w-3" aria-hidden="true" />}
+                            {entry.measured.verdict === 'inconclusive' && <Info className="h-3 w-3" aria-hidden="true" />}
+                            {entry.measured.verdict === 'confirmed' && <span>Data KPL mendukung</span>}
+                            {entry.measured.verdict === 'contradicted' && <span>Data KPL menolak</span>}
+                            {entry.measured.verdict === 'inconclusive' && <span>Data KPL netral</span>}
+                            <span className="font-mono">{formatDelta(entry.measured.delta)} pp · n={entry.measured.n}</span>
+                          </span>
+                          {hasOpposingWeightedDelta(entry.measured.delta, entry.measured.weighted_delta) && (
+                            <span className="text-[11px] text-slate-500">
+                              12 bulan terakhir: {formatDelta(entry.measured.weighted_delta!)} pp (berlawanan)
+                            </span>
+                          )}
+                        </p>
+                      )}
                     </div>
                   </article>
                 );
@@ -261,6 +392,62 @@ const MatchupPanel: React.FC<MatchupPanelProps> = ({ hero, allHeroes, onSelectRe
         );
       }) : (
         <p className="rounded-lg border border-dashed border-[#30394A] bg-[#0F151F] p-4 text-sm text-slate-400">Belum ada data counter atau matchup untuk hero ini.</p>
+      )}
+
+      {measuredOnly.size > 0 && (
+        <section className="space-y-2.5">
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex items-center gap-2 text-slate-300">
+              <Info className="h-4 w-4" aria-hidden="true" />
+              <h5 className="text-xs font-bold uppercase tracking-wide">Terukur di KPL</h5>
+              <span className="rounded-full bg-[#1A202C] px-2 py-0.5 text-[11px] font-mono text-slate-400">{measuredOnly.size}</span>
+            </div>
+            <details className="text-xs text-slate-400">
+              <summary className="cursor-pointer list-none hover:text-slate-200">Apa artinya?</summary>
+              <div className="mt-2 rounded-lg border border-[#30394A] bg-[#0F151F] p-2.5 space-y-1 text-[11px] leading-relaxed">
+                <p><strong className="text-slate-200">pp</strong> = percentage point: selisih win rate hero ini saat lawan itu ada di tim lawan, dibanding saat lawan itu tidak ada.</p>
+                <p><strong className="text-slate-200">n</strong> = jumlah game berpasangan yang jadi bukti (minimal 30).</p>
+                <p>Bukti diberi bobot recency 12 bulan: data baru lebih berpengaruh dari data lama.</p>
+              </div>
+            </details>
+          </div>
+          <p className="text-[11px] leading-relaxed text-slate-500">
+            Dihitung dari {hero.measured_meta?.measured_games?.toLocaleString('id-ID') ?? '9.817'} game pro tempat hero ini dipilih — bukan relasi kurasi; mesin tidak memakai ini sebagai counter.
+          </p>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {[...measuredOnly.values()].map((entry) => {
+              const related = entry.heroId == null ? nameMap.get(normalizeName(entry.name)) : idMap.get(entry.heroId);
+              return (
+                <article key={`measured-only-${entry.heroId ?? entry.name}`} className="flex min-w-0 gap-3 rounded-xl border border-[#263142] bg-[#0F151F] p-3 transition-colors hover:border-[#3A485C]">
+                  <button type="button" disabled={!related} onClick={() => related && onSelectRelatedHero(related)} aria-label={`Buka wiki ${related?.name || entry.name}`} className="h-11 w-11 shrink-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8FF01] disabled:cursor-default">
+                    <AssetThumbnail src={related?.portrait_asset || entry.avatar} name={related?.name || entry.name} kind="hero" className="h-11 w-11 rounded-lg border border-[#30394A] object-cover" />
+                  </button>
+                  <div className="min-w-0 flex-1 space-y-1.5">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <button type="button" disabled={!related} onClick={() => related && onSelectRelatedHero(related)} className="truncate text-left text-sm font-semibold text-white hover:text-[#B8FF01] focus-visible:outline-none focus-visible:underline disabled:cursor-default disabled:hover:text-white">
+                        {related?.name || entry.name}
+                      </button>
+                      <span className="shrink-0 rounded-md border border-slate-700 bg-slate-800/40 px-2 py-1 text-xs font-mono font-bold tabular-nums text-slate-300">
+                        {formatDelta(entry.delta)} pp
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      <span className="rounded border border-[#30394A] bg-[#171F2B] px-1.5 py-0.5 text-[10px] font-medium text-slate-400">KPL</span>
+                    </div>
+                    <p className="text-xs leading-relaxed text-slate-400">
+                      n={entry.n}{entry.n_eff ? ` · n efektif=${formatIdNumber(entry.n_eff, 1)}` : ''}
+                    </p>
+                    {hasOpposingWeightedDelta(entry.delta, entry.weighted_delta) && (
+                      <p className="text-[11px] text-slate-500">
+                        12 bulan terakhir: {formatDelta(entry.weighted_delta!)} pp (berlawanan)
+                      </p>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
       )}
     </section>
   );
