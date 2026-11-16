@@ -14,7 +14,7 @@
       "counter_id": 132,
       "target_id": 116,
       "severity": "hard",
-      "reason": "Skill 2 Marco Polo memberi Attack dan Movement Speed begitu ada hero musuh di dekatnya, jadi ambush stealth Arke langsung ketahuan saat dia mau masuk dan Marco Polo punya ruang untuk kiting. Skill 1 + ult Marco Polo jadi burst true damage plus stun pada target pertama, dan Arke tidak punya CC sama sekali (skill 2-nya hanya slow) untuk memutus ult itu — Marco Polo pun bisa Purify CC di tengah ult-nya. Arke cuma punya satu pintu masuk stealth, dan pintu itu sudah tertutup.",
+      "reason": "Pasif skill 2 Marco Polo itu detektor ambush: begitu ada hero musuh di dekatnya, muncul lingkaran penanda di badan Marco Polo, jadi stealth Arke ketahuan waktu dia mau masuk — persis seperti pasif 'nguping' Fang dan pasif Sima Yi yang bikin Arke kelihatan. Selama musuh di dekatnya Marco Polo dapat bonus 20% damage dan movement speed (15/18/21/24/27/30% per level), jadi dia bisa jaga jarak dari assassin yang harus nutup jarak dengan dash. Skill 1 + ult Marco Polo jadi burst yang tidak bisa diinterrupt: Arke tidak punya CC sama sekali (skill 2-nya cuma slow), Marco Polo sendiri bisa Purify CC di tengah ult-nya, sedangkan stun untuk menahan Arke datang dari spell atau item seperti Frigid.",
       "reviewed_by": "Draft engine curation",
       "reviewed_at": "2026-11-16"
     }
