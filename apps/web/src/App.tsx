@@ -4,8 +4,8 @@ import { loadTournamentDataset } from './engine/heroDataLoader';
 import { runTournamentInference, TournamentPredictionResult, TournamentPhaseStrategy } from './engine/tournamentInference';
 import { pickPhaseCandidates, MAX_ADVISOR_BUDGET_MS } from './engine/draftSearch';
 import type { SearchContext } from './engine/draftSearch';
-import { rankRecommendationsByPosition, promoteAdvisorPick } from './engine/advisorRanking';
-import type { AdvisorDecision } from './engine/advisorRanking';
+import { rankRecommendationsByPosition, orderRecommendationsBySolver } from './engine/advisorRanking';
+import type { AdvisorDecision, SolverStatus } from './engine/advisorRanking';
 import { OpponentClient } from './engine/opponentClient';
 import { computeTacticalDeltas } from './engine/deltaExplainer';
 import { assignmentToHeroLaneMap, buildDefaultLaneAssignments, swapAssignedLanes } from './engine/gamePlan';
@@ -116,6 +116,8 @@ export const App: React.FC = () => {
   // tidak pernah dipromosikan ke daftar yang dibangun untuk posisi lain.
   const [advisorDecision, setAdvisorDecision] = useState<AdvisorDecision | null>(null);
   const [advisorDecisionKey, setAdvisorDecisionKey] = useState<string | null>(null);
+  // Status solver untuk UI: "mesin sedang menghitung" → siap / tidak tersedia.
+  const [advisorStatus, setAdvisorStatus] = useState<SolverStatus>({ state: 'idle' });
   const advisorRevisionRef = useRef(0);
 
   const loadData = useCallback(async () => {
@@ -484,16 +486,25 @@ export const App: React.FC = () => {
     // Jawaban lama tidak pernah berlaku untuk papan baru.
     setAdvisorDecision(null);
     setAdvisorDecisionKey(null);
-    if (!advisorClient || !simulatorActive) return;
+    if (!advisorClient || !simulatorActive) {
+      setAdvisorStatus({ state: 'idle' });
+      return;
+    }
     // Advisor jalan untuk SEMUA giliran — pick maupun ban. Solver bisa menilai
     // kedua jenis aksi (urutan draft含 ban), dan daftar ban yang benar adalah
     // bagian dari "rekomendasi terbaik di semua kondisi".
-    if (currentTurn.isComplete) return;
+    if (currentTurn.isComplete) {
+      setAdvisorStatus({ state: 'idle' });
+      return;
+    }
 
     const controller = new AbortController();
     const key = advisorSignature;
     const revision = advisorRevisionRef.current + 1;
     advisorRevisionRef.current = revision;
+    // UI harus tahu bahwa mesin sedang bekerja: urutan cepat tampil sementara,
+    // lalu digantikan urutan solver penuh.
+    setAdvisorStatus({ state: 'calculating' });
     void advisorClient
       .decide(
         advisorPosition,
@@ -505,7 +516,14 @@ export const App: React.FC = () => {
           side: currentTurn.side,
           isUltimateBattle,
           rankedBanCount,
-          options: { maxDepth: 4, width: 8, budgetMs: MAX_ADVISOR_BUDGET_MS, allowExtendedBudget: true },
+          options: {
+            maxDepth: 4,
+            width: 8,
+            budgetMs: MAX_ADVISOR_BUDGET_MS,
+            allowExtendedBudget: true,
+            // Nilai per kandidat → SELURUH daftar bisa diurutkan oleh solver.
+            orderCandidates: true,
+          },
         },
         { sessionId: 'simulator-advisor', revision },
         controller.signal,
@@ -513,16 +531,29 @@ export const App: React.FC = () => {
       .then((decision) => {
         // Stale guard ganda: signal (reset/undo/mode/unmount) dan tag sesi+revisi.
         if (controller.signal.aborted) return;
-        if (decision.heroId === null) return;
+        if (decision.heroId === null) {
+          setAdvisorStatus({ state: 'fallback' });
+          return;
+        }
         setAdvisorDecision({
           heroId: decision.heroId,
           engineKind: decision.engineKind,
           completedDepth: decision.completedDepth,
           elapsedMs: decision.elapsedMs,
+          rootValues: decision.rootValues,
         });
         setAdvisorDecisionKey(key);
+        setAdvisorStatus({
+          state: 'ready',
+          heroId: decision.heroId,
+          depth: decision.completedDepth,
+          elapsedMs: decision.elapsedMs,
+        });
       })
-      .catch(() => { /* Dibatalkan / watchdog: urutan cepat tetap tampil. */ });
+      .catch(() => {
+        // Dibatalkan / watchdog: urutan cepat tetap tampil.
+        if (!controller.signal.aborted) setAdvisorStatus({ state: 'fallback' });
+      });
 
     return () => controller.abort();
   }, [
@@ -541,14 +572,16 @@ export const App: React.FC = () => {
   ]);
 
   // Urutan rekomendasi yang DILIHAT pengguna. Selama pencarian berjalan (atau bila
-  // solver gagal) ini sama dengan urutan cepat. Setelah solver menjawab, hero pilihan
-  // solver naik ke posisi pertama dan sisa daftar mempertahankan urutannya. Plan A/B
-  // yang dikunci pengguna tetap di posisi pertama: keputusan pengguna mengalahkan mesin.
+  // solver gagal) ini sama dengan urutan cepat. Setelah solver menjawab, SELURUH
+  // daftar diurutkan ulang menurut nilai yang dihitung mesin itu sendiri — bukan
+  // cuma #1 yang naik. Plan A/B yang dikunci pengguna tetap di posisi pertama:
+  // keputusan pengguna mengalahkan mesin.
   const displayRecommendations = useMemo(() => {
     if (!advisorDecision || advisorDecisionKey !== advisorSignature) return recommendations;
     const lockedPlanId = activeSidePlanAId ?? activeSidePlanBId;
-    if (lockedPlanId !== null && recommendations[0]?.hero.hero_id === lockedPlanId) return recommendations;
-    return promoteAdvisorPick(recommendations, advisorDecision.heroId);
+    return orderRecommendationsBySolver(recommendations, advisorDecision.rootValues, {
+      lockedPlanHeroId: lockedPlanId,
+    });
   }, [
     recommendations,
     advisorDecision,
@@ -1039,7 +1072,7 @@ export const App: React.FC = () => {
                   return viewMode === 'compact' ? <HeroCardCompact key={hero.hero_id} {...shared} quickBadge={rank > 0 && rank <= 5 ? 'AI #' + rank : undefined} /> : <HeroCardDetailed key={hero.hero_id} {...shared} aiRank={rank > 0 ? rank : undefined} />;
                 })}</div>}
             </section>
-            {activeTab === 'draft' && !loading && <aside className="analysis-sidebar"><TacticalRadarPanel scores={tacticalScores} deltas={deltas} primaryInsight={primaryInsight} phaseStrategy={phaseStrategy} planAId={activeSidePlanAId} planBId={activeSidePlanBId} onOpenPlanModal={() => setIsPlanModalOpen(true)} onSelectQuickPlanA={handleSetPlanA} recommendations={displayRecommendations} onSelectCandidate={handleSelectHero} onInspectHero={setWikiHero} activeSide={currentTurn.side} isPickPhase={currentTurn.action === 'pick'} isComplete={currentTurn.isComplete} duetPackages={duetPackages} onSelectDuetPackage={handleSelectDuetPackage} /></aside>}
+            {activeTab === 'draft' && !loading && <aside className="analysis-sidebar"><TacticalRadarPanel scores={tacticalScores} deltas={deltas} primaryInsight={primaryInsight} phaseStrategy={phaseStrategy} planAId={activeSidePlanAId} planBId={activeSidePlanBId} onOpenPlanModal={() => setIsPlanModalOpen(true)} onSelectQuickPlanA={handleSetPlanA} recommendations={displayRecommendations} solverStatus={advisorStatus} onSelectCandidate={handleSelectHero} onInspectHero={setWikiHero} activeSide={currentTurn.side} isPickPhase={currentTurn.action === 'pick'} isComplete={currentTurn.isComplete} duetPackages={duetPackages} onSelectDuetPackage={handleSelectDuetPackage} /></aside>}
           </div>}
         </>}
       </main>

@@ -39,6 +39,31 @@ export interface SearchContext extends DraftContext {
   aiPlan: { a: number | null; b: number | null };
 }
 
+/**
+ * Nilai solver untuk satu kandidat root.
+ *
+ * `value` adalah nilai posisi dari sudut pandang sisi yang sedang bergiliran
+ * (positif = bagus). `depth` menyatakan berapa ply di bawah root yang dipakai
+ * untuk menghitungnya: nilai dari pass "kepala" (kandidat yang benar-benar
+ * dipertimbangkan alpha-beta pada kedalaman penuh) lebih dalam daripada nilai
+ * pass "ekor" (kandidat di luar lebar cabang, dihitung 1 ply dengan balasan
+ * lawan terbaik). Nilai dengan `depth` lebih dalam selalu lebih otoritatif.
+ */
+export interface RootCandidateValue {
+  heroId: number;
+  value: number;
+  /** Ply di bawah root yang dipakai untuk menghitung nilai ini. */
+  depth: number;
+  /**
+   * Blok nilai:
+   * - `head` = kandidat yang benar-benar diperhitungkan alpha-beta pada
+   *   kedalaman penuh (nilai paling otoritatif, selalu didahulukan).
+   * - `tail` = kandidat di luar lebar cabang, dihitung dangkal (1 ply) supaya
+   *   seluruh daftar tetap berurutan menurut mesin.
+   */
+  tier: 'head' | 'tail';
+}
+
 /** Hasil keputusan pencarian AI beserta variasi utama (Principal Variation) */
 export interface SearchDecision {
   heroId: number | null;
@@ -48,6 +73,12 @@ export interface SearchDecision {
   elapsedMs: number;
   principalVariation: DraftAction[];
   fallbackReason?: string;
+  /**
+   * Nilai solver per kandidat root — dasar pengurutan SELURUH daftar
+   * rekomendasi, bukan cuma #1 yang dipromosikan.
+   * Hanya diisi ketika `orderCandidates` dinyalakan (jalur advisor).
+   */
+  rootValues?: RootCandidateValue[];
 }
 
 /**
@@ -86,6 +117,26 @@ export interface SearchOptions {
    * di mana komposisi lawan belum diketahui sehingga kredit counter spekulatif.
    */
   counterWeight?: number;
+  /**
+   * Menghitung nilai solver PER KANDIDAT (bukan hanya movements terbaik), supaya
+   * daftar rekomendasi yang dilihat user bisa diurutkan oleh game theory —
+   * bukan sekadar #1 yang dipromosikan.
+   *
+   * Opt-in: hanya jalur advisor yang menyalakannya. Jalur lawan AI tidak pernah,
+   * jadi tidak ada biaya tambahan dan invarian anggaran 1.500 ms tetap utuh.
+   */
+  orderCandidates?: boolean;
+  /**
+   * Kedalaman pass "ekor" — kandidat di luar lebar cabang dievaluasi pada
+   * kedalaman ini (1 ply: pick kita + balasan lawan terbaik). Default 1.
+   */
+  orderTailDepth?: number;
+  /**
+   * Batas jumlah kandidat ekor yang dievaluasi. Default: semua kandidat legal.
+   * Batas ini hanya memangkas Pass Ekor; Pass Kepala (kandidat yang benar-benar
+   * dihitung alpha-beta) tidak pernah dipangkas.
+   */
+  orderTailLimit?: number;
 }
 
 /**
@@ -363,8 +414,14 @@ export function searchDraft(
 
   const rootTurn = getDraftTurn(position.step, context.format);
   const rootSide = rootTurn.side;
-  const rootCandidates = rankedCandidates(position, context).slice(0, branchWidth);
+  const allRootCandidates = rankedCandidates(position, context);
+  const rootCandidates = allRootCandidates.slice(0, branchWidth);
   const primaryCandidate = rootCandidates[0];
+
+  // Pengurutan daftar oleh solver — opt-in, hanya jalur advisor.
+  const orderCandidates = options.orderCandidates === true;
+  const orderTailDepth = Math.max(1, Math.min(4, options.orderTailDepth ?? 1));
+  const orderTailLimit = Math.max(0, options.orderTailLimit ?? Number.MAX_SAFE_INTEGER);
 
   const decision: SearchDecision = {
     heroId: primaryCandidate?.hero.hero_id ?? null,
@@ -388,6 +445,13 @@ export function searchDraft(
 
   const candidateCache = new Map<string, ReturnType<typeof rankedCandidates>>();
   const valueCache = new Map<string, number>();
+
+  /**
+   * Rekaman nilai kandidat root untuk iterasi deepening yang sedang berjalan,
+   * plus rekaman terbaik yang sudah lengkap (dipakai untuk Pass Kepala).
+   */
+  let rootIterationValues = new Map<number, number>();
+  let bestRootValues: RootCandidateValue[] = [];
 
   const buildPositionKey = (pos: DraftPosition): string =>
     `${pos.step}:${pos.picks.blue.join(',')}:${pos.picks.red.join(',')}:${pos.bans.blue.join(',')}:${pos.bans.red.join(',')}`;
@@ -428,6 +492,9 @@ export function searchDraft(
     }
 
     const isMaximizing = currentTurn.side === rootSide;
+    // Node root adalah node yang dipanggil dengan objek posisi awal — tidak
+    // pernah muncul lagi di pohon, jadi penandanya unik.
+    const isRootNode = pos === position;
     let bestResult = {
       value: isMaximizing ? -Infinity : Infinity,
       line: [] as DraftAction[],
@@ -447,6 +514,13 @@ export function searchDraft(
 
       const nextPosition = applyDraftAction(pos, draftAction, context, context.format);
       const childResult = visitNode(nextPosition, depth - 1, currentAlpha, currentBeta);
+
+      // Rekaman nilai kandidat root (Pass Kepala). Nilai kandidat yang ter-cutoff
+      // adalah batas atas — wajar untuk alpha-beta; yang dijamin: kandidat dengan
+      // nilai tertinggi = keputusan solver dan nilainya eksak.
+      if (orderCandidates && isRootNode) {
+        rootIterationValues.set(candidate.hero.hero_id, childResult.value);
+      }
 
       if (isMaximizing) {
         if (childResult.value > bestResult.value) {
@@ -473,12 +547,23 @@ export function searchDraft(
 
   // Iterative Deepening: cari secara bertahap dari depth 1 sampai maxSearchDepth
   for (let currentDepth = 1; currentDepth <= maxSearchDepth; currentDepth++) {
+    // Rekaman di-reset per iterasi: hanya iterasi yang SELESAI penuh yang layak
+    // dipromosikan (kalau timeout, rekaman terakhir tidak lengkap).
+    rootIterationValues = new Map();
     try {
       const searchResult = visitNode(position, currentDepth, -Infinity, Infinity);
       decision.heroId = searchResult.line[0]?.heroId ?? decision.heroId;
       decision.principalVariation = searchResult.line;
       decision.completedDepth = currentDepth;
       decision.engineKind = 'search';
+      if (orderCandidates && rootIterationValues.size === rootCandidates.length) {
+        bestRootValues = rootCandidates.map((candidate) => ({
+          heroId: candidate.hero.hero_id,
+          value: rootIterationValues.get(candidate.hero.hero_id) ?? -Infinity,
+          depth: currentDepth - 1,
+          tier: 'head',
+        }));
+      }
     } catch (err) {
       if (err === timeoutSymbol) {
         // Waktu habis: pertahankan hasil kedalaman terdalam yang berhasil diselesaikan
@@ -486,6 +571,55 @@ export function searchDraft(
       }
       throw err;
     }
+  }
+
+  // ---------------------------------------------------------------------------
+  // PASS EKOR: kandidat di luar lebar cabang tetap dinilai solver, supaya
+  // SELURUH daftar rekomendasi bisa diurutkan oleh game theory — bukan hanya
+  // 8 kandidat teratas. Nilainya dihitung pada `orderTailDepth` ply dengan
+  // JENDELA PENUH (tidak ada pruning): pick kita + balasan lawan terbaik.
+  //
+  // Sadar-deadline: kalau anggaran habis di tengah, nilai yang sudah terkumpul
+  // tetap dipakai (pengurutan parsial sah) dan tidak ada yang hilang.
+  // ---------------------------------------------------------------------------
+  if (orderCandidates) {
+    const headIds = new Set(bestRootValues.map((entry) => entry.heroId));
+    const tailCandidates = allRootCandidates
+      .filter((candidate) => !headIds.has(candidate.hero.hero_id))
+      .slice(0, orderTailLimit);
+    for (const candidate of tailCandidates) {
+      try {
+        checkTimeBudget();
+        const draftAction: DraftAction = {
+          side: rootTurn.side,
+          action: rootTurn.action,
+          heroId: candidate.hero.hero_id,
+        };
+        const nextPosition = applyDraftAction(position, draftAction, context, context.format);
+        const childResult = visitNode(nextPosition, orderTailDepth, -Infinity, Infinity);
+        bestRootValues.push({
+          heroId: candidate.hero.hero_id,
+          value: childResult.value,
+          depth: orderTailDepth,
+          tier: 'tail',
+        });
+      } catch (err) {
+        if (err === timeoutSymbol) break; // nilai parsial tetap sah
+        throw err;
+      }
+    }
+
+    // Urutan nilai: blok `head` lebih otoritatif dan selalu didahulukan, lalu
+    // nilai tertinggi, lalu urutan kandidat root asli sebagai pemutus seri.
+    const rootOrder = new Map(allRootCandidates.map((candidate, index) => [candidate.hero.hero_id, index]));
+    decision.rootValues = bestRootValues
+      .slice()
+      .sort(
+        (a, b) =>
+          (a.tier === b.tier ? 0 : a.tier === 'head' ? -1 : 1) ||
+          (b.value - a.value) ||
+          ((rootOrder.get(a.heroId) ?? Number.MAX_SAFE_INTEGER) - (rootOrder.get(b.heroId) ?? Number.MAX_SAFE_INTEGER)),
+      );
   }
 
   decision.elapsedMs = Math.round(getTimestamp() - startTime);

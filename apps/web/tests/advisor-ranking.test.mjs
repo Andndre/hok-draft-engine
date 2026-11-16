@@ -10,7 +10,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { emptyPosition, getDraftTurn, applyDraftAction } from '../src/engine/draftRules.ts';
 import { pickPhaseCandidates, searchDraft, evaluatePosition } from '../src/engine/draftSearch.ts';
-import { rankRecommendationsByPosition, promoteAdvisorPick } from '../src/engine/advisorRanking.ts';
+import { rankRecommendationsByPosition } from '../src/engine/advisorRanking.ts';
 import { runTournamentInference } from '../src/engine/tournamentInference.ts';
 
 const read = (p) => JSON.parse(readFileSync(new URL('../public/' + p, import.meta.url), 'utf8'));
@@ -104,35 +104,17 @@ test('advisor top-1 always fills a lane the team does not have yet', () => {
   );
 });
 
-test('promoteAdvisorPick moves the solver pick to the front and keeps the rest of the order', () => {
+test('urutan cepat (1-ply) tetap dipakai sebagai daftar cadangan saat solver belum menjawab', () => {
+  // `promoteAdvisorPick` (promosi #1) sudah dihapus: urutannya digantikan
+  // `orderRecommendationsBySolver` yang memakai nilai per kandidat (lihat
+  // tests/advisor-solver-ordering.test.mjs). Yang tetap dijaga di sini adalah
+  // urutan cadangan 1-ply: kandidat tidak boleh hilang dan Plan A terkunci
+  // tetap di posisi pertama.
   const position = { ...emptyPosition(), step: 4 };
   const list = buildSheet(position).recommendations;
-  assert.ok(list.length > 5, 'butuh daftar yang cukup panjang');
-  const firstId = list[0].hero.hero_id;
-  const targetId = list[4].hero.hero_id;
+  const laneOrdered = pickPhaseCandidates(list, [], synergy.hero_lane_rates);
+  const ranked = rankRecommendationsByPosition(laneOrdered, position, context, { lockedPlanHeroId: null });
 
-  const promoted = promoteAdvisorPick(list, targetId);
-
-  assert.equal(promoted.length, list.length, 'tidak ada kandidat yang boleh hilang');
-  assert.equal(promoted[0].hero.hero_id, targetId, 'pilihan solver harus di posisi pertama');
-  const expectedRest = [...list.slice(0, 4), ...list.slice(5)].map((rec) => rec.hero.hero_id);
-  assert.deepEqual(
-    promoted.slice(1).map((rec) => rec.hero.hero_id),
-    expectedRest,
-    'sisa daftar mempertahankan urutan cepatnya',
-  );
-  assert.equal(list[0].hero.hero_id, firstId, 'daftar masukan tidak boleh dimutasi');
-});
-
-test('promoteAdvisorPick leaves the list untouched for null/unknown ids and for an already-first pick', () => {
-  const position = { ...emptyPosition(), step: 4 };
-  const list = buildSheet(position).recommendations;
-
-  assert.equal(promoteAdvisorPick(list, null), list);
-  assert.equal(promoteAdvisorPick(list, undefined), list);
-  assert.equal(promoteAdvisorPick(list, -1), list);
-  const unknown = heroes.find((h) => !list.some((rec) => rec.hero.hero_id === h.hero_id));
-  assert.ok(unknown, 'butuh hero yang tidak ada di daftar');
-  assert.equal(promoteAdvisorPick(list, unknown.hero_id), list);
-  assert.equal(promoteAdvisorPick(list, list[0].hero.hero_id), list);
+  assert.equal(ranked.length, laneOrdered.length, 'tidak ada kandidat yang boleh hilang');
+  assert.equal(new Set(ranked.map((rec) => rec.hero.hero_id)).size, laneOrdered.length, 'tidak ada duplikat');
 });

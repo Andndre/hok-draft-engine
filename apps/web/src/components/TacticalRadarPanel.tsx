@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { ArrowRight, BookOpen, ChartColumn, CheckCircle2, ChevronDown, Crosshair, Info, LoaderCircle, ShieldAlert, ShieldBan, ShieldCheck, SlidersHorizontal, Sparkles, Swords, Target, TrendingUp } from 'lucide-react';
 import type { Hero, TacticalVector, TacticalDelta, DuetPackageOption } from '../types';
 import type { TournamentPhaseStrategy, TournamentPredictionResult } from '../engine/tournamentInference';
+import type { SolverStatus } from '../engine/advisorRanking';
 import { HeroThumbnail } from './ui/AssetThumbnail';
 import { plainText } from './ui/presentation';
 
@@ -16,6 +17,8 @@ interface Props {
   onOpenPlanModal?: () => void;
   onSelectQuickPlanA?: (heroId: number | null) => void;
   recommendations: TournamentPredictionResult['recommendations'];
+  /** Status solver: "mesin sedang menghitung" → siap / tidak tersedia. */
+  solverStatus?: SolverStatus;
   onSelectCandidate?: (hero: Hero) => void;
   onInspectHero?: (hero: Hero) => void;
   activeSide: 'blue' | 'red';
@@ -32,7 +35,7 @@ const axes: Array<{ key: keyof TacticalVector; label: string }> = [
   { key: 'team_utility', label: 'Utilitas tim' },
 ];
 
-export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseStrategy, onOpenPlanModal, onSelectQuickPlanA, recommendations, onSelectCandidate, onInspectHero, activeSide, isPickPhase, isComplete = false, isWaiting = false, duetPackages = [], onSelectDuetPackage }: Props) {
+export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseStrategy, planAId, planBId, onOpenPlanModal, onSelectQuickPlanA, recommendations, solverStatus, onSelectCandidate, onInspectHero, activeSide, isPickPhase, isComplete = false, isWaiting = false, duetPackages = [], onSelectDuetPackage }: Props) {
   const ActionIcon = isPickPhase ? Swords : ShieldBan;
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [selectedDuetIdx, setSelectedDuetIdx] = useState<number>(0);
@@ -51,6 +54,16 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
   const clampedDuetIdx = Math.min(selectedDuetIdx, Math.max(0, duetPackages.length - 1));
   const activeDuet = duetPackages.length > 0 ? duetPackages[clampedDuetIdx] : null;
 
+  // Kartu yang dipilih solver (bisa berbeda dari kartu #1 bila Plan A/B dikunci).
+  const solverPickIndex = solverStatus?.state === 'ready' && solverStatus.heroId != null
+    ? recommendations.findIndex((rec) => rec.hero.hero_id === solverStatus.heroId)
+    : -1;
+  const solverPickRec = solverPickIndex >= 0 ? recommendations[solverPickIndex] : null;
+  const currentIsSolverPick = solverPickIndex >= 0 && solverPickIndex === activeIndex;
+  // Plan A/B yang dikunci user: selalu di posisi pertama, apa pun jawaban solver.
+  const lockedPlanId = planAId ?? planBId ?? solverStatus?.lockedPlanHeroId ?? null;
+  const lockedPlanHoldsTop = lockedPlanId !== null && recommendations[0]?.hero.hero_id === lockedPlanId;
+
   function SingleRankBadge({ heroId, recs }: { heroId: number; recs: Props['recommendations'] }) {
     const idx = recs.findIndex(r => r.hero.hero_id === heroId);
     const rank = idx >= 0 ? idx + 1 : null;
@@ -66,8 +79,38 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
     );
   }
 
+  const solverStatusChip = (() => {
+    if (!solverStatus || solverStatus.state === 'idle') return null;
+    if (solverStatus.state === 'calculating') {
+      return (
+        <span className="solver-status solver-status--calculating" role="status" aria-live="polite">
+          <LoaderCircle className="is-spinning" aria-hidden="true" />
+          <span>Mesin sedang menghitung…</span>
+        </span>
+      );
+    }
+    if (solverStatus.state === 'fallback') {
+      return (
+        <span className="solver-status solver-status--fallback" role="status" aria-live="polite">
+          <Info aria-hidden="true" />
+          <span>Solver tidak tersedia — urutan cepat dipakai</span>
+        </span>
+      );
+    }
+    const seconds = (solverStatus.elapsedMs ?? 0) / 1000;
+    return (
+      <span className="solver-status solver-status--ready" role="status" aria-live="polite">
+        <Sparkles aria-hidden="true" />
+        <span>
+          Solver selesai · {solverStatus.depth ?? 0} ply · {seconds.toFixed(1)} dtk
+        </span>
+      </span>
+    );
+  })();
+
   return <section className="tactical-panel surface-panel" aria-label="Rekomendasi dan evaluasi draft">
     <div className="tactical-panel__header"><div className="section-heading"><span className="section-heading__icon"><Sparkles aria-hidden="true" /></span><div><h2>{isComplete ? 'Evaluasi draft' : 'Rekomendasi giliran'}</h2><p>{isComplete ? 'Komposisi kedua tim sudah lengkap' : 'Prioritas taktis untuk tim aktif'}</p></div></div><span className="side-badge" data-side={activeSide}>{activeSide === 'blue' ? 'Blue' : 'Red'} · {isPickPhase ? 'Pick' : 'Ban'}</span></div>
+    {solverStatusChip && <div className="solver-status-row">{solverStatusChip}</div>}
 
     {activeDuet && !isComplete && !isWaiting && (
       <div className="duet-package-card" style={{ marginBottom: '1rem', padding: '0.875rem', background: 'rgba(234, 179, 8, 0.08)', border: '1px solid rgba(234, 179, 8, 0.3)', borderRadius: '10px' }}>
@@ -148,19 +191,21 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
       <div className="recommendation-tabs" role="tablist" aria-label="Pilihan prioritas rekomendasi AI">
         {recommendations.slice(0, 5).map((rec, index) => {
           const isSelected = index === activeIndex;
+          const isSolverPick = index === solverPickIndex;
           return (
             <button
               key={rec.hero.hero_id}
               type="button"
               role="tab"
               aria-selected={isSelected}
-              className={'rec-tab' + (isSelected ? ' is-active' : '')}
+              className={'rec-tab' + (isSelected ? ' is-active' : '') + (isSolverPick ? ' is-solver-pick' : '')}
               onClick={() => setSelectedIndex(index)}
-              title={`Rekomendasi #${index + 1}: ${rec.hero.name}`}
-              aria-label={`Rekomendasi #${index + 1}: ${rec.hero.name}`}
+              title={`Rekomendasi #${index + 1}: ${rec.hero.name}${isSolverPick ? ' — pilihan solver' : ''}`}
+              aria-label={`Rekomendasi #${index + 1}: ${rec.hero.name}${isSolverPick ? ' — pilihan solver' : ''}`}
             >
               <span className="rec-tab__rank">#{index + 1}</span>
               <span className="rec-tab__name">{rec.hero.name}</span>
+              {isSolverPick && <span className="rec-tab__solver" aria-hidden="true">◆</span>}
             </button>
           );
         })}
@@ -175,7 +220,26 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
           <h3>{currentRec.hero.name}</h3>
           <p><LaneLabel lane={currentRec.hero.primary_lane} /> · Pop {currentRec.hero.popularity_band ?? '—'}</p>
         </div>
+        {currentIsSolverPick && (
+          <span className="solver-pick-badge" title="Hero ini dipilih solver Minimax (game theory)">
+            <Sparkles aria-hidden="true" />
+            <span>Pilihan solver</span>
+          </span>
+        )}
       </div>
+
+      {solverPickRec && !currentIsSolverPick && (
+        <p className="solver-pick-note">
+          <Sparkles aria-hidden="true" />
+          <span>
+            Pilihan solver: <strong>{solverPickRec.hero.name}</strong> (#{solverPickIndex + 1})
+            {lockedPlanHoldsTop ? ' — Plan yang dikunci tetap di posisi pertama' : ''}
+          </span>
+          <button type="button" className="ui-button ui-button--text" onClick={() => setSelectedIndex(solverPickIndex)}>
+            Lihat
+          </button>
+        </p>
+      )}
 
       <p className="recommendation-reason">
         <Crosshair aria-hidden="true" />

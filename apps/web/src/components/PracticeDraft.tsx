@@ -7,7 +7,9 @@ import { createPracticeSession, practiceContext, reducePractice } from '../engin
 import type { DecisionTrace, PracticeEvent, PracticeSession } from '../engine/practiceState';
 import { OpponentClient } from '../engine/opponentClient';
 import { MAX_ADVISOR_BUDGET_MS } from '../engine/draftSearch';
-import { promoteAdvisorPick } from '../engine/advisorRanking';
+import type { RootCandidateValue } from '../engine/draftSearch';
+import { orderRecommendationsBySolver } from '../engine/advisorRanking';
+import type { SolverStatus } from '../engine/advisorRanking';
 import { evaluateTacticalScores, runTournamentInference } from '../engine/tournamentInference';
 import { assignmentToHeroLaneMap, buildDefaultLaneAssignments, swapAssignedLanes } from '../engine/gamePlan';
 import { loadTournamentDataset } from '../engine/heroDataLoader';
@@ -72,6 +74,8 @@ export function PracticeDraft(props: Props) {
   const advisorClient = useMemo(() => new OpponentClient(snapshot, playerSide), [snapshot, playerSide, session?.sessionId]);
   useEffect(() => () => advisorClient.cancel(), [advisorClient]);
   const [advisorPick, setAdvisorPick] = useState<number | null>(null);
+  const [advisorValues, setAdvisorValues] = useState<RootCandidateValue[] | undefined>(undefined);
+  const [advisorStatus, setAdvisorStatus] = useState<SolverStatus>({ state: 'idle' });
   const onlyGlobal = props.onlyGlobalReleased ?? true;
   const game = session?.games[session.gameIndex];
   const position = game?.position ?? emptyPosition();
@@ -111,24 +115,29 @@ export function PracticeDraft(props: Props) {
     format, false, context.rankedBanCount ?? 3
   ) : null, [game, playerSide, context, snapshot, format, turn.action, activeBans]);
   const sheetRecommendations = useMemo(() => hints?.recommendations ?? [], [hints]);
-  // Advisor memakai solver yang sama dengan lawan AI: di giliran pemain, jawaban
-  // solver naik ke posisi #1 daftar rekomendasi. Plan A/B yang dikunci pemain tetap
-  // di posisi pertama (keputusan pemain mengalahkan mesin).
+  // Advisor memakai solver yang sama dengan lawan AI: SELURUH daftar
+  // rekomendasi diurutkan menurut nilai yang dihitung mesin, bukan cuma #1.
+  // Plan A/B yang dikunci pemain tetap di posisi pertama (keputusan pemain
+  // mengalahkan mesin).
   const lockedPlanId = game?.playerPlan.a ?? game?.playerPlan.b ?? null;
   const recommendations = useMemo(() => {
     if (!assistance || !canAct) return [];
     if (advisorPick == null) return sheetRecommendations;
-    if (lockedPlanId != null && sheetRecommendations[0]?.hero.hero_id === lockedPlanId) return sheetRecommendations;
-    return promoteAdvisorPick(sheetRecommendations, advisorPick);
-  }, [assistance, canAct, advisorPick, sheetRecommendations, lockedPlanId]);
+    return orderRecommendationsBySolver(sheetRecommendations, advisorValues, {
+      lockedPlanHeroId: lockedPlanId,
+    });
+  }, [assistance, canAct, advisorPick, advisorValues, sheetRecommendations, lockedPlanId]);
   const duetPackages = assistance && canAct ? hints?.duetPackages ?? [] : [];
   useEffect(() => {
     if (!active || !session || !game || !latest || turn.isComplete || turn.side !== playerSide) {
       setAdvisorPick(null);
+      setAdvisorValues(undefined);
+      setAdvisorStatus({ state: 'idle' });
       return;
     }
     const controller = new AbortController();
     // Plan A/B pemain tidak pernah dikirim ke pencari (AGENTS.md §4.F).
+    setAdvisorStatus({ state: 'calculating' });
     void advisorClient.decide(
       game.position,
       {
@@ -137,16 +146,38 @@ export function PracticeDraft(props: Props) {
         format,
         side: playerSide,
         rankedBanCount: context.rankedBanCount ?? 3,
-        options: { maxDepth: 4, width: 8, budgetMs: MAX_ADVISOR_BUDGET_MS, allowExtendedBudget: true },
+        options: {
+          maxDepth: 4,
+          width: 8,
+          budgetMs: MAX_ADVISOR_BUDGET_MS,
+          allowExtendedBudget: true,
+          // Nilai per kandidat → seluruh daftar diurutkan oleh solver.
+          orderCandidates: true,
+        },
       },
       { sessionId: session.sessionId, revision: session.revision },
       controller.signal,
     ).then((decision) => {
-      if (controller.signal.aborted || decision.heroId === null) return;
+      if (controller.signal.aborted) return;
+      if (decision.heroId === null) {
+        setAdvisorStatus({ state: 'fallback' });
+        return;
+      }
       setAdvisorPick(decision.heroId);
-    }).catch(() => { /* Dibatalkan / watchdog: urutan cepat tetap tampil. */ });
+      setAdvisorValues(decision.rootValues);
+      setAdvisorStatus({
+        state: 'ready',
+        heroId: decision.heroId,
+        depth: decision.completedDepth,
+        elapsedMs: decision.elapsedMs,
+        lockedPlanHeroId: lockedPlanId,
+      });
+    }).catch(() => {
+      // Dibatalkan / watchdog: urutan cepat tetap tampil.
+      if (!controller.signal.aborted) setAdvisorStatus({ state: 'fallback' });
+    });
     return () => controller.abort();
-  }, [active, session, game, latest, turn.isComplete, turn.side, playerSide, advisorClient, context, format]);
+  }, [active, session, game, latest, turn.isComplete, turn.side, playerSide, advisorClient, context, format, lockedPlanId]);
 
   const send = (event: PracticeEvent) => {
     client.cancel(); setError(''); setNotice(''); setThinking(false);
@@ -367,7 +398,7 @@ export function PracticeDraft(props: Props) {
           return props.viewMode === 'compact' ? <HeroCardCompact key={hero.hero_id} {...shared} quickBadge={rank > 0 && rank <= 5 ? 'AI #' + rank : undefined} /> : <HeroCardDetailed key={hero.hero_id} {...shared} aiRank={rank > 0 ? rank : undefined} />;
         })}</div>}
       </section>
-      {assistance && !turn.isComplete && latest && hints && <aside className="analysis-sidebar"><TacticalRadarPanel scores={playerRadar} phaseStrategy={hints.phaseStrategy} recommendations={recommendations} duetPackages={duetPackages} onSelectDuetPackage={handleSelectDuetPackage} isWaiting={!canAct} onSelectCandidate={choose} onInspectHero={setWikiHero} activeSide={playerSide} isPickPhase={turn.action === 'pick'} onOpenPlanModal={() => setPlanOpen(true)} onSelectQuickPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} /></aside>}
+      {assistance && !turn.isComplete && latest && hints && <aside className="analysis-sidebar"><TacticalRadarPanel scores={playerRadar} phaseStrategy={hints.phaseStrategy} recommendations={recommendations} solverStatus={advisorStatus} duetPackages={duetPackages} onSelectDuetPackage={handleSelectDuetPackage} isWaiting={!canAct} onSelectCandidate={choose} onInspectHero={setWikiHero} activeSide={playerSide} isPickPhase={turn.action === 'pick'} onOpenPlanModal={() => setPlanOpen(true)} onSelectQuickPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} /></aside>}
     </div>
     <HeroWikiDrawer hero={wikiHero} onClose={() => setWikiHero(null)} isFavorite={!!wikiHero && props.favorites.has(wikiHero.hero_id)} onToggleFavorite={props.onToggleFavorite} onPickForDraft={canAct && wikiHero && isLegalHero(position, wikiHero.hero_id, context, format) ? choose : undefined} draftActionLabel={turn.action === 'ban' ? 'Ban hero ini' : 'Pick hero ini'} allHeroes={snapshot.heroes} onSelectRelatedHero={setWikiHero} itemCatalog={snapshot.items} spellCatalog={snapshot.spells} />
     <PlanSelectionModal isOpen={planOpen && latest} onClose={() => setPlanOpen(false)} heroes={snapshot.heroes} currentPlanAId={game.playerPlan.a} currentPlanBId={game.playerPlan.b} onSelectPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} onSelectPlanB={heroId => send({ type: 'plan', plan: 'b', heroId })} activeSide={playerSide} unavailableHeroIds={unavailablePlans} recommendedOpeners={assistance ? hints?.phaseStrategy.candidateOpeners ?? [] : []} onlyGlobalReleased={onlyGlobal} />

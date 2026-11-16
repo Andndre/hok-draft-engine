@@ -15,6 +15,9 @@
  *   dimiliki evaluator posisi).
  * - Game theory yang menentukan URUTAN. Satu sumber kebenaran untuk saran app dan
  *   untuk gerakan AI lawan.
+ * - Urutan akhir memakai NILAI PER KANDIDAT dari pencarian itu sendiri
+ *   (`searchDraft` dengan `orderCandidates`), bukan cuma #1 yang dipromosikan:
+ *   `orderRecommendationsBySolver` mengurutkan seluruh daftar.
  * - Plan A/B yang dikunci pengguna tetap didahulukan: keputusan pengguna bukan
  *   tebakan mesin.
  * - `plannedOpener` hasil tebakan mesin TIDAK dipaksa jadi #1 — diukur, itu
@@ -24,7 +27,7 @@ import type { Hero } from '../types';
 import type { DraftPosition } from './draftRules';
 import { applyDraftAction, getDraftTurn } from './draftRules';
 import { evaluatePosition } from './draftSearch';
-import type { SearchContext } from './draftSearch';
+import type { SearchContext, RootCandidateValue } from './draftSearch';
 import type { TournamentRecommendation } from './tournamentInference';
 
 /** Lebar kandidat yang di-evaluasi ulang — sama dengan lebar cabang solver. */
@@ -40,23 +43,79 @@ export interface AdvisorDecision {
   engineKind: string;
   completedDepth: number;
   elapsedMs: number;
+  /** Nilai solver per kandidat — dasar urutan seluruh daftar rekomendasi. */
+  rootValues?: RootCandidateValue[];
 }
 
 /**
- * Menaikkan pilihan solver ke posisi pertama daftar rekomendasi yang dilihat pengguna.
- *
- * Sisa daftar mempertahankan urutannya (urutan 1-ply yang cepat). Mengembalikan daftar
- * apa adanya bila id null/undefined, tidak ditemukan, atau sudah di posisi pertama —
- * sehingga pemanggil tidak perlu memeriksa kondisi itu sendiri.
+ * Status solver untuk UI: "mesin sedang menghitung" saat pencarian berjalan,
+ * lalu siap / tidak tersedia.
  */
-export function promoteAdvisorPick(
+export interface SolverStatus {
+  state: 'idle' | 'calculating' | 'ready' | 'fallback';
+  /** Hero yang dipilih solver (null saat belum ada jawaban). */
+  heroId?: number | null;
+  /** Kedalaman pencarian yang selesai. */
+  depth?: number;
+  /** Durasi pencarian terakhir. */
+  elapsedMs?: number;
+  /** Plan A/B yang dikunci user (kalau ada) — tetap didahulukan. */
+  lockedPlanHeroId?: number | null;
+}
+
+/**
+ * Mengurutkan SELURUH daftar rekomendasi menurut nilai solver.
+ *
+ * Berbeda dengan promosi sederhana #1, fungsi ini memakai nilai per kandidat
+ * yang dikembalikan pencarian itu sendiri:
+ * - Blok `head` (kandidat yang benar-benar dihitung alpha-beta pada kedalaman
+ *   penuh) selalu didahulukan, diurutkan nilai tertinggi.
+ * - Blok `tail` (kandidat di luar lebar cabang, dihitung 1 ply) menyusul,
+ *   juga diurutkan nilai tertinggi.
+ * - Kandidat tanpa nilai solver mengikuti dengan urutan relatif aslinya.
+ *
+ * Plan A/B yang dikunci pengguna tetap di posisi pertama: keputusan pengguna
+ * mengalahkan tebakan mesin.
+ */
+export function orderRecommendationsBySolver(
   recommendations: TournamentRecommendation[],
-  heroId: number | null | undefined
+  rootValues: RootCandidateValue[] | undefined | null,
+  options: { lockedPlanHeroId?: number | null } = {}
 ): TournamentRecommendation[] {
-  if (heroId === null || heroId === undefined) return recommendations;
-  const index = recommendations.findIndex((rec) => rec.hero.hero_id === heroId);
-  if (index <= 0) return recommendations;
-  return [recommendations[index], ...recommendations.slice(0, index), ...recommendations.slice(index + 1)];
+  if (!rootValues || rootValues.length === 0) return recommendations;
+
+  const bestByHero = new Map<number, RootCandidateValue>();
+  for (const entry of rootValues) {
+    const known = bestByHero.get(entry.heroId);
+    if (!known || (known.tier === 'tail' && entry.tier === 'head')) {
+      bestByHero.set(entry.heroId, entry);
+    }
+  }
+
+  const scored: Array<{ rec: TournamentRecommendation; index: number; entry: RootCandidateValue }> = [];
+  const unscored: TournamentRecommendation[] = [];
+  recommendations.forEach((rec, index) => {
+    const entry = bestByHero.get(rec.hero.hero_id);
+    if (entry) scored.push({ rec, index, entry });
+    else unscored.push(rec);
+  });
+
+  scored.sort(
+    (a, b) =>
+      (a.entry.tier === b.entry.tier ? 0 : a.entry.tier === 'head' ? -1 : 1) ||
+      (b.entry.value - a.entry.value) ||
+      (a.index - b.index),
+  );
+
+  const ordered = [...scored.map((entry) => entry.rec), ...unscored];
+  const locked = options.lockedPlanHeroId ?? null;
+  if (locked !== null) {
+    const index = ordered.findIndex((rec) => rec.hero.hero_id === locked);
+    if (index > 0) {
+      return [ordered[index], ...ordered.slice(0, index), ...ordered.slice(index + 1)];
+    }
+  }
+  return ordered;
 }
 
 export interface AdvisorRankingOptions {

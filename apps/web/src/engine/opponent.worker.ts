@@ -6,8 +6,14 @@ import { searchDraft } from './draftSearch';
 /**
  * Opsi pencarian yang boleh dikirim lewat protokol worker.
  * `now` sengaja tidak diekspos: jam harus tetap milik worker.
+ *
+ * `orderCandidates` hanya dipakai jalur advisor (nilai per kandidat → urutan
+ * penuh daftar). Jalur lawan AI tidak pernah menyalakannya.
  */
-export type WorkerSearchOptions = Pick<SearchOptions, 'maxDepth' | 'width' | 'budgetMs' | 'allowExtendedBudget'>;
+export type WorkerSearchOptions = Pick<
+  SearchOptions,
+  'maxDepth' | 'width' | 'budgetMs' | 'allowExtendedBudget' | 'orderCandidates' | 'orderTailDepth' | 'orderTailLimit'
+>;
 
 let dataset: TournamentDataset | null = null;
 let aiSide: Side = 'red';
