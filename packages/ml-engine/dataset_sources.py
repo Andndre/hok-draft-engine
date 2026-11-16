@@ -50,6 +50,10 @@ def apply_counter_overrides(heroes, overrides=None):
     in game (a knockback cancelling a channelled ultimate) can be absent. Curated relations live
     in `hero_counter_overrides.json` so a roster re-sync cannot silently drop them. The merge is
     idempotent: a relation already present in either direction is left untouched.
+
+    Provenance is explicit: scraped relations carry `source: "kurohiko"`, curated ones carry
+    `source: "curation"` plus reviewer and date. Without it the wiki would credit a manual
+    reading of skill text to the Kurohiko article.
     """
     overrides = overrides or []
     result = []
@@ -57,6 +61,10 @@ def apply_counter_overrides(heroes, overrides=None):
         hero = dict(original)
         hero["counters"] = [dict(entry) for entry in original.get("counters") or []]
         hero["countered_by"] = [dict(entry) for entry in original.get("countered_by") or []]
+        for entry in hero["counters"]:
+            entry.setdefault("source", "kurohiko")
+        for entry in hero["countered_by"]:
+            entry.setdefault("source", "kurohiko")
         result.append(hero)
     by_id = {int(hero["hero_id"]): hero for hero in result}
     for relation in overrides:
@@ -75,11 +83,28 @@ def apply_counter_overrides(heroes, overrides=None):
         if severity not in ("hard", "soft"):
             raise ValueError(f"Severity kurasi tidak dikenal: {severity} ({counter_id} -> {target_id})")
         reason = relation.get("reason", "")
+        provenance = {
+            "source": "curation",
+            "reviewed_by": relation.get("reviewed_by", "Draft engine curation"),
+            "reviewed_at": relation.get("reviewed_at"),
+        }
         counter["counters"].append(
-            {"target_id": target_id, "target_name": target["name"], "severity": severity, "reason": reason}
+            {
+                "target_id": target_id,
+                "target_name": target["name"],
+                "severity": severity,
+                "reason": reason,
+                **provenance,
+            }
         )
         target["countered_by"].append(
-            {"counter_id": counter_id, "counter_name": counter["name"], "severity": severity, "reason": reason}
+            {
+                "counter_id": counter_id,
+                "counter_name": counter["name"],
+                "severity": severity,
+                "reason": reason,
+                **provenance,
+            }
         )
     return result
 

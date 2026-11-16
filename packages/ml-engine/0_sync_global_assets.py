@@ -125,12 +125,23 @@ def fetch_hokfire_data(client: httpx.Client):
     supabase_guides_by_slug = {}
     abilities_by_id = {}
     fallback_builds_by_id = {}
+    # Metadata snapshot: kapan angka ranked ini diambil & bracket apa yang dipakai.
+    # Wajib dipublikasikan supaya kebusukan data terlihat, bukan tersembunyi.
+    stats_meta = {"updated": None, "bracket": None, "source": "HOKFIRE"}
     
     # 1. Fetch official stats.js
     try:
         r_stats = client.get("https://www.hokfire.com/assets/stats.js", headers={"User-Agent": USER_AGENT}, timeout=15.0)
         if r_stats.status_code == 200:
             tier_letters = ["S", "A", "B", "C", "D"]
+            meta_m = re.search(r'HERO_STATS_META\s*=\s*\{([^}]+)\}', r_stats.text)
+            if meta_m:
+                updated_m = re.search(r'updated:\s*"([^"]+)"', meta_m.group(1))
+                bracket_m = re.search(r'bracket:\s*"([^"]+)"', meta_m.group(1))
+                if updated_m:
+                    stats_meta["updated"] = updated_m.group(1)
+                if bracket_m:
+                    stats_meta["bracket"] = bracket_m.group(1)
             blocks = re.findall(r'\{([^{}]+)\}', r_stats.text)
             for b in blocks:
                 id_m = re.search(r'\bid:\s*(\d+)', b)
@@ -152,14 +163,18 @@ def fetch_hokfire_data(client: httpx.Client):
 
                 tier_str = tier_letters[trank] if trank is not None and trank < len(tier_letters) else "B"
 
+                # Hero tanpa data ranked resmi TIDAK boleh diberi angka pengganti:
+                # 0,035 pick / 0,010 ban dulu dipakai sebagai placeholder dan membuat
+                # hero baru tampakbery prensa (Dunshan, Wang Wei, Devara, Florentino,
+                # Flowborn). Tanpa observasi berarti "tidak ada data", bukan 3,5%.
                 stats_by_id[hid] = {
                     "name": name,
                     "position": pos,
                     "lane": LANE_MAP.get(pos, "Mid"),
                     "tier": tier_str,
                     "win_rate": round(win_rate, 4) if win_rate is not None else None,
-                    "pick_rate": round(show_rate, 4) if show_rate is not None else 0.035,
-                    "ban_rate": round(ban_rate, 4) if ban_rate is not None else 0.010
+                    "pick_rate": round(show_rate, 4) if show_rate is not None else None,
+                    "ban_rate": round(ban_rate, 4) if ban_rate is not None else None
                 }
             print(f"       Parsed {len(stats_by_id)} hero stats from HOKFIRE stats.js.", flush=True)
     except Exception as e:
@@ -256,7 +271,7 @@ def fetch_hokfire_data(client: httpx.Client):
     except Exception as e:
         print(f"       Warning: Could not fetch data.js: {e}", flush=True)
 
-    return stats_by_id, builds_by_id, supabase_guides_by_slug, abilities_by_id, fallback_builds_by_id
+    return stats_by_id, builds_by_id, supabase_guides_by_slug, abilities_by_id, fallback_builds_by_id, stats_meta
 
 def scrape_kurohiko_hero_counters(client: httpx.Client, slug: str) -> Dict[str, Any]:
     url = f"https://hok.kurohiko.id/hero/{slug}"
@@ -312,7 +327,8 @@ def scrape_kurohiko_hero_counters(client: httpx.Client, slug: str) -> Dict[str, 
                         "target_id": counter_id,
                         "target_name": counter_name,
                         "severity": severity,
-                        "reason": reason
+                        "reason": reason,
+                        "source": "kurohiko"
                     })
                 sibling = sibling.find_next_sibling()
                 
@@ -403,7 +419,7 @@ def build_master_database():
     kpl_cn_map = load_kpl_hero_mapping()
     kpl_wr_map = load_kpl_win_rates()
     roster = scrape_kurohiko_roster(client)
-    stats_map, builds_map, supa_guides_map, abilities_map, fallback_builds_map = fetch_hokfire_data(client)
+    stats_map, builds_map, supa_guides_map, abilities_map, fallback_builds_map, stats_meta = fetch_hokfire_data(client)
     
     print(f" [3/5] Scraping detailed counters & tactics for {len(roster)} heroes...", flush=True)
     hero_details = {}
@@ -451,15 +467,25 @@ def build_master_database():
         portrait_rel = download_and_process_portrait(client, hero["img_url"], hid)
         
         tier = stat.get("tier") or build.get("tier") or "A"
-        win_rate = stat.get("win_rate")
-        if win_rate is None or win_rate == 0.5:
-            kpl_data = kpl_wr_map.get(hid)
-            if kpl_data and kpl_data["matches"] > 0:
-                win_rate = round(kpl_data["wins"] / kpl_data["matches"], 4)
-            else:
-                win_rate = 0.5020
-        pick_rate = stat.get("pick_rate") or 0.0350
-        ban_rate = stat.get("ban_rate") or 0.0100
+        # Win rate ranked (Diamond+, snapshot resmi) > win rate KPL pro > tidak ada data.
+        # Populasi kedua TIDAK sama dengan ranked, jadi sumbernya dicatat eksplisit
+        # lewat `win_rate_source` supaya tidak diam-diam tercampur di skoring.
+        kpl_data = kpl_wr_map.get(hid)
+        kpl_win_rate = None
+        if kpl_data and kpl_data["matches"] > 0:
+            kpl_win_rate = round(kpl_data["wins"] / kpl_data["matches"], 4)
+        ranked_win_rate = stat.get("win_rate")
+        if ranked_win_rate is not None:
+            win_rate = ranked_win_rate
+            win_rate_source = "ranked"
+        elif kpl_win_rate is not None:
+            win_rate = kpl_win_rate
+            win_rate_source = "kpl"
+        else:
+            win_rate = 0.5
+            win_rate_source = "none"
+        pick_rate = stat.get("pick_rate")
+        ban_rate = stat.get("ban_rate")
 
         # Construct HOKFIRE guide structure
         hokfire_guide = None
@@ -512,9 +538,23 @@ def build_master_database():
             "lanes": lanes,
             "tier": tier,
             "win_rate": win_rate,
-            "pick_rate": pick_rate,
-            "ban_rate": ban_rate,
-            "counters": detail.get("counters", []),
+            "win_rate_source": win_rate_source,
+            "kpl_win_rate": kpl_win_rate,
+            "ranked_stats_as_of": stats_meta.get("updated"),
+            "ranked_stats_bracket": stats_meta.get("bracket"),
+            "pick_rate": pick_rate if pick_rate is not None else 0.0,
+            "ban_rate": ban_rate if ban_rate is not None else 0.0,
+            "counters": [],
+            "countered_by": [
+                {
+                    "counter_id": c.get("target_id"),
+                    "counter_name": c.get("target_name"),
+                    "severity": c.get("severity"),
+                    "reason": c.get("reason"),
+                    "source": c.get("source", "kurohiko"),
+                }
+                for c in detail.get("counters", [])
+            ],
             "tactical_tips": detail.get("how_to_counter", ""),
             "counter_items": detail.get("counter_items", []),
             "portrait_asset": portrait_rel,
@@ -528,20 +568,30 @@ def build_master_database():
         
     master_heroes.sort(key=lambda x: x["name"])
     
-    # Invert counters to build 'countered_by'
+    # Bangun 'counters' dari 'countered_by' (kartu "Counter alami" pada halaman hero X
+    # berarti hero-hero yang MENG-COUNTER X, jadi masuk ke X.countered_by; arahnya
+    # dibalik di sini untuk mengisi X.counters).
     id_to_entry = {h["hero_id"]: h for h in master_heroes}
     for h in master_heroes:
-        h["countered_by"] = []
+        h["counters"] = []
+    for h in master_heroes:
+        for c in h["countered_by"]:
+            tid = c.get("counter_id")
+            if tid and tid in id_to_entry:
+                id_to_entry[tid]["counters"].append({
+                    "target_id": h["hero_id"],
+                    "target_name": h["name"],
+                    "severity": c["severity"],
+                    "reason": c["reason"],
+                    "source": c.get("source", "kurohiko")
+                })
+
+    # Self-check: setiap relasi harus punya cermin di arah sebaliknya.
     for h in master_heroes:
         for c in h["counters"]:
-            tid = c.get("target_id")
-            if tid and tid in id_to_entry:
-                id_to_entry[tid]["countered_by"].append({
-                    "counter_id": h["hero_id"],
-                    "counter_name": h["name"],
-                    "severity": c["severity"],
-                    "reason": c["reason"]
-                })
+            mirror = [x for x in (id_to_entry.get(c["target_id"], {}).get("countered_by") or []) if x["counter_id"] == h["hero_id"]]
+            if not mirror:
+                raise ValueError(f"Relasi counter tidak simetris: {h['name']} -> {c['target_name']}")
                 
     output_path = MAPPINGS_DIR / "master_heroes_global.json"
     with open(output_path, "w", encoding="utf-8") as f:

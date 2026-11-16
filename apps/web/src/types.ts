@@ -2,11 +2,21 @@ export type Role = 'Marksman' | 'Mage' | 'Fighter' | 'Tank' | 'Assassin' | 'Supp
 export type Lane = 'Clash' | 'Jungle' | 'Mid' | 'Farm' | 'Roam';
 export type Tier = 'S' | 'A' | 'B' | 'C' | 'D';
 
+/**
+ * Sumber asal sebuah relasi counter.
+ * - `kurohiko`: artikel "Counter alami" di hok.kurohiko.id (redaksi editorial, maks. ±5 hero per halaman).
+ * - `curation`: kurasi manual repositori (alasan mekanis dari teks skill), bukan artikel mana pun.
+ */
+export type CounterSource = 'kurohiko' | 'curation';
+
 export interface CounterInfo {
   target_id: number | null;
   target_name: string;
   severity: 'hard' | 'soft';
   reason: string;
+  source?: CounterSource;
+  reviewed_by?: string;
+  reviewed_at?: string;
 }
 
 export interface CounterItemInfo {
@@ -19,6 +29,9 @@ export interface CounteredByInfo {
   counter_name: string;
   severity: 'hard' | 'soft';
   reason: string;
+  source?: CounterSource;
+  reviewed_by?: string;
+  reviewed_at?: string;
 }
 
 export interface SituationalSwap {
@@ -161,6 +174,14 @@ export interface Hero {
   lanes: Lane[];
   tier: Tier;
   win_rate: number;
+  /** Sumber win rate: `ranked` (snapshot resmi Diamond+), `kpl` (pro tournament), `legacy`/`none`/`unknown`. */
+  win_rate_source?: 'ranked' | 'kpl' | 'legacy' | 'none' | 'unknown';
+  /** Winrate hero di turnaround pro (KPL), bila ada — populasi berbeda dari ranked. */
+  kpl_win_rate?: number | null;
+  /** Tanggal snapshot statistik ranked yang dipakai (YYYYMMDD). */
+  ranked_stats_as_of?: string | null;
+  /** Bracket ladder yang dipakai snapshot tersebut. */
+  ranked_stats_bracket?: string | null;
   pick_rate: number;
   ban_rate: number;
   counters: CounterInfo[];

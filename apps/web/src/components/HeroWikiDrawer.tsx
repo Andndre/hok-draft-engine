@@ -22,7 +22,7 @@ interface HeroWikiDrawerProps {
   spellCatalog?: SpellCatalogEntry[];
 }
 
-type MatchupSourceLabel = 'KPL' | 'HOKFIRE' | 'HoKStats' | 'Kurohiko';
+type MatchupSourceLabel = 'KPL' | 'HOKFIRE' | 'HoKStats' | 'Kurohiko' | 'Kurasi';
 
 interface MatchupEvidenceLine {
   source: MatchupSourceLabel;
@@ -143,7 +143,10 @@ const MatchupPanel: React.FC<MatchupPanelProps> = ({ hero, allHeroes, onSelectRe
     source: 'HoKStats', url: item.source.url, detail: item.evidence,
   }));
   hero.countered_by.forEach((item) => add(danger, item.counter_id, item.counter_name, {
-    source: 'Kurohiko', url: 'https://hok.kurohiko.id/', detail: item.reason, meta: `${item.severity} counter`,
+    source: item.source === 'curation' ? 'Kurasi' : 'Kurohiko',
+    url: item.source === 'curation' ? undefined : 'https://hok.kurohiko.id/',
+    detail: item.reason,
+    meta: `${item.severity} counter${item.source === 'curation' ? ' · kurasi manual' : ''}`,
   }));
 
   kpl?.best_matchups.forEach((item) => add(favorable, item.opponent_id, item.opponent_name, {
@@ -157,7 +160,10 @@ const MatchupPanel: React.FC<MatchupPanelProps> = ({ hero, allHeroes, onSelectRe
     source: 'HoKStats', url: item.source.url, detail: item.evidence,
   }));
   hero.counters.forEach((item) => add(favorable, item.target_id, item.target_name, {
-    source: 'Kurohiko', url: 'https://hok.kurohiko.id/', detail: item.reason, meta: `${item.severity} target`,
+    source: item.source === 'curation' ? 'Kurasi' : 'Kurohiko',
+    url: item.source === 'curation' ? undefined : 'https://hok.kurohiko.id/',
+    detail: item.reason,
+    meta: `${item.severity} target${item.source === 'curation' ? ' · kurasi manual' : ''}`,
   }));
 
   for (const key of danger.keys()) {

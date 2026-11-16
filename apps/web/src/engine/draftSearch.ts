@@ -53,6 +53,12 @@ export interface SearchOptions {
   width?: number;
   budgetMs?: number;
   now?: () => number;
+  /**
+   * Pengali kredit counter di dalam evaluasi posisi.
+   * Default 1 (penuh). Nilai < 1 dipakai untuk menguji dampaknya pada pick buta,
+   * di mana komposisi lawan belum diketahui sehingga kredit counter spekulatif.
+   */
+  counterWeight?: number;
 }
 
 /**
@@ -147,7 +153,24 @@ function counterBonus(ourTeam: Hero[], enemyTeam: Hero[]): number {
  *
  * Nilai ini adalah skor heuristik evaluasi papan, bukan probabilitas kemenangan terkalibrasi.
  */
-export function evaluatePosition(position: DraftPosition, context: SearchContext, perspective: Side): number {
+/**
+ * Opsi evaluasi posisi.
+ * - `counterWeight`: pengali bonus counter langsung (1 = penuh, 0 = diabaikan).
+ *   Dipakai untuk mengukur dampak kredit counter pada pick buta: saat first pick,
+ *   komposisi lawan belum diketahui, sehingga kredit counter terhadap hero yang
+ *   baru "direspons"(search) bersifat spekulatif.
+ */
+export interface PositionEvaluationOptions {
+  counterWeight?: number;
+}
+
+export function evaluatePosition(
+  position: DraftPosition,
+  context: SearchContext,
+  perspective: Side,
+  options: PositionEvaluationOptions = {}
+): number {
+  const counterWeight = options.counterWeight ?? 1;
   const heroesById = new Map<number, Hero>(context.heroes.map((h) => [h.hero_id, h]));
   const getTeamHeroes = (side: Side) =>
     position.picks[side].map((id) => heroesById.get(id)!).filter(Boolean);
@@ -189,7 +212,7 @@ export function evaluatePosition(position: DraftPosition, context: SearchContext
 
     // 3. Counter bonus, integritas role/lane (cegah Support dipaksa ke Mid/Clash), & penalti duplikasi lane
     totalScore +=
-      counterBonus(ourTeam, enemyTeam) -
+      counterBonus(ourTeam, enemyTeam) * counterWeight -
       (ourTeam.length - laneCoverage) * 2.5 -
       integrity.displacedSupports.length * 2.8 -
       integrity.duplicateRoamSupports * 1.8 -
@@ -224,7 +247,7 @@ export function evaluatePosition(position: DraftPosition, context: SearchContext
       const exposure = evaluateEnemyCounterExposure(hero, enemyTeam, b1Openers);
       const heroValue =
         computeTournamentBaseQuality(hero, b1Openers, projectedPosition.step, exposure.synergyMultiplier) +
-        counterBonus([hero], enemyTeam) -
+        counterBonus([hero], enemyTeam) * counterWeight -
         exposure.exposurePenalty +
         ourTeam.reduce((sum, teammate) => sum + pairBonus(hero, teammate, context) * exposure.synergyMultiplier, 0);
 
@@ -254,6 +277,7 @@ export function searchDraft(
   const startTime = getTimestamp();
   const timeBudgetMs = Math.min(1500, Math.max(0, options.budgetMs ?? 1500));
   const deadline = startTime + timeBudgetMs;
+  const counterWeight = options.counterWeight ?? 1;
 
   const remainingActions = getDraftSequence(context.format).length - position.step;
   const maxSearchDepth = Math.min(4, remainingActions, Math.max(1, options.maxDepth ?? 4));
@@ -308,7 +332,7 @@ export function searchDraft(
     // Kondisi terminasi leaf: kedalaman habis atau draft selesai
     if (depth <= 0 || currentTurn.isComplete) {
       if (!valueCache.has(posKey)) {
-        valueCache.set(posKey, evaluatePosition(pos, context, rootSide));
+        valueCache.set(posKey, evaluatePosition(pos, context, rootSide, { counterWeight }));
       }
       checkTimeBudget();
       return { value: valueCache.get(posKey)!, line: [] };

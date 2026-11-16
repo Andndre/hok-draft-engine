@@ -110,16 +110,57 @@ class DataPipelineTests(unittest.TestCase):
             {"hero_id": 519, "name": "Ao'yin", "counters": [], "countered_by": []},
             {"hero_id": 132, "name": "Marco Polo", "counters": [], "countered_by": []},
         ]
-        relation = {"counter_id": 519, "target_id": 132, "severity": "hard", "reason": "Knockback skill 3 memutus ultimate."}
+        relation = {
+            "counter_id": 519,
+            "target_id": 132,
+            "severity": "hard",
+            "reason": "Knockback skill 3 memutus ultimate.",
+            "reviewed_by": "Draft engine curation",
+            "reviewed_at": "2026-11-16",
+        }
         merged = apply_counter_overrides(heroes, [relation])
-        self.assertEqual(merged[0]["counters"], [{"target_id": 132, "target_name": "Marco Polo", "severity": "hard", "reason": relation["reason"]}])
-        self.assertEqual(merged[1]["countered_by"], [{"counter_id": 519, "counter_name": "Ao'yin", "severity": "hard", "reason": relation["reason"]}])
+        provenance = {"source": "curation", "reviewed_by": "Draft engine curation", "reviewed_at": "2026-11-16"}
+        self.assertEqual(
+            merged[0]["counters"],
+            [{"target_id": 132, "target_name": "Marco Polo", "severity": "hard", "reason": relation["reason"], **provenance}],
+        )
+        self.assertEqual(
+            merged[1]["countered_by"],
+            [{"counter_id": 519, "counter_name": "Ao'yin", "severity": "hard", "reason": relation["reason"], **provenance}],
+        )
         self.assertEqual(heroes[0]["counters"], [], "kurasi tidak boleh memutasi roster sumber")
         again = apply_counter_overrides(merged, [relation])
         self.assertEqual(len(again[0]["counters"]), 1)
         self.assertEqual(len(again[1]["countered_by"]), 1)
         with self.assertRaises(ValueError):
             apply_counter_overrides(heroes, [{**relation, "target_id": 9999}])
+
+    def test_scraped_counters_are_labelled_kurohiko_not_curation(self):
+        """Relasi dari artikel Kurohiko tidak bolehclaimed sebagai kurasi manual."""
+        heroes = [
+            {
+                "hero_id": 132,
+                "name": "Marco Polo",
+                "counters": [{"target_id": 199, "target_name": "Arli", "severity": "hard", "reason": "Dash."}],
+                "countered_by": [],
+            },
+            {"hero_id": 199, "name": "Arli", "counters": [], "countered_by": [{"counter_id": 132, "counter_name": "Marco Polo", "severity": "hard", "reason": "Dash."}]},
+        ]
+        merged = apply_counter_overrides(heroes, [])
+        self.assertEqual(merged[0]["counters"][0]["source"], "kurohiko")
+        self.assertEqual(merged[1]["countered_by"][0]["source"], "kurohiko")
+
+    def test_master_counter_relations_are_mirrored_in_both_directions(self):
+        """Invarian arah counter: h.counters[x] harus berpasangan dengan x.countered_by[h]."""
+        master = json.loads((MAPPINGS / "master_heroes_global.json").read_text(encoding="utf-8"))
+        by_id = {hero["hero_id"]: hero for hero in master}
+        for hero in master:
+            for entry in hero.get("counters") or []:
+                target = by_id.get(entry["target_id"])
+                self.assertIsNotNone(target, f"{hero['name']} menunjuk target tak dikenal")
+                mirror = [x for x in (target.get("countered_by") or []) if x["counter_id"] == hero["hero_id"]]
+                self.assertTrue(mirror, f"relasi {hero['name']} -> {target['name']} tidak punya cermin")
+                self.assertEqual(mirror[0]["reason"], entry["reason"], "alasan harus sama di kedua arah")
 
     def test_immutable_collision_leaves_existing_manifest_intact(self):
         manifest_v1, texts_v1 = build_package([self.hero], {}, self.releases)

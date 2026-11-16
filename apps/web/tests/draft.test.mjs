@@ -185,6 +185,44 @@ test('current-meta openers outrank era-faded ones at B1', () => {
   // Tetap bisa direkomendasikan: perbaikan ini mengoreksi bobot, bukan memblokir hero.
   assert.ok(rankOf('Dun') <= 12 && rankOf('Kaizer') <= 12, 'Dun/Kaizer tetap muncul di papan rekomendasi sesuai konteks');
 });
+test('counter relations carry explicit provenance: curated vs Kurohiko article', () => {
+  const aoyin = heroes.find(h => h.hero_id === 519);
+  const marco = heroes.find(h => h.hero_id === 132);
+  const arli = heroes.find(h => h.hero_id === 199);
+
+  const curated = aoyin.counters.find(c => c.target_id === marco.hero_id);
+  assert.ok(curated, 'relasi Ao\'yin -> Marco Polo ada di dataset');
+  assert.equal(curated.source, 'curation', 'relasi kurasi manual tidak boleh diklaim berasal dari artikel Kurohiko');
+  assert.ok(curated.reviewed_at, 'kurasi manual mencantumkan tanggal review');
+
+  const scraped = marco.countered_by.find(c => c.counter_id === arli.hero_id);
+  assert.ok(scraped, 'relasi Arli -> Marco Polo dari artikel Kurohiko ada');
+  assert.equal(scraped.source, 'kurohiko', 'relasi artikel Kurohiko harus ditandai kurohiko');
+
+  // Tidak boleh ada relasi tanpa sumber.
+  for (const hero of heroes) {
+    for (const entry of hero.counters || []) {
+      assert.ok(entry.source, `${hero.name} -> ${entry.target_name} tanpa sumber`);
+    }
+    for (const entry of hero.countered_by || []) {
+      assert.ok(entry.source, `${hero.name} <- ${entry.counter_name} tanpa sumber`);
+    }
+  }
+});
+
+test('no hero carries fabricated ranked rates (placeholder 3.5% pick / 1.0% ban)', () => {
+  // Sinkronisasi lama memberi 0,035 pick + 0,010 ban pada hero tanpa data ranked.
+  // Angka itu membuat hero baru tampak lebihdma dalam dari kenyataan, jadi harus hilang.
+  for (const hero of heroes) {
+    const placeholder = Math.abs((hero.pick_rate ?? 0) - 0.035) < 1e-9 && Math.abs((hero.ban_rate ?? 0) - 0.01) < 1e-9;
+    assert.equal(placeholder, false, `${hero.name} masih memakai placeholder pick/ban`);
+  }
+  // Setiap hero Global yang punya data harus menandai sumber win rate-nya.
+  const released = heroes.filter(h => h.is_global_released === true);
+  const labelled = released.filter(h => ['ranked', 'kpl', 'legacy', 'none', 'unknown'].includes(h.win_rate_source));
+  assert.equal(labelled.length, released.length, 'setiap hero Global harus punya win_rate_source');
+});
+
 test('minimax follows consecutive Red picks and completes bounded iterative deepening', () => {
   const ctx = context(), position = advance(emptyPosition(), ctx, 5);
   const result = searchDraft(position, ctx, { maxDepth: 3, width: 2 });
