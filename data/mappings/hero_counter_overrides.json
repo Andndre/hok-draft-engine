@@ -9,6 +9,14 @@
       "reason": "Knockback skill 3 Ao'yin memutus kanal ultimate Marco Polo, dan Marco Polo tidak punya cara menembus CC beruntun. Begitu ultinya ter-cancel, damage inti timnya hilang.",
       "reviewed_by": "Draft engine curation",
       "reviewed_at": "2026-11-16"
+    },
+    {
+      "counter_id": 132,
+      "target_id": 116,
+      "severity": "hard",
+      "reason": "Skill 2 Marco Polo memberi Attack dan Movement Speed begitu ada hero musuh di dekatnya, jadi ambush stealth Arke langsung ketahuan saat dia mau masuk dan Marco Polo punya ruang untuk kiting. Skill 1 + ult Marco Polo jadi burst true damage plus stun pada target pertama, dan Arke tidak punya CC sama sekali (skill 2-nya hanya slow) untuk memutus ult itu — Marco Polo pun bisa Purify CC di tengah ult-nya. Arke cuma punya satu pintu masuk stealth, dan pintu itu sudah tertutup.",
+      "reviewed_by": "Draft engine curation",
+      "reviewed_at": "2026-11-16"
     }
   ]
 }
