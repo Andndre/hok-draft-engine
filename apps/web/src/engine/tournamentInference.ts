@@ -306,6 +306,19 @@ const KPL_UNIT_WEIGHT_P1BAN = 0.1625;
 /** Jumlah game B1 berbobot minimal sebelum winrate dipakai, plus prior penyusut ke 50%. */
 const KPL_B1_WIN_MIN_GAMES = 8;
 const KPL_B1_WIN_PRIOR_GAMES = 20;
+/** Prior penyusutan winrate KPL ke 50% (ukuran sampel game). */
+const KPL_STRENGTH_PRIOR = 40;
+/**
+ * Prior game untuk model hierarkis opener: catatan first-pick (B1) hero digabung
+ * dengan winrate overall-nya. B1 = bukti langsung; overall = prior saat sampel tipis.
+ */
+const KPL_B1_HIERARCHY_PRIOR = 40;
+/**
+ * Koefisien term "rekam jejak first-pick" pada skor opener. Dikalibrasi supaya
+ * sebaran (sd) term ini setara sebaran gabungan term kekuatan + outcome yang
+ * digantikannya (sd ~0,16), sehingga bobot relatif term lain tidak berubah diam-diam.
+ */
+const KPL_B1_RECORD_WEIGHT = 6.3;
 
 const KPL_PRESENCE_CACHE = new WeakMap<object, Map<number, KplPresence>>();
 
@@ -457,6 +470,20 @@ export function kplPresenceOf(
 }
 
 /**
+ * Winrate KPL sebuah hero setelah penyusutan ke 50% menurut ukuran sampel efektif
+ * (12 bulan, berbobot). Dipakai sebagai prior ketika catatan first-pick (B1)
+ * hero masih tipis.
+ */
+export function shrunkKplWinRate(hero: Hero): number {
+  const matches = hero.kpl_weighted_matches ?? hero.kpl_matches ?? 0;
+  const kplWr = hero.kpl_weighted_win_rate ?? hero.kpl_win_rate;
+  if (kplWr == null || matches <= 0) {
+    return hero.win_rate_source === 'ranked' ? hero.win_rate : 0.5;
+  }
+  return (kplWr * matches + 0.5 * KPL_STRENGTH_PRIOR) / (matches + KPL_STRENGTH_PRIOR);
+}
+
+/**
  * Estimasi kekuatan kompetitif hero (0..1) untuk simulasi tournament.
  *
  * YANG TIDAK DIPAKAI: "tier" S/A/B/C dari HoK Camp. Itu **popularity band per
@@ -473,7 +500,7 @@ export function kplPresenceOf(
  *   (`win_rate_source`), jadi tidak tercampur diam-diam.
  */
 export function competitiveStrength(hero: Hero): number {
-  const PRIOR = 40;
+  const PRIOR = KPL_STRENGTH_PRIOR;
   // Winrate KPL berbobot recency (12 bulan) dipakai lebih dulu; all-time jadi cadangan.
   const matches = hero.kpl_weighted_matches ?? hero.kpl_matches ?? 0;
   const kplWr = hero.kpl_weighted_win_rate ?? hero.kpl_win_rate;
@@ -560,7 +587,7 @@ export function computeTournamentBaseQuality(
  * - `b1WinRate`: apakah hero ini benar-benar menang saat di-first-pick, di-shrink ke 50%
  *   supaya sampel kecil tidak menghasilkan penalti ekstrem.
  */
-function computeOpenerPriorityScore(
+export function computeOpenerPriorityScore(
   hero: Hero,
   b1Openers: Record<string, any>,
   forBlueSide: boolean,
@@ -590,28 +617,30 @@ function computeOpenerPriorityScore(
       ? Math.min(0.75, b1Count / 260) + Math.min(0.30, p1Bans / 2000)
       : Math.min(0.75, r1Count / 350 + b1Count / 500) + Math.min(0.30, p1Bans / 2000);
 
-  // Rekam jejak First Pick: hero yang kalah saat di-B1 tidak layak jadi opener buta.
-  // Baseline-nya rata-rata medan (sisi biru menang > 50% di B1), bukan 50% mentah.
-  // Rekam jejak first-pick hanya berarti bila sampelnya cukup. Tanpa faktor bukti,
-  // hero dengan 10 game B1 (win rate 79,6%) mengalahkan hero dengan 155 game B1
-  // (win rate 51,3%) — itu "sampel kecil menang", bukan analisis meta.
-  const b1Evidence =
-    kpl?.b1Games != null ? kpl.b1Games / (kpl.b1Games + KPL_B1_WIN_PRIOR_GAMES) : 0;
-  const b1OutcomeTerm =
-    kpl?.b1WinRate != null && kpl.fieldB1WinRate != null
-      ? Math.max(-0.35, Math.min(0.35, (kpl.b1WinRate - kpl.fieldB1WinRate) * 3.0)) * b1Evidence
-      : 0;
+  // PENENTU OPENER: rekam jejak first-pick, bukan winrate overall.
+  // Pertanyaan "sebaik apa hero ini kalau di-first-pick" dijawab catatan B1-nya
+  // sendiri; winrate overall hanya jadi prior saat catatan B1 masih tipis
+  // (model hierarkis: 40 game B1 setara 40 game prior).
+  //
+  // Deviasi diukur terhadap RATA-RATA MEDAN B1 (bukan 50% mentah) karena sisi biru
+  // menang > 50% di slot first pick. Karena posterior sudah shrunk ke overall,
+  // term ini tidak perlu faktor bukti terpisah: sampel kecil otomatis tertahan
+  // oleh prior (Zilong dengan 10 game B1 tidak lagi bisa menang telak).
+  const overallPrior = shrunkKplWinRate(hero);
+  const b1Posterior =
+    kpl?.b1WinRate != null && kpl.b1Games != null && kpl.b1Games > 0
+      ? (kpl.b1WinRate * kpl.b1Games + overallPrior * KPL_B1_HIERARCHY_PRIOR) /
+        (kpl.b1Games + KPL_B1_HIERARCHY_PRIOR)
+      : overallPrior;
+  const b1RecordTerm =
+    kpl?.fieldB1WinRate != null ? (b1Posterior - kpl.fieldB1WinRate) * KPL_B1_RECORD_WEIGHT : 0;
 
   const banRateBonus = Math.min(0.25, (hero.ban_rate || 0) * 4.0);
   const flexBonus = hero.lanes.length > 1 ? 0.10 : 0;
 
-  // Kekuatan kompetitif menggantikan bonus "tier" (popularity band bukan kekuatan).
-  const strengthTerm = (competitiveStrength(hero) - 0.5) * 9.8;
-
   return (
-    strengthTerm +
+    b1RecordTerm +
     kplOpenerBonus +
-    b1OutcomeTerm +
     banRateBonus +
     flexBonus +
     blindSuppressAdjustment +

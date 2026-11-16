@@ -200,7 +200,7 @@ def evaluate_hero_evidence(hero: dict[str, Any]) -> dict[str, dict[str, Any]]:
 
     leap_ev = _match_positive(
         skills,
-        r"\b(?:leaps?\s+(?:to|into|forward|upward|toward|over|back|out)|jumps?\s+(?:to|into|forward|toward|over|up)|lunges?\s+(?:at|toward|forward|in)|dives?\s+(?:to|into|at|toward)|flips?\s+behind)\b",
+        r"\b(?:leaps?\s+(?:to|into|forward|upward|toward|over|back|out)|jumps?\s+(?:to|into|forward|toward|over|up)|lunges?\s+(?:at|toward|forward|in)|dives?\s+(?:to|into|at|toward|forward)|flips?\s+behind|soars?\s+(?:into|up\s+into)\s+the\s+sky)\b",
     )
     set_tag("leap", "ya" if leap_ev else "tidak", leap_ev[0] if leap_ev else "Tidak ada mekanik leap/lunge pada deskripsi skill.", True, 0.89 if leap_ev else 0.85)
 

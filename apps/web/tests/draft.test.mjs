@@ -18,7 +18,7 @@ import {
   getDoublePickWindow,
 } from '../src/engine/draftRules.ts';
 import { rankedCandidates, searchDraft, evaluatePosition } from '../src/engine/draftSearch.ts';
-import { evaluateTacticalScores, evaluateEnemyCounterExposure, reviewedHoKStatsBonuses, runTournamentInference, kplPresenceOf, competitiveStrength, counterEvidenceFor, measuredMatchupBetween, MEASURED_MIN_SAMPLE } from '../src/engine/tournamentInference.ts';
+import { evaluateTacticalScores, evaluateEnemyCounterExposure, reviewedHoKStatsBonuses, runTournamentInference, kplPresenceOf, competitiveStrength, counterEvidenceFor, measuredMatchupBetween, MEASURED_MIN_SAMPLE, computeOpenerPriorityScore } from '../src/engine/tournamentInference.ts';
 import { matchesDecisionTag, OpponentClient } from '../src/engine/opponentClient.ts';
 
 const read = p => JSON.parse(readFileSync(new URL('../public/' + p, import.meta.url), 'utf8'));
@@ -1076,4 +1076,38 @@ test('planned B1 opener must rest on real B1 evidence, not a tiny sample', () =>
     (presence?.b1Recent ?? 0) >= 40,
     `opener ${opener.name} hanya punya ${Math.round(presence?.b1Recent ?? 0)} game B1 (12 bln) — sampel terlalu tipis`,
   );
+});
+
+test('opener priority is judged by the first-pick record (hierarchical), not popularity', () => {
+  // Term opener memakai posterior hierarkis: catatan B1 (bukti langsung "sebaik apa
+  // kalau di-first-pick") digabung winrate overall sebagai prior saat sampel tipis.
+  // Deviasi diukur terhadap rata-rata medan B1, bukan 50% mentah.
+  const b1Openers = synergy.b1_openers ?? {};
+  const ranked = heroes
+    .filter((h) => h.is_global_released)
+    .map((h) => ({ name: h.name, score: computeOpenerPriorityScore(h, b1Openers, true, true) }))
+    .sort((a, b) => b.score - a.score);
+  const top = ranked.slice(0, 5).map((r) => r.name);
+  assert.ok(
+    top.includes('Guan Yu'),
+    `Guan Yu punya rekor first-pick terbaik di KPL (64% saat di-B1) dan harus masuk 5 besar prioritas opener, got: ${top.join(', ')}`,
+  );
+
+  // Hero dengan rekam B1 buruk (underperform/winrate di bawah medan) tidak boleh
+  // menjadi opener trotz seringnya dipilih.
+  const field = heroes
+    .map((h) => kplPresenceOf(h.hero_id, b1Openers))
+    .find((p) => p && p.fieldB1WinRate != null)?.fieldB1WinRate;
+  assert.ok(field != null && field > 0.45 && field < 0.56, `rata-rata medan B1 masuk akal: ${field}`);
+  const weak = heroes.find((h) => {
+    const p = kplPresenceOf(h.hero_id, b1Openers);
+    return p && p.b1WinRate != null && p.b1Games >= 40 && p.b1WinRate < field - 0.02;
+  });
+  if (weak) {
+    const score = computeOpenerPriorityScore(weak, b1Openers, true, true);
+    assert.ok(
+      score < ranked[0].score,
+      `hero dengan rekor B1 di bawah medan (${weak.name}) tidak boleh mendahului opener terbaik`,
+    );
+  }
 });
