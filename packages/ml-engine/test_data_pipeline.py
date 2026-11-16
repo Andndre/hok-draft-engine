@@ -5,7 +5,8 @@ import unittest
 import sqlite3
 from pathlib import Path
 from publish_data import build_package, write_package
-from dataset_sources import apply_counter_overrides, load_source_heroes
+from dataset_sources import apply_counter_overrides, apply_measured_matchups, load_source_heroes
+from extract_kpl_matchups import extract_measured_matchups
 from tactical_profiles import TAGS, approved_profiles, create_proposal, generate_batch_proposals, global_released_heroes, has_source_evidence, source_material, validate_proposal
 from export_draft_benchmark import export, SEQUENCE
 from extract_kpl_synergy import extract_lane_rates, extract_tempo_curves
@@ -269,6 +270,135 @@ class DataPipelineTests(unittest.TestCase):
             lane_rates = extract_lane_rates(cursor, players_path, {556, 101, 102, 103, 104}, min_year=2024, min_games=5)
             self.assertEqual(lane_rates["556"], {"Clash": {"games": 5, "share": 1.0, "win_rate": 1.0}})
             conn.close()
+
+
+    def test_measured_matchups_attach_with_sign_convention(self):
+        """Bukti terukur KPL hanya boleh terbit dengan tanda yang benar dan sampel memadai."""
+        measured_path = MAPPINGS / "hero_measured_matchups.json"
+        self.assertTrue(measured_path.exists(), "jalankan extract_kpl_matchups.py lebih dulu")
+        measured = json.loads(measured_path.read_text(encoding="utf-8"))
+        master = json.loads((MAPPINGS / "master_heroes_global.json").read_text(encoding="utf-8"))
+        names = {hero["hero_id"]: hero["name"] for hero in master}
+
+        heroes = load_source_heroes()
+        with_measured = [hero for hero in heroes if hero.get("measured_counters") or hero.get("measured_countered_by")]
+        self.assertTrue(with_measured, "tidak ada hero dengan matchup terukur")
+        self.assertEqual(sorted(int(key) for key in measured["heroes"]), sorted(hero["hero_id"] for hero in with_measured))
+
+        for hero in with_measured:
+            self.assertIn("measured_meta", hero)
+            self.assertEqual(hero["measured_meta"]["measured_model"], "kpl-measured-matchup-v1")
+            self.assertEqual(len(hero["measured_counters"]), len({entry["target_id"] for entry in hero["measured_counters"]}))
+            for entry in hero["measured_counters"]:
+                self.assertGreater(entry["delta"], 0, f"{hero['name']} vs {entry['target_name']} harus menguntungkan")
+                self.assertGreaterEqual(entry["n"], 30)
+                self.assertIn("weighted_delta", entry)
+                self.assertIn("n_eff", entry)
+                self.assertEqual(entry["source"], "kpl_measured")
+                self.assertEqual(names[entry["target_id"]], entry["target_name"])
+            for entry in hero["measured_countered_by"]:
+                self.assertLess(entry["delta"], 0, f"{hero['name']} vs {entry['counter_name']} harus merugikan")
+                self.assertGreaterEqual(entry["n"], 30)
+                self.assertEqual(entry["source"], "kpl_measured")
+                self.assertEqual(names[entry["counter_id"]], entry["counter_name"])
+            self.assertLessEqual(len(hero["measured_counters"]), 8)
+            self.assertLessEqual(len(hero["measured_countered_by"]), 8)
+            deltas = [entry["delta"] for entry in hero["measured_counters"]]
+            self.assertEqual(deltas, sorted(deltas, reverse=True))
+            penalties = [entry["delta"] for entry in hero["measured_countered_by"]]
+            self.assertEqual(penalties, sorted(penalties))
+
+    def test_measured_delta_uses_absent_from_draft_baseline(self):
+        """Spot-check Liang: kalah saat Guan Yu melawan, menang saat Lady Zhen melawan.
+
+        Angka nyata KPL (as_of 2026-10-22): Liang vs Guan Yu delta -0.0699 (n=117) dan
+        Liang vs Lady Zhen +0.1089 (n=28, di bawah min_sample 30 sehingga artefak produksi
+        memangkasnya). Fixture di bawah mengunci SEMANTIK-nya pada jalur kode asli: baseline
+        wajib "lawan itu absen dari seluruh draft". Baseline "satu tim" akan membalik tanda
+        Guan Yu menjadi positif karena pertandingan satu tim di fixture dimenangkan.
+        """
+        liang, guan_yu, lady_zhen = 156, 140, 127
+        with tempfile.TemporaryDirectory() as directory:
+            database = Path(directory) / "matchups.db"
+            connection = sqlite3.connect(database)
+            connection.executescript(
+                """
+                CREATE TABLE matches(match_id TEXT PRIMARY KEY, date TEXT);
+                CREATE TABLE battles(battle_id TEXT PRIMARY KEY, match_id TEXT, winner_side TEXT, is_complete INTEGER);
+                CREATE TABLE draft_actions(battle_id TEXT, ord INTEGER, side TEXT, action TEXT, global_hero_id INTEGER);
+                """
+            )
+            connection.execute("INSERT INTO matches VALUES ('fixture', '2026-01-01')")
+            rows = []
+            index = 0
+
+            def add_battle(blue_pick, red_pick, winner):
+                nonlocal index
+                battle_id = f"b{index}"
+                index += 1
+                connection.execute("INSERT INTO battles VALUES (?, 'fixture', ?, 1)", (battle_id, winner))
+                rows.append((battle_id, 5, "blue", "pick", blue_pick))
+                rows.append((battle_id, 6, "red", "pick", red_pick))
+
+            for _ in range(32):
+                add_battle(liang, guan_yu, "red")          # Liang biru kalah saat Guan Yu melawan
+                add_battle(guan_yu, liang, "blue")         # Liang merah kalah saat Guan Yu melawan
+                add_battle(liang, lady_zhen, "blue")       # Liang biru menang saat Lady Zhen melawan
+                add_battle(lady_zhen, liang, "red")        # Liang merah menang saat Lady Zhen melawan
+            connection.executemany("INSERT INTO draft_actions VALUES (?,?,?,?,?)", rows)
+            connection.commit()
+            connection.close()
+
+            payload, _ = extract_measured_matchups(database)
+
+        entry = payload["heroes"][str(liang)]
+        by_target = {row["target_id"]: row for row in entry["measured_counters"]}
+        by_source = {row["counter_id"]: row for row in entry["measured_countered_by"]}
+        self.assertIn(guan_yu, by_source, "Guan Yu harus terukur sebagai ancaman Liang")
+        self.assertNotIn(guan_yu, by_target)
+        self.assertLess(by_source[guan_yu]["delta"], 0)
+        self.assertIn(lady_zhen, by_target, "Lady Zhen harus terukur sebagai target empuk Liang")
+        self.assertNotIn(lady_zhen, by_source)
+        self.assertGreater(by_target[lady_zhen]["delta"], 0)
+
+    def test_inactive_alias_511_has_no_measured_matchups(self):
+        measured = json.loads((MAPPINGS / "hero_measured_matchups.json").read_text(encoding="utf-8"))
+        self.assertNotIn("511", measured["heroes"])
+        heroes = load_source_heroes()
+        self.assertNotIn(511, [hero["hero_id"] for hero in heroes], "511 adalah alias tidak aktif Ata 556")
+        self.assertNotIn(511, [hero["hero_id"] for hero in heroes if hero.get("measured_counters") or hero.get("measured_countered_by")])
+
+    def test_apply_measured_matchups_labels_provenance_without_mutating(self):
+        heroes = [
+            {"hero_id": 156, "name": "Liang", "counters": [], "countered_by": []},
+            {"hero_id": 140, "name": "Guan Yu", "counters": [], "countered_by": []},
+        ]
+        measured = {
+            "heroes": {
+                "156": {
+                    "measured_counters": [{"target_id": 140, "target_name": "Guan Yu", "delta": 0.05, "weighted_delta": 0.04, "n": 40, "n_eff": 12.5}],
+                    "measured_countered_by": [{"counter_id": 999, "counter_name": "Ghost", "delta": -0.03, "weighted_delta": -0.02, "n": 31, "n_eff": 9.0}],
+                    "measured_meta": {"measured_model": "kpl-measured-matchup-v1", "measured_games": 60},
+                }
+            }
+        }
+        merged = apply_measured_matchups(heroes, measured)
+        self.assertEqual([entry["source"] for entry in merged[0]["measured_counters"]], ["kpl_measured"])
+        self.assertEqual([entry["source"] for entry in merged[0]["measured_countered_by"]], ["kpl_measured"])
+        self.assertEqual(merged[0]["measured_meta"]["measured_games"], 60)
+        self.assertNotIn("measured_counters", merged[1])
+        self.assertNotIn("measured_counters", heroes[0], "pelabelan tidak boleh memutasi roster sumber")
+        self.assertNotIn("source", heroes[0]["counters"])
+
+    def test_load_source_heroes_survives_missing_measured_file(self):
+        with tempfile.TemporaryDirectory() as directory:
+            mappings = Path(directory)
+            (mappings / "master_heroes_global.json").write_text(
+                (MAPPINGS / "master_heroes_global.json").read_text(encoding="utf-8"), encoding="utf-8"
+            )
+            heroes = load_source_heroes(mappings)
+            self.assertTrue(heroes)
+            self.assertFalse(any("measured_counters" in hero or "measured_meta" in hero for hero in heroes))
 
 
 if __name__ == "__main__":

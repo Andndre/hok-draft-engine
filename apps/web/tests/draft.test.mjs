@@ -18,7 +18,7 @@ import {
   getDoublePickWindow,
 } from '../src/engine/draftRules.ts';
 import { rankedCandidates, searchDraft, evaluatePosition } from '../src/engine/draftSearch.ts';
-import { evaluateTacticalScores, evaluateEnemyCounterExposure, reviewedHoKStatsBonuses, runTournamentInference, kplPresenceOf, competitiveStrength } from '../src/engine/tournamentInference.ts';
+import { evaluateTacticalScores, evaluateEnemyCounterExposure, reviewedHoKStatsBonuses, runTournamentInference, kplPresenceOf, competitiveStrength, counterEvidenceFor, measuredMatchupBetween, MEASURED_MIN_SAMPLE } from '../src/engine/tournamentInference.ts';
 import { matchesDecisionTag, OpponentClient } from '../src/engine/opponentClient.ts';
 
 const read = p => JSON.parse(readFileSync(new URL('../public/' + p, import.meta.url), 'utf8'));
@@ -522,10 +522,19 @@ test('user real matches Game 1 and Game 2 regression: Red phase-1 ban prioritize
   const g2BlueBans = ['Lapulapu', 'Guan Yu', 'Arli', 'Augran'].map(byName);
   const g2RedBans = ['Dunshan', "Ao'yin", 'Florentino', 'Biron'].map(byName);
 
-  // Verify that on Step 1 / Step 3 (Red Ban Phase 1), Ao'yin is in top 3 ban recommendation
+  // Verify that on Step 1 / Step 3 (Red Ban Phase 1), Red denies Blue's top B1 target.
+  // Nama hero TIDAK dikunci di sini: yang dijamin adalah invarian "Red mem-ban
+  // opener yang sama dengan target B1 yang dipilih engine untuk Blue". Mengunci
+  // nama membuat test rapuh begitu ranking opener berubah karena bukti baru.
+  const rBlueBanStep0 = runTournamentInference([], [], [g1BlueBans[0].hero_id], [], false, true, heroes, 0, null, null, true, synergy, []);
+  const blueOpener = heroes.find((h) => h.hero_id === rBlueBanStep0.phaseStrategy?.plannedOpener?.hero_id);
+  assert.ok(blueOpener, 'Blue harus punya planned opener');
   const rRedBanStep1 = runTournamentInference([], [], [g1BlueBans[0].hero_id], [], false, false, heroes, 1, null, null, true, synergy, []);
   const topBan1 = rRedBanStep1.recommendations.slice(0, 3).map((r) => r.hero.name);
-  assert.ok(topBan1.includes("Ao'yin"), `Expected Ao'yin in Red ban step 1 top-3 recommendations, got: ${topBan1.join(', ')}`);
+  assert.ok(
+    topBan1.includes(blueOpener.name),
+    `Red harus ban target B1 Blue (${blueOpener.name}), got: ${topBan1.join(', ')}`,
+  );
 
   // Verify that Ao'yin B1 projection does not pair with archaic Cai Yan (recency threshold filtered)
   const rB1 = runTournamentInference([], [], [], [], true, true, heroes, 4, null, null, true, synergy, []);
@@ -840,4 +849,231 @@ test('Double-pick window detection and Duet Package Recommendations', () => {
     'tournament'
   );
   assert.deepEqual(resB1.duetPackages, [], 'Step 4 B1 single pick must not produce duet packages');
+});
+
+// =============================================================================
+// BUKTI MATCHUP TERUKUR (KPL MEASURED MATCHUP EVIDENCE)
+// -----------------------------------------------------------------------------
+// Fixture dibuat inline: TIDAK bergantung pada isi dataset publik (lane data
+// sedang diperbarui paralel oleh pipeline ml-engine).
+// Aturan produk yang diuji: bukti terukur boleh MEMVETO atau MENIMBANG relasi
+// counter kurasi, tetapi tidak pernah MEMBUAT relasi baru.
+// =============================================================================
+
+/** Hero fixture minimal dengan bentuk Hero yang dipakai mesin inferensi. */
+function fixtureHero(overrides = {}) {
+  return {
+    hero_id: 900,
+    name: 'Fixture Hero',
+    chinese_name: 'Fixture',
+    slug: 'fixture-hero',
+    title: '',
+    primary_role: 'Fighter',
+    primary_lane: 'Clash',
+    lanes: ['Clash'],
+    popularity_band: null,
+    win_rate: 0.5,
+    win_rate_source: 'ranked',
+    kpl_win_rate: null,
+    kpl_matches: null,
+    pick_rate: 0.05,
+    ban_rate: 0.01,
+    counters: [],
+    countered_by: [],
+    tactical_tips: '',
+    counter_items: [],
+    portrait_asset: '',
+    kpl_id: null,
+    is_global_exclusive: false,
+    is_global_released: true,
+    ...overrides,
+  };
+}
+
+test('measured KPL evidence vetoes a curated counter', () => {
+  const target = fixtureHero({ hero_id: 801, name: 'Target Hero', slug: 'target-hero' });
+  const candidate = fixtureHero({
+    hero_id: 800,
+    name: 'Kandidat',
+    slug: 'kandidat',
+    counters: [{ target_id: 801, target_name: 'Target Hero', severity: 'hard', reason: 'suppress mematikan dash' }],
+    measured_countered_by: [
+      { counter_id: 801, counter_name: 'Target Hero', delta: -0.075, n: 117, source: 'kpl_measured' },
+    ],
+  });
+
+  const evidence = counterEvidenceFor(candidate, target);
+  assert.equal(evidence.curated, true, 'relasi kurasi harus terdeteksi');
+  assert.equal(evidence.vetoed, true, 'delta -7,5 pp harus memveto relasi kurasi');
+  assert.equal(evidence.isCounter, false, 'relasi yang diveto bukan counter lagi');
+  assert.ok(evidence.measured, 'bukti terukur harus dikembalikan');
+  assert.equal(evidence.measured.delta, -0.075, 'delta harus dikembalikan apa adanya (bertanda)');
+  assert.equal(evidence.measured.n, 117);
+});
+
+test('measured evidence never creates a relation that was not curated', () => {
+  const target = fixtureHero({ hero_id: 811, name: 'Target B', slug: 'target-b' });
+  const candidate = fixtureHero({
+    hero_id: 810,
+    name: 'Kandidat B',
+    slug: 'kandidat-b',
+    counters: [],
+    measured_counters: [
+      { target_id: 811, target_name: 'Target B', delta: 0.12, n: 80, source: 'kpl_measured' },
+    ],
+  });
+
+  const evidence = counterEvidenceFor(candidate, target);
+  assert.equal(evidence.curated, false, 'tidak ada relasi kurasi');
+  assert.equal(evidence.isCounter, false, 'bukti terukur tidak boleh membuat relasi counter baru');
+  assert.equal(evidence.vetoed, false);
+  assert.equal(evidence.measured.delta, 0.12);
+});
+
+test('measured evidence confirms a curated counter', () => {
+  const target = fixtureHero({ hero_id: 821, name: 'Target C', slug: 'target-c' });
+  const candidate = fixtureHero({
+    hero_id: 820,
+    name: 'Kandidat C',
+    slug: 'kandidat-c',
+    counters: [{ target_id: 821, target_name: 'Target C', severity: 'soft', reason: 'poke jarak jauh' }],
+    measured_counters: [
+      { target_id: 821, target_name: 'Target C', delta: 0.08, n: 80, source: 'kpl_measured' },
+    ],
+  });
+
+  const evidence = counterEvidenceFor(candidate, target);
+  assert.equal(evidence.curated, true);
+  assert.equal(evidence.vetoed, false, 'delta +8 pp mengonfirmasi, bukan memveto');
+  assert.equal(evidence.isCounter, true, 'relasi kurasi yang dikonfirmasi tetap counter');
+  assert.equal(evidence.measured.delta, 0.08);
+});
+
+test('pairs below the sample gate are ignored', () => {
+  const target = fixtureHero({ hero_id: 831, name: 'Target D', slug: 'target-d' });
+  const candidate = fixtureHero({
+    hero_id: 830,
+    name: 'Kandidat D',
+    slug: 'kandidat-d',
+    counters: [{ target_id: 831, target_name: 'Target D', severity: 'hard', reason: 'kurasi' }],
+    measured_counters: [
+      { target_id: 831, target_name: 'Target D', delta: 0.12, n: MEASURED_MIN_SAMPLE - 1, source: 'kpl_measured' },
+    ],
+  });
+
+  assert.equal(MEASURED_MIN_SAMPLE, 30, 'ambang sampel minimum harus 30 game');
+  assert.equal(measuredMatchupBetween(candidate, 831), null, 'n = 29 harus diabaikan');
+  const evidence = counterEvidenceFor(candidate, target);
+  assert.equal(evidence.measured, null, 'tanpa bukti valid, mesin berperilaku seperti sebelumnya');
+  assert.equal(evidence.isCounter, true, 'relasi kurasi tetap berlaku');
+  assert.equal(evidence.vetoed, false);
+
+  // Batas inklusif: n = 30 sudah dipakai.
+  const atGate = fixtureHero({
+    hero_id: 832,
+    name: 'Kandidat E',
+    slug: 'kandidat-e',
+    measured_counters: [
+      { target_id: 831, target_name: 'Target D', delta: 0.12, n: MEASURED_MIN_SAMPLE, source: 'kpl_measured' },
+    ],
+  });
+  assert.deepEqual(measuredMatchupBetween(atGate, 831), { delta: 0.12, n: 30, weightedDelta: undefined });
+});
+
+test('measured term changes the ranking of otherwise identical candidates', () => {
+  // Fixture ban-phase: kedua kandidat sama persis kecuali bukti KPL terukur.
+  // Sisi biru dengan Plan A eksplisit -> cabang "ban counter opener" (+1,25) aktif.
+  const planHero = fixtureHero({ hero_id: 904, name: 'Opener Rencana', slug: 'opener-rencana', primary_lane: 'Clash', lanes: ['Clash'] });
+
+  // Relasi kurasi DITENTANG data KPL: bonus counter kurasi hilang (diveto).
+  const vetoed = fixtureHero({
+    hero_id: 901,
+    name: 'Kandidat Veto',
+    slug: 'kandidat-veto',
+    primary_lane: 'Jungle',
+    lanes: ['Jungle'],
+    counters: [{ target_id: 904, target_name: 'Opener Rencana', severity: 'hard', reason: 'kurasi' }],
+    measured_countered_by: [
+      { counter_id: 904, counter_name: 'Opener Rencana', delta: -0.09, n: 140, source: 'kpl_measured' },
+    ],
+  });
+
+  // Relasi kurasi DIDUKUNG data KPL: bonus kurasi + suku terukur kecil (0,08 x 0,8).
+  const confirmed = fixtureHero({
+    hero_id: 902,
+    name: 'Kandidat Konfirmasi',
+    slug: 'kandidat-konfirmasi',
+    primary_lane: 'Jungle',
+    lanes: ['Jungle'],
+    counters: [{ target_id: 904, target_name: 'Opener Rencana', severity: 'hard', reason: 'kurasi' }],
+    measured_counters: [
+      { target_id: 904, target_name: 'Opener Rencana', delta: 0.08, n: 140, source: 'kpl_measured' },
+    ],
+  });
+
+  const pool = [vetoed, confirmed, planHero];
+  const result = runTournamentInference(
+    [],            // ourHeroIds
+    [],            // enemyHeroIds
+    [],            // bannedHeroIds
+    [],            // fearlessUnavailableIds
+    false,         // isPickPhase = false -> BAN_PHASE_1
+    true,          // isBlueSide
+    pool,
+    0,             // draftStep 0 -> BAN_PHASE_1
+    904,           // planAId (opener terencana yang dilindungi)
+    null,
+    false,         // onlyGlobalReleased: fixture tanpa flag rilis
+    {},            // synergyDb kosong
+    [],
+    'tournament'
+  );
+
+  const scores = new Map(result.recommendations.map(r => [r.hero.hero_id, r.choiceScore]));
+  assert.ok(scores.has(901) && scores.has(902), 'kedua kandidat harus dievaluasi');
+  assert.ok(
+    scores.get(902) > scores.get(901),
+    `kandidat terkonfirmasi data harus unggul (${scores.get(902)} vs ${scores.get(901)})`
+  );
+  // Selisih skor = paket bonus counter kurasi (1,25 + bobot hard-counter/160) + suku terukur
+  // kecil (0,08 x 0,8 = 0,064). Kandidat yang diveto kehilangan SELURUH paket bonus itu.
+  const gap = scores.get(902) - scores.get(901);
+  assert.ok(gap > 1.25, `selisih skor harus memuat bonus counter kurasi (gap=${gap})`);
+  assert.ok(gap <= 1.25 + 0.55 + 0.08 + 1e-9, `suku terukur harus kecil, bukan dominan (gap=${gap})`);
+});
+
+test('pre-ban count is a draft pattern, never a counter relation', () => {
+  // `top_prebans` = hero yang di-ban fase-1 oleh tim itu SENDIRI sebelum first-pick-nya
+  // (mis. 102x Guan Yu di-ban sebelum Blue first-pick Dunshan). Itu pola draft, bukan
+  // matchup. Kalau pola ini diperlakukan sebagai "counter", ban list memunculkan relasi
+  // yang tidak pernah ada (dulu Guan Yu masuk top-3 ban dengan alasan palsu).
+  const ban = runTournamentInference([], [], [], [], false, true, heroes, 0, null, null, true, synergy);
+  const opener = heroes.find((h) => h.hero_id === ban.phaseStrategy?.plannedOpener?.hero_id);
+  assert.ok(opener, 'harus ada planned opener');
+  const claimsCounter = ban.recommendations.filter((r) => (r.proComboTag ?? '').includes('Amankan B1'));
+  for (const rec of claimsCounter) {
+    const slug = (s) => String(s).replace(/-/g, '').toLowerCase();
+    const curated =
+      rec.hero.counters?.some((c) => c.target_id === opener.hero_id) ||
+      opener.countered_by?.some((c) => c.counter_id === rec.hero.hero_id) ||
+      rec.hero.hokfire_counters?.strong_against?.some((s) => slug(s) === slug(opener.slug)) ||
+      opener.hokfire_counters?.weak_against?.some((s) => slug(s) === slug(rec.hero.slug));
+    assert.ok(
+      curated,
+      `Ban "${rec.hero.name}" mengklaim counter ke ${opener.name} tanpa relasi kurasi/HOKFIRE`,
+    );
+  }
+});
+
+test('planned B1 opener must rest on real B1 evidence, not a tiny sample', () => {
+  // Zilong pernah jadi opener #1 hanya karena 10 game B1 dengan win rate 79,6%.
+  // Rekam jejak first-pick tanpa sampel cukup tidak boleh jadi alasan utama.
+  const b1 = runTournamentInference([], [], [], [], true, true, heroes, 4, null, null, true, synergy);
+  const opener = heroes.find((h) => h.hero_id === b1.phaseStrategy?.plannedOpener?.hero_id);
+  assert.ok(opener, 'harus ada planned opener');
+  const presence = kplPresenceOf(opener.hero_id, synergy.b1_openers ?? {});
+  assert.ok(
+    (presence?.b1Recent ?? 0) >= 40,
+    `opener ${opener.name} hanya punya ${Math.round(presence?.b1Recent ?? 0)} game B1 (12 bln) — sampel terlalu tipis`,
+  );
 });

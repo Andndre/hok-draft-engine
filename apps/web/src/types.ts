@@ -34,6 +34,42 @@ export interface CounteredByInfo {
   reviewed_at?: string;
 }
 
+/**
+ * Bukti matchup terukur dari dataset turnamen KPL (9.817 game lengkap).
+ *
+ * `delta` adalah EFEK TERHADAP WIN RATE HERO SUBJEK (bukan hero lawan):
+ * - `delta > 0` → hero subjek tampil LEBIH BAIK saat lawan itu ada.
+ * - `delta < 0` → hero subjek tampil LEBIH BURUK saat lawan itu ada.
+ *
+ * Invarian arah: pada `measured_counters` delta selalu > 0, pada
+ * `measured_countered_by` delta selalu < 0. Bukti ini hanya boleh MEMVETO atau
+ * MENIMBANG relasi counter kurasi yang sudah ada — tidak pernah membuat relasi baru.
+ */
+export interface MeasuredCounterInfo {
+  target_id: number;
+  target_name: string;
+  /** Selisih win rate hero subjek terhadap lawan ini (fraksi, mis. 0.061 = +6,1 pp). */
+  delta: number;
+  /** Delta berbobot recency 12 bulan (bila sumber menerbitkannya). */
+  weighted_delta?: number;
+  /** Jumlah game berpasangan yang mendasari delta. */
+  n: number;
+  /** Ukuran sampel efektif setelah pembobotan recency. */
+  n_eff?: number;
+  source: 'kpl_measured';
+}
+
+export interface MeasuredCounteredByInfo {
+  counter_id: number;
+  counter_name: string;
+  /** Selisih win rate hero subjek terhadap lawan ini (negatif, mis. -0.075 = -7,5 pp). */
+  delta: number;
+  weighted_delta?: number;
+  n: number;
+  n_eff?: number;
+  source: 'kpl_measured';
+}
+
 export interface SituationalSwap {
   from: string;
   to: string;
@@ -197,6 +233,21 @@ export interface Hero {
   ban_rate: number;
   counters: CounterInfo[];
   countered_by: CounteredByInfo[];
+  /**
+   * Bukti matchup terukur dari KPL (delta > 0: hero ini unggul melawan target).
+   * Hanya boleh memveto/menimbang relasi kurasi — tidak pernah membuat relasi counter baru.
+   */
+  measured_counters?: MeasuredCounterInfo[];
+  /** Bukti matchup terukur dari KPL (delta < 0: hero ini kalah melawan counter tersebut). */
+  measured_countered_by?: MeasuredCounteredByInfo[];
+  /** Metadata model & cakupan bukti terukur yang menerbitkan dua field di atas. */
+  measured_meta?: {
+    measured_model?: string;
+    measured_as_of?: string | null;
+    measured_games?: number;
+    measured_win_rate?: number;
+    measured_pairs_emitted?: number;
+  };
   tactical_tips: string;
   counter_items: CounterItemInfo[];
   portrait_asset: string;

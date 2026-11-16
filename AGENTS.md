@@ -138,6 +138,10 @@ Di masa lalu terjadi bug inversi 180 derajat karena salah menginterpretasikan ar
 - Karena itu field di dataset kini bernama **`popularity_band`** (bukan `tier`) dan **tidak boleh dipakai sebagai sinyal kekuatan** di mana pun. Ia hanya konteks: seberapa kontesatif hero di ladder.
 - Kekuatan competitive dihitung oleh `competitiveStrength()` di [`tournamentInference.ts`](apps/web/src/engine/tournamentInference.ts): winrate **KPL pro** (populasi simulator) recency-weighted 12 bulan, dishrink ke 50% sesuai ukuran sampel, diisi sisa bobotnya dengan winrate **ranked** (Diamond+) untuk hero yang belum pernah tampil di KPL. Populasi tidak pernah dicampur diam-diam — `win_rate_source` menandainya.
 - Di UI, badge band diberi tooltip "Popularitas di HoK Camp — bukan tier kekuatan". Jangan menulis "Tier S" untuk hal ini.
+- **`pick_rate` juga popularitas, jadi TIDAK boleh masuk skor kekuatan.** Ia sudah dicabut dari `computeTournamentBaseQuality()` dan `computeOpenerPriorityScore()`. `ban_rate` boleh dipakai sebagai **kontestasi** (seberapa sering hero di-ban di ladder) — terutama di fase ban — tetapi bukan sebagai kekuatan.
+- **Rekam jejak first-pick (B1) hanya berarti bila sampelnya cukup.** Term `b1OutcomeTerm` diskalakan bobot bukti `n/(n+prior)` (prior 20 game). Tanpa itu, hero dengan 10 game B1 (Zilong, win rate 79,6%) mengalahkan hero dengan 155 game B1 (Ao'yin, 51,3%) hanya karena derau.
+- **Ambang kekuatan tidak boleh berupa cliff.** Fungsi ban memakai ramp halus (0,10 @ ≤0,50 → 0,50 @ ≥0,55), bukan ambang 0,53/0,515 yang bikin urutan ban melompat (hero 0,529 kalah dari hero 0,531).
+- **Ban phase-1 bukan bukti "layak di-first-pick".** `shareRatioBlue`/`shareRatioRed` dihitung dari pick B1 dan R1+R2 saja; `p1Bans` tetap dipakai sebagai sinyal kontestasi meta, bukan sebagai bobot opener.
 - **Tidak ada sumber tier kekuatan resmi yang bisa dipakai.** `hokfire.com/assets/data.js` memuat tier sebagai *placeholder* ("Balance/tier values are placeholder") — jangan dipakai sebagai fallback.
 
 ### C. Competitive Tournament Tiers vs Casual Pub Tiers
@@ -191,6 +195,15 @@ Sebelas invariant berikut adalah alasan fitur ini aman; agen selanjutnya dilaran
 9. **Setiap aksi vision lewat jalur aksi bersama yang ada** (`applyDraftAction` / `applyGameHero` di `apps/web/src/engine/draftRules.ts`) — jalur yang sama dipakai kartu hero, rekomendasi, dan drawer. Jangan pernah mutasi `gamesData` langsung.
 10. **`BLANK_SLOT_STD_THRESHOLD = 30.0` adalah hasil pengukuran, bukan angka arbitrer.** Placeholder pick kosong terukur std grayscale 8.3–26.8; slot terisi 31.0–68.4; lingkaran ban kosong 5.5–13.7; terisi 42.9–76.1. Klasternya tidak tumpang tindih. Nilai lama 4.0 mengklasifikasi setiap placeholder kosong sebagai terisi dan merusak advisor sejak frame ban-phase pertama.
 11. **Frame yang bukan draft tidak boleh dipercaya.** Screen classifier wajib menolak lobby, layar VS-loading (yang menampilkan art SKIN), dan footage in-match.
+
+### H. Bukti Terukur (Matchup KPL) vs Kurasi — Aturan Pemisahan
+
+- **Matchup terukur berasal dari 9.817 battle KPL lengkap** (`packages/ml-engine/extract_kpl_matchups.py` → `data/mappings/hero_measured_matchups.json`). Definisi delta: `delta(x,y) = WR(x | y di tim lawan) − WR(x | y absen dari draft)`. Baseline harus "y absen seluruh draft" — kalau memakai "y di tim sendiri", sinergi inflation membuat semua pasangan terasa negatif. `delta > 0` = x unggul vs y.
+- **Bukti terukur hanya boleh MENGAKUI atau MEMBATAL relasi kurasi, tidak pernah MEMBUAT relasi baru.** `counterEvidenceFor()` di `tournamentInference.ts` enforcing ini: tanpa relasi kurasi (`counters` / `countered_by` / HOKFIRE), `isCounter` tetap false sekuat apa pun delta. Relasi baru hanya boleh masuk lewat `data/mappings/hero_counter_overrides.json` yang direview manusia.
+- Ambang: `MEASURED_MIN_SAMPLE = 30` game berpasangan, `MEASURED_MIN_DELTA = 0,02` (2 pp). Bukti di bawah ambang tidak konklusif dan tidak mengubah perilaku kurasi.
+- Suku terukur sengaja kecil (`MEASURED_BONUS_SCALE = 0,8`, plafon 0,10 delta → maks 0,08 poin): ia menggeser bonus kurasi, bukan menggantikannya.
+- **`top_prebans` = POLA DRAFT, bukan relasi counter.** Isinya hero yang di-ban fase-1 oleh tim itu SENDIRI sebelum first-pick-nya (102× Guan Yu di-ban sebelum Blue first-pick Dunshan). Dulu pola ini salah dipakai sebagai "counter" sehingga ban list memunculkan relasi fiktif. Sekarang pola ini ditangani terpisah sebagai "pola ban pro" (khusus sisi Blue, bobot kecil) dan **tidak boleh** dipakai sebagai alasan "counter".
+- **Lane utama didahulukan saat memilih pick.** Model integritas boleh mem-fleks Bai Qi (Clash) ke Jungle karena ia main Jungle di 26% match KPL, tapi papan tetap menampilkan "Clash" — tim jadi terlihat dua Clash tanpa jungler. `rankedCandidates()` di `draftSearch.ts` karena itu memprioritaskan kandidat yang mengisi **lane utama** yang belum terisi; flex hanya dipakai bila tidak ada kandidat lane utama tersisa.
 
 ---
 

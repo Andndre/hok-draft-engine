@@ -385,8 +385,9 @@ function buildKplPresenceTable(b1Openers: Record<string, any>): Map<number, KplP
     const banUnits = wP1 * KPL_UNIT_WEIGHT_P1BAN;
     const units = wB1 * KPL_UNIT_WEIGHT_B1 + wR1 * KPL_UNIT_WEIGHT_R1R2 + banUnits;
     // Pemilihan pertama (B1) dinilai dari rekam jejak first-pick, respon merah (R1-R2) dari pick reaktif.
-    const blueUnits = wB1 * KPL_UNIT_WEIGHT_B1 + banUnits;
-    const redUnits = wR1 * KPL_UNIT_WEIGHT_R1R2 + wB1 * 0.6 + banUnits;
+    // Ban phase-1 TIDAK ikut di sini: "sering di-ban" bukan bukti "layak di-first-pick".
+    const blueUnits = wB1 * KPL_UNIT_WEIGHT_B1;
+    const redUnits = wR1 * KPL_UNIT_WEIGHT_R1R2 + wB1 * 0.6;
 
     let b1WinRate: number | null = null;
     if (weightedField && wB1 >= KPL_B1_WIN_MIN_GAMES) {
@@ -541,9 +542,10 @@ export function computeTournamentBaseQuality(
   const strengthDelta = (competitiveStrength(hero) - 0.5) * 6.5;
   const adjustedStrengthDelta = strengthDelta > 0 ? strengthDelta * synergyMultiplier : strengthDelta;
 
+  // `pick_rate` sengaja TIDAK dipakai: itu popularitas ladder, bukan kekuatan.
+  // Kontestasi (ban_rate) sudah punya tempatnya sendiri di fase ban.
   return (
     adjustedStrengthDelta +
-    hero.pick_rate * 1.8 +
     kplPresenceBonus +
     nonTournamentPenalty +
     earlyNonOpenerPenalty
@@ -590,9 +592,14 @@ function computeOpenerPriorityScore(
 
   // Rekam jejak First Pick: hero yang kalah saat di-B1 tidak layak jadi opener buta.
   // Baseline-nya rata-rata medan (sisi biru menang > 50% di B1), bukan 50% mentah.
+  // Rekam jejak first-pick hanya berarti bila sampelnya cukup. Tanpa faktor bukti,
+  // hero dengan 10 game B1 (win rate 79,6%) mengalahkan hero dengan 155 game B1
+  // (win rate 51,3%) — itu "sampel kecil menang", bukan analisis meta.
+  const b1Evidence =
+    kpl?.b1Games != null ? kpl.b1Games / (kpl.b1Games + KPL_B1_WIN_PRIOR_GAMES) : 0;
   const b1OutcomeTerm =
     kpl?.b1WinRate != null && kpl.fieldB1WinRate != null
-      ? Math.max(-0.35, Math.min(0.35, (kpl.b1WinRate - kpl.fieldB1WinRate) * 3.0))
+      ? Math.max(-0.35, Math.min(0.35, (kpl.b1WinRate - kpl.fieldB1WinRate) * 3.0)) * b1Evidence
       : 0;
 
   const banRateBonus = Math.min(0.25, (hero.ban_rate || 0) * 4.0);
@@ -603,7 +610,6 @@ function computeOpenerPriorityScore(
 
   return (
     strengthTerm +
-    hero.pick_rate * 2.0 +
     kplOpenerBonus +
     b1OutcomeTerm +
     banRateBonus +
@@ -1468,6 +1474,123 @@ export function evaluateDuetRecommendations(
 }
 
 /**
+ * ============================================================================
+ * BUKTI MATCHUP TERUKUR (KPL MEASURED MATCHUP EVIDENCE)
+ * ============================================================================
+ *
+ * Dataset menerbitkan bukti hero-vs-hero terukur dari 9.817 game turnamen KPL.
+ * Aturan produk yang keras:
+ *
+ *   BUKTI TERUKUR BOLEH MEMVETO ATAU MENIMBANG RELASI COUNTER YANG SUDAH ADA
+ *   (kurasi/artikel/HOKFIRE), TETAPI TIDAK PERNAH BOLEH MEMBUAT RELASI BARU.
+ *
+ * Pemilik produk meninjau setiap relasi hero yang dikurasi; mesin tidak boleh
+ * diam-diam mengarang relasi hanya karena data menunjukkan selisih win rate.
+ */
+
+/** Ukuran sampel minimum (game berpasangan) agar bukti terukur dipakai. */
+export const MEASURED_MIN_SAMPLE = 30;
+
+/**
+ * Ambang |delta| agar bukti terukur dianggap informatif. Delta adalah selisih
+ * PROBABILITAS menang (0,02 = 2 pp); di bawah ambang ini efeknya dianggap derau,
+ * jadi relasi kurasi dipertahankan apa adanya.
+ */
+export const MEASURED_MIN_DELTA = 0.02;
+
+/** Plafon magnitudo delta yang boleh disumbangkan ke skor (0,10 = 10 pp). */
+export const MEASURED_BONUS_DELTA_CAP = 0.10;
+
+/**
+ * Faktor skala bonus terukur. `delta` berupa selisih probabilitas (mis. 0,075 = 7,5 pp),
+ * sedangkan bonus kurasi yang sudah ada bernilai satuan poin skor. Faktor 0,8 sengaja
+ * kecil supaya bukti terukur TIDAK mendominasi bonus kurasi — ia hanya menggeser.
+ * Bonus maksimum = 0,10 x 0,8 = 0,08 poin.
+ */
+export const MEASURED_BONUS_SCALE = 0.8;
+
+/**
+ * Mencari bukti matchup terukur milik `hero` terhadap `otherHeroId`.
+ * Delta dikembalikan APA ADANYA (bertanda) agar pemanggil melihat arah efeknya
+ * pada `hero` (positif = hero unggul, negatif = hero kalah).
+ * Mengembalikan `null` bila pasangan tidak diterbitkan atau sampelnya < MEASURED_MIN_SAMPLE.
+ */
+export function measuredMatchupBetween(
+  hero: Hero,
+  otherHeroId: number
+): { delta: number; n: number; weightedDelta?: number } | null {
+  const asCounter = hero.measured_counters?.find((c) => c.target_id === otherHeroId);
+  if (asCounter) {
+    if (asCounter.delta <= 0 || asCounter.n < MEASURED_MIN_SAMPLE) return null;
+    return { delta: asCounter.delta, n: asCounter.n, weightedDelta: asCounter.weighted_delta };
+  }
+
+  const asCounteredBy = hero.measured_countered_by?.find((c) => c.counter_id === otherHeroId);
+  if (asCounteredBy) {
+    if (asCounteredBy.delta >= 0 || asCounteredBy.n < MEASURED_MIN_SAMPLE) return null;
+    return { delta: asCounteredBy.delta, n: asCounteredBy.n, weightedDelta: asCounteredBy.weighted_delta };
+  }
+
+  return null;
+}
+
+/** Hasil penimbangan relasi counter: kurasi vs bukti terukur. */
+export interface CounterEvidence {
+  isCounter: boolean;
+  vetoed: boolean;
+  measured: { delta: number; n: number } | null;
+  curated: boolean;
+}
+
+/**
+ * Menimbang relasi counter `candidate` terhadap `target` memakai bukti terukur.
+ *
+ * - `curated` = relasi hasil kurasi/artikel (candidate.counters atau target.countered_by).
+ * - Bukti terukur dibaca dari rekaman `candidate` saja (tiap entri hero menerbitkan
+ *   kedua arah). Rekaman `target` tidak dipakai untuk membalik tanda.
+ * - delta <= -0.02  → relasi kurasi DIVETO (isCounter = false).
+ * - delta >= +0.02  → relasi kurasi dikonfirmasi (isCounter = curated).
+ * - |delta| < 0.02  → tidak konklusif; perilaku kurasi dipertahankan.
+ *
+ * HARD RULE: bila tidak ada relasi kurasi, `isCounter` TETAP false meskipun delta
+ * terukur besar. Bukti terukur tidak pernah membuat relasi counter baru — hanya
+ * pemilik produk yang boleh menambah relasi kurasi.
+ */
+export function counterEvidenceFor(candidate: Hero, target: Hero): CounterEvidence {
+  const curated = Boolean(
+    candidate.counters?.some((c) => c.target_id === target.hero_id) ||
+      target.countered_by?.some((c) => c.counter_id === candidate.hero_id)
+  );
+
+  const found = measuredMatchupBetween(candidate, target.hero_id);
+  const measured = found ? { delta: found.delta, n: found.n } : null;
+
+  let isCounter = curated;
+  let vetoed = false;
+
+  if (measured) {
+    if (measured.delta <= -MEASURED_MIN_DELTA) {
+      // Data KPL menentang relasi: veto bonus kurasi.
+      vetoed = true;
+      isCounter = false;
+    } else if (measured.delta >= MEASURED_MIN_DELTA) {
+      // Data KPL mendukung relasi kurasi.
+      vetoed = false;
+    }
+    // |delta| < MEASURED_MIN_DELTA: tidak konklusif — pertahankan perilaku kurasi.
+  }
+
+  // HARD RULE: tanpa relasi kurasi tidak ada yang boleh menjadi counter,
+  // sekuat apa pun bukti terukur — mesin tidak pernah mengarang relasi baru.
+  if (!curated) {
+    isCounter = false;
+    vetoed = false;
+  }
+
+  return { isCounter, vetoed, measured, curated };
+}
+
+/**
  * Mesin utama kalkulasi inferensi taktis turnamen untuk giliran draft aktif.
  */
 export function runTournamentInference(
@@ -1662,16 +1785,31 @@ export function runTournamentInference(
 
   /**
    * Helper: Memeriksa kekuatan relasi counter antara `counterCand` terhadap `targetHero`.
+   *
+   * Sejak bukti matchup KPL terukur tersedia, hasilnya ditimbang: relasi kurasi yang
+   * ditentang data (delta <= -2 pp) DIVETO, relasi yang didukung data tetap berlaku.
+   * Bukti terukur sendiri tidak pernah menciptakan relasi counter.
    */
   const getCounterStrengthAgainst = (
     counterCand: Hero,
     targetHero: Hero
-  ): { isCounter: boolean; kplPrebanCount: number; counterWeight: number; reason?: string } => {
+  ): {
+    isCounter: boolean;
+    kplPrebanCount: number;
+    kplPrebanWeighted: number;
+    counterWeight: number;
+    reason?: string;
+    measured?: { delta: number; n: number };
+    vetoed?: boolean;
+    curated?: boolean;
+  } => {
     const directCounter = counterCand.counters.find((c) => c.target_id === targetHero.hero_id);
     const reverseCountered = targetHero.countered_by?.find((c) => c.counter_id === counterCand.hero_id);
-    const kplPrebans: Array<{ ban_id: number; count: number }> = b1Openers[String(targetHero.hero_id)]?.top_prebans || [];
+    const kplPrebans: Array<{ ban_id: number; count: number; weighted_count?: number }> =
+      b1Openers[String(targetHero.hero_id)]?.top_prebans || [];
     const prebanEntry = kplPrebans.find((p) => p.ban_id === counterCand.hero_id);
     const kplPrebanCount = prebanEntry ? prebanEntry.count : 0;
+    const kplPrebanWeighted = prebanEntry?.weighted_count ?? 0;
 
     const candCleanSlug = counterCand.slug.replace(/-/g, '').toLowerCase();
     const targetCleanSlug = targetHero.slug.replace(/-/g, '').toLowerCase();
@@ -1686,23 +1824,63 @@ export function runTournamentInference(
     const isHardMechanicCounter = Boolean(
       directCounter?.severity === 'hard' || reverseCountered?.severity === 'hard'
     );
-    const isCounter = Boolean(
-      directCounter || reverseCountered || isHokfireWeakAgainst || isHokfireStrongAgainst || kplPrebanCount >= 12
+    const evidence = counterEvidenceFor(counterCand, targetHero);
+    // PENTING: `kplPrebanCount` BUKAN relasi counter. `top_prebans` = hero yang di-ban
+    // fase-1 oleh tim itu SENDIRI sebelum first-pick-nya (mis. 102× Guan Yu di-ban
+    // sebelum Blue first-pick Dunshan). Itu POLA DRAFT, bukan matchup — makanya
+    // pre-ban tidak lagi otomatis dianggap "counter" dan tidak lagi menambah
+    // bobot counter. Pola ini ditangani terpisah sebagai "pola ban pro".
+    const legacyIsCounter = Boolean(
+      directCounter || reverseCountered || isHokfireWeakAgainst || isHokfireStrongAgainst
     );
+    // Veto hanya bisa MENGHAPUS relasi yang sudah ada; tidak pernah menambah.
+    const isCounter = legacyIsCounter && !evidence.vetoed;
     let reason = directCounter?.reason || reverseCountered?.reason;
     if (!reason && (isHokfireWeakAgainst || isHokfireStrongAgainst)) {
       reason = `HOKFIRE Official Counter: ${counterCand.name} unggul terhadap ${targetHero.name}`;
+    }
+    if (evidence.vetoed && evidence.measured) {
+      const pp = Math.abs(evidence.measured.delta * 100).toFixed(1).replace('.', ',');
+      reason = `Data KPL: -${pp} pp pada ${evidence.measured.n} game (kartu kurasi tidak didukung)`;
     }
 
     return {
       isCounter,
       kplPrebanCount,
-      counterWeight:
-        kplPrebanCount +
-        (isHardMechanicCounter ? 45 : 0) +
-        (isHokfireWeakAgainst || isHokfireStrongAgainst ? 25 : 0),
+      kplPrebanWeighted,
+      counterWeight: evidence.vetoed
+        ? 0
+        : (isHardMechanicCounter ? 45 : 0) +
+          (isHokfireWeakAgainst || isHokfireStrongAgainst ? 25 : 0),
       reason,
+      measured: evidence.measured ?? undefined,
+      vetoed: evidence.vetoed,
+      curated: evidence.curated,
     };
+  };
+
+  /**
+   * Bonus aditif dari bukti matchup terukur (KPL). HANYA berlaku bila relasi counter
+   * kurasi memang ada (`curated`) — bukti terukur tidak pernah membuat relasi baru.
+   * `delta` adalah selisih probabilitas menang, diskalakan MEASURED_BONUS_SCALE (0,8)
+   * dan dipotong MEASURED_BONUS_DELTA_CAP (0,10) supaya tidak mendominasi bonus kurasi.
+   */
+  const measuredCounterTerm = (
+    check: { curated?: boolean; measured?: { delta: number; n: number } | null; vetoed?: boolean },
+    opponentName?: string
+  ): { bonus: number; note?: string } => {
+    if (!check.curated || !check.measured || check.vetoed) return { bonus: 0 };
+    if (Math.abs(check.measured.delta) < MEASURED_MIN_DELTA) return { bonus: 0 };
+    const cappedDelta = Math.max(
+      -MEASURED_BONUS_DELTA_CAP,
+      Math.min(MEASURED_BONUS_DELTA_CAP, check.measured.delta)
+    );
+    const bonus = cappedDelta * MEASURED_BONUS_SCALE;
+    if (bonus === 0) return { bonus: 0 };
+    const pp = (check.measured.delta * 100).toFixed(1).replace('.', ',');
+    const sign = check.measured.delta > 0 ? '+' : '';
+    const vs = opponentName ? ` saat lawan ada ${opponentName}` : '';
+    return { bonus, note: `Data KPL: ${sign}${pp} pp${vs} (${check.measured.n} game)` };
   };
 
   /**
@@ -1785,6 +1963,10 @@ export function runTournamentInference(
       const metaShare = kplOpenerInfo?.shareRatio ?? 0;
       const isCompetitiveSTier = candStrength >= 0.53 && totalKplPresence >= 50 && metaShare >= 0.2;
       const isSolidMeta = candStrength >= 0.515 && totalKplPresence >= 50;
+      // Cliff 0,53 / 0,515 bikin urutan ban melompat: hero 0,529 kalah dari hero 0,531.
+      // Bonus kekuatan jadi ramp halus (0,10 @ <=0,50 -> 0,50 @ >=0,55).
+      const metaThreatStrengthBonus =
+        0.10 + Math.max(0, Math.min(1, (candStrength - 0.50) / 0.05)) * 0.40;
 
       if (isBlueSide) {
         // SISI BLUE (Keuntungan First-Pick B1):
@@ -1805,17 +1987,22 @@ export function runTournamentInference(
           } else if (hasExplicitUserPlan && counterCheck.isCounter) {
             // 2A. Pengguna mengunci Plan A/B: utamakan ban hard counter terhadap hero tersebut
             const prebanBoost = Math.min(0.55, counterCheck.counterWeight / 160);
-            score += 1.25 + prebanBoost;
+            // Bukti KPL terukur hanya menimbang relasi kurasi yang sudah ada (bukan membuat relasi).
+            const measuredTerm = measuredCounterTerm(counterCheck, plannedOpener.name);
+            score += 1.25 + prebanBoost + measuredTerm.bonus;
             laneTag = `Counter ${plannedOpener.name}`;
             proComboTag =
               counterCheck.kplPrebanCount > 0
-                ? `🎯 Amankan B1 ${plannedOpener.name}: Pre-Ban Counter (${counterCheck.kplPrebanCount}x di KPL)`
+                ? `🎯 Amankan B1 ${plannedOpener.name}: Pola ban pro (${counterCheck.kplPrebanCount}x di KPL)`
                 : `🎯 Amankan B1 ${plannedOpener.name}: Ban Hard Counter Utama`;
+            if (measuredTerm.note) {
+              proComboTag = `${proComboTag} · ${measuredTerm.note}`;
+            }
           } else {
             // 2B. Prioritaskan ancaman meta R1+R2 Red
             if (p1BansCount >= 120 || cand.ban_rate >= 0.025 || isCompetitiveSTier) {
               const metaThreatBoost =
-                (isCompetitiveSTier ? 0.50 : isSolidMeta ? 0.25 : 0.10) +
+                metaThreatStrengthBonus +
                 Math.min(0.65, p1BansCount / 850) +
                 Math.min(0.40, (cand.ban_rate || 0) * 6.5);
               score += metaThreatBoost;
@@ -1823,13 +2010,28 @@ export function runTournamentInference(
               proComboTag = `🚫 Meta Threat R1+R2 (${Math.round(kplOpenerInfo?.p1BansRecent ?? 0)}x Phase-1 Ban · 12 bln)`;
             }
             if (counterCheck.isCounter && (p1BansCount >= 80 || isCompetitiveSTier || isSolidMeta)) {
-              score += 0.35 + Math.min(0.20, counterCheck.counterWeight / 220);
+              const measuredTerm = measuredCounterTerm(counterCheck, plannedOpener.name);
+              score += 0.35 + Math.min(0.20, counterCheck.counterWeight / 220) + measuredTerm.bonus;
               laneTag = `Counter ${plannedOpener.name}`;
               proComboTag = `🎯 Amankan B1 ${plannedOpener.name} & Deny Meta R1+R2`;
+              if (measuredTerm.note) {
+                proComboTag = `${proComboTag} · ${measuredTerm.note}`;
+              }
             } else if (cand.primary_lane === plannedOpener.primary_lane && (isCompetitiveSTier || p1BansCount >= 180)) {
               score += 0.30 + Math.min(0.25, p1BansCount / 600);
               laneTag = `Deny Respon ${cand.primary_lane}`;
               proComboTag = `🚫 Cegah Red ambil ${cand.name} di R1+R2 sbg lawan ${plannedOpener.name}`;
+            }
+
+            // POLA BAN PRO (hanya sisi Blue): ketika Blue first-pick {opener}, tim pro
+            // biasanya mem-ban hero ini di fase-1 (mis. 102× Guan Yu di-ban sebelum Blue
+            // first-pick Dunshan). Itu pola draft terukur — BUKAN relasi counter — jadi
+            // bobotnya kecil dan tidak pernah dipakai sebagai alasan "counter".
+            if (counterCheck.kplPrebanWeighted >= 8) {
+              score += Math.min(0.30, counterCheck.kplPrebanWeighted / 200);
+              if (!proComboTag) {
+                proComboTag = `📋 Pola ban pro saat first-pick ${plannedOpener.name} (${counterCheck.kplPrebanCount}× di KPL)`;
+              }
             }
           }
         }
@@ -1860,9 +2062,13 @@ export function runTournamentInference(
             laneTag = `Bukan Ancaman ${plannedOpener.name}`;
             proComboTag = `🛡️ ${plannedOpener.name} sudah meng-counter ${cand.name} — ban ini sia-sia`;
           } else if (hasExplicitUserPlan && counterCheck.isCounter) {
-            score += 1.05 + Math.min(0.40, counterCheck.counterWeight / 180);
+            const measuredTerm = measuredCounterTerm(counterCheck, plannedOpener.name);
+            score += 1.05 + Math.min(0.40, counterCheck.counterWeight / 180) + measuredTerm.bonus;
             laneTag = `Counter ${plannedOpener.name}`;
             proComboTag = `🛡️ Amankan R1+R2 ${plannedOpener.name}: Ban Counter Utama`;
+            if (measuredTerm.note) {
+              proComboTag = `${proComboTag} · ${measuredTerm.note}`;
+            }
           } else if (isCompetitiveSTier || (kplOpenerInfo?.b1 ?? 0) >= 160 || p1BansCount >= 500) {
             score +=
               (isCompetitiveSTier ? 0.55 : 0.25) +
@@ -1871,9 +2077,13 @@ export function runTournamentInference(
             laneTag = 'Ancaman B1 Blue';
             proComboTag = `🚫 Potensi First-Pick B1 Blue (${Math.round(kplOpenerInfo?.b1Recent ?? 0)}x B1 / 12 bln)`;
           } else if (counterCheck.isCounter) {
-            score += 0.45 + Math.min(0.25, counterCheck.counterWeight / 220);
+            const measuredTerm = measuredCounterTerm(counterCheck, plannedOpener.name);
+            score += 0.45 + Math.min(0.25, counterCheck.counterWeight / 220) + measuredTerm.bonus;
             laneTag = `Counter ${plannedOpener.name}`;
             proComboTag = `🛡️ Amankan R1+R2 ${plannedOpener.name}: Ban Counter Utama`;
+            if (measuredTerm.note) {
+              proComboTag = `${proComboTag} · ${measuredTerm.note}`;
+            }
           }
         }
       }

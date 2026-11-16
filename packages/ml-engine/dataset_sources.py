@@ -109,10 +109,40 @@ def apply_counter_overrides(heroes, overrides=None):
     return result
 
 
+def apply_measured_matchups(heroes, measured=None):
+    """Layer measured KPL matchup evidence over the roster.
+
+    `data/mappings/hero_measured_matchups.json` (built by `extract_kpl_matchups.py`) carries
+    measured hero-vs-hero effects: delta = winrate(x | y opposing) - winrate(x | y absent from
+    the draft). Those numbers are evidence, not curation, so every attached entry is labelled
+    `source: "kpl_measured"` — the same provenance discipline as `kurohiko` | `curation`.
+
+    Only heroes present in the measured payload are touched; a missing/empty payload attaches
+    nothing, so publishing keeps working before the extractor has ever run. Input dicts are
+    never mutated.
+    """
+    entries = (measured or {}).get("heroes") or {}
+    result = []
+    for original in heroes:
+        hero = dict(original)
+        record = entries.get(str(hero["hero_id"]))
+        if record:
+            hero["measured_counters"] = [
+                {**dict(entry), "source": "kpl_measured"} for entry in record.get("measured_counters") or []
+            ]
+            hero["measured_countered_by"] = [
+                {**dict(entry), "source": "kpl_measured"} for entry in record.get("measured_countered_by") or []
+            ]
+            hero["measured_meta"] = dict(record.get("measured_meta") or {})
+        result.append(hero)
+    return result
+
+
 def load_source_heroes(mappings=MAPPINGS):
     """Load the same source-enriched hero records used by proposal validation and publishing."""
     heroes = _load_json(mappings / "master_heroes_global.json", [])
     heroes = apply_counter_overrides(heroes, _load_json(mappings / "hero_counter_overrides.json", {}).get("relations", []))
+    heroes = apply_measured_matchups(heroes, _load_json(mappings / "hero_measured_matchups.json", {}))
     return attach_hokstats(
         heroes,
         _load_json(mappings / "hokstats_heroes.json", []),

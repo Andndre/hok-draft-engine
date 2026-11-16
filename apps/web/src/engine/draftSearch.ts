@@ -112,6 +112,26 @@ export function rankedCandidates(position: DraftPosition, context: SearchContext
       !nextIntegrity.isFullCompWithoutMagicDamage
     );
   });
+  // LANE UTAMA yang belum terisi. Inilah yang terlihat pemain di papan: lima lane
+  // berbeda. Model integritas boleh mem-fleks Bai Qi (Clash) ke Jungle karena dia
+  // main Jungle di 26% match KPL — tapi papan tetap menampilkan "Clash", jadi tim
+  // terlihat seperti dua Clash tanpa jungler. Karena itu lane utama didahulukan,
+  // dan flex hanya dipakai kalau tidak ada kandidat lane utama yang tersisa.
+  const coveredPrimaryLanes = new Set(ourHeroes.map((h) => h.primary_lane));
+  const fillsMissingPrimaryLane = (hero: Hero) => !coveredPrimaryLanes.has(hero.primary_lane);
+
+  const healthyPrimaryLaneCandidates = healthyLaneFittingCandidates.filter((r) =>
+    fillsMissingPrimaryLane(r.hero)
+  );
+  if (healthyPrimaryLaneCandidates.length > 0) {
+    return healthyPrimaryLaneCandidates;
+  }
+
+  const primaryLaneCandidates = legalCandidates.filter((r) => fillsMissingPrimaryLane(r.hero));
+  if (primaryLaneCandidates.length > 0) {
+    return primaryLaneCandidates;
+  }
+
   if (healthyLaneFittingCandidates.length > 0) {
     return healthyLaneFittingCandidates;
   }
