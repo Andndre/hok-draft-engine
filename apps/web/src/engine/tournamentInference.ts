@@ -1639,7 +1639,9 @@ export function runTournamentInference(
   onlyGlobalReleased: boolean = true,
   synergyDb: Record<string, any> = {},
   enemyFearlessUnavailableIds: number[] = [],
-  format: DraftFormat = 'tournament'
+  format: DraftFormat = 'tournament',
+  isUltimateBattle: boolean = false,
+  rankedBanCount: 3 | 4 | 5 = 3
 ): TournamentPredictionResult {
   const t0 = performance.now();
 
@@ -1740,7 +1742,7 @@ export function runTournamentInference(
     }
   });
 
-  const phaseId = getTournamentPhase(draftStep, format);
+  const phaseId = getTournamentPhase(draftStep, format, isUltimateBattle, rankedBanCount);
 
   // 3. Identifikasi Opener Meta Terbaik untuk Strategi Fase 1
   const openerUnavailable = new Set([...unavailableSet, ...fearlessUnavailableIds]);

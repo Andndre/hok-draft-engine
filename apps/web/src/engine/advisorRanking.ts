@@ -30,6 +30,35 @@ import type { TournamentRecommendation } from './tournamentInference';
 /** Lebar kandidat yang di-evaluasi ulang — sama dengan lebar cabang solver. */
 export const ADVISOR_RERANK_WIDTH = 8;
 
+/**
+ * Jawaban solver untuk jalur advisor, disimpan di state `App.tsx` sebagai
+ * `advisorDecision`. Bentuk ini sengaja kecil: UI hanya perlu hero yang dipilih
+ * solver plus metadata pencarian untuk ditampilkan.
+ */
+export interface AdvisorDecision {
+  heroId: number;
+  engineKind: string;
+  completedDepth: number;
+  elapsedMs: number;
+}
+
+/**
+ * Menaikkan pilihan solver ke posisi pertama daftar rekomendasi yang dilihat pengguna.
+ *
+ * Sisa daftar mempertahankan urutannya (urutan 1-ply yang cepat). Mengembalikan daftar
+ * apa adanya bila id null/undefined, tidak ditemukan, atau sudah di posisi pertama —
+ * sehingga pemanggil tidak perlu memeriksa kondisi itu sendiri.
+ */
+export function promoteAdvisorPick(
+  recommendations: TournamentRecommendation[],
+  heroId: number | null | undefined
+): TournamentRecommendation[] {
+  if (heroId === null || heroId === undefined) return recommendations;
+  const index = recommendations.findIndex((rec) => rec.hero.hero_id === heroId);
+  if (index <= 0) return recommendations;
+  return [recommendations[index], ...recommendations.slice(0, index), ...recommendations.slice(index + 1)];
+}
+
 export interface AdvisorRankingOptions {
   /** Lebar kandidat yang dievaluasi ulang (default sama dengan lebar solver). */
   width?: number;

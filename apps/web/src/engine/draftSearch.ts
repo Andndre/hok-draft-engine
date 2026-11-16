@@ -3,7 +3,9 @@
  * @description Mesin pencarian Minimax Alpha-Beta untuk simulasi draft turnamen Honor of Kings (HoK Global).
  *
  * Menggunakan pendekatan game theory zero-sum:
- * - Iterative Deepening (Depth 1 sampai Depth 4) dengan batas waktu ketat 1.500 ms per aksi.
+ * - Iterative Deepening (Depth 1 sampai Depth 4) dengan batas waktu default 1.500 ms per aksi
+ *   (`MAX_SEARCH_BUDGET_MS`). Jalur advisor boleh meminta anggaran lebih panjang hingga
+ *   `MAX_ADVISOR_BUDGET_MS` dengan `allowExtendedBudget: true`; AI lawan tidak pernah.
  * - Alpha-Beta Pruning dengan batas cabang (Width 8 kandidat teratas per node).
  * - Evaluasi posisi asimetris: Strength(Perspektif AI) - Strength(Perspektif Musuh).
  * - Deny Pick secara alami muncul karena jika AI mengambil hero kunci lawan, nilai tree musuh anjlok drastis.
@@ -48,11 +50,35 @@ export interface SearchDecision {
   fallbackReason?: string;
 }
 
+/**
+ * Batas anggaran pencarian DEFAULT (ms) — dipakai AI lawan dan semua pemanggil lain.
+ * Angka ini adalah invarian permainan latihan: AI lawan tidak boleh tiba-tiba berpikir
+ * lebih lama hanya karena advisor mendapat anggaran lebih besar.
+ */
+export const MAX_SEARCH_BUDGET_MS = 1500;
+
+/**
+ * Plafon anggaran KHUSUS jalur advisor (ms).
+ *
+ * Product owner secara eksplisit tidak peduli latensi pada jalur ADVISOR
+ * ("rekomendasi harus langkah terbaik; kecepatan tidak penting"), jadi advisor
+ * boleh meminta pencarian lebih dalam daripada AI lawan. Ini TIDAK mengubah
+ * default: `budgetMs` tetap dijepit ke `MAX_SEARCH_BUDGET_MS` kecuali pemanggil
+ * menulis `allowExtendedBudget: true` secara sadar.
+ */
+export const MAX_ADVISOR_BUDGET_MS = 8000;
+
 /** Opsi konfigurasi pencarian Minimax */
 export interface SearchOptions {
   maxDepth?: number;
   width?: number;
   budgetMs?: number;
+  /**
+   * Mengizinkan `budgetMs` melewati `MAX_SEARCH_BUDGET_MS` hingga
+   * `MAX_ADVISOR_BUDGET_MS`. Hanya jalur advisor yang boleh menyalakannya:
+   * AI lawan harus tetap berhenti di 1.500 ms agar permainan tetap responsif.
+   */
+  allowExtendedBudget?: boolean;
   now?: () => number;
   /**
    * Pengali kredit counter di dalam evaluasi posisi.
@@ -88,7 +114,9 @@ export function rankedCandidates(position: DraftPosition, context: SearchContext
     context.onlyGlobal,
     context.synergy,
     context.fearless[oppositeSide(turn.side)],
-    context.format
+    context.format,
+    context.isUltimateBattle,
+    context.rankedBanCount
   );
 
   const legalCandidates = inferenceResult.recommendations.filter((r) =>
@@ -320,7 +348,12 @@ export function searchDraft(
 ): SearchDecision {
   const getTimestamp = options.now ?? (() => performance.now());
   const startTime = getTimestamp();
-  const timeBudgetMs = Math.min(1500, Math.max(0, options.budgetMs ?? 1500));
+  // Anggaran waktu: default tetap MAX_SEARCH_BUDGET_MS. Plafon lebih tinggi hanya
+  // berlaku bila pemanggil secara eksplisit meminta anggaran panjang untuk advisor
+  // (product owner tidak peduli latensi di jalur itu) — AI lawan tidak pernah
+  // menyalakan flag ini, jadi invarian 1.500 ms-nya utuh.
+  const budgetCeilingMs = options.allowExtendedBudget === true ? MAX_ADVISOR_BUDGET_MS : MAX_SEARCH_BUDGET_MS;
+  const timeBudgetMs = Math.min(budgetCeilingMs, Math.max(0, options.budgetMs ?? MAX_SEARCH_BUDGET_MS));
   const deadline = startTime + timeBudgetMs;
   const counterWeight = options.counterWeight ?? 1;
 

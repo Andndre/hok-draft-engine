@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { DraftFormat, Hero, Lane, ActiveTab, SortMode, ViewMode, TacticalVector, TacticalDelta, GameDraftData, LaneAssignmentMap, TournamentDataset, SeriesFormat, SeriesTeam, DuetPackageOption } from './types';
 import { loadTournamentDataset } from './engine/heroDataLoader';
 import { runTournamentInference, TournamentPredictionResult, TournamentPhaseStrategy } from './engine/tournamentInference';
-import { pickPhaseCandidates } from './engine/draftSearch';
+import { pickPhaseCandidates, MAX_ADVISOR_BUDGET_MS } from './engine/draftSearch';
 import type { SearchContext } from './engine/draftSearch';
-import { rankRecommendationsByPosition } from './engine/advisorRanking';
+import { rankRecommendationsByPosition, promoteAdvisorPick } from './engine/advisorRanking';
+import type { AdvisorDecision } from './engine/advisorRanking';
+import { OpponentClient } from './engine/opponentClient';
 import { computeTacticalDeltas } from './engine/deltaExplainer';
 import { assignmentToHeroLaneMap, buildDefaultLaneAssignments, swapAssignedLanes } from './engine/gamePlan';
 import { AlertTriangle, BookOpen, FilterX, Gamepad2, RefreshCw, Scan, SearchX, SlidersHorizontal, Star } from 'lucide-react';
@@ -100,11 +102,21 @@ export const App: React.FC = () => {
     team_utility: 0.50,
   });
   const [previousScores, setPreviousScores] = useState<TacticalVector | null>(null);
+  // 'delta' = judul berisi cerita perubahan radar setelah aksi; 'recommendation' =
+  // judul menyebut hero #1 dari daftar yang DIPAHAMI pengguna.
+  const [insightMode, setInsightMode] = useState<'delta' | 'recommendation'>('recommendation');
   const [deltas, setDeltas] = useState<TacticalDelta[]>([]);
   const [primaryInsight, setPrimaryInsight] = useState<string>('');
   const [recommendations, setRecommendations] = useState<TournamentPredictionResult['recommendations']>([]);
   const [duetPackages, setDuetPackages] = useState<DuetPackageOption[]>([]);
   const [phaseStrategy, setPhaseStrategy] = useState<TournamentPhaseStrategy | undefined>(undefined);
+
+  // Jawaban solver Minimax untuk jalur advisor (lihat efek "advisor" di bawah).
+  // `advisorDecisionKey` menandai papan mana jawaban itu milik, supaya jawaban lama
+  // tidak pernah dipromosikan ke daftar yang dibangun untuk posisi lain.
+  const [advisorDecision, setAdvisorDecision] = useState<AdvisorDecision | null>(null);
+  const [advisorDecisionKey, setAdvisorDecisionKey] = useState<string | null>(null);
+  const advisorRevisionRef = useRef(0);
 
   const loadData = useCallback(async () => {
     setLoading(true); setLoadError(null);
@@ -131,7 +143,7 @@ export const App: React.FC = () => {
 
   // Determine current turn in sequence
   const currentTurn = useMemo(
-    () => getDraftTurn(draftStep, draftFormat, isUltimateBattle),
+    () => getDraftTurn(draftStep, draftFormat, isUltimateBattle, rankedBanCount),
     [draftStep, draftFormat, isUltimateBattle]
   );
 
@@ -292,7 +304,9 @@ export const App: React.FC = () => {
           onlyGlobalReleased,
           synergyData,
           Array.from(turn.side === 'blue' ? redFearlessSet : blueFearlessSet),
-          draftFormat
+          draftFormat,
+          isUltimateBattle,
+          rankedBanCount
         );
 
         setEngineReady(true);
@@ -356,16 +370,14 @@ export const App: React.FC = () => {
             );
             setDeltas(explained.deltas);
             setPrimaryInsight(explained.primaryInsight);
+            setInsightMode('delta');
           }
         } else {
-          const topRec = result.recommendations[0];
-          if (topRec) {
-            setPrimaryInsight(
-              `Rekomendasi #1 (${turn.side.toUpperCase()} ${turn.action.toUpperCase()}): ${topRec.hero.name} — ${
-                topRec.proComboTag || topRec.laneTag || 'Prioritas Taktis Tertinggi'
-              }`
-            );
-          }
+          // Judul TIDAK diset di sini: daftar yang dilihat pengguna bisa berubah
+          // setelah solver menjawab (judul ditulis dari `displayRecommendations`,
+          // bukan dari sheet mentah) — supaya judul dan daftar tidak pernah
+          // menyebut hero berbeda.
+          setInsightMode('recommendation');
         }
       } catch (err) {
         console.error('[DraftEngine] Error during inference:', err);
@@ -403,6 +415,162 @@ export const App: React.FC = () => {
     onlyGlobalReleased,
     updateAiPredictions,
   ]);
+
+  // ---------------------------------------------------------------------------
+  // Jalur advisor: rekomendasi utama untuk pemain datang dari SOLVER MINIMAX yang
+  // sama dengan yang dipakai AI lawan, bukan perkiraan 1-ply yang cepat. Product
+  // owner tidak peduli latensi di jalur ini, jadi pencarian boleh memakai anggaran
+  // yang diperpanjang (MAX_ADVISOR_BUDGET_MS) dan kedalaman 4.
+  //
+  // Posisi yang dikirim adalah state publik murni: Plan A/B pemain tidak pernah ikut
+  // (AGENTS.md §4.F). Selama pencarian berjalan, urutan cepat tetap tampil.
+  // ---------------------------------------------------------------------------
+  const simulatorActive = activeTab === 'draft' && draftMode === 'simulator';
+  // Worker terpisah dari worker lawan AI latihan, supaya pencarian advisor yang panjang
+  // tidak pernah menunda giliran AI di mode latihan. Sisi default konstruktor tidak
+  // dipakai: setiap permintaan advisor mengirim `side` sendiri.
+  const advisorClient = useMemo(
+    () => (dataset ? new OpponentClient(dataset, 'blue') : null),
+    [dataset]
+  );
+  useEffect(() => () => advisorClient?.cancel(), [advisorClient]);
+
+  const advisorPosition = useMemo<DraftPosition>(() => ({
+    step: draftStep,
+    picks: {
+      blue: bluePicks.filter((h): h is Hero => h !== null).map((h) => h.hero_id),
+      red: redPicks.filter((h): h is Hero => h !== null).map((h) => h.hero_id),
+    },
+    bans: {
+      blue: blueBans.filter((h): h is Hero => h !== null).map((h) => h.hero_id),
+      red: redBans.filter((h): h is Hero => h !== null).map((h) => h.hero_id),
+    },
+  }), [draftStep, bluePicks, redPicks, blueBans, redBans]);
+
+  // Identitas papan: satu string yang berubah setiap kali posisi, sisi, format, atau
+  // kunci Fearless berubah. Plan A/B sengaja TIDAK ikut — solver tidak pernah menerima
+  // plan, jadi mengunci plan tidak perlu mengulang pencarian.
+  const advisorSignature = useMemo(
+    () => JSON.stringify({
+      position: advisorPosition,
+      format: draftFormat,
+      onlyGlobal: onlyGlobalReleased,
+      fearless: {
+        blue: [...blueFearlessUnavailableIds].sort((a, b) => a - b),
+        red: [...redFearlessUnavailableIds].sort((a, b) => a - b),
+      },
+      side: currentTurn.side,
+      action: currentTurn.action,
+      complete: currentTurn.isComplete,
+      ultimate: isUltimateBattle,
+      rankedBanCount,
+      game: gameNumber,
+    }),
+    [
+      advisorPosition,
+      draftFormat,
+      onlyGlobalReleased,
+      blueFearlessUnavailableIds,
+      redFearlessUnavailableIds,
+      currentTurn.side,
+      currentTurn.action,
+      currentTurn.isComplete,
+      isUltimateBattle,
+      gameNumber,
+    ]
+  );
+
+  useEffect(() => {
+    // Jawaban lama tidak pernah berlaku untuk papan baru.
+    setAdvisorDecision(null);
+    setAdvisorDecisionKey(null);
+    if (!advisorClient || !simulatorActive) return;
+    // Advisor jalan untuk SEMUA giliran — pick maupun ban. Solver bisa menilai
+    // kedua jenis aksi (urutan draft含 ban), dan daftar ban yang benar adalah
+    // bagian dari "rekomendasi terbaik di semua kondisi".
+    if (currentTurn.isComplete) return;
+
+    const controller = new AbortController();
+    const key = advisorSignature;
+    const revision = advisorRevisionRef.current + 1;
+    advisorRevisionRef.current = revision;
+    void advisorClient
+      .decide(
+        advisorPosition,
+        {
+          fearless: { blue: [...blueFearlessUnavailableIds], red: [...redFearlessUnavailableIds] },
+          // Plan A/B milik pemain TIDAK boleh sampai ke pencari.
+          aiPlan: { a: null, b: null },
+          format: draftFormat,
+          side: currentTurn.side,
+          isUltimateBattle,
+          rankedBanCount,
+          options: { maxDepth: 4, width: 8, budgetMs: MAX_ADVISOR_BUDGET_MS, allowExtendedBudget: true },
+        },
+        { sessionId: 'simulator-advisor', revision },
+        controller.signal,
+      )
+      .then((decision) => {
+        // Stale guard ganda: signal (reset/undo/mode/unmount) dan tag sesi+revisi.
+        if (controller.signal.aborted) return;
+        if (decision.heroId === null) return;
+        setAdvisorDecision({
+          heroId: decision.heroId,
+          engineKind: decision.engineKind,
+          completedDepth: decision.completedDepth,
+          elapsedMs: decision.elapsedMs,
+        });
+        setAdvisorDecisionKey(key);
+      })
+      .catch(() => { /* Dibatalkan / watchdog: urutan cepat tetap tampil. */ });
+
+    return () => controller.abort();
+  }, [
+    advisorClient,
+    simulatorActive,
+    advisorSignature,
+    advisorPosition,
+    currentTurn.isComplete,
+    currentTurn.action,
+    currentTurn.side,
+    draftFormat,
+    isUltimateBattle,
+    rankedBanCount,
+    blueFearlessUnavailableIds,
+    redFearlessUnavailableIds,
+  ]);
+
+  // Urutan rekomendasi yang DILIHAT pengguna. Selama pencarian berjalan (atau bila
+  // solver gagal) ini sama dengan urutan cepat. Setelah solver menjawab, hero pilihan
+  // solver naik ke posisi pertama dan sisa daftar mempertahankan urutannya. Plan A/B
+  // yang dikunci pengguna tetap di posisi pertama: keputusan pengguna mengalahkan mesin.
+  const displayRecommendations = useMemo(() => {
+    if (!advisorDecision || advisorDecisionKey !== advisorSignature) return recommendations;
+    const lockedPlanId = activeSidePlanAId ?? activeSidePlanBId;
+    if (lockedPlanId !== null && recommendations[0]?.hero.hero_id === lockedPlanId) return recommendations;
+    return promoteAdvisorPick(recommendations, advisorDecision.heroId);
+  }, [
+    recommendations,
+    advisorDecision,
+    advisorDecisionKey,
+    advisorSignature,
+    activeSidePlanAId,
+    activeSidePlanBId,
+  ]);
+
+  // Judul "Rekomendasi #1" SELALU mengikuti daftar yang dilihat pengguna. Begitu
+  // solver menjawab, daftar berubah dan judul ikut berubah — judul tidak pernah
+  // menyebut hero yang berbeda dari posisi pertama di layar.
+  useEffect(() => {
+    if (insightMode !== 'recommendation') return;
+    const topRec = displayRecommendations[0];
+    if (!topRec) return;
+    setPrimaryInsight(
+      `Rekomendasi #1 (${currentTurn.side.toUpperCase()} ${currentTurn.action.toUpperCase()}): ${topRec.hero.name} — ${
+        topRec.proComboTag || topRec.laneTag || 'Prioritas Taktis Tertinggi'
+      }`
+    );
+  }, [displayRecommendations, currentTurn.side, currentTurn.action, insightMode]);
 
   // Helper to mutate current game draft
   const updateCurrentDraft = useCallback(
@@ -479,7 +647,7 @@ export const App: React.FC = () => {
     if (draftStep === 0) return;
     setLaneOverridesByGame((prev) => ({ ...prev, [gameNumber]: {} }));
     const prevStepIndex = draftStep - 1;
-    const prevTurn = getDraftTurn(prevStepIndex, draftFormat);
+    const prevTurn = getDraftTurn(prevStepIndex, draftFormat, isUltimateBattle, rankedBanCount);
 
     const findLastOccupied = (arr: Array<Hero | null>) => {
       for (let i = arr.length - 1; i >= 0; i--) {
@@ -584,7 +752,7 @@ export const App: React.FC = () => {
         isUltimateBattle,
       };
       for (let step = currentPosition.step; step < detectedPosition.step; step += 1) {
-        const turn = getDraftTurn(step, draftFormat, isUltimateBattle);
+        const turn = getDraftTurn(step, draftFormat, isUltimateBattle, rankedBanCount);
         const field = turn.action === 'pick' ? 'picks' : 'bans';
         const slotsKey = `${turn.side}${field === 'picks' ? 'Picks' : 'Bans'}` as const;
         const filledCount = game[slotsKey].filter(Boolean).length;
@@ -726,7 +894,7 @@ export const App: React.FC = () => {
 
     // Attach AI scores
     const recMap = new Map<number, number>();
-    recommendations.forEach((rec, idx) => recMap.set(rec.hero.hero_id, idx + 1));
+    displayRecommendations.forEach((rec, idx) => recMap.set(rec.hero.hero_id, idx + 1));
 
     const compare = (a: Hero, b: Hero) => {
       if (sortMode === 'ai' && activeTab === 'draft') {
@@ -743,7 +911,7 @@ export const App: React.FC = () => {
     // A typed query (typo-, apostrophe- and skip-tolerant) always ranks by relevance
     // first; the chosen sort mode only breaks ties between equally good matches.
     return searchHeroes(result, searchQuery, compare);
-  }, [heroes, selectedLane, searchQuery, activeTab, favorites, recommendations, sortMode, onlyGlobalReleased]);
+  }, [heroes, selectedLane, searchQuery, activeTab, favorites, displayRecommendations, sortMode, onlyGlobalReleased]);
 
   // Enter in the search field commits the first result that is still legal. Skipping the
   // taken ones keeps "type a name, press Enter" working after earlier bans and picks.
@@ -854,8 +1022,8 @@ export const App: React.FC = () => {
                       unavailableLabel = currentTurn.action === 'ban' ? 'Terban' : 'Terpilih';
                     }
                   }
-                  const rec = activeTab === 'draft' ? recommendations.find(r => r.hero.hero_id === hero.hero_id) : undefined;
-                  const rank = rec ? recommendations.indexOf(rec) + 1 : 0;
+                  const rec = activeTab === 'draft' ? displayRecommendations.find(r => r.hero.hero_id === hero.hero_id) : undefined;
+                  const rank = rec ? displayRecommendations.indexOf(rec) + 1 : 0;
                   const shared = {
                     hero,
                     isUnavailable,
@@ -871,7 +1039,7 @@ export const App: React.FC = () => {
                   return viewMode === 'compact' ? <HeroCardCompact key={hero.hero_id} {...shared} quickBadge={rank > 0 && rank <= 5 ? 'AI #' + rank : undefined} /> : <HeroCardDetailed key={hero.hero_id} {...shared} aiRank={rank > 0 ? rank : undefined} />;
                 })}</div>}
             </section>
-            {activeTab === 'draft' && !loading && <aside className="analysis-sidebar"><TacticalRadarPanel scores={tacticalScores} deltas={deltas} primaryInsight={primaryInsight} phaseStrategy={phaseStrategy} planAId={activeSidePlanAId} planBId={activeSidePlanBId} onOpenPlanModal={() => setIsPlanModalOpen(true)} onSelectQuickPlanA={handleSetPlanA} recommendations={recommendations} onSelectCandidate={handleSelectHero} onInspectHero={setWikiHero} activeSide={currentTurn.side} isPickPhase={currentTurn.action === 'pick'} isComplete={currentTurn.isComplete} duetPackages={duetPackages} onSelectDuetPackage={handleSelectDuetPackage} /></aside>}
+            {activeTab === 'draft' && !loading && <aside className="analysis-sidebar"><TacticalRadarPanel scores={tacticalScores} deltas={deltas} primaryInsight={primaryInsight} phaseStrategy={phaseStrategy} planAId={activeSidePlanAId} planBId={activeSidePlanBId} onOpenPlanModal={() => setIsPlanModalOpen(true)} onSelectQuickPlanA={handleSetPlanA} recommendations={displayRecommendations} onSelectCandidate={handleSelectHero} onInspectHero={setWikiHero} activeSide={currentTurn.side} isPickPhase={currentTurn.action === 'pick'} isComplete={currentTurn.isComplete} duetPackages={duetPackages} onSelectDuetPackage={handleSelectDuetPackage} /></aside>}
           </div>}
         </>}
       </main>

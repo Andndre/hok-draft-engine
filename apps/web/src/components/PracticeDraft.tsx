@@ -6,6 +6,8 @@ import type { Side } from '../engine/draftRules';
 import { createPracticeSession, practiceContext, reducePractice } from '../engine/practiceState';
 import type { DecisionTrace, PracticeEvent, PracticeSession } from '../engine/practiceState';
 import { OpponentClient } from '../engine/opponentClient';
+import { MAX_ADVISOR_BUDGET_MS } from '../engine/draftSearch';
+import { promoteAdvisorPick } from '../engine/advisorRanking';
 import { evaluateTacticalScores, runTournamentInference } from '../engine/tournamentInference';
 import { assignmentToHeroLaneMap, buildDefaultLaneAssignments, swapAssignedLanes } from '../engine/gamePlan';
 import { loadTournamentDataset } from '../engine/heroDataLoader';
@@ -65,11 +67,16 @@ export function PracticeDraft(props: Props) {
   const gameKey = session ? `${session.sessionId}-${session.gameIndex}` : '';
   const client = useMemo(() => new OpponentClient(snapshot, oppositeSide(playerSide)), [snapshot, playerSide, session?.sessionId]);
   useEffect(() => () => client.cancel(), [client]);
+  // Worker terpisah untuk advisor: pencarian panjang tidak boleh menunda giliran
+  // lawan AI (client di atas).
+  const advisorClient = useMemo(() => new OpponentClient(snapshot, playerSide), [snapshot, playerSide, session?.sessionId]);
+  useEffect(() => () => advisorClient.cancel(), [advisorClient]);
+  const [advisorPick, setAdvisorPick] = useState<number | null>(null);
   const onlyGlobal = props.onlyGlobalReleased ?? true;
   const game = session?.games[session.gameIndex];
   const position = game?.position ?? emptyPosition();
   const format = session?.config.format ?? setupFormat;
-  const turn = getDraftTurn(position.step, format);
+  const turn = getDraftTurn(position.step, format, false, session?.config.rankedBanCount ?? 3);
   const latest = !!session && session.gameIndex === session.games.length - 1;
   const context = useMemo(() => session ? practiceContext(session, snapshot) : { heroes: snapshot.heroes, onlyGlobal, fearless: { blue: [], red: [] }, format: setupFormat }, [session, snapshot, onlyGlobal, setupFormat]);
   const canAct = !!session && latest && active && !turn.isComplete && turn.side === playerSide;
@@ -101,10 +108,46 @@ export function PracticeDraft(props: Props) {
     position.picks[playerSide], position.picks[oppositeSide(playerSide)], activeBans,
     context.fearless[playerSide], turn.action === 'pick', playerSide === 'blue', snapshot.heroes, position.step,
     game.playerPlan.a, game.playerPlan.b, true, snapshot.synergy, context.fearless[oppositeSide(playerSide)],
-    format
+    format, false, context.rankedBanCount ?? 3
   ) : null, [game, playerSide, context, snapshot, format, turn.action, activeBans]);
-  const recommendations = assistance && canAct ? hints?.recommendations ?? [] : [];
+  const sheetRecommendations = useMemo(() => hints?.recommendations ?? [], [hints]);
+  // Advisor memakai solver yang sama dengan lawan AI: di giliran pemain, jawaban
+  // solver naik ke posisi #1 daftar rekomendasi. Plan A/B yang dikunci pemain tetap
+  // di posisi pertama (keputusan pemain mengalahkan mesin).
+  const lockedPlanId = game?.playerPlan.a ?? game?.playerPlan.b ?? null;
+  const recommendations = useMemo(() => {
+    if (!assistance || !canAct) return [];
+    if (advisorPick == null) return sheetRecommendations;
+    if (lockedPlanId != null && sheetRecommendations[0]?.hero.hero_id === lockedPlanId) return sheetRecommendations;
+    return promoteAdvisorPick(sheetRecommendations, advisorPick);
+  }, [assistance, canAct, advisorPick, sheetRecommendations, lockedPlanId]);
   const duetPackages = assistance && canAct ? hints?.duetPackages ?? [] : [];
+  useEffect(() => {
+    if (!active || !session || !game || !latest || turn.isComplete || turn.side !== playerSide) {
+      setAdvisorPick(null);
+      return;
+    }
+    const controller = new AbortController();
+    // Plan A/B pemain tidak pernah dikirim ke pencari (AGENTS.md §4.F).
+    void advisorClient.decide(
+      game.position,
+      {
+        fearless: context.fearless,
+        aiPlan: { a: null, b: null },
+        format,
+        side: playerSide,
+        rankedBanCount: context.rankedBanCount ?? 3,
+        options: { maxDepth: 4, width: 8, budgetMs: MAX_ADVISOR_BUDGET_MS, allowExtendedBudget: true },
+      },
+      { sessionId: session.sessionId, revision: session.revision },
+      controller.signal,
+    ).then((decision) => {
+      if (controller.signal.aborted || decision.heroId === null) return;
+      setAdvisorPick(decision.heroId);
+    }).catch(() => { /* Dibatalkan / watchdog: urutan cepat tetap tampil. */ });
+    return () => controller.abort();
+  }, [active, session, game, latest, turn.isComplete, turn.side, playerSide, advisorClient, context, format]);
+
   const send = (event: PracticeEvent) => {
     client.cancel(); setError(''); setNotice(''); setThinking(false);
     if (gameKey && (event.type === 'undo' || event.type === 'reset')) {

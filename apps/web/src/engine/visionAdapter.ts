@@ -26,6 +26,8 @@ export interface VisionRecommendationInput {
   format?: DraftFormat;
   /** Game 7 Peak Showdown mode (ULTIMATE_BATTLE_SEQUENCE phases). */
   isUltimateBattle?: boolean;
+  /** Jumlah ban per sisi pada mode ranked (3/4/5) — harus sama dengan board. */
+  rankedBanCount?: 3 | 4 | 5;
   /** KPL synergy dataset in the exact shape App.tsx passes as `synergyData`. */
   synergyDb?: Record<string, any>;
   /** The user's Plan A opener id (active only while it is the user's pick turn). */
@@ -103,6 +105,8 @@ export function computeVisionRecommendation(input: VisionRecommendationInput): V
     input.synergyDb ?? {},
     [...fearless[enemySide]],
     format,
+    input.isUltimateBattle ?? false,
+    input.rankedBanCount ?? 3,
   );
   const used = new Set([...ourHeroIds, ...enemyHeroIds, ...bannedHeroIds]);
   const filteredRecommendations = result.recommendations
