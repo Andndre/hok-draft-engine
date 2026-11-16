@@ -24,7 +24,7 @@ const heroes = read(manifest.artifacts.heroes.file);
 const synergy = read(manifest.artifacts.synergy.file);
 
 /**
- * Agreement terukur pada 16 Nov 2026: 26 dari 41 posisi = 63,41%.
+ * Agreement terukur pada 16 Nov 2026: 33 dari 41 posisi = 80,49%.
  *
  * SEBELUM advisory ranking diperkenalkan angkanya hanya 8 dari 41 (19,51%): lembar
  * menilai hero per-individu (bonus planned opener +1,45, radar taktis, sinergi duet)
@@ -32,11 +32,20 @@ const synergy = read(manifest.artifacts.synergy.file);
  * lembar diurutkan ulang dengan evaluator posisi milik solver (src/engine/
  * advisorRanking.ts), jadi keduanya memakai satu sumber kebenaran penilaian.
  *
- * Lantai dinaikkan ke angka terukur BARU (26/41) — perbaikan yang nyata dikunci
- * agar tidak bisa hilang diam-diam. Sisa divergensi tetap besar: di B1 buta
- * evaluasinya masih 0/5 (evaluasi 1-ply terlalu miop di slot terpenting).
+ * Kenaikan 26/41 → 33/41 (63,41% → 80,49%) datang dari dua aturan opener yang
+ * keduanya memakai BUKTI TERUKUR:
+ *  1. Term opener (`computeOpenerPriorityScore`, rekam jejak first-pick KPL)
+ *     masuk ke evaluator posisi solver untuk hero di slot pembuka.
+ *  2. Akar PEMBUKA BUTA dipotong kedalaman (`BLIND_OPENER_MAX_DEPTH`): saat
+ *     kedua sisi belum punya pick, lineup yang dinilai subtree balasan lawan
+ *     hanya spekulasi, sementara rekam jejak first-pick adalah bukti terukur.
+ *     Hierarki bukti: bukti terukur tidak boleh dikalahkan sinyal lebih lemah.
+ *     Akibatnya B1 buta naik dari 0/5 menjadi 5/5 (=100%).
+ *
+ * Lantai dinaikkan ke angka terukur BARU — perbaikan nyata dikunci agar tidak
+ * bisa hilang diam-diam. Sisa divergensi masih besar di R4 (1/4).
  */
-const MEASURED_SHEET_SEARCH_AGREEMENT = 26 / 41;
+const MEASURED_SHEET_SEARCH_AGREEMENT = 33 / 41;
 const MEASURED_SAMPLE_SIZE = 41;
 
 test('sheet top-1 vs minimax top-1 agreement stays at or above the measured floor', () => {

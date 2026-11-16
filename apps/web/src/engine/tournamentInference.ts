@@ -26,6 +26,8 @@ import {
   isFlowborn,
   getDoublePickWindow,
   getDraftSequence,
+  getFirstPickStep,
+  isOpenerPickSlot,
 } from './draftRules';
 
 export type { TournamentPhaseId } from './draftRules';
@@ -1798,7 +1800,12 @@ export function runTournamentInference(
   const planAExposure = planAHero ? evaluateEnemyCounterExposure(planAHero, enemyHeroes, b1Openers).counterCount : 0;
   const planBExposure = planBHero ? evaluateEnemyCounterExposure(planBHero, enemyHeroes, b1Openers).counterCount : 0;
 
-  const firstPickStep = format === 'ranked' ? 6 : 4;
+  // Langkah B1 diturunkan dari urutan draft (bukan angka tetap): ranked 4 ban
+  // mulai pick di langkah 8, ranked 5 ban di langkah 10. Angka tetap "6" hanya
+  // benar untuk ranked 3 ban — nomor hardcode itu membuat aturan B1 (buang
+  // carry immobile, bonus opener terjadwal) dibaca di langkah yang salah pada
+  // ranked 4/5-ban.
+  const firstPickStep = getFirstPickStep(format, isUltimateBattle, rankedBanCount);
   if (
     planAHero &&
     !openerUnavailable.has(planAHero.hero_id) &&
@@ -2130,6 +2137,9 @@ export function runTournamentInference(
       const kplOpenerInfo = kplPresenceOf(cand.hero_id, b1Openers);
       const hasKplOpenerCredibility =
         (kplOpenerInfo?.b1 ?? 0) >= 90 || (kplOpenerInfo?.r1r2 ?? 0) >= 180;
+      // Slot pembuka: B1 biru, R1 + R2 merah. Ditentukan dari urutan pick
+      // (bukan nomor langkah), jadi aturan ini sama di tournament dan ranked.
+      const isOpenerSlot = isOpenerPickSlot(isBlueSide ? 'blue' : 'red', ourHeroes.length);
       // Pemeriksaan Okupansi Lane dengan Flex Reassignment & Guard Support Role
       if (ourHeroes.length > 0) {
         const laneFit = evaluatePickLaneFit(
@@ -2147,15 +2157,15 @@ export function runTournamentInference(
         laneTag = `Opener ${cand.primary_lane}`;
       }
 
-      // Step 4 (Turnamen) / Step 6 (Ranked) adalah First-Pick B1 Blue: Eksekusi strategi opener utama!
-      if ((draftStep === 4 || (format === 'ranked' && draftStep === 6)) && plannedOpener && cand.hero_id === plannedOpener.hero_id) {
+      // Langkah B1 (First-Pick Blue): Eksekusi strategi opener utama!
+      if (draftStep === firstPickStep && plannedOpener && cand.hero_id === plannedOpener.hero_id) {
         score += 1.45 * exposure.synergyMultiplier;
         laneTag = 'B1 Target Utama';
         proComboTag =
           bannedOpenerCounters.length > 0
             ? `👑 Eksekusi First-Pick B1! Counter (${bannedOpenerCounters.join(', ')}) sudah di-ban`
             : `👑 First-Pick Meta Prioritas #1 (B1 Opener)`;
-      } else if (draftStep <= 6 && !isImmobileCarry && hasKplOpenerCredibility) {
+      } else if (isOpenerSlot && !isImmobileCarry && hasKplOpenerCredibility) {
         const openerBoost =
           computeOpenerPriorityScore(cand, b1Openers, isBlueSide, onlyGlobalReleased) *
           0.45 *
@@ -2168,7 +2178,7 @@ export function runTournamentInference(
         ) {
           proComboTag = `👑 Prioritas Pembuka Turnamen (${Math.round(kplOpenerInfo?.b1Recent ?? 0)}x B1 / ${Math.round(kplOpenerInfo?.r1r2Recent ?? 0)}x R1-R2 · 12 bln terakhir)`;
         }
-      } else if (draftStep === 4 && isImmobileCarry && cand.hero_id !== plannedOpener?.hero_id) {
+      } else if (draftStep === firstPickStep && isImmobileCarry && cand.hero_id !== plannedOpener?.hero_id) {
         score -= 2.0;
         laneTag = 'Rentan Di-Dive Musuh';
       }

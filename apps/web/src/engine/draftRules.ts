@@ -92,6 +92,30 @@ export function getDraftTurn(step: number, format: DraftFormat = 'tournament', i
   return { ...(turn ?? { side: 'blue' as const, action: 'pick' as const }), stepIndex: step, isComplete: !turn };
 }
 
+/**
+ * Slot PEMBUKA (opener): pick pertama biru (B1) dan dua pick pertama merah
+ * (R1 + R2).
+ *
+ * Urutan pick fase-1 sama di tournament maupun ranked (B1, R1, R2, B2, B3,
+ * R3+), jadi aturan ini format-independent — tidak perlu menebak "langkah berapa".
+ * Sheet dan solver memakai helper ini yang sama, sehingga penilaian "hero ini
+ * sah sebagai pembuka" hanya punya satu definisi.
+ */
+export function isOpenerPickSlot(side: Side, pickIndex: number): boolean {
+  return side === 'blue' ? pickIndex === 0 : pickIndex <= 1;
+}
+
+/**
+ * Langkah pertama yang berupa pick (B1) — diturunkan dari urutan draft, bukan
+ * angka tetap. Ranked 4 ban mulai pick di langkah 8 dan ranked 5 ban di langkah
+ * 10; angka tetap "6" hanya benar untuk ranked 3 ban.
+ */
+export function getFirstPickStep(format: DraftFormat = 'tournament', isUltimateBattle: boolean = false, rankedBanCount: 3 | 4 | 5 = 3): number {
+  const sequence = getDraftSequence(format, isUltimateBattle, rankedBanCount);
+  const index = sequence.findIndex((entry) => entry.action === 'pick');
+  return index >= 0 ? index : 0;
+}
+
 export interface DoublePickWindow {
   isDoublePickFirst: boolean;
   isDoublePickSecond: boolean;

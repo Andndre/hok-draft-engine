@@ -20,6 +20,7 @@ import {
   evaluateTeamCompositionIntegrity,
   getDraftTurn,
   isLegalHero,
+  isOpenerPickSlot,
   isRiskyOpener,
   oppositeSide,
 } from './draftRules';
@@ -28,6 +29,8 @@ import {
   evaluateTacticalScores,
   evaluateEnemyCounterExposure,
   computeTournamentBaseQuality,
+  computeOpenerPriorityScore,
+  kplPresenceOf,
   runTournamentInference,
 } from './tournamentInference';
 import type { TournamentRecommendation } from './tournamentInference';
@@ -98,6 +101,22 @@ export const MAX_SEARCH_BUDGET_MS = 1500;
  * menulis `allowExtendedBudget: true` secara sadar.
  */
 export const MAX_ADVISOR_BUDGET_MS = 8000;
+
+/**
+ * Batas kedalaman pencarian di akar "opener buta" (pick pertama, kedua sisi
+ * masih tanpa pick sama sekali).
+ *
+ * Di titik itu lineup yang dinilai subtree solver untuk balasan lawan adalah
+ * SPEKULASI — komposisi hipotetis yang dipilih solver sendiri, bukan pilihan
+ * lawan yang nyata. Yang terukur adalah rekam jejak first-pick KPL.
+ *
+ * Aturan hierarki bukti (AGENTS.md §4.H): bukti terukur tidak boleh dikalahkan
+ * sinyal yang lebih lemah. Maka di akar ini pencarian dipotong menjadi
+ * "pick kita + balasan lawan pertama", dan yang menentukan = rekam jejak
+ * pembuka + posisi sesudah balasan pertama. Di slot lain (lawan sudah punya
+ * pick) pencarian tetap penuh.
+ */
+export const BLIND_OPENER_MAX_DEPTH = 1;
 
 /** Opsi konfigurasi pencarian Minimax */
 export interface SearchOptions {
@@ -313,15 +332,41 @@ export function evaluatePosition(
       ourTeam.map((h) => [h.hero_id, evaluateEnemyCounterExposure(h, enemyTeam, b1Openers)])
     );
 
-    // 1. Kualitas dasar hero di turnamen dikurangi penalti paparan counter musuh
+    // 1. Kualitas dasar hero di turnamen dikurangi penalti paparan counter musuh.
+    //    Hero yang dipilih di slot PEMBUKA (B1 biru, R1 + R2 merah) dinilai
+    //    dengan aturan opener yang sama seperti sheet: rekam jejak first-pick
+    //    terukur (KPL), kredibilitas meta, dan penalti carry statis.
+    //
+    //    Tanpa aturan ini solver cenderung memilih pick "aman" (tank/support)
+    //    di B1 buta: minimax melihat balasan lawan, bukan meta pembuka yang
+    //    terukur — hasilnya B1 merekomendasikan tank, bukan opener meta
+    //    (Liang, Dun, Ao'yin, Augran, Marco Polo, Haya, Lady Sun).
+    const openerHeroIds = new Set<number>();
+    position.picks[side].forEach((id, index) => {
+      if (isOpenerPickSlot(side, index)) openerHeroIds.add(id);
+    });
+
     let totalScore = ourTeam.reduce((sum, hero) => {
       const exposure = exposures.get(hero.hero_id)!;
-      const baseQuality = computeTournamentBaseQuality(
+      let baseQuality = computeTournamentBaseQuality(
         hero,
         b1Openers,
         position.step,
         exposure.synergyMultiplier
       );
+      if (openerHeroIds.has(hero.hero_id)) {
+        const openerInfo = kplPresenceOf(hero.hero_id, b1Openers);
+        const hasOpenerCredibility =
+          (openerInfo?.b1 ?? 0) >= 90 || (openerInfo?.r1r2 ?? 0) >= 180;
+        // Carry immobile tidak boleh jadi pembuka: sheet membuangnya dari daftar
+        // B1, jadi di evaluator ia tidak dapat bonus opener sama sekali.
+        if (hasOpenerCredibility && !isRiskyOpener(hero)) {
+          baseQuality +=
+            computeOpenerPriorityScore(hero, b1Openers, side === 'blue', context.onlyGlobal) *
+            0.45 *
+            exposure.synergyMultiplier;
+        }
+      }
       return sum + baseQuality - exposure.exposurePenalty;
     }, 0);
 
@@ -417,6 +462,17 @@ export function searchDraft(
   const allRootCandidates = rankedCandidates(position, context);
   const rootCandidates = allRootCandidates.slice(0, branchWidth);
   const primaryCandidate = rootCandidates[0];
+
+  // Akar pembuka buta: pick pertama saat kedua sisi belum punya pick. Di sini
+  // subtree balasan lawan hanya spekulasi, jadi pencarian dipotong (lihat
+  // BLIND_OPENER_MAX_DEPTH). Di slot lain pencarian tetap kedalaman penuh.
+  const blindOpenerRoot =
+    rootTurn.action === 'pick' &&
+    position.picks[rootSide].length === 0 &&
+    position.picks[oppositeSide(rootSide)].length === 0;
+  const effectiveMaxDepth = blindOpenerRoot
+    ? Math.min(maxSearchDepth, BLIND_OPENER_MAX_DEPTH)
+    : maxSearchDepth;
 
   // Pengurutan daftar oleh solver — opt-in, hanya jalur advisor.
   const orderCandidates = options.orderCandidates === true;
@@ -546,7 +602,7 @@ export function searchDraft(
   candidateCache.set(buildPositionKey(position), rootCandidates);
 
   // Iterative Deepening: cari secara bertahap dari depth 1 sampai maxSearchDepth
-  for (let currentDepth = 1; currentDepth <= maxSearchDepth; currentDepth++) {
+  for (let currentDepth = 1; currentDepth <= effectiveMaxDepth; currentDepth++) {
     // Rekaman di-reset per iterasi: hanya iterasi yang SELESAI penuh yang layak
     // dipromosikan (kalau timeout, rekaman terakhir tidak lengkap).
     rootIterationValues = new Map();

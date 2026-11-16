@@ -24,8 +24,10 @@ import {
   searchDraft,
   MAX_SEARCH_BUDGET_MS,
   MAX_ADVISOR_BUDGET_MS,
+  BLIND_OPENER_MAX_DEPTH,
 } from '../src/engine/draftSearch.ts';
 import { OpponentClient } from '../src/engine/opponentClient.ts';
+import { kplPresenceOf } from '../src/engine/tournamentInference.ts';
 
 const read = (p) => JSON.parse(readFileSync(new URL('../public/' + p, import.meta.url), 'utf8'));
 const manifest = read('data_manifest.json');
@@ -151,7 +153,11 @@ test('budget ceiling: default stays at 1.500 ms, only the advisor flag opens the
   assert.equal(MAX_SEARCH_BUDGET_MS, 1500);
   assert.equal(MAX_ADVISOR_BUDGET_MS, 8000);
 
-  const position = blindB1();
+  // Papan R1 (lawan sudah punya pick): pencarian berjalan penuh. Papan B1 buta
+  // TIDAK dipakai di sini karena akar pembuka buta dipotong kedalaman
+  // (BLIND_OPENER_MAX_DEPTH) — uji ini menguji plafon anggaran, bukan aturan
+  // pembuka.
+  const position = afterBlueFirstPick();
   const context = makeContext('blue');
   // Jam palsu: tiap pembacaan jam memajukan 10 ms, jadi batas anggaran bisa diuji
   // tanpa benar-benar menunggu 8 detik.
@@ -177,6 +183,53 @@ test('budget ceiling: default stays at 1.500 ms, only the advisor flag opens the
     `dengan flag, anggaran tetap dijepit ke ${MAX_ADVISOR_BUDGET_MS} ms (dapat ${extended.decision.elapsedMs})`,
   );
   assert.ok(extended.ticks > clamped.ticks, 'pencarian panjang harus benar-benar berjalan lebih lama');
+});
+
+test('akar pembuka buta dipotong kedalaman: yang menentukan = rekam jejak first-pick', () => {
+  // Di B1 buta subtree balasan lawan hanya spekulasi (komposisi hipotetis),
+  // sementara rekam jejak first-pick adalah bukti terukur KPL. Aturan hierarki
+  // bukti: bukti terukur tidak boleh dikalahkan sinyal lebih lemah. Maka akar
+  // pembuka buta dipotong; begitu lawan sudah punya pick, pencarian penuh lagi.
+  const blind = blindB1();
+  const blindContext = makeContext('blue');
+  const blindDecision = searchDraft(blind, blindContext, {
+    maxDepth: 4,
+    width: 8,
+    budgetMs: 8000,
+    allowExtendedBudget: true,
+  });
+
+  assert.ok(
+    blindDecision.completedDepth <= BLIND_OPENER_MAX_DEPTH,
+    `akar pembuka buta tidak boleh lebih dalam dari ${BLIND_OPENER_MAX_DEPTH} ply (dapat ${blindDecision.completedDepth})`,
+  );
+  assert.notEqual(blindDecision.heroId, null, 'akar pembuka buta tetap harus menghasilkan aksi legal');
+  assert.ok(
+    isLegalHero(blind, blindDecision.heroId, blindContext),
+    'pick B1 harus legal',
+  );
+
+  // Hero pembuka yang dipilih harus punya kredibilitas tournament: rekam jejak
+  // first-pick atau R1-R2 yang cukup banyak (bukan tebakan tanpa bukti).
+  const openerInfo = kplPresenceOf(blindDecision.heroId, synergy.b1_openers);
+  assert.ok(openerInfo, 'pick pembuka harus punya catatan tournament');
+  assert.ok(
+    (openerInfo.b1 ?? 0) >= 90 || (openerInfo.r1r2 ?? 0) >= 180,
+    `pick pembuka harus punya kredibilitas first-pick (b1=${openerInfo?.b1}, r1r2=${openerInfo?.r1r2})`,
+  );
+
+  // Begitu lawan sudah punya pick, pencarian kembali kedalaman penuh.
+  const contested = afterBlueFirstPick();
+  const contestedDecision = searchDraft(contested, makeContext('red'), {
+    maxDepth: 4,
+    width: 8,
+    budgetMs: 8000,
+    allowExtendedBudget: true,
+  });
+  assert.ok(
+    contestedDecision.completedDepth > BLIND_OPENER_MAX_DEPTH,
+    `di slot dengan lawan terisi, pencarian harus penuh (dapat ${contestedDecision.completedDepth} ply)`,
+  );
 });
 
 test('worker protocol accepts side + options for the advisor path and forwards no player plan', async () => {
