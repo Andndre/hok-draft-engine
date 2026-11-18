@@ -47,6 +47,11 @@ export const HERO_SCALE_VECTORS: Record<number, BattleScaleVector> = {
   153: { duel: 0.2, skirmish: 0.7, teamfight: 0.1 }, // Gao Changgong (Prince of Lanling) - Kamuflase gank
   137: { duel: 0.2, skirmish: 0.6, teamfight: 0.2 }, // Sima Yi - Silence flank ganker
   167: { duel: 0.3, skirmish: 0.6, teamfight: 0.1 }, // Wukong - Critical burst pick-off
+  150: { duel: 0.3, skirmish: 0.6, teamfight: 0.1 }, // Han Xin - Split-pusher & skirmisher
+  156: { duel: 0.1, skirmish: 0.7, teamfight: 0.2 }, // Liang - Single-target suppression pick-off
+  187: { duel: 0.2, skirmish: 0.6, teamfight: 0.2 }, // Donghuang - Single-target suppress
+  196: { duel: 0.3, skirmish: 0.5, teamfight: 0.2 }, // Shouyue - Sniper camouflage pick-off
+  199: { duel: 0.5, skirmish: 0.4, teamfight: 0.1 }, // Arli - Duelist & skirmisher kite
 
   // --- Spesialis Teamfight (5v5 / Mass Brawl) ---
   123: { duel: 0.2, skirmish: 0.2, teamfight: 0.6 }, // Lu Bu - Domain lompat AoE & true damage brawl
@@ -59,6 +64,10 @@ export const HERO_SCALE_VECTORS: Record<number, BattleScaleVector> = {
   124: { duel: 0.0, skirmish: 0.3, teamfight: 0.7 }, // Zhou Yu - Zona api merata di choke point
   186: { duel: 0.0, skirmish: 0.3, teamfight: 0.7 }, // Tai Yi - Stun gerombolan & revive tim
   505: { duel: 0.2, skirmish: 0.2, teamfight: 0.6 }, // Meng Tian - Barisan perisai formasi tentara
+  152: { duel: 0.0, skirmish: 0.3, teamfight: 0.7 }, // Wang Zhaojun - AoE zone control
+  106: { duel: 0.0, skirmish: 0.3, teamfight: 0.7 }, // Xiao Qiao - AoE burst
+  112: { duel: 0.1, skirmish: 0.2, teamfight: 0.7 }, // Luban No.7 - AoE % max HP fire
+  508: { duel: 0.2, skirmish: 0.2, teamfight: 0.6 }, // Garo - AoE slow & range
 };
 
 /**
@@ -88,7 +97,9 @@ export const HERO_DIMENSION_VECTORS: Record<number, DimensionVector> = {
   137: { poke: 0.0, dive: 0.9, peel: 0.1 }, // Sima Yi - Sabit bayangan silence penerobos
   528: { poke: 0.0, dive: 0.8, peel: 0.2 }, // Lam - Hiu menerjang formasi musuh
   531: { poke: 0.0, dive: 0.8, peel: 0.2 }, // Jing - Domain cermin penerobos
-  142: { poke: 0.1, dive: 0.8, peel: 0.1 }, // Mulan - Pedang ganda dash ke pedang berat silence
+  142: { poke: 0.1, dive: 0.8, peel: 0.1 }, // Mulan - Pedang ganda dash ke pedang berat silence (mock 142)
+  154: { poke: 0.1, dive: 0.8, peel: 0.1 }, // Mulan - ID resmi 154
+  199: { poke: 0.4, dive: 0.4, peel: 0.2 }, // Arli - Slippery kite & outplay
   134: { poke: 0.0, dive: 0.8, peel: 0.2 }, // Dharma - Flash kick penabrak dinding
 
   // --- Spesialis Peel (Menciptakan Jarak & Waktu / Bodyguard Anti-Dive) ---
@@ -97,6 +108,7 @@ export const HERO_DIMENSION_VECTORS: Record<number, DimensionVector> = {
   509: { poke: 0.0, dive: 0.2, peel: 0.8 }, // Dunshan - Tembok tameng pemblok proyektil & pentalan
   640: { poke: 0.2, dive: 0.0, peel: 0.8 }, // Annette - Badai penolak musuh penjaga carry
   156: { poke: 0.2, dive: 0.0, peel: 0.8 }, // Liang (Zhang Liang) - Tali pengekang suppress anti-diver
+  152: { poke: 0.6, dive: 0.0, peel: 0.4 }, // Wang Zhaojun - Snowstorm poke & freeze peel
   135: { poke: 0.0, dive: 0.2, peel: 0.8 }, // Xiang Yu - Dorongan mundur pembuka ruang bagi carry
   114: { poke: 0.0, dive: 0.3, peel: 0.7 }, // Liu Shan - Stun beruntun pengawal turret
   113: { poke: 0.0, dive: 0.0, peel: 1.0 }, // Zhuangzi - Pembersih CC massal pencegah follow-up dive
@@ -609,3 +621,93 @@ export function evaluateDaQiaoFrontlineSynergy(
 
   return { scoreAdjustment: 0 };
 }
+
+// =============================================================================
+// HERO MOBILITY & ESCAPE CLASSIFICATION
+// =============================================================================
+
+export const HIGH_MOBILITY_HERO_IDS = new Set<number>([
+  199, // Arli - 3-skill umbrella teleport/dash
+  132, // Marco Polo - dual dash
+  157, // Mai Shiranui - multi-roll/dash
+  519, // Ao'yin - flight untargetable dragon form
+  513, // Shangguan - 5-dash invulnerable flight
+  137, // Sima Yi - shadow dash & leap
+  190, // Kongming - triple blink
+  150, // Han Xin - triple leap/dash
+  131, // Li Bai - double dash & untargetable
+  531, // Jing - mirror domain resets
+  528, // Lam - surfing dash & dive
+  162, // Nakoruru - bird flying speed & dive
+  506, // Cirrus - terrain flight
+  153, // Gao Changgong - camouflage & dash
+  173, // Fang - S2 roll iframe
+  545, // Alessio - rocket jump & glide
+  548, // Geya - sandboard drifting
+  111, // Lady Sun - combat roll dash
+  521, // Haya - multi dashes
+  563, // Heino - rewind ult
+  141, // Diaochan - short cd dashes
+  154, // Mulan - dual blade dashes
+  142, // Mulan (mock ID)
+  510, // Sun Ce - boat charge
+  140, // Guan Yu - galloping sprint
+  514, // Allain - triple dash & iframe ult
+  525, // Mayene - multi-combo dashing
+  116, // Arke - invisible dash
+  167, // Wukong - clone leap/dash
+]);
+
+export const LOW_ESCAPE_IMMOBILE_HERO_IDS = new Set<number>([
+  // Marksmen
+  112, // Luban No.7
+  192, // Huang Zhong
+  169, // Hou Yi
+  508, // Garo
+  133, // Di Renjie
+  524, // Meng Ya
+  177, // Chano
+  174, // Consort Yu
+  196, // Shouyue
+  // Mages
+  152, // Wang Zhaojun
+  106, // Xiao Qiao
+  109, // Daji
+  127, // Lady Zhen
+  124, // Zhou Yu
+  156, // Liang
+  182, // Gan & Mo
+  504, // Milady
+  119, // Dr Bian
+  179, // Nuwa
+  115, // Gao
+  148, // Ziya
+  197, // Yixing
+]);
+
+export function isHighMobilityHero(hero: Hero | number): boolean {
+  const id = typeof hero === 'number' ? hero : hero.hero_id;
+  if (HIGH_MOBILITY_HERO_IDS.has(id)) return true;
+  if (typeof hero !== 'number') {
+    const tags = hero.tactical_profile?.tags;
+    if (tags?.mobility || tags?.dash || tags?.blink || tags?.leap || tags?.teleport) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export function isLowEscapeHero(hero: Hero | number): boolean {
+  const id = typeof hero === 'number' ? hero : hero.hero_id;
+  if (HIGH_MOBILITY_HERO_IDS.has(id)) return false;
+  if (LOW_ESCAPE_IMMOBILE_HERO_IDS.has(id)) return true;
+  if (typeof hero !== 'number') {
+    const tags = hero.tactical_profile?.tags;
+    if (tags?.dive_vulnerable) return true;
+    if (tags && (tags.mobility || tags.dash || tags.blink || tags.leap || tags.teleport)) {
+      return false;
+    }
+  }
+  return false;
+}
+

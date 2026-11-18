@@ -26,6 +26,8 @@ import {
   evaluateBacklineSafety,
   detectConstraintRemovalSynergies,
   detectEnemyTempoImpostors,
+  isHighMobilityHero,
+  isLowEscapeHero,
 } from "./scaleDimensionTactics";
 
 export type TempoCurveMap = Record<string, HeroTempoCurve>;
@@ -139,9 +141,9 @@ function evaluateSwapMacroProfile(
   }
 
   const tags = hero.tactical_profile?.tags;
-  const hasEscape = Boolean(
-    tags?.mobility || tags?.dash || tags?.blink || tags?.leap,
-  );
+  const hasEscape =
+    isHighMobilityHero(hero) ||
+    Boolean(tags?.mobility || tags?.dash || tags?.blink || tags?.leap);
   const reswapAt4 = `Tukarkan kembali ${hero.name} ke ${hero.primary_lane} setelah 04:00 (saat shield turret habis).`;
 
   if (lane === "Jungle") {
@@ -907,10 +909,13 @@ export function deriveWinningCondition(
 
   const diveableEnemy = enemyHeroes.find(
     (e) =>
-      e.tactical_profile?.tags.dive_vulnerable ||
-      (!e.tactical_profile?.tags.mobility &&
-        !e.tactical_profile?.tags.dash &&
-        (e.primary_role === "Marksman" || e.primary_role === "Mage")),
+      !isHighMobilityHero(e) &&
+      (isLowEscapeHero(e) ||
+        Boolean(e.tactical_profile?.tags.dive_vulnerable) ||
+        (Boolean(e.tactical_profile?.tags) &&
+          !e.tactical_profile?.tags.mobility &&
+          !e.tactical_profile?.tags.dash &&
+          (e.primary_role === "Marksman" || e.primary_role === "Mage"))),
   );
 
   const winConditions: string[] = [];
@@ -1188,12 +1193,17 @@ export function computeJungleAndGankPlan(
 
       const enemyTags = targetEnemy.tactical_profile?.tags;
       const enemyLowEscape =
-        !enemyTags?.mobility &&
-        !enemyTags?.dash &&
-        !enemyTags?.blink &&
-        !enemyTags?.leap &&
-        !enemyTags?.teleport;
-      if (enemyLowEscape || enemyTags?.dive_vulnerable) {
+        isLowEscapeHero(targetEnemy) ||
+        (Boolean(enemyTags) &&
+          !enemyTags?.mobility &&
+          !enemyTags?.dash &&
+          !enemyTags?.blink &&
+          !enemyTags?.leap &&
+          !enemyTags?.teleport);
+      if (
+        !isHighMobilityHero(targetEnemy) &&
+        (enemyLowEscape || enemyTags?.dive_vulnerable)
+      ) {
         score += 0.85;
         setupParts.push(`${targetEnemy.name} minim escape`);
       }
