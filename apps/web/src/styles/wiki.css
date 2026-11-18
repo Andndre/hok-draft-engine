@@ -1,0 +1,15 @@
+/* Hero Wiki Drawer */
+.wiki-drawer, .plan-dialog { isolation: isolate; }
+.wiki-drawer .item-thumbnail { width: 44px; height: 44px; }
+.wiki-drawer [role="tablist"] { overflow-x: auto; }
+.wiki-drawer__panel { width: min(680px, 100vw); max-width: 680px; height: 100dvh; }
+.wiki-drawer button { min-height: 44px; }
+.wiki-drawer__panel > div:first-child > button { min-width: 44px; min-height: 44px; }
+.wiki-close { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; }
+.wiki-close svg { display: block; width: 20px; height: 20px; flex-shrink: 0; }
+.wiki-drawer .asset-thumbnail { flex-shrink: 0; }
+.wiki-drawer .overflow-y-auto { overscroll-behavior: contain; min-height: 0; }
+.wiki-sections { flex-shrink: 0; }
+@media (max-width: 479px) {
+  .wiki-sections { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
