@@ -29,6 +29,10 @@ import {
   getFirstPickStep,
   isOpenerPickSlot,
 } from './draftRules';
+import {
+  evaluateSuicidalDiverTrap,
+  evaluateDaQiaoFrontlineSynergy,
+} from './scaleDimensionTactics';
 
 export type { TournamentPhaseId } from './draftRules';
 import type { TournamentPhaseId } from './draftRules';
@@ -2403,17 +2407,37 @@ export function runTournamentInference(
       const counterWeight = isLastPickR5 ? 0.70 : 0.50;
       const counteredEnemies: string[] = [];
 
+      // Evaluasi Jebakan Kuncian Mutlak (Suppression Liang/Donghuang + 2+ Tank/Peeler Lawan)
+      const suicidalTrap = evaluateSuicidalDiverTrap(cand, enemyHeroes);
+      if (suicidalTrap.isTrapped) {
+        score -= suicidalTrap.penalty;
+        proComboTag = `🚫 ${suicidalTrap.reason}`;
+      }
+
       for (const eh of enemyHeroes) {
         if (cand.counters.some((c) => c.target_id === eh.hero_id)) {
+          // Jika diver terjebak di sarang musuh, abaikan bonus counter 1v1 naif ke squishy carry
+          if (suicidalTrap.isTrapped && (eh.primary_role === 'Marksman' || eh.primary_role === 'Mage')) {
+            continue;
+          }
           score += counterWeight;
           counteredEnemies.push(eh.name);
         }
       }
 
-      if (counteredEnemies.length > 0) {
+      if (counteredEnemies.length > 0 && !suicidalTrap.isTrapped) {
         proComboTag = isLastPickR5
           ? `🔥 Last-Pick Counter (R5): Menangkal ${counteredEnemies.join(', ')}`
           : `⚔️ Counter Pick Fase 2: Menangkal ${counteredEnemies.join(', ')}`;
+      }
+
+      // Evaluasi Sinergi Arsitektur Da Qiao & Defisit Frontline
+      const daQiaoSynergy = evaluateDaQiaoFrontlineSynergy(cand, ourHeroes);
+      if (daQiaoSynergy.scoreAdjustment !== 0) {
+        score += daQiaoSynergy.scoreAdjustment;
+        if (daQiaoSynergy.tacticalTag) {
+          proComboTag = daQiaoSynergy.tacticalTag;
+        }
       }
 
       // Sinergi KPL dengan Hero Tim

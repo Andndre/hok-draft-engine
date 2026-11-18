@@ -469,3 +469,143 @@ export function detectEnemyTempoImpostors(
   }
   return results;
 }
+
+export interface SuicidalTrapAnalysis {
+  isTrapped: boolean;
+  reason?: string;
+  penalty: number;
+}
+
+const SUPPRESSION_HERO_IDS = new Set([156, 187]); // Liang, Donghuang
+const UNTARGETABLE_IFRAME_HERO_IDS = new Set([131, 531, 141, 125]); // Li Bai, Jing, Diaochan, Yuan'ge
+const HEAVY_PEEL_TANK_IDS = new Set([171, 135, 517, 149, 105, 509, 168, 120, 167, 527]);
+
+/**
+ * Mendeteksi jebakan kuncian mutlak (Suppression Liang/Donghuang + 2+ Heavy Peeler).
+ * Assassin squishy tanpa iframe/untargetable (seperti Gao Changgong) tidak boleh
+ * dipromosikan sebagai 1v1 counter karena formasi lawan adalah benteng anti-burst.
+ */
+export function evaluateSuicidalDiverTrap(
+  candidate: Hero,
+  enemyHeroes: Hero[],
+): SuicidalTrapAnalysis {
+  const hasSuppression = enemyHeroes.some((eh) => SUPPRESSION_HERO_IDS.has(eh.hero_id));
+  if (!hasSuppression) {
+    return { isTrapped: false, penalty: 0 };
+  }
+
+  const peelerCount = enemyHeroes.filter(
+    (eh) =>
+      HEAVY_PEEL_TANK_IDS.has(eh.hero_id) ||
+      eh.primary_role === 'Tank' ||
+      eh.tactical_profile?.tags.frontline === true,
+  ).length;
+
+  if (peelerCount < 2) {
+    return { isTrapped: false, penalty: 0 };
+  }
+
+  // Jika kandidat memiliki frame untargetable (seperti Li Bai / Jing), ia memiliki peluang outplay
+  if (UNTARGETABLE_IFRAME_HERO_IDS.has(candidate.hero_id)) {
+    return { isTrapped: false, penalty: 0 };
+  }
+
+  // Diver / Assassin squishy tanpa daya tahan atau iframe
+  const isSquishyDiver =
+    candidate.primary_role === 'Assassin' ||
+    (candidate.tactical_profile?.tags.mobility === true &&
+      candidate.tactical_profile?.tags.frontline !== true &&
+      candidate.primary_role !== 'Tank');
+
+  if (isSquishyDiver) {
+    const suppressor = enemyHeroes.find((eh) => SUPPRESSION_HERO_IDS.has(eh.hero_id));
+    return {
+      isTrapped: true,
+      reason: `Jebakan Kuncian Mutlak (${suppressor?.name ?? 'Suppression'} + ${peelerCount} Peeler/Tank Lawan)`,
+      penalty: 1.15,
+    };
+  }
+
+  return { isTrapped: false, penalty: 0 };
+}
+
+export interface DaQiaoFrontlineSynergy {
+  scoreAdjustment: number;
+  tacticalTag?: string;
+}
+
+const IMMOBILE_VULNERABLE_CARRIES = new Set([
+  124, // Zhou Yu
+  177, // Chano
+  127, // Lady Zhen
+  504, // Milady
+  112, // Luban No.7
+  169, // Hou Yi
+  192, // Huang Zhong
+  508, // Garo
+  524, // Meng Ya
+]);
+
+const BRUISER_SUSTAIN_JUNGLERS = new Set([
+  193, // Kaizer
+  126, // Dun
+  528, // Lam
+  502, // Pei
+  527, // Meng Tian
+  140, // Guan Yu
+  107, // Zilong
+  120, // Bai Qi
+]);
+
+const STEALTH_SOLO_ASSASSINS = new Set([
+  153, // Gao Changgong
+  547, // Arke
+]);
+
+/**
+ * Menilai kesesuaian arsitektural tim Da Qiao yang memiliki carry minim escape.
+ * Dalam kondisi defisit frontline, Bruiser/Sustain mendapatkan dorongan elevator-engine,
+ * sedangkan Stealth Assassin yang anti-sinergi terkena penalti.
+ */
+export function evaluateDaQiaoFrontlineSynergy(
+  candidate: Hero,
+  ourHeroes: Hero[],
+): DaQiaoFrontlineSynergy {
+  const hasDaQiao = ourHeroes.some((h) => h.hero_id === 191);
+  if (!hasDaQiao) {
+    return { scoreAdjustment: 0 };
+  }
+
+  const vulnerableCarryCount = ourHeroes.filter((h) =>
+    IMMOBILE_VULNERABLE_CARRIES.has(h.hero_id),
+  ).length;
+
+  // Cek apakah tim memiliki setidaknya 2 carry immobile (seperti Zhou Yu + Chano)
+  if (vulnerableCarryCount < 2) {
+    return { scoreAdjustment: 0 };
+  }
+
+  // Hitung jumlah frontline murni di tim saat ini (selain kandidat)
+  const existingFrontlineCount = ourHeroes.filter(
+    (h) => h.primary_role === 'Tank' || h.tactical_profile?.tags.frontline === true,
+  ).length;
+
+  if (existingFrontlineCount <= 1) {
+    // Tim mengalami Frontline Deficit!
+    if (BRUISER_SUSTAIN_JUNGLERS.has(candidate.hero_id) || candidate.tactical_profile?.tags.frontline === true) {
+      return {
+        scoreAdjustment: 0.55,
+        tacticalTag: '🔗 Sinergi Da Qiao: Mesin Reset Berkelanjutan (Elevator Engine) & Pelindung Backline',
+      };
+    }
+
+    if (STEALTH_SOLO_ASSASSINS.has(candidate.hero_id)) {
+      return {
+        scoreAdjustment: -0.85,
+        tacticalTag: '⚠️ Antitesis Sistem Da Qiao: Stealth Membuka Diri & Korbankan Backline',
+      };
+    }
+  }
+
+  return { scoreAdjustment: 0 };
+}

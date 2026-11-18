@@ -7,6 +7,8 @@ import {
   evaluateBacklineSafety,
   detectConstraintRemovalSynergies,
   detectEnemyTempoImpostors,
+  evaluateSuicidalDiverTrap,
+  evaluateDaQiaoFrontlineSynergy,
 } from '../src/engine/scaleDimensionTactics.ts';
 
 // Helper mock hero
@@ -121,4 +123,45 @@ test('enemy tempo impostors detect Da Qiao and Sun Bin counter-tactics', () => {
   assert.equal(tactics.length, 2);
   assert.ok(tactics.some((t) => t.counterStrategy.includes('KONTRA DA QIAO')));
   assert.ok(tactics.some((t) => t.counterStrategy.includes('KONTRA SUN BIN')));
+});
+
+test('suicidal diver trap catches Gao Changgong against Liang suppression + heavy peelers', () => {
+  const enemyHeroes = [
+    makeMockHero(111, 'Lady Sun', 'Marksman', 'Farm', {}),
+    makeMockHero(156, 'Liang', 'Mage', 'Mid', {}),
+    makeMockHero(517, 'Augran', 'Fighter', 'Jungle', {}),
+    makeMockHero(135, 'Xiang Yu', 'Tank', 'Clash', {}),
+    makeMockHero(171, 'Zhang Fei', 'Tank', 'Roam', {}),
+  ];
+
+  const gaoChanggong = makeMockHero(153, 'Gao Changgong', 'Assassin', 'Jungle', { mobility: true });
+  const trapGao = evaluateSuicidalDiverTrap(gaoChanggong, enemyHeroes);
+  assert.equal(trapGao.isTrapped, true);
+  assert.ok(trapGao.reason?.includes('Jebakan Kuncian Mutlak'));
+  assert.ok(trapGao.penalty > 1.0);
+
+  // Li Bai memiliki frame untargetable, jadi tidak boleh terjebak trap
+  const liBai = makeMockHero(131, 'Li Bai', 'Assassin', 'Jungle', { mobility: true });
+  const trapLiBai = evaluateSuicidalDiverTrap(liBai, enemyHeroes);
+  assert.equal(trapLiBai.isTrapped, false);
+});
+
+test('Da Qiao frontline deficit synergy boosts Bruiser and penalizes Stealth solo assassin', () => {
+  const ourHeroes = [
+    makeMockHero(123, 'Lu Bu', 'Fighter', 'Clash', { frontline: true }),
+    makeMockHero(191, 'Da Qiao', 'Support', 'Roam', {}),
+    makeMockHero(177, 'Chano', 'Marksman', 'Farm', {}),
+    makeMockHero(124, 'Zhou Yu', 'Mage', 'Mid', {}),
+  ];
+
+  const kaizer = makeMockHero(193, 'Kaizer', 'Fighter', 'Jungle', { frontline: true });
+  const gao = makeMockHero(153, 'Gao Changgong', 'Assassin', 'Jungle', {});
+
+  const kaizerSyn = evaluateDaQiaoFrontlineSynergy(kaizer, ourHeroes);
+  assert.ok(kaizerSyn.scoreAdjustment > 0);
+  assert.ok(kaizerSyn.tacticalTag?.includes('Elevator Engine'));
+
+  const gaoSyn = evaluateDaQiaoFrontlineSynergy(gao, ourHeroes);
+  assert.ok(gaoSyn.scoreAdjustment < 0);
+  assert.ok(gaoSyn.tacticalTag?.includes('Antitesis'));
 });
