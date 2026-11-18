@@ -273,10 +273,10 @@ button svg, .ui-button svg { flex-shrink: 0; }
 .dropdown-option > .lane-icon + span { flex: 1; }
 .filter-reset { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; color: #c1cddd; font-size: 13px; margin-top: 4px; }
 .filter-reset svg { width: 16px; height: 16px; }
-.hero-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); }
+.hero-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); isolation: isolate; }
 .hero-grid--detailed { grid-template-columns: repeat(auto-fill, minmax(min(100%, 145px), 1fr)); gap: 12px; }
 .hero-card { position: relative; min-width: 0; border: 1px solid #2c394e; border-radius: 12px; background: #141d2a; }
-.hero-card:hover, .hero-card:focus-within, .hero-card.has-hovercard-open { border-color: #546784; z-index: 60; }
+.hero-card:hover, .hero-card:focus-within, .hero-card.has-hovercard-open { border-color: #546784; z-index: 3; }
 .hero-card.is-selected { border-color: #b0d36f; }
 .hero-card.is-unavailable { background: #111923; border-color: #2a3444; }
 .hero-card.is-unavailable .hero-card__avatar, .hero-card.is-unavailable .hero-card__portrait { filter: saturate(.35); }
