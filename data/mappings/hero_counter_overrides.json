@@ -49,6 +49,14 @@
       "reason": "Ultimate Power Word - Decay Donghuang memberikan Absolute Suppression point-blank yang menghukum keras assassin melee. Gao Changgong wajib menempel ke badan target untuk kombo, sehingga Donghuang langsung menguncinya dan membagi damage ke tubuh Gao Changgong yang tipis hingga tewas.",
       "reviewed_by": "Draft engine curation",
       "reviewed_at": "2026-11-18"
+    },
+    {
+      "counter_id": 108,
+      "target_id": 509,
+      "severity": "soft",
+      "reason": "Mozi unggul dalam poke dan stun jarak jauh via Skill 2 (Cannon Blast). Pada kit baru Dunshan, Skill 1 (Bastion) murni menempel ke rekan/turret tanpa tameng berjalan, dan satu-satunya penangkal proyektil adalah Ultimate (Allshield) ber-cooldown lama. Dunshan dan kawan yang dilindunginya menjadi target empuk poke tanpa bisa membalas dari jarak aman.",
+      "reviewed_by": "Draft engine curation",
+      "reviewed_at": "2026-11-18"
     }
   ]
 }

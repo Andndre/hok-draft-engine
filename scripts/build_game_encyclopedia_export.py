@@ -25,8 +25,13 @@ def write_export(filename, content):
     size_kb = dest.stat().st_size / 1024
     print(f"Generated: {filename} ({size_kb:.1f} KB)")
 
-# Load core datasets
-master_heroes = load_json("data/mappings/master_heroes_global.json") or []
+import sys
+sys.path.insert(0, str(ROOT / "packages" / "ml-engine"))
+try:
+    from dataset_sources import load_source_heroes
+    master_heroes = load_source_heroes()
+except Exception:
+    master_heroes = load_json("data/mappings/master_heroes_global.json") or []
 hokstats_heroes = load_json("data/mappings/hokstats_heroes.json") or []
 items_raw = load_json("data/mappings/hokstats_items.json") or []
 arcana_raw = load_json("data/mappings/arcana_hokfire_full.json") or {}

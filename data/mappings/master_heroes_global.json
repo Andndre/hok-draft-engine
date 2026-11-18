@@ -10118,12 +10118,6 @@
         "reason": "Perisai Dunshan nahan skill 2, ult, dan basic attack berenergi Li Xin wujud cahaya karena semuanya proyektil. Gak berlaku buat wujud gelap. Artikel lama, bisa berubah karena patch."
       },
       {
-        "target_id": 108,
-        "target_name": "Mozi",
-        "severity": "hard",
-        "reason": "Shield skill 1 Dunshan ngeblok proyektil skill 2 Mozi, dan skill-nya bisa nge-control Mozi. Artikel lama, bisa berubah karena patch."
-      },
-      {
         "target_id": 196,
         "target_name": "Shouyue",
         "severity": "hard",
@@ -27811,12 +27805,6 @@
         "counter_name": "Milady",
         "severity": "hard",
         "reason": "Minion Milady nahan skill 2 Mozi, jadi Mozi susah kena musuh di lane."
-      },
-      {
-        "counter_id": 509,
-        "counter_name": "Dunshan",
-        "severity": "hard",
-        "reason": "Shield skill 1 Dunshan ngeblok proyektil skill 2 Mozi, dan skill-nya bisa nge-control Mozi. Artikel lama, bisa berubah karena patch."
       },
       {
         "counter_id": 105,
