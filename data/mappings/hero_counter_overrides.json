@@ -17,6 +17,22 @@
       "reason": "Pasif skill 2 Marco Polo itu detektor ambush: begitu ada hero musuh di dekatnya, muncul lingkaran penanda di badan Marco Polo, jadi stealth Arke ketahuan waktu dia mau masuk — persis seperti pasif 'nguping' Fang dan pasif Sima Yi yang bikin Arke kelihatan. Selama musuh di dekatnya Marco Polo dapat bonus 20% damage dan movement speed (15/18/21/24/27/30% per level), jadi dia bisa jaga jarak dari assassin yang harus nutup jarak dengan dash. Skill 1 + ult Marco Polo jadi burst yang tidak bisa diinterrupt: Arke tidak punya CC sama sekali (skill 2-nya cuma slow), Marco Polo sendiri bisa Purify CC di tengah ult-nya, sedangkan stun untuk menahan Arke datang dari spell atau item seperti Frigid.",
       "reviewed_by": "Draft engine curation",
       "reviewed_at": "2026-11-16"
+    },
+    {
+      "counter_id": 180,
+      "target_id": 153,
+      "severity": "hard",
+      "reason": "Ultimate Universe Blazing Wheel Nezha memberikan True Sight ke seluruh musuh di peta secara global, seketika membongkar stealth kamuflase Gao Changgong di mana pun ia berada. Nezha dapat mengunci dan terbang menabrak Gao Changgong, memberikan debuff damage reduction serta burn pasif berkelanjutan yang mencegah Gao Changgong masuk kembali ke mode stealth.",
+      "reviewed_by": "Draft engine curation",
+      "reviewed_at": "2026-11-18"
+    },
+    {
+      "counter_id": 173,
+      "target_id": 153,
+      "severity": "hard",
+      "reason": "Pasif Big Ears Fang mendeteksi dan mengungkap unit stealth dalam radius semak secara periodik, membongkar pendekatan Gao Changgong sebelum ia sempat mendekat. Selain itu, Skill 2 Fang memiliki frame Untargetable yang membatalkan kombo burst dagger Gao Changgong secara instan.",
+      "reviewed_by": "Draft engine curation",
+      "reviewed_at": "2026-11-18"
     }
   ]
 }
