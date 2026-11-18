@@ -60,8 +60,8 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
     : -1;
   const solverPickRec = solverPickIndex >= 0 ? recommendations[solverPickIndex] : null;
   const currentIsSolverPick = solverPickIndex >= 0 && solverPickIndex === activeIndex;
-  // Plan A/B yang dikunci user: selalu di posisi pertama, apa pun jawaban solver.
-  const lockedPlanId = planAId ?? planBId ?? solverStatus?.lockedPlanHeroId ?? null;
+  // Plan A/B yang dikunci user: selalu di posisi pertama pada fase PICK, apa pun jawaban solver.
+  const lockedPlanId = isPickPhase ? (planAId ?? planBId ?? solverStatus?.lockedPlanHeroId ?? null) : null;
   const lockedPlanHoldsTop = lockedPlanId !== null && recommendations[0]?.hero.hero_id === lockedPlanId;
 
   function SingleRankBadge({ heroId, recs }: { heroId: number; recs: Props['recommendations'] }) {

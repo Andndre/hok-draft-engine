@@ -2030,11 +2030,16 @@ export function runTournamentInference(
 
       if (isBlueSide) {
         // SISI BLUE (Keuntungan First-Pick B1):
-        // 1. DILARANG mem-ban hero B1 target kita sendiri!
-        if (plannedOpener && cand.hero_id === plannedOpener.hero_id) {
+        // 1. DILARANG mem-ban hero B1 target kita sendiri (Plan A maupun Plan B eksplisit)!
+        const isExplicitUserPlanA = Boolean(planAId && cand.hero_id === planAId);
+        const isExplicitUserPlanB = Boolean(planBId && cand.hero_id === planBId);
+        const isTargetToPreserve = isExplicitUserPlanA || isExplicitUserPlanB || (plannedOpener && cand.hero_id === plannedOpener.hero_id);
+
+        if (isTargetToPreserve) {
           score -= 3.0;
-          laneTag = 'Jangan Di-Ban (Target B1)';
-          proComboTag = `👑 Simpan untuk First-Pick B1 Kita!`;
+          const planLabel = isExplicitUserPlanA ? 'Plan A' : isExplicitUserPlanB ? 'Plan B' : 'Target B1';
+          laneTag = `Jangan Di-Ban (${planLabel})`;
+          proComboTag = `👑 Simpan untuk First-Pick B1 Kita (${planLabel})!`;
         } else if (plannedOpener) {
           const counterCheck = getCounterStrengthAgainst(cand, plannedOpener);
           const openerAdvantage = getOpenerAdvantageAgainst(cand, plannedOpener);
@@ -2098,7 +2103,9 @@ export function runTournamentInference(
       } else {
         // SISI RED (Second Pick R1+R2 — Deny B1 Blue & Lindungi Core R1+R2):
         const isBlueB1Threat = Boolean(blueB1ThreatHero && cand.hero_id === blueB1ThreatHero.hero_id);
-        const isUserExplicitPlanned = Boolean(hasExplicitUserPlan && plannedOpener && cand.hero_id === plannedOpener.hero_id);
+        const isUserPlanA = Boolean(planAId && cand.hero_id === planAId);
+        const isUserPlanB = Boolean(planBId && cand.hero_id === planBId);
+        const isUserExplicitPlanned = isUserPlanA || isUserPlanB;
 
         if (isBlueB1Threat && !isUserExplicitPlanned) {
           // Deny Hero S-Tier Utama Pembuka B1 Blue!
@@ -2110,10 +2117,11 @@ export function runTournamentInference(
           score += 0.85;
           laneTag = 'Potensi Diambil Blue B1';
           proComboTag = `⚠️ Sarankan Ubah Plan R1: ${cand.name} prioritas First-Pick B1 Blue, pertimbangkan ban`;
-        } else if (plannedOpener && cand.hero_id === plannedOpener.hero_id) {
+        } else if (isUserPlanA || isUserPlanB || (plannedOpener && cand.hero_id === plannedOpener.hero_id)) {
           score -= 2.5;
-          laneTag = 'Simpan utk R1 Kita';
-          proComboTag = `👑 Simpan untuk R1+R2 Pick Kita!`;
+          const planLabel = isUserPlanA ? 'Target R1' : isUserPlanB ? 'Target R2' : 'Core R1+R2';
+          laneTag = `Simpan utk ${planLabel}`;
+          proComboTag = `👑 Simpan untuk Giliran Pick Red (${planLabel})!`;
         } else if (plannedOpener) {
           const counterCheck = getCounterStrengthAgainst(cand, plannedOpener);
           const openerAdvantage = getOpenerAdvantageAgainst(cand, plannedOpener);

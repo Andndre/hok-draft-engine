@@ -117,9 +117,9 @@ export function PracticeDraft(props: Props) {
   const sheetRecommendations = useMemo(() => hints?.recommendations ?? [], [hints]);
   // Advisor memakai solver yang sama dengan lawan AI: SELURUH daftar
   // rekomendasi diurutkan menurut nilai yang dihitung mesin, bukan cuma #1.
-  // Plan A/B yang dikunci pemain tetap di posisi pertama (keputusan pemain
-  // mengalahkan mesin).
-  const lockedPlanId = game?.playerPlan.a ?? game?.playerPlan.b ?? null;
+  // Plan A/B yang dikunci pemain tetap di posisi pertama HANYA saat giliran PICK
+  // (saat fase BAN, hero target tim sendiri tidak boleh dipromosikan sebagai ban).
+  const lockedPlanId = turn.action === 'pick' ? (game?.playerPlan.a ?? game?.playerPlan.b ?? null) : null;
   const recommendations = useMemo(() => {
     if (!assistance || !canAct) return [];
     if (advisorPick == null) return sheetRecommendations;

@@ -578,7 +578,9 @@ export const App: React.FC = () => {
   // keputusan pengguna mengalahkan mesin.
   const displayRecommendations = useMemo(() => {
     if (!advisorDecision || advisorDecisionKey !== advisorSignature) return recommendations;
-    const lockedPlanId = activeSidePlanAId ?? activeSidePlanBId;
+    // Plan A/B yang dikunci pengguna hanya dipromosikan ke posisi pertama pada fase PICK.
+    // Pada fase BAN, hero rencana tim sendiri tidak boleh dipromosikan sebagai target ban!
+    const lockedPlanId = currentTurn.action === 'pick' ? (activeSidePlanAId ?? activeSidePlanBId) : null;
     return orderRecommendationsBySolver(recommendations, advisorDecision.rootValues, {
       lockedPlanHeroId: lockedPlanId,
     });
@@ -589,6 +591,7 @@ export const App: React.FC = () => {
     advisorSignature,
     activeSidePlanAId,
     activeSidePlanBId,
+    currentTurn.action,
   ]);
 
   // Judul "Rekomendasi #1" SELALU mengikuti daftar yang dilihat pengguna. Begitu
