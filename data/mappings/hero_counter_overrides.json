@@ -33,6 +33,22 @@
       "reason": "Pasif Big Ears Fang mendeteksi dan mengungkap unit stealth dalam radius semak secara periodik, membongkar pendekatan Gao Changgong sebelum ia sempat mendekat. Selain itu, Skill 2 Fang memiliki frame Untargetable yang membatalkan kombo burst dagger Gao Changgong secara instan.",
       "reviewed_by": "Draft engine curation",
       "reviewed_at": "2026-11-18"
+    },
+    {
+      "counter_id": 156,
+      "target_id": 153,
+      "severity": "hard",
+      "reason": "Ultimate Power Word - Control Liang memberikan Absolute Suppression point-and-click yang langsung menghentikan diving Gao Changgong begitu ia menampakkan diri. Karena Gao Changgong tidak memiliki iframe atau defense tebal, ia tereliminasi seketika saat kuncian aktif sebelum sempat mengeluarkan kombo damage.",
+      "reviewed_by": "Draft engine curation",
+      "reviewed_at": "2026-11-18"
+    },
+    {
+      "counter_id": 187,
+      "target_id": 153,
+      "severity": "hard",
+      "reason": "Ultimate Power Word - Decay Donghuang memberikan Absolute Suppression point-blank yang menghukum keras assassin melee. Gao Changgong wajib menempel ke badan target untuk kombo, sehingga Donghuang langsung menguncinya dan membagi damage ke tubuh Gao Changgong yang tipis hingga tewas.",
+      "reviewed_by": "Draft engine curation",
+      "reviewed_at": "2026-11-18"
     }
   ]
 }
