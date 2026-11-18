@@ -28,6 +28,7 @@ import {
   getDraftSequence,
   getFirstPickStep,
   isOpenerPickSlot,
+  getDraftTurn,
 } from './draftRules';
 import {
   evaluateSuicidalDiverTrap,
@@ -1267,6 +1268,7 @@ export function evaluateDuetRecommendations(
 ): DuetPackageOption[] {
   const window = getDoublePickWindow(draftStep, format);
   if (!window.isDoublePickFirst) return [];
+  const isBlueSide = getDraftTurn(draftStep, format).side === 'blue';
 
   // Bobot lane-fit duet, diselaraskan dengan `evaluatePickLaneFit` di fase pick (bukan model lane baru).
   const DUET_POOL_SIZE = 10;
@@ -1467,6 +1469,31 @@ export function evaluateDuetRecommendations(
           exploitScore += 0.35;
           const counterHeroName = aCountersB1 ? heroA.name : heroB.name;
           enemyExploitBadge = enemyExploitBadge ? `${enemyExploitBadge} · ⚔️ Kontra B1 ${blueB1.name}` : `⚔️ Respon Kontra B1 ${blueB1.name} (${counterHeroName})`;
+        }
+      }
+
+      // Respons Khusus Blue Side di Jendela B2+B3 terhadap R1+R2 Red (Hybrid Counter & Complement)
+      if (isBlueSide && ourHeroes.length === 1 && enemyHeroes.length === 2) {
+        const countersEnemy = (hero: Hero) =>
+          enemyHeroes.some((eh) => hero.counters?.some((c) => c.target_id === eh.hero_id));
+        const hardCountersEnemy = (hero: Hero) =>
+          enemyHeroes.some((eh) => hero.counters?.some((c) => c.target_id === eh.hero_id && c.severity === 'hard'));
+
+        const aHard = hardCountersEnemy(heroA);
+        const bHard = hardCountersEnemy(heroB);
+        const aCount = countersEnemy(heroA);
+        const bCount = countersEnemy(heroB);
+
+        if (aHard || bHard) {
+          exploitScore += 0.50;
+          const counterHero = aHard ? heroA : heroB;
+          const counteredTarget = enemyHeroes.find((eh) => counterHero.counters?.some((c) => c.target_id === eh.hero_id))?.name ?? 'R1/R2';
+          enemyExploitBadge = `⚔️ Hard Counter ${counteredTarget} (${counterHero.name}) & Fondasi B2+B3`;
+        } else if (aCount || bCount) {
+          exploitScore += 0.35;
+          const counterHero = aCount ? heroA : heroB;
+          const counteredTarget = enemyHeroes.find((eh) => counterHero.counters?.some((c) => c.target_id === eh.hero_id))?.name ?? 'R1/R2';
+          enemyExploitBadge = enemyExploitBadge ? `${enemyExploitBadge} · ⚔️ Kontra ${counteredTarget}` : `⚔️ Respon Kontra ${counteredTarget} (${counterHero.name})`;
         }
       }
 
@@ -2604,7 +2631,17 @@ export function runTournamentInference(
         : 'Amankan hero Meta S-Tier paling fleksibel untuk membuka formasi.';
     } else {
       phaseTitle = `FASE PICK 1 — PEMBENTUKAN CORE (${ourVacantArr.join(', ')})`;
-      phaseObjective = `Respon pick musuh (${enemyHeroes.map((e) => e.name).join(', ') || '-'}) dengan kombo sinergi KPL & isi lane kosong (${ourVacantArr.join(', ')}).`;
+      if (isBlueSide && (draftStep === 7 || draftStep === 8)) {
+        const isFinisher = (h: Hero) =>
+          [646, 162, 547, 153, 167, 131, 150].includes(h.hero_id) || h.primary_role === 'Assassin';
+        const finisherPlan = [planAHero, planBHero].find((h) => h && isFinisher(h));
+        const finisherWarning = finisherPlan
+          ? ` ⚠️ Timing Alert: Tahan ${finisherPlan.name} untuk Fase 2 (B4/B5) agar terhindar dari counter-ban & kuncian di R3-R5! Kunci pilar respon & fondasi (B2+B3) terlebih dahulu.`
+          : '';
+        phaseObjective = `Jendela Ganda B2+B3: Kunci '1 Kontra Musuh + 1 Fondasi Sinergi' untuk merespons (${enemyHeroes.map((e) => e.name).join(', ') || '-'}).${finisherWarning}`;
+      } else {
+        phaseObjective = `Respon pick musuh (${enemyHeroes.map((e) => e.name).join(', ') || '-'}) dengan kombo sinergi KPL & isi lane kosong (${ourVacantArr.join(', ')}).`;
+      }
     }
   } else if (phaseId === 'BAN_PHASE_2') {
     phaseTitle = `FASE BAN 2 — PUTUS KOMBO & KUNCI LANE MUSUH`;
