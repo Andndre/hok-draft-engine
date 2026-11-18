@@ -21,6 +21,12 @@ import type {
 import { ALL_LANES, assignHeroLanes, oppositeSide } from "./draftRules";
 import type { KplLaneRateMap, Side } from "./draftRules";
 import { evaluateTacticalScores, competitiveStrength } from "./tournamentInference";
+import {
+  evaluateScaleClash,
+  evaluateBacklineSafety,
+  detectConstraintRemovalSynergies,
+  detectEnemyTempoImpostors,
+} from "./scaleDimensionTactics";
 
 export type TempoCurveMap = Record<string, HeroTempoCurve>;
 
@@ -1043,12 +1049,58 @@ export function deriveWinningCondition(
       };
     });
 
+  // --- Evaluasi Taktis Level 3 (Scale Clash, Backline Safety, Constraint Synergies, Anti-Impostor) ---
+  const scaleClash = evaluateScaleClash(ourHeroes, enemyHeroes);
+  const backlineSafety = evaluateBacklineSafety(ourHeroes, enemyHeroes);
+  const constraintPairs = detectConstraintRemovalSynergies(ourHeroes);
+  const antiImpostorAdvices = detectEnemyTempoImpostors(enemyHeroes);
+
+  if (scaleClash.isSplitPushViable) {
+    winConditions.push(scaleClash.tacticalAdvice);
+  }
+  if (constraintPairs.length > 0) {
+    winConditions.push(
+      `Sinergi Bebas Batasan: ${constraintPairs[0].tacticalImpact}`,
+    );
+  }
+
+  if (backlineSafety.riskLevel === 'CRITICAL' && backlineSafety.warningMessage) {
+    loseConditions.unshift(
+      `${backlineSafety.warningMessage} ${backlineSafety.defensiveActionAdvice ?? ''}`,
+    );
+  }
+  if (antiImpostorAdvices.length > 0) {
+    loseConditions.push(antiImpostorAdvices[0].counterStrategy);
+  }
+
   return {
     archetype,
     enemyArchetype,
-    winConditions: winConditions.slice(0, 4),
-    loseConditions: loseConditions.slice(0, 3),
+    winConditions: winConditions.slice(0, 5),
+    loseConditions: loseConditions.slice(0, 4),
     counterChecklist,
+    scaleClash: {
+      ourDominantScale: scaleClash.ourDominantScale,
+      enemyDominantScale: scaleClash.enemyDominantScale,
+      matchupHeadline: scaleClash.matchupHeadline,
+      tacticalAdvice: scaleClash.tacticalAdvice,
+      isSplitPushViable: scaleClash.isSplitPushViable,
+    },
+    backlineSafety: {
+      riskLevel: backlineSafety.riskLevel,
+      enemyDiveScore: backlineSafety.enemyDiveScore,
+      ourPeelScore: backlineSafety.ourPeelScore,
+      warningMessage: backlineSafety.warningMessage,
+      defensiveActionAdvice: backlineSafety.defensiveActionAdvice,
+      vulnerableCarryNames: backlineSafety.vulnerableCarries.map((c) => c.name),
+      threatDiverNames: backlineSafety.threatDivers.map((d) => d.name),
+    },
+    constraintSynergies: constraintPairs.map((p) => ({
+      enablerName: p.enabler.name,
+      beneficiaryName: p.beneficiary.name,
+      constraintRemoved: p.constraintRemoved,
+      tacticalImpact: p.tacticalImpact,
+    })),
   };
 }
 

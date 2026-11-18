@@ -436,6 +436,31 @@ export interface CompArchetypeSummary {
   summary: string;
 }
 
+export interface ScaleClashSummary {
+  ourDominantScale: 'DUEL_SPLIT' | 'SKIRMISH_GANK' | 'TEAMFIGHT_BRAWL';
+  enemyDominantScale: 'DUEL_SPLIT' | 'SKIRMISH_GANK' | 'TEAMFIGHT_BRAWL';
+  matchupHeadline: string;
+  tacticalAdvice: string;
+  isSplitPushViable: boolean;
+}
+
+export interface BacklineSafetySummary {
+  riskLevel: 'SAFE' | 'ELEVATED' | 'CRITICAL';
+  enemyDiveScore: number;
+  ourPeelScore: number;
+  warningMessage?: string;
+  defensiveActionAdvice?: string;
+  vulnerableCarryNames: string[];
+  threatDiverNames: string[];
+}
+
+export interface ConstraintSynergySummary {
+  enablerName: string;
+  beneficiaryName: string;
+  constraintRemoved: string;
+  tacticalImpact: string;
+}
+
 export interface WinningConditionAnalysis {
   archetype: CompArchetypeSummary;
   enemyArchetype: CompArchetypeSummary;
@@ -447,6 +472,9 @@ export interface WinningConditionAnalysis {
     recommendedItems: CounterItemInfo[];
     counterAction: string;
   }>;
+  scaleClash?: ScaleClashSummary;
+  backlineSafety?: BacklineSafetySummary;
+  constraintSynergies?: ConstraintSynergySummary[];
 }
 
 export interface GankTargetPriority {

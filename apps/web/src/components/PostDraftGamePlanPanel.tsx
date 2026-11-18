@@ -444,6 +444,106 @@ export function PostDraftGamePlanPanel({
             </div>
           </div>
 
+          {/* Level 3 Macro & Safety Diagnostics */}
+          <div className="macro-tactics-bar" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '12px', marginBottom: '14px' }}>
+            {plan.winningCondition.scaleClash && (
+              <div className="surface-card" style={{ padding: '12px 14px', borderRadius: '10px', background: '#0e1724', border: '1px solid #253347' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                  <Swords style={{ width: '16px', height: '16px', color: '#60a5fa' }} aria-hidden="true" />
+                  <strong style={{ fontSize: '0.88rem', color: '#93c5fd' }}>
+                    {plan.winningCondition.scaleClash.matchupHeadline}
+                  </strong>
+                </div>
+                <p style={{ margin: 0, fontSize: '0.82rem', color: '#cbd5e1', lineHeight: '1.4' }}>
+                  {plainText(plan.winningCondition.scaleClash.tacticalAdvice)}
+                </p>
+              </div>
+            )}
+
+            {plan.winningCondition.backlineSafety && (
+              <div
+                className="surface-card"
+                style={{
+                  padding: '12px 14px',
+                  borderRadius: '10px',
+                  background:
+                    plan.winningCondition.backlineSafety.riskLevel === 'CRITICAL'
+                      ? '#241017'
+                      : plan.winningCondition.backlineSafety.riskLevel === 'ELEVATED'
+                        ? '#241c10'
+                        : '#0e1f18',
+                  border: `1px solid ${
+                    plan.winningCondition.backlineSafety.riskLevel === 'CRITICAL'
+                      ? '#dc2626'
+                      : plan.winningCondition.backlineSafety.riskLevel === 'ELEVATED'
+                        ? '#d97706'
+                        : '#16a34a'
+                  }`,
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                  {plan.winningCondition.backlineSafety.riskLevel === 'CRITICAL' ? (
+                    <ShieldAlert style={{ width: '16px', height: '16px', color: '#f87171' }} aria-hidden="true" />
+                  ) : plan.winningCondition.backlineSafety.riskLevel === 'ELEVATED' ? (
+                    <AlertTriangle style={{ width: '16px', height: '16px', color: '#fbbf24' }} aria-hidden="true" />
+                  ) : (
+                    <ShieldCheck style={{ width: '16px', height: '16px', color: '#4ade80' }} aria-hidden="true" />
+                  )}
+                  <strong
+                    style={{
+                      fontSize: '0.88rem',
+                      color:
+                        plan.winningCondition.backlineSafety.riskLevel === 'CRITICAL'
+                          ? '#fca5a5'
+                          : plan.winningCondition.backlineSafety.riskLevel === 'ELEVATED'
+                            ? '#fde68a'
+                            : '#86efac',
+                    }}
+                  >
+                    {plan.winningCondition.backlineSafety.riskLevel === 'CRITICAL'
+                      ? 'Carry Collapse Risk (Lini Belakang Kritis)'
+                      : plan.winningCondition.backlineSafety.riskLevel === 'ELEVATED'
+                        ? 'Tekanan Dive Lini Belakang'
+                        : 'Lini Belakang Terlindungi (Peel Memadai)'}
+                  </strong>
+                </div>
+                <p style={{ margin: 0, fontSize: '0.82rem', color: '#cbd5e1', lineHeight: '1.4' }}>
+                  {plainText(
+                    plan.winningCondition.backlineSafety.warningMessage ??
+                      'Diver musuh seimbang atau dapat ditahan oleh barisan peel kita.',
+                  )}
+                </p>
+              </div>
+            )}
+          </div>
+
+          {plan.winningCondition.constraintSynergies && plan.winningCondition.constraintSynergies.length > 0 && (
+            <div
+              style={{
+                marginBottom: '14px',
+                padding: '10px 14px',
+                borderRadius: '10px',
+                background: '#111c2e',
+                border: '1px solid #1e3a5f',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                <Sparkles style={{ width: '15px', height: '15px', color: '#a78bfa' }} aria-hidden="true" />
+                <strong style={{ fontSize: '0.85rem', color: '#c4b5fd' }}>Sinergi Pembebas Batasan Terdeteksi</strong>
+              </div>
+              <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '0.82rem', color: '#cbd5e1' }}>
+                {plan.winningCondition.constraintSynergies.map((syn, idx) => (
+                  <li key={idx}>
+                    <strong>
+                      {syn.enablerName} + {syn.beneficiaryName}
+                    </strong>{' '}
+                    ({syn.constraintRemoved}): {plainText(syn.tacticalImpact)}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           <div className="conditions-grid">
             <div className="condition-box condition-box--win">
               <h4>
