@@ -42,19 +42,85 @@ export function PlanSelectionModal({ isOpen, onClose, heroes, currentPlanAId, cu
   };
   return <div className="modal-backdrop" onClick={event => { if (event.target === event.currentTarget) onClose(); }}>
     <div ref={dialog} role="dialog" aria-modal="true" aria-labelledby={titleId} tabIndex={-1} className="plan-dialog">
-      <header className="dialog-header"><div className="section-heading"><span className="section-heading__icon"><SlidersHorizontal aria-hidden="true" /></span><div><h2 id={titleId}>Atur Plan A/B</h2><p>Tim {activeSide === 'blue' ? 'Blue' : 'Red'} · Target utama & cadangan</p></div></div><button type="button" className="ui-icon-button" onClick={onClose} aria-label="Tutup pengaturan rencana" title="Tutup"><X aria-hidden="true" /></button></header>
-      <div className="plan-dialog__selection" role="group" aria-label="Pilih slot rencana">{[{ key: 'A' as const, id: currentPlanAId, clear: onSelectPlanA }, { key: 'B' as const, id: currentPlanBId, clear: onSelectPlanB }].map(plan => {
-        const hero = heroes.find(value => value.hero_id === plan.id);
-        return <div key={plan.key} className={'plan-slot' + (slot === plan.key ? ' is-selected' : '')}><button type="button" onClick={() => setSlot(plan.key)} aria-pressed={slot === plan.key}>{hero ? <HeroThumbnail hero={hero} /> : <Target aria-hidden="true" />}<span><small>{plan.key === 'A' ? 'Plan A · Utama' : 'Plan B · Cadangan'}</small><strong>{hero?.name ?? 'Belum ditentukan'}</strong></span>{slot === plan.key && <CheckCircle2 aria-hidden="true" />}</button><button type="button" className="ui-icon-button" aria-label={'Hapus Plan ' + plan.key} title={'Hapus Plan ' + plan.key} disabled={!hero} onClick={() => plan.clear(null)}><X aria-hidden="true" /></button></div>;
-      })}</div>
-      <p className="plan-dialog__instruction" role="status"><Target aria-hidden="true" />Pilih hero untuk <strong>Plan {slot}</strong>.</p>
+      <header className="dialog-header">
+        <div className="section-heading">
+          <span className="section-heading__icon"><SlidersHorizontal aria-hidden="true" /></span>
+          <div>
+            <h2 id={titleId}>{activeSide === 'blue' ? 'Atur Plan A/B' : 'Atur Strategi Red'}</h2>
+            <p>
+              {activeSide === 'blue'
+                ? 'Tim Blue · Target first-pick B1 & cadangan proaktif'
+                : 'Tim Red · Target respon R1 kontra B1 & cadangan sinergi'}
+            </p>
+          </div>
+        </div>
+        <button type="button" className="ui-icon-button" onClick={onClose} aria-label="Tutup pengaturan rencana" title="Tutup">
+          <X aria-hidden="true" />
+        </button>
+      </header>
+      <div className="plan-dialog__selection" role="group" aria-label="Pilih slot rencana">
+        {[
+          {
+            key: 'A' as const,
+            id: currentPlanAId,
+            clear: onSelectPlanA,
+            label: activeSide === 'blue' ? 'Plan A · Utama B1' : 'Target R1 · Kontra B1',
+          },
+          {
+            key: 'B' as const,
+            id: currentPlanBId,
+            clear: onSelectPlanB,
+            label: activeSide === 'blue' ? 'Plan B · Cadangan' : 'Target R2 · Sinergi/R5',
+          },
+        ].map((plan) => {
+          const hero = heroes.find((value) => value.hero_id === plan.id);
+          return (
+            <div key={plan.key} className={'plan-slot' + (slot === plan.key ? ' is-selected' : '')}>
+              <button type="button" onClick={() => setSlot(plan.key)} aria-pressed={slot === plan.key}>
+                {hero ? <HeroThumbnail hero={hero} /> : <Target aria-hidden="true" />}
+                <span>
+                  <small>{plan.label}</small>
+                  <strong>{hero?.name ?? 'Belum ditentukan'}</strong>
+                </span>
+                {slot === plan.key && <CheckCircle2 aria-hidden="true" />}
+              </button>
+              <button
+                type="button"
+                className="ui-icon-button"
+                aria-label={'Hapus Plan ' + plan.key}
+                title={'Hapus Plan ' + plan.key}
+                disabled={!hero}
+                onClick={() => plan.clear(null)}
+              >
+                <X aria-hidden="true" />
+              </button>
+            </div>
+          );
+        })}
+      </div>
+      <p className="plan-dialog__instruction" role="status">
+        <Target aria-hidden="true" />
+        {activeSide === 'blue'
+          ? `Pilih hero untuk Plan ${slot}.`
+          : `Pilih hero target ${slot === 'A' ? 'R1 (Kontra B1)' : 'R2 (Sinergi / R5)'}.`}
+      </p>
       <div className="plan-dialog__filters"><div className="search-field"><Search aria-hidden="true" /><label htmlFor={searchId} className="sr-only">Cari hero untuk rencana</label><input id={searchId} value={search} onChange={event => setSearch(event.target.value)} placeholder="Cari hero pembuka…" autoComplete="off" />{search && <button type="button" aria-label="Hapus pencarian rencana" onClick={() => setSearch('')}><X aria-hidden="true" /></button>}</div><DropdownSelect<Lane | 'All'> label="Filter lane rencana" leadingIcon={<LaneIcon lane={lane} />} value={lane} onChange={setLane} options={(['All', 'Clash', 'Jungle', 'Mid', 'Farm', 'Roam'] as const).map(value => ({ value, label: value === 'All' ? 'Semua lane' : value, icon: <LaneIcon lane={value} /> }))} /></div>
       <div className="plan-dialog__roster">{filtered.length ? filtered.map(hero => {
         const selected = (slot === 'A' ? currentPlanAId : currentPlanBId) === hero.hero_id;
         const locked = unavailableHeroIds.has(hero.hero_id);
         return <button type="button" key={hero.hero_id} className={'plan-hero-row' + (selected ? ' is-selected' : '')} aria-pressed={selected} disabled={locked} onClick={() => choose(hero)}><HeroThumbnail hero={hero} /><span><strong>{hero.name}</strong><small><LaneLabel lane={hero.primary_lane} /> · Pop {hero.popularity_band ?? '—'}</small></span>{locked ? <LockKeyhole aria-label="Hero tidak tersedia" /> : selected ? <Check aria-label="Dipilih" /> : ranked.has(hero.hero_id) ? <Sparkles aria-label="Opener yang disarankan" /> : <Target aria-hidden="true" />}</button>;
       }) : <div className="empty-state"><Search aria-hidden="true" /><h3>Hero tidak ditemukan</h3><p>Coba nama lain atau ubah filter lane.</p></div>}</div>
-      <footer className="dialog-footer"><p><ShieldCheck aria-hidden="true" />Plan B menjadi cadangan jika target utama tidak tersedia.</p><button type="button" className="ui-button ui-button--primary" onClick={onClose}><Check aria-hidden="true" />Selesai</button></footer>
+      <footer className="dialog-footer">
+        <p>
+          <ShieldCheck aria-hidden="true" />
+          {activeSide === 'blue'
+            ? 'Plan B menjadi cadangan jika target utama di-ban atau di-counter.'
+            : 'Red Side memprioritaskan Paket Respon Duet R1+R2 begitu B1 Blue terkunci.'}
+        </p>
+        <button type="button" className="ui-button ui-button--primary" onClick={onClose}>
+          <Check aria-hidden="true" />Selesai
+        </button>
+      </footer>
     </div>
   </div>;
 }

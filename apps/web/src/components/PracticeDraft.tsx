@@ -335,7 +335,21 @@ export function PracticeDraft(props: Props) {
         <button type="button" className={button} onClick={() => send({ type: 'undo' })} disabled={!canUndo}><Undo2 aria-hidden="true" />Urungkan</button>
         <button type="button" className={button} onClick={() => send({ type: 'reset' })} disabled={!latest}><RotateCcw aria-hidden="true" />Reset game</button>
         <button type="button" className={button} onClick={() => { client.cancel(); setSession(null); setLaneOverridesByKey({}); setNotice(''); setError(''); }}><Settings2 aria-hidden="true" />Sesi baru</button>
-        {!turn.isComplete && latest && <button type="button" className={button} onClick={() => setPlanOpen(true)}><SlidersHorizontal aria-hidden="true" />Plan A/B</button>}
+        {!turn.isComplete && latest && (
+          <button type="button" className={button} onClick={() => setPlanOpen(true)}>
+            {playerSide === 'blue' ? (
+              <>
+                <SlidersHorizontal aria-hidden="true" />
+                Plan A/B
+              </>
+            ) : (
+              <>
+                <Swords aria-hidden="true" />
+                Strategi Red
+              </>
+            )}
+          </button>
+        )}
       </div>
       <div aria-live="polite" role="status" className="practice-status">{thinking ? <LoaderCircle className="is-spinning" aria-hidden="true" /> : turn.isComplete ? <CheckCircle2 aria-hidden="true" /> : <Info aria-hidden="true" />}<span>{!latest ? 'Ulasan game terdahulu. Kembali ke game terbaru untuk melanjutkan.' : turn.isComplete ? 'Draft selesai. Evaluasi komposisi tersedia di bawah.' : thinking ? 'AI sedang memilih… Kamu tetap bisa membaca wiki hero.' : canAct ? 'Giliran Anda: ' + (turn.action === 'ban' ? 'ban' : 'pick') + ' hero.' : 'Menyiapkan giliran AI…'}</span></div>
       {notice && !thinking && <p className="practice-notice">{notice}</p>}

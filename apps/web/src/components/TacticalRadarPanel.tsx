@@ -115,9 +115,16 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
     {activeDuet && !isComplete && !isWaiting && (
       <div className="duet-package-card" style={{ marginBottom: '1rem', padding: '0.875rem', background: 'rgba(234, 179, 8, 0.08)', border: '1px solid rgba(234, 179, 8, 0.3)', borderRadius: '10px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.5rem' }}>
-          <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#eab308', whiteSpace: 'nowrap' }}>
-            💡 PAKET DUET
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#eab308', whiteSpace: 'nowrap' }}>
+              💡 PAKET DUET
+            </span>
+            {activeSide === 'red' && (
+              <span style={{ fontSize: '0.7rem', fontWeight: 600, color: '#f59e0b', background: 'rgba(245, 158, 11, 0.15)', padding: '0.1rem 0.35rem', borderRadius: '4px' }}>
+                Respon R1+R2
+              </span>
+            )}
+          </div>
           {duetPackages.length > 1 && (
             <div style={{ display: 'flex', gap: '0.25rem', flexShrink: 0, marginLeft: 'auto' }}>
               {duetPackages.map((_, idx) => (
@@ -284,7 +291,56 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
 
     {!currentRec && <div className="recommendation-empty">{isComplete ? <CheckCircle2 aria-hidden="true" /> : isWaiting ? <Info aria-hidden="true" /> : <LoaderCircle className="is-spinning" aria-hidden="true" />}<p>{isComplete ? 'Draft selesai. Buka evaluasi komposisi di bawah.' : isWaiting ? 'Giliran AI. Rekomendasi tersedia saat giliran Anda.' : 'Menyiapkan rekomendasi untuk giliran ini…'}</p></div>}
 
-    {phaseStrategy && !isComplete && <div className="plan-overview"><div className="plan-overview__heading"><h3>Rencana pembuka</h3>{onOpenPlanModal && <button type="button" className="ui-button ui-button--text" onClick={onOpenPlanModal}><SlidersHorizontal aria-hidden="true" />Atur Plan A/B</button>}</div><div className="plan-overview__cards">{[{ label: 'Plan A', hero: phaseStrategy.planAHero, banned: phaseStrategy.isPlanABanned }, { label: 'Plan B', hero: phaseStrategy.planBHero, banned: phaseStrategy.isPlanBBanned }].map(plan => <button type="button" key={plan.label} className={'plan-preview' + (phaseStrategy.plannedOpener?.hero_id === plan.hero?.hero_id ? ' is-active' : '')} onClick={onOpenPlanModal} disabled={!onOpenPlanModal}>{plan.hero ? <HeroThumbnail hero={plan.hero} /> : <Target aria-hidden="true" />}<span><small>{plan.label}{plan.banned ? ' · Terban' : ''}</small><strong>{plan.hero?.name ?? 'Pilih target'}</strong></span>{phaseStrategy.plannedOpener?.hero_id === plan.hero?.hero_id && <CheckCircle2 aria-label="Rencana aktif" />}</button>)}</div></div>}
+    {phaseStrategy && !isComplete && (
+      <div className="plan-overview">
+        <div className="plan-overview__heading">
+          <h3>{activeSide === 'blue' ? 'Rencana Pembuka B1 (Plan A/B)' : 'Strategi Red (Kontra B1 & Sinergi)'}</h3>
+          {onOpenPlanModal && (
+            <button type="button" className="ui-button ui-button--text" onClick={onOpenPlanModal}>
+              <SlidersHorizontal aria-hidden="true" />
+              {activeSide === 'blue' ? 'Atur Plan A/B' : 'Atur Target Red'}
+            </button>
+          )}
+        </div>
+        <div className="plan-overview__cards">
+          {[
+            {
+              label: activeSide === 'blue' ? 'Plan A (B1)' : 'Target R1 (Kontra B1)',
+              hero: phaseStrategy.planAHero,
+              banned: phaseStrategy.isPlanABanned,
+            },
+            {
+              label: activeSide === 'blue' ? 'Plan B (Cadangan)' : 'Target R2 (Sinergi/R5)',
+              hero: phaseStrategy.planBHero,
+              banned: phaseStrategy.isPlanBBanned,
+            },
+          ].map((plan) => (
+            <button
+              type="button"
+              key={plan.label}
+              className={
+                'plan-preview' +
+                (phaseStrategy.plannedOpener?.hero_id === plan.hero?.hero_id ? ' is-active' : '')
+              }
+              onClick={onOpenPlanModal}
+              disabled={!onOpenPlanModal}
+            >
+              {plan.hero ? <HeroThumbnail hero={plan.hero} /> : <Target aria-hidden="true" />}
+              <span>
+                <small>
+                  {plan.label}
+                  {plan.banned ? ' · Terban' : ''}
+                </small>
+                <strong>{plan.hero?.name ?? 'Pilih target'}</strong>
+              </span>
+              {phaseStrategy.plannedOpener?.hero_id === plan.hero?.hero_id && (
+                <CheckCircle2 aria-label="Rencana aktif" />
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
+    )}
     {phaseStrategy && !isComplete && <details className="panel-disclosure"><summary><Target aria-hidden="true" /><span>Tujuan dan target pembuka</span><ChevronDown aria-hidden="true" /></summary><div className="disclosure-content"><p>{plainText(phaseStrategy.phaseObjective)}</p>{onSelectQuickPlanA && <div className="opener-shortlist">{phaseStrategy.candidateOpeners.slice(0, 6).map(hero => <button type="button" key={hero.hero_id} onClick={() => onSelectQuickPlanA(hero.hero_id)}><HeroThumbnail hero={hero} /><span>{hero.name}</span></button>)}</div>}</div></details>}
     <details className="panel-disclosure" open={isComplete}><summary><ChartColumn aria-hidden="true" /><span>Komposisi · 7 dimensi</span><span className="metric-summary">{Math.round(scores.draft_advantage * 100)}/100</span><ChevronDown aria-hidden="true" /></summary><div className="disclosure-content"><div className="tactical-metrics">{axes.map(({ key, label }) => <div key={key}><div><span>{label}</span><strong>{Math.round(scores[key] * 100)}</strong></div><progress aria-label={label} value={Math.round(scores[key] * 100)} max={100} /></div>)}</div><p className="metric-caption">Indeks heuristik komposisi, bukan probabilitas kemenangan.</p>{primaryInsight && <p className="metric-insight">{plainText(primaryInsight)}</p>}{deltas.length > 0 && <ul className="tactical-deltas">{deltas.map(delta => <li key={delta.dimension}><span>{delta.label}</span><strong>{delta.deltaPercent > 0 ? '+' : ''}{delta.deltaPercent}%</strong></li>)}</ul>}</div></details>
   </section>;

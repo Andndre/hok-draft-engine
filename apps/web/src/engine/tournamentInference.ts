@@ -1447,6 +1447,25 @@ export function evaluateDuetRecommendations(
         }
       }
 
+      // Respons Khusus Red Side terhadap First Pick B1 Blue (Conditional Response Matrix)
+      if (enemyHeroes.length === 1 && ourHeroes.length === 0) {
+        const blueB1 = enemyHeroes[0];
+        const aCountersB1 = heroA.counters?.some((c) => c.target_id === blueB1.hero_id);
+        const bCountersB1 = heroB.counters?.some((c) => c.target_id === blueB1.hero_id);
+        const aHardCountersB1 = heroA.counters?.some((c) => c.target_id === blueB1.hero_id && c.severity === 'hard');
+        const bHardCountersB1 = heroB.counters?.some((c) => c.target_id === blueB1.hero_id && c.severity === 'hard');
+
+        if (aHardCountersB1 || bHardCountersB1) {
+          exploitScore += 0.55;
+          const counterHeroName = aHardCountersB1 ? heroA.name : heroB.name;
+          enemyExploitBadge = `⚔️ Hard Counter B1 ${blueB1.name} (${counterHeroName})`;
+        } else if (aCountersB1 || bCountersB1) {
+          exploitScore += 0.35;
+          const counterHeroName = aCountersB1 ? heroA.name : heroB.name;
+          enemyExploitBadge = enemyExploitBadge ? `${enemyExploitBadge} · ⚔️ Kontra B1 ${blueB1.name}` : `⚔️ Respon Kontra B1 ${blueB1.name} (${counterHeroName})`;
+        }
+      }
+
       // Penalti jika salah satu hero di-hard counter oleh musuh yang sudah ada
       const aCountered = (heroA.countered_by || []).some((c) => enemyHeroes.some((e) => e.hero_id === c.counter_id && c.severity === 'hard'));
       const bCountered = (heroB.countered_by || []).some((c) => enemyHeroes.some((e) => e.hero_id === c.counter_id && c.severity === 'hard'));
