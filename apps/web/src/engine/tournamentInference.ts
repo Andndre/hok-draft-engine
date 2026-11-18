@@ -1269,6 +1269,9 @@ export function evaluateDuetRecommendations(
   const window = getDoublePickWindow(draftStep, format);
   if (!window.isDoublePickFirst) return [];
   const isBlueSide = getDraftTurn(draftStep, format).side === 'blue';
+  const windowLabel = isBlueSide
+    ? (ourHeroes.length <= 1 ? 'Jendela B2+B3' : 'Penutup B4+B5')
+    : (ourHeroes.length === 0 ? 'Respon R1+R2' : 'Jendela R3+R4');
 
   // Bobot lane-fit duet, diselaraskan dengan `evaluatePickLaneFit` di fase pick (bukan model lane baru).
   const DUET_POOL_SIZE = 10;
@@ -1530,6 +1533,7 @@ export function evaluateDuetRecommendations(
         enemyExploitBadge,
         primaryLane: firstLane,
         secondaryLane: secondLane,
+        windowLabel,
       });
     }
   }

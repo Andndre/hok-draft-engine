@@ -527,6 +527,7 @@ export interface DuetPackageOption {
   enemyExploitBadge?: string;
   primaryLane: Lane;
   secondaryLane: Lane;
+  windowLabel?: string;
 }
 
 export type SortMode = 'az' | 'win' | 'pick' | 'ai';

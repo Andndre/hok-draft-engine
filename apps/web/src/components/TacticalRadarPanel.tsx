@@ -119,13 +119,9 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
             <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#eab308', whiteSpace: 'nowrap' }}>
               💡 PAKET DUET
             </span>
-            {activeSide === 'red' ? (
-              <span style={{ fontSize: '0.7rem', fontWeight: 600, color: '#f59e0b', background: 'rgba(245, 158, 11, 0.15)', padding: '0.1rem 0.35rem', borderRadius: '4px' }}>
-                Respon R1+R2
-              </span>
-            ) : (
-              <span style={{ fontSize: '0.7rem', fontWeight: 600, color: '#60a5fa', background: 'rgba(59, 130, 246, 0.15)', padding: '0.1rem 0.35rem', borderRadius: '4px' }}>
-                Jendela B2+B3
+            {activeDuet.windowLabel && (
+              <span style={{ fontSize: '0.7rem', fontWeight: 600, color: activeSide === 'red' ? '#f59e0b' : '#60a5fa', background: activeSide === 'red' ? 'rgba(245, 158, 11, 0.15)' : 'rgba(59, 130, 246, 0.15)', padding: '0.1rem 0.35rem', borderRadius: '4px' }}>
+                {activeDuet.windowLabel}
               </span>
             )}
           </div>
