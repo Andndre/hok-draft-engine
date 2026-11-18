@@ -1,37 +1,96 @@
 /* Design System & Shared Primitives */
+@theme {
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Surface & Background */
+  --color-canvas: #0a0d12;
+  --color-surface-header: #0c1017;
+  --color-surface-panel: #111923;
+  --color-surface-card: #141d2a;
+  --color-surface-elevated: #172130;
+  --color-surface-input: #0d141f;
+
+  /* Borders */
+  --color-border-subtle: #232a38;
+  --color-border-card: #2c394e;
+  --color-border-input: #354155;
+  --color-border-hover: #546784;
+
+  /* Accents & Focus */
+  --color-accent-lime: #b8ff01;
+  --color-accent-lime-hover: #c9ff50;
+  --color-accent-lime-muted: #26351b;
+  --color-focus-ring: #c1ff32;
+  --color-accent-gold: #f5c451;
+
+  /* Sides (Drafting Context) */
+  --color-side-blue: #3b82f6;
+  --color-side-blue-dark: #183051;
+  --color-side-blue-text: #add0ff;
+  --color-side-red: #ef4444;
+  --color-side-red-dark: #402031;
+  --color-side-red-text: #ffc0ce;
+
+  /* Typography / Status */
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #c3ccda;
+  --color-text-muted: #8d9bb2;
+  --color-text-danger: #f87171;
+  --color-text-success: #85ccb0;
+
+  /* Popularity / Tiers */
+  --color-tier-s: #ef4444;
+  --color-tier-a: #f59e0b;
+  --color-tier-b: #eab308;
+  --color-tier-c: #84cc16;
+  --color-tier-d: #64748b;
+
+  /* Border Radii */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+}
+
 @layer base {
   :root {
-    --bg-canvas: #0A0D12;
-    --bg-surface-1: #12161F;
-    --bg-surface-2: #1A202C;
+    --bg-canvas: var(--color-canvas);
+    --bg-surface-1: var(--color-surface-panel);
+    --bg-surface-2: var(--color-surface-card);
     --bg-glass-dock: rgba(18, 22, 31, 0.88);
-    --border-subtle: #232A38;
-    --border-hover: #334155;
+    --border-subtle: var(--color-border-subtle);
+    --border-hover: var(--color-border-input);
     
-    --accent-cyber-lime: #B8FF01;
-    --accent-imperial-gold: #F5C451;
-    --side-blue: #3B82F6;
-    --side-red: #EF4444;
+    --accent-cyber-lime: var(--color-accent-lime);
+    --accent-imperial-gold: var(--color-accent-gold);
+    --side-blue: var(--color-side-blue);
+    --side-red: var(--color-side-red);
     
-    --stat-high: #10B981;
-    --stat-neutral: #E2E8F0;
-    --stat-low: #F43F5E;
+    --stat-high: var(--color-text-success);
+    --stat-neutral: var(--color-text-secondary);
+    --stat-low: var(--color-text-danger);
     
-    --tier-s: #EF4444;
-    --tier-a: #F59E0B;
-    --tier-b: #EAB308;
-    --tier-c: #84CC16;
-    --tier-d: #64748B;
+    --tier-s: var(--color-tier-s);
+    --tier-a: var(--color-tier-a);
+    --tier-b: var(--color-tier-b);
+    --tier-c: var(--color-tier-c);
+    --tier-d: var(--color-tier-d);
+
+    --app-header-height: 76px;
+    --content-width: 1560px;
+    --ui-muted: var(--color-text-muted);
   }
 
   body {
-    background-color: var(--bg-canvas);
-    color: #F8FAFC;
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: var(--color-canvas);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
   }
 
   .font-mono-numbers {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
   }
 }
