@@ -29,6 +29,7 @@ export interface DecideSettings {
   isUltimateBattle?: boolean;
   /** Jumlah ban per sisi pada mode ranked (3/4/5) — harus sama dengan board. */
   rankedBanCount?: 3 | 4 | 5;
+  onlyGlobal?: boolean;
 }
 
 /** One worker at a time; cancel terminates computation, not just its callback. */
@@ -49,7 +50,7 @@ export class OpponentClient {
       heroes: this.dataset.heroes,
       synergy: this.dataset.synergy,
       aiSide: settings.side ?? this.aiSide,
-      onlyGlobal: true,
+      onlyGlobal: settings.onlyGlobal ?? true,
       fearless: settings.fearless,
       aiPlan: settings.side ? { a: null, b: null } : settings.aiPlan,
       format: settings.format,
@@ -89,6 +90,7 @@ export class OpponentClient {
           fearless: settings.fearless, aiPlan: settings.aiPlan, format: settings.format,
           side: settings.side, options: settings.options, isUltimateBattle: settings.isUltimateBattle,
           rankedBanCount: settings.rankedBanCount,
+          onlyGlobal: settings.onlyGlobal,
         });
       } catch { fallback(); }
     });

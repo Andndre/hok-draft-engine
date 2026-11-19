@@ -1,4 +1,4 @@
-import React, { useDeferredValue, useEffect, useId, useMemo, useState } from 'react';
+import React, { useDeferredValue, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Check, Search, X } from 'lucide-react';
 import type { Hero } from '../types';
 import { isHeroGlobalReleased } from '../data/heroReleaseStatus';
@@ -14,6 +14,7 @@ interface Props {
   onlyGlobalReleased?: boolean;
   unavailableHeroIds?: Set<number>;
   title?: string;
+  candidateIds?: number[];
 }
 
 export function VisionHeroPickerModal({
@@ -24,15 +25,17 @@ export function VisionHeroPickerModal({
   onlyGlobalReleased = true,
   unavailableHeroIds = new Set<number>(),
   title = 'Pilih hero untuk slot ini',
+  candidateIds = [],
 }: Props) {
   const [search, setSearch] = useState('');
   const deferredSearch = useDeferredValue(search);
   const { dialogRef, requestClose } = useNativeModalDialog(isOpen, onClose);
   const titleId = useId();
   const searchId = useId();
+  const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (isOpen) setSearch('');
+    if (isOpen) { setSearch(''); searchRef.current?.focus(); }
   }, [isOpen]);
 
   const filtered = useMemo(() => {
@@ -62,9 +65,17 @@ export function VisionHeroPickerModal({
             <label htmlFor={searchId} className="sr-only">Cari hero</label>
             <input
               id={searchId}
+              ref={searchRef}
               autoFocus
               value={search}
               onChange={event => setSearch(event.target.value)}
+              onKeyDown={event => {
+                if (event.key !== 'Enter' || event.nativeEvent.isComposing || event.nativeEvent.keyCode === 229 || !search.trim()) return;
+                event.preventDefault();
+                const eligible = heroes.filter(hero => (!onlyGlobalReleased || isHeroGlobalReleased(hero)) && !unavailableHeroIds.has(hero.hero_id));
+                const first = searchHeroes(eligible, search, (a, b) => a.name.localeCompare(b.name))[0];
+                if (first) onSelect(first.hero_id);
+              }}
               placeholder="Cari hero..."
               autoComplete="off"
             />
@@ -76,6 +87,16 @@ export function VisionHeroPickerModal({
           </div>
         </div>
         <div className="plan-dialog__roster">
+          {!deferredSearch && candidateIds.length > 0 && (
+            <div className="vision-picker-candidates">
+              <strong>Kandidat gambar · pilih untuk konfirmasi</strong>
+              {candidateIds.map(id => heroes.find(hero => hero.hero_id === id)).filter((hero): hero is Hero => Boolean(hero) && (!onlyGlobalReleased || isHeroGlobalReleased(hero!))).map(hero => (
+                <button type="button" key={hero.hero_id} className="plan-hero-row" disabled={unavailableHeroIds.has(hero.hero_id)} onClick={() => onSelect(hero.hero_id)}>
+                  <HeroThumbnail hero={hero} /><span><strong>{hero.name}</strong><small>{hero.primary_lane}</small></span>
+                </button>
+              ))}
+            </div>
+          )}
           {filtered.length ? filtered.map(hero => {
             const locked = unavailableHeroIds.has(hero.hero_id);
             return (

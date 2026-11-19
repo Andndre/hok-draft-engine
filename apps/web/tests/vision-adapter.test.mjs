@@ -38,12 +38,11 @@ test('our/enemy derivation is mirrored: occupied lanes constrain OUR side only',
   // Our side already occupies Clash/Jungle/Mid/Farm -> top advice must fill Roam.
   assert.equal(asBlue.heroSuggestions[0].primary_lane, 'Roam');
 
-  // Same board seen from the red side: it is the opponent's turn, no advice.
+  // Same board seen from red: the opponent's advice has the same public perspective.
   const asRed = call(pos, 'red');
   assert.equal(asRed.isUserTurn, false);
   assert.equal(asRed.actingSide, 'blue');
-  assert.deepEqual(asRed.heroIds, []);
-  assert.deepEqual(asRed.heroSuggestions, []);
+  assert.deepEqual(asRed.heroIds, asBlue.heroIds);
 
   // At red's pick turn the SAME four heroes are now ENEMY picks: they must not
   // block our (red side's) vacant lanes, so a Farm-primary hero becomes advice.
@@ -85,7 +84,7 @@ test('only globally released heroes appear in heroSuggestions', () => {
   assert.equal(rec.heroIds.includes(nonGlobalId), false);
 });
 
-test('opponent turns and ban turns yield no pick candidates for the user', () => {
+test('opponent pick turns produce public predictions while ban and complete turns do not', () => {
   // Blue's ban turn (step 0): it IS the user's turn but no pick advice is due.
   const banTurn = call(emptyPosition(), 'blue');
   assert.equal(banTurn.isUserTurn, true);
@@ -98,7 +97,8 @@ test('opponent turns and ban turns yield no pick candidates for the user', () =>
   const oppTurn = call(pos4, 'red');
   assert.equal(oppTurn.isUserTurn, false);
   assert.equal(oppTurn.actingSide, 'blue');
-  assert.deepEqual(oppTurn.heroIds, []);
+  assert.ok(oppTurn.heroIds.length > 0);
+  assert.deepEqual(oppTurn.heroIds, call(pos4, 'red', { planAId: G[8], planBId: G[9] }).heroIds, 'private player plans must not affect opponent prediction');
 
   // Completed draft: no advice either way.
   const done = call({ ...emptyPosition(), step: 18 }, 'blue');

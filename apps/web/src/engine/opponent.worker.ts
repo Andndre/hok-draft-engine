@@ -21,7 +21,7 @@ self.onmessage = (event: MessageEvent) => {
   const request = event.data;
   if (request.type === 'init') { dataset = request.dataset; aiSide = request.aiSide; return; }
   if (request.type !== 'decide' || !dataset) return;
-  const { sessionId, revision, position, fearless, aiPlan, format, side, options, isUltimateBattle, rankedBanCount } = request as {
+  const { sessionId, revision, position, fearless, aiPlan, format, side, options, isUltimateBattle, rankedBanCount, onlyGlobal } = request as {
     sessionId: string; revision: number; position: DraftPosition;
     fearless: SearchContext['fearless']; aiPlan: SearchContext['aiPlan'];
     format?: SearchContext['format'];
@@ -44,12 +44,13 @@ self.onmessage = (event: MessageEvent) => {
      * akan dibaca sebagai urutan 3 ban — giliran yang salah dinilai.
      */
     rankedBanCount?: 3 | 4 | 5;
+    onlyGlobal?: boolean;
   };
   try {
     const context: SearchContext = {
       heroes: dataset.heroes,
       synergy: dataset.synergy,
-      onlyGlobal: true,
+      onlyGlobal: onlyGlobal ?? true,
       fearless,
       aiSide: side ?? aiSide,
       aiPlan: side ? { a: null, b: null } : aiPlan,

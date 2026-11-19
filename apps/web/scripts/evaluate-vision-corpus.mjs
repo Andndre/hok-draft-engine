@@ -96,6 +96,7 @@ Opsional:
   --scale         faktor downscale frame (default 1.0; 0.7 ≈ jendela fullscreen, 0.5 ≈ jendela kecil)
   --min-score     ambang score matcher slot PICK (default 0.55)
   --min-margin    ambang margin top-1 vs top-2 slot PICK (default 0.04)
+  --shortlist-size jumlah referensi pick untuk uji pencarian lebih luas (default 12)
   --ban-gt        berkas ground truth identitas ban (default: tests/fixtures/vision/ban-identity-ground-truth.json)
 
 Slot BAN selalu di-match dengan kind:'ban' seperti jalur live. Dengan referensi
@@ -717,7 +718,9 @@ async function main() {
 
   const minScore = Number(options['min-score'] ?? 0.55);
   const minMargin = Number(options['min-margin'] ?? 0.04);
-  const matcher = new HeroMatcher(references, { minScore, minMargin });
+  const shortlistSize = options['shortlist-size'] ? Number(options['shortlist-size']) : undefined;
+  if (shortlistSize !== undefined && (!Number.isInteger(shortlistSize) || shortlistSize < 1)) fail('--shortlist-size harus berupa bilangan bulat positif');
+  const matcher = new HeroMatcher(references, { minScore, minMargin, shortlistSize });
   const captureScale = Number(options.scale ?? 1);
   if (!Number.isFinite(captureScale) || captureScale <= 0 || captureScale > 1) {
     fail(`Opsi --scale harus berada di (0, 1] (faktor downscale frame), bukan "${options.scale ?? ''}".`);

@@ -11,6 +11,8 @@ import {
   Info,
   LoaderCircle,
   Monitor,
+  Pause,
+  Play,
   RefreshCw,
   Scan,
   Shield,
@@ -20,9 +22,12 @@ import {
   UserRound,
   XCircle,
 } from 'lucide-react';
-import type { DraftFormat, Hero } from '../types';
+import type { DraftFormat, Hero, TournamentDataset } from '../types';
 import type { DraftPosition, Side } from '../engine/draftRules';
 import { getDraftSequence, getDraftTurn } from '../engine/draftRules';
+import { OpponentClient } from '../engine/opponentClient';
+import { MAX_ADVISOR_BUDGET_MS } from '../engine/draftSearch';
+import { orderRecommendationsBySolver, type AdvisorDecision } from '../engine/advisorRanking';
 import type { Rect, VisionSide, VisionSlotKind } from '../vision/types';
 import { VisionPipeline, VisionPipelineStatus, scaleRect } from '../vision/pipeline';
 import type { LayoutStatus, ObserverResult, VisionRecommendation, SideCrossCheck } from '../vision/pipeline';
@@ -41,12 +46,12 @@ import { visionFormatMismatchReason, type VisionApplyResult } from '../vision/vi
 import { VisionHeroPickerModal } from './VisionHeroPickerModal';
 import { HeroThumbnail } from './ui/AssetThumbnail';
 import { LaneLabel } from './ui/LaneIcon';
-import { TacticalRadarPanel } from './TacticalRadarPanel';
 import { evaluateTacticalScores } from '../engine/tournamentInference';
 import { PostDraftGamePlanPanel } from './PostDraftGamePlanPanel';
 import { buildDefaultLaneAssignments, assignmentToHeroLaneMap } from '../engine/gamePlan';
 
 interface VisionPanelProps {
+  dataset?: TournamentDataset | null;
   heroes: Hero[];
   synergyData: Record<string, any>;
   /** Draft format the advisor follows; tied to the calibrated region profile, not to the simulator mode. */
@@ -89,11 +94,6 @@ export function positionIsPrefix(current: DraftPosition, detected: DraftPosition
 function findHero(heroes: Hero[], heroId: number | null): Hero | undefined {
   if (heroId === null) return undefined;
   return heroes.find(hero => hero.hero_id === heroId);
-}
-
-/** Format a confidence score as a percentage string. */
-function formatConfidence(score: number): string {
-  return `${Math.round(score * 100)}%`;
 }
 
 const PHASE_LABELS: Record<VisionRecommendation['phase'], string> = {
@@ -356,8 +356,6 @@ export function VisionDetectedBoard({ slotsByTeam, ownSide, advisorIsUltimateBat
                         <span className="slot-code">{slotCode}</span>
                         {isPreselected ? (
                           <span className="slot-flex-tag vision-tag-preselect">Pilih Dulu</span>
-                        ) : slot.hero ? (
-                          <span className="slot-flex-tag vision-tag-score">{formatConfidence(slot.score)}</span>
                         ) : null}
                       </span>
                       <span className="pick-slot__info">
@@ -388,6 +386,7 @@ export function VisionDetectedBoard({ slotsByTeam, ownSide, advisorIsUltimateBat
 
 /** Operator-facing surface for the Live Draft Advisor with preview overlay and verification affordances. */
 export function VisionPanel({
+  dataset,
   heroes,
   synergyData,
   advisorFormat = 'ranked',
@@ -405,6 +404,7 @@ export function VisionPanel({
   onInspectHero,
 }: VisionPanelProps) {
   const [status, setStatus] = useState<VisionPipelineStatus>('idle');
+  const [paused, setPaused] = useState(false);
   const [progress, setProgress] = useState({ done: 0, total: 0 });
   const [error, setError] = useState<string | null>(null);
   const [side, setSide] = useState<VisionSide>('blue');
@@ -416,7 +416,6 @@ export function VisionPanel({
   const [sideCheck, setSideCheck] = useState<SideCrossCheck | null>(null);
   const [showOverlay, setShowOverlay] = useState(true);
   const [overlayRevision, setOverlayRevision] = useState(0);
-  const [settingsOpen, setSettingsOpen] = useState(true);
   const [interactionMode, setInteractionMode] = useState<'detect' | 'edit'>('detect');
   const [manualState, setManualState] = useState<{
     pickActions: Array<{ slotIndex: number; side: VisionSide; heroId: number; score: number; locked: boolean; at: number }>;
@@ -426,8 +425,15 @@ export function VisionPanel({
   }>({ pickActions: [], preSelections: [], banEstimates: [], lastPickActionSlot: null });
   const [pickerSlot, setPickerSlot] = useState<number | null>(null);
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [pickerCandidates, setPickerCandidates] = useState<number[]>([]);
+  const [unresolvedPickSlot, setUnresolvedPickSlot] = useState<number | null>(null);
+  const clickTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [hoveredTarget, setHoveredTarget] = useState<string | null>(null);
   const [hoveredSlotIndex, setHoveredSlotIndex] = useState<number | null>(null);
+  const [banCaptureStatus, setBanCaptureStatus] = useState('');
+  const [quickStatus, setQuickStatus] = useState('');
+  const quickBusyRef = useRef(false);
+  const [capturingBans, setCapturingBans] = useState(false);
   const [manualConfig, setManualConfig] = useState<ManualLayoutConfig>(() =>
     loadManualLayoutConfig(advisorFormat === 'ranked' ? 3 : 5)
   );
@@ -535,8 +541,10 @@ export function VisionPanel({
         isUltimateBattle: advisorIsUltimateBattle,
         synergyDb: synergyData,
         manualLayout: manualConfig,
+        fps: 8,
       },
       {
+        onFrame: () => setOverlayRevision(r => r + 1),
         onStatus: s => callbacksRef.current.onStatus(s),
         onReferenceProgress: (done, total) => callbacksRef.current.onReferenceProgress(done, total),
         onObservation: (observation, result) => callbacksRef.current.onObservation(observation, result),
@@ -556,7 +564,12 @@ export function VisionPanel({
   }, []);
 
   useEffect(() => { pipelineRef.current?.setHeroes(heroes); }, [heroes]);
-  useEffect(() => { pipelineRef.current?.setSide(side); }, [side]);
+  useEffect(() => {
+    const pipeline = pipelineRef.current;
+    pipeline?.setSide(side);
+    setUnresolvedPickSlot(null);
+    if (pipeline) setManualState(pipeline.getManualState());
+  }, [side]);
   useEffect(() => { pipelineRef.current?.setFormat(advisorFormat); }, [advisorFormat]);
   useEffect(() => { pipelineRef.current?.setOnlyGlobal(onlyGlobalReleased); }, [onlyGlobalReleased]);
   useEffect(() => { pipelineRef.current?.setFearless({ blue: [...fearlessLocks.blue], red: [...fearlessLocks.red] }); }, [fearlessLocks.blue, fearlessLocks.red]);
@@ -583,7 +596,22 @@ export function VisionPanel({
 
   const handleStop = useCallback(() => {
     pipelineRef.current?.stop();
+    setPaused(false);
+    setLastObservation(null);
+    setLastResult(null);
+    setRecommendation(null);
+    setUnresolvedPickSlot(null);
+    setManualState({ pickActions: [], preSelections: [], banEstimates: [], lastPickActionSlot: null });
   }, []);
+
+  const togglePause = useCallback(() => {
+    const next = !paused;
+    if (pipelineRef.current?.setPaused(next)) setPaused(next);
+  }, [paused]);
+
+  useEffect(() => {
+    if (status !== 'running' && status !== 'not-calibrated') setPaused(false);
+  }, [status]);
 
   const isSupported = VisionPipeline.isSupported();
 
@@ -687,6 +715,43 @@ export function VisionPanel({
         for (const slot of manualSurfaceSlots) {
           drawSlotOverlay(ctx, slot.rect, slot, 'manual');
         }
+        // Keep names beside the portrait boxes, towards the centre of the screen.
+        ctx.save();
+        const fontSize = Math.max(16, Math.round(frame.width * 0.012));
+        ctx.font = `600 ${fontSize}px sans-serif`;
+        ctx.textBaseline = 'middle';
+        for (const entry of [...manualState.pickActions, ...manualState.preSelections]) {
+          const slot = manualSurfaceSlots.find(s => s.index === entry.slotIndex);
+          const hero = heroes.find(h => h.hero_id === entry.heroId);
+          if (!slot || !hero) continue;
+          const left = slot.rect.x + slot.rect.w / 2 < frame.width / 2;
+          const label = hero.name + ('locked' in entry ? '' : ' · pra-pilih');
+          const width = Math.min(ctx.measureText(label).width + 16, frame.width * 0.22);
+          const x = left ? slot.rect.x + slot.rect.w + 6 : slot.rect.x - width - 6;
+          const y = slot.rect.y + slot.rect.h / 2;
+          ctx.fillStyle = 'rgba(8, 15, 25, 0.88)';
+          ctx.fillRect(x, y - fontSize * 0.8, width, fontSize * 1.6);
+          ctx.fillStyle = '#fff';
+          ctx.textAlign = 'left';
+          ctx.fillText(label, x + 8, y, width - 16);
+        }
+        if (manualState.banEstimates.length) {
+          const rows = (['blue', 'red'] as const).map(team => {
+            const names = manualState.banEstimates.filter(entry => entry.side === team)
+              .map(entry => heroes.find(h => h.hero_id === entry.heroId)?.name).filter(Boolean);
+            return `${team === 'blue' ? 'Blue' : 'Red'}: ${names.join(' · ') || '—'}`;
+          });
+          const width = Math.min(Math.max(...rows.map(row => ctx.measureText(row).width), ctx.measureText('Ban (perkiraan)').width) + 24, frame.width * 0.65);
+          const x = (frame.width - width) / 2;
+          const y = frame.height * 0.08;
+          ctx.fillStyle = 'rgba(8, 15, 25, 0.9)';
+          ctx.fillRect(x, y, width, fontSize * 4.5);
+          ctx.fillStyle = '#fff';
+          ctx.textAlign = 'center';
+          ctx.fillText('Ban (perkiraan)', frame.width / 2, y + fontSize * 0.9, width - 16);
+          rows.forEach((row, index) => ctx.fillText(row, frame.width / 2, y + fontSize * (2.2 + index * 1.3), width - 16));
+        }
+        ctx.restore();
         if (interactionMode === 'detect') {
           ctx.save();
           const turn = lastResult ? getDraftTurn(lastResult.step, advisorFormat, advisorIsUltimateBattle) : undefined;
@@ -758,7 +823,7 @@ export function VisionPanel({
         }
       }
     }
-  }, [lastObservation, layoutStatus, showOverlay, side, overlayRevision, manualConfig, interactionMode, manualState, lastResult, advisorFormat, advisorIsUltimateBattle]);
+  }, [lastObservation, layoutStatus, showOverlay, side, overlayRevision, manualConfig, interactionMode, manualState, lastResult, advisorFormat, advisorIsUltimateBattle, heroes]);
 
   const handleCanvasPointerDown = useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
     if (!canvasRef.current) return;
@@ -920,6 +985,34 @@ export function VisionPanel({
     return slots.find(slot => px >= slot.rect.x && px <= slot.rect.x + slot.rect.w && py >= slot.rect.y && py <= slot.rect.y + slot.rect.h) ?? null;
   }, [manualConfig]);
 
+  const openSlotPicker = useCallback(async (slotIndex: number) => {
+    const pipeline = pipelineRef.current;
+    if (!pipeline) return;
+    const result = await pipeline.inspectSlot(slotIndex);
+    if (pipelineRef.current !== pipeline) return;
+    setPickerCandidates(result?.candidates.map(candidate => candidate.heroId) ?? []);
+    setPickerSlot(slotIndex);
+    setPickerOpen(true);
+  }, []);
+
+  const detectSlot = useCallback(async (slotIndex: number, allowBlankManual = false) => {
+    const pipeline = pipelineRef.current;
+    if (!pipeline) return;
+    const result = await pipeline.clickSlot(slotIndex);
+    if (pipelineRef.current !== pipeline) return;
+    setManualState(pipeline.getManualState());
+    if (result.action === 'abstained' || (allowBlankManual && result.action === 'blank')) {
+      if (result.action === 'abstained' && slotIndex < 10) setUnresolvedPickSlot(slotIndex);
+      const inspection = await pipeline.inspectSlot(slotIndex);
+      if (pipelineRef.current !== pipeline) return;
+      setPickerCandidates((inspection?.candidates ?? result.candidates)?.map(candidate => candidate.heroId) ?? []);
+      setPickerSlot(slotIndex);
+      setPickerOpen(true);
+    }
+  }, []);
+
+  useEffect(() => () => { if (clickTimerRef.current) clearTimeout(clickTimerRef.current); }, []);
+
   const handleCanvasClick = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
     if (interactionMode !== 'detect') return;
     if (dragOccurredRef.current) return;
@@ -934,13 +1027,33 @@ export function VisionPanel({
     const slot = findManualSlotAt(px, py);
     if (!slot) return;
     if (!pipeline.isSlotFilled(slot.index)) return;
-    void (async () => {
-      await pipeline.clickSlot(slot.index);
+    if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
+    clickTimerRef.current = setTimeout(() => { void detectSlot(slot.index); }, 250);
+  }, [findManualSlotAt, interactionMode, detectSlot]);
+
+  const handleCaptureAllBans = useCallback(async () => {
+    const pipeline = pipelineRef.current;
+    const frame = pipeline?.getLastFrame();
+    if (!pipeline || !frame || capturingBans) return;
+    setCapturingBans(true);
+    try {
+      const slots = buildManualRegionProfile(manualConfig, frame.width, frame.height).slots.filter(slot => slot.kind === 'ban');
+      let identified = 0;
+      let uncertain = 0;
+      for (const slot of slots) {
+        const result = await pipeline.refreshBan(slot.index);
+        if (result?.abstained) uncertain += 1;
+        else if (result?.heroId != null) identified += 1;
+      }
       setManualState(pipeline.getManualState());
-    })();
-  }, [findManualSlotAt, interactionMode]);
+      setBanCaptureStatus(`${identified} ban dikenali sebagai perkiraan${uncertain ? ` · ${uncertain} belum dikenali` : ''}.`);
+    } finally {
+      setCapturingBans(false);
+    }
+  }, [manualConfig, capturingBans]);
 
   const handleCanvasDoubleClick = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
     if (interactionMode !== 'detect') return;
     const canvas = canvasRef.current;
     const pipeline = pipelineRef.current;
@@ -953,41 +1066,64 @@ export function VisionPanel({
     if (!slot) return;
     const ownPickEmpty = slot.kind === 'pick' && slot.side === side && !pipeline.isSlotFilled(slot.index);
     if (!pipeline.isSlotFilled(slot.index) && !ownPickEmpty) return;
-    setPickerSlot(slot.index);
-    setPickerOpen(true);
-  }, [findManualSlotAt, interactionMode, side]);
+    void openSlotPicker(slot.index);
+  }, [findManualSlotAt, interactionMode, side, openSlotPicker]);
 
   const handleBoardSlotClick = useCallback((slotSide: VisionSide, kind: VisionSlotKind, displayIndex: number, double = false) => {
     if (interactionMode !== 'detect') return;
     const pipeline = pipelineRef.current;
     if (!pipeline) return;
     const banCount = manualConfig.ban.countPerSide;
+    const isLeft = slotSide === side;
     const slotIndex = kind === 'pick'
-      ? (slotSide === 'red' ? displayIndex : 5 + displayIndex)
-      : (slotSide === 'red' ? 10 + displayIndex : 10 + banCount + displayIndex);
+      ? (isLeft ? displayIndex : 5 + displayIndex)
+      : (isLeft ? 10 + displayIndex : 10 + banCount + displayIndex);
     const ownPickEmpty = kind === 'pick' && slotSide === side && !pipeline.isSlotFilled(slotIndex);
     if (!pipeline.isSlotFilled(slotIndex) && !ownPickEmpty) return;
     if (double) {
+      if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
       if (ownPickEmpty || pipeline.isSlotFilled(slotIndex)) {
-        setPickerSlot(slotIndex);
-        setPickerOpen(true);
+        void openSlotPicker(slotIndex);
       }
       return;
     }
-    void (async () => {
-      await pipeline.clickSlot(slotIndex);
-      setManualState(pipeline.getManualState());
-    })();
-  }, [manualConfig]);
+    if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
+    clickTimerRef.current = setTimeout(() => { void detectSlot(slotIndex); }, 250);
+  }, [manualConfig, side, interactionMode, openSlotPicker, detectSlot]);
+
+  const handlePreviewKeyDown = useCallback((event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (interactionMode !== 'detect' || status !== 'running' || pickerOpen || event.repeat || event.ctrlKey || event.altKey || event.metaKey || event.nativeEvent.isComposing) return;
+    if (event.target !== event.currentTarget) return;
+    if (event.key.toLowerCase() === 'c' && !event.shiftKey) {
+      const slot = unresolvedPickSlot ?? manualState.lastPickActionSlot;
+      if (slot !== null) { event.preventDefault(); void openSlotPicker(slot); }
+      return;
+    }
+    const match = /^Digit([0-9])$/.exec(event.code);
+    if (!match) return;
+    const digit = Number(match[1]);
+    const slotIndex = digit === 0 ? 9 : digit - 1;
+    const pipeline = pipelineRef.current;
+    if (!pipeline) return;
+    event.preventDefault();
+    if (event.shiftKey) {
+      if (pipeline.isSlotFilled(slotIndex) || slotIndex < 5) void openSlotPicker(slotIndex);
+    } else if (pipeline.isSlotFilled(slotIndex)) {
+      // Re-reading the most recently committed slot would undo it; use correction instead.
+      if (manualState.lastPickActionSlot === slotIndex) void openSlotPicker(slotIndex);
+      else void detectSlot(slotIndex);
+    }
+  }, [interactionMode, status, pickerOpen, manualState.lastPickActionSlot, unresolvedPickSlot, openSlotPicker, detectSlot]);
 
   const handlePickerSelect = useCallback((heroId: number) => {
     const pipeline = pipelineRef.current;
     if (!pipeline || pickerSlot === null) return;
     pipeline.updateSlotFromModal(pickerSlot, heroId);
+    if (pickerSlot === unresolvedPickSlot) setUnresolvedPickSlot(null);
     setManualState(pipeline.getManualState());
     setPickerOpen(false);
     setPickerSlot(null);
-  }, [pickerSlot]);
+  }, [pickerSlot, unresolvedPickSlot]);
 
   const detectedSlotsByTeam = useMemo(
     () => mapObservationToTeamSlots(lastObservation, heroes, advisorFormat, manualConfig.ban.countPerSide),
@@ -998,6 +1134,111 @@ export function VisionPanel({
     () => (lastResult ? getDraftTurn(lastResult.step, advisorFormat, advisorIsUltimateBattle) : undefined),
     [lastResult, advisorFormat, advisorIsUltimateBattle]
   );
+
+  useEffect(() => {
+    if (status === 'running' && interactionMode === 'detect') previewContainerRef.current?.focus({ preventScroll: true });
+  }, [status, interactionMode]);
+
+  useEffect(() => {
+    setQuickStatus('');
+  }, [lastResult?.step, side, interactionMode]);
+
+  const quickDetect = useCallback(async () => {
+    const pipeline = pipelineRef.current;
+    if (!pipeline || quickBusyRef.current || !currentTurn || currentTurn.isComplete || currentTurn.action !== 'pick') return;
+    const start = currentTurn.side === side ? 0 : 5;
+    const state = pipeline.getManualState();
+    const slot = Array.from({ length: 5 }, (_, index) => start + index)
+      .find(index => !state.pickActions.some(action => action.slotIndex === index));
+    if (slot === undefined) {
+      setQuickStatus('Tidak ada slot pick berikutnya pada sisi ini.');
+      return;
+    }
+    setQuickStatus('');
+    quickBusyRef.current = true;
+    try { await detectSlot(slot, true); } finally { quickBusyRef.current = false; }
+  }, [currentTurn, side, detectSlot]);
+
+  useEffect(() => {
+    if (status !== 'running' || interactionMode !== 'detect' || pickerOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Enter' || event.repeat || event.ctrlKey || event.altKey || event.metaKey || event.shiftKey || event.isComposing || event.keyCode === 229 || event.defaultPrevented) return;
+      const target = event.target as HTMLElement | null;
+      if (target?.closest('input, textarea, select, button, a, [contenteditable], dialog, [role="dialog"]') || document.querySelector('dialog[open], [role="dialog"][aria-modal="true"]')) return;
+      event.preventDefault();
+      void quickDetect();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [status, interactionMode, pickerOpen, quickDetect]);
+
+  const solverClient = useMemo(() => dataset ? new OpponentClient(dataset, 'blue') : null, [dataset]);
+  useEffect(() => () => solverClient?.cancel(), [solverClient]);
+  const solverRevision = useRef(0);
+  const [solverDecision, setSolverDecision] = useState<{ key: string; decision: AdvisorDecision } | null>(null);
+  const [solverState, setSolverState] = useState<'idle' | 'calculating' | 'ready' | 'fallback'>('idle');
+  const solverKey = JSON.stringify({
+    position: lastResult?.position ?? null,
+    valid: status === 'running' && !lastResult?.truncated && unresolvedPickSlot === null && (advisorFormat !== 'ranked' || manualConfig.ban.countPerSide === 3),
+    side: currentTurn?.side, action: currentTurn?.action, complete: currentTurn?.isComplete,
+    format: advisorFormat, ultimate: advisorIsUltimateBattle, onlyGlobal: onlyGlobalReleased,
+    fearless: { blue: [...fearlessLocks.blue].sort((a, b) => a - b), red: [...fearlessLocks.red].sort((a, b) => a - b) },
+    rankedBanCount: manualConfig.ban.countPerSide,
+  });
+  useEffect(() => {
+    setSolverDecision(null);
+    const request = JSON.parse(solverKey) as {
+      position: DraftPosition | null; valid: boolean; side?: Side; action?: 'pick' | 'ban'; complete?: boolean;
+      format: DraftFormat; ultimate: boolean; onlyGlobal: boolean; fearless: { blue: number[]; red: number[] }; rankedBanCount: 3 | 4 | 5;
+    };
+    if (!solverClient || !request.position || !request.valid || !request.side || request.action !== 'pick' || request.complete) {
+      setSolverState('idle');
+      return;
+    }
+    const controller = new AbortController();
+    const revision = ++solverRevision.current;
+    setSolverState('calculating');
+    void solverClient.decide(request.position, {
+      fearless: request.fearless, aiPlan: { a: null, b: null }, side: request.side,
+      format: request.format, isUltimateBattle: request.ultimate, rankedBanCount: request.rankedBanCount,
+      onlyGlobal: request.onlyGlobal,
+      options: { maxDepth: 4, width: 8, budgetMs: MAX_ADVISOR_BUDGET_MS, allowExtendedBudget: true, orderCandidates: true },
+    }, { sessionId: 'vision-advisor', revision }, controller.signal).then(decision => {
+      if (controller.signal.aborted) return;
+      if (decision.engineKind !== 'search' || decision.heroId === null || !decision.rootValues?.length) {
+        setSolverState('fallback');
+        return;
+      }
+      setSolverDecision({ key: solverKey, decision: { heroId: decision.heroId, engineKind: decision.engineKind, completedDepth: decision.completedDepth, elapsedMs: decision.elapsedMs, rootValues: decision.rootValues } });
+      setSolverState('ready');
+    }).catch(() => { if (!controller.signal.aborted) setSolverState('fallback'); });
+    return () => controller.abort();
+  }, [solverClient, solverKey]);
+
+  const rankedVisionRecommendations = useMemo(() => {
+    const entries = recommendation?.recommendations ?? [];
+    if (!solverDecision || solverDecision.key !== solverKey) return entries;
+    const lockedPlan = recommendation?.isUserTurn ? (side === 'blue' ? bluePlanAId ?? bluePlanBId : redPlanAId ?? redPlanBId) : null;
+    return orderRecommendationsBySolver(entries, solverDecision.decision.rootValues, { lockedPlanHeroId: lockedPlan });
+  }, [recommendation, solverDecision, solverKey, side, bluePlanAId, bluePlanBId, redPlanAId, redPlanBId]);
+
+  const activeSuggestion = useMemo(() => {
+    const frame = pipelineRef.current?.getLastFrame();
+    if (!frame || !showOverlay || interactionMode !== 'detect' || status !== 'running' || unresolvedPickSlot !== null || (advisorFormat === 'ranked' && manualConfig.ban.countPerSide !== 3) || !lastResult || lastResult.truncated || !recommendation || !recommendation.isPickPhase || recommendation.step !== lastResult.step || !recommendation.heroSuggestions.length) return null;
+    const slots = resolveSlotSides(buildManualRegionProfile(manualConfig, frame.width, frame.height), side);
+    const slot = slots.find(item => item.kind === 'pick' && item.side === recommendation.actingSide && !manualState.pickActions.some(a => a.slotIndex === item.index) && !manualState.preSelections.some(a => a.slotIndex === item.index));
+    if (!slot) return null;
+    const own = recommendation.actingSide === side;
+    return {
+      own,
+      left: own ? (slot.rect.x + slot.rect.w) / frame.width * 100 : (frame.width - slot.rect.x) / frame.width * 100,
+      top: Math.max(2, Math.min(75, slot.rect.y / frame.height * 100)),
+      hero: rankedVisionRecommendations[0]?.hero ?? recommendation.heroSuggestions[0],
+      alternatives: rankedVisionRecommendations.length ? rankedVisionRecommendations.slice(1, 4).map(entry => entry.hero) : recommendation.heroSuggestions.slice(1, 4),
+      reason: rankedVisionRecommendations[0]?.laneTag || rankedVisionRecommendations[0]?.proComboTag || 'Saran berdasarkan posisi draft saat ini',
+      solver: solverDecision?.key === solverKey ? `${rankedVisionRecommendations[0]?.hero.hero_id === solverDecision.decision.heroId ? 'Pilihan solver' : 'Urutan solver'} · ${solverDecision.decision.completedDepth} ply · ${(solverDecision.decision.elapsedMs / 1000).toFixed(1)} dtk` : solverState === 'calculating' ? 'Mesin sedang menghitung…' : 'Solver belum tersedia · saran sementara',
+    };
+  }, [status, showOverlay, interactionMode, lastResult, recommendation, manualConfig, side, manualState, overlayRevision, unresolvedPickSlot, advisorFormat, rankedVisionRecommendations, solverDecision, solverKey, solverState]);
 
   const sideOptions: { value: VisionSide; label: string }[] = [
     { value: 'blue', label: 'Blue' },
@@ -1018,18 +1259,10 @@ export function VisionPanel({
 
   const renderRecommendation = () => {
     if (!recommendation) return null;
+    if (advisorFormat === 'ranked' && manualConfig.ban.countPerSide !== 3) return <p>Saran pick belum tersedia untuk konfigurasi selain 3 ban per sisi.</p>;
+    if (unresolvedPickSlot !== null) return <p>Pick belum dikenali. Klik dua kali slot tersebut untuk memilih hero.</p>;
     if (currentTurn?.isComplete) return null;
-    if (!recommendation.isUserTurn) {
-      return (
-        <div className="vision-recommendation vision-recommendation--waiting">
-          <Info aria-hidden="true" />
-          <div>
-            <strong>Giliran {recommendation.actingSide === 'blue' ? 'Blue' : 'Red'}</strong>
-            <p>Rekomendasi pick muncul saat giliran Anda.</p>
-          </div>
-        </div>
-      );
-    }
+    if (lastResult?.truncated) return <p>Periksa slot yang belum dikenali sebelum memakai saran.</p>;
     if (!recommendation.isPickPhase) {
       return (
         <div className="vision-recommendation vision-recommendation--waiting">
@@ -1052,48 +1285,7 @@ export function VisionPanel({
         </div>
       );
     }
-    if (recommendation.recommendations && recommendation.recommendations.length > 0 && recommendation.tacticalScores) {
-      return (
-        <TacticalRadarPanel
-          scores={recommendation.tacticalScores}
-          phaseStrategy={recommendation.phaseStrategy}
-          recommendations={recommendation.recommendations}
-          duetPackages={recommendation.duetPackages}
-          onInspectHero={onInspectHero}
-          activeSide={side}
-          isPickPhase={true}
-        />
-      );
-    }
-    const top = recommendation.heroSuggestions[0];
-    return (
-      <div className="vision-recommendation">
-        <div className="vision-recommendation__header">
-          <span className="section-heading__icon"><Swords aria-hidden="true" /></span>
-          <div>
-            <h4>Rekomendasi Pick</h4>
-            <p>{PHASE_LABELS[recommendation.phase]} · Langkah {recommendation.step + 1}</p>
-          </div>
-        </div>
-        <div className="vision-recommendation__primary">
-          {top && <HeroThumbnail hero={top} />}
-          <div>
-            <strong>{top?.name}</strong>
-            <span>{top?.primary_role} · {top?.primary_lane}</span>
-          </div>
-        </div>
-        {recommendation.heroSuggestions.length > 1 && (
-          <div className="vision-recommendation__alternatives">
-            {recommendation.heroSuggestions.slice(1, 4).map((hero, index) => (
-              <button key={hero.hero_id} type="button" className="vision-rec-alt" onClick={() => onInspectHero?.(hero)}>
-                <HeroThumbnail hero={hero} />
-                <span>#{index + 2} {hero.name}</span>
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-    );
+    return null;
   };
 
 
@@ -1134,16 +1326,6 @@ export function VisionPanel({
               );
             })}
           </fieldset>
-          {showPreview && (
-            <button
-              type="button"
-              className={`ui-button ui-button--quiet ${settingsOpen ? 'is-selected' : ''}`}
-              onClick={() => setSettingsOpen(v => !v)}
-              aria-pressed={settingsOpen}
-            >
-              <SlidersHorizontal aria-hidden="true" />Pengaturan
-            </button>
-          )}
           {status === 'running' || status === 'not-calibrated' ? (
             <button type="button" className="ui-button ui-button--quiet" onClick={handleStop}>
               <XCircle aria-hidden="true" />Berhenti
@@ -1241,8 +1423,8 @@ export function VisionPanel({
       {showPreview && (
         <>
           <div className="vision-status-bar">
-            <span className="vision-status-bar__pulse" aria-hidden="true" />
-            <span>{status === 'running' ? 'Mengamati layar…' : 'Menunggu kalibrasi resolusi…'}</span>
+            <span className={`vision-status-bar__pulse${paused ? ' is-paused' : ''}`} aria-hidden="true" />
+            <span>{paused ? 'Pratinjau dijeda · berbagi layar masih aktif' : status === 'running' ? 'Mengamati layar…' : 'Menunggu kalibrasi resolusi…'}</span>
             {lastResult && (
               <span className="vision-status-bar__phase">
                 {PHASE_LABELS[lastResult.phase]} · {lastResult.step}/{getDraftSequence(advisorFormat, advisorIsUltimateBattle).length} aksi
@@ -1251,20 +1433,18 @@ export function VisionPanel({
             )}
           </div>
 
-          <div className={`vision-workspace${settingsOpen ? ' has-settings' : ''}`}>
-            <div className="vision-preview" ref={previewContainerRef}>
+          <div className={`vision-workspace${interactionMode === 'edit' ? ' has-settings' : ''}`}>
+            <div className="vision-preview" ref={previewContainerRef} tabIndex={interactionMode === 'detect' ? 0 : undefined} role="group" aria-label="Pratinjau layar dan shortcut slot" onKeyDown={handlePreviewKeyDown}>
               <div className="vision-preview__header">
                 <span className="vision-preview__title"><Scan aria-hidden="true" />Pratinjau layar &amp; overlay slot</span>
                 <div className="vision-preview__header-actions">
-                  <select
-                    aria-label="Pilih preset layout"
-                    value=""
-                    onChange={(e) => { if (e.target.value) handleLoadPreset(e.target.value); }}
-                    className="vision-settings__input"
-                  >
-                    <option value="">Preset…</option>
-                    {presets.map(p => <option key={p.name} value={p.name}>{p.name}</option>)}
-                  </select>
+                  {interactionMode === 'detect' && <>
+                    <button type="button" className="ui-button ui-button--small ui-button--quiet" onClick={() => { previewContainerRef.current?.focus({ preventScroll: true }); void quickDetect(); }} disabled={!currentTurn || currentTurn.isComplete || currentTurn.action !== 'pick'}>Baca pick · Enter</button>
+                    {(unresolvedPickSlot ?? manualState.lastPickActionSlot) !== null && <button type="button" className="ui-button ui-button--small ui-button--quiet" onClick={() => void openSlotPicker((unresolvedPickSlot ?? manualState.lastPickActionSlot)!)}>Koreksi pick · C</button>}
+                  </>}
+                  <button type="button" className="ui-button ui-button--small ui-button--quiet" onClick={() => void handleCaptureAllBans()} disabled={capturingBans}>
+                    {capturingBans ? 'Membaca ban…' : 'Capture semua ban'}
+                  </button>
                   <div className="vision-mode-toggle" role="group" aria-label="Mode interaksi">
                     <button
                       type="button"
@@ -1294,12 +1474,13 @@ export function VisionPanel({
                   </label>
                 </div>
               </div>
+              {quickStatus && <div className="vision-quick-status" role="status">{quickStatus}</div>}
               <div className="vision-preview__canvas-wrap">
                 <canvas
                   ref={canvasRef}
                   className="vision-preview__canvas"
                   style={{ cursor: interactionMode === 'detect' ? (hoveredSlotIndex !== null ? 'pointer' : 'default') : (dragRef.current ? (dragRef.current.target.startsWith('resize') ? 'nwse-resize' : 'grabbing') : (hoveredTarget?.startsWith('resize') ? 'nwse-resize' : hoveredTarget ? 'grab' : 'default')), touchAction: 'none' }}
-                  onClick={handleCanvasClick}
+                  onClick={event => { previewContainerRef.current?.focus({ preventScroll: true }); handleCanvasClick(event); }}
                    onDoubleClick={handleCanvasDoubleClick}
                    onPointerDown={handleCanvasPointerDown}
                   onPointerMove={handleCanvasPointerMove}
@@ -1308,23 +1489,35 @@ export function VisionPanel({
                   onPointerLeave={() => { setHoveredTarget(null); setHoveredSlotIndex(null); }}
                   aria-label="Pratinjau layar dengan overlay slot draft"
                 />
+                <button type="button" className={`vision-preview__playback${paused ? ' is-paused' : ''}`} onClick={togglePause} aria-label={paused ? 'Lanjutkan pratinjau' : 'Jeda pratinjau'} title={paused ? 'Lanjutkan pratinjau' : 'Jeda pratinjau'}>
+                  {paused ? <Play aria-hidden="true" /> : <Pause aria-hidden="true" />}
+                  <span className="sr-only">{paused ? 'Lanjutkan pratinjau' : 'Jeda pratinjau'}</span>
+                </button>
+                {activeSuggestion && (
+                  <section className={`vision-slot-suggestion ${activeSuggestion.own ? 'is-own' : 'is-enemy'}`} style={{ top: `${activeSuggestion.top}%`, ...(activeSuggestion.own ? { left: `${activeSuggestion.left}%` } : { right: `${activeSuggestion.left}%` }) }} tabIndex={0} aria-label={`${activeSuggestion.own ? 'Saran pick' : 'Prediksi pick lawan'}: ${activeSuggestion.hero.name}. Fokus untuk melihat alternatif.`}>
+                    <div className="vision-slot-suggestion__main">
+                      <HeroThumbnail hero={activeSuggestion.hero} />
+                      <div><small>{activeSuggestion.own ? 'Saran pick' : 'Prediksi pick lawan'}</small><strong>{activeSuggestion.hero.name}</strong><span>{activeSuggestion.hero.primary_lane}</span></div>
+                    </div>
+                    <p>{activeSuggestion.reason}</p>
+                    <small className="vision-slot-suggestion__solver">{activeSuggestion.solver}</small>
+                    <div className="vision-slot-suggestion__alternatives">Alternatif: {activeSuggestion.alternatives.map(hero => hero.name).join(' · ') || 'Tidak ada'}</div>
+                  </section>
+                )}
               </div>
               <p className="vision-preview__hint">
-                Seret titik kuning pada slot untuk menggeser atau ubah ukuran grid. Semua kotak 1:1 dan dicerminkan kiri-kanan.
+                {interactionMode === 'edit'
+                  ? 'Seret titik kuning atau gunakan pengaturan untuk menyesuaikan kotak slot.'
+                  : 'Klik slot untuk membaca hero, atau klik dua kali untuk memilih hero secara manual. Posisi baris saran hanya perkiraan.'}
               </p>
+              {interactionMode === 'detect' && <p className="vision-preview__hint">Enter membaca pick pada sisi yang bergiliran. Fokuskan pratinjau untuk C (koreksi terakhir), angka 1–5 (kiri) atau 6–0 (kanan), dan Shift + angka (koreksi slot).</p>}
+              <p className="vision-preview__hint" role="status">{banCaptureStatus}</p>
             </div>
 
-            {settingsOpen && (
+            {interactionMode === 'edit' && (
               <aside className="vision-settings-panel" aria-label="Pengaturan slot">
                 <div className="vision-settings__head">
                   <h3><SlidersHorizontal aria-hidden="true" />Pengaturan Slot</h3>
-                  <button
-                    type="button"
-                    className={`ui-button ui-button--small ui-button--quiet ${interactionMode === 'edit' ? 'is-selected' : ''}`}
-                    onClick={() => setInteractionMode(mode => mode === 'edit' ? 'detect' : 'edit')}
-                  >
-                    {interactionMode === 'edit' ? 'Selesai Edit' : 'Edit Kotak'}
-                  </button>
                   <button
                     type="button"
                     className="ui-button ui-button--small ui-button--quiet"
@@ -1380,6 +1573,7 @@ export function VisionPanel({
                   </div>
                 </div>
 
+                {interactionMode === 'edit' && <>
                 <div className="vision-slider-group">
                   <div className="vision-slider-group__title is-pick">Slot Pick</div>
                   <div className="vision-slider-grid">
@@ -1531,6 +1725,7 @@ export function VisionPanel({
                     </label>
                   </div>
                 </div>
+                </>}
               </aside>
             )}
           </div>
@@ -1658,8 +1853,9 @@ export function VisionPanel({
         isOpen={pickerOpen}
         onClose={() => { setPickerOpen(false); setPickerSlot(null); }}
         heroes={heroes}
+        candidateIds={pickerCandidates}
         onlyGlobalReleased={onlyGlobalReleased}
-        unavailableHeroIds={new Set(manualState.pickActions.map(a => a.heroId).concat(manualState.banEstimates.map(b => b.heroId)))}
+        unavailableHeroIds={new Set([...manualState.pickActions, ...manualState.preSelections, ...manualState.banEstimates].filter(entry => entry.slotIndex !== pickerSlot).map(entry => entry.heroId))}
         onSelect={handlePickerSelect}
         title={pickerSlot !== null && pickerSlot < 10 ? 'Pilih hero untuk slot pick' : 'Pilih hero untuk slot ban'}
       />
