@@ -103,7 +103,7 @@ export function DraftSimulator({
   return (
     <section className="draft-board surface-panel" aria-label={playerSide ? 'Papan latihan draft' : 'Papan simulator draft'}>
       {fearlessConflicts.length > 0 && (
-        <div className="surface-banner surface-banner--warning" role="alert" style={{ marginBottom: '1rem', padding: '0.75rem 1rem', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.4)', borderRadius: '8px' }}>
+        <div className="surface-banner surface-banner--warning" role="alert">
           <strong>⚠️ Konflik Fearless Terdeteksi:</strong> Terdapat hero yang pernah dipick oleh tim yang sama di game lampau:{' '}
           {fearlessConflicts.map((c) => `${c.heroName ?? c.heroId} (Game ${c.game} ${c.side.toUpperCase()})`).join(', ')}.
         </div>
@@ -121,7 +121,7 @@ export function DraftSimulator({
                 maxSteps +
                 ' aksi selesai'}
               {format !== 'ranked' && (
-                <span className="muted-copy" style={{ marginLeft: '0.75rem', fontWeight: 600 }}>
+                <span className="muted-copy series-score-copy">
                   ({teamAName} {seriesScore.teamA} - {seriesScore.teamB} {teamBName})
                 </span>
               )}
@@ -241,10 +241,10 @@ export function DraftSimulator({
             <p>{team.caption}</p>
           </div>
           {!isUltimateBattle && (
-            <div className="ban-slots" aria-label={'Ban tim ' + team.label}>{team.bans.map((hero, index) => {
+            <div className="ban-slots" role="group" aria-label={'Ban tim ' + team.label}>{team.bans.map((hero, index) => {
               const active = activeSide && currentTurn.action === 'ban' && index === team.bans.findIndex(value => value === null);
               const isAiBlindBan = format === 'ranked' && currentTurn.stepIndex < 6 && Boolean(playerSide) && playerSide !== team.side;
-              return <button type="button" key={index} className={'ban-slot' + (active ? ' is-active' : '')} aria-label={isAiBlindBan ? 'Ban ' + (index + 1) + ' tim lawan (tersembunyi)' : hero ? 'Lihat hero terban ' + hero.name : team.label + ' ban ' + (index + 1) + (active ? ', giliran saat ini' : '')} title={isAiBlindBan ? 'Ban rahasia AI' : hero ? hero.name : 'Ban ' + (index + 1)} disabled={isAiBlindBan ? true : hero ? !onInspectHero : !active || !onRequestHero} onClick={() => { if (isAiBlindBan) return; if (hero) onInspectHero?.(hero); else onRequestHero?.(); }}>{isAiBlindBan ? <><LockKeyhole aria-hidden="true" /><span>?</span></> : hero ? <HeroThumbnail hero={hero} /> : <><ShieldBan aria-hidden="true" /><span>{index + 1}</span></>}</button>;
+              return <button type="button" key={index} className={'ban-slot' + (active ? ' is-active' : '')} aria-label={isAiBlindBan ? 'Ban ' + (index + 1) + ' tim lawan (tersembunyi)' : hero ? 'Lihat hero terban ' + hero.name : team.label + ' ban ' + (index + 1) + (active ? ', giliran saat ini' : '')} title={isAiBlindBan ? 'Ban rahasia AI' : hero ? hero.name : 'Ban ' + (index + 1)} disabled={isAiBlindBan ? true : hero ? !onInspectHero : !active || !onRequestHero} onClick={() => { if (isAiBlindBan) return; if (hero) onInspectHero?.(hero); else onRequestHero?.(); }}>{isAiBlindBan ? <><LockKeyhole aria-hidden="true" /><span>?</span></> : hero ? <HeroThumbnail hero={hero} priority="eager" /> : <><ShieldBan aria-hidden="true" /><span>{index + 1}</span></>}</button>;
             })}</div>
           )}
         </div>
@@ -258,13 +258,13 @@ export function DraftSimulator({
           const displayLane = assignedLane ?? hero?.primary_lane;
           const isFlexShifted = Boolean(hero && assignedLane && assignedLane !== hero.primary_lane);
           return <button type="button" key={index} className={'pick-slot' + (hero ? ' is-filled' : '') + (active ? ' is-active' : '')} disabled={hero ? !onInspectHero : !active || !onRequestHero} title={hero ? hero.name + ' (' + displayLane + (isFlexShifted ? ' · Swap' : '') + ')' : undefined} aria-label={hero ? 'Lihat ' + slotName + ': ' + hero.name + ' (' + displayLane + (isFlexShifted ? ', Swap' : '') + ')' : slotName + (active ? ': pilih hero sekarang' : ': menunggu giliran')} onClick={() => { if (hero) onInspectHero?.(hero); else { onSelectSlot?.(team.side, 'pick', index); onRequestHero?.(); } }}>
-            <span className="pick-slot__portrait">{hero ? <HeroThumbnail hero={hero} /> : active ? <ArrowDown className="pick-slot__next" aria-hidden="true" /> : <UserRound aria-hidden="true" />}</span>
+            <span className="pick-slot__portrait">{hero ? <HeroThumbnail hero={hero} priority="eager" /> : active ? <ArrowDown className="pick-slot__next" aria-hidden="true" /> : <UserRound aria-hidden="true" />}</span>
             <span className="pick-slot__badges">
               <span className="slot-code">{slotName}</span>
               {isFlexShifted && <span className="slot-flex-tag">Swap</span>}
-              {active && doublePick.isDoublePickFirst && <span className="slot-flex-tag" style={{ background: '#eab308', color: '#000', fontWeight: 700 }}>Pick 1/2</span>}
-              {active && doublePick.isDoublePickSecond && <span className="slot-flex-tag" style={{ background: '#eab308', color: '#000', fontWeight: 700 }}>Pick 2/2</span>}
-              {isPartnerDoubleSlot && <span className="slot-flex-tag" style={{ background: 'rgba(234, 179, 8, 0.2)', color: '#eab308' }}>Slot 2/2</span>}
+              {active && doublePick.isDoublePickFirst && <span className="slot-flex-tag slot-flex-tag--double-active">Pick 1/2</span>}
+              {active && doublePick.isDoublePickSecond && <span className="slot-flex-tag slot-flex-tag--double-active">Pick 2/2</span>}
+              {isPartnerDoubleSlot && <span className="slot-flex-tag slot-flex-tag--double-partner">Slot 2/2</span>}
             </span>
             <span className="pick-slot__info"><strong>{hero?.name ?? (active ? 'Pilih hero' : isPartnerDoubleSlot ? 'Giliran ke-2' : 'Menunggu')}</strong><small>{hero ? <LaneLabel lane={displayLane!} /> : active ? (doublePick.isDoublePickFirst ? 'Giliran 1 dari 2' : 'Giliran 2 dari 2') : isPartnerDoubleSlot ? 'Paket Duet' : 'Kosong'}</small></span>
           </button>;
@@ -273,13 +273,13 @@ export function DraftSimulator({
       </section>;
     })}</div>
     {currentTurn.isComplete && (
-      <div className="board-complete-panel" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '1rem' }}>
-        <p className="board-complete" style={{ margin: 0 }}>
+      <div className="board-complete-panel">
+        <p className="board-complete">
           <CheckCircle2 aria-hidden="true" />Kedua tim lengkap. Tinjau komposisi dan matchup sebelum game berikutnya.
         </p>
         {format !== 'ranked' && onRecordWinner && (
-          <div className="winner-selection-bar" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.5rem 1rem', background: 'rgba(255, 255, 255, 0.04)', borderRadius: '8px' }}>
-            <span style={{ fontSize: '0.875rem', fontWeight: 600 }}>Hasil Game {gameNumber}:</span>
+          <div className="winner-selection-bar">
+            <span className="winner-selection-bar__label">Hasil Game {gameNumber}:</span>
             <button
               type="button"
               className={`ui-button ui-button--small ${currentGameWinner === 'blue' ? 'ui-button--primary' : 'ui-button--quiet'}`}
@@ -295,7 +295,7 @@ export function DraftSimulator({
               🏆 {redTeamName} (Red) Menang
             </button>
             {currentGameWinner && (
-              <span className="muted-copy" style={{ fontSize: '0.8125rem' }}>
+              <span className="muted-copy winner-selection-bar__note">
                 (Pemenang tercatat: {currentGameWinner === 'blue' ? blueTeamName : redTeamName})
               </span>
             )}

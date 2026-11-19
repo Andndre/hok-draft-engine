@@ -1,11 +1,11 @@
 import { HeroRoleIcons } from './ui/HeroRoleIcons';
-import React, { useState, useEffect } from 'react';
+import React, { useId } from 'react';
 import { BookOpen, LockKeyhole, ShieldBan, Sparkles, Swords } from 'lucide-react';
 import type { HeroCardProps } from './HeroCardCompact';
 import { HeroThumbnail } from './ui/AssetThumbnail';
 import { plainText } from './ui/presentation';
 
-export function HeroCardDetailed({
+export const HeroCardDetailed = React.memo(function HeroCardDetailed({
   hero,
   isSelected,
   isUnavailable,
@@ -17,43 +17,44 @@ export function HeroCardDetailed({
   aiRank,
   recommendationReason,
   projection,
+  imagePriority,
 }: HeroCardProps) {
   const ActionIcon = action === 'ban' ? ShieldBan : Swords;
-  const [showHoverCard, setShowHoverCard] = useState(false);
-
-  useEffect(() => {
-    if (!showHoverCard) return;
-    const handleOutside = () => setShowHoverCard(false);
-    window.addEventListener('click', handleOutside);
-    return () => window.removeEventListener('click', handleOutside);
-  }, [showHoverCard]);
+  const hovercardId = useId();
+  const hasTooltip = Boolean(recommendationReason || projection);
 
   return (
-    <article className={'hero-card hero-card--detailed' + (isSelected ? ' is-selected' : '') + (isUnavailable ? ' is-unavailable' : '') + (showHoverCard ? ' has-hovercard-open' : '')}>
-      <button type="button" className="hero-card__cover" onClick={() => onClick(hero)} aria-label={'Buka wiki ' + hero.name}>
-        <HeroThumbnail hero={hero} className="hero-card__portrait" />
-        <span
-          className={'tier-label tier-' + (hero.popularity_band ?? 'C')}
-          title="Popularitas di HoK Camp (seberapa sering dipilih/dibanned) — bukan tier kekuatan"
-        >
-          {hero.popularity_band ?? '—'}
-        </span>
+    <article className={'hero-card hero-card--detailed' + (isSelected ? ' is-selected' : '') + (isUnavailable ? ' is-unavailable' : '')}>
+      <div className="hero-card__cover">
+        <button type="button" className="hero-card__cover-btn" onClick={() => onClick(hero)} aria-label={'Buka wiki ' + hero.name}>
+          <HeroThumbnail hero={hero} className="hero-card__portrait" priority={imagePriority} />
+          <span
+            className={'tier-label tier-' + (hero.popularity_band ?? 'C')}
+            title="Popularitas di HoK Camp (seberapa sering dipilih/dibanned) — bukan tier kekuatan"
+          >
+            {hero.popularity_band ?? '—'}
+          </span>
+          <span className="hero-card__cover-hint"><BookOpen aria-hidden="true" />Buka wiki</span>
+        </button>
         {aiRank !== undefined && aiRank <= 5 && (
-          <div className="hero-card__ai-group" onClick={(e) => e.stopPropagation()}>
+          <div className="hero-card__ai-group">
             <button
               type="button"
               className="ai-badge"
-              aria-expanded={showHoverCard}
+              aria-expanded={hasTooltip ? false : undefined}
               aria-label={`Rekomendasi AI #${aiRank}: ${plainText(recommendationReason || '')}. Ketuk untuk melihat analisis.`}
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowHoverCard((v) => !v);
-              }}
+              {...(hasTooltip
+                ? ({
+                    interestfor: hovercardId,
+                    popoverTarget: hovercardId,
+                    popoverTargetAction: 'show',
+                  } as Record<string, string>)
+                : {})}
             >
               <Sparkles aria-hidden="true" />#{aiRank}
             </button>
-            {(recommendationReason || projection) && (
-              <div className={'tactical-hovercard' + (showHoverCard ? ' is-visible' : '')} role="tooltip">
+            {hasTooltip && (
+              <div id={hovercardId} className="tactical-hovercard" role="tooltip" popover="hint">
                 <div className="tactical-hovercard__header">
                   <span className="tactical-hovercard__rank">AI #{aiRank}</span>
                   <strong>{hero.name}</strong>
@@ -86,8 +87,7 @@ export function HeroCardDetailed({
             )}
           </div>
         )}
-        <span className="hero-card__cover-hint"><BookOpen aria-hidden="true" />Buka wiki</span>
-      </button>
+      </div>
 
       <div className="hero-card__body">
         <h3>{hero.name}</h3>
@@ -111,4 +111,4 @@ export function HeroCardDetailed({
       </div>
     </article>
   );
-}
+});

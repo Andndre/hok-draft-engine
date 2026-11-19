@@ -668,14 +668,12 @@ export function searchDraft(
     // Urutan nilai: blok `head` lebih otoritatif dan selalu didahulukan, lalu
     // nilai tertinggi, lalu urutan kandidat root asli sebagai pemutus seri.
     const rootOrder = new Map(allRootCandidates.map((candidate, index) => [candidate.hero.hero_id, index]));
-    decision.rootValues = bestRootValues
-      .slice()
-      .sort(
-        (a, b) =>
-          (a.tier === b.tier ? 0 : a.tier === 'head' ? -1 : 1) ||
-          (b.value - a.value) ||
-          ((rootOrder.get(a.heroId) ?? Number.MAX_SAFE_INTEGER) - (rootOrder.get(b.heroId) ?? Number.MAX_SAFE_INTEGER)),
-      );
+    decision.rootValues = bestRootValues.toSorted(
+      (a, b) =>
+        (a.tier === b.tier ? 0 : a.tier === 'head' ? -1 : 1) ||
+        (b.value - a.value) ||
+        ((rootOrder.get(a.heroId) ?? Number.MAX_SAFE_INTEGER) - (rootOrder.get(b.heroId) ?? Number.MAX_SAFE_INTEGER)),
+    );
   }
 
   decision.elapsedMs = Math.round(getTimestamp() - startTime);

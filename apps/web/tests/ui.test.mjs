@@ -17,6 +17,11 @@ import { displayCopy, focusHeroSearch } from '../src/components/ui/presentation.
 import { buildDefaultLaneAssignments, assignmentToHeroLaneMap, swapAssignedLanes } from '../src/engine/gamePlan.ts';
 import { evaluateTacticalScores, computeDraftOutcomeProjection } from '../src/engine/tournamentInference.ts';
 import { DropdownSelect } from '../src/components/ui/DropdownSelect.tsx';
+import { HeroThumbnail } from '../src/components/ui/AssetThumbnail.tsx';
+import { VisionPanel } from '../src/components/VisionPanel.tsx';
+import { VisionHeroPickerModal } from '../src/components/VisionHeroPickerModal.tsx';
+import { shouldNotifyDialogClose } from '../src/components/ui/useNativeModalDialog.ts';
+import { searchHeroes } from '../src/heroSearch.ts';
 import { Layers } from 'lucide-react';
 const noop = () => {};
 const render = (Component, props) => renderToStaticMarkup(React.createElement(Component, props));
@@ -157,7 +162,9 @@ test('duet package card renders only when the radar panel receives packages', ()
   const duetSlice = dualHtml.slice(duetCardStart, duetCardEnd);
   assert.ok(duetSlice.includes('💡 PAKET DUET'), 'Duet card header shows the compact PAKET DUET title');
   assert.ok(!duetSlice.includes('Paket Duet Giliran Ganda'), 'Legacy wrapped header wording must be gone');
-  assert.match(duetSlice, /white-space:nowrap"[^>]*>💡 PAKET DUET<\/span>/, 'PAKET DUET header must not wrap');
+  assert.match(duetSlice, /class="duet-package-card__title"[^>]*>💡 PAKET DUET<\/span>/, 'PAKET DUET header keeps its dedicated class');
+  const draftCss = readFileSync(new URL('../src/styles/draft.css', import.meta.url), 'utf8');
+  assert.match(draftCss, /\.duet-package-card__title\s*\{[^}]*white-space:\s*nowrap/, 'PAKET DUET header must stay nowrap in CSS');
   const duetButtons = [...duetSlice.matchAll(/<button\b([^>]*)>([^<]*)<\/button>/g)].map(m => ({ attrs: m[1], text: m[2] }));
   assert.deepEqual(duetButtons.map(b => b.text), ['#1', '#2'], 'Duet tab visible labels must be the bare "#N", never "Paket #N"');
   assert.ok(
@@ -206,10 +213,11 @@ test('duet package card renders only when the radar panel receives packages', ()
   const outsider = dataset.heroes.filter(h => h.is_global_released)[2];
   const neutralBadgesHtml = render(TacticalRadarPanel, { ...base, recommendations: [{ hero: outsider, proComboTag: '', laneTag: '' }] });
   assert.equal(
-    (neutralBadgesHtml.match(/aria-label="Tidak ada di rekomendasi tunggal"/g) ?? []).length,
+    (neutralBadgesHtml.match(/<span class="sr-only">Tidak ada di rekomendasi tunggal<\/span>/g) ?? []).length,
     2,
     'Both package members outside the single-pick recommendations render the neutral badge'
   );
+  assert.ok(!neutralBadgesHtml.includes('role="status"'), 'Static rank badges avoid spurious live regions');
 
   // NOTE (stale-tab reset): the SSR harness (renderToStaticMarkup) never runs useEffect,
   // and every render() call mounts a fresh instance, so the duet-tab reset on a changing
@@ -448,13 +456,15 @@ test('computeDraftOutcomeProjection produces specific hero names and lanes in Ba
 
 test('plan and wiki dialogs expose names, native controls and counter-first navigation', () => {
   const plan = render(PlanSelectionModal, { isOpen: true, onClose: noop, heroes: [hero], currentPlanAId: hero.hero_id, currentPlanBId: null, onSelectPlanA: noop, onSelectPlanB: noop, activeSide: 'blue', unavailableHeroIds: new Set(), recommendedOpeners: [] });
-  assert.match(plan, /role="dialog" aria-modal="true" aria-labelledby=/);
+  assert.match(plan, /<dialog[^>]*aria-labelledby=/);
+  assert.match(plan, /<dialog[^>]*closedby="any"/);
   assert.ok(plan.includes('Hapus Plan A') && plan.includes('Hapus Plan B'));
   assert.ok(!/<button\b(?:(?!<\/button>)[\s\S])*<button\b/.test(plan));
   const wiki = render(HeroWikiDrawer, { hero, onClose: noop, isFavorite: false, onToggleFavorite: noop, allHeroes: dataset.heroes, onSelectRelatedHero: noop, initialTab: 'counters' });
-  assert.match(wiki, /role="dialog" aria-modal="true" aria-labelledby=/);
+  assert.match(wiki, /<dialog[^>]*aria-labelledby=/);
+  assert.match(wiki, /<dialog[^>]*closedby="any"/);
   assert.ok(wiki.includes('Tutup wiki hero'));
-  assert.match(wiki, /<button aria-pressed="true"[^>]*>[\s\S]*?<span>Counter<\/span>/);
+  assert.match(wiki, /<button[^>]*role="tab"[^>]*aria-selected="true"[^>]*>[\s\S]*?<span>Counter<\/span>/);
   assert.ok(!/\p{Extended_Pictographic}/u.test(wiki.replace(/<[^>]+>/g, '')));
 });
 
@@ -487,15 +497,17 @@ test('wiki exposes HoKStats build alternatives and source-attributed item, spell
   const factualWiki = render(HeroWikiDrawer, { hero: taggedHero, onClose: noop, isFavorite: false, onToggleFavorite: noop, allHeroes: dataset.heroes, onSelectRelatedHero: noop, initialTab: 'abilities' });
   assert.ok(factualWiki.includes('Mekanik Skill Terverifikasi'));
   assert.ok(factualWiki.includes('Slow') && factualWiki.includes('Heal Sekutu') && factualWiki.includes('Taunt'));
-  assert.ok(factualWiki.includes('title="Memperlambat kecepatan gerak (movement speed) lawan."'));
-  assert.ok(factualWiki.includes('title="Memulihkan sejumlah HP untuk rekan satu tim."'));
-  assert.ok(factualWiki.includes('title="Memaksa lawan menyerang hero ini dan mengunci penggunaan skill selama durasi."'));
+  assert.ok(!factualWiki.includes('title="Memperlambat'), 'Factual tags use native toggletips instead of title attributes');
+  assert.match(factualWiki, /role="tooltip" popover="hint"[^>]*>Memperlambat kecepatan gerak \(movement speed\) lawan\.<\/span>/);
+  assert.match(factualWiki, /role="tooltip" popover="hint"[^>]*>Memulihkan sejumlah HP untuk rekan satu tim\.<\/span>/);
+  assert.match(factualWiki, /role="tooltip" popover="hint"[^>]*>Memaksa lawan menyerang hero ini dan mengunci penggunaan skill selama durasi\.<\/span>/);
   assert.ok(!factualWiki.includes('Dive Vulnerable') && !factualWiki.includes('Weak Early') && !factualWiki.includes('engage'));
   const tacticsWiki = render(HeroWikiDrawer, { hero: taggedHero, onClose: noop, isFavorite: false, onToggleFavorite: noop, allHeroes: dataset.heroes, onSelectRelatedHero: noop, initialTab: 'tactics' });
   assert.ok(tacticsWiki.includes('Peran Taktis'));
   assert.ok(tacticsWiki.includes('Inisiator (Engage)'));
   assert.ok(tacticsWiki.includes('Rentan Dive') && tacticsWiki.includes('Lemah Early Game'));
-  assert.ok(tacticsWiki.includes('title="Sangat rentan disergap (dive) oleh assassin karena minim mobilitas atau pertahanan mandiri."'));
+  assert.ok(!tacticsWiki.includes('title="Sangat rentan'), 'Tactical tags use native toggletips instead of title attributes');
+  assert.match(tacticsWiki, /role="tooltip" popover="hint"[^>]*>Sangat rentan disergap \(dive\) oleh assassin karena minim mobilitas atau pertahanan mandiri\.<\/span>/);
   const counters = render(HeroWikiDrawer, { hero: enriched, onClose: noop, isFavorite: false, onToggleFavorite: noop, allHeroes: dataset.heroes, onSelectRelatedHero: noop, initialTab: 'counters' });
   assert.ok(counters.includes('Kuat melawan') && counters.includes('Dun') && counters.includes('HoKStats'));
   assert.ok(!counters.includes('Pending review') && !counters.includes('DITINJAU'));
@@ -645,4 +657,71 @@ test('DraftSimulator swap badges keep exact 10 lane icons and PostDraftGamePlanP
     assert.equal(Number(oursPct) + Number(enemyPct), 100, `Tempo pair ${oursPct}% vs ${enemyPct}% must sum to 100%`);
   }
   assert.ok(!/\p{Extended_Pictographic}/u.test(winningPlainText), 'No decorative emoji rendered on winning tab');
+});
+
+test('modern web guidance regressions: non-nested card buttons, search landmark, viewport, native controls and priority images', () => {
+  const projection = {
+    bestCaseScore: 84,
+    bestCaseScenario: 'Kombo kuat early',
+    worstCaseScore: 52,
+    worstCaseScenario: 'Risiko counter pick',
+    riskLevel: 'SEDANG',
+  };
+  const detailedHtml = render(HeroCardDetailed, {
+    hero,
+    onClick: noop,
+    onSelect: noop,
+    aiRank: 1,
+    recommendationReason: 'Opener meta prioritas',
+    projection,
+  });
+  assert.ok(!/<button\b(?:(?!<\/button>)[\s\S])*<button\b/.test(detailedHtml), 'HeroCardDetailed must not nest interactive buttons');
+  assert.match(detailedHtml, /popover="hint"/);
+  assert.match(detailedHtml, /interestfor="/);
+
+  const toolbarHtml = render(HeroRosterToolbar, { ...controls, count: 120 });
+  assert.match(toolbarHtml, /<search\b[^>]*class="roster-toolbar"[\s\S]*<\/search>$/);
+
+  const indexHtml = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  assert.ok(!indexHtml.includes('maximum-scale') && !indexHtml.includes('user-scalable=no'), 'Viewport must allow pinch-to-zoom');
+  assert.ok(indexHtml.includes('<meta name="color-scheme" content="dark" />'));
+
+  const visionHtml = render(VisionPanel, { heroes: dataset.heroes.slice(0, 5), synergyData: {} });
+  assert.match(visionHtml, /<fieldset class="vision-side-toggle">/);
+  assert.ok(visionHtml.includes('<legend class="sr-only">Sisi tim Anda</legend>'));
+  assert.match(visionHtml, /<input[^>]*type="radio"/);
+  assert.ok(!visionHtml.includes('role="radiogroup"'));
+
+  const pickerHtml = render(VisionHeroPickerModal, { isOpen: true, onClose: noop, heroes: [hero], onSelect: noop });
+  assert.match(pickerHtml, /<dialog[^>]*closedby="any"/);
+
+  const highImgHtml = render(HeroThumbnail, { hero, priority: 'high' });
+  assert.ok(highImgHtml.includes('width="96"') && highImgHtml.includes('height="96"'));
+  assert.ok(highImgHtml.includes('loading="eager"'));
+  assert.match(highImgHtml, /fetchpriority="high"/i);
+
+  const rosterCss = readFileSync(new URL('../src/styles/roster.css', import.meta.url), 'utf8');
+  assert.ok(rosterCss.includes('.hero-card__cover-btn > .tier-label'));
+  assert.ok(!rosterCss.includes('.hero-card__cover .tier-label'));
+
+  const draftCss = readFileSync(new URL('../src/styles/draft.css', import.meta.url), 'utf8');
+  assert.ok(!draftCss.includes('.hero-card--detailed .hero-card__ai-group'));
+
+  assert.equal(shouldNotifyDialogClose(true, { open: true }), false, 'Stale async close events while dialog is re-opened in StrictMode must be ignored');
+  assert.equal(shouldNotifyDialogClose(false, { open: false }), false, 'Cleanup close events must not notify onClose');
+  assert.equal(shouldNotifyDialogClose(true, { open: false }), true, 'User-initiated dialog close while active must notify onClose');
+
+  const polyfillsTs = readFileSync(new URL('../src/platform/polyfills.ts', import.meta.url), 'utf8');
+  assert.ok(!polyfillsTs.includes('polyfillBodyAndObserve'), 'Must not attach global body MutationObserver for focusgroup');
+
+  const useFocusgroupTs = readFileSync(new URL('../src/components/ui/useFocusgroup.ts', import.meta.url), 'utf8');
+  assert.ok(useFocusgroupTs.includes('@microsoft/focusgroup-polyfill/shadowless'), 'Scoped focusgroup helper uses lightweight shadowless build');
+
+  const baseCss = readFileSync(new URL('../src/styles/base.css', import.meta.url), 'utf8');
+  assert.ok(baseCss.includes('--interest-delay-start:'), 'Configures snappy hover delay for interest invokers');
+
+  const sampleHeroes = dataset.heroes.filter(h => h.is_global_released);
+  const firstRun = searchHeroes(sampleHeroes, 'liang');
+  const secondRun = searchHeroes(sampleHeroes, 'liang');
+  assert.deepEqual(firstRun.map(h => h.hero_id), secondRun.map(h => h.hero_id), 'WeakMap-cached hero search index preserves deterministic order');
 });

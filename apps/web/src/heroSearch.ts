@@ -95,15 +95,50 @@ function fuzzyScore(name: string, tokens: string[], query: string): number {
   return Math.max(400, 580 - best * 90);
 }
 
-/** How well one hero name answers the query; 0 means "no match". */
-function scoreNameValue(name: string, query: string): number {
-  const normalized = normalizeHeroSearchText(name);
+interface HeroSearchIndex {
+  normalizedName: string;
+  nameTokens: string[];
+  chineseLower: string;
+  rolesLanes: string[];
+  counterNames: string[];
+}
+
+const HERO_SEARCH_INDEX = new WeakMap<Hero, HeroSearchIndex>();
+
+function getHeroSearchIndex(hero: Hero): HeroSearchIndex {
+  const cached = HERO_SEARCH_INDEX.get(hero);
+  if (cached) return cached;
+
+  const rolesLanes: string[] = [];
+  for (const label of [hero.primary_role, hero.primary_lane]) {
+    const value = normalizeHeroSearchText(label ?? '');
+    if (value) rolesLanes.push(value);
+  }
+
+  const counterNames: string[] = [];
+  for (const counter of hero.counters ?? []) {
+    const value = normalizeHeroSearchText(counter.target_name);
+    if (value) counterNames.push(value);
+  }
+
+  const index: HeroSearchIndex = {
+    normalizedName: normalizeHeroSearchText(hero.name),
+    nameTokens: tokensOf(hero.name),
+    chineseLower: hero.chinese_name ? hero.chinese_name.toLowerCase() : '',
+    rolesLanes,
+    counterNames,
+  };
+  HERO_SEARCH_INDEX.set(hero, index);
+  return index;
+}
+
+/** How well one cached hero name index answers the query; 0 means "no match". */
+function scoreNameValue(normalized: string, tokens: string[], query: string): number {
   if (!normalized) return 0;
   if (normalized === query) return 1000;
   if (normalized.startsWith(query)) return 900 - Math.min(80, (normalized.length - query.length) * 5);
   const at = normalized.indexOf(query);
   if (at > 0) return 800 - Math.min(80, at * 6);
-  const tokens = tokensOf(name);
   for (let index = 0; index < tokens.length; index += 1) {
     const token = tokens[index];
     const penalty = Math.min(20, index * 5);
@@ -117,21 +152,20 @@ function scoreNameValue(name: string, query: string): number {
 export function scoreHeroSearchMatch(hero: Hero, rawQuery: string): number {
   const trimmed = rawQuery.trim();
   if (!trimmed) return 1;
+  const cached = getHeroSearchIndex(hero);
   const query = normalizeHeroSearchText(trimmed);
-  let best = query ? scoreNameValue(hero.name, query) : 0;
+  let best = query ? scoreNameValue(cached.normalizedName, cached.nameTokens, query) : 0;
   // HUD/Chinese labels stay an exact substring test: they are not latinizable.
-  if (hero.chinese_name && hero.chinese_name.toLowerCase().includes(trimmed.toLowerCase())) best = Math.max(best, 720);
+  if (cached.chineseLower && cached.chineseLower.includes(trimmed.toLowerCase())) best = Math.max(best, 720);
   if (!query) return best;
-  for (const label of [hero.primary_role, hero.primary_lane]) {
-    const value = normalizeHeroSearchText(label ?? '');
-    if (!value) continue;
+  for (const value of cached.rolesLanes) {
     if (value === query) best = Math.max(best, 360);
     else if (value.startsWith(query)) best = Math.max(best, 340);
     else if (value.includes(query)) best = Math.max(best, 320);
   }
   if (query.length >= 3) {
-    for (const counter of hero.counters ?? []) {
-      if (normalizeHeroSearchText(counter.target_name).includes(query)) {
+    for (const targetName of cached.counterNames) {
+      if (targetName.includes(query)) {
         best = Math.max(best, 300);
         break;
       }
@@ -146,7 +180,7 @@ export function scoreHeroSearchMatch(hero: Hero, rawQuery: string): number {
  * only to break ties, so a typo still surfaces the hero above win-rate neighbours.
  */
 export function searchHeroes<T extends Hero>(heroes: readonly T[], rawQuery: string, compare: (a: T, b: T) => number = () => 0): T[] {
-  if (!rawQuery.trim()) return [...heroes].sort(compare);
+  if (!rawQuery.trim()) return heroes.toSorted(compare);
   const scored: Array<{ hero: T; score: number }> = [];
   for (const hero of heroes) {
     const score = scoreHeroSearchMatch(hero, rawQuery);

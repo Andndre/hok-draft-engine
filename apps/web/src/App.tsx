@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import React, { Suspense, lazy, useState, useEffect, useMemo, useCallback, useDeferredValue, useRef } from 'react';
 import { DraftFormat, Hero, Lane, ActiveTab, SortMode, ViewMode, TacticalVector, TacticalDelta, GameDraftData, LaneAssignmentMap, TournamentDataset, SeriesFormat, SeriesTeam, DuetPackageOption } from './types';
 import { loadTournamentDataset } from './engine/heroDataLoader';
 import { runTournamentInference, TournamentPredictionResult, TournamentPhaseStrategy } from './engine/tournamentInference';
@@ -17,15 +17,17 @@ import { HeaderSortBar } from './components/HeaderSortBar';
 import { HeroCardCompact } from './components/HeroCardCompact';
 import { HeroCardDetailed } from './components/HeroCardDetailed';
 import { BottomCommandDock } from './components/BottomCommandDock';
-import { PracticeDraft } from './components/PracticeDraft';
 import { DraftSimulator } from './components/DraftSimulator';
-import { PostDraftGamePlanPanel } from './components/PostDraftGamePlanPanel';
 import { TacticalRadarPanel } from './components/TacticalRadarPanel';
-import { VisionPanel, visionFormatMismatchReason } from './components/VisionPanel';
-import type { VisionApplyResult } from './components/VisionPanel';
-import { HeroWikiDrawer } from './components/HeroWikiDrawer';
+import { visionFormatMismatchReason } from './vision/visionMessages';
+import type { VisionApplyResult } from './vision/visionMessages';
 import { PlanSelectionModal } from './components/PlanSelectionModal';
 import { isHeroGlobalReleased } from './data/heroReleaseStatus';
+
+const PracticeDraft = lazy(() => import('./components/PracticeDraft').then(m => ({ default: m.PracticeDraft })));
+const PostDraftGamePlanPanel = lazy(() => import('./components/PostDraftGamePlanPanel').then(m => ({ default: m.PostDraftGamePlanPanel })));
+const VisionPanel = lazy(() => import('./components/VisionPanel').then(m => ({ default: m.VisionPanel })));
+const HeroWikiDrawer = lazy(() => import('./components/HeroWikiDrawer').then(m => ({ default: m.HeroWikiDrawer })));
 
 import { assignHeroLanes, DRAFT_SEQUENCE, getDraftTurn, createInitialGameDraft, applyGameHero, computeSeriesFearlessLocks, findSeriesFearlessConflicts, teamOnSide, FLOWBORN_HERO_IDS, isFlowborn, toPosition } from './engine/draftRules';
 import type { DraftPosition, Side } from './engine/draftRules';
@@ -47,8 +49,29 @@ export const App: React.FC = () => {
   const [practiceAssistance, setPracticeAssistance] = useState(true);
   const practiceActive = activeTab === 'draft' && draftMode === 'practice';
   const visionActive = activeTab === 'draft' && draftMode === 'vision';
+  const [hasVisitedPractice, setHasVisitedPractice] = useState(false);
+
+  useEffect(() => {
+    if (practiceActive) setHasVisitedPractice(true);
+  }, [practiceActive]);
+
+  useEffect(() => {
+    const titles: Record<ActiveTab, string> = {
+      draft:
+        draftMode === 'practice'
+          ? 'Latihan Draft vs AI — HoK Draft Engine'
+          : draftMode === 'vision'
+            ? 'Live Draft Advisor — HoK Draft Engine'
+            : 'Simulator Draft — HoK Draft Engine',
+      counter: 'Cari Matchup & Counter — HoK Draft Engine',
+      wiki: 'Wiki & Tier Hero — HoK Draft Engine',
+      favorites: 'Hero Favorit — HoK Draft Engine',
+    };
+    document.title = titles[activeTab];
+  }, [activeTab, draftMode]);
   const [selectedLane, setSelectedLane] = useState<Lane | 'All'>('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const deferredSearchQuery = useDeferredValue(searchQuery);
   const [sortMode, setSortMode] = useState<SortMode>('ai');
   const [viewMode, setViewMode] = useState<ViewMode>('compact');
   const [onlyGlobalReleased, setOnlyGlobalReleased] = useState<boolean>(true);
@@ -645,10 +668,14 @@ export const App: React.FC = () => {
 
   // Roster selection: after a pick/ban from a filtered result list, hand the search
   // field back focused with its query highlighted so the next name can be typed at once.
-  const handleRosterSelectHero = (hero: Hero) => {
+  const handleRosterSelectHeroRef = useRef<(hero: Hero) => void>(() => {});
+  handleRosterSelectHeroRef.current = (hero: Hero) => {
     handleSelectHero(hero);
     if (searchQuery.trim()) focusHeroSearch({ select: true });
   };
+  const handleRosterSelectHero = useCallback((hero: Hero) => {
+    handleRosterSelectHeroRef.current(hero);
+  }, []);
 
   // Handle two-hero core package selection on double-pick turns
   const handleSelectDuetPackage = (duet: DuetPackageOption) => {
@@ -907,8 +934,8 @@ export const App: React.FC = () => {
     setLaneOverridesByGame((prev) => ({ ...prev, [gameNumber]: {} }));
   };
 
-  // Filter & Sort Heroes for the main grid
-  const filteredAndSortedHeroes = useMemo(() => {
+  // Filter & Sort Heroes for the main grid (base filtering memoized separately from deferred typing)
+  const baseHeroesAndCompare = useMemo(() => {
     let result = [...heroes];
 
     // Filter by Global Released status
@@ -944,16 +971,28 @@ export const App: React.FC = () => {
       return a.name.localeCompare(b.name);
     };
 
-    // A typed query (typo-, apostrophe- and skip-tolerant) always ranks by relevance
-    // first; the chosen sort mode only breaks ties between equally good matches.
-    return searchHeroes(result, searchQuery, compare);
-  }, [heroes, selectedLane, searchQuery, activeTab, favorites, displayRecommendations, sortMode, onlyGlobalReleased]);
+    return { result, compare };
+  }, [heroes, selectedLane, activeTab, favorites, displayRecommendations, sortMode, onlyGlobalReleased]);
+
+  const filteredAndSortedHeroes = useMemo(
+    () => searchHeroes(baseHeroesAndCompare.result, deferredSearchQuery, baseHeroesAndCompare.compare),
+    [baseHeroesAndCompare, deferredSearchQuery]
+  );
+
+  const recommendationByHeroId = useMemo(
+    () => new Map(displayRecommendations.map((rec, index) => [rec.hero.hero_id, { rec, rank: index + 1 }])),
+    [displayRecommendations]
+  );
 
   // Enter in the search field commits the first result that is still legal. Skipping the
   // taken ones keeps "type a name, press Enter" working after earlier bans and picks.
   const handleConfirmHeroSearch = () => {
     if (activeTab !== 'draft' || currentTurn.isComplete || !searchQuery.trim()) return;
-    const first = firstSelectableHero(filteredAndSortedHeroes, (hero) => !currentDraftUnavailableIds.has(hero.hero_id));
+    const candidates =
+      deferredSearchQuery === searchQuery
+        ? filteredAndSortedHeroes
+        : searchHeroes(baseHeroesAndCompare.result, searchQuery, baseHeroesAndCompare.compare);
+    const first = firstSelectableHero(candidates, (hero) => !currentDraftUnavailableIds.has(hero.hero_id));
     if (first) handleRosterSelectHero(first);
   };
 
@@ -963,10 +1002,14 @@ export const App: React.FC = () => {
       <HeaderSortBar activeTab={activeTab} onTabChange={setActiveTab} engineReady={engineReady} globalLocked={false} onlyGlobalReleased={onlyGlobalReleased} onToggleGlobalReleased={() => setOnlyGlobalReleased(value => !value)} favoriteCount={favorites.size} />
       <main className="app-main" id="main-content" tabIndex={-1}>
         <div className="page-heading"><div><h1>{activeTab === 'draft' ? 'Ruang draft' : activeTab === 'counter' ? 'Cari matchup hero' : activeTab === 'wiki' ? 'Wiki & tier hero' : 'Hero favorit'}</h1><p>{activeTab === 'draft' ? (draftMode === 'practice' ? 'Pilih sisi, susun strategi, lalu uji keputusanmu melawan AI.' : draftMode === 'vision' ? 'Pantau layar draft secara langsung dan lihat rekomendasi read-only.' : 'Atur kedua tim dan cari pilihan terbaik untuk setiap giliran.') : activeTab === 'counter' ? 'Buka hero untuk melihat ancaman, target empuk, dan sinerginya.' : activeTab === 'wiki' ? 'Pelajari skill, build item, arcana, dan statistik hero Global.' : 'Simpan hero dari wiki untuk mengaksesnya kembali dengan cepat.'}</p></div>
-          {activeTab === 'draft' && <nav className="mode-switch" aria-label="Mode draft"><button type="button" aria-pressed={draftMode === 'simulator'} onClick={() => setDraftMode('simulator')}><SlidersHorizontal aria-hidden="true" />Simulator</button><button type="button" aria-pressed={draftMode === 'practice'} onClick={() => setDraftMode('practice')}><Gamepad2 aria-hidden="true" />Latihan vs AI</button><button type="button" aria-pressed={draftMode === 'vision'} onClick={() => setDraftMode('vision')}><Scan aria-hidden="true" />Live Advisor <span className="beta-badge">Beta</span></button></nav>}
+          {activeTab === 'draft' && <div className="mode-switch" role="group" aria-label="Mode draft"><button type="button" aria-pressed={draftMode === 'simulator'} onClick={() => setDraftMode('simulator')}><SlidersHorizontal aria-hidden="true" />Simulator</button><button type="button" aria-pressed={draftMode === 'practice'} onClick={() => setDraftMode('practice')}><Gamepad2 aria-hidden="true" />Latihan vs AI</button><button type="button" aria-pressed={draftMode === 'vision'} onClick={() => setDraftMode('vision')}><Scan aria-hidden="true" />Live Advisor <span className="beta-badge">Beta</span></button></div>}
         </div>
         {loadError && <section role="alert" className="empty-state"><AlertTriangle aria-hidden="true" /><h2>Data hero belum dapat dimuat</h2><p>{loadError}</p><button type="button" className="ui-button ui-button--primary" onClick={() => void loadData()}><RefreshCw aria-hidden="true" />Coba lagi</button></section>}
-        {dataset && <div hidden={!practiceActive}><PracticeDraft dataset={dataset} active={practiceActive} onlyGlobalReleased={onlyGlobalReleased} assistance={practiceAssistance} onAssistanceChange={setPracticeAssistance} selectedLane={selectedLane} onLaneChange={setSelectedLane} searchQuery={searchQuery} onSearchChange={setSearchQuery} sortMode={sortMode} onSortChange={setSortMode} viewMode={viewMode} onViewChange={setViewMode} favorites={favorites} onToggleFavorite={handleToggleFavorite} /></div>}
+        {dataset && (practiceActive || hasVisitedPractice) && (
+          <Suspense fallback={<div className="surface-panel p-6 text-sm text-slate-400" role="status">Memuat ruang latihan…</div>}>
+            <div hidden={!practiceActive}><PracticeDraft dataset={dataset} active={practiceActive} onlyGlobalReleased={onlyGlobalReleased} assistance={practiceAssistance} onAssistanceChange={setPracticeAssistance} selectedLane={selectedLane} onLaneChange={setSelectedLane} searchQuery={searchQuery} onSearchChange={setSearchQuery} sortMode={sortMode} onSortChange={setSortMode} viewMode={viewMode} onViewChange={setViewMode} favorites={favorites} onToggleFavorite={handleToggleFavorite} /></div>
+          </Suspense>
+        )}
         {!practiceActive && <>
           {activeTab === 'draft' && !loadError && draftMode !== 'vision' && (
             <DraftSimulator
@@ -1006,45 +1049,49 @@ export const App: React.FC = () => {
             />
           )}
           {activeTab === 'draft' && !loadError && draftMode === 'vision' && (
-            <VisionPanel
-              heroes={heroes}
-              synergyData={synergyData}
-              advisorFormat={VISION_ADVISOR_FORMAT}
-              simulatorFormat={draftFormat}
-              onlyGlobalReleased={onlyGlobalReleased}
-              fearlessLocks={{ blue: blueFearlessUnavailableIds, red: redFearlessUnavailableIds }}
-              bluePlanAId={bluePlanAId}
-              bluePlanBId={bluePlanBId}
-              redPlanAId={redPlanAId}
-              redPlanBId={redPlanBId}
-              isUltimateBattle={isUltimateBattle}
-              currentGamePosition={toPosition(currentGame)}
-              onApplyToSimulator={handleApplyVisionToSimulator}
-              onSwitchToSimulator={handleSwitchToSimulator}
-              onInspectHero={setWikiHero}
-            />
+            <Suspense fallback={<div className="surface-panel p-6 text-sm text-slate-400" role="status">Memuat Live Draft Advisor…</div>}>
+              <VisionPanel
+                heroes={heroes}
+                synergyData={synergyData}
+                advisorFormat={VISION_ADVISOR_FORMAT}
+                simulatorFormat={draftFormat}
+                onlyGlobalReleased={onlyGlobalReleased}
+                fearlessLocks={{ blue: blueFearlessUnavailableIds, red: redFearlessUnavailableIds }}
+                bluePlanAId={bluePlanAId}
+                bluePlanBId={bluePlanBId}
+                redPlanAId={redPlanAId}
+                redPlanBId={redPlanBId}
+                isUltimateBattle={isUltimateBattle}
+                currentGamePosition={toPosition(currentGame)}
+                onApplyToSimulator={handleApplyVisionToSimulator}
+                onSwitchToSimulator={handleSwitchToSimulator}
+                onInspectHero={setWikiHero}
+              />
+            </Suspense>
           )}
           {activeTab === 'draft' && !loadError && !visionActive && currentTurn.isComplete && filledBlueHeroes.length === 5 && filledRedHeroes.length === 5 && (
-            <PostDraftGamePlanPanel
-              key={`sim-game-${gameNumber}`}
-              blueHeroes={filledBlueHeroes}
-              redHeroes={filledRedHeroes}
-              synergy={synergyData}
-              defaultPerspective="blue"
-              blueAssignment={activeBlueAssignment}
-              redAssignment={activeRedAssignment}
-              hasCustomAssignments={Boolean(gameLaneOverrides?.blue || gameLaneOverrides?.red)}
-              onSwapLane={handleSwapSimulatorLane}
-              onResetLanes={handleResetSimulatorLanes}
-              onInspectHero={setWikiHero}
-            />
+            <Suspense fallback={<div className="surface-panel p-6 text-sm text-slate-400" role="status">Memuat analisis pasca-draft…</div>}>
+              <PostDraftGamePlanPanel
+                key={`sim-game-${gameNumber}`}
+                blueHeroes={filledBlueHeroes}
+                redHeroes={filledRedHeroes}
+                synergy={synergyData}
+                defaultPerspective="blue"
+                blueAssignment={activeBlueAssignment}
+                redAssignment={activeRedAssignment}
+                hasCustomAssignments={Boolean(gameLaneOverrides?.blue || gameLaneOverrides?.red)}
+                onSwapLane={handleSwapSimulatorLane}
+                onResetLanes={handleResetSimulatorLanes}
+                onInspectHero={setWikiHero}
+              />
+            </Suspense>
           )}
           {!loadError && !visionActive && <div className={activeTab === 'draft' ? 'draft-workspace' : ''}>
             <section className="hero-roster" id="hero-roster" aria-label="Katalog hero" aria-busy={loading}>
               <HeroRosterToolbar title={activeTab === 'favorites' ? 'Hero favorit' : activeTab === 'draft' ? 'Pilih hero untuk ' + (currentTurn.action === 'ban' ? 'ban' : 'pick') : 'Jelajahi hero'} count={filteredAndSortedHeroes.length} searchQuery={searchQuery} onSearchChange={setSearchQuery} onConfirmSearch={handleConfirmHeroSearch} selectedLane={selectedLane} onLaneChange={setSelectedLane} sortMode={sortMode} onSortChange={setSortMode} viewMode={viewMode} onViewChange={setViewMode} hideAiSort={activeTab !== 'draft'} />
               {loading ? <div className="hero-grid" role="status" aria-label="Memuat katalog hero"><span className="sr-only">Memuat database hero…</span>{Array.from({ length: 12 }, (_, index) => <div key={index} className="roster-skeleton" aria-hidden="true" />)}</div>
                 : !filteredAndSortedHeroes.length ? <div className="empty-state">{activeTab === 'favorites' && !favorites.size ? <Star aria-hidden="true" /> : <SearchX aria-hidden="true" />}<h3>{activeTab === 'favorites' && !favorites.size ? 'Belum ada hero favorit' : 'Hero tidak ditemukan'}</h3><p>{activeTab === 'favorites' && !favorites.size ? 'Buka wiki hero, lalu simpan ke favorit.' : 'Coba nama lain atau hapus filter lane yang aktif.'}</p><button type="button" className="ui-button ui-button--quiet" onClick={() => { setSearchQuery(''); setSelectedLane('All'); if (activeTab === 'favorites' && !favorites.size) setActiveTab('wiki'); }}>{activeTab === 'favorites' && !favorites.size ? <BookOpen aria-hidden="true" /> : <FilterX aria-hidden="true" />}{activeTab === 'favorites' && !favorites.size ? 'Jelajahi hero' : 'Bersihkan filter'}</button></div>
-                : <div className={'hero-grid' + (viewMode === 'detailed' ? ' hero-grid--detailed' : '')}>{filteredAndSortedHeroes.map(hero => {
+                : <div className={'hero-grid' + (viewMode === 'detailed' ? ' hero-grid--detailed' : '')}>{filteredAndSortedHeroes.map((hero, index) => {
                   const isUnavailable = activeTab === 'draft' && currentDraftUnavailableIds.has(hero.hero_id);
                   let unavailableLabel: string | undefined = undefined;
                   if (isUnavailable) {
@@ -1058,8 +1105,9 @@ export const App: React.FC = () => {
                       unavailableLabel = currentTurn.action === 'ban' ? 'Terban' : 'Terpilih';
                     }
                   }
-                  const rec = activeTab === 'draft' ? displayRecommendations.find(r => r.hero.hero_id === hero.hero_id) : undefined;
-                  const rank = rec ? displayRecommendations.indexOf(rec) + 1 : 0;
+                  const recEntry = activeTab === 'draft' ? recommendationByHeroId.get(hero.hero_id) : undefined;
+                  const rec = recEntry?.rec;
+                  const rank = recEntry?.rank ?? 0;
                   const shared = {
                     hero,
                     isUnavailable,
@@ -1071,6 +1119,7 @@ export const App: React.FC = () => {
                     aiRank: rank > 0 ? rank : undefined,
                     recommendationReason: rec?.proComboTag || rec?.laneTag,
                     projection: rec?.projection,
+                    imagePriority: index < 12 ? ('eager' as const) : ('lazy' as const),
                   };
                   return viewMode === 'compact' ? <HeroCardCompact key={hero.hero_id} {...shared} quickBadge={rank > 0 && rank <= 5 ? 'AI #' + rank : undefined} /> : <HeroCardDetailed key={hero.hero_id} {...shared} aiRank={rank > 0 ? rank : undefined} />;
                 })}</div>}
@@ -1080,7 +1129,11 @@ export const App: React.FC = () => {
         </>}
       </main>
       <BottomCommandDock activeTab={activeTab} onTabChange={setActiveTab} favoriteCount={favorites.size} />
-      <HeroWikiDrawer hero={wikiHero} onClose={() => setWikiHero(null)} isFavorite={wikiHero ? favorites.has(wikiHero.hero_id) : false} onToggleFavorite={handleToggleFavorite} onPickForDraft={activeTab === 'draft' && draftMode === 'simulator' && wikiHero && !currentTurn.isComplete && !currentDraftUnavailableIds.has(wikiHero.hero_id) ? handleSelectHero : undefined} draftActionLabel={currentTurn.action === 'ban' ? 'Ban hero ini' : 'Pick hero ini'} initialTab={activeTab === 'counter' ? 'counters' : 'build'} allHeroes={heroes} onSelectRelatedHero={setWikiHero} itemCatalog={dataset?.items} spellCatalog={dataset?.spells} />
+      {wikiHero && (
+        <Suspense fallback={null}>
+          <HeroWikiDrawer hero={wikiHero} onClose={() => setWikiHero(null)} isFavorite={favorites.has(wikiHero.hero_id)} onToggleFavorite={handleToggleFavorite} onPickForDraft={activeTab === 'draft' && draftMode === 'simulator' && !currentTurn.isComplete && !currentDraftUnavailableIds.has(wikiHero.hero_id) ? handleSelectHero : undefined} draftActionLabel={currentTurn.action === 'ban' ? 'Ban hero ini' : 'Pick hero ini'} initialTab={activeTab === 'counter' ? 'counters' : 'build'} allHeroes={heroes} onSelectRelatedHero={setWikiHero} itemCatalog={dataset?.items} spellCatalog={dataset?.spells} />
+        </Suspense>
+      )}
       <PlanSelectionModal isOpen={isPlanModalOpen} onClose={() => setIsPlanModalOpen(false)} heroes={heroes} currentPlanAId={activeSidePlanAId} currentPlanBId={activeSidePlanBId} onSelectPlanA={handleSetPlanA} onSelectPlanB={handleSetPlanB} activeSide={currentTurn.side} unavailableHeroIds={currentDraftUnavailableIds} recommendedOpeners={phaseStrategy?.candidateOpeners || []} onlyGlobalReleased={onlyGlobalReleased} />
     </div>
   );

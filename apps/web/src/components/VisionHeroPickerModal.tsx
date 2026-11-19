@@ -1,9 +1,9 @@
-import React, { useEffect, useId, useMemo, useState } from 'react';
+import React, { useDeferredValue, useEffect, useId, useMemo, useState } from 'react';
 import { Check, Search, X } from 'lucide-react';
 import type { Hero } from '../types';
 import { isHeroGlobalReleased } from '../data/heroReleaseStatus';
 import { HeroThumbnail } from './ui/AssetThumbnail';
-import { useDialogFocus } from './ui/useDialogFocus';
+import { useNativeModalDialog } from './ui/useNativeModalDialog';
 import { searchHeroes } from '../heroSearch';
 
 interface Props {
@@ -26,7 +26,8 @@ export function VisionHeroPickerModal({
   title = 'Pilih hero untuk slot ini',
 }: Props) {
   const [search, setSearch] = useState('');
-  const dialog = useDialogFocus(isOpen, onClose);
+  const deferredSearch = useDeferredValue(search);
+  const { dialogRef, requestClose } = useNativeModalDialog(isOpen, onClose);
   const titleId = useId();
   const searchId = useId();
 
@@ -36,14 +37,13 @@ export function VisionHeroPickerModal({
 
   const filtered = useMemo(() => {
     const rows = heroes.filter(hero => !onlyGlobalReleased || isHeroGlobalReleased(hero));
-    return searchHeroes(rows, search, (a, b) => a.name.localeCompare(b.name));
-  }, [heroes, onlyGlobalReleased, search]);
+    return searchHeroes(rows, deferredSearch, (a, b) => a.name.localeCompare(b.name));
+  }, [heroes, onlyGlobalReleased, deferredSearch]);
 
   if (!isOpen) return null;
 
   return (
-    <div className="modal-backdrop" onClick={event => { if (event.target === event.currentTarget) onClose(); }}>
-      <div ref={dialog} role="dialog" aria-modal="true" aria-labelledby={titleId} tabIndex={-1} className="plan-dialog">
+    <dialog ref={dialogRef} aria-labelledby={titleId} closedby="any" className="plan-dialog">
         <header className="dialog-header">
           <div className="section-heading">
             <span className="section-heading__icon"><Search aria-hidden="true" /></span>
@@ -52,7 +52,7 @@ export function VisionHeroPickerModal({
               <p>Pilih hero manual saat deteksi otomatis dianggap gagal.</p>
             </div>
           </div>
-          <button type="button" className="ui-icon-button" onClick={onClose} aria-label="Tutup pemilihan hero" title="Tutup">
+          <button type="button" className="ui-icon-button" onClick={requestClose} aria-label="Tutup pemilihan hero" title="Tutup">
             <X aria-hidden="true" />
           </button>
         </header>
@@ -62,6 +62,7 @@ export function VisionHeroPickerModal({
             <label htmlFor={searchId} className="sr-only">Cari hero</label>
             <input
               id={searchId}
+              autoFocus
               value={search}
               onChange={event => setSearch(event.target.value)}
               placeholder="Cari hero..."
@@ -105,11 +106,10 @@ export function VisionHeroPickerModal({
           )}
         </div>
         <footer className="dialog-footer">
-          <button type="button" className="ui-button ui-button--primary" onClick={onClose}>
+          <button type="button" className="ui-button ui-button--primary" onClick={requestClose}>
             <Check aria-hidden="true" />Selesai
           </button>
         </footer>
-      </div>
-    </div>
+    </dialog>
   );
 }

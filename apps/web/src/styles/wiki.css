@@ -1,9 +1,55 @@
 /* Hero Wiki Drawer */
 .wiki-drawer, .plan-dialog { isolation: isolate; }
+dialog.wiki-drawer {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  max-width: none;
+  max-height: none;
+  inset-block: 0;
+  inset-inline-start: auto;
+  inset-inline-end: 0;
+  margin: 0 0 0 auto;
+  height: 100svh;
+  width: min(42.5rem, 100dvw);
+  overflow: hidden;
+}
+dialog.wiki-drawer[open] {
+  display: flex;
+  justify-content: flex-end;
+}
+@media (prefers-reduced-motion: no-preference) {
+  dialog.wiki-drawer[open] {
+    transform: translateX(0);
+    opacity: 1;
+    transition: transform 220ms ease-out, opacity 220ms ease-out, display 220ms allow-discrete, overlay 220ms allow-discrete;
+  }
+  @starting-style {
+    dialog.wiki-drawer[open] {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+}
 .wiki-drawer .item-thumbnail { width: 44px; height: 44px; }
 .wiki-drawer [role="tablist"] { overflow-x: auto; }
-.wiki-drawer__panel { width: min(680px, 100vw); max-width: 680px; height: 100dvh; }
-.wiki-drawer button { min-height: 44px; }
+.wiki-drawer__panel { width: 100%; max-width: 42.5rem; height: 100svh; }
+.wiki-drawer button:not(.toggletip-tag) { min-block-size: 44px; }
+.toggletip-tag { min-block-size: 1.75rem; }
+.wiki-tier-ribbon { clip-path: polygon(0 0, 100% 0, 0 100%); }
+.wiki-sections [role="tab"] {
+  border-bottom: 2px solid transparent;
+  color: var(--color-text-muted);
+}
+.wiki-sections [role="tab"]:hover {
+  color: var(--color-text-primary);
+}
+.wiki-sections [role="tab"][aria-selected="true"] {
+  border-bottom-color: var(--color-accent-lime);
+  color: var(--color-accent-lime);
+  background: #12161f;
+}
 .wiki-drawer__panel > div:first-child > button { min-width: 44px; min-height: 44px; }
 .wiki-close { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; }
 .wiki-close svg { display: block; width: 20px; height: 20px; flex-shrink: 0; }
