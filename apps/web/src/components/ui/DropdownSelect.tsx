@@ -27,6 +27,8 @@ export function DropdownSelect<T extends string | number>({ label, value, option
   const [active, setActive] = useState(Math.max(0, selected));
   const typed = useRef({ text: '', time: 0 });
   const [placement, setPlacement] = useState({ left: 0, top: 0, minWidth: 0, maxWidth: 0, maxHeight: 256 });
+  const anchorName = '--dropdown-' + id.replace(/[^a-zA-Z0-9_-]/g, '');
+  const supportsAnchor = typeof CSS !== 'undefined' && typeof CSS.supports === 'function' && CSS.supports('position-area: block-end');
 
   const close = () => setOpen(false);
   const show = (index = Math.max(0, selected)) => {
@@ -46,6 +48,7 @@ export function DropdownSelect<T extends string | number>({ label, value, option
     // The native top layer avoids clipping by scrolling toolbars and dialogs.
     const supportsPopover = typeof node.showPopover === 'function';
     if (supportsPopover && !node.matches(':popover-open')) node.showPopover();
+
     const position = () => {
       const rect = trigger.current?.getBoundingClientRect();
       if (!rect) return;
@@ -66,21 +69,31 @@ export function DropdownSelect<T extends string | number>({ label, value, option
         minWidth, maxWidth, maxHeight,
       });
     };
+
     const outside = (event: PointerEvent) => {
       const target = event.target as Node;
       if (!node.contains(target) && !trigger.current?.contains(target)) close();
     };
-    position();
-    window.addEventListener('resize', position);
-    window.addEventListener('scroll', position, true);
-    document.addEventListener('pointerdown', outside);
+
+    if (!supportsAnchor) {
+      position();
+      window.addEventListener('resize', position);
+      window.addEventListener('scroll', position, true);
+    }
+    if (!supportsPopover) {
+      document.addEventListener('pointerdown', outside);
+    }
     return () => {
-      window.removeEventListener('resize', position);
-      window.removeEventListener('scroll', position, true);
-      document.removeEventListener('pointerdown', outside);
+      if (!supportsAnchor) {
+        window.removeEventListener('resize', position);
+        window.removeEventListener('scroll', position, true);
+      }
+      if (!supportsPopover) {
+        document.removeEventListener('pointerdown', outside);
+      }
       if (supportsPopover && node.matches(':popover-open')) node.hidePopover();
     };
-  }, [open, disabled]);
+  }, [open, disabled, supportsAnchor]);
 
   useEffect(() => {
     if (open) menu.current?.querySelector('[data-active="true"]')?.scrollIntoView({ block: 'nearest' });
@@ -111,13 +124,15 @@ export function DropdownSelect<T extends string | number>({ label, value, option
       aria-label={label + ': ' + (options[selected]?.label ?? 'Pilih opsi')} aria-haspopup="listbox"
       aria-expanded={open} aria-controls={id} aria-activedescendant={open ? `${id}-${active}` : undefined}
       disabled={disabled || !options.length} popoverTarget={id}
+      style={supportsAnchor ? ({ anchorName } as React.CSSProperties) : undefined}
       onClick={event => { event.preventDefault(); if (open) close(); else show(); }} onKeyDown={keydown}
       onBlur={event => { if (!menu.current?.contains(event.relatedTarget as Node | null)) close(); }}>
       {leadingIcon ?? (Icon && <Icon aria-hidden="true" />)}<span>{options[selected]?.label ?? 'Pilih opsi'}</span>
       <ChevronDown aria-hidden="true" className="dropdown-chevron" />
     </button>
     <div ref={menu} id={id} role="listbox" aria-label={label} popover="auto" className="dropdown-menu"
-      data-open={open} style={placement} onToggle={event => { if ((event.nativeEvent as ToggleEvent).newState === 'closed') close(); }}>
+      data-open={open} style={supportsAnchor ? ({ positionAnchor: anchorName } as React.CSSProperties) : placement}
+      onToggle={event => { if ((event.nativeEvent as ToggleEvent).newState === 'closed') close(); }}>
       {options.map((option, index) => <div key={option.value} id={`${id}-${index}`} role="option"
         aria-selected={value === option.value} data-active={index === active} className="dropdown-option"
         onPointerMove={() => setActive(index)} onMouseDown={event => event.preventDefault()} onClick={() => choose(index)}>

@@ -1,11 +1,12 @@
 import { LaneLabel } from './ui/LaneIcon';
-import React, { useState, useEffect } from 'react';
+import React, { useId, useRef, useState, useEffect } from 'react';
 import { ArrowRight, BookOpen, ChartColumn, CheckCircle2, ChevronDown, Crosshair, Info, LoaderCircle, ShieldAlert, ShieldBan, ShieldCheck, SlidersHorizontal, Sparkles, Swords, Target, TrendingUp } from 'lucide-react';
 import type { Hero, TacticalVector, TacticalDelta, DuetPackageOption } from '../types';
 import type { TournamentPhaseStrategy, TournamentPredictionResult } from '../engine/tournamentInference';
 import type { SolverStatus } from '../engine/advisorRanking';
 import { HeroThumbnail } from './ui/AssetThumbnail';
 import { plainText } from './ui/presentation';
+import { useFocusgroup } from './ui/useFocusgroup';
 
 interface Props {
   scores: TacticalVector;
@@ -63,18 +64,21 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
   // Plan A/B yang dikunci user: selalu di posisi pertama pada fase PICK, apa pun jawaban solver.
   const lockedPlanId = isPickPhase ? (planAId ?? planBId ?? solverStatus?.lockedPlanHeroId ?? null) : null;
   const lockedPlanHoldsTop = lockedPlanId !== null && recommendations[0]?.hero.hero_id === lockedPlanId;
+  const recTabsId = useId();
+  const projTitleId = useId();
+  const recTabsRef = useRef<HTMLDivElement>(null);
+  const hasRecTabs = recommendations.length > 1 && !isComplete && !isWaiting;
+  useFocusgroup(recTabsRef, hasRecTabs);
 
   function SingleRankBadge({ heroId, recs }: { heroId: number; recs: Props['recommendations'] }) {
     const idx = recs.findIndex(r => r.hero.hero_id === heroId);
     const rank = idx >= 0 ? idx + 1 : null;
     return (
-      <span
-        role="status"
-        aria-label={rank ? `Peringkat rekomendasi tunggal #${rank}` : 'Tidak ada di rekomendasi tunggal'}
-        title={rank ? `Peringkat rekomendasi tunggal #${rank}` : 'Tidak ada di rekomendasi tunggal'}
-        style={{ marginLeft: 'auto', background: 'rgba(255, 255, 255, 0.08)', padding: '0.15rem 0.4rem', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 700, color: rank ? '#c8f542' : '#94a3b8', whiteSpace: 'nowrap' }}
-      >
-        {rank ? `#${rank}` : '—'}
+      <span className={`duet-rank-badge${rank ? ' is-ranked' : ''}`}>
+        <span aria-hidden="true">{rank ? `#${rank}` : '—'}</span>
+        <span className="sr-only">
+          {rank ? `Peringkat rekomendasi tunggal #${rank}` : 'Tidak ada di rekomendasi tunggal'}
+        </span>
       </span>
     );
   }
@@ -113,27 +117,26 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
     {solverStatusChip && <div className="solver-status-row">{solverStatusChip}</div>}
 
     {activeDuet && !isComplete && !isWaiting && (
-      <div className="duet-package-card" style={{ marginBottom: '1rem', padding: '0.875rem', background: 'rgba(234, 179, 8, 0.08)', border: '1px solid rgba(234, 179, 8, 0.3)', borderRadius: '10px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.5rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#eab308', whiteSpace: 'nowrap' }}>
+      <div className="duet-package-card">
+        <div className="duet-package-card__head">
+          <div className="duet-package-card__title-group">
+            <span className="duet-package-card__title">
               💡 PAKET DUET
             </span>
             {activeDuet.windowLabel && (
-              <span style={{ fontSize: '0.7rem', fontWeight: 600, color: activeSide === 'red' ? '#f59e0b' : '#60a5fa', background: activeSide === 'red' ? 'rgba(245, 158, 11, 0.15)' : 'rgba(59, 130, 246, 0.15)', padding: '0.1rem 0.35rem', borderRadius: '4px' }}>
+              <span className="duet-package-card__window" data-side={activeSide}>
                 {activeDuet.windowLabel}
               </span>
             )}
           </div>
           {duetPackages.length > 1 && (
-            <div style={{ display: 'flex', gap: '0.25rem', flexShrink: 0, marginLeft: 'auto' }}>
+            <div className="duet-package-card__tabs">
               {duetPackages.map((_, idx) => (
                 <button
                   key={idx}
                   type="button"
                   onClick={() => setSelectedDuetIdx(idx)}
-                  className={`ui-button ui-button--small ${selectedDuetIdx === idx ? 'ui-button--primary' : 'ui-button--quiet'}`}
-                  style={{ padding: '0.15rem 0.5rem', fontSize: '0.75rem', minHeight: 'auto', whiteSpace: 'nowrap', flexShrink: 0 }}
+                  className={`ui-button ui-button--small duet-package-card__tab ${selectedDuetIdx === idx ? 'ui-button--primary' : 'ui-button--quiet'}`}
                   aria-label={`Paket #${idx + 1}`}
                   title={`Paket #${idx + 1}`}
                 >
@@ -144,37 +147,37 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
           )}
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', margin: '0.5rem 0' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flex: 1, background: 'rgba(0, 0, 0, 0.2)', padding: '0.35rem 0.5rem', borderRadius: '6px' }}>
+        <div className="duet-package-card__pair">
+          <div className="duet-package-card__hero">
             <HeroThumbnail hero={activeDuet.primaryHero} />
-            <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0, flex: 1 }}>
-              <strong style={{ fontSize: '0.875rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{activeDuet.primaryHero.name}</strong>
+            <div className="duet-package-card__hero-meta">
+              <strong>{activeDuet.primaryHero.name}</strong>
               <small><LaneLabel lane={activeDuet.primaryLane} /></small>
             </div>
             <SingleRankBadge heroId={activeDuet.primaryHero.hero_id} recs={recommendations} />
           </div>
-          <span style={{ fontSize: '1.1rem', fontWeight: 700, color: '#eab308' }}>+</span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flex: 1, background: 'rgba(0, 0, 0, 0.2)', padding: '0.35rem 0.5rem', borderRadius: '6px' }}>
+          <span className="duet-package-card__plus" aria-hidden="true">+</span>
+          <div className="duet-package-card__hero">
             <HeroThumbnail hero={activeDuet.secondaryHero} />
-            <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0, flex: 1 }}>
-              <strong style={{ fontSize: '0.875rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{activeDuet.secondaryHero.name}</strong>
+            <div className="duet-package-card__hero-meta">
+              <strong>{activeDuet.secondaryHero.name}</strong>
               <small><LaneLabel lane={activeDuet.secondaryLane} /></small>
             </div>
             <SingleRankBadge heroId={activeDuet.secondaryHero.hero_id} recs={recommendations} />
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem', fontSize: '0.75rem', margin: '0.5rem 0' }}>
-          <span style={{ background: 'rgba(255, 255, 255, 0.08)', padding: '0.15rem 0.4rem', borderRadius: '4px' }}>
+        <div className="duet-package-card__badges">
+          <span className="duet-badge">
             {activeDuet.archetypeBadge}
           </span>
           {activeDuet.kplSynergyLabel && (
-            <span style={{ background: 'rgba(59, 130, 246, 0.15)', color: '#60a5fa', padding: '0.15rem 0.4rem', borderRadius: '4px' }}>
+            <span className="duet-badge duet-badge--synergy">
               {activeDuet.kplSynergyLabel}
             </span>
           )}
           {activeDuet.enemyExploitBadge && (
-            <span style={{ background: 'rgba(34, 197, 94, 0.15)', color: '#4ade80', padding: '0.15rem 0.4rem', borderRadius: '4px' }}>
+            <span className="duet-badge duet-badge--exploit">
               {activeDuet.enemyExploitBadge}
             </span>
           )}
@@ -183,8 +186,7 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
         {onSelectDuetPackage && (
           <button
             type="button"
-            className="ui-button ui-button--primary"
-            style={{ width: '100%', marginTop: '0.5rem', justifyContent: 'center' }}
+            className="ui-button ui-button--primary duet-package-card__cta"
             onClick={() => onSelectDuetPackage(activeDuet)}
           >
             <Swords aria-hidden="true" />
@@ -194,19 +196,29 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
       </div>
     )}
 
-    {recommendations.length > 1 && !isComplete && !isWaiting && (
-      <div className="recommendation-tabs" role="tablist" aria-label="Pilihan prioritas rekomendasi AI">
+    {hasRecTabs && (
+      <div
+        ref={recTabsRef}
+        className="recommendation-tabs"
+        role="tablist"
+        aria-label="Pilihan prioritas rekomendasi AI"
+        {...({ focusgroup: 'tablist nomemory' } as Record<string, string>)}
+      >
         {recommendations.slice(0, 5).map((rec, index) => {
           const isSelected = index === activeIndex;
           const isSolverPick = index === solverPickIndex;
           return (
             <button
               key={rec.hero.hero_id}
+              id={`${recTabsId}-tab-${index}`}
               type="button"
               role="tab"
               aria-selected={isSelected}
+              aria-controls={`${recTabsId}-panel`}
+              {...({ ...(isSelected ? { focusgroupstart: '' } : {}) } as Record<string, string>)}
               className={'rec-tab' + (isSelected ? ' is-active' : '') + (isSolverPick ? ' is-solver-pick' : '')}
               onClick={() => setSelectedIndex(index)}
+              onFocus={() => setSelectedIndex(index)}
               title={`Rekomendasi #${index + 1}: ${rec.hero.name}${isSolverPick ? ' — pilihan solver' : ''}`}
               aria-label={`Rekomendasi #${index + 1}: ${rec.hero.name}${isSolverPick ? ' — pilihan solver' : ''}`}
             >
@@ -219,9 +231,12 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
       </div>
     )}
 
-    {currentRec && <div className="primary-recommendation">
+    {currentRec && <div
+      className="primary-recommendation"
+      {...(hasRecTabs ? { role: 'tabpanel', id: `${recTabsId}-panel`, 'aria-labelledby': `${recTabsId}-tab-${activeIndex}` } : {})}
+    >
       <div className="primary-recommendation__identity">
-        <HeroThumbnail hero={currentRec.hero} />
+        <HeroThumbnail hero={currentRec.hero} priority="high" />
         <div>
           <span className="eyebrow">Rekomendasi #{activeIndex + 1}</span>
           <h3>{currentRec.hero.name}</h3>
@@ -254,9 +269,9 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
       </p>
 
       {currentRec.projection && (
-        <div className="outcome-projection" aria-label="Proyeksi hasil akhir draft">
+        <section className="outcome-projection" aria-labelledby={projTitleId}>
           <div className="outcome-projection__header">
-            <span className="outcome-projection__title">Proyeksi Hasil Draft</span>
+            <span id={projTitleId} className="outcome-projection__title">Proyeksi Hasil Draft</span>
             <span className={'risk-badge risk-badge--' + currentRec.projection.riskLevel.toLowerCase()}>
               {currentRec.projection.riskLevel === 'RENDAH' ? <ShieldCheck aria-hidden="true" /> : <ShieldAlert aria-hidden="true" />}
               Risiko {currentRec.projection.riskLevel}
@@ -280,7 +295,7 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
               <p>{plainText(currentRec.projection.worstCaseScenario)}</p>
             </div>
           </div>
-        </div>
+        </section>
       )}
 
       <div className="primary-recommendation__actions">

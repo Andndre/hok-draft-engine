@@ -1803,14 +1803,14 @@ export function runTournamentInference(
   // 3. Identifikasi Opener Meta Terbaik untuk Strategi Fase 1
   const openerUnavailable = new Set([...unavailableSet, ...fearlessUnavailableIds]);
   const availableHeroes = heroes.filter((h) => !openerUnavailable.has(h.hero_id));
-  const rankedOpeners = [...availableHeroes].sort(
+  const rankedOpeners = availableHeroes.toSorted(
     (a, b) =>
       computeOpenerPriorityScore(b, b1Openers, isBlueSide, onlyGlobalReleased) -
       computeOpenerPriorityScore(a, b1Openers, isBlueSide, onlyGlobalReleased)
   );
 
   // Perspective-aware Blue B1 Threat Hero (always computed as Blue opener priority #1)
-  const blueOpenersRanked = [...availableHeroes].sort(
+  const blueOpenersRanked = availableHeroes.toSorted(
     (a, b) =>
       computeOpenerPriorityScore(b, b1Openers, true, onlyGlobalReleased) -
       computeOpenerPriorityScore(a, b1Openers, true, onlyGlobalReleased)

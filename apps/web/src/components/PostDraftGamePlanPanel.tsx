@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useId, useMemo, useRef, useState } from 'react';
 import {
   AlertTriangle,
   ArrowLeftRight,
@@ -22,6 +22,7 @@ import { generatePostDraftGamePlan } from '../engine/gamePlan';
 import { HeroThumbnail } from './ui/AssetThumbnail';
 import { LaneLabel } from './ui/LaneIcon';
 import { plainText } from './ui/presentation';
+import { useFocusgroup } from './ui/useFocusgroup';
 
 interface Props {
   blueHeroes: Hero[];
@@ -54,6 +55,30 @@ const FEASIBILITY_LABEL: Record<LaneMatchupEvaluation['swapFeasibility'], string
   TACTICAL_SWAP: 'Swap <4m',
 };
 
+function ItemCounterToggletip({ name, description }: { name: string; description: string }) {
+  const tipId = useId();
+  if (!description) {
+    return <span className="counter-item-pill">{name}</span>;
+  }
+  return (
+    <span className="counter-item-tip">
+      <button
+        type="button"
+        className="counter-item-pill"
+        aria-expanded={false}
+        {...({ interestfor: tipId } as Record<string, string>)}
+        popoverTarget={tipId}
+        popoverTargetAction="show"
+      >
+        {name}
+      </button>
+      <span id={tipId} role="tooltip" popover="hint" className="toggletip-panel">
+        {description}
+      </span>
+    </span>
+  );
+}
+
 export function PostDraftGamePlanPanel({
   blueHeroes,
   redHeroes,
@@ -71,6 +96,9 @@ export function PostDraftGamePlanPanel({
   const [activeTab, setActiveTab] = useState<PlanTab>(defaultTab);
   const [swapTargetSide, setSwapTargetSide] = useState<'our' | 'enemy'>('our');
   const [pendingSwapLane, setPendingSwapLane] = useState<Lane | null>(null);
+  const planTabsId = useId();
+  const planTabsRef = useRef<HTMLDivElement>(null);
+  useFocusgroup(planTabsRef);
 
   const ourHeroes = perspective === 'blue' ? blueHeroes : redHeroes;
   const enemyHeroes = perspective === 'blue' ? redHeroes : blueHeroes;
@@ -156,33 +184,51 @@ export function PostDraftGamePlanPanel({
         </div>
       </div>
 
-      <div className="game-plan-tabs" role="tablist" aria-label="Bagian analisis pasca-draft">
+      <div
+        ref={planTabsRef}
+        className="game-plan-tabs"
+        role="tablist"
+        aria-label="Bagian analisis pasca-draft"
+        {...({ focusgroup: 'tablist nomemory' } as Record<string, string>)}
+      >
         <button
+          id={`${planTabsId}-tab-lanes`}
           type="button"
           role="tab"
           aria-selected={activeTab === 'lanes'}
+          aria-controls={`${planTabsId}-panel-lanes`}
+          {...({ ...(activeTab === 'lanes' ? { focusgroupstart: '' } : {}) } as Record<string, string>)}
           className={'game-plan-tab' + (activeTab === 'lanes' ? ' is-active' : '')}
           onClick={() => setActiveTab('lanes')}
+          onFocus={() => setActiveTab('lanes')}
         >
           <ArrowLeftRight aria-hidden="true" />
           <span>Peta Lane &amp; Swap 5v5</span>
         </button>
         <button
+          id={`${planTabsId}-tab-winning`}
           type="button"
           role="tab"
           aria-selected={activeTab === 'winning'}
+          aria-controls={`${planTabsId}-panel-winning`}
+          {...({ ...(activeTab === 'winning' ? { focusgroupstart: '' } : {}) } as Record<string, string>)}
           className={'game-plan-tab' + (activeTab === 'winning' ? ' is-active' : '')}
           onClick={() => setActiveTab('winning')}
+          onFocus={() => setActiveTab('winning')}
         >
           <TrendingUp aria-hidden="true" />
           <span>Winning Condition &amp; Tempo</span>
         </button>
         <button
+          id={`${planTabsId}-tab-jungle`}
           type="button"
           role="tab"
           aria-selected={activeTab === 'jungle'}
+          aria-controls={`${planTabsId}-panel-jungle`}
+          {...({ ...(activeTab === 'jungle' ? { focusgroupstart: '' } : {}) } as Record<string, string>)}
           className={'game-plan-tab' + (activeTab === 'jungle' ? ' is-active' : '')}
           onClick={() => setActiveTab('jungle')}
+          onFocus={() => setActiveTab('jungle')}
         >
           <Crosshair aria-hidden="true" />
           <span>Pola Jungle, Gank &amp; Item</span>
@@ -190,7 +236,12 @@ export function PostDraftGamePlanPanel({
       </div>
 
       {activeTab === 'lanes' && (
-        <div className="game-plan-section" role="tabpanel" aria-label="Peta lane dan simulator swap">
+        <div
+          id={`${planTabsId}-panel-lanes`}
+          className="game-plan-section"
+          role="tabpanel"
+          aria-labelledby={`${planTabsId}-tab-lanes`}
+        >
           <div className="swap-toolbar">
             <div className="swap-toolbar__target">
               <span className="muted-copy">Simulasi tukar lane:</span>
@@ -366,7 +417,12 @@ export function PostDraftGamePlanPanel({
       )}
 
       {activeTab === 'winning' && (
-        <div className="game-plan-section" role="tabpanel" aria-label="Winning condition dan kurva tempo">
+        <div
+          id={`${planTabsId}-panel-winning`}
+          className="game-plan-section"
+          role="tabpanel"
+          aria-labelledby={`${planTabsId}-tab-winning`}
+        >
           <div className="archetype-banner">
             <div>
               <span className="archetype-banner__eyebrow">Arketipe {sideName(perspective)}</span>
@@ -445,16 +501,16 @@ export function PostDraftGamePlanPanel({
           </div>
 
           {/* Level 3 Macro & Safety Diagnostics */}
-          <div className="macro-tactics-bar" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '12px', marginBottom: '14px' }}>
+          <div className="macro-tactics-bar">
             {plan.winningCondition.scaleClash && (
-              <div className="surface-card" style={{ padding: '12px 14px', borderRadius: '10px', background: '#0e1724', border: '1px solid #253347' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                  <Swords style={{ width: '16px', height: '16px', color: '#60a5fa' }} aria-hidden="true" />
-                  <strong style={{ fontSize: '0.88rem', color: '#93c5fd' }}>
+              <div className="surface-card macro-card macro-card--scale">
+                <div className="macro-card__head">
+                  <Swords className="macro-card__icon" aria-hidden="true" />
+                  <strong className="macro-card__title">
                     {plan.winningCondition.scaleClash.matchupHeadline}
                   </strong>
                 </div>
-                <p style={{ margin: 0, fontSize: '0.82rem', color: '#cbd5e1', lineHeight: '1.4' }}>
+                <p className="macro-card__body">
                   {plainText(plan.winningCondition.scaleClash.tacticalAdvice)}
                 </p>
               </div>
@@ -462,44 +518,18 @@ export function PostDraftGamePlanPanel({
 
             {plan.winningCondition.backlineSafety && (
               <div
-                className="surface-card"
-                style={{
-                  padding: '12px 14px',
-                  borderRadius: '10px',
-                  background:
-                    plan.winningCondition.backlineSafety.riskLevel === 'CRITICAL'
-                      ? '#241017'
-                      : plan.winningCondition.backlineSafety.riskLevel === 'ELEVATED'
-                        ? '#241c10'
-                        : '#0e1f18',
-                  border: `1px solid ${
-                    plan.winningCondition.backlineSafety.riskLevel === 'CRITICAL'
-                      ? '#dc2626'
-                      : plan.winningCondition.backlineSafety.riskLevel === 'ELEVATED'
-                        ? '#d97706'
-                        : '#16a34a'
-                  }`,
-                }}
+                className="surface-card macro-card macro-card--safety"
+                data-risk={plan.winningCondition.backlineSafety.riskLevel}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                <div className="macro-card__head">
                   {plan.winningCondition.backlineSafety.riskLevel === 'CRITICAL' ? (
-                    <ShieldAlert style={{ width: '16px', height: '16px', color: '#f87171' }} aria-hidden="true" />
+                    <ShieldAlert className="macro-card__icon" aria-hidden="true" />
                   ) : plan.winningCondition.backlineSafety.riskLevel === 'ELEVATED' ? (
-                    <AlertTriangle style={{ width: '16px', height: '16px', color: '#fbbf24' }} aria-hidden="true" />
+                    <AlertTriangle className="macro-card__icon" aria-hidden="true" />
                   ) : (
-                    <ShieldCheck style={{ width: '16px', height: '16px', color: '#4ade80' }} aria-hidden="true" />
+                    <ShieldCheck className="macro-card__icon" aria-hidden="true" />
                   )}
-                  <strong
-                    style={{
-                      fontSize: '0.88rem',
-                      color:
-                        plan.winningCondition.backlineSafety.riskLevel === 'CRITICAL'
-                          ? '#fca5a5'
-                          : plan.winningCondition.backlineSafety.riskLevel === 'ELEVATED'
-                            ? '#fde68a'
-                            : '#86efac',
-                    }}
-                  >
+                  <strong className="macro-card__title">
                     {plan.winningCondition.backlineSafety.riskLevel === 'CRITICAL'
                       ? 'Carry Collapse Risk (Lini Belakang Kritis)'
                       : plan.winningCondition.backlineSafety.riskLevel === 'ELEVATED'
@@ -507,7 +537,7 @@ export function PostDraftGamePlanPanel({
                         : 'Lini Belakang Terlindungi (Peel Memadai)'}
                   </strong>
                 </div>
-                <p style={{ margin: 0, fontSize: '0.82rem', color: '#cbd5e1', lineHeight: '1.4' }}>
+                <p className="macro-card__body">
                   {plainText(
                     plan.winningCondition.backlineSafety.warningMessage ??
                       'Diver musuh seimbang atau dapat ditahan oleh barisan peel kita.',
@@ -518,20 +548,12 @@ export function PostDraftGamePlanPanel({
           </div>
 
           {plan.winningCondition.constraintSynergies && plan.winningCondition.constraintSynergies.length > 0 && (
-            <div
-              style={{
-                marginBottom: '14px',
-                padding: '10px 14px',
-                borderRadius: '10px',
-                background: '#111c2e',
-                border: '1px solid #1e3a5f',
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                <Sparkles style={{ width: '15px', height: '15px', color: '#a78bfa' }} aria-hidden="true" />
-                <strong style={{ fontSize: '0.85rem', color: '#c4b5fd' }}>Sinergi Pembebas Batasan Terdeteksi</strong>
+            <div className="constraint-synergies-box">
+              <div className="constraint-synergies-box__head">
+                <Sparkles className="constraint-synergies-box__icon" aria-hidden="true" />
+                <strong className="constraint-synergies-box__title">Sinergi Pembebas Batasan Terdeteksi</strong>
               </div>
-              <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '0.82rem', color: '#cbd5e1' }}>
+              <ul className="constraint-synergies-box__list">
                 {plan.winningCondition.constraintSynergies.map((syn, idx) => (
                   <li key={idx}>
                     <strong>
@@ -572,7 +594,12 @@ export function PostDraftGamePlanPanel({
       )}
 
       {activeTab === 'jungle' && (
-        <div className="game-plan-section" role="tabpanel" aria-label="Pola jungle, target gank, dan item counter">
+        <div
+          id={`${planTabsId}-panel-jungle`}
+          className="game-plan-section"
+          role="tabpanel"
+          aria-labelledby={`${planTabsId}-tab-jungle`}
+        >
           <div className="jungle-route-cards">
             <div className="jungle-card jungle-card--primary">
               <div className="jungle-card__eyebrow">
@@ -656,9 +683,11 @@ export function PostDraftGamePlanPanel({
                   {entry.recommendedItems.length > 0 && (
                     <div className="counter-items-pills">
                       {entry.recommendedItems.map((item) => (
-                        <span key={item.name} className="counter-item-pill" title={item.description}>
-                          {item.name}
-                        </span>
+                        <ItemCounterToggletip
+                          key={item.name}
+                          name={item.name}
+                          description={item.description}
+                        />
                       ))}
                     </div>
                   )}

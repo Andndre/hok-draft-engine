@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import {
   AlertTriangle,
   ArrowDown,
@@ -37,6 +37,7 @@ import {
   type ManualLayoutConfig,
 } from '../vision/manualLayout';
 import { unidentifiedBansBreakdownMessage } from '../vision/observer';
+import { visionFormatMismatchReason, type VisionApplyResult } from '../vision/visionMessages';
 import { VisionHeroPickerModal } from './VisionHeroPickerModal';
 import { HeroThumbnail } from './ui/AssetThumbnail';
 import { LaneLabel } from './ui/LaneIcon';
@@ -65,16 +66,7 @@ interface VisionPanelProps {
   onInspectHero?: (hero: Hero) => void;
 }
 
-/** Result returned by the apply-to-simulator action so the panel can render confirmation or refusal feedback. */
-export type VisionApplyResult =
-  | { ok: true; appliedCount: number; newStep: number }
-  | { ok: false; reason: string };
-
-/** Refusal message shown when the simulator is not in the advisor's draft format. */
-export function visionFormatMismatchReason(advisorFormat: DraftFormat): string {
-  const label = advisorFormat === 'ranked' ? 'Ranked' : 'Turnamen';
-  return `Simulator harus berada di mode ${label} untuk menerapkan papan live ini. Buka tab Simulator, lalu ubah dropdown "Format draft" ke "${label}".`;
-}
+export { visionFormatMismatchReason, type VisionApplyResult };
 
 /** Compare two positions: true when `current` arrays are a prefix of `detected`. */
 export function positionIsPrefix(current: DraftPosition, detected: DraftPosition): boolean {
@@ -299,6 +291,7 @@ export function VisionDetectedBoard({ slotsByTeam, ownSide, advisorIsUltimateBat
                 {!advisorIsUltimateBattle && (
                   <div
                     className="ban-slots"
+                    role="group"
                     style={{ ['--ban-count' as string]: team.data.bans.length }}
                     aria-label={`Ban tim ${team.label}`}
                   >
@@ -331,7 +324,7 @@ export function VisionDetectedBoard({ slotsByTeam, ownSide, advisorIsUltimateBat
                   </div>
                 )}
               </div>
-              <div className="team-picks" aria-label={`Pick tim ${team.label}`}>
+              <div className="team-picks" role="group" aria-label={`Pick tim ${team.label}`}>
                 {team.data.picks.map((slot, index) => {
                   const slotCode = (team.side === 'blue' ? 'B' : 'R') + (index + 1);
                   const isCommitted = slot.locked === true;
@@ -453,6 +446,8 @@ export function VisionPanel({
   };
   const [presets, setPresets] = useState<{ name: string; config: ManualLayoutConfig }[]>(loadPresets);
   const [presetInput, setPresetInput] = useState('');
+  const sideGroupName = useId();
+  const presetInputId = useId();
   const persistPresets = (next: { name: string; config: ManualLayoutConfig }[]) => {
     setPresets(next);
     try {
@@ -1116,22 +1111,29 @@ export function VisionPanel({
           </div>
         </div>
         <div className="vision-panel__controls">
-          <div className="vision-side-toggle" role="radiogroup" aria-label="Sisi tim Anda">
-            {sideOptions.map(option => (
-              <button
-                key={option.value}
-                type="button"
-                role="radio"
-                aria-checked={side === option.value}
-                aria-label={`Sisi ${option.label}`}
-                className={side === option.value ? 'is-selected' : ''}
-                onClick={() => setSide(option.value)}
-              >
-                {side === option.value ? <Eye aria-hidden="true" /> : <EyeOff aria-hidden="true" />}
-                {option.label}
-              </button>
-            ))}
-          </div>
+          <fieldset className="vision-side-toggle">
+            <legend className="sr-only">Sisi tim Anda</legend>
+            {sideOptions.map(option => {
+              const inputId = `${sideGroupName}-${option.value}`;
+              const selected = side === option.value;
+              return (
+                <label key={option.value} htmlFor={inputId} className={selected ? 'is-selected' : ''}>
+                  <input
+                    id={inputId}
+                    type="radio"
+                    name={sideGroupName}
+                    value={option.value}
+                    checked={selected}
+                    onChange={() => setSide(option.value)}
+                    className="sr-only"
+                  />
+                  {selected ? <Eye aria-hidden="true" /> : <EyeOff aria-hidden="true" />}
+                  <span className="sr-only">Sisi </span>
+                  <span>{option.label}</span>
+                </label>
+              );
+            })}
+          </fieldset>
           {showPreview && (
             <button
               type="button"
@@ -1200,9 +1202,12 @@ export function VisionPanel({
           <LoaderCircle className="is-spinning" aria-hidden="true" />
           <div className="vision-progress">
             <strong>Memuat referensi hero…</strong>
-            <div className="vision-progress__bar" role="progressbar" aria-valuenow={progress.done} aria-valuemax={progress.total}>
-              <div style={{ width: `${progress.total > 0 ? (progress.done / progress.total) * 100 : 0}%` }} />
-            </div>
+            <progress
+              className="vision-progress__bar"
+              aria-label="Memuat referensi hero"
+              value={progress.done}
+              max={Math.max(1, progress.total)}
+            />
             <p>{progress.done}/{progress.total} portrait</p>
           </div>
         </div>
@@ -1260,11 +1265,10 @@ export function VisionPanel({
                     <option value="">Preset…</option>
                     {presets.map(p => <option key={p.name} value={p.name}>{p.name}</option>)}
                   </select>
-                  <div className="vision-mode-toggle" role="tablist" aria-label="Mode interaksi">
+                  <div className="vision-mode-toggle" role="group" aria-label="Mode interaksi">
                     <button
                       type="button"
-                      role="tab"
-                      aria-selected={interactionMode === 'detect'}
+                      aria-pressed={interactionMode === 'detect'}
                       className={interactionMode === 'detect' ? 'is-selected' : ''}
                       onClick={() => setInteractionMode('detect')}
                     >
@@ -1272,8 +1276,7 @@ export function VisionPanel({
                     </button>
                     <button
                       type="button"
-                      role="tab"
-                      aria-selected={interactionMode === 'edit'}
+                      aria-pressed={interactionMode === 'edit'}
                       className={interactionMode === 'edit' ? 'is-selected' : ''}
                       onClick={() => setInteractionMode('edit')}
                     >
@@ -1361,7 +1364,9 @@ export function VisionPanel({
                     {presets.map(p => <option key={p.name} value={p.name}>{p.name}</option>)}
                   </select>
                   <div className="vision-settings__preset-actions">
+                    <label htmlFor={presetInputId} className="sr-only">Nama preset layout</label>
                     <input
+                      id={presetInputId}
                       type="text"
                       placeholder="Nama preset"
                       value={presetInput}

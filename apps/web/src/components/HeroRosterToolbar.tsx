@@ -31,7 +31,7 @@ export function HeroRosterToolbar({ title = 'Pilih hero', count, searchQuery, on
     if (!active) return;
     const shortcut = (event: KeyboardEvent) => {
       const target = event.target as HTMLElement | null;
-      if (event.key === '/' && !event.ctrlKey && !event.metaKey && !event.altKey && !target?.closest('input,textarea,select,[contenteditable="true"],[role="dialog"]')) {
+      if (event.key === '/' && !event.ctrlKey && !event.metaKey && !event.altKey && !target?.closest('input,textarea,select,[contenteditable="true"],dialog,[role="dialog"]')) {
         event.preventDefault(); search.current?.focus();
       }
     };
@@ -41,7 +41,7 @@ export function HeroRosterToolbar({ title = 'Pilih hero', count, searchQuery, on
   const effectiveSort = hideAiSort && sortMode === 'ai' ? 'az' : sortMode;
   const SortIcon = { ai: Sparkles, win: TrendingUp, pick: ChartColumn, az: ArrowDownAZ }[effectiveSort];
   const reset = () => { onSearchChange(''); onLaneChange('All'); search.current?.focus(); };
-  return <div className="roster-toolbar" aria-label="Pencarian dan filter hero">
+  return <search className="roster-toolbar" aria-label="Pencarian dan filter hero">
     <div className="roster-toolbar__heading"><h2>{title} <span className="count-badge">{count}</span></h2>
       <div className="view-switch" role="group" aria-label="Tampilan hero">
         <button type="button" aria-label="Tampilan daftar" aria-pressed={viewMode === 'compact'} title="Tampilan daftar" onClick={() => onViewChange('compact')}><List aria-hidden="true" /></button>
@@ -58,5 +58,5 @@ export function HeroRosterToolbar({ title = 'Pilih hero', count, searchQuery, on
     </div>
     <div className="lane-filter" role="group" aria-label="Filter lane">{lanes.map(({ id, name }) => <button type="button" key={id} aria-pressed={selectedLane === id} onClick={() => onLaneChange(id)}><LaneIcon lane={id} /><span>{name}</span></button>)}</div>
     {(searchQuery || selectedLane !== 'All') && <button type="button" className="filter-reset" onClick={reset}><FilterX aria-hidden="true" />Bersihkan filter</button>}
-  </div>;
+  </search>;
 }

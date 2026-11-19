@@ -51,7 +51,7 @@ export function decodePng(buffer) {
   try {
     raw = inflateSync(compressed);
   } catch (error) {
-    throw new Error(`Data IDAT gagal didekompresi (zlib inflate): ${error.message}`);
+    throw new Error(`Data IDAT gagal didekompresi (zlib inflate): ${error.message}`, { cause: error });
   }
 
   const stride = header.width * channels;

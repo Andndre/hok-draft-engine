@@ -46,13 +46,12 @@ const writeCache = async (value: CachedPackage) => {
   }, false, 'readwrite');
 };
 async function fetchText(url: string): Promise<string> {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 5000);
-  try {
-    const res = await fetch(url, { signal: controller.signal, cache: url.endsWith('data_manifest.json') ? 'no-store' : 'default' });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.text();
-  } finally { clearTimeout(timer); }
+  const res = await fetch(url, {
+    signal: AbortSignal.timeout(5000),
+    cache: url.endsWith('data_manifest.json') ? 'no-store' : 'default',
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return await res.text();
 }
 export async function sha256(text: string): Promise<string> {
   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));

@@ -728,9 +728,7 @@ export class VisionPipeline {
     const index = this.pickActions.findIndex(action => action.slotIndex === this.lastPickActionSlot);
     if (index < 0) return false;
     this.pickActions.splice(index, 1);
-    const remaining = this.pickActions
-      .slice()
-      .sort((a, b) => b.at - a.at);
+    const remaining = this.pickActions.toSorted((a, b) => b.at - a.at);
     this.lastPickActionSlot = remaining.length > 0 ? remaining[0].slotIndex : null;
     this.publishManualObservation();
     return true;
