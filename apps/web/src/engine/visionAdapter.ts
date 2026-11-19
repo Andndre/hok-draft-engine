@@ -12,6 +12,7 @@ import { getDraftTurn, oppositeSide } from './draftRules';
 import type { DraftPosition, Side } from './draftRules';
 import { isHeroGlobalReleased } from '../data/heroReleaseStatus';
 import { runTournamentInference } from './tournamentInference';
+import { pickPhaseCandidates } from './draftSearch';
 import type { TournamentPhaseStrategy, TournamentPredictionResult } from './tournamentInference';
 import { visionPhaseForStep } from '../vision/observer';
 import type { VisionPhase } from '../vision/observer';
@@ -42,7 +43,7 @@ export interface VisionRecommendationInput {
 
 /** One recommendation snapshot for the live advisor panel. */
 export interface VisionRecommendation {
-  /** Recommended hero ids, best first. Empty when it is not the user's pick turn. */
+  /** Recommended hero ids for the acting side, best first. */
   heroIds: number[];
   /** The matching Hero objects for `heroIds` (resolved from `heroes`). */
   heroSuggestions: Hero[];
@@ -65,25 +66,23 @@ export interface VisionRecommendation {
 }
 
 /**
- * Compute a pick recommendation for the user's side via runTournamentInference.
- * `heroIds` is populated ONLY when it is the user's turn AND the step is a
- * pick; ban turns and opponent turns intentionally yield no candidates (ban
- * advice is a separate concern owned by the UI lane).
+ * Compute a pick recommendation for the acting side via runTournamentInference.
+ * Opponent suggestions use public information, never the user's private plan.
  */
 export function computeVisionRecommendation(input: VisionRecommendationInput): VisionRecommendation {
   const format: DraftFormat = input.format ?? 'tournament';
   const isUltimateBattle = input.isUltimateBattle ?? false;
-  const turn = getDraftTurn(input.position.step, format, isUltimateBattle);
+  const turn = getDraftTurn(input.position.step, format, isUltimateBattle, input.rankedBanCount ?? 3);
   const userSide: Side = input.side;
   const actingSide = turn.side;
   const isPickPhase = turn.action === 'pick' && !turn.isComplete;
   const isUserTurn = !turn.isComplete && actingSide === userSide;
   const phase = visionPhaseForStep(input.position.step, format, isUltimateBattle);
   const base = { step: input.position.step, phase, isPickPhase, isUserTurn, actingSide };
-  if (!isUserTurn || !isPickPhase) return { ...base, heroIds: [], heroSuggestions: [] };
+  if (!isPickPhase) return { ...base, heroIds: [], heroSuggestions: [] };
 
-  const enemySide: Side = oppositeSide(userSide);
-  const ourHeroIds = [...input.position.picks[userSide]];
+  const enemySide: Side = oppositeSide(actingSide);
+  const ourHeroIds = [...input.position.picks[actingSide]];
   const enemyHeroIds = [...input.position.picks[enemySide]];
   // App.tsx narrows bans to the acting side only during a ranked BAN turn; the
   // adapter returns early on ban turns, so at any pick turn all bans apply.
@@ -96,11 +95,11 @@ export function computeVisionRecommendation(input: VisionRecommendationInput): V
     bannedHeroIds,
     [...fearless[actingSide]],
     isPickPhase,
-    userSide === 'blue',
+    actingSide === 'blue',
     input.heroes,
     input.position.step,
-    input.planAId ?? null,
-    input.planBId ?? null,
+    isUserTurn ? input.planAId ?? null : null,
+    isUserTurn ? input.planBId ?? null : null,
     onlyGlobalReleased,
     input.synergyDb ?? {},
     [...fearless[enemySide]],
@@ -109,9 +108,11 @@ export function computeVisionRecommendation(input: VisionRecommendationInput): V
     input.rankedBanCount ?? 3,
   );
   const used = new Set([...ourHeroIds, ...enemyHeroIds, ...bannedHeroIds]);
-  const filteredRecommendations = result.recommendations
+  const legalRecommendations = result.recommendations
     .filter(entry => (onlyGlobalReleased ? isHeroGlobalReleased(entry.hero) : true))
     .filter(entry => !used.has(entry.hero.hero_id));
+  const actingHeroes = input.heroes.filter(hero => ourHeroIds.includes(hero.hero_id));
+  const filteredRecommendations = pickPhaseCandidates(legalRecommendations, actingHeroes, input.synergyDb?.hero_lane_rates);
   const heroSuggestions = filteredRecommendations.map(entry => entry.hero);
   return {
     ...base,

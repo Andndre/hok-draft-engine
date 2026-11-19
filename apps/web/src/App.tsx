@@ -1051,6 +1051,7 @@ export const App: React.FC = () => {
           {activeTab === 'draft' && !loadError && draftMode === 'vision' && (
             <Suspense fallback={<div className="surface-panel p-6 text-sm text-slate-400" role="status">Memuat Live Draft Advisor…</div>}>
               <VisionPanel
+                dataset={dataset}
                 heroes={heroes}
                 synergyData={synergyData}
                 advisorFormat={VISION_ADVISOR_FORMAT}

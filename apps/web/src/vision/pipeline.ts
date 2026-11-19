@@ -14,8 +14,9 @@ import { buildManualRegionProfile, type ManualLayoutConfig } from './manualLayou
 import { DraftObserver } from './observer';
 import { computeVisionRecommendation } from '../engine/visionAdapter';
 import { getDraftSequence } from '../engine/draftRules';
+import { isHeroGlobalReleased } from '../data/heroReleaseStatus';
 import type { DraftFormat, Hero } from '../types';
-import type { CaptureFrame, GrayImage, MatchResult, Rect, SlotObservation, DraftObservation, VisionSide, RegionProfile, SlotRegion, RgbaPlane, SurfaceSlotRect, PickAction, PreSelection, BanEstimate, ManualDetectionState } from './types';
+import type { CaptureFrame, GrayImage, MatchResult, Rect, SlotObservation, DraftObservation, VisionSide, RegionProfile, SlotRegion, RgbaPlane, SurfaceSlotRect, PickAction, PreSelection, BanEstimate, ManualDetectionState, ReferenceEntry } from './types';
 import type { ObserverResult } from './observer';
 import type { VisionRecommendation } from '../engine/visionAdapter';
 
@@ -54,6 +55,8 @@ export interface LayoutStatus {
 
 /** Callback surface between VisionPipeline and the React panel. */
 export interface VisionPipelineEvents {
+  /** A new preview frame is available, independent of recognition results. */
+  onFrame?: () => void;
   /** Current lifecycle/status state changed. */
   onStatus?: (status: VisionPipelineStatus) => void;
   /**
@@ -307,6 +310,12 @@ export function sideCrossCheck(detected: 'red' | 'blue' | 'unknown', declared: V
 /** Module-level cache so re-mounting the panel does not re-fetch 137 portraits. */
 let referenceCache: Promise<import('./types').ReferenceEntry[]> | null = null;
 
+/** Restrict both recognition and correction search to the active hero catalog. */
+export function eligibleVisionReferences(references: ReferenceEntry[], heroes: Hero[], onlyGlobal: boolean): ReferenceEntry[] {
+  const eligible = new Set(heroes.filter(hero => hero.hero_id !== 511 && (!onlyGlobal || isHeroGlobalReleased(hero))).map(hero => hero.hero_id));
+  return references.filter(reference => eligible.has(reference.heroId));
+}
+
 /**
  * Drives capture -> recognition -> observation -> recommendation. Holds the
  * CaptureSource and HeroMatcher lifecycle and emits callbacks for the UI.
@@ -318,6 +327,8 @@ export class VisionPipeline {
     Omit<VisionPipelineOptions, 'format' | 'onlyGlobal' | 'isUltimateBattle'>;  private statusValue: VisionPipelineStatus = 'idle';
   private autoDetect = false;
   private matcher: HeroMatcher | null = null;
+  private inspectionMatcher: HeroMatcher | null = null;
+  private references: ReferenceEntry[] | null = null;
   private observer: DraftObserver | null = null;
   private frameCount = 0;
   /** First fill timestamp per slot index (SlotRegion.index), across frames. */
@@ -373,6 +384,11 @@ export class VisionPipeline {
   /** True when the browser environment supports screen capture. */
   static isSupported(): boolean {
     return CaptureSource.isSupported();
+  }
+
+  /** Pause or resume frame updates without ending screen sharing or resetting the draft. */
+  setPaused(paused: boolean): boolean {
+    return this.capture.setPaused(paused);
   }
 
   /** Request screen share, load references lazily, and begin processing frames. */
@@ -491,7 +507,12 @@ export class VisionPipeline {
   setSide(side: VisionSide): void {
     if (this.options.side === side) return;
     this.options.side = side;
+    this.pickActions = [];
+    this.preSelections.clear();
+    this.banEstimates.clear();
+    this.lastPickActionSlot = null;
     this.rebuildObserver();
+    if (this.currentProfile) this.publishManualObservation();
   }
 
   /** Update the manual grid layout (null returns to automatic detection) and refresh the active frame. */
@@ -508,6 +529,7 @@ export class VisionPipeline {
   setHeroes(heroes: Hero[]): void {
     if (this.options.heroes === heroes) return;
     this.options.heroes = heroes;
+    this.rebuildMatchers();
     this.rebuildObserver();
   }
 
@@ -536,11 +558,13 @@ export class VisionPipeline {
     this.options.planBId = planBId;
   }
 
-  /** Update the Global-release filter (observer legality only; matcher already covers all heroes). */
+  /** Update the Global-release filter for recognition as well as draft legality. */
   setOnlyGlobal(onlyGlobal: boolean): void {
     if (this.options.onlyGlobal === onlyGlobal) return;
     this.options.onlyGlobal = onlyGlobal;
+    this.rebuildMatchers();
     this.rebuildObserver();
+    if (this.currentProfile) this.publishManualObservation();
   }
 
   /** Update Ultimate Battle flag. */
@@ -578,14 +602,22 @@ export class VisionPipeline {
           onProgress: (done, total) => this.events.onReferenceProgress?.(done, total),
         });
       }
-      const references = await referenceCache;
-      this.matcher = new HeroMatcher(references);
-      if (this.matcher.referenceCount === 0) throw new Error('Gagal memuat referensi hero.');
+      this.references = await referenceCache;
+      this.rebuildMatchers();
+      if (eligibleVisionReferences(this.references, this.options.heroes, this.options.onlyGlobal).length === 0) throw new Error('Gagal memuat referensi hero.');
     } catch (err) {
       this.setStatus('error');
       this.events.onError?.(err instanceof Error ? err.message : 'Gagal memuat referensi hero.');
       referenceCache = null;
     }
+  }
+
+  private rebuildMatchers(): void {
+    if (!this.references) return;
+    const references = eligibleVisionReferences(this.references, this.options.heroes, this.options.onlyGlobal);
+    this.matcher = new HeroMatcher(references);
+    this.inspectionMatcher = new HeroMatcher(references, { shortlistSize: Math.max(1, references.length) });
+    this.matchCache.clear();
   }
 
   private setStatus(next: VisionPipelineStatus): void {
@@ -761,6 +793,22 @@ export class VisionPipeline {
     return match;
   }
 
+  /** Inspect a crop without mutating the observed draft. */
+  async inspectSlot(slotIndex: number): Promise<MatchResult | null> {
+    await this.ensureMatcher();
+    const frame = this.lastFrameValue;
+    const profile = this.currentProfile;
+    if (!this.matcher || !profile || !frame) return null;
+    const region = resolveSlotSides(profile, this.options.side).find(slot => slot.index === slotIndex);
+    if (!region) return null;
+    const rect = scaleRect(region.rect, profile.resolution.width, profile.resolution.height, frame.width, frame.height);
+    const crop = cropGray(frame.gray, rect);
+    if (isBlankSlot(crop)) return null;
+    const rgba = cropRgba({ data: frame.rgba, width: frame.width, height: frame.height }, rect);
+    const matcher = region.kind === 'pick' ? this.inspectionMatcher ?? this.matcher : this.matcher;
+    return matcher.match(crop, { kind: region.kind, banPadlock: region.kind === 'ban', rgba });
+  }
+
   /** Apply a manually chosen hero to a slot. */
   updateSlotFromModal(slotIndex: number, heroId: number): void {
     if (!this.currentProfile) return;
@@ -775,6 +823,20 @@ export class VisionPipeline {
         score: 1,
         at: Date.now(),
       });
+      this.publishManualObservation();
+      return;
+    }
+    const existing = this.pickActions.find(action => action.slotIndex === slotIndex);
+    if (existing) {
+      existing.heroId = heroId;
+      existing.score = 1;
+      this.publishManualObservation();
+      return;
+    }
+    const preselection = this.preSelections.get(slotIndex);
+    if (preselection) {
+      preselection.heroId = heroId;
+      preselection.score = 1;
       this.publishManualObservation();
       return;
     }
@@ -810,7 +872,7 @@ export class VisionPipeline {
   }
 
   /** Single-click handling for a slot. */
-  async clickSlot(slotIndex: number): Promise<{ action: string; heroId: number | null; score: number; abstained: boolean; locked?: boolean; reason?: string }> {
+  async clickSlot(slotIndex: number): Promise<{ action: string; heroId: number | null; score: number; abstained: boolean; candidates?: MatchResult['candidates']; locked?: boolean; reason?: string }> {
     await this.ensureMatcher();
     if (!this.matcher || !this.currentProfile || !this.lastFrameValue || !this.observer) {
       return { action: 'error', heroId: null, score: 0, abstained: true, reason: 'advisor not ready' };
@@ -829,6 +891,7 @@ export class VisionPipeline {
         heroId: match && !match.abstained ? match.heroId : null,
         score: match ? match.score : 0,
         abstained: !match || match.abstained,
+        candidates: match?.candidates,
       };
     }
 
@@ -863,7 +926,7 @@ export class VisionPipeline {
         return { action: 'committed', heroId, score: match.score, abstained: false, locked: true };
       }
       if (match.abstained) {
-        return { action: 'abstained', heroId: null, score: match.score, abstained: true };
+        return { action: 'abstained', heroId: null, score: match.score, abstained: true, candidates: match.candidates };
       }
       this.preSelections.set(slotIndex, { slotIndex, side: region.side, heroId: match.heroId!, score: match.score, at: Date.now() });
       this.publishManualObservation();
@@ -873,9 +936,9 @@ export class VisionPipeline {
     if (isExpected) {
       if (match.abstained) {
         if (badge) {
-          return { action: 'abstained', heroId: null, score: match.score, abstained: true };
+          return { action: 'abstained', heroId: null, score: match.score, abstained: true, candidates: match.candidates };
         }
-        return { action: 'abstained', heroId: null, score: match.score, abstained: true };
+        return { action: 'abstained', heroId: null, score: match.score, abstained: true, candidates: match.candidates };
       }
       const action: PickAction = { slotIndex, side: region.side, heroId: match.heroId!, score: match.score, locked: true, at: Date.now() };
       this.pickActions.push(action);
@@ -885,7 +948,7 @@ export class VisionPipeline {
     }
 
     if (isOwn && !isExpected) {
-      if (match.abstained) return { action: 'abstained', heroId: null, score: match.score, abstained: true };
+      if (match.abstained) return { action: 'abstained', heroId: null, score: match.score, abstained: true, candidates: match.candidates };
       this.preSelections.set(slotIndex, { slotIndex, side: region.side, heroId: match.heroId!, score: match.score, at: Date.now() });
       this.publishManualObservation();
       return { action: 'preselection', heroId: match.heroId, score: match.score, abstained: false, locked: false };
@@ -1008,7 +1071,7 @@ export class VisionPipeline {
       side: this.options.side,
     };
     this.events.onObservation?.(observation, result);
-    if (result.changed || this.frameCount <= 1) {
+    {
       const recommendation = computeVisionRecommendation({
         position: result.position,
         heroes: this.options.heroes,
@@ -1036,6 +1099,7 @@ export class VisionPipeline {
         height: frame.height,
         ts: frame.ts,
       };
+      this.events.onFrame?.();
     }
     if (!this.matcher || !this.observer) {
       this.ensureMatcher().catch(() => {});

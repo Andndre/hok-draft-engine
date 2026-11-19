@@ -18,10 +18,31 @@ import {
   sideCrossCheck,
   sortSlotsChronologically,
   scaleRect,
+  eligibleVisionReferences,
 } from '../src/vision/pipeline.ts';
 import { buildManualRegionProfile, defaultManualLayoutConfig } from '../src/vision/manualLayout.ts';
 import { badgeStrictCounts, detectSlotLockBadge, LOCK_BADGE_PROBE } from '../src/vision/badgeLock.ts';
 import { unidentifiedBansMessage } from '../src/vision/observer.ts';
+
+test('vision reference search follows Global Only, including variants and unknown release status', () => {
+  const heroes = [
+    { hero_id: 1, is_global_released: true },
+    { hero_id: 2, is_global_released: false },
+    { hero_id: 3 },
+    { hero_id: 511, is_global_released: true },
+  ];
+  const refs = [1, 1, 2, 3, 511, 999].map(heroId => ({ heroId }));
+  assert.deepEqual(eligibleVisionReferences(refs, heroes, true).map(ref => ref.heroId), [1, 1]);
+  assert.deepEqual(eligibleVisionReferences(refs, heroes, false).map(ref => ref.heroId), [1, 1, 2, 3]);
+  const pipeline = new VisionPipeline({ heroes, side: 'blue', onlyGlobal: false });
+  pipeline.references = refs;
+  pipeline.setOnlyGlobal(true);
+  assert.equal(pipeline.matcher.referenceCount, 2);
+  assert.equal(pipeline.inspectionMatcher.referenceCount, 2);
+  pipeline.setOnlyGlobal(false);
+  assert.equal(pipeline.matcher.referenceCount, 4);
+  assert.equal(pipeline.inspectionMatcher.referenceCount, 4);
+});
 
 function grayImage(width, height, fill) {
   const data = new Float32Array(width * height);
@@ -369,6 +390,19 @@ test('inspectColourFrame resolves the calibrated profile from a downscaled same-
   assert.equal(check.detected, 'red');
   assert.equal(check.mismatch, false);
   pipeline.stop();
+});
+
+test('manual correction replaces an earlier committed pick without changing its order', () => {
+  const pipeline = new VisionPipeline({ heroes: [], side: 'red', manualLayout: defaultManualLayoutConfig(3) });
+  pipeline.currentProfile = buildManualRegionProfile(defaultManualLayoutConfig(3), 2800, 1260);
+  pipeline.pickActions = [
+    { slotIndex: 0, side: 'red', heroId: 1, score: 0.8, locked: true, at: 10 },
+    { slotIndex: 1, side: 'red', heroId: 2, score: 0.8, locked: true, at: 20 },
+  ];
+  pipeline.updateSlotFromModal(0, 3);
+  assert.deepEqual(pipeline.getManualState().pickActions.map(({ heroId, at }) => ({ heroId, at })), [{ heroId: 3, at: 10 }, { heroId: 2, at: 20 }]);
+  pipeline.setSide('blue');
+  assert.deepEqual(pipeline.getManualState().pickActions, []);
 });
 
 // Per-slot match cache: static-slot memoisation with content-signature

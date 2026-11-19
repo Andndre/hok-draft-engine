@@ -29,6 +29,7 @@ export class CaptureSource {
   private error: string | null = null;
   private timer: ReturnType<typeof setInterval> | null = null;
   private lastEmit = 0;
+  private paused = false;
   private readonly fps: number;
   private readonly maxWidth: number;
 
@@ -52,6 +53,14 @@ export class CaptureSource {
   /** Last error message, or null when the source has not failed. */
   get lastError(): string | null {
     return this.error;
+  }
+
+  /** Freeze frame emission while retaining the shared stream for resuming. */
+  setPaused(paused: boolean): boolean {
+    if (this.state !== 'running') return false;
+    this.paused = paused;
+    if (!paused) this.lastEmit = 0;
+    return true;
   }
 
   /** Register the frame callback that receives throttled CaptureFrames. */
@@ -120,7 +129,7 @@ export class CaptureSource {
   }
 
   private processFrame(): void {
-    if (this.state !== 'running' || !this.video || !this.sink) return;
+    if (this.state !== 'running' || this.paused || !this.video || !this.sink) return;
     const now = Date.now();
     if (now - this.lastEmit < this.frameInterval() - 8) return;
     try {
@@ -185,5 +194,6 @@ export class CaptureSource {
     this.canvas = null;
     this.ctx = null;
     this.lastEmit = 0;
+    this.paused = false;
   }
 }

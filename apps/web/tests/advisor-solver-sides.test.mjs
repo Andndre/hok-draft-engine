@@ -259,6 +259,7 @@ test('worker protocol accepts side + options for the advisor path and forwards n
         format: 'tournament',
         side: 'blue',
         isUltimateBattle: false,
+        onlyGlobal: true,
         options: { maxDepth: 2, width: 6, budgetMs: 500, allowExtendedBudget: true },
       },
       { sessionId: 'advisor-side-fixture', revision: 1 },
@@ -276,6 +277,7 @@ test('worker protocol accepts side + options for the advisor path and forwards n
     assert.ok(request, 'worker harus menerima pesan decide');
     assert.equal(request.side, 'blue');
     assert.equal(request.isUltimateBattle, false);
+    assert.equal(request.onlyGlobal, true);
     assert.deepEqual(request.options, { maxDepth: 2, width: 6, budgetMs: 500, allowExtendedBudget: true });
     assert.deepEqual(request.aiPlan, { a: null, b: null });
     assert.equal('playerPlan' in request, false);
