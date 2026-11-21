@@ -292,16 +292,16 @@
       ]
     },
     "leap": {
-      "value": "tidak",
+      "value": "ya",
       "confidence": null,
       "chunk_votes": [
         {
           "chunk": 0,
-          "choice": "tidak",
+          "choice": "ya",
           "probabilities": {
-            "ya": 0.0525,
-            "tidak": 0.85,
-            "tidak_diketahui": 0.0975
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
           }
         }
       ]

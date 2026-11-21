@@ -9,6 +9,7 @@ import { useNativeModalDialog } from './ui/useNativeModalDialog';
 import { useFocusgroup } from './ui/useFocusgroup';
 import { getItemMeta } from '../data/itemsMap';
 import { ColoredText } from './ColoredText';
+import { detectHeroSkillStances } from '../engine/skillStanceDetector';
 
 interface HeroWikiDrawerProps {
   hero: Hero | null;
@@ -529,6 +530,17 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
 
   const hGuide = hero.hokfire_guide;
   const abilities = hero.abilities || [];
+  const stances = useMemo(() => detectHeroSkillStances(hero), [hero]);
+  const [activeStanceId, setActiveStanceId] = useState<string>(stances[0]?.id || 'default');
+
+  useEffect(() => {
+    setActiveStanceId(stances[0]?.id || 'default');
+  }, [hero.hero_id, stances]);
+
+  const activeStance = useMemo(() => {
+    return stances.find((s) => s.id === activeStanceId) || stances[0];
+  }, [stances, activeStanceId]);
+
   const buildVariants = hero.hokstats_guide?.build_variants || [];
   const selectedVariant = selectedBuild.startsWith('hokstats:') ? buildVariants.find(build => `hokstats:${build.id}` === selectedBuild) : undefined;
   const officialPreset = hero.official_build
@@ -1023,24 +1035,73 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
               )}
 
               {/* Ability Descriptions */}
-              <div className="space-y-2.5">
-                <h3 className="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center justify-between">
-                  <span>Kemampuan & Skill Hero ({abilities.length})</span>
+              <div className="space-y-3">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <h3 className="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                    <span>Kemampuan & Skill Hero</span>
+                    <span className="text-xs font-mono font-normal text-slate-400">
+                      ({activeStance?.skills.length || 0} Skill{stances.length > 1 ? ` · ${stances.length} Bentuk/Stance` : ''})
+                    </span>
+                  </h3>
                   <span className="text-xs text-slate-500 font-mono">HOK Official Abilities</span>
-                </h3>
+                </div>
 
-                {abilities.length === 0 && (!hero.hokstats_guide || hero.hokstats_guide.skills.length === 0) ? (
+                {/* Stance Selector when hero has multi-forms or combo branches */}
+                {stances.length > 1 && (
+                  <div className="space-y-2">
+                    <div className="flex flex-wrap items-center gap-2 p-1.5 bg-[#12161F] border border-[#232A38] rounded-xl">
+                      {stances.map((st) => {
+                        const isActive = activeStance?.id === st.id;
+                        return (
+                          <button
+                            key={st.id}
+                            type="button"
+                            onClick={() => setActiveStanceId(st.id)}
+                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                              isActive
+                                ? 'bg-[#B8FF01]/15 text-[#B8FF01] border border-[#B8FF01]/40 shadow-[0_0_12px_rgba(184,255,1,0.15)]'
+                                : 'text-slate-400 hover:text-white hover:bg-[#1A202C] border border-transparent'
+                            }`}
+                          >
+                            <span>{st.label}</span>
+                            {st.badge && (
+                              <span
+                                className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-medium ${
+                                  isActive
+                                    ? 'bg-[#B8FF01]/20 text-[#B8FF01] border border-[#B8FF01]/30'
+                                    : 'bg-[#1A202C] text-slate-400 border border-slate-700'
+                                }`}
+                              >
+                                {st.badge}
+                              </span>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    {activeStance?.description && (
+                      <div className="p-2.5 bg-[#0F131C] border border-[#1E2533] rounded-lg text-xs leading-relaxed text-slate-300">
+                        <span className="font-bold text-[#B8FF01] mr-1">Mekanisme:</span>
+                        {activeStance.description}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Active Stance Skills */}
+                {(!activeStance || activeStance.skills.length === 0) ? (
                   <p className="text-xs text-slate-500 italic p-3 bg-[#12161F] rounded-xl border border-[#232A38]">
                     {!hero.is_global_released
                       ? 'Hero eksklusif server China / KPL ini belum memiliki rilis deskripsi kemampuan resmi.'
                       : 'Informasi detail skill belum dimuat.'}
                   </p>
                 ) : (
-                  abilities.map((ab, idx) => {
-                    const abilityIconSrc = `/assets/abilities/${hero.hero_id}-${idx}.png`;
+                  activeStance.skills.map((ab, idx) => {
+                    const iconIdx = ab.iconIndex !== undefined ? ab.iconIndex : idx;
+                    const abilityIconSrc = `/assets/abilities/${hero.hero_id}-${iconIdx}.png`;
                     return (
                       <div
-                        key={idx}
+                        key={`${ab.name}-${idx}`}
                         className="p-3 bg-[#12161F] border border-[#232A38] rounded-xl space-y-2 hover:border-[#334155] transition-colors"
                       >
                         <div className="flex items-center gap-3">
@@ -1051,12 +1112,14 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                                 ? 'border-[#F5C451] shadow-[0_0_10px_rgba(245,196,81,0.2)]'
                                 : (ab.type || '').toLowerCase().includes('passive')
                                 ? 'border-indigo-400/60'
+                                : ab.comboBadge
+                                ? 'border-[#B8FF01]/60 shadow-[0_0_8px_rgba(184,255,1,0.15)]'
                                 : 'border-[#232A38]'
                             }`}
                           >
                             <AssetThumbnail
                               src={abilityIconSrc}
-                              fallbackSrc={ab.icon || abilityIconSrc}
+                              fallbackSrc={abilityIconSrc}
                               name={ab.name}
                               kind="item"
                               className="w-full h-full object-cover asset-thumbnail--fill"
@@ -1066,26 +1129,31 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between gap-2">
                               <span className="font-bold text-sm text-white truncate">{ab.name}</span>
-                              <span
-                                className={`text-xs font-mono px-2 py-0.5 rounded font-bold uppercase ${
-                                  (ab.type || '').toLowerCase().includes('ultimate')
-                                    ? 'bg-[#F5C451]/10 text-[#F5C451] border border-[#F5C451]/30'
-                                    : (ab.type || '').toLowerCase().includes('passive')
-                                    ? 'bg-indigo-950/60 text-indigo-300 border border-indigo-800/40'
-                                    : 'bg-[#1A202C] text-[#B8FF01] border border-[#232A38]'
-                                }`}
-                              >
-                                {ab.type}
-                              </span>
+                              <div className="flex items-center gap-1.5 flex-shrink-0">
+                                {ab.comboBadge && (
+                                  <span className="text-[11px] font-mono px-2 py-0.5 rounded font-bold bg-[#B8FF01]/10 text-[#B8FF01] border border-[#B8FF01]/30">
+                                    {ab.comboBadge}
+                                  </span>
+                                )}
+                                <span
+                                  className={`text-xs font-mono px-2 py-0.5 rounded font-bold uppercase ${
+                                    (ab.type || '').toLowerCase().includes('ultimate')
+                                      ? 'bg-[#F5C451]/10 text-[#F5C451] border border-[#F5C451]/30'
+                                      : (ab.type || '').toLowerCase().includes('passive')
+                                      ? 'bg-indigo-950/60 text-indigo-300 border border-indigo-800/40'
+                                      : 'bg-[#1A202C] text-[#B8FF01] border border-[#232A38]'
+                                  }`}
+                                >
+                                  {ab.type}
+                                </span>
+                              </div>
                             </div>
                             <div className="flex flex-wrap items-center gap-2 mt-1">
-                              <span className="text-xs font-mono text-slate-400">
-                                {idx === 0
-                                  ? 'Skill Pasif'
-                                  : idx === 3
-                                  ? 'Skill Pamungkas (Ultimate)'
-                                  : `Skill Aktif #${idx}`}
-                              </span>
+                              {ab.roleLabel && (
+                                <span className="text-xs font-mono text-slate-400">
+                                  {ab.roleLabel}
+                                </span>
+                              )}
                               {ab.cd !== undefined && ab.cd > 0 && (
                                 <span className="text-xs font-mono font-medium text-cyan-300 bg-cyan-950/50 px-2 py-0.5 rounded border border-cyan-800/40">
                                   CD: {ab.cd >= 100 ? `${(ab.cd / 1000).toFixed(ab.cd % 1000 === 0 ? 0 : 1)}s` : `${ab.cd}s`}
@@ -1116,21 +1184,6 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                   })
                 )}
               </div>
-              {abilities.length === 0 && hero.hokstats_guide && hero.hokstats_guide.skills.length > 0 && (
-                <div className="space-y-2.5">
-                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200">Detail skill HoKStats</h3>
-                  {hero.hokstats_guide.skills.map((skill, index) => (
-                    <div key={`${skill.name}-${index}`} className="rounded-xl border border-[#232A38] bg-[#12161F] p-3 space-y-1">
-                      <div className="flex items-center gap-2">
-                        <h4 className="text-sm font-bold text-white">{skill.name || `Skill ${index + 1}`}</h4>
-                        {skill.type && <span className="rounded border border-slate-700 px-2 py-0.5 text-xs font-mono uppercase text-slate-400">{skill.type}</span>}
-                      </div>
-                      <p className="text-xs leading-relaxed text-slate-300"><ColoredText text={skill.description} /></p>
-                    </div>
-                  ))}
-                  <a className="text-xs text-slate-400 underline" href={hero.hokstats_guide.source.url} target="_blank" rel="noreferrer">Sumber HoKStats</a>
-                </div>
-              )}
             </div>
           )}
 
