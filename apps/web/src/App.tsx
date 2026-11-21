@@ -28,6 +28,7 @@ const PracticeDraft = lazy(() => import('./components/PracticeDraft').then(m => 
 const PostDraftGamePlanPanel = lazy(() => import('./components/PostDraftGamePlanPanel').then(m => ({ default: m.PostDraftGamePlanPanel })));
 const VisionPanel = lazy(() => import('./components/VisionPanel').then(m => ({ default: m.VisionPanel })));
 const HeroWikiDrawer = lazy(() => import('./components/HeroWikiDrawer').then(m => ({ default: m.HeroWikiDrawer })));
+const WikiHub = lazy(() => import('./components/WikiHub').then(m => ({ default: m.WikiHub })));
 
 import { assignHeroLanes, DRAFT_SEQUENCE, getDraftTurn, createInitialGameDraft, applyGameHero, computeSeriesFearlessLocks, findSeriesFearlessConflicts, teamOnSide, FLOWBORN_HERO_IDS, isFlowborn, toPosition } from './engine/draftRules';
 import type { DraftPosition, Side } from './engine/draftRules';
@@ -63,8 +64,8 @@ export const App: React.FC = () => {
           : draftMode === 'vision'
             ? 'Live Draft Advisor — HoK Draft Engine'
             : 'Simulator Draft — HoK Draft Engine',
-      counter: 'Cari Matchup & Counter — HoK Draft Engine',
-      wiki: 'Wiki & Tier Hero — HoK Draft Engine',
+      counter: 'Wiki & Ensiklopedia — HoK Draft Engine',
+      wiki: 'Wiki & Ensiklopedia — HoK Draft Engine',
       favorites: 'Hero Favorit — HoK Draft Engine',
     };
     document.title = titles[activeTab];
@@ -1001,7 +1002,7 @@ export const App: React.FC = () => {
       <a href="#main-content" className="skip-link">Lewati ke konten utama</a>
       <HeaderSortBar activeTab={activeTab} onTabChange={setActiveTab} engineReady={engineReady} globalLocked={false} onlyGlobalReleased={onlyGlobalReleased} onToggleGlobalReleased={() => setOnlyGlobalReleased(value => !value)} favoriteCount={favorites.size} />
       <main className="app-main" id="main-content" tabIndex={-1}>
-        <div className="page-heading"><div><h1>{activeTab === 'draft' ? 'Ruang draft' : activeTab === 'counter' ? 'Cari matchup hero' : activeTab === 'wiki' ? 'Wiki & tier hero' : 'Hero favorit'}</h1><p>{activeTab === 'draft' ? (draftMode === 'practice' ? 'Pilih sisi, susun strategi, lalu uji keputusanmu melawan AI.' : draftMode === 'vision' ? 'Pantau layar draft secara langsung dan lihat rekomendasi read-only.' : 'Atur kedua tim dan cari pilihan terbaik untuk setiap giliran.') : activeTab === 'counter' ? 'Buka hero untuk melihat ancaman, target empuk, dan sinerginya.' : activeTab === 'wiki' ? 'Pelajari skill, build item, arcana, dan statistik hero Global.' : 'Simpan hero dari wiki untuk mengaksesnya kembali dengan cepat.'}</p></div>
+        <div className="page-heading"><div><h1>{activeTab === 'draft' ? 'Ruang draft' : activeTab === 'favorites' ? 'Hero favorit' : 'Wiki & Ensiklopedia'}</h1><p>{activeTab === 'draft' ? (draftMode === 'practice' ? 'Pilih sisi, susun strategi, lalu uji keputusanmu melawan AI.' : draftMode === 'vision' ? 'Pantau layar draft secara langsung dan lihat rekomendasi read-only.' : 'Atur kedua tim dan cari pilihan terbaik untuk setiap giliran.') : activeTab === 'favorites' ? 'Simpan hero dari wiki untuk mengaksesnya kembali dengan cepat.' : 'Ensiklopedia lengkap Honor of Kings: Hero & Matrix Counter, Item Equipment, Arcana Level 5, dan Battle Spell.'}</p></div>
           {activeTab === 'draft' && <div className="mode-switch" role="group" aria-label="Mode draft"><button type="button" aria-pressed={draftMode === 'simulator'} onClick={() => setDraftMode('simulator')}><SlidersHorizontal aria-hidden="true" />Simulator</button><button type="button" aria-pressed={draftMode === 'practice'} onClick={() => setDraftMode('practice')}><Gamepad2 aria-hidden="true" />Latihan vs AI</button><button type="button" aria-pressed={draftMode === 'vision'} onClick={() => setDraftMode('vision')}><Scan aria-hidden="true" />Live Advisor <span className="beta-badge">Beta</span></button></div>}
         </div>
         {loadError && <section role="alert" className="empty-state"><AlertTriangle aria-hidden="true" /><h2>Data hero belum dapat dimuat</h2><p>{loadError}</p><button type="button" className="ui-button ui-button--primary" onClick={() => void loadData()}><RefreshCw aria-hidden="true" />Coba lagi</button></section>}
@@ -1087,7 +1088,20 @@ export const App: React.FC = () => {
               />
             </Suspense>
           )}
-          {!loadError && !visionActive && <div className={activeTab === 'draft' ? 'draft-workspace' : ''}>
+          {!loadError && (activeTab === 'wiki' || activeTab === 'counter') && (
+            <Suspense fallback={<div className="surface-panel p-6 text-sm text-slate-400" role="status">Memuat Ensiklopedia Wiki…</div>}>
+              <WikiHub
+                heroes={heroes}
+                items={dataset?.items}
+                spells={dataset?.spells}
+                onInspectHero={setWikiHero}
+                onlyGlobalReleased={onlyGlobalReleased}
+                initialSubTab="hero"
+                initialTargetHeroId={activeTab === 'counter' ? heroes[0]?.hero_id : undefined}
+              />
+            </Suspense>
+          )}
+          {!loadError && !visionActive && (activeTab === 'draft' || activeTab === 'favorites') && <div className={activeTab === 'draft' ? 'draft-workspace' : ''}>
             <section className="hero-roster" id="hero-roster" aria-label="Katalog hero" aria-busy={loading}>
               <HeroRosterToolbar title={activeTab === 'favorites' ? 'Hero favorit' : activeTab === 'draft' ? 'Pilih hero untuk ' + (currentTurn.action === 'ban' ? 'ban' : 'pick') : 'Jelajahi hero'} count={filteredAndSortedHeroes.length} searchQuery={searchQuery} onSearchChange={setSearchQuery} onConfirmSearch={handleConfirmHeroSearch} selectedLane={selectedLane} onLaneChange={setSelectedLane} sortMode={sortMode} onSortChange={setSortMode} viewMode={viewMode} onViewChange={setViewMode} hideAiSort={activeTab !== 'draft'} />
               {loading ? <div className="hero-grid" role="status" aria-label="Memuat katalog hero"><span className="sr-only">Memuat database hero…</span>{Array.from({ length: 12 }, (_, index) => <div key={index} className="roster-skeleton" aria-hidden="true" />)}</div>

@@ -35,7 +35,22 @@ def build_catalogs(hokfire_items, hokfire_spells, hokstats_items=(), hokstats_sp
     for raw in hokfire_items:
         name = raw.get("name", "")
         key = str(raw.get("id") or norm(name))
-        items[key] = {"id": raw.get("id"), "name": name, "type": raw.get("type", ""), "desc": raw.get("desc", ""), "icon": f"/assets/items/{raw.get('id')}.png" if raw.get("id") else "", "sources": {"hokfire": {"description": raw.get("desc", ""), "source": {"source": "HOKFIRE", "url": "https://www.hokfire.com/"}}}}
+        item_entry = {
+            "id": raw.get("id"),
+            "name": name,
+            "type": raw.get("type", ""),
+            "desc": raw.get("desc", ""),
+            "icon": f"/assets/items/{raw.get('id')}.png" if raw.get("id") else "",
+            "sources": {
+                "hokfire": {
+                    "description": raw.get("desc", ""),
+                    "source": {"source": "HOKFIRE", "url": "https://www.hokfire.com/"},
+                }
+            },
+        }
+        if raw.get("price"):
+            item_entry["price"] = raw["price"]
+        items[key] = item_entry
     name_index = {norm(item["name"]): key for key, item in items.items()}
     for raw in hokstats_items:
         key = str(raw.get("local_id") or raw.get("id") or name_index.get(norm(raw.get("name")), norm(raw.get("name"))))

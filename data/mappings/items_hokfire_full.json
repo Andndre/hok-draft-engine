@@ -3,642 +3,749 @@
     "name": "Iron Sword",
     "id": 1111,
     "type": "Attack",
-    "desc": "Basic physical attack component for early builds."
+    "desc": "Basic physical attack component for early builds.",
+    "price": 275
   },
   {
     "name": "Master Sword",
     "id": 1134,
     "type": "Attack",
-    "desc": "High physical attack and cooldown reduction; enhances basic attacks."
+    "desc": "High physical attack and cooldown reduction; enhances basic attacks.",
+    "price": 2100
   },
   {
     "name": "Eternity Blade",
     "id": 1133,
     "type": "Attack",
-    "desc": "Physical attack and lifesteal; revives you once after dying."
+    "desc": "Physical attack and lifesteal; revives you once after dying.",
+    "price": 2060
   },
   {
     "name": "Starbreaker",
     "id": 1131,
     "type": "Attack",
-    "desc": "Physical attack and crit with bonus damage after using a skill."
+    "desc": "Physical attack and crit with bonus damage after using a skill.",
+    "price": 2080
   },
   {
     "name": "Shadow Ripper",
     "id": 1136,
     "type": "Attack",
-    "desc": "Physical attack and cooldown that shreds the target's armor."
+    "desc": "Physical attack and cooldown that shreds the target's armor.",
+    "price": 2040
   },
   {
     "name": "Sparkforged Dagger",
     "id": 1135,
     "type": "Attack",
-    "desc": "Physical attack and attack speed with on-hit bonus damage."
+    "desc": "Physical attack and attack speed with on-hit bonus damage.",
+    "price": 2040
   },
   {
     "name": "Demonsbane",
     "id": 1125,
     "type": "Attack",
-    "desc": "Physical attack that deals extra damage to high-health targets."
+    "desc": "Physical attack that deals extra damage to high-health targets.",
+    "price": 2060
   },
   {
     "name": "Destiny",
     "id": 1127,
     "type": "Attack",
-    "desc": "Physical attack and cooldown reduction for ability fighters."
+    "desc": "Physical attack and cooldown reduction for ability fighters.",
+    "price": 2060
   },
   {
     "name": "Sunchaser",
     "id": 1141,
     "type": "Attack",
-    "desc": "Physical attack and movement that slows enemies you damage."
+    "desc": "Physical attack and movement that slows enemies you damage.",
+    "price": 2100
   },
   {
     "name": "Golden Blade",
     "id": 1728,
     "type": "Magic",
-    "desc": "Attack speed, crit and lifesteal - a marksman staple."
+    "desc": "Attack speed, crit and lifesteal - a marksman staple.",
+    "price": 2070
   },
   {
     "name": "Mortal Punisher",
     "id": 11210,
     "type": "Attack",
-    "desc": "Crit and attack speed that reduces enemy healing."
+    "desc": "Crit and attack speed that reduces enemy healing.",
+    "price": 2080
   },
   {
     "name": "Pure Sky",
     "id": 11311,
     "type": "Attack",
-    "desc": "Physical attack and crit with a periodic burst passive."
+    "desc": "Physical attack and crit with a periodic burst passive.",
+    "price": 2140
   },
   {
     "name": "Tempest",
     "id": 1159,
     "type": "Attack",
-    "desc": "Attack speed and physical pierce that chains damage between enemies."
+    "desc": "Attack speed and physical pierce that chains damage between enemies.",
+    "price": 2080
   },
   {
     "name": "Spell Tome",
     "id": 1211,
     "type": "Magic",
-    "desc": "Early magic power and mana component."
+    "desc": "Early magic power and mana component.",
+    "price": 275
   },
   {
     "name": "Void Staff",
     "id": 1231,
     "type": "Magic",
-    "desc": "Magic penetration to cut through magic resistance."
+    "desc": "Magic penetration to cut through magic resistance.",
+    "price": 2040
   },
   {
     "name": "Savant's Wrath",
     "id": 1232,
     "type": "Magic",
-    "desc": "High magic attack with cooldown reduction."
+    "desc": "High magic attack with cooldown reduction.",
+    "price": 2140
   },
   {
     "name": "Scepter of Reverberation",
     "id": 1233,
     "type": "Magic",
-    "desc": "Magic attack and cooldown that amplifies ability damage."
+    "desc": "Magic attack and cooldown that amplifies ability damage.",
+    "price": 2050
   },
   {
     "name": "Holy Grail",
     "id": 1226,
     "type": "Magic",
-    "desc": "Magic attack, cooldown and spell vamp for sustain."
+    "desc": "Magic attack, cooldown and spell vamp for sustain.",
+    "price": 2020
   },
   {
     "name": "Mask of Agony",
     "id": 1235,
     "type": "Magic",
-    "desc": "Magic attack that burns nearby enemies over time."
+    "desc": "Magic attack that burns nearby enemies over time.",
+    "price": 2080
   },
   {
     "name": "Staves of Sorcery",
     "id": 1236,
     "type": "Magic",
-    "desc": "Stacking magic attack that grows as you fight."
+    "desc": "Stacking magic attack that grows as you fight.",
+    "price": 2080
   },
   {
     "name": "Sage's Tome",
     "id": 1238,
     "type": "Magic",
-    "desc": "Large magic attack and mana for burst mages."
+    "desc": "Large magic attack and mana for burst mages.",
+    "price": 2610
   },
   {
     "name": "Enigma - Moon Goddess",
     "id": 1242,
     "type": "Magic",
-    "desc": "High magic attack with a strong shield passive."
+    "desc": "High magic attack with a strong shield passive.",
+    "price": 3340
   },
   {
     "name": "Ominous Premonition",
     "id": 1333,
     "type": "Defense",
-    "desc": "Magic defense that blocks a burst of magic damage."
+    "desc": "Magic defense that blocks a burst of magic damage.",
+    "price": 2020
   },
   {
     "name": "Overlord's Platemail",
     "id": 1332,
     "type": "Defense",
-    "desc": "Large health pool with steady health regen."
+    "desc": "Large health pool with steady health regen.",
+    "price": 2450
   },
   {
     "name": "Spikemail",
     "id": 1327,
     "type": "Defense",
-    "desc": "Armor that reflects damage and slows nearby attack speed."
+    "desc": "Armor that reflects damage and slows nearby attack speed.",
+    "price": 2020
   },
   {
     "name": "Cuirass of Savagery",
     "id": 1338,
     "type": "Defense",
-    "desc": "Health and armor with a counter-attack passive."
+    "desc": "Health and armor with a counter-attack passive.",
+    "price": 2050
   },
   {
     "name": "Sage's Sanctuary",
     "id": 1337,
     "type": "Defense",
-    "desc": "Health and cooldown that shields you when low."
+    "desc": "Health and cooldown that shields you when low.",
+    "price": 2280
   },
   {
     "name": "Frostscar's Embrace",
     "id": 13310,
     "type": "Defense",
-    "desc": "Health and resistances that slow nearby attackers."
+    "desc": "Health and resistances that slow nearby attackers.",
+    "price": 2060
   },
   {
     "name": "Eye of the Phoenix",
     "id": 1334,
     "type": "Defense",
-    "desc": "Health and defense with team-fight utility."
+    "desc": "Health and defense with team-fight utility.",
+    "price": 2020
   },
   {
     "name": "Boots of Resistance",
     "id": 1422,
     "type": "Movement",
-    "desc": "Movement speed and magic resistance."
+    "desc": "Movement speed and magic resistance.",
+    "price": 700
   },
   {
     "name": "Boots of the Arcane",
     "id": 1424,
     "type": "Movement",
-    "desc": "Movement speed and magic penetration."
+    "desc": "Movement speed and magic penetration.",
+    "price": 700
   },
   {
     "name": "Boots of Tranquility",
     "id": 1423,
     "type": "Movement",
-    "desc": "Movement speed and cooldown reduction."
+    "desc": "Movement speed and cooldown reduction.",
+    "price": 700
   },
   {
     "name": "Boots of Fortitude",
     "id": 1421,
     "type": "Movement",
-    "desc": "Movement speed and physical armor."
+    "desc": "Movement speed and physical armor.",
+    "price": 700
   },
   {
     "name": "Boots of Dexterity",
     "id": 1425,
     "type": "Movement",
-    "desc": "Movement speed and attack speed."
+    "desc": "Movement speed and attack speed.",
+    "price": 700
   },
   {
     "name": "Hunting Knife",
     "id": 1511,
     "type": "Jungle",
-    "desc": "Jungle starter that lets you damage and clear monsters."
+    "desc": "Jungle starter that lets you damage and clear monsters.",
+    "price": 250
   },
   {
     "name": "Dragon's Rage",
     "id": 1534,
     "type": "Defense",
-    "desc": "Defensive item with bonus physical attack and burst."
+    "desc": "Defensive item with bonus physical attack and burst.",
+    "price": 2040
   },
   {
     "name": "Rapacious Bite",
     "id": 1533,
     "type": "Jungle",
-    "desc": "Jungle enchant with lifesteal and sustained damage."
+    "desc": "Jungle enchant with lifesteal and sustained damage.",
+    "price": 2100
   },
   {
     "name": "Guardian",
     "id": 1714,
     "type": "Support",
-    "desc": "Support item that shields and heals nearby allies."
+    "desc": "Support item that shields and heals nearby allies.",
+    "price": 850
   },
   {
     "name": "Knowledge Gem",
     "id": 1701,
     "type": "Support",
-    "desc": "Support starter that grants extra gold and experience."
+    "desc": "Support starter that grants extra gold and experience.",
+    "price": 300
   },
   {
     "name": "Amble - Winter",
     "id": 1351,
-    "type": "",
-    "desc": ""
+    "type": "Defense",
+    "desc": "",
+    "price": 3190
   },
   {
     "name": "Ardent Dominion",
     "id": 1227,
-    "type": "",
-    "desc": ""
+    "type": "Magic",
+    "desc": "",
+    "price": 2040
   },
   {
     "name": "Augur's Word",
     "id": 1237,
-    "type": "",
-    "desc": ""
+    "type": "Magic",
+    "desc": "",
+    "price": 2150
   },
   {
     "name": "Axe of Torment",
     "id": 1137,
-    "type": "",
-    "desc": ""
+    "type": "Attack",
+    "desc": "",
+    "price": 2090
   },
   {
     "name": "Belt of Might",
     "id": 1321,
-    "type": "",
-    "desc": ""
+    "type": "Defense",
+    "desc": "",
+    "price": 850
   },
   {
     "name": "Blazing Cape",
     "id": 1331,
-    "type": "",
-    "desc": ""
+    "type": "Defense",
+    "desc": "",
+    "price": 2040
   },
   {
     "name": "Blood Clan's Grimoire",
     "id": 1222,
-    "type": "",
-    "desc": ""
+    "type": "Magic",
+    "desc": "",
+    "price": 800
   },
   {
     "name": "Blood Rage",
     "id": 1328,
-    "type": "",
-    "desc": ""
+    "type": "Defense",
+    "desc": "",
+    "price": 2180
   },
   {
     "name": "Bloodsoul",
     "id": 1158,
-    "type": "",
-    "desc": ""
+    "type": "Attack",
+    "desc": "",
+    "price": 800
   },
   {
     "name": "Bloodweeper",
     "id": 1132,
-    "type": "",
-    "desc": ""
+    "type": "Attack",
+    "desc": "",
+    "price": 2020
   },
   {
     "name": "Boots of Deftness",
     "id": 1426,
-    "type": "",
-    "desc": ""
+    "type": "Movement",
+    "desc": "",
+    "price": 700
   },
   {
     "name": "Breakthrough Robe",
     "id": 1244,
-    "type": "",
-    "desc": ""
+    "type": "Magic",
+    "desc": "",
+    "price": 2120
   },
   {
     "name": "Clandestine Cape",
     "id": 1323,
-    "type": "",
-    "desc": ""
+    "type": "Defense",
+    "desc": "",
+    "price": 800
   },
   {
     "name": "Cloth Jerkin",
     "id": 1312,
-    "type": "",
-    "desc": ""
+    "type": "Defense",
+    "desc": "",
+    "price": 275
   },
   {
     "name": "Cloud Piercer",
     "id": 1154,
-    "type": "",
-    "desc": ""
+    "type": "Attack",
+    "desc": "",
+    "price": 800
   },
   {
     "name": "Crimson Shadow",
     "id": 1711,
-    "type": "",
-    "desc": ""
+    "type": "Support",
+    "desc": "",
+    "price": 1900
   },
   {
     "name": "Crimson Shadow - Howl",
     "id": 1723,
-    "type": "",
-    "desc": ""
+    "type": "Support",
+    "desc": "",
+    "price": 2080
   },
   {
     "name": "Crimson Shadow - Radiance",
     "id": 1737,
-    "type": "",
-    "desc": ""
+    "type": "Support",
+    "desc": "",
+    "price": 2080
   },
   {
     "name": "Crimson Shadow - Redemption",
     "id": 1721,
-    "type": "",
-    "desc": ""
+    "type": "Support",
+    "desc": "",
+    "price": 2080
   },
   {
     "name": "Crimson Shadow - Starspring",
     "id": 1747,
-    "type": "",
-    "desc": ""
+    "type": "Support",
+    "desc": "",
+    "price": 2080
   },
   {
     "name": "Cuirass of Swiftness",
     "id": 1317,
-    "type": "",
-    "desc": ""
+    "type": "Defense",
+    "desc": "",
+    "price": 800
   },
   {
     "name": "Dagger",
     "id": 1112,
-    "type": "",
-    "desc": ""
+    "type": "Attack",
+    "desc": "",
+    "price": 300
   },
   {
     "name": "Dawnlight",
     "id": 1353,
-    "type": "",
-    "desc": ""
+    "type": "Defense",
+    "desc": "",
+    "price": 2040
   },
   {
     "name": "Daybreaker's Virtue",
     "id": 1155,
-    "type": "",
-    "desc": ""
+    "type": "Attack",
+    "desc": "",
+    "price": 2500
   },
   {
     "name": "Deepfrost Siege",
     "id": 1128,
-    "type": "",
-    "desc": ""
+    "type": "Attack",
+    "desc": "",
+    "price": 2040
   },
   {
     "name": "Doomsday",
     "id": 1126,
-    "type": "",
-    "desc": ""
+    "type": "Attack",
+    "desc": "",
+    "price": 2100
   },
   {
     "name": "Frigid Charge",
     "id": 1341,
-    "type": "",
-    "desc": ""
+    "type": "Defense",
+    "desc": "",
+    "price": 2030
   },
   {
     "name": "Frosthold Targe",
     "id": 1324,
-    "type": "",
-    "desc": ""
+    "type": "Defense",
+    "desc": "",
+    "price": 750
   },
   {
     "name": "Frozen Breath",
     "id": 1234,
-    "type": "",
-    "desc": ""
+    "type": "Magic",
+    "desc": "",
+    "price": 2100
   },
   {
     "name": "Giant's Grip",
     "id": 1532,
-    "type": "",
-    "desc": ""
+    "type": "Jungle",
+    "desc": "",
+    "price": 2100
   },
   {
     "name": "Glacial Buckler",
     "id": 1336,
-    "type": "",
-    "desc": ""
+    "type": "Defense",
+    "desc": "",
+    "price": 2040
   },
   {
     "name": "Grand Staff",
     "id": 1221,
-    "type": "",
-    "desc": ""
+    "type": "Magic",
+    "desc": "",
+    "price": 820
   },
   {
     "name": "Guardian - Radiance",
     "id": 1754,
-    "type": "",
-    "desc": ""
+    "type": "Support",
+    "desc": "",
+    "price": 2080
   },
   {
     "name": "Guardian - Redemption",
     "id": 1724,
-    "type": "",
-    "desc": ""
+    "type": "Support",
+    "desc": "",
+    "price": 2080
   },
   {
     "name": "Guardian - Starspring",
     "id": 1725,
-    "type": "",
-    "desc": ""
+    "type": "Support",
+    "desc": "",
+    "price": 2080
   },
   {
     "name": "Guerrilla Machete",
     "id": 1521,
-    "type": "",
-    "desc": ""
+    "type": "Jungle",
+    "desc": "",
+    "price": 700
   },
   {
     "name": "Haste - Sunpool",
     "id": 1156,
-    "type": "",
-    "desc": ""
+    "type": "Attack",
+    "desc": "",
+    "price": 3320
   },
   {
     "name": "Immovable - Sky Dome",
     "id": 1157,
-    "type": "",
-    "desc": ""
+    "type": "Attack",
+    "desc": "",
+    "price": 3280
   },
   {
     "name": "Insatiable Tome",
     "id": 1240,
-    "type": "",
-    "desc": ""
+    "type": "Magic",
+    "desc": "",
+    "price": 2060
   },
   {
     "name": "Lightfoot Shoes",
     "id": 1411,
-    "type": "",
-    "desc": ""
+    "type": "Movement",
+    "desc": "",
+    "price": 250
   },
   {
     "name": "Longnight Guardian",
     "id": 1347,
-    "type": "",
-    "desc": ""
+    "type": "Defense",
+    "desc": "",
+    "price": 2020
   },
   {
     "name": "Meteor",
     "id": 1124,
-    "type": "",
-    "desc": ""
+    "type": "Attack",
+    "desc": "",
+    "price": 760
   },
   {
     "name": "Mirror of Radiance",
     "id": 13211,
-    "type": "",
-    "desc": ""
+    "type": "Defense",
+    "desc": "",
+    "price": 800
   },
   {
     "name": "Mystic Page",
     "id": 1217,
-    "type": "",
-    "desc": ""
+    "type": "Magic",
+    "desc": "",
+    "price": 300
   },
   {
     "name": "Nebulon Wood",
     "id": 1243,
-    "type": "",
-    "desc": ""
+    "type": "Magic",
+    "desc": "",
+    "price": 840
   },
   {
     "name": "Nettle Gauntlet",
     "id": 1345,
-    "type": "",
-    "desc": ""
+    "type": "Defense",
+    "desc": "",
+    "price": 750
   },
   {
     "name": "Overlord's Might",
     "id": 1138,
-    "type": "",
-    "desc": ""
+    "type": "Attack",
+    "desc": "",
+    "price": 2540
   },
   {
     "name": "Patrol Axe",
     "id": 1522,
-    "type": "",
-    "desc": ""
+    "type": "Jungle",
+    "desc": "",
+    "price": 700
   },
   {
     "name": "Plume of Enchantment",
     "id": 11110,
-    "type": "",
-    "desc": ""
+    "type": "Attack",
+    "desc": "",
+    "price": 300
   },
   {
     "name": "Primordial Crystal",
     "id": 1218,
-    "type": "",
-    "desc": ""
+    "type": "Magic",
+    "desc": "",
+    "price": 300
   },
   {
     "name": "Protector's Cuirass",
     "id": 1325,
-    "type": "",
-    "desc": ""
+    "type": "Defense",
+    "desc": "",
+    "price": 800
   },
   {
     "name": "Pugilist's Gauntlet",
     "id": 1113,
-    "type": "",
-    "desc": ""
+    "type": "Attack",
+    "desc": "",
+    "price": 300
   },
   {
     "name": "Ravage - Phantom",
     "id": 1350,
-    "type": "",
-    "desc": ""
+    "type": "Defense",
+    "desc": "",
+    "price": 3300
   },
   {
     "name": "Relentless Blade",
     "id": 1523,
-    "type": "",
-    "desc": ""
+    "type": "Jungle",
+    "desc": "",
+    "price": 700
   },
   {
     "name": "Resilient Agate",
     "id": 1311,
-    "type": "",
-    "desc": ""
+    "type": "Defense",
+    "desc": "",
+    "price": 300
   },
   {
     "name": "Runeblade",
     "id": 1531,
-    "type": "",
-    "desc": ""
+    "type": "Jungle",
+    "desc": "",
+    "price": 2100
   },
   {
     "name": "Sage's Codex",
     "id": 1214,
-    "type": "",
-    "desc": ""
+    "type": "Magic",
+    "desc": "",
+    "price": 800
   },
   {
     "name": "Splendor",
     "id": 1239,
-    "type": "",
-    "desc": ""
+    "type": "Magic",
+    "desc": "",
+    "price": 2080
   },
   {
     "name": "Stone of Sorcery",
     "id": 1224,
-    "type": "",
-    "desc": ""
+    "type": "Magic",
+    "desc": "",
+    "price": 800
   },
   {
     "name": "Storm Sword",
     "id": 1121,
-    "type": "",
-    "desc": ""
+    "type": "Attack",
+    "desc": "",
+    "price": 850
   },
   {
     "name": "Succubus Cloak",
     "id": 1335,
-    "type": "",
-    "desc": ""
+    "type": "Defense",
+    "desc": "",
+    "price": 2020
   },
   {
     "name": "Sunglow Striker",
     "id": 1122,
-    "type": "",
-    "desc": ""
+    "type": "Attack",
+    "desc": "",
+    "price": 760
   },
   {
     "name": "Swiftstrike Lance",
     "id": 1129,
-    "type": "",
-    "desc": ""
+    "type": "Attack",
+    "desc": "",
+    "price": 800
   },
   {
     "name": "Thunderclap Brand",
     "id": 1116,
-    "type": "",
-    "desc": ""
+    "type": "Attack",
+    "desc": "",
+    "price": 820
   },
   {
     "name": "Twilight Stream",
     "id": 1727,
-    "type": "",
-    "desc": ""
+    "type": "Magic",
+    "desc": "",
+    "price": 2040
   },
   {
     "name": "Twinblades of Destruction",
     "id": 1123,
-    "type": "",
-    "desc": ""
+    "type": "Attack",
+    "desc": "",
+    "price": 760
   },
   {
     "name": "Vampiric Scythe",
     "id": 1114,
-    "type": "",
-    "desc": ""
+    "type": "Attack",
+    "desc": "",
+    "price": 300
   },
   {
     "name": "Venomous Staff",
     "id": 12211,
-    "type": "",
-    "desc": ""
+    "type": "Magic",
+    "desc": "",
+    "price": 2050
   }
 ]

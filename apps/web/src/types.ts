@@ -184,6 +184,7 @@ export interface ItemCatalogEntry {
   type: string;
   desc: string;
   icon: string;
+  price?: number;
   sources: {
     hokfire?: { description: string; source: { source: string; url: string } };
     hokstats?: { stats: Record<string, string>; passive: string; active?: string; build_path: string[]; source: SourceAttribution };

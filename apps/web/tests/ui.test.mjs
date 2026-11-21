@@ -22,6 +22,8 @@ import { VisionPanel } from '../src/components/VisionPanel.tsx';
 import { VisionHeroPickerModal } from '../src/components/VisionHeroPickerModal.tsx';
 import { shouldNotifyDialogClose } from '../src/components/ui/useNativeModalDialog.ts';
 import { searchHeroes } from '../src/heroSearch.ts';
+import { APP_NAVIGATION } from '../src/components/ui/navigation.ts';
+import { WikiHub } from '../src/components/WikiHub.tsx';
 import { Layers } from 'lucide-react';
 const noop = () => {};
 const render = (Component, props) => renderToStaticMarkup(React.createElement(Component, props));
@@ -798,4 +800,51 @@ test('modern web guidance regressions: non-nested card buttons, search landmark,
   const firstRun = searchHeroes(sampleHeroes, 'liang');
   const secondRun = searchHeroes(sampleHeroes, 'liang');
   assert.deepEqual(firstRun.map(h => h.hero_id), secondRun.map(h => h.hero_id), 'WeakMap-cached hero search index preserves deterministic order');
+});
+
+test('unified wiki hub merges redundant counter tab and provides hero, item, arcana, and spell encyclopedias', () => {
+  // 1. Navigation has exactly 3 unified tabs: draft, wiki, favorites
+  assert.deepEqual(APP_NAVIGATION.map(n => n.id), ['draft', 'wiki', 'favorites']);
+
+  // 2. Header renders the 3 unified navigation items
+  const headerHtml = render(HeaderSortBar, { activeTab: 'wiki', onTabChange: noop, engineReady: true, favoriteCount: 2, onlyGlobalReleased: true, onToggleGlobalReleased: noop });
+  assert.ok(headerHtml.includes('Wiki'));
+  assert.ok(headerHtml.includes('Draft'));
+  assert.ok(headerHtml.includes('Favorit'));
+  assert.ok(!headerHtml.includes('<span>Counter</span>'));
+
+  // 3. WikiHub renders all sub-tabs: Hero & Counter, Item Equipment, Arcana Level 5, Battle Spell
+  const items = read(manifest.artifacts.items.file);
+  const spells = read(manifest.artifacts.spells.file);
+  const wikiHeroHtml = render(WikiHub, { heroes: dataset.heroes, items, spells, onInspectHero: noop, onlyGlobalReleased: true, initialSubTab: 'hero' });
+  assert.ok(wikiHeroHtml.includes('Hero &amp; Counter') || wikiHeroHtml.includes('Hero & Counter'));
+  assert.ok(wikiHeroHtml.includes('Item Equipment'));
+  assert.ok(wikiHeroHtml.includes('Arcana Level 5'));
+  assert.ok(wikiHeroHtml.includes('Battle Spell'));
+
+  // 4. WikiHub renders item catalog with category filter and price
+  const wikiItemHtml = render(WikiHub, { heroes: dataset.heroes, items, spells, onInspectHero: noop, onlyGlobalReleased: true, initialSubTab: 'item' });
+  assert.ok(wikiItemHtml.includes('Serangan'));
+  assert.ok(wikiItemHtml.includes('Sihir'));
+  assert.ok(wikiItemHtml.includes('Pertahanan'));
+  assert.ok(wikiItemHtml.includes('Gold'));
+
+  // 5. WikiHub renders arcana catalog with all 30 Level 5 arcana colors
+  const wikiArcanaHtml = render(WikiHub, { heroes: dataset.heroes, items, spells, onInspectHero: noop, onlyGlobalReleased: true, initialSubTab: 'arcana' });
+  assert.ok(wikiArcanaHtml.includes('Semua Arcana (30)'));
+  assert.ok(wikiArcanaHtml.includes('Merah (Serangan &amp; Pierce)') || wikiArcanaHtml.includes('Merah (Serangan & Pierce)'));
+  assert.ok(wikiArcanaHtml.includes('Biru (Mobilitas &amp; Sustain)') || wikiArcanaHtml.includes('Biru (Mobilitas & Sustain)'));
+  assert.ok(wikiArcanaHtml.includes('Hijau (Defense &amp; CDR)') || wikiArcanaHtml.includes('Hijau (Defense & CDR)'));
+
+  // 6. WikiHub renders spell catalog with cooldowns
+  const wikiSpellHtml = render(WikiHub, { heroes: dataset.heroes, items, spells, onInspectHero: noop, onlyGlobalReleased: true, initialSubTab: 'spell' });
+  assert.ok(wikiSpellHtml.includes('Flash'));
+  assert.ok(wikiSpellHtml.includes('Smite'));
+  assert.ok(wikiSpellHtml.includes('Purify'));
+
+  // 7. Counter matrix mode renders direct threat and target relations
+  const liang = dataset.heroes.find(h => h.name === 'Liang');
+  const wikiCounterHtml = render(WikiHub, { heroes: dataset.heroes, items, spells, onInspectHero: noop, onlyGlobalReleased: true, initialSubTab: 'hero', initialTargetHeroId: liang.hero_id });
+  assert.ok(wikiCounterHtml.includes('Kuat Melawan (Target Empuk)'));
+  assert.ok(wikiCounterHtml.includes('Lemah Melawan (Ancaman Alami)'));
 });
