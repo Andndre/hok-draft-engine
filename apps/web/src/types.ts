@@ -165,7 +165,7 @@ export interface HoKStatsMatchup {
 }
 
 export interface HoKStatsGuide {
-  skills: Array<{ name: string; description: string; type?: string }>;
+  skills: Array<{ name: string; description: string; type?: string; combo_badge?: string; stance_id?: string }>;
   pick_when: string[];
   avoid_when: string[];
   power_spikes: string[];
@@ -283,6 +283,7 @@ export interface Hero {
   tactical_tips: string;
   counter_items: CounterItemInfo[];
   portrait_asset: string;
+  variant_assets?: string[];
   kpl_id: number | null;
   is_global_exclusive: boolean;
   is_global_released?: boolean;
@@ -293,6 +294,8 @@ export interface Hero {
   abilities?: HeroAbility[];
   official_build?: OfficialHeroBuild;
   tactical_profile?: TacticalProfile;
+  skill_stances_meta?: Array<{ id: string; label: string; badge?: string; description?: string }>;
+  recast_skills_meta?: Array<{ slot: number; badge: string; note?: string }>;
   
   // Dynamic client-side score computed by the tournament engine
   ai_choice_score?: number;

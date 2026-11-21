@@ -10,23 +10,23 @@
   },
   "tag_distribution": {
     "mobility": {
-      "ya": 71,
-      "tidak": 49,
+      "ya": 75,
+      "tidak": 45,
       "tidak_diketahui": 0
     },
     "dash": {
-      "ya": 56,
-      "tidak": 64,
+      "ya": 58,
+      "tidak": 62,
       "tidak_diketahui": 0
     },
     "blink": {
-      "ya": 3,
-      "tidak": 117,
+      "ya": 5,
+      "tidak": 115,
       "tidak_diketahui": 0
     },
     "leap": {
-      "ya": 19,
-      "tidak": 101,
+      "ya": 24,
+      "tidak": 96,
       "tidak_diketahui": 0
     },
     "teleport": {
@@ -40,8 +40,8 @@
       "tidak_diketahui": 0
     },
     "cc_knockup": {
-      "ya": 37,
-      "tidak": 83,
+      "ya": 40,
+      "tidak": 80,
       "tidak_diketahui": 0
     },
     "cc_knockback": {
@@ -80,8 +80,8 @@
       "tidak_diketahui": 0
     },
     "engage": {
-      "ya": 49,
-      "tidak": 71,
+      "ya": 51,
+      "tidak": 69,
       "tidak_diketahui": 0
     },
     "disengage": {
@@ -348,6 +348,7 @@
       "review_status": "approved",
       "positive_tags": [
         "ally_heal",
+        "cc_knockup",
         "cc_slow",
         "dive_vulnerable",
         "weak_early"
@@ -412,6 +413,7 @@
       "file": "125-2d9fa40607be.json",
       "review_status": "approved",
       "positive_tags": [
+        "blink",
         "cc_knockup",
         "cc_slow",
         "cc_stun",
@@ -785,7 +787,9 @@
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
-        "cc_stun"
+        "cc_stun",
+        "leap",
+        "mobility"
       ]
     },
     {
@@ -955,7 +959,10 @@
       "positive_tags": [
         "cc_slow",
         "cc_stun",
-        "kite_vulnerable"
+        "engage",
+        "kite_vulnerable",
+        "leap",
+        "mobility"
       ]
     },
     {
@@ -1133,7 +1140,9 @@
       "file": "196-2dde16e7087f.json",
       "review_status": "approved",
       "positive_tags": [
-        "cc_slow"
+        "cc_slow",
+        "leap",
+        "mobility"
       ]
     },
     {
@@ -1189,6 +1198,7 @@
       "positive_tags": [
         "cc_slow",
         "dash",
+        "leap",
         "mobility"
       ]
     },
@@ -1198,6 +1208,7 @@
       "file": "503-99f687ff4e87.json",
       "review_status": "approved",
       "positive_tags": [
+        "cc_knockup",
         "cc_slow",
         "dash",
         "engage",
@@ -1358,11 +1369,16 @@
     {
       "hero_id": 522,
       "hero_name": "Yao",
-      "file": "522-9da98acd12b7.json",
+      "file": "522-d7b54e5b5e2f.json",
       "review_status": "approved",
       "positive_tags": [
+        "blink",
+        "cc_knockup",
         "cc_slow",
-        "frontline"
+        "dash",
+        "engage",
+        "frontline",
+        "mobility"
       ]
     },
     {
@@ -1553,7 +1569,7 @@
     {
       "hero_id": 564,
       "hero_name": "Mayene",
-      "file": "564-d3c6424d03c5.json",
+      "file": "564-277a0d785480.json",
       "review_status": "approved",
       "positive_tags": [
         "blink",
@@ -1561,8 +1577,10 @@
         "cc_knockup",
         "cc_pull",
         "cc_slow",
+        "dash",
         "disengage",
         "engage",
+        "leap",
         "mobility",
         "peel"
       ]

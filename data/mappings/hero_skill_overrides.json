@@ -1,0 +1,138 @@
+{
+  "_comment": "Curated skill mechanics and stance descriptions that persist across automated scraper syncs.",
+  "heroes": {
+    "163": {
+      "hero_name": "Ukyo Tachibana",
+      "recast_skills": [
+        {
+          "slot": 1,
+          "badge": "2 Tahap (Recast Leap)",
+          "note": "Fase 1: Leap mundur dan menebas. Fase 2: Jika mengenai musuh, dapat di-cast ulang seketika (recast leap kedua) dalam 3 detik."
+        }
+      ]
+    },
+    "522": {
+      "hero_name": "Yao",
+      "stances": [
+        {
+          "id": "normal",
+          "label": "Skill Biasa",
+          "badge": "Normal",
+          "description": "Bentuk dasar tanpa energi bintang penuh. Menggunakan skill apa pun mengisi 1 bar Star Energy."
+        },
+        {
+          "id": "enhanced",
+          "label": "Kilau Bintang (Enhanced)",
+          "badge": "3 Bar Energi",
+          "description": "Saat 3 bar Star Energy penuh, skill di-refresh seketika dan diperkuat menjadi Kilau Bintang (Brilliance) dengan efek knock-up pada combo 2-2."
+        }
+      ],
+      "skill_overrides": {
+        "Brilliance: Starlight Slice": {
+          "desc": "Yao menebas pedang 2 kali memutar dengan cepat, memberikan physical damage tinggi dan efek slow ke musuh di sekitarnya.",
+          "type": "Enhanced Skill 1",
+          "combo_badge": "Combo 1-1",
+          "stance_id": "enhanced"
+        },
+        "Brilliance: Star Rush": {
+          "desc": "Yao melesat cepat (dash) melengkung ke arah target, memberikan damage dan efek slow. Jika kedua tebasan (kiri dan kanan) mengenai musuh, musuh akan terlempar ke udara (knock-up / airborne).",
+          "type": "Enhanced Skill 2",
+          "combo_badge": "Combo 2-2 · Knock-up",
+          "stance_id": "enhanced"
+        },
+        "Brilliance: Return to Dust": {
+          "desc": "Yao kembali (teleport) ke posisinya 2 detik lalu, menghapus 50% akumulasi damage (Star Reduction), memberikan damage fisik besar ke musuh di lintasan, dan memperlambat lawan.",
+          "type": "Enhanced Ultimate",
+          "combo_badge": "Combo 3-3 · Time Rewind",
+          "stance_id": "enhanced"
+        }
+      }
+    },
+    "564": {
+      "hero_name": "Mayene",
+      "stances": [
+        {
+          "id": "normal",
+          "label": "Skill Dasar",
+          "badge": "Normal",
+          "description": "Skill 1 (Whatever I) dan Skill 2 (Whatever II) menyimpan hingga 2 charge yang dapat digabungkan menjadi 4 cabang combo unik."
+        },
+        {
+          "id": "combos",
+          "label": "Varian Combo (1-1, 1-2, 2-1, 2-2)",
+          "badge": "4 Combo",
+          "description": "Kombinasi input tombol Skill 1 & 2 menghasilkan cabang jurus dengan efek berbeda: 1-1 (knock-up), 1-2 (burst HP), 2-1 (knock-back), 2-2 (untargetable escape)."
+        }
+      ],
+      "skill_overrides": {
+        "Exploit Weakness": {
+          "desc": "Runs & Pulls: Mayene berlari ke arah target dan menarik musuh di depannya, lalu melancarkan serangan kombinasi smash yang menerbangkan musuh ke udara (knock-up / airborne) dan memberikan area damage besar.",
+          "type": "Combo Skill",
+          "combo_badge": "Combo 1-1 · Knock-up",
+          "stance_id": "combos"
+        },
+        "Defend by Attacking": {
+          "desc": "Pull & Finisher: Mayene menarik musuh lalu melompat ke belakang musuh dan menendangnya, memberikan damage fisik ekstra berbasis max HP target dan memulihkan HP Mayene.",
+          "type": "Combo Skill",
+          "combo_badge": "Combo 1-2 · Execute & Heal",
+          "stance_id": "combos"
+        },
+        "Feint to Retreat": {
+          "desc": "Flip & Push: Mayene berguling maju lalu seketika berteleportasi (blink) ke belakang musuh, memberikan tendangan tumit memutar yang menghempaskan lawan (knock-back) ke arah timnya.",
+          "type": "Combo Skill",
+          "combo_badge": "Combo 2-1 · Knock-back",
+          "stance_id": "combos"
+        },
+        "Flee Danger": {
+          "desc": "Flip & Untargetable Leap: Mayene menyerang lalu melompat mundur tinggi ke udara. Selama animasi lompatan mundur, ia memperoleh kekebalan penuh (untargetable / invulnerable), pengurangan damage, dan pemulihan HP tinggi.",
+          "type": "Combo Skill",
+          "combo_badge": "Combo 2-2 · Untargetable",
+          "stance_id": "combos"
+        }
+      }
+    },
+    "125": {
+      "hero_name": "Yango",
+      "stances": [
+        {
+          "id": "human",
+          "label": "Bentuk Manusia",
+          "badge": "Manusia",
+          "description": "Bentuk utama Yango saat mengendalikan tubuhnya sendiri. Gunakan Skill 1 untuk melempar wayang dan beralih ke Mode Wayang."
+        },
+        {
+          "id": "puppet",
+          "label": "Bentuk Wayang (Puppet)",
+          "badge": "Mode Wayang",
+          "description": "Saat Skill 1 aktif, Yango mengendalikan wayang dari jarak aman dengan kemampuan mobilitas, swap posisi, dan stun area."
+        }
+      ],
+      "skill_overrides": {
+        "Occult Arts - Return": {
+          "desc": "Yango menarik kembali wayang seketika ke tubuhnya, memberikan damage fisik di sepanjang lintasan dan meluncurkan musuh (knock-up / launch) ke udara.",
+          "type": "Puppet Skill 1",
+          "combo_badge": "Tarik Wayang · Knock-up",
+          "stance_id": "puppet"
+        },
+        "Occult Arts - Substitution": {
+          "desc": "Yango bertukar posisi seketika (swap blink) dengan wayang, memberikan damage kepada musuh di sepanjang lintasan pertukaran tempat.",
+          "type": "Puppet Skill 2",
+          "combo_badge": "Tukar Posisi · Blink",
+          "stance_id": "puppet"
+        },
+        "Occult Arts - Breakout": {
+          "desc": "Wayang menerjang cepat (dash) ke arah target dan menarik tubuh asli Yango ke posisinya, memberikan damage fisik ke musuh yang dilalui.",
+          "type": "Puppet Skill 3",
+          "combo_badge": "Dash & Tarik Tubuh",
+          "stance_id": "puppet"
+        },
+        "Occult Arts - Binding": {
+          "desc": "Fase 1: Wayang memperlambat musuh di area sekitarnya. Fase 2: Wayang melilit dan melumpuhkan lawan secara terus-menerus dengan stun area berkelanjutan.",
+          "type": "Puppet Ultimate",
+          "combo_badge": "Area Stun Berkelanjutan",
+          "stance_id": "puppet"
+        }
+      }
+    }
+  }
+}

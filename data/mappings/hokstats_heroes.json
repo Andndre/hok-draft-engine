@@ -23353,17 +23353,17 @@
         },
         {
           "name": "Exploit Weakness",
-          "description": "Runs in the target direction and pulls enemies in front, dealing area damage and slowing them. 1-1 Combo: Deals area damage and launches enemies. 1-2 Combo: Deals damage and recovers Health.",
+          "description": "1-1 Combo: Runs forward and pulls enemies, dealing area damage and launching enemies airborne (knockup).",
           "type": "skill1"
         },
         {
           "name": "Defend by Attacking",
-          "description": "Runs in the target direction and pulls enemies in front, dealing area damage and slowing them. 1-1 Combo: Deals area damage and launches enemies. 1-2 Combo: Deals damage and recovers Health.",
+          "description": "1-2 Combo: Deals damage and recovers Health.",
           "type": "skill1"
         },
         {
           "name": "Feint to Retreat",
-          "description": "Skill 2: Flips forward, gains immunity and damage reduction, and recovers Health. 2-1 Combo: Blinks behind the enemy, knocking them back and damaging them. 2-2 Combo: Deals damage before leaping back, gaining immunity and damage reduction, and recovering Health.",
+          "description": "2-1 Combo: Flips and blinks behind the enemy, knocking them back and damaging them.",
           "type": "skill2"
         },
         {
@@ -23373,7 +23373,7 @@
         },
         {
           "name": "Flee Danger",
-          "description": "Skill 2: Flips forward, gains immunity and damage reduction, and recovers Health. 2-1 Combo: Blinks behind the enemy, knocking them back and damaging them. 2-2 Combo: Deals damage before leaping back, gaining immunity and damage reduction, and recovering Health.",
+          "description": "2-2 Combo: Deals damage before leaping back, gaining immunity (untargetable) and damage reduction, and recovering Health.",
           "type": "skill2"
         },
         {
@@ -32949,17 +32949,17 @@
         },
         {
           "name": "Brilliance: Starlight Slice",
-          "description": "Deals damage to nearby enemies.",
+          "description": "Yao slashes twice in a circle, dealing physical damage and slowing nearby enemies.",
           "type": "skill1"
         },
         {
           "name": "Brilliance: Star Rush",
-          "description": "Moves quickly, dealing damage and slowing enemies in his path.",
+          "description": "Yao dashes forward in an arc, dealing physical damage and slowing enemies. If both the left and right slashes hit the target, enemies are knocked airborne (knockup).",
           "type": "skill2"
         },
         {
           "name": "Brilliance: Return to Dust",
-          "description": "Returns to his location 2s ago, removes Star Reduction, and deals damage to enemies in his path. Passive: Some of his damage taken is converted into Star Reduction after a short delay.",
+          "description": "Yao returns to his location from 2s ago, removes Star Reduction (cleanses damage taken), deals physical damage to enemies along the path, and slows enemies hit.",
           "type": "ultimate"
         }
       ],

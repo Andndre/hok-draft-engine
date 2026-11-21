@@ -218,16 +218,16 @@
   },
   "tags": {
     "mobility": {
-      "value": "tidak",
+      "value": "ya",
       "confidence": null,
       "chunk_votes": [
         {
           "chunk": 0,
-          "choice": "tidak",
+          "choice": "ya",
           "probabilities": {
-            "ya": 0.049,
-            "tidak": 0.86,
-            "tidak_diketahui": 0.091
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
           }
         }
       ]
@@ -263,16 +263,16 @@
       ]
     },
     "leap": {
-      "value": "tidak",
+      "value": "ya",
       "confidence": null,
       "chunk_votes": [
         {
           "chunk": 0,
-          "choice": "tidak",
+          "choice": "ya",
           "probabilities": {
-            "ya": 0.0525,
-            "tidak": 0.85,
-            "tidak_diketahui": 0.0975
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
           }
         }
       ]
@@ -428,16 +428,16 @@
       ]
     },
     "engage": {
-      "value": "tidak",
+      "value": "ya",
       "confidence": null,
       "chunk_votes": [
         {
           "chunk": 0,
-          "choice": "tidak",
+          "choice": "ya",
           "probabilities": {
-            "ya": 0.056,
-            "tidak": 0.84,
-            "tidak_diketahui": 0.104
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
           }
         }
       ]

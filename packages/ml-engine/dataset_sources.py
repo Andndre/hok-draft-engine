@@ -138,14 +138,58 @@ def apply_measured_matchups(heroes, measured=None):
     return result
 
 
+def apply_skill_overrides(heroes, overrides_payload):
+    """Apply curated skill mechanics, custom descriptions, and stance metadata idempotently.
+    
+    Guarantees that hero mode/combo skills and tactical clarifications survive scraper re-syncs.
+    """
+    by_hero = (overrides_payload or {}).get("heroes") or {}
+    result = []
+    for original in heroes:
+        hero = dict(original)
+        hid_str = str(hero.get("hero_id") or hero.get("id"))
+        override = by_hero.get(hid_str)
+        if override:
+            if override.get("stances"):
+                hero["skill_stances_meta"] = list(override["stances"])
+            if override.get("recast_skills"):
+                hero["recast_skills_meta"] = list(override["recast_skills"])
+
+            skill_map = override.get("skill_overrides") or {}
+            guide = hero.get("hokstats_guide")
+            if guide and guide.get("skills"):
+                new_guide = dict(guide)
+                updated_skills = []
+                for s in new_guide.get("skills") or []:
+                    s_copy = dict(s)
+                    s_name = s_copy.get("name")
+                    if s_name in skill_map:
+                        so = skill_map[s_name]
+                        if so.get("desc"):
+                            s_copy["description"] = so["desc"]
+                        if so.get("type"):
+                            s_copy["type"] = so["type"]
+                        if so.get("combo_badge"):
+                            s_copy["combo_badge"] = so["combo_badge"]
+                        if so.get("stance_id"):
+                            s_copy["stance_id"] = so["stance_id"]
+                    updated_skills.append(s_copy)
+                new_guide["skills"] = updated_skills
+                hero["hokstats_guide"] = new_guide
+
+        result.append(hero)
+    return result
+
+
 def load_source_heroes(mappings=MAPPINGS):
     """Load the same source-enriched hero records used by proposal validation and publishing."""
     heroes = _load_json(mappings / "master_heroes_global.json", [])
     heroes = apply_counter_overrides(heroes, _load_json(mappings / "hero_counter_overrides.json", {}).get("relations", []))
     heroes = apply_measured_matchups(heroes, _load_json(mappings / "hero_measured_matchups.json", {}))
-    return attach_hokstats(
+    heroes = attach_hokstats(
         heroes,
         _load_json(mappings / "hokstats_heroes.json", []),
         _load_json(mappings / "hokstats_matchup_reviews.json", []),
         _load_json(mappings / "hokstats_guide_reviews.json", []),
     )
+    return apply_skill_overrides(heroes, _load_json(mappings / "hero_skill_overrides.json", {}))

@@ -35,12 +35,13 @@ def clean_ability_sentences(hero: dict[str, Any]) -> list[str]:
     sentences: list[str] = []
 
     for ability in hero.get("abilities") or []:
-        desc = str(ability.get("desc") or "").strip()
-        if not desc:
+        raw_desc = str(ability.get("desc") or "").strip()
+        if not raw_desc:
             continue
         # Guard against HOKFIRE scraper contamination (e.g. Dolia #159 Wavemaker containing Lam's text)
-        if hero.get("hero_id") == 159 and "lam " in desc.lower() and "dolia" not in desc.lower():
+        if hero.get("hero_id") == 159 and "lam " in raw_desc.lower() and "dolia" not in raw_desc.lower():
             continue
+        desc = re.sub(r"</?[a-zA-Z0-9]+(?:=[^>]*)?>", "", raw_desc)
         for part in re.split(r"(?<=[.!?])(?:\s+|(?=[A-Z]))|\n+", desc):
             cleaned = part.strip()
             if cleaned:
@@ -48,9 +49,10 @@ def clean_ability_sentences(hero: dict[str, Any]) -> list[str]:
 
     guide = hero.get("hokstats_guide") or {}
     for skill in guide.get("skills") or []:
-        desc = str(skill.get("description") or "").strip()
-        if not desc:
+        raw_desc = str(skill.get("description") or "").strip()
+        if not raw_desc:
             continue
+        desc = re.sub(r"</?[a-zA-Z0-9]+(?:=[^>]*)?>", "", raw_desc)
         for part in re.split(r"(?<=[.!?])(?:\s+|(?=[A-Z]))|\n+", desc):
             cleaned = part.strip()
             if cleaned and cleaned not in sentences:
@@ -186,7 +188,7 @@ def evaluate_hero_evidence(hero: dict[str, Any]) -> dict[str, dict[str, Any]]:
     # 1. Movement mechanics (strictly from hero's own skills)
     dash_ev = _match_positive(
         skills,
-        r"\b(?:dashes|dash|charges\s+(?:forward|in\s+the\s+target\s+direction|toward|at|ahead|up\s+and\s+dashes)|rolls?\s+(?:forward|in\s+the\s+target\s+direction|and\s+gains)|slides?\s+forward|rushes\s+(?:forward|toward|to))\b",
+        r"\b(?:dashes|dash|charges\s+(?:forward|in\s+the\s+target\s+direction|toward|at|ahead|up\s+and\s+dashes)|rolls?\s+(?:forward|in\s+the\s+target\s+direction|and\s+gains)|slides?\s+forward|rushes\s+(?:forward|toward|to|in\s+an\s+arc|in\s+the\s+target\s+direction)?|moves\s+quickly(?:\s+in\s+the\s+target\s+direction)?|runs\s+in\s+the\s+target\s+direction)\b",
     )
     if not dash_ev:
         dash_ev = _match_positive(guides["tips"] + guides["pros"], r"\b(?:can\s+be\s+used\s+to\s+dash|extra\s+dash|multiple\s+dashes|high\s+mobility\s+dash)\b")
@@ -194,13 +196,13 @@ def evaluate_hero_evidence(hero: dict[str, Any]) -> dict[str, dict[str, Any]]:
 
     blink_ev = _match_positive(
         skills,
-        r"\b(?:blinks?|teleports?\s+(?:a\s+short\s+distance|instantly|(?:to|in)\s+the\s+target\s+(?:location|direction)|behind\s+the\s+target|to\s+a\s+specified\s+location|to\s+the\s+spirit's\s+location)|flashes?\s+to)\b",
+        r"\b(?:blinks?|teleports?\s+(?:a\s+short\s+distance|instantly|(?:to|in)\s+the\s+target\s+(?:location|direction)|behind\s+the\s+target|to\s+a\s+specified\s+location|to\s+the\s+spirit's\s+location)|flashes?\s+to|vanishes\b.*?reappears\b|swaps?\s+positions\s+with|returns?\s+to\s+(?:his|her|their)?\s*location)\b",
     )
     set_tag("blink", "ya" if blink_ev else "tidak", blink_ev[0] if blink_ev else "Tidak ada mekanik blink instan pada deskripsi skill.", True, 0.90 if blink_ev else 0.86)
 
     leap_ev = _match_positive(
         skills,
-        r"\b(?:leaps?\s+(?:to|into|forward|upward|toward|over|back|out)|jumps?\s+(?:to|into|forward|toward|over|up)|lunges?\s+(?:at|toward|forward|in)|dives?\s+(?:to|into|at|toward|forward)|flips?\s+behind|soars?\s+(?:into|up\s+into)\s+the\s+sky)\b",
+        r"\b(?:leap(?:s|ing)?\s+(?:to|into|forward|upward|toward|over|back(?:ward|wards)?|out)|jumps?\s+(?:to|into|forward|toward|over|up)|lunges?\s+(?:at|toward|forward|in)|dives?\s+(?:to|into|at|toward|forward)|flips?\s+(?:forward|behind)|soars?\s+(?:into|up\s+into)\s+the\s+sky|pounces?\s+(?:in|at|toward|forward))\b",
     )
     set_tag("leap", "ya" if leap_ev else "tidak", leap_ev[0] if leap_ev else "Tidak ada mekanik leap/lunge pada deskripsi skill.", True, 0.89 if leap_ev else 0.85)
 
