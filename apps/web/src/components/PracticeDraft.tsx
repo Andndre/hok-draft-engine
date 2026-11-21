@@ -146,6 +146,7 @@ export function PracticeDraft(props: Props) {
         format,
         side: playerSide,
         rankedBanCount: context.rankedBanCount ?? 3,
+        onlyGlobal,
         options: {
           maxDepth: 4,
           width: 8,
@@ -198,7 +199,7 @@ export function PracticeDraft(props: Props) {
     const tag = { sessionId: session.sessionId, revision: session.revision };
     setThinking(true); setError('');
     // Build an explicit public-state request: playerPlan is deliberately excluded.
-    void client.decide(game.position, { fearless: context.fearless, aiPlan: game.aiPlan, format }, tag, controller.signal).then(decision => {
+    void client.decide(game.position, { fearless: context.fearless, aiPlan: game.aiPlan, format, onlyGlobal }, tag, controller.signal).then(decision => {
       if (controller.signal.aborted) return;
       setThinking(false);
       if (decision.heroId === null) { setError('AI tidak menemukan aksi legal. Coba lagi atau reset game ini.'); return; }
