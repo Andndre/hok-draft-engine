@@ -93,6 +93,7 @@
     background-color: var(--color-canvas);
     color: var(--color-text-primary);
     font-family: var(--font-sans);
+    overflow-x: hidden;
   }
 
   .font-mono-numbers {
@@ -115,6 +116,14 @@
 }
 
 /* Custom Scrollbars */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 @supports not (scrollbar-color: auto) {
   html, * {
     scrollbar-width: auto;

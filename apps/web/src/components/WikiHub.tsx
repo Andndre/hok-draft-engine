@@ -158,69 +158,71 @@ export const WikiHub: React.FC<Props> = ({
   return (
     <div className="wiki-hub space-y-6">
       {/* Subtab Navigation Pill Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-[#232A38]">
-        <div className="flex items-center gap-1.5 p-1 bg-[#10141E] rounded-xl border border-[#232A38]">
-          <button
-            type="button"
-            onClick={() => setSubTab('hero')}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all ${
-              subTab === 'hero'
-                ? 'bg-[#B8FF01] text-slate-950 shadow-sm'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-[#18202F]'
-            }`}
-          >
-            <Users className="w-4 h-4" aria-hidden="true" />
-            <span>Hero & Counter</span>
-            <span className="text-xs font-mono font-medium px-2 py-0.5 rounded-md bg-black/25">
-              {filteredHeroes.length}
-            </span>
-          </button>
-          <button
-            type="button"
-            onClick={() => setSubTab('item')}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all ${
-              subTab === 'item'
-                ? 'bg-[#B8FF01] text-slate-950 shadow-sm'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-[#18202F]'
-            }`}
-          >
-            <Swords className="w-4 h-4" aria-hidden="true" />
-            <span>Item Equipment</span>
-            <span className="text-xs font-mono font-medium px-2 py-0.5 rounded-md bg-black/25">
-              {items.length}
-            </span>
-          </button>
-          <button
-            type="button"
-            onClick={() => setSubTab('arcana')}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all ${
-              subTab === 'arcana'
-                ? 'bg-[#B8FF01] text-slate-950 shadow-sm'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-[#18202F]'
-            }`}
-          >
-            <Sparkles className="w-4 h-4" aria-hidden="true" />
-            <span>Arcana Level 5</span>
-            <span className="text-xs font-mono font-medium px-2 py-0.5 rounded-md bg-black/25">30</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => setSubTab('spell')}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all ${
-              subTab === 'spell'
-                ? 'bg-[#B8FF01] text-slate-950 shadow-sm'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-[#18202F]'
-            }`}
-          >
-            <Zap className="w-4 h-4" aria-hidden="true" />
-            <span>Battle Spell</span>
-            <span className="text-xs font-mono font-medium px-2 py-0.5 rounded-md bg-black/25">
-              {spells.length}
-            </span>
-          </button>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#232A38]">
+        <div className="w-full sm:w-auto overflow-x-auto no-scrollbar -mx-1 px-1 sm:mx-0 sm:px-0">
+          <div className="flex items-center gap-1.5 p-1 bg-[#10141E] rounded-xl border border-[#232A38] w-max">
+            <button
+              type="button"
+              onClick={() => setSubTab('hero')}
+              className={`shrink-0 whitespace-nowrap flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
+                subTab === 'hero'
+                  ? 'bg-[#B8FF01] text-slate-950 shadow-sm'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-[#18202F]'
+              }`}
+            >
+              <Users className="w-4 h-4 shrink-0" aria-hidden="true" />
+              <span>Hero & Counter</span>
+              <span className="text-xs font-mono font-medium px-2 py-0.5 rounded-md bg-black/25">
+                {filteredHeroes.length}
+              </span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setSubTab('item')}
+              className={`shrink-0 whitespace-nowrap flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
+                subTab === 'item'
+                  ? 'bg-[#B8FF01] text-slate-950 shadow-sm'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-[#18202F]'
+              }`}
+            >
+              <Swords className="w-4 h-4 shrink-0" aria-hidden="true" />
+              <span>Item Equipment</span>
+              <span className="text-xs font-mono font-medium px-2 py-0.5 rounded-md bg-black/25">
+                {items.length}
+              </span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setSubTab('arcana')}
+              className={`shrink-0 whitespace-nowrap flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
+                subTab === 'arcana'
+                  ? 'bg-[#B8FF01] text-slate-950 shadow-sm'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-[#18202F]'
+              }`}
+            >
+              <Sparkles className="w-4 h-4 shrink-0" aria-hidden="true" />
+              <span>Arcana Level 5</span>
+              <span className="text-xs font-mono font-medium px-2 py-0.5 rounded-md bg-black/25">30</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setSubTab('spell')}
+              className={`shrink-0 whitespace-nowrap flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
+                subTab === 'spell'
+                  ? 'bg-[#B8FF01] text-slate-950 shadow-sm'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-[#18202F]'
+              }`}
+            >
+              <Zap className="w-4 h-4 shrink-0" aria-hidden="true" />
+              <span>Battle Spell</span>
+              <span className="text-xs font-mono font-medium px-2 py-0.5 rounded-md bg-black/25">
+                {spells.length}
+              </span>
+            </button>
+          </div>
         </div>
 
-        <div className="text-xs text-slate-400 flex items-center gap-1.5">
+        <div className="hidden lg:flex text-xs text-slate-400 items-center gap-1.5 shrink-0">
           <Info className="w-3.5 h-3.5 text-slate-500" aria-hidden="true" />
           <span>Klik kartu mana pun untuk membuka detail ensiklopedia lengkap</span>
         </div>
@@ -232,55 +234,55 @@ export const WikiHub: React.FC<Props> = ({
       {subTab === 'hero' && (
         <div className="space-y-4">
           {/* Sub-mode switcher: Katalog vs Counter Matrix */}
-          <div className="flex flex-wrap items-center justify-between gap-3 p-3 bg-[#10141E] border border-[#232A38] rounded-xl">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Tampilan:</span>
-              <div className="flex items-center gap-1 bg-[#0A0D12] p-1 rounded-lg border border-[#232A38]">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 p-3 bg-[#10141E] border border-[#232A38] rounded-xl">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider hidden sm:inline">Tampilan:</span>
+              <div className="grid grid-cols-2 gap-1 bg-[#0A0D12] p-1 rounded-lg border border-[#232A38] w-full sm:w-auto">
                 <button
                   type="button"
                   onClick={() => setHeroViewMode('catalog')}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all ${
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center justify-center gap-1.5 whitespace-nowrap ${
                     heroViewMode === 'catalog'
                       ? 'bg-[#18202F] text-[#B8FF01] border border-[#324056]'
                       : 'text-slate-400 hover:text-slate-200'
                   }`}
                 >
-                  Katalog Semua Hero ({filteredHeroes.length})
+                  <span>Katalog ({filteredHeroes.length})</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setHeroViewMode('counter')}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 ${
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center justify-center gap-1.5 whitespace-nowrap ${
                     heroViewMode === 'counter'
                       ? 'bg-[#18202F] text-[#B8FF01] border border-[#324056]'
                       : 'text-slate-400 hover:text-slate-200'
                   }`}
                 >
-                  <Swords className="w-3.5 h-3.5" aria-hidden="true" />
-                  Matrix Counter Langsung
+                  <Swords className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+                  <span>Matrix Counter</span>
                 </button>
               </div>
             </div>
 
             {/* Filter controls */}
-            <div className="flex flex-wrap items-center gap-2">
-              <div className="relative">
+            <div className="grid grid-cols-1 sm:flex sm:flex-wrap items-center gap-2 w-full lg:w-auto">
+              <div className="relative w-full sm:w-56">
                 <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500" aria-hidden="true" />
                 <input
                   type="text"
                   placeholder="Cari hero..."
                   value={heroSearch}
                   onChange={(e) => setHeroSearch(e.target.value)}
-                  className="pl-8 pr-3 py-1.5 text-xs bg-[#0A0D12] border border-[#232A38] rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#B8FF01] w-40 sm:w-56"
+                  className="w-full pl-8 pr-3 py-1.5 text-xs bg-[#0A0D12] border border-[#232A38] rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#B8FF01]"
                 />
               </div>
 
               {heroViewMode === 'catalog' && (
-                <>
+                <div className="grid grid-cols-2 sm:flex sm:items-center gap-2 w-full sm:w-auto">
                   <select
                     value={selectedLane}
                     onChange={(e) => setSelectedLane(e.target.value as Lane | 'All')}
-                    className="px-2.5 py-1.5 text-xs bg-[#0A0D12] border border-[#232A38] rounded-lg text-slate-200 focus:outline-none focus:border-[#B8FF01]"
+                    className="w-full sm:w-auto px-2.5 py-1.5 text-xs bg-[#0A0D12] border border-[#232A38] rounded-lg text-slate-200 focus:outline-none focus:border-[#B8FF01]"
                     aria-label="Filter Lane"
                   >
                     <option value="All">Semua Lane</option>
@@ -294,7 +296,7 @@ export const WikiHub: React.FC<Props> = ({
                   <select
                     value={selectedRole}
                     onChange={(e) => setSelectedRole(e.target.value as Role | 'All')}
-                    className="px-2.5 py-1.5 text-xs bg-[#0A0D12] border border-[#232A38] rounded-lg text-slate-200 focus:outline-none focus:border-[#B8FF01]"
+                    className="w-full sm:w-auto px-2.5 py-1.5 text-xs bg-[#0A0D12] border border-[#232A38] rounded-lg text-slate-200 focus:outline-none focus:border-[#B8FF01]"
                     aria-label="Filter Role"
                   >
                     <option value="All">Semua Role</option>
@@ -305,7 +307,7 @@ export const WikiHub: React.FC<Props> = ({
                     <option value="Assassin">Assassin</option>
                     <option value="Support">Support</option>
                   </select>
-                </>
+                </div>
               )}
             </div>
           </div>
@@ -382,7 +384,7 @@ export const WikiHub: React.FC<Props> = ({
                     />
                   </div>
                   <div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <h3 className="text-lg font-bold text-slate-100">{targetHero.name}</h3>
                       <span className="text-xs text-slate-400 font-mono">({targetHero.chinese_name})</span>
                       <span className="text-xs font-mono font-semibold px-2 py-0.5 rounded bg-[#18202F] text-[#B8FF01] border border-[#2D3A50]">
@@ -602,40 +604,42 @@ export const WikiHub: React.FC<Props> = ({
       {subTab === 'item' && (
         <div className="space-y-4">
           {/* Item Category Pills & Search */}
-          <div className="flex flex-wrap items-center justify-between gap-3 p-3 bg-[#10141E] border border-[#232A38] rounded-xl">
-            <div className="flex flex-wrap items-center gap-1.5">
-              {[
-                { id: 'All', label: 'Semua Item' },
-                { id: 'Attack', label: 'Serangan' },
-                { id: 'Magic', label: 'Sihir' },
-                { id: 'Defense', label: 'Pertahanan' },
-                { id: 'Movement', label: 'Sepatu' },
-                { id: 'Jungle', label: 'Hutan' },
-                { id: 'Support', label: 'Roaming' },
-              ].map((cat) => (
-                <button
-                  key={cat.id}
-                  type="button"
-                  onClick={() => setSelectedItemType(cat.id)}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
-                    selectedItemType.toLowerCase() === cat.id.toLowerCase()
-                      ? 'bg-[#B8FF01] text-slate-950 shadow-sm font-bold'
-                      : 'bg-[#0A0D12] text-slate-300 hover:text-white border border-[#232A38]'
-                  }`}
-                >
-                  {cat.label}
-                </button>
-              ))}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 bg-[#10141E] border border-[#232A38] rounded-xl">
+            <div className="w-full sm:w-auto overflow-x-auto no-scrollbar -mx-1 px-1 sm:mx-0 sm:px-0">
+              <div className="flex items-center gap-1.5 w-max">
+                {[
+                  { id: 'All', label: 'Semua Item' },
+                  { id: 'Attack', label: 'Serangan' },
+                  { id: 'Magic', label: 'Sihir' },
+                  { id: 'Defense', label: 'Pertahanan' },
+                  { id: 'Movement', label: 'Sepatu' },
+                  { id: 'Jungle', label: 'Hutan' },
+                  { id: 'Support', label: 'Roaming' },
+                ].map((cat) => (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => setSelectedItemType(cat.id)}
+                    className={`shrink-0 whitespace-nowrap px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+                      selectedItemType.toLowerCase() === cat.id.toLowerCase()
+                        ? 'bg-[#B8FF01] text-slate-950 shadow-sm font-bold'
+                        : 'bg-[#0A0D12] text-slate-300 hover:text-white border border-[#232A38]'
+                    }`}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            <div className="relative">
+            <div className="relative w-full sm:w-64">
               <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500" aria-hidden="true" />
               <input
                 type="text"
                 placeholder="Cari item, pasif, atau stat..."
                 value={itemSearch}
                 onChange={(e) => setItemSearch(e.target.value)}
-                className="pl-8 pr-3 py-1.5 text-xs bg-[#0A0D12] border border-[#232A38] rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#B8FF01] w-48 sm:w-64"
+                className="w-full pl-8 pr-3 py-1.5 text-xs bg-[#0A0D12] border border-[#232A38] rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#B8FF01]"
               />
             </div>
           </div>
@@ -760,37 +764,40 @@ export const WikiHub: React.FC<Props> = ({
       {subTab === 'arcana' && (
         <div className="space-y-4">
           {/* Arcana Filter Pills & Search */}
-          <div className="flex flex-wrap items-center justify-between gap-3 p-3 bg-[#10141E] border border-[#232A38] rounded-xl">
-            <div className="flex flex-wrap items-center gap-1.5">
-              {[
-                { id: 'all', label: 'Semua Arcana (30)' },
-                { id: 'red', label: 'Merah (Serangan & Pierce)' },
-                { id: 'blue', label: 'Biru (Mobilitas & Sustain)' },
-                { id: 'green', label: 'Hijau (Defense & CDR)' },
-              ].map((c) => (
-                <button
-                  key={c.id}
-                  type="button"
-                  onClick={() => setSelectedArcanaColor(c.id as ArcanaColor | 'all')}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
-                    selectedArcanaColor === c.id
-                      ? 'bg-[#B8FF01] text-slate-950 shadow-sm font-bold'
-                      : 'bg-[#0A0D12] text-slate-300 hover:text-white border border-[#232A38]'
-                  }`}
-                >
-                  {c.label}
-                </button>
-              ))}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 bg-[#10141E] border border-[#232A38] rounded-xl">
+            <div className="w-full sm:w-auto overflow-x-auto no-scrollbar -mx-1 px-1 sm:mx-0 sm:px-0">
+              <div className="flex items-center gap-1.5 w-max">
+                {[
+                  { id: 'all', label: 'Semua (30)', fullLabel: 'Semua Arcana (30)' },
+                  { id: 'red', label: 'Merah (Serang)', fullLabel: 'Merah (Serangan & Pierce)' },
+                  { id: 'blue', label: 'Biru (Sustain)', fullLabel: 'Biru (Mobilitas & Sustain)' },
+                  { id: 'green', label: 'Hijau (Defense)', fullLabel: 'Hijau (Defense & CDR)' },
+                ].map((c) => (
+                  <button
+                    key={c.id}
+                    type="button"
+                    onClick={() => setSelectedArcanaColor(c.id as ArcanaColor | 'all')}
+                    className={`shrink-0 whitespace-nowrap px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+                      selectedArcanaColor === c.id
+                        ? 'bg-[#B8FF01] text-slate-950 shadow-sm font-bold'
+                        : 'bg-[#0A0D12] text-slate-300 hover:text-white border border-[#232A38]'
+                    }`}
+                  >
+                    <span className="sm:hidden">{c.label}</span>
+                    <span className="hidden sm:inline">{c.fullLabel}</span>
+                  </button>
+                ))}
+              </div>
             </div>
 
-            <div className="relative">
+            <div className="relative w-full sm:w-64">
               <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500" aria-hidden="true" />
               <input
                 type="text"
                 placeholder="Cari arcana atau stat..."
                 value={arcanaSearch}
                 onChange={(e) => setArcanaSearch(e.target.value)}
-                className="pl-8 pr-3 py-1.5 text-xs bg-[#0A0D12] border border-[#232A38] rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#B8FF01] w-48 sm:w-64"
+                className="w-full pl-8 pr-3 py-1.5 text-xs bg-[#0A0D12] border border-[#232A38] rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#B8FF01]"
               />
             </div>
           </div>
@@ -911,20 +918,20 @@ export const WikiHub: React.FC<Props> = ({
       {subTab === 'spell' && (
         <div className="space-y-4">
           {/* Spell Header & Search */}
-          <div className="flex flex-wrap items-center justify-between gap-3 p-3 bg-[#10141E] border border-[#232A38] rounded-xl">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 bg-[#10141E] border border-[#232A38] rounded-xl">
             <div className="text-xs text-slate-200 flex items-center gap-2">
-              <Zap className="w-4 h-4 text-[#B8FF01]" aria-hidden="true" />
+              <Zap className="w-4 h-4 text-[#B8FF01] shrink-0" aria-hidden="true" />
               <span>Daftar 11 Battle Spell Resmi HoK Global (Cooldown & Rekomendasi Taktis)</span>
             </div>
 
-            <div className="relative">
+            <div className="relative w-full sm:w-64">
               <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500" aria-hidden="true" />
               <input
                 type="text"
                 placeholder="Cari spell..."
                 value={spellSearch}
                 onChange={(e) => setSpellSearch(e.target.value)}
-                className="pl-8 pr-3 py-1.5 text-xs bg-[#0A0D12] border border-[#232A38] rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#B8FF01] w-48 sm:w-64"
+                className="w-full pl-8 pr-3 py-1.5 text-xs bg-[#0A0D12] border border-[#232A38] rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#B8FF01]"
               />
             </div>
           </div>
