@@ -1,0 +1,1037 @@
+[
+  {
+    "id": 1111,
+    "name": "铁剑",
+    "type": 1,
+    "price": 165,
+    "total_price": 275,
+    "desc": "+20物理攻击",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1111.png"
+  },
+  {
+    "id": 1112,
+    "name": "匕首",
+    "type": 1,
+    "price": 180,
+    "total_price": 300,
+    "desc": "+10%攻击速度",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1112.png"
+  },
+  {
+    "id": 1113,
+    "name": "搏击拳套",
+    "type": 1,
+    "price": 180,
+    "total_price": 300,
+    "desc": "+8%暴击率",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1113.png"
+  },
+  {
+    "id": 1114,
+    "name": "吸血之镰",
+    "type": 1,
+    "price": 180,
+    "total_price": 300,
+    "desc": "+8%物理吸血",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1114.png"
+  },
+  {
+    "id": 1116,
+    "name": "雷鸣刃",
+    "type": 1,
+    "price": 492,
+    "total_price": 820,
+    "desc": "+35物理攻击 +12%暴击率",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1116.png"
+  },
+  {
+    "id": 1121,
+    "name": "风暴巨剑",
+    "type": 1,
+    "price": 510,
+    "total_price": 850,
+    "desc": "+75物理攻击",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1121.png"
+  },
+  {
+    "id": 1122,
+    "name": "日冕",
+    "type": 1,
+    "price": 456,
+    "total_price": 760,
+    "desc": "+35物理攻击 +450最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1122.png"
+  },
+  {
+    "id": 1123,
+    "name": "狂暴双刃",
+    "type": 1,
+    "price": 456,
+    "total_price": 760,
+    "desc": "+15%攻击速度 +7.5%移速",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1123.png"
+  },
+  {
+    "id": 1124,
+    "name": "陨星",
+    "type": 1,
+    "price": 456,
+    "total_price": 760,
+    "desc": "+35物理攻击 +7.5%冷却缩减",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1124.png"
+  },
+  {
+    "id": 1131,
+    "name": "碎星锤",
+    "type": 1,
+    "price": 1248,
+    "total_price": 2080,
+    "desc": "+90物理攻击 +700最大生命 +7.5%移动速度",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1131.png"
+  },
+  {
+    "id": 1126,
+    "name": "末世",
+    "type": 1,
+    "price": 1260,
+    "total_price": 2100,
+    "desc": "+500最大生命 +40物理攻击 +20%攻击速度 +20%物理吸血",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1126.png"
+  },
+  {
+    "id": 1127,
+    "name": "名刀·司命",
+    "type": 1,
+    "price": 1236,
+    "total_price": 2060,
+    "desc": "+500最大生命 +75物理攻击 +15%攻击速度",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1127.png"
+  },
+  {
+    "id": 1128,
+    "name": "寒霜袭侵",
+    "type": 1,
+    "price": 1224,
+    "total_price": 2040,
+    "desc": "+750最大生命 +25%攻击速度 +70物理攻击",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1128.png"
+  },
+  {
+    "id": 1129,
+    "name": "速击之枪",
+    "type": 1,
+    "price": 480,
+    "total_price": 800,
+    "desc": "+35物理攻击 +15%攻击速度",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1129.png"
+  },
+  {
+    "id": 11210,
+    "name": "制裁之刃",
+    "type": 1,
+    "price": 1248,
+    "total_price": 2080,
+    "desc": "+75物理攻击 +20%物理吸血 +30%攻击速度",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/11210.png"
+  },
+  {
+    "id": 1132,
+    "name": "泣血之刃",
+    "type": 1,
+    "price": 1212,
+    "total_price": 2020,
+    "desc": "+80物理攻击 +25%物理吸血 +500 最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1132.png"
+  },
+  {
+    "id": 1133,
+    "name": "无尽战刃",
+    "type": 1,
+    "price": 1224,
+    "total_price": 2060,
+    "desc": "+120物理攻击 +20%暴击率",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1133.png"
+  },
+  {
+    "id": 1134,
+    "name": "宗师之力",
+    "type": 1,
+    "price": 1260,
+    "total_price": 2100,
+    "desc": "+55物理攻击 +20%暴击率 +600最大生命 +15%攻击速度",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1134.png"
+  },
+  {
+    "id": 1135,
+    "name": "闪电匕首",
+    "type": 1,
+    "price": 1224,
+    "total_price": 2040,
+    "desc": "+40物理攻击 +35%攻击速度 +7.5%移速",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1135.png"
+  },
+  {
+    "id": 1136,
+    "name": "影刃",
+    "type": 1,
+    "price": 1224,
+    "total_price": 2040,
+    "desc": "+45物理攻击 +35%攻击速度 +20%暴击率 +7.5%移动速度",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1136.png"
+  },
+  {
+    "id": 1137,
+    "name": "暗影战斧",
+    "type": 1,
+    "price": 1254,
+    "total_price": 2090,
+    "desc": "+80物理攻击 +10%冷却缩减 +500最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1137.png"
+  },
+  {
+    "id": 1138,
+    "name": "强者破军",
+    "type": 1,
+    "price": 1524,
+    "total_price": 2540,
+    "desc": "+150物理攻击 +5%冷却缩减",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1138.png"
+  },
+  {
+    "id": 11311,
+    "name": "纯净苍穹",
+    "type": 1,
+    "price": 1284,
+    "total_price": 2140,
+    "desc": "+80物理攻击 +10%冷却缩减 +150物理防御",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/11311.png"
+  },
+  {
+    "id": 1141,
+    "name": "逐日之弓",
+    "type": 1,
+    "price": 1260,
+    "total_price": 2100,
+    "desc": "+40物理攻击 +20%攻击速度 +15%暴击 +7.5%移速",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1141.png"
+  },
+  {
+    "id": 1125,
+    "name": "破魔刀",
+    "type": 1,
+    "price": 1236,
+    "total_price": 2060,
+    "desc": "+90物理攻击 +150法术防御 +700最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1125.png"
+  },
+  {
+    "id": 1154,
+    "name": "穿云弓",
+    "type": 1,
+    "price": 480,
+    "total_price": 800,
+    "desc": "+12%暴击率 +15%攻击速度",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1154.png"
+  },
+  {
+    "id": 1155,
+    "name": "仁者破晓",
+    "type": 1,
+    "price": 1500,
+    "total_price": 2500,
+    "desc": "+75物理攻击 +30%攻击速度 +15%暴击率",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1155.png"
+  },
+  {
+    "id": 1211,
+    "name": "咒术典籍",
+    "type": 2,
+    "price": 165,
+    "total_price": 275,
+    "desc": "+35法术攻击",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1211.png"
+  },
+  {
+    "id": 1212,
+    "name": "蓝宝石",
+    "type": 2,
+    "price": 165,
+    "total_price": 275,
+    "desc": "+400最大法力",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1212.png"
+  },
+  {
+    "id": 1214,
+    "name": "圣者法典",
+    "type": 2,
+    "price": 480,
+    "total_price": 800,
+    "desc": "+60法术攻击 +7.5%冷却缩减",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1214.png"
+  },
+  {
+    "id": 1221,
+    "name": "大棒",
+    "type": 2,
+    "price": 492,
+    "total_price": 820,
+    "desc": "+120法术攻击",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1221.png"
+  },
+  {
+    "id": 1222,
+    "name": "血族之书",
+    "type": 2,
+    "price": 480,
+    "total_price": 800,
+    "desc": "+60法术攻击 +12%法术吸血",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1222.png"
+  },
+  {
+    "id": 1227,
+    "name": "炽热支配",
+    "type": 2,
+    "price": 1224,
+    "total_price": 2040,
+    "desc": "+150法术攻击 +12%法术吸血 +7.5%移动速度",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1227.png"
+  },
+  {
+    "id": 12211,
+    "name": "梦魇之牙",
+    "type": 2,
+    "price": 1230,
+    "total_price": 2050,
+    "desc": "+220法术攻击 +7.5%移动速度 +7.5%冷却缩减",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/12211.png"
+  },
+  {
+    "id": 1231,
+    "name": "虚无法杖",
+    "type": 2,
+    "price": 1224,
+    "total_price": 2040,
+    "desc": "+210法术攻击 +500最大生命值 +5%冷却缩减",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1231.png"
+  },
+  {
+    "id": 1232,
+    "name": "博学者之怒",
+    "type": 2,
+    "price": 1284,
+    "total_price": 2140,
+    "desc": "+210法术攻击",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1232.png"
+  },
+  {
+    "id": 1239,
+    "name": "辉月",
+    "type": 2,
+    "price": 1248,
+    "total_price": 2080,
+    "desc": "+160法术攻击 +7.5%冷却缩减 +12%法术吸血",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1239.png"
+  },
+  {
+    "id": 1233,
+    "name": "回响之杖",
+    "type": 2,
+    "price": 1230,
+    "total_price": 2050,
+    "desc": "+220法术攻击 +7.5%移速",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1233.png"
+  },
+  {
+    "id": 1234,
+    "name": "凝冰之息",
+    "type": 2,
+    "price": 1260,
+    "total_price": 2100,
+    "desc": "+180法术攻击 +7.5%冷却缩减 +500最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1234.png"
+  },
+  {
+    "id": 1235,
+    "name": "痛苦面具",
+    "type": 2,
+    "price": 1248,
+    "total_price": 2080,
+    "desc": "+100法术攻击 +7.5%冷却缩减 +900最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1235.png"
+  },
+  {
+    "id": 1236,
+    "name": "巫术法杖",
+    "type": 2,
+    "price": 1248,
+    "total_price": 2080,
+    "desc": "+180法术攻击 +600最大生命 +300最大法力 +7.5%移速",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1236.png"
+  },
+  {
+    "id": 1226,
+    "name": "圣杯",
+    "type": 2,
+    "price": 1212,
+    "total_price": 2020,
+    "desc": "+150法术攻击 +15%冷却缩减 +500生命值",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1226.png"
+  },
+  {
+    "id": 1237,
+    "name": "时之预言",
+    "type": 2,
+    "price": 1290,
+    "total_price": 2150,
+    "desc": "+140法术攻击 +450最大法力 +900最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1237.png"
+  },
+  {
+    "id": 1238,
+    "name": "贤者天书",
+    "type": 2,
+    "price": 1686,
+    "total_price": 2610,
+    "desc": "+350法术攻击 +10%冷却缩减",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1238.png"
+  },
+  {
+    "id": 1240,
+    "name": "噬神之书",
+    "type": 2,
+    "price": 1236,
+    "total_price": 2060,
+    "desc": "+160法术攻击 +24%法术吸血 +750最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1240.png"
+  },
+  {
+    "id": 1311,
+    "name": "红玛瑙",
+    "type": 3,
+    "price": 180,
+    "total_price": 300,
+    "desc": "+300最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1311.png"
+  },
+  {
+    "id": 1312,
+    "name": "布甲",
+    "type": 3,
+    "price": 165,
+    "total_price": 275,
+    "desc": "+100物理防御",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1312.png"
+  },
+  {
+    "id": 1313,
+    "name": "抗魔披风",
+    "type": 3,
+    "price": 165,
+    "total_price": 275,
+    "desc": "+100法术防御",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1313.png"
+  },
+  {
+    "id": 1321,
+    "name": "力量腰带",
+    "type": 3,
+    "price": 510,
+    "total_price": 850,
+    "desc": "+900最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1321.png"
+  },
+  {
+    "id": 1323,
+    "name": "神隐斗篷",
+    "type": 3,
+    "price": 480,
+    "total_price": 800,
+    "desc": "+150法术防御 +450最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1323.png"
+  },
+  {
+    "id": 1324,
+    "name": "雪山圆盾",
+    "type": 3,
+    "price": 450,
+    "total_price": 750,
+    "desc": "+7.5%冷却缩减 +150物理防御",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1324.png"
+  },
+  {
+    "id": 1325,
+    "name": "守护者之铠",
+    "type": 3,
+    "price": 480,
+    "total_price": 800,
+    "desc": "+150物理防御 +450最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1325.png"
+  },
+  {
+    "id": 1327,
+    "name": "反伤刺甲",
+    "type": 3,
+    "price": 1212,
+    "total_price": 2020,
+    "desc": "+45物理攻击 +300物理防御 +700最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1327.png"
+  },
+  {
+    "id": 1328,
+    "name": "血魔之怒",
+    "type": 3,
+    "price": 1308,
+    "total_price": 2180,
+    "desc": "+75物理攻击 +900最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1328.png"
+  },
+  {
+    "id": 1331,
+    "name": "红莲斗篷",
+    "type": 3,
+    "price": 1224,
+    "total_price": 2040,
+    "desc": "+240物理防御 +1350最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1331.png"
+  },
+  {
+    "id": 1332,
+    "name": "霸者重装",
+    "type": 3,
+    "price": 1470,
+    "total_price": 2450,
+    "desc": "+1800最大生命 +180物理防御 +90法术防御",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1332.png"
+  },
+  {
+    "id": 1341,
+    "name": "冰霜冲击",
+    "type": 3,
+    "price": 1218,
+    "total_price": 2030,
+    "desc": "+150物理防御 +950最大生命 +7.5%冷却缩减",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1341.png"
+  },
+  {
+    "id": 1333,
+    "name": "不祥征兆",
+    "type": 3,
+    "price": 1212,
+    "total_price": 2020,
+    "desc": "+300物理防御 +1200最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1333.png"
+  },
+  {
+    "id": 1334,
+    "name": "不死鸟之眼",
+    "type": 3,
+    "price": 1212,
+    "total_price": 2020,
+    "desc": "+90物理防御 +180法术防御 +1350最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1334.png"
+  },
+  {
+    "id": 1335,
+    "name": "魔女斗篷",
+    "type": 3,
+    "price": 1212,
+    "total_price": 2020,
+    "desc": "+300法术防御 +1100最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1335.png"
+  },
+  {
+    "id": 1336,
+    "name": "极寒风暴",
+    "type": 3,
+    "price": 1224,
+    "total_price": 2040,
+    "desc": "+20%冷却缩减 +600最大生命 +240物理防御",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1336.png"
+  },
+  {
+    "id": 13310,
+    "name": "冰痕之握",
+    "type": 3,
+    "price": 1236,
+    "total_price": 2060,
+    "desc": "+10%冷却缩减 +300物理防御 +55物理攻击",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/13310.png"
+  },
+  {
+    "id": 1337,
+    "name": "贤者的庇护",
+    "type": 3,
+    "price": 1368,
+    "total_price": 2280,
+    "desc": "+150物理防御 +150法术防御 +900最大生命 +5%冷却缩减",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1337.png"
+  },
+  {
+    "id": 1338,
+    "name": "暴烈之甲",
+    "type": 3,
+    "price": 1230,
+    "total_price": 2050,
+    "desc": "+210物理防御 +1000最大生命 +35物理攻击",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1338.png"
+  },
+  {
+    "id": 1411,
+    "name": "神速之靴",
+    "type": 4,
+    "price": 150,
+    "total_price": 250,
+    "desc": "唯一被动：+30移动速度",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1411.png"
+  },
+  {
+    "id": 1421,
+    "name": "影忍之足",
+    "type": 4,
+    "price": 420,
+    "total_price": 700,
+    "desc": "+50法术防御 +120物理防御",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1421.png"
+  },
+  {
+    "id": 1422,
+    "name": "抵抗之靴",
+    "type": 4,
+    "price": 420,
+    "total_price": 700,
+    "desc": "+50物理防御 +100法术防御",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1422.png"
+  },
+  {
+    "id": 1423,
+    "name": "冷静之靴",
+    "type": 4,
+    "price": 420,
+    "total_price": 700,
+    "desc": "+15%冷却缩减",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1423.png"
+  },
+  {
+    "id": 1424,
+    "name": "秘法之靴",
+    "type": 4,
+    "price": 420,
+    "total_price": 700,
+    "desc": "+400最大法力",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1424.png"
+  },
+  {
+    "id": 1425,
+    "name": "急速战靴",
+    "type": 4,
+    "price": 420,
+    "total_price": 700,
+    "desc": "+20%攻速",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1425.png"
+  },
+  {
+    "id": 1426,
+    "name": "疾步之靴",
+    "type": 4,
+    "price": 420,
+    "total_price": 700,
+    "desc": "+300最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1426.png"
+  },
+  {
+    "id": 1511,
+    "name": "狩猎宽刃",
+    "type": 5,
+    "price": 150,
+    "total_price": 250,
+    "desc": "被动-狩猎: 普攻/技能命中后，野怪每0.5秒70~140点法术伤害，（远程英雄伤害减半），持续2秒。受野怪伤害降低25%，获得来自野怪的经验提升20%。",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1511.png"
+  },
+  {
+    "id": 1521,
+    "name": "游击弯刀",
+    "type": 5,
+    "price": 420,
+    "total_price": 700,
+    "desc": "+40法术攻击",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1521.png"
+  },
+  {
+    "id": 1522,
+    "name": "巡守利斧",
+    "type": 5,
+    "price": 420,
+    "total_price": 700,
+    "desc": "+400最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1522.png"
+  },
+  {
+    "id": 1523,
+    "name": "追击刀锋",
+    "type": 5,
+    "price": 420,
+    "total_price": 700,
+    "desc": "+25物理攻击",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1523.png"
+  },
+  {
+    "id": 1531,
+    "name": "符文大剑",
+    "type": 5,
+    "price": 1260,
+    "total_price": 2100,
+    "desc": "+130法术攻击 +10%冷却缩减 +5%移速",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1531.png"
+  },
+  {
+    "id": 1532,
+    "name": "巨人之握",
+    "type": 5,
+    "price": 1260,
+    "total_price": 2100,
+    "desc": "+1200最大生命 +5%冷却缩减 +5%移速",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1532.png"
+  },
+  {
+    "id": 1533,
+    "name": "贪婪之噬",
+    "type": 5,
+    "price": 1260,
+    "total_price": 2100,
+    "desc": "+90物理攻击 +5%移速 +7.5%冷却",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1533.png"
+  },
+  {
+    "id": 1727,
+    "name": "日暮之流",
+    "type": 2,
+    "price": 1224,
+    "total_price": 2040,
+    "desc": "+160法术攻击 +500最大生命 +10%冷却缩减",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1727.png"
+  },
+  {
+    "id": 1728,
+    "name": "金色圣剑",
+    "type": 2,
+    "price": 1242,
+    "total_price": 2070,
+    "desc": "+150法术攻击 +20%攻击速度 +7.5%移动速度",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1728.png"
+  },
+  {
+    "id": 1534,
+    "name": "怒龙剑盾",
+    "type": 3,
+    "price": 1224,
+    "total_price": 2040,
+    "desc": "+1100最大生命 +150物理防御 +150法术防御",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1534.png"
+  },
+  {
+    "id": 1345,
+    "name": "荆棘护手",
+    "type": 3,
+    "price": 450,
+    "total_price": 750,
+    "desc": "+150物理防御 +35物理攻击",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1345.png"
+  },
+  {
+    "id": 1347,
+    "name": "永夜守护",
+    "type": 3,
+    "price": 1212,
+    "total_price": 2020,
+    "desc": "+90物理防御 +180法术防御 +900最大生命 +7.5%移动速度",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1347.png"
+  },
+  {
+    "id": 1349,
+    "name": "原初遗珠",
+    "type": 3,
+    "price": 480,
+    "total_price": 800,
+    "desc": "+150物理防御 +150法术防御",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1349.png"
+  },
+  {
+    "id": 1350,
+    "name": "侵掠·怒魂",
+    "type": 3,
+    "price": 1980,
+    "total_price": 3300,
+    "desc": "+75物理攻击 +900最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1350.png"
+  },
+  {
+    "id": 1351,
+    "name": "徐行·凛冬",
+    "type": 3,
+    "price": 1914,
+    "total_price": 3190,
+    "desc": "+150物理防御 +950最大生命 +7.5%冷却缩减",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1351.png"
+  },
+  {
+    "id": 1156,
+    "name": "迅疾·日渊",
+    "type": 1,
+    "price": 1992,
+    "total_price": 3320,
+    "desc": "+40物理攻击 +20%攻击速度 +15%暴击率 +7.5%移速",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1156.png"
+  },
+  {
+    "id": 1157,
+    "name": "不动·天穹",
+    "type": 1,
+    "price": 1968,
+    "total_price": 3280,
+    "desc": "+80物理攻击 +10%冷却缩减 +150物理防御",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1157.png"
+  },
+  {
+    "id": 1242,
+    "name": "难知·月神",
+    "type": 2,
+    "price": 2004,
+    "total_price": 3340,
+    "desc": "+160法术攻击 +7.5%冷却缩减 +12%法术吸血",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1242.png"
+  },
+  {
+    "id": 1224,
+    "name": "魔道之石",
+    "type": 2,
+    "price": 480,
+    "total_price": 800,
+    "desc": "+60法术攻击 +7.5移动速度",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1224.png"
+  },
+  {
+    "id": 1243,
+    "name": "云灵木",
+    "type": 2,
+    "price": 504,
+    "total_price": 840,
+    "desc": "+60法术攻击 +450最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1243.png"
+  },
+  {
+    "id": 1115,
+    "name": "迅捷长矛",
+    "type": 1,
+    "price": 456,
+    "total_price": 760,
+    "desc": "+35物理攻击 +7.5%移动速度",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1115.png"
+  },
+  {
+    "id": 1244,
+    "name": "破茧之衣",
+    "type": 2,
+    "price": 1272,
+    "total_price": 2120,
+    "desc": "+120 法术攻击 +900 最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1244.png"
+  },
+  {
+    "id": 1158,
+    "name": "血魂刃",
+    "type": 1,
+    "price": 480,
+    "total_price": 800,
+    "desc": "+35物理攻击 +12%物理吸血",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1158.png"
+  },
+  {
+    "id": 1159,
+    "name": "逐风",
+    "type": 1,
+    "price": 1248,
+    "total_price": 2080,
+    "desc": "+50 物理攻击 +600最大生命 +30%攻击速度",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1159.png"
+  },
+  {
+    "id": 1353,
+    "name": "旭日初光",
+    "type": 3,
+    "price": 1224,
+    "total_price": 2040,
+    "desc": "+900最大生命 +210物理防御 +10%冷却缩减",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1353.png"
+  },
+  {
+    "id": 1701,
+    "name": "学识宝石",
+    "type": 7,
+    "price": 180,
+    "total_price": 300,
+    "desc": "+5%移速",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1701.png"
+  },
+  {
+    "id": 1711,
+    "name": "极影",
+    "type": 7,
+    "price": 1140,
+    "total_price": 1900,
+    "desc": "+500生命值 +5%移速",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1711.png"
+  },
+  {
+    "id": 1714,
+    "name": "近卫",
+    "type": 7,
+    "price": 510,
+    "total_price": 850,
+    "desc": "+500生命值 +5%移速",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1714.png"
+  },
+  {
+    "id": 1721,
+    "name": "极影·救赎",
+    "type": 7,
+    "price": 1248,
+    "total_price": 2080,
+    "desc": "+1200生命值 +7.5%移速",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1721.png"
+  },
+  {
+    "id": 1747,
+    "name": "极影·星泉",
+    "type": 7,
+    "price": 1248,
+    "total_price": 2080,
+    "desc": "+1200生命值 +7.5%移速",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1747.png"
+  },
+  {
+    "id": 1723,
+    "name": "极影·奔狼",
+    "type": 7,
+    "price": 1248,
+    "total_price": 2080,
+    "desc": "+1200生命值 +7.5%移速",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1723.png"
+  },
+  {
+    "id": 1737,
+    "name": "极影·形昭",
+    "type": 7,
+    "price": 1248,
+    "total_price": 2080,
+    "desc": "+1200生命值 +7.5%移速",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1737.png"
+  },
+  {
+    "id": 1724,
+    "name": "近卫·救赎",
+    "type": 7,
+    "price": 1248,
+    "total_price": 2080,
+    "desc": "+1200生命值 +7.5%移速",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1724.png"
+  },
+  {
+    "id": 1725,
+    "name": "近卫·星泉",
+    "type": 7,
+    "price": 1248,
+    "total_price": 2080,
+    "desc": "+1200生命值 +7.5%移速",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1725.png"
+  },
+  {
+    "id": 1753,
+    "name": "近卫·奔狼",
+    "type": 7,
+    "price": 1248,
+    "total_price": 2080,
+    "desc": "+1200生命值 +7.5%移速",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1753.png"
+  },
+  {
+    "id": 1754,
+    "name": "近卫·形昭",
+    "type": 7,
+    "price": 1248,
+    "total_price": 2080,
+    "desc": "+1200生命值 +7.5%移速",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1754.png"
+  },
+  {
+    "id": 1317,
+    "name": "急速铠甲",
+    "type": 3,
+    "price": 480,
+    "total_price": 800,
+    "desc": "+450生命 +7.5%冷却",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1317.png"
+  },
+  {
+    "id": 1217,
+    "name": "秘法残页",
+    "type": 2,
+    "price": 180,
+    "total_price": 300,
+    "desc": "+8%法术吸血",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1217.png"
+  },
+  {
+    "id": 11110,
+    "name": "附魔之羽",
+    "type": 1,
+    "price": 180,
+    "total_price": 300,
+    "desc": "+5%移动速度",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/11110.png"
+  },
+  {
+    "id": 1218,
+    "name": "元流结晶",
+    "type": 2,
+    "price": 180,
+    "total_price": 300,
+    "desc": "+5%冷却缩减",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1218.png"
+  },
+  {
+    "id": 13212,
+    "name": "天地石",
+    "type": 3,
+    "price": 480,
+    "total_price": 800,
+    "desc": "+150物理防御 +150法术防御",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/13212.png"
+  },
+  {
+    "id": 11211,
+    "name": "精钢锻刀",
+    "type": 1,
+    "price": 510,
+    "total_price": 850,
+    "desc": "+15%攻击速度 +450最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/11211.png"
+  },
+  {
+    "id": 13211,
+    "name": "玛瑙护心镜",
+    "type": 3,
+    "price": 480,
+    "total_price": 800,
+    "desc": "+450最大生命 +7.5%移动速度",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/13211.png"
+  },
+  {
+    "id": 1161,
+    "name": "幽影袖箭",
+    "type": 1,
+    "price": 1224,
+    "total_price": 2040,
+    "desc": "+40物理 +20%攻击速度 +20%暴击率 +650最大生命",
+    "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/itemimg/1161.png"
+  }
+]

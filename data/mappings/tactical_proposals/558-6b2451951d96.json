@@ -1,0 +1,627 @@
+{
+  "schema_version": 2,
+  "hero_id": 558,
+  "source_hash": "6b2451951d9694f485e0573f8624850cbb682b5afb65fd7bd007be6ba8db2d8b",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "skill_id": 55800,
+          "type": "Passive",
+          "name": "Whirling Featherblades",
+          "desc": "When attacking at a distance, Basic Attacks throw a blade that returns to her. She can <color=#ffce49>hit the blade as it returns to bounce it back at the enemy,</color> dealing increased damage with each rebound.\nWhen attacking nearby targets, she enters melee mode and attacks faster.\nBasic Attacks <color=#ffce49>mark</color> targets. Marked enemies take extra damage from Skill 2.",
+          "cd": 800,
+          "cost": 0,
+          "tags": [],
+          "icon": "https://camp.honorofkings.com/Global/Common/UGUI/SystemRes/902_HeroSkillIcon/55800.png"
+        },
+        {
+          "skill_id": 55810,
+          "type": "Skill 1",
+          "name": "Feverish Dance",
+          "desc": "Fires Featherblades at nearby enemies, dealing <color=#fa863a>damage</color> and applying <color=#ffce49>marks</color>. Then enters Frenzied state, gaining a major boost to <color=#6fc075>Movement Speed</color> and <color=#6fc075>Attack Speed</color>.",
+          "cd": 7500,
+          "cost": 50,
+          "tags": [],
+          "icon": "https://camp.honorofkings.com/Global/Common/UGUI/SystemRes/902_HeroSkillIcon/55810.png"
+        },
+        {
+          "skill_id": 55822,
+          "type": "Skill 2",
+          "name": "Feathered Tempest",
+          "desc": "Dashes forward, <color=#fa863a>damaging</color> and <color=#50c1eb>knocking back</color> enemies. Also triggers Featherblade marks and spreads them to nearby enemies.\nThen, throws rebounding flying blades at enemies in front, dealing <color=#fa863a>damage</color> and <color=#6fc075>recovering Health</color>. Each hit consumes 1 <color=#ffce49>mark</color> to deal extra <color=#fa863a>damage</color>.",
+          "cd": 10000,
+          "cost": 60,
+          "tags": [],
+          "icon": "https://camp.honorofkings.com/Global/Common/UGUI/SystemRes/902_HeroSkillIcon/55820.png"
+        },
+        {
+          "skill_id": 55830,
+          "type": "Skill 3",
+          "name": "Final Frenzy",
+          "desc": "<color=#fa863a>Damages</color> nearby enemies and gains <color=#6fc075>Movement Speed</color>. Also enters the <color=#ffce49>Indomitable</color> state for 4s, gaining temporary Health.\nIf she is defeated while this skill is not on cooldown, she resurrects after a short delay, <color=#fa863a>damaging</color> nearby enemies. The skill will then enter cooldown.\n<color=#4f6f95>The Indomitable state ends immediately if she loses all of her temporary Health.</color>",
+          "cd": 55000,
+          "cost": 100,
+          "tags": [],
+          "icon": "https://camp.honorofkings.com/Global/Common/UGUI/SystemRes/902_HeroSkillIcon/55830.png"
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [
+          "Strong duelist with good sustained damage",
+          "Healthy mix of damage and durability",
+          "Can split-push and skirmish across the map"
+        ],
+        "cons": [
+          "Vulnerable before key items come online",
+          "Struggles into heavy ranged poke",
+          "Can be peeled and kited by control"
+        ],
+        "gameplay_tips": "Umbrosa is a Fighter who plays the Clash Lane. Your aim is to trade in your lane, then bully your way onto the enemy backline. Pick your moment to use Final Frenzy, then follow up with Feverish Dance and Feathered Tempest. Manage the wave, respect ganks, and look to roam once you have a lead."
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": ""
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/umbrosa/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Whirling Featherblades",
+            "description": "When attacking at a distance, Basic Attacks throw a blade that returns to her. She can hit the blade as it returns to bounce it back at the enemy, dealing increased damage with each rebound. When attacking nearby targets, she enters melee mode and attacks faster. Basic Attacks mark targets. Marked enemies take extra damage from Skill 2.",
+            "type": "passive"
+          },
+          {
+            "name": "Feverish Dance",
+            "description": "Sweeps the surrounding area, damaging and slowing nearby enemies. Then enters Frenzied state, gaining a major boost to Movement Speed and Attack Speed.",
+            "type": "skill1"
+          },
+          {
+            "name": "Feathered Tempest",
+            "description": "Dashes forward, damaging and knocking back enemies. Also triggers Featherblade marks and spreads them to nearby enemies. Then, throws rebounding blades at enemies in front, dealing damage and recovering Health. Each hit consumes 1 mark to deal extra damage.",
+            "type": "skill2"
+          },
+          {
+            "name": "Final Frenzy",
+            "description": "Damages nearby enemies and gains Movement Speed. Also enters the Indomitable state for 4s, gaining temporary Health. If she is defeated while this skill is not on cooldown, she resurrects after a short delay, damaging nearby enemies. The skill will then enter cooldown. Passive: Upgrading this skill increases Skill 2 and melee Basic Attack damage. The Indomitable state ends immediately if she loses all of her temporary Health.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "The team draft favors extended team fights where healing scales",
+          "Your team has the structure to use their ability to soak pressure in lane and threaten side objectives, since Umbrosa delivers a durable front-line presence with steady wave control.",
+          "The enemy composition leaves room for Umbrosa to reach the targets their kit punishes."
+        ],
+        "avoid_when": [
+          "The enemy already builds anti-heal items, neutralizing your sustain plan",
+          "Your team needs a mid pick more than Umbrosa's specialty, leaving the role unfilled if you commit here.",
+          "The enemy team is built around answers to Sustained Damage, removing the windows Umbrosa's kit needs to perform."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Umbrosa's mid-game tools come online.",
+          "Lifesteal item online: trade patterns flip from neutral to favorable once sustain stacks with damage",
+          "Late game: cooldowns become short enough that Feathered Tempest influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Forcing all-ins against opponents already wearing anti-heal — your healing barely activates.",
+          "Engaging without checking enemy summoner-spell cooldowns, which often decide whether Umbrosa's commit reaches the target alive.",
+          "Forcing solo engages instead of waiting for ally commit — Umbrosa's value compounds when the team follows up on engages."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 112,
+            "hero_name": "Luban No.7",
+            "evidence": "Feathered Tempest dashes in and Frenzied attacks burst Luban No.7.",
+            "source_hash": "233e6e4b0940b0b62d0863e6c501a7725f3062660e2cf598a55b6e9b2495c850"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 169,
+            "hero_name": "Hou Yi",
+            "evidence": "Feathered Tempest dashes in and knocks back Hou Yi.",
+            "source_hash": "110dd73655f9a1c165a1e3ddf29982290579f5e215db2c42b171f922194bd8af"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 152,
+            "hero_name": "Wang Zhaojun",
+            "evidence": "Frigid Prison freezes Umbrosa during Feverish Dance.",
+            "source_hash": "f19fa9631aac672053f99128ec695e9610439990689256943770d48b4b311c42"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 174,
+            "hero_name": "Consort Yu",
+            "evidence": "Protecting Winds makes Consort Yu invulnerable to Umbrosa's physical damage.",
+            "source_hash": "75e9eaa7690270907a97a186dc4005e7f32809bb7799ad601a23ef88ecdb99e0"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 159,
+            "hero_name": "Dolia",
+            "source_hash": "85f0148e1b178aee04d67b4d675e2336f4eae5b4b7c8a83680ef635ac057c2d1"
+          },
+          {
+            "hero_id": 513,
+            "hero_name": "Shangguan",
+            "source_hash": "85f0148e1b178aee04d67b4d675e2336f4eae5b4b7c8a83680ef635ac057c2d1"
+          },
+          {
+            "hero_id": 519,
+            "hero_name": "Ao'yin",
+            "source_hash": "85f0148e1b178aee04d67b4d675e2336f4eae5b4b7c8a83680ef635ac057c2d1"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "Skill-Evidence-Audit-v2",
+  "provider": "evidence",
+  "model_info": {
+    "provider": "evidence",
+    "engine": "skill-evidence-audit",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_taunt": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.85,
+            "tidak": 0.0975,
+            "tidak_diketahui": 0.0525
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

@@ -472,6 +472,8 @@ test('wiki exposes HoKStats build alternatives and source-attributed item, spell
   const source = { source: 'HoKStats', url: 'https://hokstats.gg/heroes/annette/', fetched_at: '2026-11-09T00:00:00Z', patch_version: '1.10', review_status: 'pending', source_hash: 'fixture' };
   const enriched = {
     ...hero,
+    abilities: [],
+    official_build: undefined,
     hokfire_guide: { full_build: [], core_items: [], situational_items: [], arcana: [], spell: 'Flash', skill_priority: '', pros: [], cons: [], gameplay_tips: '' },
     hokstats_guide: { source, skills: [{ name: 'Whirlwind', description: 'Pushes enemies back.' }], pick_when: ['Your team needs peel.'], avoid_when: [], power_spikes: [], common_mistakes: [], pros: [], cons: [], matchups: [{ relation: 'strong_against', hero_id: 126, hero_name: 'Dun', evidence: 'Stops engage.', source }], partners: [], build_variants: [{ id: 'peel', name: 'Peel build', use_case: 'Against dive', items: ['Guardian Armor'] }] },
   };
@@ -511,6 +513,79 @@ test('wiki exposes HoKStats build alternatives and source-attributed item, spell
   const counters = render(HeroWikiDrawer, { hero: enriched, onClose: noop, isFavorite: false, onToggleFavorite: noop, allHeroes: dataset.heroes, onSelectRelatedHero: noop, initialTab: 'counters' });
   assert.ok(counters.includes('Kuat melawan') && counters.includes('Dun') && counters.includes('HoKStats'));
   assert.ok(!counters.includes('Pending review') && !counters.includes('DITINJAU'));
+
+  // Test opening wiki for CN hero (no hokfire_guide or hokstats_guide)
+  const cnHero = {
+    hero_id: 525,
+    name: 'Master Luban',
+    chinese_name: '鲁班大师',
+    slug: 'master-luban',
+    title: 'Divine Craftsman',
+    primary_role: 'Support',
+    primary_lane: 'Roamer',
+    lanes: ['Roamer'],
+    win_rate: 0.52,
+    win_rate_source: 'kpl',
+    kpl_matches: 450,
+    kpl_winrate: 0.52,
+    kpl_pick_rate: 0.12,
+    kpl_ban_rate: 0.25,
+    counters: [],
+    countered_by: [],
+    counter_items: [],
+    tactical_tips: 'Bantu inisiasi dan tarik rekan tim.',
+    portrait_asset: '/assets/portraits/525.png',
+    kpl_id: 525,
+    is_global_exclusive: false,
+    is_global_released: false,
+    abilities: [
+      {
+        skill_id: 52500,
+        type: 'Passive',
+        name: 'Tech Mastery',
+        desc: 'Hits generate shields.',
+        cd: 0,
+        cost: 0,
+      },
+    ],
+    official_build: {
+      build_1: {
+        name: 'Support Tank',
+        items: ['Shadow Blade', 'Boots of Speed'],
+        tips: 'Build fokus durability.',
+      },
+      build_2: {
+        name: 'Full Roamer',
+        items: ['Boots of Tranquility', 'Glacial Buckler'],
+      },
+      arcana: [
+        {
+          id: '1504',
+          name: 'Fate',
+          color: 'red',
+          attr: 'Max HP +33.7',
+          count: 10,
+        },
+      ],
+      spell: 'Flicker',
+      core_items: ['Shadow Blade'],
+      situational_items: [],
+    },
+  };
+
+  const cnBuild = render(HeroWikiDrawer, { hero: cnHero, onClose: noop, isFavorite: false, onToggleFavorite: noop, allHeroes: dataset.heroes, onSelectRelatedHero: noop, initialTab: 'build' });
+  assert.ok(cnBuild.includes('Preset Resmi #1 (Standar)'));
+  assert.ok(cnBuild.includes('Shadow Blade'));
+  assert.ok(cnBuild.includes('Fate'));
+
+  const cnAbilities = render(HeroWikiDrawer, { hero: cnHero, onClose: noop, isFavorite: false, onToggleFavorite: noop, allHeroes: dataset.heroes, onSelectRelatedHero: noop, initialTab: 'abilities' });
+  assert.ok(cnAbilities.includes('Tech Mastery'));
+
+  const cnTactics = render(HeroWikiDrawer, { hero: cnHero, onClose: noop, isFavorite: false, onToggleFavorite: noop, allHeroes: dataset.heroes, onSelectRelatedHero: noop, initialTab: 'tactics' });
+  assert.ok(cnTactics.includes('Cara Melawan di Pertandingan'));
+
+  const cnCounters = render(HeroWikiDrawer, { hero: cnHero, onClose: noop, isFavorite: false, onToggleFavorite: noop, allHeroes: dataset.heroes, onSelectRelatedHero: noop, initialTab: 'counters' });
+  assert.ok(cnCounters.includes('Master Luban'));
 });
 
 test('focusHeroSearch hands the roster query back for re-typing and skips hidden fields', () => {
@@ -687,10 +762,9 @@ test('modern web guidance regressions: non-nested card buttons, search landmark,
   assert.ok(indexHtml.includes('<meta name="color-scheme" content="dark" />'));
 
   const visionHtml = render(VisionPanel, { heroes: dataset.heroes.slice(0, 5), synergyData: {} });
-  assert.match(visionHtml, /<fieldset class="vision-side-toggle">/);
-  assert.ok(visionHtml.includes('<legend class="sr-only">Sisi tim Anda</legend>'));
-  assert.match(visionHtml, /<input[^>]*type="radio"/);
-  assert.ok(!visionHtml.includes('role="radiogroup"'));
+  assert.match(visionHtml, /class="vision-side-indicator"/);
+  assert.ok(visionHtml.includes('Sisi:'));
+  assert.ok(visionHtml.includes('(Otomatis)'));
 
   const pickerHtml = render(VisionHeroPickerModal, { isOpen: true, onClose: noop, heroes: [hero], onSelect: noop });
   assert.match(pickerHtml, /<dialog[^>]*closedby="any"/);
