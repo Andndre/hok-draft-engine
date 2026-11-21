@@ -160,7 +160,7 @@ export function PracticeDraft(props: Props) {
       controller.signal,
     ).then((decision) => {
       if (controller.signal.aborted) return;
-      if (decision.heroId === null) {
+      if (decision.heroId === null || decision.engineKind === 'deterministic') {
         setAdvisorStatus({ state: 'fallback' });
         return;
       }

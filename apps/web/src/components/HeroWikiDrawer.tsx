@@ -1055,8 +1055,8 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                             }`}
                           >
                             <AssetThumbnail
-                              src={ab.icon || abilityIconSrc}
-                              fallbackSrc={abilityIconSrc}
+                              src={abilityIconSrc}
+                              fallbackSrc={ab.icon || abilityIconSrc}
                               name={ab.name}
                               kind="item"
                               className="w-full h-full object-cover asset-thumbnail--fill"

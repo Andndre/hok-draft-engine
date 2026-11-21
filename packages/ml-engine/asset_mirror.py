@@ -146,6 +146,47 @@ def mirror_hero_portraits(client: httpx.Client, heroes_dir: Path = PUBLIC_ASSETS
     return downloaded
 
 
+def mirror_abilities(client: httpx.Client, abilities_dir: Path = PUBLIC_ASSETS / "abilities") -> int:
+    """Download missing hero ability / skill icons into PNG format."""
+    abilities_dir.mkdir(parents=True, exist_ok=True)
+    master_heroes = _load_json(MAPPINGS / "master_heroes_global.json", [])
+    cn_heroes = _load_json(MAPPINGS / "cn_heroes.json", [])
+    downloaded = 0
+
+    all_heroes = list(master_heroes)
+    master_ids = {h.get("hero_id") for h in master_heroes}
+    for ch in cn_heroes:
+        if ch.get("hero_id") not in master_ids:
+            all_heroes.append(ch)
+
+    for hero in all_heroes:
+        hero_id = hero.get("hero_id")
+        if not hero_id:
+            continue
+        abilities = hero.get("abilities") or []
+        for idx, ab in enumerate(abilities):
+            target_png = abilities_dir / f"{hero_id}-{idx}.png"
+            if target_png.exists():
+                continue
+
+            icon_url = ab.get("icon")
+            if not icon_url:
+                continue
+
+            try:
+                resp = client.get(icon_url, timeout=10.0)
+                if resp.status_code == 200:
+                    img = Image.open(io.BytesIO(resp.content))
+                    img.save(target_png, format="PNG")
+                    downloaded += 1
+                    logger.info(f"Downloaded ability icon: {hero_id}-{idx}.png ({hero.get('name')} - {ab.get('name')})")
+            except Exception as e:
+                logger.warning(f"Failed to download ability icon {hero_id}-{idx} from {icon_url}: {e}")
+
+    logger.info(f"Abilities mirror complete: {downloaded} new icons downloaded.")
+    return downloaded
+
+
 def sync():
     """Main asset mirror runner."""
     with httpx.Client(headers={"User-Agent": USER_AGENT}, timeout=15.0, follow_redirects=True) as client:
@@ -153,6 +194,7 @@ def sync():
         mirror_spells(client)
         mirror_arcana(client)
         mirror_hero_portraits(client)
+        mirror_abilities(client)
     logger.info("Asset mirror synchronization finished.")
 
 
