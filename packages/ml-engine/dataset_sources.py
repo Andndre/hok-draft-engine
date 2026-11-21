@@ -154,6 +154,8 @@ def apply_skill_overrides(heroes, overrides_payload):
                 hero["skill_stances_meta"] = list(override["stances"])
             if override.get("recast_skills"):
                 hero["recast_skills_meta"] = list(override["recast_skills"])
+            if override.get("variant_assets"):
+                hero["variant_assets"] = list(override["variant_assets"])
 
             skill_map = override.get("skill_overrides") or {}
             guide = hero.get("hokstats_guide")

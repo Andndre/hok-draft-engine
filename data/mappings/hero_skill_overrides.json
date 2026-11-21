@@ -1,6 +1,12 @@
 {
   "_comment": "Curated skill mechanics and stance descriptions that persist across automated scraper syncs.",
   "heroes": {
+    "119": {
+      "hero_name": "Dr Bian",
+      "variant_assets": [
+        "/assets/heroes/119_v1.webp"
+      ]
+    },
     "163": {
       "hero_name": "Ukyo Tachibana",
       "recast_skills": [
@@ -133,6 +139,12 @@
           "stance_id": "puppet"
         }
       }
+    },
+    "646": {
+      "hero_name": "Butterfly",
+      "variant_assets": [
+        "/assets/heroes/646_v1.webp"
+      ]
     }
   }
 }
