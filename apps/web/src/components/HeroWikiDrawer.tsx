@@ -359,7 +359,7 @@ const MatchupPanel: React.FC<MatchupPanelProps> = ({ hero, allHeroes, onSelectRe
               <div className={`flex items-center gap-2 ${group.tone}`}>
                 {group.icon}
                 <h4 className="text-xs font-bold uppercase tracking-wide">{group.title}</h4>
-                <span className="rounded-full bg-[#1A202C] px-2 py-0.5 text-[11px] font-mono text-slate-400">{group.rows.size}</span>
+                <span className="rounded-full bg-[#1A202C] px-2 py-0.5 text-xs font-mono text-slate-400">{group.rows.size}</span>
               </div>
               <span className="hidden text-xs text-slate-500 sm:block">{group.hint}</span>
             </div>
@@ -380,11 +380,11 @@ const MatchupPanel: React.FC<MatchupPanelProps> = ({ hero, allHeroes, onSelectRe
                         {entry.evidence.filter((item) => item.metric).map((item, index) => <span key={`${item.source}-metric-${index}`} className={`shrink-0 rounded-md px-2 py-1 text-xs font-mono font-bold tabular-nums ${group.title === 'Lemah melawan' ? 'bg-rose-950/40 text-rose-300' : group.title === 'Kuat melawan' ? 'bg-emerald-950/40 text-emerald-300' : 'bg-indigo-950/40 text-indigo-300'}`}>{item.metric}</span>)}
                       </div>
                       <div className="flex flex-wrap gap-1">
-                        {entry.hasSourceConflict && <span className="rounded border border-amber-800/50 bg-amber-950/30 px-1.5 py-0.5 text-[10px] font-medium text-amber-300">Sumber berbeda</span>}
+                        {entry.hasSourceConflict && <span className="rounded border border-amber-800/50 bg-amber-950/30 px-2 py-0.5 text-xs font-medium text-amber-300">Sumber berbeda</span>}
                         {uniqueSources.map((item) => item.url ? (
-                          <a key={`${item.source}-${item.url}`} href={item.url} target="_blank" rel="noreferrer" className="rounded border border-[#30394A] bg-[#171F2B] px-1.5 py-0.5 text-[10px] font-medium text-slate-400 hover:text-slate-200">{item.source}</a>
+                          <a key={`${item.source}-${item.url}`} href={item.url} target="_blank" rel="noreferrer" className="rounded border border-[#30394A] bg-[#171F2B] px-2 py-0.5 text-xs font-medium text-slate-400 hover:text-slate-200">{item.source}</a>
                         ) : (
-                          <span key={item.source} className="rounded border border-[#30394A] bg-[#171F2B] px-1.5 py-0.5 text-[10px] font-medium text-slate-400">{item.source}</span>
+                          <span key={item.source} className="rounded border border-[#30394A] bg-[#171F2B] px-2 py-0.5 text-xs font-medium text-slate-400">{item.source}</span>
                         ))}
                       </div>
                       {entry.evidence.filter((item) => item.detail || item.meta).map((item, index) => (
@@ -410,7 +410,7 @@ const MatchupPanel: React.FC<MatchupPanelProps> = ({ hero, allHeroes, onSelectRe
                             <span className="font-mono">{formatDelta(entry.measured.delta)} pp · n={entry.measured.n}</span>
                           </span>
                           {hasOpposingWeightedDelta(entry.measured.delta, entry.measured.weighted_delta) && (
-                            <span className="text-[11px] text-slate-500">
+                            <span className="text-xs text-slate-400">
                               12 bulan terakhir: {formatDelta(entry.measured.weighted_delta!)} pp (berlawanan)
                             </span>
                           )}
@@ -433,18 +433,18 @@ const MatchupPanel: React.FC<MatchupPanelProps> = ({ hero, allHeroes, onSelectRe
             <div className="flex items-center gap-2 text-slate-300">
               <Info className="h-4 w-4" aria-hidden="true" />
               <h4 className="text-xs font-bold uppercase tracking-wide">Terukur di KPL</h4>
-              <span className="rounded-full bg-[#1A202C] px-2 py-0.5 text-[11px] font-mono text-slate-400">{measuredOnly.size}</span>
+              <span className="rounded-full bg-[#1A202C] px-2 py-0.5 text-xs font-mono text-slate-400">{measuredOnly.size}</span>
             </div>
             <details className="text-xs text-slate-400">
               <summary className="cursor-pointer list-none hover:text-slate-200">Apa artinya?</summary>
-              <div className="mt-2 rounded-lg border border-[#30394A] bg-[#0F151F] p-2.5 space-y-1 text-[11px] leading-relaxed">
+              <div className="mt-2 rounded-lg border border-[#30394A] bg-[#0F151F] p-3 space-y-1.5 text-xs leading-relaxed">
                 <p><strong className="text-slate-200">pp</strong> = percentage point: selisih win rate hero ini saat lawan itu ada di tim lawan, dibanding saat lawan itu tidak ada.</p>
                 <p><strong className="text-slate-200">n</strong> = jumlah game berpasangan yang jadi bukti (minimal 30).</p>
                 <p>Bukti diberi bobot recency 12 bulan: data baru lebih berpengaruh dari data lama.</p>
               </div>
             </details>
           </div>
-          <p className="text-[11px] leading-relaxed text-slate-500">
+          <p className="text-xs leading-relaxed text-slate-400">
             Dihitung dari {hero.measured_meta?.measured_games?.toLocaleString('id-ID') ?? '9.817'} game pro tempat hero ini dipilih — bukan relasi kurasi; mesin tidak memakai ini sebagai counter.
           </p>
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -465,13 +465,13 @@ const MatchupPanel: React.FC<MatchupPanelProps> = ({ hero, allHeroes, onSelectRe
                       </span>
                     </div>
                     <div className="flex flex-wrap gap-1">
-                      <span className="rounded border border-[#30394A] bg-[#171F2B] px-1.5 py-0.5 text-[10px] font-medium text-slate-400">KPL</span>
+                      <span className="rounded border border-[#30394A] bg-[#171F2B] px-2 py-0.5 text-xs font-medium text-slate-400">KPL</span>
                     </div>
                     <p className="text-xs leading-relaxed text-slate-400">
                       n={entry.n}{entry.n_eff ? ` · n efektif=${formatIdNumber(entry.n_eff, 1)}` : ''}
                     </p>
                     {hasOpposingWeightedDelta(entry.delta, entry.weighted_delta) && (
-                      <p className="text-[11px] text-slate-500">
+                      <p className="text-xs text-slate-400">
                         12 bulan terakhir: {formatDelta(entry.weighted_delta!)} pp (berlawanan)
                       </p>
                     )}
@@ -586,7 +586,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                 className="wiki-tier-ribbon absolute top-0 left-0 w-6 h-6 bg-[#EF4444] flex items-start justify-start p-0.5"
               >
                 <span
-                  className="text-xs font-black text-black"
+                  className="text-xs font-bold text-black font-mono"
                   title="Popularitas di HoK Camp (seberapa sering dipilih/dibanned) — bukan tier kekuatan"
                 >
                   {hero.popularity_band ?? '—'}
@@ -596,7 +596,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
 
             <div className="flex-1 min-w-0 pr-8">
               <div className="flex items-center gap-2">
-                <h2 id={titleId} className="text-lg font-extrabold text-white truncate">{hero.name}</h2>
+                <h2 id={titleId} className="text-xl font-bold text-white truncate">{hero.name}</h2>
                 <span className="text-xs font-mono text-slate-400">({hero.chinese_name})</span>
               </div>
               <p className="text-xs text-slate-400 truncate mt-0.5">{hero.title}</p>
@@ -750,7 +750,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                 <>
                   <div className="p-3 bg-[#12161F] border border-[#232A38] rounded-xl space-y-2.5">
                     <div className="flex items-center justify-between gap-2">
-                      <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                      <h3 className="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
                         <Sparkles className="w-3.5 h-3.5 text-[#F5C451]" aria-hidden="true" />
                         <span>Rekomendasi Item ({activeBuildLabel})</span>
                       </h3>
@@ -794,7 +794,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                               {meta ? (
                                 <AssetThumbnail src={meta.icon} name={item} kind="item" className="w-full h-full object-cover asset-thumbnail--fill" />
                               ) : (
-                                <span className="text-xs font-black text-slate-500">
+                                <span className="text-xs font-bold text-slate-500">
                                   {item.slice(0, 2).toUpperCase()}
                                 </span>
                               )}
@@ -827,7 +827,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                   {/* Situational Item Swaps */}
                   {((hero.official_build?.situational_items && hero.official_build.situational_items.length > 0) || (hGuide && (hGuide.situational_items?.length ?? 0) > 0)) && (
                     <div className="p-3 bg-[#12161F] border border-[#232A38] rounded-xl space-y-2">
-                      <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                      <h3 className="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
                         <Shield className="w-3.5 h-3.5 text-[#B8FF01]" aria-hidden="true" />
                         <span>Item Situasional (Swap Khusus)</span>
                       </h3>
@@ -872,7 +872,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                   {/* Arcana Setup */}
                   {activeArcana.length > 0 && (
                     <div className="p-3 bg-[#12161F] border border-[#232A38] rounded-xl space-y-2">
-                      <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center justify-between">
+                      <h3 className="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center justify-between">
                         <span>Susunan Arcana Resmi Level 5</span>
                         <span className="text-xs text-slate-500 font-mono">30 Sockets</span>
                       </h3>
@@ -906,18 +906,18 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                                 {iconSrc ? (
                                   <AssetThumbnail src={iconSrc} name={arc.name} kind="item" className="w-full h-full object-cover asset-thumbnail--fill" />
                                 ) : (
-                                  <span className="text-xs font-black">{arc.name.slice(0, 2)}</span>
+                                  <span className="text-xs font-bold text-slate-400">{arc.name.slice(0, 2)}</span>
                                 )}
                               </div>
                               <div className="min-w-0 flex-1">
                                 <span className="text-xs font-bold text-slate-200 block truncate leading-tight">
                                   {arc.name}
                                 </span>
-                                <span className="text-[11px] font-mono text-slate-400 block truncate">
+                                <span className="text-xs font-mono text-slate-400 block truncate mt-0.5">
                                   {attrText ? attrText.slice(0, 30) : `Arcana Tipe ${arc.color || 'L5'}`}
                                 </span>
                               </div>
-                              <span className="text-xs font-mono font-black text-[#B8FF01] flex-shrink-0">
+                              <span className="text-xs font-mono font-bold text-[#B8FF01] flex-shrink-0">
                                 x{arc.count}
                               </span>
                             </div>
@@ -956,8 +956,8 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {/* Pros */}
                   <div className="p-3 bg-[#101F18] border border-emerald-900/50 rounded-xl space-y-2">
-                    <span className="text-xs font-black uppercase text-emerald-400 flex items-center gap-1">
-                      <CheckCircle2 className="w-3 h-3" aria-hidden="true" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3.5 h-3.5" aria-hidden="true" />
                       <span>Kelebihan (Pros)</span>
                     </span>
                     <ul className="space-y-1">
@@ -972,8 +972,8 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
 
                   {/* Cons */}
                   <div className="p-3 bg-[#241216] border border-rose-900/50 rounded-xl space-y-2">
-                    <span className="text-xs font-black uppercase text-rose-400 flex items-center gap-1">
-                      <AlertCircle className="w-3 h-3" aria-hidden="true" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-rose-400 flex items-center gap-1.5">
+                      <AlertCircle className="w-3.5 h-3.5" aria-hidden="true" />
                       <span>Kelemahan (Cons)</span>
                     </span>
                     <ul className="space-y-1">
@@ -989,7 +989,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
               )}
 
               {(!hGuide || ((hGuide.pros?.length ?? 0) === 0 && (hGuide.cons?.length ?? 0) === 0)) && hero.hokstats_guide && ((hero.hokstats_guide.pros?.length ?? 0) > 0 || (hero.hokstats_guide.cons?.length ?? 0) > 0) && <div className="rounded-xl border border-[#263142] bg-[#121824] p-3 space-y-2">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-200">Panduan HoKStats</h3>
+                <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200">Panduan HoKStats</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {hero.hokstats_guide.pros.length > 0 && <div><span className="text-xs font-bold text-emerald-300">Kelebihan</span><ul className="mt-1 space-y-1">{hero.hokstats_guide.pros.map((item, index) => <li key={index} className="text-xs text-slate-200">• {item}</li>)}</ul></div>}
                   {hero.hokstats_guide.cons.length > 0 && <div><span className="text-xs font-bold text-rose-300">Kelemahan</span><ul className="mt-1 space-y-1">{hero.hokstats_guide.cons.map((item, index) => <li key={index} className="text-xs text-slate-200">• {item}</li>)}</ul></div>}
@@ -1001,13 +1001,13 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
               {factualSkillGroups.length > 0 && (
                 <div className="p-3 bg-[#12161F] border border-[#232A38] rounded-xl space-y-2.5">
                   <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider">Mekanik Skill Terverifikasi</h3>
-                    <span className="text-[11px] text-slate-500">Faktual dari skill</span>
+                    <h3 className="text-sm font-bold text-slate-200 uppercase tracking-wider">Mekanik Skill Terverifikasi</h3>
+                    <span className="text-xs text-slate-400">Faktual dari skill</span>
                   </div>
                   <div className="space-y-2">
                     {factualSkillGroups.map((group) => (
                       <div key={group.category} className="flex flex-wrap items-center gap-1.5">
-                        <span className="text-[11px] font-semibold text-slate-400 mr-1">{group.category}:</span>
+                        <span className="text-xs font-semibold text-slate-400 mr-1">{group.category}:</span>
                         {group.matched.map(([tag, label, desc]) => (
                           <TagToggletip
                             key={tag}
@@ -1024,7 +1024,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
 
               {/* Ability Descriptions */}
               <div className="space-y-2.5">
-                <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center justify-between">
+                <h3 className="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center justify-between">
                   <span>Kemampuan & Skill Hero ({abilities.length})</span>
                   <span className="text-xs text-slate-500 font-mono">HOK Official Abilities</span>
                 </h3>
@@ -1065,7 +1065,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
 
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between gap-2">
-                              <span className="font-extrabold text-sm text-white truncate">{ab.name}</span>
+                              <span className="font-bold text-sm text-white truncate">{ab.name}</span>
                               <span
                                 className={`text-xs font-mono px-2 py-0.5 rounded font-bold uppercase ${
                                   (ab.type || '').toLowerCase().includes('ultimate')
@@ -1079,7 +1079,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                               </span>
                             </div>
                             <div className="flex flex-wrap items-center gap-2 mt-1">
-                              <span className="text-xs font-mono text-slate-500">
+                              <span className="text-xs font-mono text-slate-400">
                                 {idx === 0
                                   ? 'Skill Pasif'
                                   : idx === 3
@@ -1087,19 +1087,19 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                                   : `Skill Aktif #${idx}`}
                               </span>
                               {ab.cd !== undefined && ab.cd > 0 && (
-                                <span className="text-[10px] font-mono font-medium text-cyan-300 bg-cyan-950/50 px-1.5 py-0.5 rounded border border-cyan-800/40">
+                                <span className="text-xs font-mono font-medium text-cyan-300 bg-cyan-950/50 px-2 py-0.5 rounded border border-cyan-800/40">
                                   CD: {ab.cd >= 1000 ? `${(ab.cd / 1000).toFixed(ab.cd % 1000 === 0 ? 0 : 1)}s` : `${ab.cd}s`}
                                 </span>
                               )}
                               {ab.cost !== undefined && ab.cost > 0 && (
-                                <span className="text-[10px] font-mono font-medium text-blue-300 bg-blue-950/50 px-1.5 py-0.5 rounded border border-blue-800/40">
+                                <span className="text-xs font-mono font-medium text-blue-300 bg-blue-950/50 px-2 py-0.5 rounded border border-blue-800/40">
                                   Cost: {ab.cost}
                                 </span>
                               )}
                               {ab.tags && ab.tags.map((tag) => (
                                 <span
                                   key={tag}
-                                  className="text-[10px] font-medium text-amber-300 bg-amber-950/40 px-1.5 py-0.5 rounded border border-amber-800/40"
+                                  className="text-xs font-medium text-amber-300 bg-amber-950/40 px-2 py-0.5 rounded border border-amber-800/40"
                                 >
                                   {tag}
                                 </span>
@@ -1118,17 +1118,17 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
               </div>
               {abilities.length === 0 && hero.hokstats_guide && hero.hokstats_guide.skills.length > 0 && (
                 <div className="space-y-2.5">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300">Detail skill HoKStats</h3>
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200">Detail skill HoKStats</h3>
                   {hero.hokstats_guide.skills.map((skill, index) => (
                     <div key={`${skill.name}-${index}`} className="rounded-xl border border-[#232A38] bg-[#12161F] p-3 space-y-1">
                       <div className="flex items-center gap-2">
                         <h4 className="text-sm font-bold text-white">{skill.name || `Skill ${index + 1}`}</h4>
-                        {skill.type && <span className="rounded border border-slate-700 px-1.5 py-0.5 text-[10px] uppercase text-slate-400">{skill.type}</span>}
+                        {skill.type && <span className="rounded border border-slate-700 px-2 py-0.5 text-xs font-mono uppercase text-slate-400">{skill.type}</span>}
                       </div>
                       <p className="text-xs leading-relaxed text-slate-300"><ColoredText text={skill.description} /></p>
                     </div>
                   ))}
-                  <a className="text-xs text-slate-500 underline" href={hero.hokstats_guide.source.url} target="_blank" rel="noreferrer">Sumber HoKStats</a>
+                  <a className="text-xs text-slate-400 underline" href={hero.hokstats_guide.source.url} target="_blank" rel="noreferrer">Sumber HoKStats</a>
                 </div>
               )}
             </div>
@@ -1141,15 +1141,15 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
               {(tacticalRoleMatches.length > 0 || tacticalVulnerabilityMatches.length > 0) && (
                 <div className="rounded-xl border border-[#232A38] bg-[#12161F] p-3.5 space-y-3">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                    <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200">
                       Karakteristik & Peran Taktis
                     </h3>
-                    <span className="text-[10px] text-slate-500">Audit Taktis Terverifikasi</span>
+                    <span className="text-xs text-slate-400">Audit Taktis Terverifikasi</span>
                   </div>
 
                   {tacticalRoleMatches.length > 0 && (
                     <div className="space-y-1.5">
-                      <span className="text-[11px] font-semibold text-indigo-300">Peran Komposisi Tim:</span>
+                      <span className="text-xs font-semibold text-indigo-300">Peran Komposisi Tim:</span>
                       <div className="flex flex-wrap gap-1.5">
                         {tacticalRoleMatches.map(([tag, label, tooltip]) => (
                           <TagToggletip
@@ -1165,7 +1165,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
 
                   {tacticalVulnerabilityMatches.length > 0 && (
                     <div className="space-y-1.5">
-                      <span className="text-[11px] font-semibold text-rose-300">Peringatan Kelemahan (Trade-off):</span>
+                      <span className="text-xs font-semibold text-rose-300">Peringatan Kelemahan (Trade-off):</span>
                       <div className="flex flex-wrap gap-1.5">
                         {tacticalVulnerabilityMatches.map(([tag, label, tooltip]) => (
                           <TagToggletip
@@ -1184,7 +1184,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
               {/* HOKFIRE Gameplay Breakdown */}
               {hGuide && hGuide.gameplay_tips ? (
                 <div className="p-3.5 bg-[#12161F] border border-[#232A38] rounded-xl space-y-2">
-                  <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                  <h3 className="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
                     <BookOpen className="w-3.5 h-3.5 text-[#B8FF01]" aria-hidden="true" />
                     <span>Panduan Bermain Resmi HOKFIRE</span>
                   </h3>
@@ -1196,7 +1196,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
 
               {/* Cara Melawan / Menghadapi dari Kurohiko */}
               <div>
-                <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+                <h3 className="text-sm font-bold text-slate-200 uppercase tracking-wider mb-2">
                   Cara Melawan di Pertandingan
                 </h3>
                 <div className="p-3 rounded-xl bg-[#12161F] border border-[#232A38] text-xs text-slate-200 leading-relaxed">
@@ -1208,7 +1208,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
               {/* Item Counter */}
               {hero.counter_items && hero.counter_items.length > 0 && (
                 <div>
-                  <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+                  <h3 className="text-sm font-bold text-slate-200 uppercase tracking-wider mb-2">
                     Item Counter yang Direkomendasikan
                   </h3>
                   <div className="space-y-2">
@@ -1217,9 +1217,9 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                         key={idx}
                         className="p-3 rounded-xl bg-[#12161F] border border-[#232A38] space-y-1"
                       >
-                        <h4 className="font-bold text-xs text-[#F5C451]">{item.name}</h4>
+                        <h4 className="font-bold text-sm text-[#F5C451]">{item.name}</h4>
                         {item.description && (
-                          <p className="text-xs text-slate-400">{item.description}</p>
+                          <p className="text-xs text-slate-300 leading-relaxed">{item.description}</p>
                         )}
                       </div>
                     ))}

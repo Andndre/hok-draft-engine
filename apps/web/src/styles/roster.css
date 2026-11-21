@@ -24,10 +24,10 @@
 .search-field button svg { width: 16px; height: 16px; }
 .search-field kbd { display: none; padding: 1px 6px; border: 1px solid var(--color-border-input); border-radius: var(--radius-xs); color: var(--color-text-muted); font-size: 0.75rem; }
 .lane-filter { display: flex; gap: 6px; overflow-x: auto; padding: 2px 0 5px; scrollbar-width: thin; }
-.lane-filter button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 12px; min-height: 42px; color: var(--color-text-secondary); background: var(--color-surface-card); border: 1px solid var(--color-border-card); border-radius: var(--radius-sm); font-size: 0.8125rem; font-weight: 600; flex-shrink: 0; }
+.lane-filter button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 12px; min-height: 42px; color: var(--color-text-secondary); background: var(--color-surface-card); border: 1px solid var(--color-border-card); border-radius: var(--radius-sm); font-size: 0.875rem; font-weight: 600; flex-shrink: 0; }
 .lane-filter button[aria-pressed="true"] { background: var(--color-accent-lime-muted); border-color: var(--color-border-hover); color: var(--color-focus-ring); }
 .lane-filter svg { width: 16px; height: 16px; }
-.filter-reset { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; color: var(--color-text-secondary); font-size: 0.8125rem; margin-top: 4px; }
+.filter-reset { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; color: var(--color-text-secondary); font-size: 0.875rem; margin-top: 4px; }
 .filter-reset svg { width: 16px; height: 16px; }
 
 /* Hero Grid */
@@ -65,15 +65,15 @@
 .hero-card__cover .hero-card__ai-group { position: absolute; top: 8px; right: 8px; z-index: 5; }
 .hero-grid > .hero-card:nth-child(n + 13) { content-visibility: auto; contain-intrinsic-size: auto 92px; }
 .hero-grid--detailed > .hero-card:nth-child(n + 13) { contain-intrinsic-size: auto 260px; }
-.hero-card__cover-hint { display: flex; align-items: center; gap: 5px; position: absolute; left: 8px; bottom: 8px; padding: 4px 6px; font-size: 0.6875rem; background: #0b121de8; border-radius: var(--radius-xs); color: var(--color-text-primary); }
+.hero-card__cover-hint { display: flex; align-items: center; gap: 5px; position: absolute; left: 8px; bottom: 8px; padding: 4px 6px; font-size: 0.75rem; background: #0b121de8; border-radius: var(--radius-xs); color: var(--color-text-primary); }
 .hero-card__cover-hint svg { width: 13px; height: 13px; }
 .hero-card__body { padding: 12px; }
 .hero-card__body h3 { font-size: 0.875rem; font-weight: 700; overflow-wrap: anywhere; color: var(--color-text-primary); }
 .hero-card__body > .hero-role-icons { margin-top: 4px; }
 .hero-card__body dl { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 10px 0; font-size: 0.75rem; }
-.hero-card__body dt { color: var(--color-text-muted); font-size: 0.6875rem; }
+.hero-card__body dt { color: var(--color-text-muted); font-size: 0.75rem; }
 .hero-card__body dd { font-variant-numeric: tabular-nums; color: var(--color-text-secondary); margin-top: 2px; }
-.hero-card__body > .ui-button { width: 100%; font-size: 0.8125rem; }
+.hero-card__body > .ui-button { width: 100%; font-size: 0.875rem; }
 
 /* Responsive Roster Rules */
 @media (min-width: 640px) {
