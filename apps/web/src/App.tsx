@@ -556,7 +556,7 @@ export const App: React.FC = () => {
       .then((decision) => {
         // Stale guard ganda: signal (reset/undo/mode/unmount) dan tag sesi+revisi.
         if (controller.signal.aborted) return;
-        if (decision.heroId === null) {
+        if (decision.heroId === null || decision.engineKind === 'deterministic') {
           setAdvisorStatus({ state: 'fallback' });
           return;
         }

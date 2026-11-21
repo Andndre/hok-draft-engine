@@ -12,7 +12,7 @@ header('Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
 header(
     "Content-Security-Policy: default-src 'self'; script-src 'self'; worker-src 'self'; "
     . "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
-    . "font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://hok.kurohiko.id; "
+    . "font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://hok.kurohiko.id https://game.gtimg.cn https://camp.honorofkings.com; "
     . "connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
 );
 
