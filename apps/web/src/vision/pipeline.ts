@@ -509,8 +509,14 @@ export class VisionPipeline {
     this.options.side = side;
     this.pickActions = [];
     this.preSelections.clear();
-    this.banEstimates.clear();
     this.lastPickActionSlot = null;
+    if (this.currentProfile) {
+      const regions = resolveSlotSides(this.currentProfile, side);
+      for (const [slotIndex, ban] of this.banEstimates.entries()) {
+        const region = regions.find(r => r.index === slotIndex);
+        if (region) ban.side = region.side;
+      }
+    }
     this.rebuildObserver();
     if (this.currentProfile) this.publishManualObservation();
   }

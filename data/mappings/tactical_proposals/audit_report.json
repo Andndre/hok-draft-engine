@@ -10,8 +10,8 @@
   },
   "tag_distribution": {
     "mobility": {
-      "ya": 72,
-      "tidak": 48,
+      "ya": 71,
+      "tidak": 49,
       "tidak_diketahui": 0
     },
     "dash": {
@@ -20,13 +20,13 @@
       "tidak_diketahui": 0
     },
     "blink": {
-      "ya": 5,
-      "tidak": 115,
+      "ya": 3,
+      "tidak": 117,
       "tidak_diketahui": 0
     },
     "leap": {
-      "ya": 21,
-      "tidak": 99,
+      "ya": 19,
+      "tidak": 101,
       "tidak_diketahui": 0
     },
     "teleport": {
@@ -40,23 +40,23 @@
       "tidak_diketahui": 0
     },
     "cc_knockup": {
-      "ya": 40,
-      "tidak": 80,
+      "ya": 37,
+      "tidak": 83,
       "tidak_diketahui": 0
     },
     "cc_knockback": {
-      "ya": 31,
-      "tidak": 89,
+      "ya": 33,
+      "tidak": 87,
       "tidak_diketahui": 0
     },
     "cc_pull": {
-      "ya": 11,
-      "tidak": 109,
+      "ya": 7,
+      "tidak": 113,
       "tidak_diketahui": 0
     },
     "cc_stun": {
-      "ya": 36,
-      "tidak": 84,
+      "ya": 34,
+      "tidak": 86,
       "tidak_diketahui": 0
     },
     "cc_root": {
@@ -75,13 +75,13 @@
       "tidak_diketahui": 0
     },
     "cc_slow": {
-      "ya": 82,
-      "tidak": 38,
+      "ya": 81,
+      "tidak": 39,
       "tidak_diketahui": 0
     },
     "engage": {
-      "ya": 52,
-      "tidak": 68,
+      "ya": 49,
+      "tidak": 71,
       "tidak_diketahui": 0
     },
     "disengage": {
@@ -95,23 +95,23 @@
       "tidak_diketahui": 0
     },
     "peel": {
-      "ya": 38,
-      "tidak": 82,
+      "ya": 39,
+      "tidak": 81,
       "tidak_diketahui": 0
     },
     "ally_shield": {
-      "ya": 9,
-      "tidak": 111,
+      "ya": 10,
+      "tidak": 110,
       "tidak_diketahui": 0
     },
     "ally_heal": {
-      "ya": 9,
-      "tidak": 111,
+      "ya": 10,
+      "tidak": 110,
       "tidak_diketahui": 0
     },
     "ally_move_speed_buff": {
-      "ya": 9,
-      "tidak": 111,
+      "ya": 6,
+      "tidak": 114,
       "tidak_diketahui": 0
     },
     "ally_attack_speed_buff": {
@@ -120,8 +120,8 @@
       "tidak_diketahui": 0
     },
     "ally_damage_buff": {
-      "ya": 2,
-      "tidak": 118,
+      "ya": 1,
+      "tidak": 119,
       "tidak_diketahui": 0
     },
     "ally_cleanse": {
@@ -160,7 +160,7 @@
     {
       "hero_id": 105,
       "hero_name": "Lian Po",
-      "file": "105-4285759a8db5.json",
+      "file": "105-5c4eb02a45f8.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -178,7 +178,7 @@
     {
       "hero_id": 106,
       "hero_name": "Xiao Qiao",
-      "file": "106-123ab639aa93.json",
+      "file": "106-bce55126465c.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -189,7 +189,7 @@
     {
       "hero_id": 107,
       "hero_name": "Zilong",
-      "file": "107-72ebc82ed4fd.json",
+      "file": "107-677b16eb4cee.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -202,7 +202,7 @@
     {
       "hero_id": 108,
       "hero_name": "Mozi",
-      "file": "108-2c6fc3248e97.json",
+      "file": "108-38e76cf94463.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
@@ -218,7 +218,7 @@
     {
       "hero_id": 109,
       "hero_name": "Daji",
-      "file": "109-35ff884af29b.json",
+      "file": "109-c965eb83ea09.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_stun",
@@ -229,7 +229,7 @@
     {
       "hero_id": 110,
       "hero_name": "Garuda",
-      "file": "110-12dcdd011b7c.json",
+      "file": "110-8c8870d58849.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow"
@@ -238,7 +238,7 @@
     {
       "hero_id": 111,
       "hero_name": "Lady Sun",
-      "file": "111-7fa4e58363cf.json",
+      "file": "111-253b54c0507c.json",
       "review_status": "approved",
       "positive_tags": [
         "dash",
@@ -248,7 +248,7 @@
     {
       "hero_id": 112,
       "hero_name": "Luban No.7",
-      "file": "112-1a36ccb21b44.json",
+      "file": "112-88e7c6bab959.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
@@ -260,7 +260,7 @@
     {
       "hero_id": 113,
       "hero_name": "Zhuangzi",
-      "file": "113-41a16e418c23.json",
+      "file": "113-172a258522cd.json",
       "review_status": "approved",
       "positive_tags": [
         "ally_cc_immunity",
@@ -276,10 +276,9 @@
     {
       "hero_id": 114,
       "hero_name": "Liu Shan",
-      "file": "114-0f18244038bb.json",
+      "file": "114-2b4fb5eb4065.json",
       "review_status": "approved",
       "positive_tags": [
-        "cc_knockup",
         "cc_slow",
         "cc_stun",
         "engage",
@@ -291,7 +290,7 @@
     {
       "hero_id": 115,
       "hero_name": "Gao",
-      "file": "115-8850b1873df7.json",
+      "file": "115-982af07d9d20.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -303,7 +302,7 @@
     {
       "hero_id": 116,
       "hero_name": "Arke",
-      "file": "116-28f0a03f244c.json",
+      "file": "116-69763e7ce279.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -314,7 +313,7 @@
     {
       "hero_id": 117,
       "hero_name": "Wuyan",
-      "file": "117-9fdb2d55a4ca.json",
+      "file": "117-9a987014c2eb.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -329,7 +328,7 @@
     {
       "hero_id": 118,
       "hero_name": "Sun Bin",
-      "file": "118-38be29903faa.json",
+      "file": "118-a575f95b07b4.json",
       "review_status": "approved",
       "positive_tags": [
         "ally_heal",
@@ -345,7 +344,7 @@
     {
       "hero_id": 119,
       "hero_name": "Dr Bian",
-      "file": "119-c8284ad8f71b.json",
+      "file": "119-be216de3982d.json",
       "review_status": "approved",
       "positive_tags": [
         "ally_heal",
@@ -357,10 +356,9 @@
     {
       "hero_id": 120,
       "hero_name": "Bai Qi",
-      "file": "120-07a1ef6d7f28.json",
+      "file": "120-2af98db30a8e.json",
       "review_status": "approved",
       "positive_tags": [
-        "cc_pull",
         "cc_slow",
         "cc_taunt",
         "engage",
@@ -375,7 +373,7 @@
     {
       "hero_id": 121,
       "hero_name": "Mi Yue",
-      "file": "121-d62d16e3a94c.json",
+      "file": "121-676fc5a5226e.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow"
@@ -384,7 +382,7 @@
     {
       "hero_id": 123,
       "hero_name": "Lu Bu",
-      "file": "123-eca8c8239db7.json",
+      "file": "123-270eb45bbd6c.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -397,7 +395,7 @@
     {
       "hero_id": 124,
       "hero_name": "Zhou Yu",
-      "file": "124-f29463515111.json",
+      "file": "124-a45762540dd1.json",
       "review_status": "approved",
       "positive_tags": [
         "ally_move_speed_buff",
@@ -411,7 +409,7 @@
     {
       "hero_id": 125,
       "hero_name": "Yango",
-      "file": "125-cbbd3dd2b826.json",
+      "file": "125-717dd8c125c7.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -424,7 +422,7 @@
     {
       "hero_id": 126,
       "hero_name": "Dun",
-      "file": "126-f0b69612f170.json",
+      "file": "126-2622d4569d1e.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -439,7 +437,7 @@
     {
       "hero_id": 127,
       "hero_name": "Lady Zhen",
-      "file": "127-95f8de6a83bc.json",
+      "file": "127-7b6707e364b1.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -452,7 +450,7 @@
     {
       "hero_id": 128,
       "hero_name": "Fatih",
-      "file": "128-0719b5873c51.json",
+      "file": "128-826c2eba3a04.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -467,7 +465,7 @@
     {
       "hero_id": 129,
       "hero_name": "Dian Wei",
-      "file": "129-a473ae863eb1.json",
+      "file": "129-d9b3e09d57c9.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -479,20 +477,18 @@
     {
       "hero_id": 130,
       "hero_name": "Musashi",
-      "file": "130-6b352b9bfa84.json",
+      "file": "130-1ba775992da5.json",
       "review_status": "approved",
       "positive_tags": [
-        "cc_knockup",
         "cc_slow",
         "dash",
-        "engage",
         "mobility"
       ]
     },
     {
       "hero_id": 131,
       "hero_name": "Li Bai",
-      "file": "131-2d28afad9ba5.json",
+      "file": "131-2619bf4edcf2.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -504,7 +500,7 @@
     {
       "hero_id": 132,
       "hero_name": "Marco Polo",
-      "file": "132-5c03714952eb.json",
+      "file": "132-1e530790a6c2.json",
       "review_status": "approved",
       "positive_tags": [
         "blink",
@@ -515,7 +511,7 @@
     {
       "hero_id": 133,
       "hero_name": "Di Renjie",
-      "file": "133-b754ec3958ab.json",
+      "file": "133-9f19161155ab.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_stun"
@@ -524,7 +520,7 @@
     {
       "hero_id": 134,
       "hero_name": "Dharma",
-      "file": "134-dfd8799bb51b.json",
+      "file": "134-9d0448071954.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
@@ -541,7 +537,7 @@
     {
       "hero_id": 135,
       "hero_name": "Xiang Yu",
-      "file": "135-7191c4bf4020.json",
+      "file": "135-644455fbd819.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
@@ -559,18 +555,16 @@
     {
       "hero_id": 137,
       "hero_name": "Sima Yi",
-      "file": "137-9982678a4241.json",
+      "file": "137-6a8e932da44e.json",
       "review_status": "approved",
       "positive_tags": [
-        "blink",
-        "cc_silence",
-        "mobility"
+        "cc_silence"
       ]
     },
     {
       "hero_id": 138,
       "hero_name": "Wang Wei",
-      "file": "138-23ae6646b845.json",
+      "file": "138-3ea72c570083.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
@@ -582,7 +576,7 @@
     {
       "hero_id": 139,
       "hero_name": "Fuzi",
-      "file": "139-9e69c80d64fc.json",
+      "file": "139-9ed1441e2537.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_pull",
@@ -595,7 +589,7 @@
     {
       "hero_id": 140,
       "hero_name": "Guan Yu",
-      "file": "140-f66e31e6452f.json",
+      "file": "140-17b075de2c9e.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
@@ -609,7 +603,7 @@
     {
       "hero_id": 141,
       "hero_name": "Diaochan",
-      "file": "141-a22367bdbe8d.json",
+      "file": "141-ffe294aed879.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -621,7 +615,7 @@
     {
       "hero_id": 142,
       "hero_name": "Angela",
-      "file": "142-1a913ead5960.json",
+      "file": "142-2d6a0a703bc4.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -632,7 +626,7 @@
     {
       "hero_id": 146,
       "hero_name": "Luna",
-      "file": "146-7b0e546238b4.json",
+      "file": "146-2a1abc6d56db.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_pull",
@@ -646,7 +640,7 @@
     {
       "hero_id": 148,
       "hero_name": "Ziya",
-      "file": "148-90efa0c79dc4.json",
+      "file": "148-46bc067961f7.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -657,7 +651,7 @@
     {
       "hero_id": 149,
       "hero_name": "Liu Bang",
-      "file": "149-7e7a16e2704d.json",
+      "file": "149-8fc7bcbe9a2f.json",
       "review_status": "approved",
       "positive_tags": [
         "ally_shield",
@@ -673,7 +667,7 @@
     {
       "hero_id": 150,
       "hero_name": "Han Xin",
-      "file": "150-258ded24b589.json",
+      "file": "150-7387c79ab54e.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -685,7 +679,7 @@
     {
       "hero_id": 152,
       "hero_name": "Wang Zhaojun",
-      "file": "152-f2191da0dcdc.json",
+      "file": "152-7765a23fcdd4.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -697,7 +691,7 @@
     {
       "hero_id": 153,
       "hero_name": "Gao Changgong",
-      "file": "153-147aa50df7b8.json",
+      "file": "153-ffaf29af6c86.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -709,7 +703,7 @@
     {
       "hero_id": 154,
       "hero_name": "Mulan",
-      "file": "154-43e916214dee.json",
+      "file": "154-eadd237868ab.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
@@ -725,7 +719,7 @@
     {
       "hero_id": 155,
       "hero_name": "Erin",
-      "file": "155-89ec8fe5aac4.json",
+      "file": "155-fe632fb2db36.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -735,7 +729,7 @@
     {
       "hero_id": 156,
       "hero_name": "Liang",
-      "file": "156-40da3d22d96c.json",
+      "file": "156-a79633918052.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -748,7 +742,7 @@
     {
       "hero_id": 157,
       "hero_name": "Mai Shiranui",
-      "file": "157-996733c7161f.json",
+      "file": "157-417260b38cf6.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
@@ -761,13 +755,12 @@
     {
       "hero_id": 159,
       "hero_name": "Dolia",
-      "file": "159-b7dca60ad7cd.json",
+      "file": "159-e53433a70d4e.json",
       "review_status": "approved",
       "positive_tags": [
         "ally_heal",
         "cc_knockback",
         "cc_slow",
-        "cc_stun",
         "disengage",
         "low_damage",
         "peel"
@@ -776,7 +769,7 @@
     {
       "hero_id": 162,
       "hero_name": "Nakoruru",
-      "file": "162-7fb925e979e4.json",
+      "file": "162-88c97d22020c.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -787,7 +780,7 @@
     {
       "hero_id": 163,
       "hero_name": "Ukyo Tachibana",
-      "file": "163-f30cdce2fae0.json",
+      "file": "163-2ab39c897c70.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -797,7 +790,7 @@
     {
       "hero_id": 166,
       "hero_name": "Arthur",
-      "file": "166-467cde5a8571.json",
+      "file": "166-77e8f4a183f4.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -814,7 +807,7 @@
     {
       "hero_id": 167,
       "hero_name": "Wukong",
-      "file": "167-cdbc0a3b2763.json",
+      "file": "167-03a5f6188064.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -825,7 +818,7 @@
     {
       "hero_id": 168,
       "hero_name": "Lapulapu",
-      "file": "168-73fba08bf38b.json",
+      "file": "168-aea3f54b8ff4.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -840,7 +833,7 @@
     {
       "hero_id": 169,
       "hero_name": "Hou Yi",
-      "file": "169-f272ea9d425f.json",
+      "file": "169-d2eade3f9322.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -852,7 +845,7 @@
     {
       "hero_id": 170,
       "hero_name": "Liu Bei",
-      "file": "170-5d571e91a3f3.json",
+      "file": "170-08b2903107e3.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
@@ -865,7 +858,7 @@
     {
       "hero_id": 171,
       "hero_name": "Zhang Fei",
-      "file": "171-c643142ec6cf.json",
+      "file": "171-6719aca166a3.json",
       "review_status": "approved",
       "positive_tags": [
         "ally_shield",
@@ -884,7 +877,7 @@
     {
       "hero_id": 172,
       "hero_name": "Chicha",
-      "file": "172-441bc2cd3cfb.json",
+      "file": "172-a3875da94217.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
@@ -899,7 +892,7 @@
     {
       "hero_id": 173,
       "hero_name": "Fang",
-      "file": "173-3ac8b4cf51ce.json",
+      "file": "173-35bb46d7de8e.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -910,22 +903,19 @@
     {
       "hero_id": 174,
       "hero_name": "Consort Yu",
-      "file": "174-0d35adbcccc8.json",
+      "file": "174-9e7d1ebfad73.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
-        "cc_stun",
-        "leap",
-        "mobility"
+        "cc_stun"
       ]
     },
     {
       "hero_id": 175,
       "hero_name": "Kui",
-      "file": "175-50a37a307c63.json",
+      "file": "175-e6ff37a7d20f.json",
       "review_status": "approved",
       "positive_tags": [
-        "cc_pull",
         "cc_slow",
         "cc_stun",
         "engage",
@@ -935,7 +925,7 @@
     {
       "hero_id": 176,
       "hero_name": "Yuhuan",
-      "file": "176-c685eac6dca8.json",
+      "file": "176-adb9d9d44564.json",
       "review_status": "approved",
       "positive_tags": [
         "ally_heal",
@@ -947,7 +937,7 @@
     {
       "hero_id": 177,
       "hero_name": "Chano",
-      "file": "177-5abf4cf948cd.json",
+      "file": "177-784a651aa382.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
@@ -959,21 +949,18 @@
     {
       "hero_id": 178,
       "hero_name": "Yang Jian",
-      "file": "178-c4c75f1c3b67.json",
+      "file": "178-6fb70cefe059.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
         "cc_stun",
-        "dash",
-        "engage",
-        "kite_vulnerable",
-        "mobility"
+        "kite_vulnerable"
       ]
     },
     {
       "hero_id": 179,
       "hero_name": "Nuwa",
-      "file": "179-907cfb90c9fb.json",
+      "file": "179-ea79ad29d014.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
@@ -990,7 +977,7 @@
     {
       "hero_id": 180,
       "hero_name": "Nezha",
-      "file": "180-8a76cf778abe.json",
+      "file": "180-37de53cc8dde.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
@@ -1005,7 +992,7 @@
     {
       "hero_id": 182,
       "hero_name": "Gan & Mo",
-      "file": "182-3974bf5f9de6.json",
+      "file": "182-863520fb3184.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
@@ -1017,7 +1004,7 @@
     {
       "hero_id": 183,
       "hero_name": "Athena",
-      "file": "183-f1ded0c8a788.json",
+      "file": "183-bbf24c56b62a.json",
       "review_status": "approved",
       "positive_tags": [
         "ally_shield",
@@ -1031,7 +1018,7 @@
     {
       "hero_id": 184,
       "hero_name": "Cai Yan",
-      "file": "184-22158d0b8f4a.json",
+      "file": "184-76a2b511547d.json",
       "review_status": "approved",
       "positive_tags": [
         "ally_heal",
@@ -1043,7 +1030,7 @@
     {
       "hero_id": 187,
       "hero_name": "Donghuang",
-      "file": "187-2a48aef61410.json",
+      "file": "187-5ee4cedb1851.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -1057,12 +1044,11 @@
     {
       "hero_id": 189,
       "hero_name": "Guiguzi",
-      "file": "189-12f38854345b.json",
+      "file": "189-2c70f58d78cc.json",
       "review_status": "approved",
       "positive_tags": [
         "ally_move_speed_buff",
         "ally_shield",
-        "cc_pull",
         "cc_slow",
         "cc_stun",
         "disengage",
@@ -1074,7 +1060,7 @@
     {
       "hero_id": 190,
       "hero_name": "Kongming",
-      "file": "190-ea169d3672ac.json",
+      "file": "190-7cc7f0eddffb.json",
       "review_status": "approved",
       "positive_tags": [
         "blink",
@@ -1085,10 +1071,9 @@
     {
       "hero_id": 191,
       "hero_name": "Da Qiao",
-      "file": "191-912da82727b6.json",
+      "file": "191-8f4a9775ab09.json",
       "review_status": "approved",
       "positive_tags": [
-        "ally_move_speed_buff",
         "ally_shield",
         "cc_knockup",
         "disengage",
@@ -1102,7 +1087,7 @@
     {
       "hero_id": 192,
       "hero_name": "Huang Zhong",
-      "file": "192-cd519612ba1b.json",
+      "file": "192-50c6c8e06ec2.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -1115,7 +1100,7 @@
     {
       "hero_id": 193,
       "hero_name": "Kaizer",
-      "file": "193-83457ef284f5.json",
+      "file": "193-f7d475c951d5.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -1131,7 +1116,7 @@
     {
       "hero_id": 195,
       "hero_name": "Xuance",
-      "file": "195-a3bedb804064.json",
+      "file": "195-5fa747c3bfb4.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_pull",
@@ -1144,7 +1129,7 @@
     {
       "hero_id": 196,
       "hero_name": "Shouyue",
-      "file": "196-b6fca6d611dd.json",
+      "file": "196-1779eeb66760.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow"
@@ -1153,7 +1138,7 @@
     {
       "hero_id": 197,
       "hero_name": "Yixing",
-      "file": "197-a18c3998ff48.json",
+      "file": "197-1ce6ed0d22f0.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -1166,7 +1151,7 @@
     {
       "hero_id": 198,
       "hero_name": "Menki",
-      "file": "198-0c13c5da2a78.json",
+      "file": "198-598d22e05e7d.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -1177,7 +1162,7 @@
     {
       "hero_id": 199,
       "hero_name": "Arli",
-      "file": "199-d6e7a3725b04.json",
+      "file": "199-59772e592d9e.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback"
@@ -1186,21 +1171,19 @@
     {
       "hero_id": 501,
       "hero_name": "Ming",
-      "file": "501-de042fb35a64.json",
+      "file": "501-f794d82e8651.json",
       "review_status": "approved",
       "positive_tags": [
         "ally_attack_speed_buff",
         "ally_damage_buff",
         "ally_heal",
-        "ally_move_speed_buff",
-        "disengage",
         "peel"
       ]
     },
     {
       "hero_id": 502,
       "hero_name": "Pei",
-      "file": "502-c5336f631d1f.json",
+      "file": "502-e5619bdc50e0.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -1211,7 +1194,7 @@
     {
       "hero_id": 503,
       "hero_name": "Biron",
-      "file": "503-322692f9b841.json",
+      "file": "503-542c0753178f.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -1225,7 +1208,7 @@
     {
       "hero_id": 504,
       "hero_name": "Milady",
-      "file": "504-1327eb18d8cd.json",
+      "file": "504-3f4ccbf22d74.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -1236,10 +1219,9 @@
     {
       "hero_id": 505,
       "hero_name": "Yaria",
-      "file": "505-1daddad77b6d.json",
+      "file": "505-0d2fa1125815.json",
       "review_status": "approved",
       "positive_tags": [
-        "ally_damage_buff",
         "ally_shield",
         "cc_knockup",
         "peel"
@@ -1248,7 +1230,7 @@
     {
       "hero_id": 506,
       "hero_name": "Cirrus",
-      "file": "506-b71bcd00aca6.json",
+      "file": "506-3b98f1643a22.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -1261,7 +1243,7 @@
     {
       "hero_id": 507,
       "hero_name": "Li Xin",
-      "file": "507-a285079f59e7.json",
+      "file": "507-d1cbc2004f03.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -1276,7 +1258,7 @@
     {
       "hero_id": 508,
       "hero_name": "Garo",
-      "file": "508-9883b6e457bb.json",
+      "file": "508-588ffe148c9c.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_silence",
@@ -1286,7 +1268,7 @@
     {
       "hero_id": 509,
       "hero_name": "Dunshan",
-      "file": "509-1b05af2bc1ad.json",
+      "file": "509-c390e8717eb5.json",
       "review_status": "approved",
       "positive_tags": [
         "ally_shield",
@@ -1303,7 +1285,7 @@
     {
       "hero_id": 510,
       "hero_name": "Sun Ce",
-      "file": "510-ae869f2aa4ad.json",
+      "file": "510-dd2da50fa88b.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -1328,7 +1310,7 @@
     {
       "hero_id": 514,
       "hero_name": "Allain",
-      "file": "514-948994fb1c0b.json",
+      "file": "514-ecbe230f2b4f.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -1343,7 +1325,7 @@
     {
       "hero_id": 517,
       "hero_name": "Augran",
-      "file": "517-351a1c8d213a.json",
+      "file": "517-899b033a348a.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
@@ -1353,26 +1335,29 @@
     {
       "hero_id": 519,
       "hero_name": "Ao'yin",
-      "file": "519-4665c498530d.json",
+      "file": "519-ff6763560def.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
-        "cc_slow"
+        "cc_slow",
+        "leap",
+        "mobility"
       ]
     },
     {
       "hero_id": 521,
       "hero_name": "Haya",
-      "file": "521-822d65fe6008.json",
+      "file": "521-ca5b9dc3e131.json",
       "review_status": "approved",
       "positive_tags": [
+        "cc_slow",
         "cc_stun"
       ]
     },
     {
       "hero_id": 522,
       "hero_name": "Yao",
-      "file": "522-707209b62190.json",
+      "file": "522-fc90ee88a5fd.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -1382,7 +1367,7 @@
     {
       "hero_id": 523,
       "hero_name": "Shi",
-      "file": "523-bd79da0f910c.json",
+      "file": "523-003e4fa84ce2.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_pull",
@@ -1394,7 +1379,7 @@
     {
       "hero_id": 524,
       "hero_name": "Meng Ya",
-      "file": "524-7bb5cfa930f0.json",
+      "file": "524-5d6c220a215e.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow"
@@ -1403,19 +1388,17 @@
     {
       "hero_id": 528,
       "hero_name": "Lam",
-      "file": "528-feab20e8f4db.json",
+      "file": "528-5380e647beff.json",
       "review_status": "approved",
       "positive_tags": [
-        "cc_slow",
         "dash",
-        "leap",
         "mobility"
       ]
     },
     {
       "hero_id": 531,
       "hero_name": "Jing",
-      "file": "531-ae10e8cdb29a.json",
+      "file": "531-a3d391cfe5fe.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_pull",
@@ -1428,11 +1411,9 @@
     {
       "hero_id": 533,
       "hero_name": "Agudo",
-      "file": "533-40261e490f2b.json",
+      "file": "533-900c51ff932d.json",
       "review_status": "approved",
       "positive_tags": [
-        "ally_heal",
-        "ally_move_speed_buff",
         "cc_knockup",
         "dash",
         "leap",
@@ -1442,7 +1423,7 @@
     {
       "hero_id": 534,
       "hero_name": "Sakeer",
-      "file": "534-34637cd1b70c.json",
+      "file": "534-c493a0c7eaaa.json",
       "review_status": "approved",
       "positive_tags": [
         "ally_heal",
@@ -1454,7 +1435,7 @@
     {
       "hero_id": 536,
       "hero_name": "Charlotte",
-      "file": "536-ac1f6a809aca.json",
+      "file": "536-b6a19b14a299.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -1468,7 +1449,7 @@
     {
       "hero_id": 537,
       "hero_name": "Devara",
-      "file": "537-0fbe2ff9027c.json",
+      "file": "537-d2d4a805fbec.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
@@ -1482,21 +1463,18 @@
     {
       "hero_id": 538,
       "hero_name": "Ying",
-      "file": "538-587bffa7f0a5.json",
+      "file": "538-de6c80b2eb6c.json",
       "review_status": "approved",
       "positive_tags": [
-        "cc_knockup",
-        "cc_pull",
         "cc_slow",
         "dash",
-        "engage",
         "mobility"
       ]
     },
     {
       "hero_id": 542,
       "hero_name": "Feyd",
-      "file": "542-f81aaea42c4a.json",
+      "file": "542-bc9a8e624c43.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -1507,7 +1485,7 @@
     {
       "hero_id": 545,
       "hero_name": "Alessio",
-      "file": "545-c1e7d8bdcae1.json",
+      "file": "545-a4ee0c92ccd5.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -1518,7 +1496,7 @@
     {
       "hero_id": 547,
       "hero_name": "Luara",
-      "file": "547-90a13cf86522.json",
+      "file": "547-61adacd5c3b1.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -1529,14 +1507,12 @@
     {
       "hero_id": 556,
       "hero_name": "Ata",
-      "file": "556-dae7b0fd95c5.json",
+      "file": "556-c414ac304193.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
         "cc_knockup",
         "cc_slow",
-        "cc_stun",
-        "dash",
         "disengage",
         "engage",
         "frontline",
@@ -1549,7 +1525,7 @@
     {
       "hero_id": 558,
       "hero_name": "Umbrosa",
-      "file": "558-6a2e1e2dc6cb.json",
+      "file": "558-6b2451951d96.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
@@ -1564,7 +1540,7 @@
     {
       "hero_id": 563,
       "hero_name": "Heino",
-      "file": "563-f26c426fc890.json",
+      "file": "563-cfe0da7089bc.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
@@ -1576,7 +1552,7 @@
     {
       "hero_id": 564,
       "hero_name": "Mayene",
-      "file": "564-57f310d6b8d0.json",
+      "file": "564-0a4bfd0fe1bd.json",
       "review_status": "approved",
       "positive_tags": [
         "blink",
@@ -1586,7 +1562,6 @@
         "cc_slow",
         "disengage",
         "engage",
-        "leap",
         "mobility",
         "peel"
       ]
@@ -1594,7 +1569,7 @@
     {
       "hero_id": 577,
       "hero_name": "Dyadia",
-      "file": "577-f435cf201db6.json",
+      "file": "577-f0efed9e90a3.json",
       "review_status": "approved",
       "positive_tags": [
         "ally_heal",
@@ -1611,7 +1586,7 @@
     {
       "hero_id": 581,
       "hero_name": "Flowborn (Tank)",
-      "file": "581-0c0edc0b2d0f.json",
+      "file": "581-fbf82389d0fc.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
@@ -1630,9 +1605,10 @@
     {
       "hero_id": 582,
       "hero_name": "Flowborn (Mage)",
-      "file": "582-e1e612b660e6.json",
+      "file": "582-3558ed4174e5.json",
       "review_status": "approved",
       "positive_tags": [
+        "ally_heal",
         "cc_knockback",
         "cc_slow",
         "cc_stun",
@@ -1645,14 +1621,18 @@
     {
       "hero_id": 583,
       "hero_name": "Flowborn (Assassin)",
-      "file": "583-9051b4bac735.json",
+      "file": "583-f653e0397706.json",
       "review_status": "approved",
-      "positive_tags": []
+      "positive_tags": [
+        "cc_knockback",
+        "dash",
+        "mobility"
+      ]
     },
     {
       "hero_id": 584,
       "hero_name": "Flowborn (Marksman)",
-      "file": "584-4a5188c923b3.json",
+      "file": "584-5f47519cd1d1.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
@@ -1664,14 +1644,23 @@
     {
       "hero_id": 585,
       "hero_name": "Flowborn (Roamer)",
-      "file": "585-5d41fc61ef7a.json",
+      "file": "585-a707dbdbda56.json",
       "review_status": "approved",
-      "positive_tags": []
+      "positive_tags": [
+        "ally_heal",
+        "ally_shield",
+        "cc_knockback",
+        "dash",
+        "disengage",
+        "engage",
+        "mobility",
+        "peel"
+      ]
     },
     {
       "hero_id": 631,
       "hero_name": "Florentino",
-      "file": "631-a7a049b192f3.json",
+      "file": "631-3b5a7804e9da.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_stun",
@@ -1683,20 +1672,16 @@
     {
       "hero_id": 635,
       "hero_name": "Lorion",
-      "file": "635-ccb88797c30e.json",
+      "file": "635-72d687de9533.json",
       "review_status": "approved",
       "positive_tags": [
-        "blink",
-        "cc_knockup",
-        "cc_slow",
-        "engage",
-        "mobility"
+        "cc_knockup"
       ]
     },
     {
       "hero_id": 640,
       "hero_name": "Annette",
-      "file": "640-a028287b7c03.json",
+      "file": "640-1155b9948f0b.json",
       "review_status": "approved",
       "positive_tags": [
         "ally_cc_immunity",
@@ -1713,7 +1698,7 @@
     {
       "hero_id": 646,
       "hero_name": "Butterfly",
-      "file": "646-97ad25a5791a.json",
+      "file": "646-5bd1ceabbb88.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",

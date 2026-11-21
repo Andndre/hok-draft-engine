@@ -8,6 +8,7 @@ import { displayCopy } from './ui/presentation';
 import { useNativeModalDialog } from './ui/useNativeModalDialog';
 import { useFocusgroup } from './ui/useFocusgroup';
 import { getItemMeta } from '../data/itemsMap';
+import { ColoredText } from './ColoredText';
 
 interface HeroWikiDrawerProps {
   hero: Hero | null;
@@ -207,24 +208,24 @@ const MatchupPanel: React.FC<MatchupPanelProps> = ({ hero, allHeroes, onSelectRe
   guide?.matchups.filter((item) => item.relation === 'countered_by').forEach((item) => add(danger, item.hero_id, item.hero_name, {
     source: 'HoKStats', url: item.source.url, detail: item.evidence,
   }));
-  hero.countered_by.forEach((item) => add(danger, item.counter_id, item.counter_name, {
+  hero.countered_by?.forEach((item) => add(danger, item.counter_id, item.counter_name, {
     source: item.source === 'curation' ? 'Kurasi' : 'Kurohiko',
     url: item.source === 'curation' ? undefined : 'https://hok.kurohiko.id/',
     detail: item.reason,
     meta: `${item.severity} counter${item.source === 'curation' ? ' · kurasi manual' : ''}`,
   }));
 
-  kpl?.best_matchups.forEach((item) => add(favorable, item.opponent_id, item.opponent_name, {
+  kpl?.best_matchups?.forEach((item) => add(favorable, item.opponent_id, item.opponent_name, {
     source: 'KPL', detail: `${item.wins}W · ${item.losses}L · ${item.total_matches} game`, metric: `${(item.hero_winrate * 100).toFixed(1)}% WR`,
   }, item.opponent_avatar));
-  hokfire?.strong_against.forEach((slug) => {
+  hokfire?.strong_against?.forEach((slug) => {
     const related = nameMap.get(normalizeName(slug));
     add(favorable, related?.hero_id, related?.name || slug, { source: 'HOKFIRE', url: 'https://www.hokfire.com/' }, related?.portrait_asset);
   });
-  guide?.matchups.filter((item) => item.relation === 'strong_against').forEach((item) => add(favorable, item.hero_id, item.hero_name, {
+  guide?.matchups?.filter((item) => item.relation === 'strong_against').forEach((item) => add(favorable, item.hero_id, item.hero_name, {
     source: 'HoKStats', url: item.source.url, detail: item.evidence,
   }));
-  hero.counters.forEach((item) => add(favorable, item.target_id, item.target_name, {
+  hero.counters?.forEach((item) => add(favorable, item.target_id, item.target_name, {
     source: item.source === 'curation' ? 'Kurasi' : 'Kurohiko',
     url: item.source === 'curation' ? undefined : 'https://hok.kurohiko.id/',
     detail: item.reason,
@@ -499,7 +500,9 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
   spellCatalog = [],
 }) => {
   const [activeWikiTab, setActiveWikiTab] = useState<'build' | 'counters' | 'abilities' | 'tactics'>(initialTab);
-  const [selectedBuild, setSelectedBuild] = useState(() => sourceHero?.hokfire_guide?.full_build?.length ? 'hokfire' : sourceHero?.hokstats_guide?.build_variants?.[0] ? `hokstats:${sourceHero.hokstats_guide.build_variants[0].id}` : 'hokfire');
+  const [selectedBuild, setSelectedBuild] = useState<string>(() =>
+    sourceHero?.official_build ? 'preset_1' : sourceHero?.hokfire_guide?.full_build?.length ? 'hokfire' : sourceHero?.hokstats_guide?.build_variants?.[0] ? `hokstats:${sourceHero.hokstats_guide.build_variants[0].id}` : 'preset_1'
+  );
   const hero = useMemo(() => displayCopy(sourceHero), [sourceHero]);
   const titleId = useId();
   const tabsId = useId();
@@ -509,9 +512,15 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
   useFocusgroup(wikiTabsRef, Boolean(sourceHero));
   useEffect(() => setActiveWikiTab(initialTab), [initialTab]);
   useEffect(() => {
-    const hasHokfire = Boolean(sourceHero?.hokfire_guide?.full_build?.length);
-    const firstVariant = sourceHero?.hokstats_guide?.build_variants?.[0];
-    setSelectedBuild(hasHokfire ? 'hokfire' : firstVariant ? `hokstats:${firstVariant.id}` : 'hokfire');
+    if (sourceHero?.official_build) {
+      setSelectedBuild('preset_1');
+    } else if (sourceHero?.hokfire_guide?.full_build?.length) {
+      setSelectedBuild('hokfire');
+    } else if (sourceHero?.hokstats_guide?.build_variants?.[0]) {
+      setSelectedBuild(`hokstats:${sourceHero.hokstats_guide.build_variants[0].id}`);
+    } else {
+      setSelectedBuild('preset_1');
+    }
   }, [sourceHero?.hero_id]);
 
   if (!hero) return null;
@@ -522,10 +531,21 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
   const abilities = hero.abilities || [];
   const buildVariants = hero.hokstats_guide?.build_variants || [];
   const selectedVariant = selectedBuild.startsWith('hokstats:') ? buildVariants.find(build => `hokstats:${build.id}` === selectedBuild) : undefined;
-  const activeBuildItems = selectedVariant?.items || hGuide?.full_build || [];
-  const activeBuildLabel = selectedVariant ? `HoKStats · ${selectedVariant.name}` : 'HOKFIRE';
-  const selectedSpellName = hGuide?.spell || '';
+  const officialPreset = hero.official_build
+    ? (selectedBuild === 'preset_2' ? hero.official_build.build_2 : hero.official_build.build_1)
+    : undefined;
+  const activeBuildItems = officialPreset?.items || selectedVariant?.items || hGuide?.full_build || [];
+  const activeBuildLabel = officialPreset
+    ? officialPreset.name
+    : selectedVariant
+    ? `HoKStats · ${selectedVariant.name}`
+    : 'HOK Resmi';
+  const activeBuildTips = officialPreset?.tips;
+  const selectedSpellName = hero.official_build?.spell || hGuide?.spell || '';
   const selectedSpell = selectedSpellName ? spellCatalog.find(spell => spell.name.toLowerCase() === selectedSpellName.toLowerCase()) : undefined;
+  const activeArcana = (hero.official_build?.arcana && hero.official_build.arcana.length > 0)
+    ? hero.official_build.arcana
+    : (hGuide?.arcana || []);
   const findItem = (name: string) => itemCatalog.find(item => item.name.toLowerCase() === name.toLowerCase()) || getItemMeta(name);
   const heroTags = hero.tactical_profile?.tags;
   const factualSkillGroups = heroTags
@@ -679,27 +699,60 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
           aria-labelledby={`${tabsId}-${activeWikiTab}`}
           className="flex-1 overflow-y-auto p-4 pb-16 space-y-4"
         >
-          {/* TAB 1: BUILD & ARCANA HOKFIRE */}
+          {/* TAB 1: BUILD & ARCANA */}
           {activeWikiTab === 'build' && (
             <div className="space-y-4">
-              {/* Core & Full Build */}
-              {buildVariants.length > 0 && (
+              {/* Preset Build Selector */}
+              {hero.official_build ? (
+                <div className="flex gap-2 p-1 bg-[#0A0D12] rounded-xl border border-[#232A38]">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedBuild('preset_1')}
+                    className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition-all ${
+                      selectedBuild === 'preset_1'
+                        ? 'bg-[#1A2333] text-[#F5C451] shadow-sm border border-[#F5C451]/30'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    Preset Resmi #1 (Standar)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedBuild('preset_2')}
+                    className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition-all ${
+                      selectedBuild === 'preset_2'
+                        ? 'bg-[#1A2333] text-[#F5C451] shadow-sm border border-[#F5C451]/30'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    Preset Resmi #2 (Alternatif)
+                  </button>
+                </div>
+              ) : buildVariants.length > 0 ? (
                 <label className="block space-y-1.5">
                   <span className="text-xs font-bold text-slate-400">Pilih preset build</span>
                   <select aria-label="Preset build" value={selectedBuild} onChange={event => setSelectedBuild(event.target.value)} className="w-full rounded-lg border border-[#30394A] bg-[#10151E] px-3 py-2 text-sm text-white">
-                    {hGuide?.full_build.length ? <option value="hokfire">HOKFIRE · Build utama</option> : null}
+                    {hGuide?.full_build && hGuide.full_build.length ? <option value="hokfire">HOKFIRE · Build utama</option> : null}
                     {buildVariants.map(build => <option key={build.id} value={`hokstats:${build.id}`}>HoKStats · {build.name}{build.use_case ? ` — ${build.use_case}` : ''}</option>)}
                   </select>
                 </label>
-              )}
+              ) : null}
               {selectedVariant && hero.hokstats_guide && <div className="flex items-center justify-between rounded-lg border border-[#263142] bg-[#121824] px-3 py-2 text-xs"><span className="text-slate-300">Build HoKStats · {selectedVariant.name}</span><a className="text-slate-400 underline underline-offset-2 hover:text-white" href={hero.hokstats_guide.source.url} target="_blank" rel="noreferrer">Sumber</a></div>}
+
+              {activeBuildTips && (
+                <div className="p-3 bg-[#101520] border border-[#232A38] rounded-xl text-xs text-slate-300 leading-relaxed flex items-start gap-2">
+                  <Lightbulb className="w-4 h-4 text-[#F5C451] flex-shrink-0 mt-0.5" aria-hidden="true" />
+                  <span>{activeBuildTips}</span>
+                </div>
+              )}
+
               {activeBuildItems.length > 0 ? (
                 <>
                   <div className="p-3 bg-[#12161F] border border-[#232A38] rounded-xl space-y-2.5">
                     <div className="flex items-center justify-between gap-2">
                       <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
                         <Sparkles className="w-3.5 h-3.5 text-[#F5C451]" aria-hidden="true" />
-                        <span>Rekomendasi Full Build {activeBuildLabel}</span>
+                        <span>Rekomendasi Item ({activeBuildLabel})</span>
                       </h3>
                       {selectedSpellName && (
                         <div className="wiki-spell-group relative">
@@ -723,7 +776,8 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
 
                     <div className="grid grid-cols-2 gap-2">
                       {activeBuildItems.map((item, idx) => {
-                        const isCore = !selectedVariant && Boolean(hGuide?.core_items.includes(item));
+                        const coreItems = hero.official_build?.core_items || hGuide?.core_items || [];
+                        const isCore = !selectedVariant && coreItems.includes(item);
                         const catalogMeta = findItem(item) && 'sources' in (findItem(item) as object) ? findItem(item) as ItemCatalogEntry : undefined;
                         const meta = catalogMeta || getItemMeta(item);
                         return (
@@ -771,7 +825,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                   </div>
 
                   {/* Situational Item Swaps */}
-                  {hGuide && hGuide.situational_items.length > 0 && (
+                  {((hero.official_build?.situational_items && hero.official_build.situational_items.length > 0) || (hGuide && (hGuide.situational_items?.length ?? 0) > 0)) && (
                     <div className="p-3 bg-[#12161F] border border-[#232A38] rounded-xl space-y-2">
                       <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
                         <Shield className="w-3.5 h-3.5 text-[#B8FF01]" aria-hidden="true" />
@@ -782,7 +836,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                       </p>
 
                       <div className="space-y-1.5 pt-1">
-                        {hGuide.situational_items.map((sit, idx) => {
+                        {(hero.official_build?.situational_items || hGuide?.situational_items || []).map((sit, idx) => {
                           const metaFrom = getItemMeta(sit.from);
                           const metaTo = getItemMeta(sit.to);
                           return (
@@ -816,27 +870,37 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                   )}
 
                   {/* Arcana Setup */}
-                  {hGuide && hGuide.arcana.length > 0 && (
+                  {activeArcana.length > 0 && (
                     <div className="p-3 bg-[#12161F] border border-[#232A38] rounded-xl space-y-2">
                       <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center justify-between">
-                        <span>Susunan Arcana Resmi</span>
+                        <span>Susunan Arcana Resmi Level 5</span>
                         <span className="text-xs text-slate-500 font-mono">30 Sockets</span>
                       </h3>
-                      <div className="grid grid-cols-2 gap-2">
-                        {hGuide.arcana.map((arc, idx) => {
-                          const iconSrc = arc.icon_url || (arc.id ? `/assets/arcana/${arc.id}.png` : '');
-                          const colorBorder =
-                            arc.color === 'R'
-                              ? 'border-rose-800/60 bg-rose-950/20 text-rose-300'
-                              : arc.color === 'B'
-                              ? 'border-blue-800/60 bg-blue-950/20 text-blue-300'
-                              : 'border-emerald-800/60 bg-emerald-950/20 text-emerald-300';
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+                        {activeArcana.map((arc, idx) => {
+                          const iconSrc: string = (('icon' in arc && typeof arc.icon === 'string' && arc.icon)
+                            ? arc.icon
+                            : ('icon_url' in arc && typeof arc.icon_url === 'string' && arc.icon_url)
+                            ? arc.icon_url
+                            : (arc.id ? `/assets/arcana/${arc.id}.png` : '')) as string;
+                          const isRed = arc.color === 'R' || arc.color === 'red';
+                          const isBlue = arc.color === 'B' || arc.color === 'blue';
+                          const colorBorder = isRed
+                            ? 'border-rose-800/60 bg-rose-950/20 text-rose-300'
+                            : isBlue
+                            ? 'border-blue-800/60 bg-blue-950/20 text-blue-300'
+                            : 'border-emerald-800/60 bg-emerald-950/20 text-emerald-300';
+                          const attrText: string = (('attr' in arc && typeof arc.attr === 'string' && arc.attr)
+                            ? arc.attr
+                            : ('desc' in arc && typeof arc.desc === 'string' && arc.desc)
+                            ? arc.desc
+                            : '') as string;
 
                           return (
                             <div
                               key={idx}
                               className={`p-2 rounded-xl bg-[#0A0D12] border flex items-center gap-2.5 ${colorBorder}`}
-                              title={arc.desc || arc.name}
+                              title={attrText || arc.name}
                             >
                               <div className="relative w-8 h-8 rounded-lg bg-[#12161F] border border-[#232A38] overflow-hidden flex items-center justify-center flex-shrink-0">
                                 {iconSrc ? (
@@ -849,8 +913,8 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                                 <span className="text-xs font-bold text-slate-200 block truncate leading-tight">
                                   {arc.name}
                                 </span>
-                                <span className="text-xs font-mono text-slate-400 block truncate">
-                                  {arc.desc ? arc.desc.slice(0, 24) + '...' : `Arcana Tipe ${arc.color || 'L3'}`}
+                                <span className="text-[11px] font-mono text-slate-400 block truncate">
+                                  {attrText ? attrText.slice(0, 30) : `Arcana Tipe ${arc.color || 'L5'}`}
                                 </span>
                               </div>
                               <span className="text-xs font-mono font-black text-[#B8FF01] flex-shrink-0">
@@ -888,7 +952,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
           {activeWikiTab === 'abilities' && (
             <div className="space-y-4">
               {/* Pros & Cons */}
-              {hGuide && (hGuide.pros.length > 0 || hGuide.cons.length > 0) && (
+              {hGuide && ((hGuide.pros?.length ?? 0) > 0 || (hGuide.cons?.length ?? 0) > 0) && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {/* Pros */}
                   <div className="p-3 bg-[#101F18] border border-emerald-900/50 rounded-xl space-y-2">
@@ -897,7 +961,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                       <span>Kelebihan (Pros)</span>
                     </span>
                     <ul className="space-y-1">
-                      {hGuide.pros.map((p, idx) => (
+                      {(hGuide.pros || []).map((p, idx) => (
                         <li key={idx} className="text-xs text-slate-200 flex items-start gap-1.5">
                           <span className="text-emerald-400 font-bold" aria-hidden="true">•</span>
                           <span>{p}</span>
@@ -913,7 +977,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                       <span>Kelemahan (Cons)</span>
                     </span>
                     <ul className="space-y-1">
-                      {hGuide.cons.map((c, idx) => (
+                      {(hGuide.cons || []).map((c, idx) => (
                         <li key={idx} className="text-xs text-slate-200 flex items-start gap-1.5">
                           <span className="text-rose-400 font-bold" aria-hidden="true">•</span>
                           <span>{c}</span>
@@ -924,7 +988,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                 </div>
               )}
 
-              {hero.hokstats_guide && (hero.hokstats_guide.pros.length > 0 || hero.hokstats_guide.cons.length > 0) && <div className="rounded-xl border border-[#263142] bg-[#121824] p-3 space-y-2">
+              {(!hGuide || ((hGuide.pros?.length ?? 0) === 0 && (hGuide.cons?.length ?? 0) === 0)) && hero.hokstats_guide && ((hero.hokstats_guide.pros?.length ?? 0) > 0 || (hero.hokstats_guide.cons?.length ?? 0) > 0) && <div className="rounded-xl border border-[#263142] bg-[#121824] p-3 space-y-2">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-200">Panduan HoKStats</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {hero.hokstats_guide.pros.length > 0 && <div><span className="text-xs font-bold text-emerald-300">Kelebihan</span><ul className="mt-1 space-y-1">{hero.hokstats_guide.pros.map((item, index) => <li key={index} className="text-xs text-slate-200">• {item}</li>)}</ul></div>}
@@ -965,9 +1029,11 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                   <span className="text-xs text-slate-500 font-mono">HOK Official Abilities</span>
                 </h3>
 
-                {abilities.length === 0 ? (
+                {abilities.length === 0 && (!hero.hokstats_guide || hero.hokstats_guide.skills.length === 0) ? (
                   <p className="text-xs text-slate-500 italic p-3 bg-[#12161F] rounded-xl border border-[#232A38]">
-                    Informasi detail skill belum dimuat.
+                    {!hero.is_global_released
+                      ? 'Hero eksklusif server China / KPL ini belum memiliki rilis deskripsi kemampuan resmi.'
+                      : 'Informasi detail skill belum dimuat.'}
                   </p>
                 ) : (
                   abilities.map((ab, idx) => {
@@ -981,14 +1047,20 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                           {/* Ability Icon with Gold Border for Ultimate */}
                           <div
                             className={`relative w-12 h-12 rounded-xl overflow-hidden bg-[#0A0D12] border-2 flex-shrink-0 flex items-center justify-center ${
-                              ab.type.toLowerCase().includes('ultimate')
+                              (ab.type || '').toLowerCase().includes('ultimate')
                                 ? 'border-[#F5C451] shadow-[0_0_10px_rgba(245,196,81,0.2)]'
-                                : ab.type.toLowerCase().includes('passive')
+                                : (ab.type || '').toLowerCase().includes('passive')
                                 ? 'border-indigo-400/60'
                                 : 'border-[#232A38]'
                             }`}
                           >
-                            <AssetThumbnail src={abilityIconSrc} name={ab.name} kind="item" className="w-full h-full object-cover asset-thumbnail--fill" />
+                            <AssetThumbnail
+                              src={ab.icon || abilityIconSrc}
+                              fallbackSrc={abilityIconSrc}
+                              name={ab.name}
+                              kind="item"
+                              className="w-full h-full object-cover asset-thumbnail--fill"
+                            />
                           </div>
 
                           <div className="flex-1 min-w-0">
@@ -996,9 +1068,9 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                               <span className="font-extrabold text-sm text-white truncate">{ab.name}</span>
                               <span
                                 className={`text-xs font-mono px-2 py-0.5 rounded font-bold uppercase ${
-                                  ab.type.toLowerCase().includes('ultimate')
+                                  (ab.type || '').toLowerCase().includes('ultimate')
                                     ? 'bg-[#F5C451]/10 text-[#F5C451] border border-[#F5C451]/30'
-                                    : ab.type.toLowerCase().includes('passive')
+                                    : (ab.type || '').toLowerCase().includes('passive')
                                     ? 'bg-indigo-950/60 text-indigo-300 border border-indigo-800/40'
                                     : 'bg-[#1A202C] text-[#B8FF01] border border-[#232A38]'
                                 }`}
@@ -1006,29 +1078,59 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                                 {ab.type}
                               </span>
                             </div>
-                            <span className="text-xs font-mono text-slate-500 block mt-0.5">
-                              {idx === 0
-                                ? 'Skill Pasif'
-                                : idx === 3
-                                ? 'Skill Pamungkas (Ultimate)'
-                                : `Skill Aktif #${idx}`}
-                            </span>
+                            <div className="flex flex-wrap items-center gap-2 mt-1">
+                              <span className="text-xs font-mono text-slate-500">
+                                {idx === 0
+                                  ? 'Skill Pasif'
+                                  : idx === 3
+                                  ? 'Skill Pamungkas (Ultimate)'
+                                  : `Skill Aktif #${idx}`}
+                              </span>
+                              {ab.cd !== undefined && ab.cd > 0 && (
+                                <span className="text-[10px] font-mono font-medium text-cyan-300 bg-cyan-950/50 px-1.5 py-0.5 rounded border border-cyan-800/40">
+                                  CD: {ab.cd >= 1000 ? `${(ab.cd / 1000).toFixed(ab.cd % 1000 === 0 ? 0 : 1)}s` : `${ab.cd}s`}
+                                </span>
+                              )}
+                              {ab.cost !== undefined && ab.cost > 0 && (
+                                <span className="text-[10px] font-mono font-medium text-blue-300 bg-blue-950/50 px-1.5 py-0.5 rounded border border-blue-800/40">
+                                  Cost: {ab.cost}
+                                </span>
+                              )}
+                              {ab.tags && ab.tags.map((tag) => (
+                                <span
+                                  key={tag}
+                                  className="text-[10px] font-medium text-amber-300 bg-amber-950/40 px-1.5 py-0.5 rounded border border-amber-800/40"
+                                >
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
                           </div>
                         </div>
 
                         <p className="text-xs text-slate-300 leading-relaxed pt-1 border-t border-[#1E2533]">
-                          {ab.desc}
+                          <ColoredText text={ab.desc || ''} />
                         </p>
                       </div>
                     );
                   })
                 )}
               </div>
-              {hero.hokstats_guide && hero.hokstats_guide.skills.length > 0 && <div className="space-y-2.5">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300">Detail skill HoKStats</h3>
-                {hero.hokstats_guide.skills.map((skill, index) => <div key={`${skill.name}-${index}`} className="rounded-xl border border-[#232A38] bg-[#12161F] p-3 space-y-1"><div className="flex items-center gap-2"><h4 className="text-sm font-bold text-white">{skill.name || `Skill ${index + 1}`}</h4>{skill.type && <span className="rounded border border-slate-700 px-1.5 py-0.5 text-[10px] uppercase text-slate-400">{skill.type}</span>}</div><p className="text-xs leading-relaxed text-slate-300">{skill.description}</p></div>)}
-                <a className="text-xs text-slate-500 underline" href={hero.hokstats_guide.source.url} target="_blank" rel="noreferrer">Sumber HoKStats</a>
-              </div>}
+              {abilities.length === 0 && hero.hokstats_guide && hero.hokstats_guide.skills.length > 0 && (
+                <div className="space-y-2.5">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300">Detail skill HoKStats</h3>
+                  {hero.hokstats_guide.skills.map((skill, index) => (
+                    <div key={`${skill.name}-${index}`} className="rounded-xl border border-[#232A38] bg-[#12161F] p-3 space-y-1">
+                      <div className="flex items-center gap-2">
+                        <h4 className="text-sm font-bold text-white">{skill.name || `Skill ${index + 1}`}</h4>
+                        {skill.type && <span className="rounded border border-slate-700 px-1.5 py-0.5 text-[10px] uppercase text-slate-400">{skill.type}</span>}
+                      </div>
+                      <p className="text-xs leading-relaxed text-slate-300"><ColoredText text={skill.description} /></p>
+                    </div>
+                  ))}
+                  <a className="text-xs text-slate-500 underline" href={hero.hokstats_guide.source.url} target="_blank" rel="noreferrer">Sumber HoKStats</a>
+                </div>
+              )}
             </div>
           )}
 
@@ -1092,13 +1194,6 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                 </div>
               ) : null}
 
-              {hero.hokstats_guide && (hero.hokstats_guide.pick_when.length || hero.hokstats_guide.avoid_when.length || hero.hokstats_guide.power_spikes.length || hero.hokstats_guide.common_mistakes.length || hero.hokstats_guide.partners.length) > 0 && <div className="p-3.5 bg-[#121824] border border-[#263142] rounded-xl space-y-3">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-200">Panduan draft & permainan HoKStats</h3>
-                {([['Pilih saat', hero.hokstats_guide.pick_when], ['Hindari saat', hero.hokstats_guide.avoid_when], ['Power spike', hero.hokstats_guide.power_spikes], ['Kesalahan umum', hero.hokstats_guide.common_mistakes]] as const).filter(([, values]) => values.length > 0).map(([label, values]) => <div key={label}><h4 className="text-xs font-bold text-slate-200">{label}</h4><ul className="mt-1 space-y-1">{values.map((value, index) => <li key={index} className="text-xs leading-relaxed text-slate-300">• {value}</li>)}</ul></div>)}
-                {hero.hokstats_guide.partners.length > 0 && <div><h4 className="text-xs font-bold text-slate-200">Partner yang disarankan</h4><div className="mt-1 flex flex-wrap gap-1.5">{hero.hokstats_guide.partners.map((partner, index) => { const related = partner.hero_id ? idMap.get(partner.hero_id) : undefined; return <button key={`${partner.hero_id}-${index}`} type="button" disabled={!related} onClick={() => related && onSelectRelatedHero(related)} className="rounded-lg border border-indigo-800/50 bg-indigo-950/30 px-2 py-1 text-xs text-indigo-200">{related?.name || partner.hero_name}</button>; })}</div></div>}
-                <a className="text-xs text-slate-500 underline underline-offset-2 hover:text-slate-300" href={hero.hokstats_guide.source.url} target="_blank" rel="noreferrer">Sumber HoKStats · {hero.hokstats_guide.source.fetched_at.slice(0, 10)}</a>
-              </div>}
-
               {/* Cara Melawan / Menghadapi dari Kurohiko */}
               <div>
                 <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
@@ -1111,7 +1206,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
               </div>
 
               {/* Item Counter */}
-              {hero.counter_items.length > 0 && (
+              {hero.counter_items && hero.counter_items.length > 0 && (
                 <div>
                   <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
                     Item Counter yang Direkomendasikan

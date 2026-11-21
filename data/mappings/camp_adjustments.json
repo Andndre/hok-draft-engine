@@ -1,0 +1,282 @@
+[
+  {
+    "hero_id": 119,
+    "hero_name": "Dr Bian",
+    "type": 1,
+    "short_desc": "Quality Upgrade",
+    "tag": "Mechanics Upgrade",
+    "win_rate": 0.52091825,
+    "pick_rate": 0.0057,
+    "ban_rate": 0.00135
+  },
+  {
+    "hero_id": 547,
+    "hero_name": "Luara",
+    "type": 1,
+    "short_desc": "Stats Adjusted",
+    "tag": "Stat Changes",
+    "win_rate": 0.5279489,
+    "pick_rate": 0.013699999,
+    "ban_rate": 0.00127
+  },
+  {
+    "hero_id": 509,
+    "hero_name": "Dunshan",
+    "type": 1,
+    "short_desc": "Stats Buffed",
+    "tag": "Stat Buffs",
+    "win_rate": 0.46118307,
+    "pick_rate": 0.0078000003,
+    "ban_rate": 0.03876
+  },
+  {
+    "hero_id": 112,
+    "hero_name": "Luban No.7",
+    "type": 1,
+    "short_desc": "Stats Buffed",
+    "tag": "Stat Buffs",
+    "win_rate": 0.45692328,
+    "pick_rate": 0.0138,
+    "ban_rate": 0.00234
+  },
+  {
+    "hero_id": 585,
+    "hero_name": "Flowborn (Roamer)",
+    "type": 1,
+    "short_desc": "Stats Adjusted",
+    "tag": "Stat Changes",
+    "win_rate": 0.5186154,
+    "pick_rate": 0.0047,
+    "ban_rate": 0.00289
+  },
+  {
+    "hero_id": 521,
+    "hero_name": "Haya",
+    "type": 1,
+    "short_desc": "Quality Upgrade",
+    "tag": "Mechanics Upgrade",
+    "win_rate": 0.47856408,
+    "pick_rate": 0.0086,
+    "ban_rate": 0.021850001
+  },
+  {
+    "hero_id": 171,
+    "hero_name": "Zhang Fei",
+    "type": 1,
+    "short_desc": "Stats Buffed",
+    "tag": "Stat Buffs",
+    "win_rate": 0.499325,
+    "pick_rate": 0.007,
+    "ban_rate": 0.00304
+  },
+  {
+    "hero_id": 150,
+    "hero_name": "Han Xin",
+    "type": 1,
+    "short_desc": "Stats Buffed",
+    "tag": "Stat Buffs",
+    "win_rate": 0.4676215,
+    "pick_rate": 0.0037,
+    "ban_rate": 0.00032
+  },
+  {
+    "hero_id": 646,
+    "hero_name": "Butterfly",
+    "type": 1,
+    "short_desc": "Quality Upgrade",
+    "tag": "Mechanics Upgrade",
+    "win_rate": 0.49662727,
+    "pick_rate": 0.0045000003,
+    "ban_rate": 0.00067
+  },
+  {
+    "hero_id": 180,
+    "hero_name": "Nezha",
+    "type": 1,
+    "short_desc": "Stats Adjusted",
+    "tag": "Stat Changes",
+    "win_rate": 0.5022493,
+    "pick_rate": 0.0042,
+    "ban_rate": 0.0006
+  },
+  {
+    "hero_id": 169,
+    "hero_name": "Hou Yi",
+    "type": 1,
+    "short_desc": "Stats Buffed",
+    "tag": "Stat Buffs",
+    "win_rate": 0.5192474,
+    "pick_rate": 0.034599997,
+    "ban_rate": 0.00266
+  },
+  {
+    "hero_id": 139,
+    "hero_name": "Fuzi",
+    "type": 1,
+    "short_desc": "Stats Adjusted",
+    "tag": "Stat Changes",
+    "win_rate": 0.5117158,
+    "pick_rate": 0.0037,
+    "ban_rate": 0.00037
+  },
+  {
+    "hero_id": 582,
+    "hero_name": "Flowborn (Mage)",
+    "type": 1,
+    "short_desc": "Stats Buffed",
+    "tag": "Stat Buffs",
+    "win_rate": 0.4946093,
+    "pick_rate": 0.0037,
+    "ban_rate": 0.00037
+  },
+  {
+    "hero_id": 162,
+    "hero_name": "Nakoruru",
+    "type": 1,
+    "short_desc": "Stats Buffed",
+    "tag": "Stat Buffs",
+    "win_rate": 0.513029,
+    "pick_rate": 0.0075999997,
+    "ban_rate": 0.0030200002
+  },
+  {
+    "hero_id": 503,
+    "hero_name": "Biron",
+    "type": 1,
+    "short_desc": "Stats Buffed",
+    "tag": "Stat Buffs",
+    "win_rate": 0.4863174,
+    "pick_rate": 0.0107,
+    "ban_rate": 0.00423
+  },
+  {
+    "hero_id": 199,
+    "hero_name": "Arli",
+    "type": 1,
+    "short_desc": "Stats Buffed",
+    "tag": "Stat Buffs",
+    "win_rate": 0.46012318,
+    "pick_rate": 0.0077,
+    "ban_rate": 0.00402
+  },
+  {
+    "hero_id": 111,
+    "hero_name": "Lady Sun",
+    "type": 1,
+    "short_desc": "Adjusted skill effect",
+    "tag": "Stat Buffs",
+    "win_rate": 0.49955,
+    "pick_rate": 0.0194,
+    "ban_rate": 0.0016300001
+  },
+  {
+    "hero_id": 510,
+    "hero_name": "Sun Ce",
+    "type": 1,
+    "short_desc": "Stats Buffed",
+    "tag": "Stat Buffs",
+    "win_rate": 0.5075122,
+    "pick_rate": 0.0135,
+    "ban_rate": 0.00084
+  },
+  {
+    "hero_id": 105,
+    "hero_name": "Lian Po",
+    "type": 1,
+    "short_desc": "Stats Adjusted",
+    "tag": "Stat Changes",
+    "win_rate": 0.5185098,
+    "pick_rate": 0.0099,
+    "ban_rate": 0.00147
+  },
+  {
+    "hero_id": 176,
+    "hero_name": "Yuhuan",
+    "type": 1,
+    "short_desc": "Stats Buffed",
+    "tag": "Stat Buffs",
+    "win_rate": 0.52236205,
+    "pick_rate": 0.0054,
+    "ban_rate": 0.00029
+  },
+  {
+    "hero_id": 116,
+    "hero_name": "Arke",
+    "type": 1,
+    "short_desc": "Stats Buffed",
+    "tag": "Stat Buffs",
+    "win_rate": 0.53283465,
+    "pick_rate": 0.0066,
+    "ban_rate": 0.0122
+  },
+  {
+    "hero_id": 107,
+    "hero_name": "Zilong",
+    "type": 1,
+    "short_desc": "Stats Adjusted",
+    "tag": "Stat Changes",
+    "win_rate": 0.5185098,
+    "pick_rate": 0.009000001,
+    "ban_rate": 0.00047
+  },
+  {
+    "hero_id": 126,
+    "hero_name": "Dun",
+    "type": 1,
+    "short_desc": "Stats Adjusted",
+    "tag": "Stat Changes",
+    "win_rate": 0.5189318,
+    "pick_rate": 0.0126,
+    "ban_rate": 0.0062700002
+  },
+  {
+    "hero_id": 631,
+    "hero_name": "Florentino",
+    "type": 1,
+    "short_desc": "Stats Adjusted",
+    "tag": "Stat Changes",
+    "win_rate": 0.5048308,
+    "pick_rate": 0.0036,
+    "ban_rate": 0.00569
+  },
+  {
+    "hero_id": 163,
+    "hero_name": "Ukyo Tachibana",
+    "type": 1,
+    "short_desc": "Stats Buffed",
+    "tag": "Stat Buffs",
+    "win_rate": 0.5231791,
+    "pick_rate": 0.0049,
+    "ban_rate": 0.00029
+  },
+  {
+    "hero_id": 177,
+    "hero_name": "Chano",
+    "type": 1,
+    "short_desc": "Stats Buffed",
+    "tag": "Stat Buffs",
+    "win_rate": 0.513029,
+    "pick_rate": 0.009099999,
+    "ban_rate": 0.00086000003
+  },
+  {
+    "hero_id": 191,
+    "hero_name": "Da Qiao",
+    "type": 1,
+    "short_desc": "Stats Buffed",
+    "tag": "Stat Buffs",
+    "win_rate": 0.50762355,
+    "pick_rate": 0.0095,
+    "ban_rate": 0.0074600005
+  },
+  {
+    "hero_id": 558,
+    "hero_name": "Umbrosa",
+    "type": 1,
+    "short_desc": "Quality Upgrade\r\nUpgraded skill effects",
+    "tag": "Mechanics Upgrade",
+    "win_rate": 0.51259214,
+    "pick_rate": 0.013600001,
+    "ban_rate": 0.0017899999
+  }
+]

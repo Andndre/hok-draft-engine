@@ -79,18 +79,49 @@ export interface SituationalSwap {
 export interface ArcanaItem {
   name: string;
   count: number;
-  id?: number;
+  id?: number | string;
   color?: string;
   desc?: string;
   icon_url?: string;
 }
 
+export interface OfficialBuildVariant {
+  name: string;
+  items: string[];
+  tips?: string;
+}
+
+export interface OfficialArcanaEntry {
+  id: string;
+  name: string;
+  color: 'red' | 'blue' | 'green' | string;
+  attr: string;
+  count: number;
+  icon?: string;
+  icon_url?: string;
+  desc?: string;
+}
+
+export interface OfficialHeroBuild {
+  build_1: OfficialBuildVariant;
+  build_2: OfficialBuildVariant;
+  arcana: OfficialArcanaEntry[];
+  spell: string;
+  core_items: string[];
+  situational_items: SituationalSwap[];
+}
+
 export interface HeroAbility {
+  skill_id?: number;
   type: string;
   name: string;
   desc: string;
   idx?: number;
   icon_url?: string;
+  cd?: number;
+  cost?: number;
+  tags?: string[];
+  icon?: string;
 }
 
 export interface HokfireGuide {
@@ -259,6 +290,7 @@ export interface Hero {
   hokstats_guide?: HoKStatsGuide;
   kpl_matchup?: KplMatchup | null;
   abilities?: HeroAbility[];
+  official_build?: OfficialHeroBuild;
   tactical_profile?: TacticalProfile;
   
   // Dynamic client-side score computed by the tournament engine

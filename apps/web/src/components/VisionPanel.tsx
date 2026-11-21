@@ -18,6 +18,7 @@ import {
   Shield,
   ShieldBan,
   SlidersHorizontal,
+  Sparkles,
   Swords,
   UserRound,
   XCircle,
@@ -29,7 +30,7 @@ import { OpponentClient } from '../engine/opponentClient';
 import { MAX_ADVISOR_BUDGET_MS } from '../engine/draftSearch';
 import { orderRecommendationsBySolver, type AdvisorDecision } from '../engine/advisorRanking';
 import type { Rect, VisionSide, VisionSlotKind } from '../vision/types';
-import { VisionPipeline, VisionPipelineStatus, scaleRect } from '../vision/pipeline';
+import { VisionPipeline, VisionPipelineStatus, scaleRect, detectLeftColumnSide } from '../vision/pipeline';
 import type { LayoutStatus, ObserverResult, VisionRecommendation, SideCrossCheck } from '../vision/pipeline';
 import type { DraftObservation, SlotRegion } from '../vision/types';
 import { resolveSlotSides } from '../vision/regionMap';
@@ -452,7 +453,6 @@ export function VisionPanel({
   };
   const [presets, setPresets] = useState<{ name: string; config: ManualLayoutConfig }[]>(loadPresets);
   const [presetInput, setPresetInput] = useState('');
-  const sideGroupName = useId();
   const presetInputId = useId();
   const persistPresets = (next: { name: string; config: ManualLayoutConfig }[]) => {
     setPresets(next);
@@ -507,7 +507,19 @@ export function VisionPanel({
     onError: (message: string) => setError(message),
     onPermission: (granted: boolean) => setPermissionGranted(granted),
     onLayout: setLayoutStatus,
-    onSideCheck: setSideCheck,
+    onSideCheck: (check: SideCrossCheck) => {
+      setSideCheck(check);
+      if (check.detected === 'blue' || check.detected === 'red') {
+        const detectedSide = check.detected;
+        setSide(prev => {
+          if (prev !== detectedSide) {
+            pipelineRef.current?.setSide(detectedSide);
+            return detectedSide;
+          }
+          return prev;
+        });
+      }
+    },
   });
 
   useEffect(() => {
@@ -522,7 +534,19 @@ export function VisionPanel({
       onError: (message) => setError(message),
       onPermission: (granted) => setPermissionGranted(granted),
       onLayout: setLayoutStatus,
-      onSideCheck: setSideCheck,
+      onSideCheck: (check: SideCrossCheck) => {
+        setSideCheck(check);
+        if (check.detected === 'blue' || check.detected === 'red') {
+          const detectedSide = check.detected;
+          setSide(prev => {
+            if (prev !== detectedSide) {
+              pipelineRef.current?.setSide(detectedSide);
+              return detectedSide;
+            }
+            return prev;
+          });
+        }
+      },
     };
   });
 
@@ -1011,6 +1035,11 @@ export function VisionPanel({
     }
   }, []);
 
+  const currentTurn = useMemo(
+    () => (lastResult ? getDraftTurn(lastResult.step, advisorFormat, advisorIsUltimateBattle) : undefined),
+    [lastResult, advisorFormat, advisorIsUltimateBattle]
+  );
+
   useEffect(() => () => { if (clickTimerRef.current) clearTimeout(clickTimerRef.current); }, []);
 
   const handleCanvasClick = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
@@ -1026,10 +1055,12 @@ export function VisionPanel({
     const py = ((e.clientY - rect.top) / rect.height) * canvas.height;
     const slot = findManualSlotAt(px, py);
     if (!slot) return;
-    if (!pipeline.isSlotFilled(slot.index)) return;
+    const isFilled = pipeline.isSlotFilled(slot.index);
+    const isCurrentActiveTurn = currentTurn && !currentTurn.isComplete && currentTurn.action === slot.kind && currentTurn.side === slot.side;
+    if (!isFilled && !isCurrentActiveTurn && !(slot.kind === 'pick' && slot.side === side)) return;
     if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
-    clickTimerRef.current = setTimeout(() => { void detectSlot(slot.index); }, 250);
-  }, [findManualSlotAt, interactionMode, detectSlot]);
+    clickTimerRef.current = setTimeout(() => { void detectSlot(slot.index, true); }, 250);
+  }, [findManualSlotAt, interactionMode, detectSlot, currentTurn, side]);
 
   const handleCaptureAllBans = useCallback(async () => {
     const pipeline = pipelineRef.current;
@@ -1037,6 +1068,21 @@ export function VisionPanel({
     if (!pipeline || !frame || capturingBans) return;
     setCapturingBans(true);
     try {
+      const profile = buildManualRegionProfile(manualConfig, frame.width, frame.height);
+      const ownSide: VisionSide = profile.ownSide ?? 'red';
+      const ownSlots = profile.slots.filter(slot => slot.side === ownSide && slot.kind === 'pick');
+      if (ownSlots.length > 0 && frame.rgba) {
+        const rects = ownSlots.map(slot => {
+          const scaled = scaleRect(slot.rect, profile.resolution.width, profile.resolution.height, frame.width, frame.height);
+          return { x: scaled.x, y: scaled.y, w: scaled.w, h: scaled.h * 0.8 };
+        });
+        const detected = detectLeftColumnSide({ data: frame.rgba, width: frame.width, height: frame.height }, rects);
+        if (detected !== 'unknown' && detected !== side) {
+          pipeline.setSide(detected);
+          setSide(detected);
+        }
+      }
+
       const slots = buildManualRegionProfile(manualConfig, frame.width, frame.height).slots.filter(slot => slot.kind === 'ban');
       let identified = 0;
       let uncertain = 0;
@@ -1050,7 +1096,7 @@ export function VisionPanel({
     } finally {
       setCapturingBans(false);
     }
-  }, [manualConfig, capturingBans]);
+  }, [manualConfig, capturingBans, side]);
 
   const handleCanvasDoubleClick = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
     if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
@@ -1064,10 +1110,8 @@ export function VisionPanel({
     const py = ((e.clientY - rect.top) / rect.height) * canvas.height;
     const slot = findManualSlotAt(px, py);
     if (!slot) return;
-    const ownPickEmpty = slot.kind === 'pick' && slot.side === side && !pipeline.isSlotFilled(slot.index);
-    if (!pipeline.isSlotFilled(slot.index) && !ownPickEmpty) return;
     void openSlotPicker(slot.index);
-  }, [findManualSlotAt, interactionMode, side, openSlotPicker]);
+  }, [findManualSlotAt, interactionMode, openSlotPicker]);
 
   const handleBoardSlotClick = useCallback((slotSide: VisionSide, kind: VisionSlotKind, displayIndex: number, double = false) => {
     if (interactionMode !== 'detect') return;
@@ -1078,18 +1122,17 @@ export function VisionPanel({
     const slotIndex = kind === 'pick'
       ? (isLeft ? displayIndex : 5 + displayIndex)
       : (isLeft ? 10 + displayIndex : 10 + banCount + displayIndex);
-    const ownPickEmpty = kind === 'pick' && slotSide === side && !pipeline.isSlotFilled(slotIndex);
-    if (!pipeline.isSlotFilled(slotIndex) && !ownPickEmpty) return;
     if (double) {
       if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
-      if (ownPickEmpty || pipeline.isSlotFilled(slotIndex)) {
-        void openSlotPicker(slotIndex);
-      }
+      void openSlotPicker(slotIndex);
       return;
     }
+    const isFilled = pipeline.isSlotFilled(slotIndex);
+    const isCurrentActiveTurn = currentTurn && !currentTurn.isComplete && currentTurn.action === kind && currentTurn.side === slotSide;
+    if (!isFilled && !isCurrentActiveTurn && !(kind === 'pick' && slotSide === side)) return;
     if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
-    clickTimerRef.current = setTimeout(() => { void detectSlot(slotIndex); }, 250);
-  }, [manualConfig, side, interactionMode, openSlotPicker, detectSlot]);
+    clickTimerRef.current = setTimeout(() => { void detectSlot(slotIndex, true); }, 250);
+  }, [manualConfig, side, interactionMode, openSlotPicker, detectSlot, currentTurn]);
 
   const handlePreviewKeyDown = useCallback((event: React.KeyboardEvent<HTMLDivElement>) => {
     if (interactionMode !== 'detect' || status !== 'running' || pickerOpen || event.repeat || event.ctrlKey || event.altKey || event.metaKey || event.nativeEvent.isComposing) return;
@@ -1128,11 +1171,6 @@ export function VisionPanel({
   const detectedSlotsByTeam = useMemo(
     () => mapObservationToTeamSlots(lastObservation, heroes, advisorFormat, manualConfig.ban.countPerSide),
     [lastObservation, heroes, advisorFormat, manualConfig.ban.countPerSide]
-  );
-
-  const currentTurn = useMemo(
-    () => (lastResult ? getDraftTurn(lastResult.step, advisorFormat, advisorIsUltimateBattle) : undefined),
-    [lastResult, advisorFormat, advisorIsUltimateBattle]
   );
 
   useEffect(() => {
@@ -1240,11 +1278,6 @@ export function VisionPanel({
     };
   }, [status, showOverlay, interactionMode, lastResult, recommendation, manualConfig, side, manualState, overlayRevision, unresolvedPickSlot, advisorFormat, rankedVisionRecommendations, solverDecision, solverKey, solverState]);
 
-  const sideOptions: { value: VisionSide; label: string }[] = [
-    { value: 'blue', label: 'Blue' },
-    { value: 'red', label: 'Red' },
-  ];
-
   const renderBoard = () => (
     <VisionDetectedBoard
       slotsByTeam={detectedSlotsByTeam}
@@ -1285,7 +1318,57 @@ export function VisionPanel({
         </div>
       );
     }
-    return null;
+
+    const primaryRec = rankedVisionRecommendations[0] ?? null;
+    const primaryHero = primaryRec?.hero ?? recommendation.heroSuggestions[0];
+    const alternatives = (rankedVisionRecommendations.length > 1
+      ? rankedVisionRecommendations.slice(1, 5).map(entry => entry.hero)
+      : recommendation.heroSuggestions.slice(1, 5));
+    const reason = primaryRec?.laneTag || primaryRec?.proComboTag || 'Saran berdasarkan posisi draft saat ini';
+    const solverText = solverDecision?.key === solverKey
+      ? `${rankedVisionRecommendations[0]?.hero.hero_id === solverDecision.decision.heroId ? 'Pilihan solver' : 'Urutan solver'} · ${solverDecision.decision.completedDepth} ply · ${(solverDecision.decision.elapsedMs / 1000).toFixed(1)} dtk`
+      : solverState === 'calculating'
+        ? 'Mesin sedang menghitung…'
+        : 'Solver belum tersedia · saran sementara';
+
+    const isOwn = recommendation.isUserTurn;
+    return (
+      <div className={`vision-recommendation${isOwn ? '' : ' is-enemy'}`}>
+        <div className="vision-recommendation__header">
+          <span className="section-heading__icon"><Sparkles aria-hidden="true" /></span>
+          <div>
+            <h4>{isOwn ? 'Rekomendasi Pick Anda' : `Prediksi Pick Lawan (${recommendation.actingSide.toUpperCase()})`}</h4>
+            <p>Langkah {recommendation.step + 1} · Giliran {recommendation.actingSide === 'blue' ? 'Blue' : 'Red'}</p>
+          </div>
+        </div>
+        {primaryHero && (
+          <div className="vision-recommendation__primary">
+            <HeroThumbnail hero={primaryHero} />
+            <div>
+              <strong>{primaryHero.name}</strong>
+              <span>{primaryHero.primary_lane} · {reason}</span>
+              {solverText && <small className="vision-slot-suggestion__solver" style={{ display: 'block', marginTop: 4 }}>{solverText}</small>}
+            </div>
+          </div>
+        )}
+        {alternatives.length > 0 && (
+          <div className="vision-recommendation__alternatives">
+            {alternatives.map(hero => (
+              <button
+                key={hero.hero_id}
+                type="button"
+                className="vision-rec-alt ui-button ui-button--quiet"
+                onClick={() => onInspectHero?.(hero)}
+                title={`Lihat detail ${hero.name}`}
+              >
+                <HeroThumbnail hero={hero} />
+                <span>{hero.name} ({hero.primary_lane})</span>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    );
   };
 
 
@@ -1303,29 +1386,11 @@ export function VisionPanel({
           </div>
         </div>
         <div className="vision-panel__controls">
-          <fieldset className="vision-side-toggle">
-            <legend className="sr-only">Sisi tim Anda</legend>
-            {sideOptions.map(option => {
-              const inputId = `${sideGroupName}-${option.value}`;
-              const selected = side === option.value;
-              return (
-                <label key={option.value} htmlFor={inputId} className={selected ? 'is-selected' : ''}>
-                  <input
-                    id={inputId}
-                    type="radio"
-                    name={sideGroupName}
-                    value={option.value}
-                    checked={selected}
-                    onChange={() => setSide(option.value)}
-                    className="sr-only"
-                  />
-                  {selected ? <Eye aria-hidden="true" /> : <EyeOff aria-hidden="true" />}
-                  <span className="sr-only">Sisi </span>
-                  <span>{option.label}</span>
-                </label>
-              );
-            })}
-          </fieldset>
+          <div className="vision-side-indicator" role="status" aria-label={`Sisi tim terdeteksi: ${side === 'blue' ? 'Blue' : 'Red'}`}>
+            <span className={`vision-side-indicator__dot is-${side}`} aria-hidden="true" />
+            <span className="vision-side-indicator__label">Sisi: <strong>{side === 'blue' ? 'Blue' : 'Red'}</strong></span>
+            <small className="vision-side-indicator__auto">(Otomatis)</small>
+          </div>
           {status === 'running' || status === 'not-calibrated' ? (
             <button type="button" className="ui-button ui-button--quiet" onClick={handleStop}>
               <XCircle aria-hidden="true" />Berhenti

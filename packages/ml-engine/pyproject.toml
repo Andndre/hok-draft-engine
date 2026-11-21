@@ -6,6 +6,8 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "beautifulsoup4>=4.15.0",
+    "deep-translator>=1.11.4",
+    "hok-camp-api>=1.0.0",
     "httpx>=0.28.1",
     "pillow>=13.0.0",
 ]
