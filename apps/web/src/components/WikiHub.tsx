@@ -1,22 +1,14 @@
 import React, { useState, useMemo } from 'react';
 import {
-  BookOpen,
   Coins,
-  Compass,
-  Filter,
-  Flame,
   Search,
   Shield,
   Sparkles,
   Swords,
   Users,
   Zap,
-  ArrowRight,
-  ChevronRight,
-  Layers,
   Info,
   CheckCircle2,
-  Check,
 } from 'lucide-react';
 import type { Hero, ItemCatalogEntry, SpellCatalogEntry, Lane, Role } from '../types';
 import { ARCANA_L5_CATALOG, ArcanaCatalogEntry, ArcanaColor } from '../data/arcanaCatalog';
@@ -171,64 +163,64 @@ export const WikiHub: React.FC<Props> = ({
           <button
             type="button"
             onClick={() => setSubTab('hero')}
-            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all ${
               subTab === 'hero'
                 ? 'bg-[#B8FF01] text-slate-950 shadow-sm'
                 : 'text-slate-400 hover:text-slate-200 hover:bg-[#18202F]'
             }`}
           >
-            <Users className="w-3.5 h-3.5" aria-hidden="true" />
+            <Users className="w-4 h-4" aria-hidden="true" />
             <span>Hero & Counter</span>
-            <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-black/20">
+            <span className="text-xs font-mono font-medium px-2 py-0.5 rounded-md bg-black/25">
               {filteredHeroes.length}
             </span>
           </button>
           <button
             type="button"
             onClick={() => setSubTab('item')}
-            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all ${
               subTab === 'item'
                 ? 'bg-[#B8FF01] text-slate-950 shadow-sm'
                 : 'text-slate-400 hover:text-slate-200 hover:bg-[#18202F]'
             }`}
           >
-            <Swords className="w-3.5 h-3.5" aria-hidden="true" />
+            <Swords className="w-4 h-4" aria-hidden="true" />
             <span>Item Equipment</span>
-            <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-black/20">
+            <span className="text-xs font-mono font-medium px-2 py-0.5 rounded-md bg-black/25">
               {items.length}
             </span>
           </button>
           <button
             type="button"
             onClick={() => setSubTab('arcana')}
-            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all ${
               subTab === 'arcana'
                 ? 'bg-[#B8FF01] text-slate-950 shadow-sm'
                 : 'text-slate-400 hover:text-slate-200 hover:bg-[#18202F]'
             }`}
           >
-            <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
+            <Sparkles className="w-4 h-4" aria-hidden="true" />
             <span>Arcana Level 5</span>
-            <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-black/20">30</span>
+            <span className="text-xs font-mono font-medium px-2 py-0.5 rounded-md bg-black/25">30</span>
           </button>
           <button
             type="button"
             onClick={() => setSubTab('spell')}
-            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all ${
               subTab === 'spell'
                 ? 'bg-[#B8FF01] text-slate-950 shadow-sm'
                 : 'text-slate-400 hover:text-slate-200 hover:bg-[#18202F]'
             }`}
           >
-            <Zap className="w-3.5 h-3.5" aria-hidden="true" />
+            <Zap className="w-4 h-4" aria-hidden="true" />
             <span>Battle Spell</span>
-            <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-black/20">
+            <span className="text-xs font-mono font-medium px-2 py-0.5 rounded-md bg-black/25">
               {spells.length}
             </span>
           </button>
         </div>
 
-        <div className="text-xs text-slate-400 flex items-center gap-2">
+        <div className="text-xs text-slate-400 flex items-center gap-1.5">
           <Info className="w-3.5 h-3.5 text-slate-500" aria-hidden="true" />
           <span>Klik kartu mana pun untuk membuka detail ensiklopedia lengkap</span>
         </div>
@@ -247,7 +239,7 @@ export const WikiHub: React.FC<Props> = ({
                 <button
                   type="button"
                   onClick={() => setHeroViewMode('catalog')}
-                  className={`px-3 py-1 text-xs font-bold rounded-md transition-all ${
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all ${
                     heroViewMode === 'catalog'
                       ? 'bg-[#18202F] text-[#B8FF01] border border-[#324056]'
                       : 'text-slate-400 hover:text-slate-200'
@@ -258,13 +250,13 @@ export const WikiHub: React.FC<Props> = ({
                 <button
                   type="button"
                   onClick={() => setHeroViewMode('counter')}
-                  className={`px-3 py-1 text-xs font-bold rounded-md transition-all flex items-center gap-1.5 ${
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 ${
                     heroViewMode === 'counter'
                       ? 'bg-[#18202F] text-[#B8FF01] border border-[#324056]'
                       : 'text-slate-400 hover:text-slate-200'
                   }`}
                 >
-                  <Swords className="w-3 h-3" aria-hidden="true" />
+                  <Swords className="w-3.5 h-3.5" aria-hidden="true" />
                   Matrix Counter Langsung
                 </button>
               </div>
@@ -346,29 +338,29 @@ export const WikiHub: React.FC<Props> = ({
                         <div className="absolute top-1 right-1 flex flex-col gap-1 items-end">
                           {hero.popularity_band && (
                             <span
-                              className={`text-[10px] font-black px-1.5 py-0.5 rounded border ${bandColor}`}
+                              className={`text-xs font-mono font-bold px-1.5 py-0.5 rounded border ${bandColor}`}
                               title={`Popularitas HoK Camp: Band ${hero.popularity_band}`}
                             >
                               Band {hero.popularity_band}
                             </span>
                           )}
                         </div>
-                        <div className="absolute bottom-1 left-1 bg-black/70 px-1.5 py-0.5 rounded text-[10px] font-mono text-slate-300">
+                        <div className="absolute bottom-1 left-1 bg-black/75 px-1.5 py-0.5 rounded text-xs font-mono text-slate-200">
                           {hero.primary_lane}
                         </div>
                       </div>
                       <div>
                         <div className="flex items-center justify-between">
-                          <h4 className="text-xs font-bold text-slate-100 truncate group-hover:text-[#B8FF01]">
+                          <h4 className="text-sm font-bold text-slate-100 truncate group-hover:text-[#B8FF01]">
                             {hero.name}
                           </h4>
                         </div>
-                        <p className="text-[11px] text-slate-400 truncate">{hero.title || hero.chinese_name}</p>
+                        <p className="text-xs text-slate-400 truncate mt-0.5">{hero.title || hero.chinese_name}</p>
                       </div>
                     </div>
-                    <div className="pt-2 mt-2 border-t border-[#1C2230] flex items-center justify-between text-[11px] font-mono text-slate-400">
+                    <div className="pt-2 mt-2 border-t border-[#1C2230] flex items-center justify-between text-xs font-mono text-slate-400">
                       <span>WR {(hero.win_rate * 100).toFixed(1)}%</span>
-                      <span className="text-[10px] text-slate-500">{hero.primary_role}</span>
+                      <span className="text-slate-400">{hero.primary_role}</span>
                     </div>
                   </button>
                 );
@@ -391,14 +383,14 @@ export const WikiHub: React.FC<Props> = ({
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <h3 className="text-base font-black text-slate-100">{targetHero.name}</h3>
+                      <h3 className="text-lg font-bold text-slate-100">{targetHero.name}</h3>
                       <span className="text-xs text-slate-400 font-mono">({targetHero.chinese_name})</span>
-                      <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#18202F] text-[#B8FF01] border border-[#2D3A50]">
+                      <span className="text-xs font-mono font-semibold px-2 py-0.5 rounded bg-[#18202F] text-[#B8FF01] border border-[#2D3A50]">
                         {targetHero.primary_lane} · {targetHero.primary_role}
                       </span>
                     </div>
-                    <p className="text-xs text-slate-400 mt-0.5">
-                      Pilih hero untuk melihat matrix counter, ancaman, target empuk, dan sinergi duet.
+                    <p className="text-xs text-slate-300 mt-1">
+                      Pilih hero untuk melihat matrix counter, ancaman, target empuk, dan sinergi duet turnamen.
                     </p>
                   </div>
                 </div>
@@ -422,7 +414,7 @@ export const WikiHub: React.FC<Props> = ({
                   <button
                     type="button"
                     onClick={() => onInspectHero(targetHero)}
-                    className="px-3 py-1.5 text-xs font-bold bg-[#B8FF01] text-slate-950 rounded-lg hover:bg-[#a6e600] flex items-center gap-1"
+                    className="px-3.5 py-1.5 text-xs font-bold bg-[#B8FF01] text-slate-950 rounded-lg hover:bg-[#a6e600] flex items-center gap-1.5"
                   >
                     Detail Wiki
                   </button>
@@ -438,13 +430,13 @@ export const WikiHub: React.FC<Props> = ({
                       <CheckCircle2 className="w-4 h-4" aria-hidden="true" />
                       <span>{targetHero.name} Kuat Melawan (Target Empuk)</span>
                     </div>
-                    <span className="text-xs font-mono text-emerald-500 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/50">
+                    <span className="text-xs font-mono font-semibold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/50">
                       {(targetHero.counters || []).length} Hero
                     </span>
                   </div>
 
                   {(!targetHero.counters || targetHero.counters.length === 0) ? (
-                    <p className="text-xs text-slate-500 py-4 text-center">
+                    <p className="text-xs text-slate-400 py-4 text-center">
                       Belum ada catatan counter alami resmi untuk hero ini.
                     </p>
                   ) : (
@@ -454,7 +446,7 @@ export const WikiHub: React.FC<Props> = ({
                         return (
                           <div
                             key={idx}
-                            className="p-2.5 rounded-lg bg-[#0A0D12] border border-[#232A38] hover:border-emerald-600/50 transition-all flex items-start gap-3"
+                            className="p-3 rounded-lg bg-[#0A0D12] border border-[#232A38] hover:border-emerald-600/50 transition-all flex items-start gap-3"
                           >
                             <div className="w-10 h-10 rounded-lg overflow-hidden bg-[#18202F] border border-[#232A38] flex-shrink-0">
                               <img
@@ -465,24 +457,24 @@ export const WikiHub: React.FC<Props> = ({
                             </div>
                             <div className="min-w-0 flex-1">
                               <div className="flex items-center justify-between">
-                                <span className="text-xs font-bold text-slate-200">
+                                <span className="text-sm font-semibold text-slate-100">
                                   {c.target_name}
                                 </span>
                                 <span
-                                  className={`text-[10px] font-mono px-1.5 py-0.5 rounded border ${
+                                  className={`text-xs font-mono font-medium px-2 py-0.5 rounded border ${
                                     c.severity === 'hard'
                                       ? 'bg-emerald-950 text-emerald-300 border-emerald-800'
-                                      : 'bg-slate-900 text-slate-400 border-slate-700'
+                                      : 'bg-slate-900 text-slate-300 border-slate-700'
                                   }`}
                                 >
                                   {c.severity === 'hard' ? 'Hard Counter' : 'Soft Counter'}
                                 </span>
                               </div>
-                              <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+                              <p className="text-xs text-slate-300 mt-1 leading-relaxed">
                                 {c.reason || 'Hero ini memiliki keunggulan mekanik/range saat berhadapan.'}
                               </p>
                               {c.source && (
-                                <span className="text-[10px] font-mono text-slate-500 mt-1 block">
+                                <span className="text-xs font-mono text-slate-400 mt-1 block">
                                   Sumber: {c.source === 'curation' ? 'Kurasi Taktis' : 'Kurohiko'}
                                 </span>
                               )}
@@ -501,13 +493,13 @@ export const WikiHub: React.FC<Props> = ({
                       <Shield className="w-4 h-4" aria-hidden="true" />
                       <span>{targetHero.name} Lemah Melawan (Ancaman Alami)</span>
                     </div>
-                    <span className="text-xs font-mono text-rose-500 bg-rose-950/60 px-2 py-0.5 rounded border border-rose-800/50">
+                    <span className="text-xs font-mono font-semibold text-rose-400 bg-rose-950/60 px-2 py-0.5 rounded border border-rose-800/50">
                       {(targetHero.countered_by || []).length} Hero
                     </span>
                   </div>
 
                   {(!targetHero.countered_by || targetHero.countered_by.length === 0) ? (
-                    <p className="text-xs text-slate-500 py-4 text-center">
+                    <p className="text-xs text-slate-400 py-4 text-center">
                       Belum ada ancaman counter keras yang tercatat.
                     </p>
                   ) : (
@@ -517,7 +509,7 @@ export const WikiHub: React.FC<Props> = ({
                         return (
                           <div
                             key={idx}
-                            className="p-2.5 rounded-lg bg-[#0A0D12] border border-[#232A38] hover:border-rose-600/50 transition-all flex items-start gap-3"
+                            className="p-3 rounded-lg bg-[#0A0D12] border border-[#232A38] hover:border-rose-600/50 transition-all flex items-start gap-3"
                           >
                             <div className="w-10 h-10 rounded-lg overflow-hidden bg-[#18202F] border border-[#232A38] flex-shrink-0">
                               <img
@@ -528,24 +520,24 @@ export const WikiHub: React.FC<Props> = ({
                             </div>
                             <div className="min-w-0 flex-1">
                               <div className="flex items-center justify-between">
-                                <span className="text-xs font-bold text-slate-200">
+                                <span className="text-sm font-semibold text-slate-100">
                                   {cb.counter_name}
                                 </span>
                                 <span
-                                  className={`text-[10px] font-mono px-1.5 py-0.5 rounded border ${
+                                  className={`text-xs font-mono font-medium px-2 py-0.5 rounded border ${
                                     cb.severity === 'hard'
                                       ? 'bg-rose-950 text-rose-300 border-rose-800'
-                                      : 'bg-slate-900 text-slate-400 border-slate-700'
+                                      : 'bg-slate-900 text-slate-300 border-slate-700'
                                   }`}
                                 >
                                   {cb.severity === 'hard' ? 'Hard Threat' : 'Soft Threat'}
                                 </span>
                               </div>
-                              <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+                              <p className="text-xs text-slate-300 mt-1 leading-relaxed">
                                 {cb.reason || 'Hero ini mengeksploitasi kerentanan mobilitas atau durabilitas.'}
                               </p>
                               {cb.source && (
-                                <span className="text-[10px] font-mono text-slate-500 mt-1 block">
+                                <span className="text-xs font-mono text-slate-400 mt-1 block">
                                   Sumber: {cb.source === 'curation' ? 'Kurasi Taktis' : 'Kurohiko'}
                                 </span>
                               )}
@@ -562,11 +554,11 @@ export const WikiHub: React.FC<Props> = ({
               {targetHero.kpl_matchup?.synergies && targetHero.kpl_matchup.synergies.length > 0 && (
                 <div className="p-4 bg-[#10141E] border border-[#232A38] rounded-xl space-y-3">
                   <div className="flex items-center justify-between border-b border-[#232A38] pb-2">
-                    <div className="flex items-center gap-2 text-[#B8FF01] font-bold text-xs uppercase tracking-wider">
-                      <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
+                    <div className="flex items-center gap-2 text-[#B8FF01] font-bold text-sm">
+                      <Sparkles className="w-4 h-4" aria-hidden="true" />
                       <span>Sinergi Duet Terkuat di Turnamen KPL Pro (Empiris)</span>
                     </div>
-                    <span className="text-xs font-mono text-slate-500">
+                    <span className="text-xs font-mono text-slate-400">
                       {targetHero.kpl_matchup.synergies.length} Partner Terverifikasi
                     </span>
                   </div>
@@ -583,10 +575,10 @@ export const WikiHub: React.FC<Props> = ({
                             className="w-8 h-8 rounded-lg object-cover border border-[#232A38]"
                           />
                           <div className="min-w-0">
-                            <span className="font-bold text-slate-200 block truncate leading-tight">
+                            <span className="font-semibold text-slate-100 block truncate leading-tight">
                               {syn.partner_name}
                             </span>
-                            <span className="text-[11px] font-mono text-slate-500">
+                            <span className="text-xs font-mono text-slate-400">
                               {syn.total_matches} Match ({syn.wins}W - {syn.losses}L)
                             </span>
                           </div>
@@ -625,10 +617,10 @@ export const WikiHub: React.FC<Props> = ({
                   key={cat.id}
                   type="button"
                   onClick={() => setSelectedItemType(cat.id)}
-                  className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                     selectedItemType.toLowerCase() === cat.id.toLowerCase()
-                      ? 'bg-[#B8FF01] text-slate-950 shadow-sm'
-                      : 'bg-[#0A0D12] text-slate-400 hover:text-slate-200 border border-[#232A38]'
+                      ? 'bg-[#B8FF01] text-slate-950 shadow-sm font-bold'
+                      : 'bg-[#0A0D12] text-slate-300 hover:text-white border border-[#232A38]'
                   }`}
                 >
                   {cat.label}
@@ -691,21 +683,21 @@ export const WikiHub: React.FC<Props> = ({
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <div className="flex items-center justify-between gap-1">
-                          <h4 className="text-xs font-black text-slate-100 truncate">{item.name}</h4>
+                        <div className="flex items-center justify-between gap-1.5">
+                          <h4 className="text-sm font-bold text-slate-100 truncate">{item.name}</h4>
                           {item.type && (
-                            <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded border ${typeColor}`}>
+                            <span className={`text-xs font-mono font-medium px-2 py-0.5 rounded border ${typeColor}`}>
                               {item.type}
                             </span>
                           )}
                         </div>
                         {item.price && (
-                          <div className="flex items-center gap-1 text-[11px] font-mono text-amber-400 font-bold mt-0.5">
-                            <Coins className="w-3 h-3" aria-hidden="true" />
+                          <div className="flex items-center gap-1 text-xs font-mono text-amber-400 font-bold mt-1">
+                            <Coins className="w-3.5 h-3.5" aria-hidden="true" />
                             <span>{item.price.toLocaleString()} Gold</span>
                           </div>
                         )}
-                        <p className="text-[11px] text-slate-400 leading-tight line-clamp-2 mt-1">
+                        <p className="text-xs text-slate-300 leading-relaxed line-clamp-2 mt-1">
                           {item.desc || 'Equipment resmi HoK.'}
                         </p>
                       </div>
@@ -713,44 +705,44 @@ export const WikiHub: React.FC<Props> = ({
 
                     {/* Stats pills */}
                     {statsText && (
-                      <div className="p-2 rounded-lg bg-[#0A0D12] border border-[#1A2230] text-[11px] font-mono text-[#B8FF01]">
+                      <div className="p-2 rounded-lg bg-[#0A0D12] border border-[#1A2230] text-xs font-mono font-medium text-[#B8FF01]">
                         {statsText}
                       </div>
                     )}
 
                     {/* Passive Effect */}
                     {passiveText && (
-                      <div className="text-xs text-slate-300 bg-[#0E131C] p-2 rounded-lg border border-[#1A2230] leading-relaxed">
+                      <div className="text-xs text-slate-300 bg-[#0E131C] p-2.5 rounded-lg border border-[#1A2230] leading-relaxed">
                         <span className="font-bold text-amber-300 block mb-0.5">Efek Pasif:</span>
-                        <span className="text-[11px] text-slate-300">{passiveText}</span>
+                        <span className="text-xs text-slate-300 leading-relaxed">{passiveText}</span>
                       </div>
                     )}
 
                     {/* Active Effect */}
                     {activeText && (
-                      <div className="text-xs text-slate-300 bg-[#16120E] p-2 rounded-lg border border-amber-900/40 leading-relaxed">
+                      <div className="text-xs text-slate-300 bg-[#16120E] p-2.5 rounded-lg border border-amber-900/40 leading-relaxed">
                         <span className="font-bold text-orange-400 block mb-0.5">Skill Aktif:</span>
-                        <span className="text-[11px] text-slate-300">{activeText}</span>
+                        <span className="text-xs text-slate-300 leading-relaxed">{activeText}</span>
                       </div>
                     )}
                   </div>
 
                   {/* Build path / tree */}
                   {buildPath.length > 0 && (
-                    <div className="pt-2 border-t border-[#1C2331] text-[10px] text-slate-500">
-                      <span className="block mb-1 text-slate-400 font-bold">Jalur Upgrade / Bahan:</span>
+                    <div className="pt-2 border-t border-[#1C2331] text-xs text-slate-400">
+                      <span className="block mb-1.5 font-semibold text-slate-300">Jalur Upgrade / Bahan:</span>
                       <div className="flex flex-wrap gap-1">
                         {buildPath.slice(0, 4).map((bp, idx) => (
                           <span
                             key={idx}
-                            className="px-1.5 py-0.5 rounded bg-[#0A0D12] border border-[#232A38] text-slate-400 truncate max-w-[120px]"
+                            className="px-2 py-0.5 rounded bg-[#0A0D12] border border-[#232A38] text-slate-300 truncate max-w-[140px] text-xs font-mono"
                             title={bp}
                           >
                             {bp}
                           </span>
                         ))}
                         {buildPath.length > 4 && (
-                          <span className="text-slate-500 px-1">+{buildPath.length - 4}</span>
+                          <span className="text-slate-400 px-1 text-xs font-mono">+{buildPath.length - 4}</span>
                         )}
                       </div>
                     </div>
@@ -780,10 +772,10 @@ export const WikiHub: React.FC<Props> = ({
                   key={c.id}
                   type="button"
                   onClick={() => setSelectedArcanaColor(c.id as ArcanaColor | 'all')}
-                  className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                     selectedArcanaColor === c.id
-                      ? 'bg-[#B8FF01] text-slate-950 shadow-sm'
-                      : 'bg-[#0A0D12] text-slate-400 hover:text-slate-200 border border-[#232A38]'
+                      ? 'bg-[#B8FF01] text-slate-950 shadow-sm font-bold'
+                      : 'bg-[#0A0D12] text-slate-300 hover:text-white border border-[#232A38]'
                   }`}
                 >
                   {c.label}
@@ -835,15 +827,15 @@ export const WikiHub: React.FC<Props> = ({
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <div className="flex items-center justify-between gap-1">
-                          <h4 className="text-xs font-black text-slate-100 truncate">{arc.name}</h4>
-                          <span className="text-[10px] font-mono text-slate-500">{arc.chinese_name}</span>
+                        <div className="flex items-center justify-between gap-1.5">
+                          <h4 className="text-sm font-bold text-slate-100 truncate">{arc.name}</h4>
+                          <span className="text-xs font-mono text-slate-400">{arc.chinese_name}</span>
                         </div>
-                        <div className="flex items-center gap-1.5 mt-0.5">
-                          <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded border ${colorBorder}`}>
+                        <div className="flex items-center gap-1.5 mt-1">
+                          <span className={`text-xs font-mono font-medium px-2 py-0.5 rounded border ${colorBorder}`}>
                             {badgeText}
                           </span>
-                          <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-black/40 text-slate-400 border border-[#232A38]">
+                          <span className="text-xs font-mono font-medium px-2 py-0.5 rounded bg-black/40 text-slate-300 border border-[#232A38]">
                             Level 5
                           </span>
                         </div>
@@ -851,7 +843,7 @@ export const WikiHub: React.FC<Props> = ({
                     </div>
 
                     {/* Stat Attribute */}
-                    <div className="p-2 rounded-lg bg-[#0A0D12] border border-[#1A2230] text-xs font-mono font-bold text-[#B8FF01]">
+                    <div className="p-2.5 rounded-lg bg-[#0A0D12] border border-[#1A2230] text-xs font-mono font-bold text-[#B8FF01]">
                       {arc.attr}
                     </div>
 
@@ -862,12 +854,12 @@ export const WikiHub: React.FC<Props> = ({
 
                     {/* Recommended Roles */}
                     {arc.recommended_roles && arc.recommended_roles.length > 0 && (
-                      <div className="flex items-center gap-1 flex-wrap">
-                        <span className="text-[10px] text-slate-500 font-bold">Cocok untuk:</span>
+                      <div className="flex items-center gap-1.5 flex-wrap pt-1">
+                        <span className="text-xs font-semibold text-slate-400">Cocok untuk:</span>
                         {arc.recommended_roles.map((r, idx) => (
                           <span
                             key={idx}
-                            className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-[#18202F] text-slate-300 border border-[#263346]"
+                            className="text-xs font-mono px-2 py-0.5 rounded bg-[#18202F] text-slate-300 border border-[#263346]"
                           >
                             {r}
                           </span>
@@ -878,8 +870,8 @@ export const WikiHub: React.FC<Props> = ({
 
                   {/* Users (Heroes in our dataset using this Arcana in official builds) */}
                   {users.length > 0 && (
-                    <div className="pt-2 border-t border-[#1C2331]">
-                      <span className="text-[10px] font-bold text-slate-400 block mb-1">
+                    <div className="pt-2.5 border-t border-[#1C2331]">
+                      <span className="text-xs font-semibold text-slate-300 block mb-1.5">
                         Dipakai oleh {users.length} hero resmi:
                       </span>
                       <div className="flex items-center gap-1.5 flex-wrap">
@@ -888,7 +880,7 @@ export const WikiHub: React.FC<Props> = ({
                             key={u.hero_id}
                             type="button"
                             onClick={() => onInspectHero(u)}
-                            className="group relative w-6 h-6 rounded-md overflow-hidden bg-[#0A0D12] border border-[#232A38] hover:border-[#B8FF01] transition-all"
+                            className="group relative w-7 h-7 rounded-lg overflow-hidden bg-[#0A0D12] border border-[#232A38] hover:border-[#B8FF01] transition-all"
                             title={`${u.name} (Buka Wiki)`}
                           >
                             <img
@@ -899,7 +891,7 @@ export const WikiHub: React.FC<Props> = ({
                           </button>
                         ))}
                         {users.length > 7 && (
-                          <span className="text-[10px] font-mono text-slate-500">
+                          <span className="text-xs font-mono text-slate-400 pl-1">
                             +{users.length - 7}
                           </span>
                         )}
@@ -920,7 +912,7 @@ export const WikiHub: React.FC<Props> = ({
         <div className="space-y-4">
           {/* Spell Header & Search */}
           <div className="flex flex-wrap items-center justify-between gap-3 p-3 bg-[#10141E] border border-[#232A38] rounded-xl">
-            <div className="text-xs text-slate-300 flex items-center gap-2">
+            <div className="text-xs text-slate-200 flex items-center gap-2">
               <Zap className="w-4 h-4 text-[#B8FF01]" aria-hidden="true" />
               <span>Daftar 11 Battle Spell Resmi HoK Global (Cooldown & Rekomendasi Taktis)</span>
             </div>
@@ -961,15 +953,15 @@ export const WikiHub: React.FC<Props> = ({
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <div className="flex items-center justify-between gap-1">
-                          <h4 className="text-xs font-black text-slate-100 truncate">{spell.name}</h4>
+                        <div className="flex items-center justify-between gap-1.5">
+                          <h4 className="text-sm font-bold text-slate-100 truncate">{spell.name}</h4>
                           {cooldown && (
-                            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-950/70 text-blue-300 border border-blue-800/60 font-bold">
+                            <span className="text-xs font-mono px-2 py-0.5 rounded bg-blue-950/70 text-blue-300 border border-blue-800/60 font-bold">
                               {cooldown}
                             </span>
                           )}
                         </div>
-                        <p className="text-[11px] text-slate-400 mt-1 leading-tight">
+                        <p className="text-xs text-slate-300 mt-1 leading-relaxed">
                           {hokstats?.effect || spell.effect}
                         </p>
                       </div>
@@ -977,15 +969,15 @@ export const WikiHub: React.FC<Props> = ({
 
                     {/* Best for tags */}
                     {bestFor.length > 0 && (
-                      <div className="p-2 bg-[#0A0D12] rounded-lg border border-[#1A2230] space-y-1">
-                        <span className="text-[10px] font-bold text-slate-400 block uppercase tracking-wider">
+                      <div className="p-2.5 bg-[#0A0D12] rounded-lg border border-[#1A2230] space-y-1.5">
+                        <span className="text-xs font-bold text-slate-400 block tracking-wider">
                           Rekomendasi Taktis:
                         </span>
                         <div className="flex flex-wrap gap-1">
                           {bestFor.map((bf, idx) => (
                             <span
                               key={idx}
-                              className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#18202F] text-slate-300 border border-[#2A374A]"
+                              className="text-xs font-mono px-2 py-0.5 rounded bg-[#18202F] text-slate-300 border border-[#2A374A]"
                             >
                               {bf}
                             </span>
