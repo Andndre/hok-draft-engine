@@ -1,0 +1,546 @@
+{
+  "schema_version": 2,
+  "hero_id": 540,
+  "source_hash": "2720cc9f863e9c5d50c3669b75dc171bccbb88f360b943ee6a9baa0d335d50cc",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "skill_id": 54000,
+          "type": "Passive",
+          "name": "Jinyi treasure clothes",
+          "desc": "Jinyi Baoyi will protect the golden cicada and reduce the damage by 40% after a single damage exceeds 5% of the Max HP; During the liberation of the Seal of Reincarnation: the power of the treasure clothes will be shared with all friendly hero units present to protect them.",
+          "cd": "0",
+          "cost": "0",
+          "tags": [
+            "Damage Reduction",
+            "Defense"
+          ],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/540/54000.png"
+        },
+        {
+          "skill_id": 54001,
+          "type": "Skill 1",
+          "name": "The Tightening Curse",
+          "desc": "Throws a tight hoop to trap the first hit target for 3 seconds and causes 200/225/250/275/300/325 (+40% Magical Attack) magic damage to nearby enemies. The hoop will follow the target at a fixed speed and gain vision. The target cannot leave the scope of the hoop. During the release of the Seal of Reincarnation: Causes an additional 50% slowdown to the target.",
+          "cd": "12/11.8/11.6/11.4/11.2/11",
+          "cost": "60",
+          "tags": [
+            "Crowd Control",
+            "Tether",
+            "Slow"
+          ],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/540/54010.png"
+        },
+        {
+          "skill_id": 54002,
+          "type": "Skill 2",
+          "name": "Staff of Nine Rings",
+          "desc": "Release the nine magic weapons on the staff of nine rings to cause 270/300/330/360/390/420 (+28% Magical Attack) magic damage to the target point and form a magic circle for 5 seconds. Each time the magic circle hits the enemy, a magic weapon will be activated and cause 60/65/7 0/75/80/85 (+5% Magical Attack) spell damage. When fully activated or the duration ends, it causes 300/330/360/390/420/450 (+35% Magical Attack) spell damage and an additional 50% damage to minions and monsters. The circle will automatically track the object carrying the hoop. Nearby army lines and Jungle Creeps will be affected by the magic circle and move towards the magic circle. During the liberation of the Seal of Reincarnation: the attack frequency of the magic circle is greatly increased.",
+          "cd": "8",
+          "cost": "65",
+          "tags": [
+            "Damage",
+            "Burst",
+            "AoE"
+          ],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/540/54020.png"
+        },
+        {
+          "skill_id": 54003,
+          "type": "Skill 3",
+          "name": "Seal of Reincarnation",
+          "desc": "The Seal of Reincarnation was briefly liberated, and the three artifacts returned to their original power. During the duration of the ultimate move, each time your basic attacks and skills cause damage, 1 layer of mark will be added, up to 10 layers. Clicking the ultimate move again will consume all the marks and hit out the power. The basic damage is 400/600/800 (+76% Magical Attack) spell damage. Each layer of marks increases the damage by 8%.",
+          "cd": "50/45/40",
+          "cost": "100",
+          "tags": [
+            "Buff",
+            "Shield",
+            "Damage"
+          ],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/540/54030.png"
+        },
+        {
+          "skill_id": 54004,
+          "type": "Skill 4",
+          "name": "",
+          "desc": "",
+          "cd": "0",
+          "cost": "0",
+          "tags": [],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/540/54040.png"
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": null,
+        "cons": null,
+        "gameplay_tips": null
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Mengunci hero lincah di dalam lingkaran mantra sehingga musuh tidak bisa dash/flash kabur."
+    }
+  ],
+  "model": "Skill-Evidence-Audit-v2",
+  "provider": "evidence",
+  "model_info": {
+    "provider": "evidence",
+    "engine": "skill-evidence-audit",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_taunt": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.07,
+            "tidak": 0.8,
+            "tidak_diketahui": 0.13
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

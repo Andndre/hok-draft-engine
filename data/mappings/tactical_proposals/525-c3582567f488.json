@@ -1,0 +1,546 @@
+{
+  "schema_version": 2,
+  "hero_id": 525,
+  "source_hash": "c3582567f4888086281c8c61b663a067d1e12f2361a3d3847274cb279b6af238",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "skill_id": 52500,
+          "type": "Passive",
+          "name": "Jixia Technology",
+          "desc": "Passive: Master Luban's skills will provide himself with a shield that absorbs 50 (+5*hero level) (+0.15Ap) (+2%*maximum life) damage when casting a spell or hitting the target. The shield lasts for 5 seconds and can be stacked 4 times. Every 5 seconds, Master Luban's mechanical arm completes charging and strengthens the next basic attack with 400 (+40% spell bonus) points of spell damage.",
+          "cd": "0",
+          "cost": "0",
+          "tags": [
+            "Shield",
+            "Enhance"
+          ],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/525/52500.png"
+        },
+        {
+          "skill_id": 52501,
+          "type": "Skill 1",
+          "name": "boost jump",
+          "desc": "Master Luban jumps forward with the help of the jet power of the mechanical arm, and when he lands, he deploys a force field to knock up surrounding enemies for 0.5 seconds and cause 350/480/610/740/870/1000 (+40% Magical Attack) magic damage.",
+          "cd": "10/9.6/9.2/8.8/8.4/8",
+          "cost": "50",
+          "tags": [
+            "Movement",
+            "Knock Back",
+            "Jump"
+          ],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/525/52510.png"
+        },
+        {
+          "skill_id": 52502,
+          "type": "Skill 2",
+          "name": "Assistants rush to help",
+          "desc": "Master Luban grants a shield to a teammate and himself, and creates a link between him and himself, which lasts for 6 seconds. After the teammate confirms the interaction, he will immediately move to Master Luban's position and cause 450/540/630/720/810/900 (+45% Magical Attack) magic damage to enemies on the path. When starting to cast a spell, Master Luban's movement speed increases by 50% for 1.5 seconds. If teammates do not interact during the link, 30% of the cooldown will be returned.",
+          "cd": "10/9.8/9.6/9.4/9.2/9",
+          "cost": "45",
+          "tags": [
+            "Tether",
+            "Shield",
+            "Ally Mobility"
+          ],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/525/52520.png"
+        },
+        {
+          "skill_id": 52503,
+          "type": "Skill 3",
+          "name": "Powerful storage",
+          "desc": "Master Luban launches a mechanical arm to the fan-shaped area ahead, connecting up to 6 enemies in the area, giving priority to hero units. The connected enemy will take 250/300/350 (+25% Magical Attack) spell damage. If the connected enemy is far enough away from Master Luban, the connection will be severed. Otherwise, the enemy will be pulled to Master Luban after 1.25 seconds. Each unit pulled back will cause a small range of 600/900/1200 (+60% Magical Attack) spell damage around Master Luban, starting from the second enemy, only 25% of the damage will be caused.",
+          "cd": "40/35/30",
+          "cost": "60",
+          "tags": [
+            "Crowd Control",
+            "Pull",
+            "Stun"
+          ],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/525/52530.png"
+        },
+        {
+          "skill_id": 52504,
+          "type": "Skill 4",
+          "name": "",
+          "desc": "",
+          "cd": "0",
+          "cost": "0",
+          "tags": [],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/525/52540.png"
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": null,
+        "cons": null,
+        "gameplay_tips": null
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Menghubungkan tether rekan setim untuk blink penyelamatan instan serta ulti penarik magnet."
+    }
+  ],
+  "model": "Skill-Evidence-Audit-v2",
+  "provider": "evidence",
+  "model_info": {
+    "provider": "evidence",
+    "engine": "skill-evidence-audit",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_taunt": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.91,
+            "tidak": 0.0585,
+            "tidak_diketahui": 0.0315
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

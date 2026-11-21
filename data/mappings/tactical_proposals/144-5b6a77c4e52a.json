@@ -1,0 +1,545 @@
+{
+  "schema_version": 2,
+  "hero_id": 144,
+  "source_hash": "5b6a77c4e52ad18e40e325ae013db36d973c12cd889e7493d15b444d2cb3628d",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "skill_id": 14400,
+          "type": "Passive",
+          "name": "Give up one's life",
+          "desc": "Passive: Cheng Yaojin gains an additional 3 to 7 points of physical attack power for every 1% of his Max HP lost. The increase increases with the hero's level. Cheng Yaojin's normal skills will consume 10% of his current Max HP, and his ultimate skill will consume 16% of his current health. Each time he releases a skill, he will also recover 8% of his lost health. The recovery process lasts 3 seconds.",
+          "cd": "0",
+          "cost": "0",
+          "tags": [
+            "Enhance",
+            "Attack Up"
+          ],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/144/14400.png"
+        },
+        {
+          "skill_id": 14401,
+          "type": "Skill 1",
+          "name": "Explosive double ax",
+          "desc": "Cheng Yaojin leaps towards the designated target position and swings his double ax to slash, causing 120/155/190/225/260/295 (+50% physical bonus) points of physical damage to enemies within the range and causing a 50% deceleration effect, lasting 2 seconds; Passive: Cheng Yaojin's normal attack hits the enemy hero, which will reduce the cooldown of the explosive double ax by 1 second.",
+          "cd": "15/14.4/13.8/13.2/12.6/12",
+          "cost": "0",
+          "tags": [
+            "Movement",
+            "Slow",
+            "Jump"
+          ],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/144/14410.png"
+        },
+        {
+          "skill_id": 14402,
+          "type": "Skill 2",
+          "name": "slalom",
+          "desc": "Cheng Yaojin spins his double ax to chop the enemy, causing two sections of damage to enemies within the range. Each section causes 125/150/175/200/225/250 (+60% physical bonus) points of physical damage.",
+          "cd": "5",
+          "cost": "0",
+          "tags": [
+            "Damage",
+            "AoE"
+          ],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/144/14420.png"
+        },
+        {
+          "skill_id": 14403,
+          "type": "Skill 3",
+          "name": "justice potential",
+          "desc": "Cheng Yaojin bursts with righteous passion, recovering 8% of his maximum life per second and increasing his movement speed by 30% for 5/6/7 seconds.",
+          "cd": "30",
+          "cost": "0",
+          "tags": [
+            "Recovery",
+            "Speed Up",
+            "Heal"
+          ],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/144/14430.png"
+        },
+        {
+          "skill_id": 14404,
+          "type": "Skill 4",
+          "name": "",
+          "desc": "",
+          "cd": "0",
+          "cost": "0",
+          "tags": [],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/144/14440.png"
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": null,
+        "cons": null,
+        "gameplay_tips": null
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Regenerasi HP masif saat sekarat, semakin rendah HP semakin tinggi attack damage-nya."
+    }
+  ],
+  "model": "Skill-Evidence-Audit-v2",
+  "provider": "evidence",
+  "model_info": {
+    "provider": "evidence",
+    "engine": "skill-evidence-audit",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_taunt": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

@@ -142,7 +142,7 @@ export function evaluateTacticalScores(ourHeroes: Hero[], enemyHeroes: Hero[]): 
 
     const reviewedUtility = new Set<string>();
     for (const hero of ourHeroes) {
-      if (hero.is_global_released !== true) continue;
+      if (!hero.tactical_profile) continue;
       for (const tag of utilityTags) {
         if (hero.tactical_profile?.tags[tag] === true) {
           reviewedUtility.add(tag);
@@ -241,13 +241,13 @@ export function reviewedHoKStatsBonuses(
     return { matchupBonus, traitBonus: 0, totalBonus: matchupBonus };
   }
 
-  const globalTeam = ourHeroes.filter((hero) => hero.is_global_released === true);
-  const alreadyHas = (tag: keyof typeof tags) => globalTeam.some((hero) => hero.tactical_profile?.tags[tag] === true);
+  const teamHeroes = ourHeroes;
+  const alreadyHas = (tag: keyof typeof tags) => teamHeroes.some((hero) => hero.tactical_profile?.tags[tag] === true);
 
   const gaps: Array<[keyof typeof tags, boolean]> = [
-    ['frontline', !globalTeam.some((hero) => hero.primary_role === 'Tank' || hero.tactical_profile?.tags.frontline === true)],
-    ['engage', !globalTeam.some((hero) => hero.tactical_profile?.tags.engage === true)],
-    ['peel', !globalTeam.some((hero) => hero.tactical_profile?.tags.peel === true || hero.tactical_profile?.tags.disengage === true)],
+    ['frontline', !teamHeroes.some((hero) => hero.primary_role === 'Tank' || hero.tactical_profile?.tags.frontline === true)],
+    ['engage', !teamHeroes.some((hero) => hero.tactical_profile?.tags.engage === true)],
+    ['peel', !teamHeroes.some((hero) => hero.tactical_profile?.tags.peel === true || hero.tactical_profile?.tags.disengage === true)],
     ['ally_shield', !alreadyHas('ally_shield')],
     ['ally_heal', !alreadyHas('ally_heal')],
     ['ally_move_speed_buff', !alreadyHas('ally_move_speed_buff')],

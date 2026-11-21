@@ -1,0 +1,547 @@
+{
+  "schema_version": 2,
+  "hero_id": 544,
+  "source_hash": "04d2c59f31224a172e12b81e5420707e3389a536461f2fc690e3711e54af1f17",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "skill_id": 54400,
+          "type": "Passive",
+          "name": "Qi follows the heart",
+          "desc": "Huaizhen used four basic attacks: palm, punch, elbow, and relying on his strength. Palm strength starts, causing 8 (+8/Lv) (+50% physical attack) physical damage once, causing 1.5 times the damage to non-hero units. When the energy is full, the displacement distance of this move increases. When full of energy, Huai Zhen will rush towards the enemy. The fist strikes quickly to cause 2 damage, the first blow causes 8 (+8/Lv) (+50% physical attack) physical damage, the second blow causes 4 (+4/Lv) (+25% physical attack) physical damage and restores 10 (+5/Lv) (+10% physical attack) points of life. Elbow Jin causes 16 (+16/Lv) (+100% physical attack) physical damage and restores 20 (+10/Lv) (+20% physical attack) points of life. Using Reliance will cause 20 (+20/Lv) (+125% physical attack) (+3% target's lost health) physical damage after a short period of charging. Each hit consumes 1 energy, recovers 1 energy every 0.7 seconds, and can accumulate 4 energy.",
+          "cd": "0",
+          "cost": "0",
+          "tags": [
+            "Combo Stance",
+            "Recovery",
+            "Enhance"
+          ],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/544/54400.png"
+        },
+        {
+          "skill_id": 54401,
+          "type": "Skill 1",
+          "name": "Clear the clouds and see the light",
+          "desc": "Huaizhen brings up his true energy and creates wind with his palms. The wind wraps up the enemies and moves them together, causing 250/300/350/400/450/500 (+20% physical attack) physical damage, while changing the direction of the enemies. Later, a punch will be released, causing 100 (+15% physical attack) physical damage to the path.",
+          "cd": "9",
+          "cost": "0",
+          "tags": [
+            "Pull",
+            "Crowd Control",
+            "Damage"
+          ],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/544/54410.png"
+        },
+        {
+          "skill_id": 54402,
+          "type": "Skill 2",
+          "name": "Calm and calm",
+          "desc": "Huaizhen enters the parrying posture and continuously gains 200 (+30% physical attack) ~ 680 (+80% physical attack) shield for 4 seconds. Parry the first hard control, and counterattack in the direction of the attacker, causing 150/165/180/195/210/225 (+15% physical attack) physical damage, stun and knockback effects, and then no longer parry the hard control. When ending the parrying posture, it will cause 200 (+30% physical attack) ~ 350 (+60% physical attack) physical damage to the surroundings depending on the charging time.",
+          "cd": "8/7.6/7.2/6.8/6.4/6",
+          "cost": "0",
+          "tags": [
+            "Parry",
+            "Shield",
+            "Stun"
+          ],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/544/54420.png"
+        },
+        {
+          "skill_id": 54403,
+          "type": "Skill 3",
+          "name": "Yin and Yang reversal",
+          "desc": "Huaizhen hits the cloud hand and continues to dominate the body, forming a cyclone around him to protect himself and causing 200/300/400 (+20% physical attack) physical damage to surrounding enemies. The cyclone absorbs 40% of the incoming damage for Huaizhen. Every 10 points of attack power increases the absorption ratio by 0.5%, and absorbs incoming flying objects. The total amount of damage absorbed is capped at 1500/2500/3500. The absorbed damage is then condensed into energy and emitted to the selected enemy. After hitting the hero, it will cause physical damage in a range of 500/900/1300 (+150% physical attack) (enjoy 50% absorbed damage bonus).",
+          "cd": "55/50/45",
+          "cost": "0",
+          "tags": [
+            "Cyclone",
+            "Absorb Projectiles",
+            "Burst"
+          ],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/544/54430.png"
+        },
+        {
+          "skill_id": 54404,
+          "type": "Skill 4",
+          "name": "",
+          "desc": "",
+          "cd": "0",
+          "cost": "0",
+          "tags": [],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/544/54440.png"
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": null,
+        "cons": null,
+        "gameplay_tips": null
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Menyerap semua proyektil musuh dan membalikkannya kembali dengan energi Tai Chi."
+    }
+  ],
+  "model": "Skill-Evidence-Audit-v2",
+  "provider": "evidence",
+  "model_info": {
+    "provider": "evidence",
+    "engine": "skill-evidence-audit",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_taunt": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

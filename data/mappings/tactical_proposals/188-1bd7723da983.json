@@ -1,0 +1,543 @@
+{
+  "schema_version": 2,
+  "hero_id": 188,
+  "source_hash": "1bd7723da9833fe14ae7b1a811f300541f4ce58d0a75a36bee06353f27057f02",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "skill_id": 18800,
+          "type": "Passive",
+          "name": "Harmony of Nine Cauldrons (Jiu Ding Qi Ming)",
+          "desc": "Can place sacred Cauldrons (Ding) across the battlefield. Learning the Ultimate converts Da Yu's recall spell into a Teleport when near any Cauldron, allowing him to teleport with iron body (crowd control immunity) to any active Cauldron location. Active Cauldrons grant vision, continuous HP regeneration, and act as global strategic fast-travel beacons.",
+          "cd": "0",
+          "cost": "0",
+          "tags": [
+            "Teleport",
+            "Global Presence",
+            "Vision",
+            "Regeneration",
+            "Iron Body"
+          ],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/188/18800.png"
+        },
+        {
+          "skill_id": 18801,
+          "type": "Skill 1",
+          "name": "Mountain Stabilizer (Sui Shan Ding Shi)",
+          "desc": "Summons a defensive Cauldron at the target spot, unleashing concentric shockwaves that deal physical damage and slow/knock up enemies. Provides vision in bushes and heals passing allies.",
+          "cd": "7",
+          "cost": "40",
+          "tags": [
+            "Summon",
+            "Shockwave",
+            "Knockup",
+            "Heal",
+            "Vision"
+          ],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/188/18800.png"
+        },
+        {
+          "skill_id": 18802,
+          "type": "Skill 2",
+          "name": "Heaven Hunter Stance (Pi Ming Shou Tian)",
+          "desc": "Enters an empowered hunting stance, gaining movement speed and extending basic attacks into ranged empowered strikes with delay-interrupt mechanics (fast/slow blade timing), dealing physical damage and interrupting enemy dashes while regenerating HP.",
+          "cd": "9",
+          "cost": "50",
+          "tags": [
+            "Empowered Attack",
+            "Interrupt",
+            "Slow",
+            "Heal"
+          ],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/188/18800.png"
+        },
+        {
+          "skill_id": 18803,
+          "type": "Ultimate",
+          "name": "Heaven and Earth as One (Qian Kun Yi Tong)",
+          "desc": "Calls down a colossal Primeval Cauldron from the sky, crashing into the target area with massive area knock-up and chained resonance damage with all nearby Cauldrons. Provides team-wide damage mitigation and sustained territorial dominance.",
+          "cd": "45",
+          "cost": "100",
+          "tags": [
+            "Ultimate",
+            "Area Knockup",
+            "Resonance",
+            "Damage Reduction"
+          ],
+          "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/188/18800.png"
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": null,
+        "cons": null,
+        "gameplay_tips": null
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "Kontrol ombak penahan pergerakan musuh dan pertahanan benteng air."
+    }
+  ],
+  "model": "Skill-Evidence-Audit-v2",
+  "provider": "evidence",
+  "model_info": {
+    "provider": "evidence",
+    "engine": "skill-evidence-audit",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_taunt": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.89,
+            "tidak": 0.0715,
+            "tidak_diketahui": 0.0385
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.91,
+            "tidak": 0.0585,
+            "tidak_diketahui": 0.0315
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}

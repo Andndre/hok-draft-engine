@@ -235,13 +235,13 @@ def evaluate_hero_evidence(hero: dict[str, Any]) -> dict[str, dict[str, Any]]:
 
     knockback_ev = _match_positive(
         skills,
-        r"\b(?:knocks?\s+(?:them\s+)?back|knocking\s+(?:them\s+)?back|knocks?\s+enemies\s+(?:back|away|out)|pushes?\s+(?:enemies|targets?|them)\s+(?:back|away)|repels?\s+enemies|shoves?\s+enemies)\b",
+        r"\b(?:knocks?\s+(?:them\s+)?back|knocking\s+(?:them\s+)?back|knockback|knocks?\s+enemies\s+(?:back|away|out)|pushes?\s+(?:enemies|targets?|them)\s+(?:back|away)|repels?\s+enemies|shoves?\s+enemies)\b",
     )
     set_tag("cc_knockback", "ya" if knockback_ev else "tidak", knockback_ev[0] if knockback_ev else "Tidak ada efek knockback/push pada skill.", True, 0.90 if knockback_ev else 0.86)
 
     pull_ev = _match_positive(
         skills,
-        r"\b(?:pulls?\s+(?:enemies|enemy|targets?|them|nearby|hit)|pulling\s+(?:enemies|enemy|targets?|them)|drags?\s+(?:enemies|enemy|targets?)|hooks?\s+(?:an\s+enemy|enemies|targets?)|draws?\s+enemies\s+(?:in|toward)|sucks?\s+enemies)\b",
+        r"\b(?:pulls?\s+(?:enemies|enemy|targets?|them|nearby|hit)|pulling\s+(?:enemies|enemy|targets?|them)|pull(?:/traction)?(?:\s+toward)?|drags?\s+(?:enemies|enemy|targets?)|hooks?\s+(?:an\s+enemy|enemies|targets?)|draws?\s+enemies\s+(?:in|toward)|sucks?\s+enemies)\b",
     )
     set_tag("cc_pull", "ya" if pull_ev else "tidak", pull_ev[0] if pull_ev else "Tidak ada efek pull/hook hero lawan pada skill.", True, 0.89 if pull_ev else 0.86)
 

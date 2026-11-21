@@ -1,0 +1,559 @@
+{
+  "schema_version": 2,
+  "hero_id": 585,
+  "source_hash": "4f532e7726f5b0deb5fa90924b70474233d64b79dbbd5e8d9653497f263599e4",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "skill_id": 58500,
+          "type": "Passive",
+          "name": "Flow of the World",
+          "desc": "Can use Flow at the Base to enhance stats.\nSpends Flow to perform an enhanced Basic Attack that deals <color=#db70d0>damage</color>, then ricochets to deal <color=#db70d0>damage</color> or restore <color=#6fc075>Health</color>.",
+          "cd": 1000,
+          "cost": 0,
+          "tags": [
+            "Switch",
+            "Damage",
+            "Recovery"
+          ],
+          "icon": "https://camp.honorofkings.com/Global/Common/UGUI/SystemRes/902_HeroSkillIcon/58100.png"
+        },
+        {
+          "skill_id": 58510,
+          "type": "Skill 1",
+          "name": "Convergence",
+          "desc": "Channels the Flow, dealing <color=#db70d0>damage</color> to nearby enemies and <color=#50c1eb>knocking them back</color>. Also <color=#6fc075>recovers Health</color>, gains 5 stacks of Flow, and reduces the cooldown of other skills.\n<color=#4f6f95>Nearby teammates and minions increase Health recovery and Flow stacks.</color>",
+          "cd": 12500,
+          "cost": 50,
+          "tags": [
+            "Enhance",
+            "Recovery",
+            "Knock Back"
+          ],
+          "icon": "https://camp.honorofkings.com/Global/Common/UGUI/SystemRes/902_HeroSkillIcon/58110.png"
+        },
+        {
+          "skill_id": 58530,
+          "type": "Skill 2",
+          "name": "Protection Melody",
+          "desc": "Raises a platform, <color=#50c1eb>knocking back</color> nearby enemies. Teammates on the platform gain increased <color=#6fc075>vision, attack, and skill range</color> and a <color=#6fc075>shared shield</color>.\nUsing the skill again while on the platform refreshes its duration and expands it, while further boosting the <color=#6fc075>attack and skill range</color> and <color=#6fc075>shield</color> effects. Dashes when leaving the platform.\n<color=#4f6f95>Can spend 4 stacks of Flow to gain an extra Protection Melody use as well as increased attack and skill range while on the platform.</color>",
+          "cd": 7500,
+          "cost": 35,
+          "tags": [
+            "Casting Platform",
+            "Shield",
+            "Enhance"
+          ],
+          "icon": "https://camp.honorofkings.com/Global/Common/UGUI/SystemRes/902_HeroSkillIcon/58520.png"
+        },
+        {
+          "skill_id": 58520,
+          "type": "Skill 3",
+          "name": "Lingering Melody",
+          "desc": "Gains <color=#6fc075>Movement Speed</color> and unleashes sound waves in the target direction that <color=#6fc075>restore their Health</color> when they hit. Hitting an enemy deals <color=#db70d0>damage</color>, hitting an ally restores <color=#6fc075>Health</color>, and hitting a wall causes the attack to ricochet and create a new sound wave.\n<color=#4f6f95>Can spend 5 stacks of Flow to use this skill again.</color>",
+          "cd": 25000,
+          "cost": 65,
+          "tags": [
+            "Damage",
+            "Heal",
+            "Slow"
+          ],
+          "icon": "https://camp.honorofkings.com/Global/Common/UGUI/SystemRes/902_HeroSkillIcon/58530.png"
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": null,
+        "cons": null,
+        "gameplay_tips": null
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": ""
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/flowborn-roamer/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Flow of the World",
+            "description": "Flow enhances stats at base. Empowered basic attacks ricochet to damage enemies or restore Health.",
+            "type": "passive"
+          }
+        ],
+        "pick_when": [],
+        "avoid_when": [],
+        "power_spikes": [],
+        "common_mistakes": [],
+        "pros": [],
+        "cons": [],
+        "matchups": [],
+        "partners": []
+      }
+    }
+  ],
+  "model": "Skill-Evidence-Audit-v2",
+  "provider": "evidence",
+  "model_info": {
+    "provider": "evidence",
+    "engine": "skill-evidence-audit",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.035,
+            "tidak": 0.9,
+            "tidak_diketahui": 0.065
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_taunt": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.86,
+            "tidak": 0.091,
+            "tidak_diketahui": 0.049
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.91,
+            "tidak": 0.0585,
+            "tidak_diketahui": 0.0315
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.91,
+            "tidak": 0.0585,
+            "tidak_diketahui": 0.0315
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}
