@@ -1,0 +1,673 @@
+{
+  "schema_version": 2,
+  "hero_id": 156,
+  "source_hash": "c260492a2197ff2137189906716d98fa59e584d037ba849ec5c1c58658cba902",
+  "sources": [
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "abilities",
+      "content": [
+        {
+          "skill_id": 15600,
+          "type": "Passive",
+          "name": "Power Word - Trance",
+          "desc": "Every second hit on the same target within a short time will deal an extra strike of <color=#ffffff>damage</color>.",
+          "cd": 1000,
+          "cost": 0,
+          "tags": [
+            "Damage"
+          ],
+          "icon": "https://camp.honorofkings.com/Global/Common/UGUI/SystemRes/902_HeroSkillIcon/15600.png"
+        },
+        {
+          "skill_id": 15610,
+          "type": "Skill 1",
+          "name": "Power Word - Barrier",
+          "desc": "Summons 4 barriers that shatter when touched by an enemy, inflicting <color=#f264ff>damage</color>, <color=#2bc6ff>stun</color>, and <color=#2bc6ff>slow</color>.\n<color=#f264ff>Damage</color> and <color=#2bc6ff>slowing</color> effects are reduced for enemies that touch multiple barriers.",
+          "cd": 11000,
+          "cost": 60,
+          "tags": [
+            "Crowd Control",
+            "Slow",
+            "Damage"
+          ],
+          "icon": "https://camp.honorofkings.com/Global/Common/UGUI/SystemRes/902_HeroSkillIcon/15610.png"
+        },
+        {
+          "skill_id": 15620,
+          "type": "Skill 2",
+          "name": "Power Word - Fate",
+          "desc": "Conjures a magic circle that deals <color=#f264ff>damage</color> to enemies within range while granting <color=#ffc834>vision</color> of the area.\nLiang gains <color=#6bc872>Movement Speed</color> while inside his magic circle.",
+          "cd": 2000,
+          "cost": 55,
+          "tags": [
+            "Damage",
+            "Vision",
+            "Speed Up"
+          ],
+          "icon": "https://camp.honorofkings.com/Global/Common/UGUI/SystemRes/902_HeroSkillIcon/15620.png"
+        },
+        {
+          "skill_id": 15630,
+          "type": "Skill 3",
+          "name": "Power Word - Control",
+          "desc": "<color=#ffc834>Suppresses</color> an enemy hero, dealing <color=#f264ff>damage</color> over time. When the suppression is complete, deals <color=#f264ff>damage</color> and <color=#2bc6ff>stuns</color> enemies in range.",
+          "cd": 55000,
+          "cost": 130,
+          "tags": [
+            "Suppress",
+            "Crowd Control",
+            "Damage"
+          ],
+          "icon": "https://camp.honorofkings.com/Global/Common/UGUI/SystemRes/902_HeroSkillIcon/15630.png"
+        }
+      ]
+    },
+    {
+      "source": "HOKFIRE",
+      "url": "https://www.hokfire.com/",
+      "field": "guide",
+      "content": {
+        "pros": [],
+        "cons": [],
+        "gameplay_tips": ""
+      }
+    },
+    {
+      "source": "Kurohiko",
+      "url": "https://hok.kurohiko.id/",
+      "field": "tactical_tips",
+      "content": "1) Kalau kena damage berkelanjutan Liang, mundur dikit buat mutus biar pasifnya gagal. 2) Jaga HP tetep tinggi sebelum Liang pakai ult."
+    },
+    {
+      "source": "HoKStats",
+      "url": "https://hokstats.gg/heroes/liang/",
+      "field": "guide",
+      "content": {
+        "skills": [
+          {
+            "name": "Power Word - Trance",
+            "description": "Every second hit on the same target within a short time will deal an extra strike of damage.",
+            "type": "passive"
+          },
+          {
+            "name": "Power Word - Barrier",
+            "description": "Summons 4 barriers that shatter when touched by an enemy, inflicting damage, stun, and slow. Damage and slowing effects are reduced for enemies that touch multiple barriers.",
+            "type": "skill1"
+          },
+          {
+            "name": "Power Word - Fate",
+            "description": "Conjures a magic circle that deals damage to enemies within range while granting vision of the area. Liang gains Movement Speed while inside his magic circle.",
+            "type": "skill2"
+          },
+          {
+            "name": "Power Word - Control",
+            "description": "Suppresses an enemy hero, dealing damage over time. When the suppression is complete, deals damage and stuns enemies in range.",
+            "type": "ultimate"
+          }
+        ],
+        "pick_when": [
+          "Your team needs a setup hero whose Power Word - Fate creates kill windows for the carry",
+          "Your team has the structure to use his ability to farm safely and rotate to side lanes when the wave allows, since Liang delivers consistent damage output and timely roams.",
+          "The enemy draft includes Han Xin, Lam, and Mulan, who appear in counter data as matchups Liang can pressure."
+        ],
+        "avoid_when": [
+          "The enemy team is loaded with cleanse, dashes, and immunity that bypass crowd control",
+          "Your team needs a jungle pick more than Liang's specialty, leaving the role unfilled if you commit here.",
+          "The enemy already drafted Li Xin, Mayene, and Mulan, who counter data identifies as direct answers to Liang."
+        ],
+        "power_spikes": [
+          "Early game: focus on safe lane phase and tracking jungle pressure before Liang's mid-game tools come online.",
+          "Ultimate online: Power Word - Control extends control duration, making team fights snowball off a single hit",
+          "Late game: cooldowns become short enough that Power Word - Fate influences every team fight rather than being a one-shot tool."
+        ],
+        "common_mistakes": [
+          "Throwing Power Word - Fate on the front-line tank instead of saving it for backline carries.",
+          "Ignoring Li Xin and Mayene on the enemy team when picking fights — counter data flags them as direct answers, so engage timing must respect their cooldowns.",
+          "Greeding farm in mid lane while side lanes get camped — rotation timing matters more than CS lead in most matchups."
+        ],
+        "pros": [],
+        "cons": [],
+        "matchups": [
+          {
+            "relation": "strong_against",
+            "hero_id": 150,
+            "hero_name": "Han Xin",
+            "evidence": "Han Xin",
+            "source_hash": "c518743687a48797ae4007621751f632e725108672dc9976b7b0c2434fa64784"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 528,
+            "hero_name": "Lam",
+            "evidence": "Lam",
+            "source_hash": "242bcc88116409f149bdf17719ce8483e74a16b0537c5704fc9675187ad797b9"
+          },
+          {
+            "relation": "strong_against",
+            "hero_id": 154,
+            "hero_name": "Mulan",
+            "evidence": "Mulan",
+            "source_hash": "a7c51f8a97fafb66c224494f956b7f36da86a0c5693d9cdb6c6d31d4f08f5130"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 507,
+            "hero_name": "Li Xin",
+            "evidence": "Li Xin",
+            "source_hash": "bdc768176ee029012feab75933898eeeae420ae0bc8d478e26acca5405752441"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 564,
+            "hero_name": "Mayene",
+            "evidence": "Mayene",
+            "source_hash": "1f6c9da8eae5bf01a3f359b14a5bd943e23b6288c51605aa77ed0fe32071b165"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 154,
+            "hero_name": "Mulan",
+            "evidence": "Mulan",
+            "source_hash": "33f431852b7dfc13e043f41272bce7f5f559ad87b2c9f0f280a391a42f3036e7"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 510,
+            "hero_name": "Sun Ce",
+            "evidence": "Sun Ce",
+            "source_hash": "501218b8414f2ccb73c5ef585468b1324cf96dad650757e09006d2c96a3f053a"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 117,
+            "hero_name": "Wuyan",
+            "evidence": "Wuyan",
+            "source_hash": "3140fdf5a3b8f2f927068b4e49e1e8439e803b8a67c44b89b2660447f7babb4b"
+          },
+          {
+            "relation": "countered_by",
+            "hero_id": 538,
+            "hero_name": "Ying",
+            "evidence": "Ying",
+            "source_hash": "b7a3be9d56aa7d556a9268fd42ff924f42dfae29a8ccb84e7e9677989807a092"
+          }
+        ],
+        "partners": [
+          {
+            "hero_id": 123,
+            "hero_name": "Lu Bu",
+            "source_hash": "183d4a06f483bc23d9d0feb96c2a6dd6c8955ede92a8a059708b90ac98f10fc8"
+          },
+          {
+            "hero_id": 112,
+            "hero_name": "Luban No.7",
+            "source_hash": "183d4a06f483bc23d9d0feb96c2a6dd6c8955ede92a8a059708b90ac98f10fc8"
+          },
+          {
+            "hero_id": 631,
+            "hero_name": "Florentino",
+            "source_hash": "183d4a06f483bc23d9d0feb96c2a6dd6c8955ede92a8a059708b90ac98f10fc8"
+          },
+          {
+            "hero_id": 107,
+            "hero_name": "Zilong",
+            "source_hash": "183d4a06f483bc23d9d0feb96c2a6dd6c8955ede92a8a059708b90ac98f10fc8"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "Skill-Evidence-Audit-v2",
+  "provider": "evidence",
+  "model_info": {
+    "provider": "evidence",
+    "engine": "skill-evidence-audit",
+    "chunks": 1,
+    "minimum_probability": 0.7,
+    "probabilities_calibrated_for_hok": false,
+    "network_model_calls": 0
+  },
+  "tags": {
+    "mobility": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "dash": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "blink": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "leap": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "teleport": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "suppress": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.94,
+            "tidak": 0.039,
+            "tidak_diketahui": 0.021
+          }
+        }
+      ]
+    },
+    "cc_knockup": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_knockback": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_pull": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_stun": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "cc_root": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "cc_silence": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_taunt": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.042,
+            "tidak": 0.88,
+            "tidak_diketahui": 0.078
+          }
+        }
+      ]
+    },
+    "cc_slow": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.9,
+            "tidak": 0.065,
+            "tidak_diketahui": 0.035
+          }
+        }
+      ]
+    },
+    "engage": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "disengage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.056,
+            "tidak": 0.84,
+            "tidak_diketahui": 0.104
+          }
+        }
+      ]
+    },
+    "frontline": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0525,
+            "tidak": 0.85,
+            "tidak_diketahui": 0.0975
+          }
+        }
+      ]
+    },
+    "peel": {
+      "value": "ya",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "ya",
+          "probabilities": {
+            "ya": 0.87,
+            "tidak": 0.0845,
+            "tidak_diketahui": 0.0455
+          }
+        }
+      ]
+    },
+    "ally_shield": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_heal": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_move_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_attack_speed_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0455,
+            "tidak": 0.87,
+            "tidak_diketahui": 0.0845
+          }
+        }
+      ]
+    },
+    "ally_damage_buff": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "ally_cleanse": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "ally_cc_immunity": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0385,
+            "tidak": 0.89,
+            "tidak_diketahui": 0.0715
+          }
+        }
+      ]
+    },
+    "dive_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.049,
+            "tidak": 0.86,
+            "tidak_diketahui": 0.091
+          }
+        }
+      ]
+    },
+    "kite_vulnerable": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    },
+    "low_damage": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.0595,
+            "tidak": 0.83,
+            "tidak_diketahui": 0.1105
+          }
+        }
+      ]
+    },
+    "weak_early": {
+      "value": "tidak",
+      "confidence": null,
+      "chunk_votes": [
+        {
+          "chunk": 0,
+          "choice": "tidak",
+          "probabilities": {
+            "ya": 0.063,
+            "tidak": 0.82,
+            "tidak_diketahui": 0.117
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "status": "approved",
+    "reviewed_by": "HoK-Evidence-Auditor"
+  }
+}
