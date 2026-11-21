@@ -111,7 +111,7 @@ async def fetch_camp_data():
                             "desc": s.get("skillDesc", "").strip(),
                             "cd": s.get("skillCd", 0),
                             "cost": s.get("skillCostList", {}).get("skillCost", 0) if isinstance(s.get("skillCostList"), dict) else 0,
-                            "tags": [t.get("tagText", "").strip() for t in s.get("skillTag", []) if isinstance(t, dict) and t.get("tagText")],
+                            "tags": [t.get("name", t.get("tagText", "")).strip() for t in s.get("skillTag", []) if isinstance(t, dict) and (t.get("name") or t.get("tagText"))],
                             "icon": s.get("skillIcon", ""),
                         })
                 hero_skills[hero_id] = skills_list
