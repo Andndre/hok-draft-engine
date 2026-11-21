@@ -36,7 +36,7 @@ dialog.wiki-drawer[open] {
 .wiki-drawer [role="tablist"] { overflow-x: auto; }
 .wiki-drawer__panel { width: 100%; max-width: 42.5rem; height: 100svh; }
 .wiki-drawer button:not(.toggletip-tag) { min-block-size: 44px; }
-.toggletip-tag { min-block-size: 1.75rem; }
+.toggletip-tag { display: inline-flex; align-items: center; min-block-size: 0; line-height: 1.25; }
 .wiki-tier-ribbon { clip-path: polygon(0 0, 100% 0, 0 100%); }
 .wiki-sections [role="tab"] {
   border-bottom: 2px solid transparent;

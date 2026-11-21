@@ -1013,7 +1013,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                             key={tag}
                             label={label}
                             description={desc}
-                            className={`toggletip-tag rounded-md border px-2 py-0.5 text-xs font-semibold cursor-help transition-colors hover:brightness-125 ${group.tone}`}
+                            className={`toggletip-tag rounded border px-1.5 py-0.5 text-xs font-medium cursor-help transition-colors hover:brightness-125 ${group.tone}`}
                           />
                         ))}
                       </div>
@@ -1088,7 +1088,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                               </span>
                               {ab.cd !== undefined && ab.cd > 0 && (
                                 <span className="text-xs font-mono font-medium text-cyan-300 bg-cyan-950/50 px-2 py-0.5 rounded border border-cyan-800/40">
-                                  CD: {ab.cd >= 1000 ? `${(ab.cd / 1000).toFixed(ab.cd % 1000 === 0 ? 0 : 1)}s` : `${ab.cd}s`}
+                                  CD: {ab.cd >= 100 ? `${(ab.cd / 1000).toFixed(ab.cd % 1000 === 0 ? 0 : 1)}s` : `${ab.cd}s`}
                                 </span>
                               )}
                               {ab.cost !== undefined && ab.cost > 0 && (
@@ -1156,7 +1156,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                             key={tag}
                             label={label}
                             description={tooltip}
-                            className="toggletip-tag inline-flex cursor-help items-center rounded-lg border border-indigo-800/60 bg-indigo-950/30 px-2.5 py-1 text-xs font-medium text-indigo-200 transition-colors hover:brightness-125"
+                            className="toggletip-tag inline-flex cursor-help items-center rounded border border-indigo-800/60 bg-indigo-950/30 px-2 py-0.5 text-xs font-medium text-indigo-200 transition-colors hover:brightness-125"
                           />
                         ))}
                       </div>
@@ -1172,7 +1172,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                             key={tag}
                             label={label}
                             description={tooltip}
-                            className="toggletip-tag inline-flex cursor-help items-center rounded-lg border border-rose-800/60 bg-rose-950/30 px-2.5 py-1 text-xs font-medium text-rose-200 transition-colors hover:brightness-125"
+                            className="toggletip-tag inline-flex cursor-help items-center rounded border border-rose-800/60 bg-rose-950/30 px-2 py-0.5 text-xs font-medium text-rose-200 transition-colors hover:brightness-125"
                           />
                         ))}
                       </div>
