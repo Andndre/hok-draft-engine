@@ -68,8 +68,9 @@ export class OpponentClient {
       const abort = () => { if (settled) return; settled = true; cleanup(); this.worker?.terminate(); this.worker = null; reject(new DOMException('Dibatalkan', 'AbortError')); };
       this.abortPending = abort;
       signal.addEventListener('abort', abort, { once: true });
-      const fallback = () => {
+      const fallback = (err?: unknown) => {
         if (settled) return;
+        if (err) console.warn('[OpponentClient] Worker error, falling back to deterministic:', err);
         this.worker?.terminate(); this.worker = null;
         const first = rankedCandidates(position, context)[0];
         finish({ heroId: first?.hero.hero_id ?? null, engineKind: 'deterministic', completedDepth: 0, nodes: 0, elapsedMs: 0, principalVariation: [], fallbackReason: 'Pencarian AI terhenti. Mesin taktis lokal mengambil alih.' });
@@ -80,10 +81,10 @@ export class OpponentClient {
           this.worker = new Worker(new URL('./opponent.worker.ts', import.meta.url), { type: 'module' });
           this.worker.postMessage({ type: 'init', dataset: this.dataset, aiSide: this.aiSide });
         }
-        this.worker.onerror = fallback;
+        this.worker.onerror = (e) => fallback(e);
         this.worker.onmessage = ({ data }) => {
           if (!matchesDecisionTag(data, tag)) return;
-          if (data.error) fallback(); else finish(data.decision);
+          if (data.error) fallback(data.error); else finish(data.decision);
         };
         this.worker.postMessage({
           type: 'decide', ...tag, position,
@@ -92,7 +93,7 @@ export class OpponentClient {
           rankedBanCount: settings.rankedBanCount,
           onlyGlobal: settings.onlyGlobal,
         });
-      } catch { fallback(); }
+      } catch (e) { fallback(e); }
     });
   }
 }

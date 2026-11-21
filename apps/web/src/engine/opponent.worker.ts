@@ -15,11 +15,22 @@ export type WorkerSearchOptions = Pick<
   'maxDepth' | 'width' | 'budgetMs' | 'allowExtendedBudget' | 'orderCandidates' | 'orderTailDepth' | 'orderTailLimit'
 >;
 
+/** Build ID to bust stale CDN edge caches: 2026-11-21-coep-v2 */
+export const OPPONENT_WORKER_BUILD_ID = '2026-11-21-coep-v2';
+
 let dataset: TournamentDataset | null = null;
 let aiSide: Side = 'red';
 self.onmessage = (event: MessageEvent) => {
   const request = event.data;
-  if (request.type === 'init') { dataset = request.dataset; aiSide = request.aiSide; return; }
+  if (request.type === 'ping') {
+    self.postMessage({ type: 'pong', buildId: OPPONENT_WORKER_BUILD_ID });
+    return;
+  }
+  if (request.type === 'init') {
+    dataset = request.dataset;
+    aiSide = request.aiSide;
+    return;
+  }
   if (request.type !== 'decide' || !dataset) return;
   const { sessionId, revision, position, fearless, aiPlan, format, side, options, isUltimateBattle, rankedBanCount, onlyGlobal } = request as {
     sessionId: string; revision: number; position: DraftPosition;

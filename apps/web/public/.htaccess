@@ -11,7 +11,7 @@
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
     Header always set X-Frame-Options "DENY"
     Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), display-capture=(self)"
-    Header set Content-Security-Policy "default-src 'self'; script-src 'self'; worker-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://hok.kurohiko.id https://game.gtimg.cn https://camp.honorofkings.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; worker-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://hok.kurohiko.id https://game.gtimg.cn https://camp.honorofkings.com; connect-src 'self' https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
 </IfModule>
 
 <IfModule mod_mime.c>
