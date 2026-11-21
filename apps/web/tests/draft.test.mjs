@@ -1111,3 +1111,30 @@ test('opener priority is judged by the first-pick record (hierarchical), not pop
     );
   }
 });
+
+test('when onlyGlobal is false, CN heroes are legally considered in draft minimax and recommendations', () => {
+  const ctx = {
+    heroes,
+    synergy,
+    onlyGlobal: false,
+    fearless: { blue: [], red: [] },
+    aiSide: 'blue',
+    aiPlan: { a: null, b: null },
+  };
+
+  // 1. Pada step 0 (Fase Ban Blue), hero CN yang punya presensi KPL kuat harus masuk kandidat legal
+  const banCandidates = rankedCandidates(emptyPosition(), ctx);
+  const cnBans = banCandidates.filter((c) => !c.hero.is_global_released);
+  assert.ok(cnBans.length > 0, 'Kandidat ban legal harus memuat hero CN saat onlyGlobal=false');
+
+  // Kongkong'er (#550) atau Luban Master (#525) harus dapat dipertimbangkan
+  const hasCnBanCandidate = cnBans.some((c) => c.hero.hero_id === 550 || c.hero.hero_id === 525 || c.hero.hero_id === 194);
+  assert.ok(hasCnBanCandidate, 'Hero CN ber-KPL tinggi harus muncul dalam kandidat ban legal');
+
+  // 2. Evaluasi inference langsung: runTournamentInference dengan onlyGlobal=false
+  const banInference = runTournamentInference([], [], [], [], false, true, heroes, 0, null, null, false, synergy);
+  const topBanRecs = banInference.recommendations.slice(0, 10);
+  const cnInRecs = topBanRecs.some((r) => !r.hero.is_global_released);
+  assert.ok(cnInRecs, 'Rekomendasi ban top-10 harus mempertimbangkan hero CN saat onlyGlobal=false');
+});
+

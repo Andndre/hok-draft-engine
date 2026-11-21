@@ -108,7 +108,13 @@
 .hover-proj__risk--tinggi { color: #fca5a5; }
 
 /* Progressive disclosure keeps decisions ahead of secondary analysis. */
-.tactical-panel { padding: 16px; }
+.tactical-panel {
+  padding: 16px;
+  min-width: 0;
+  box-sizing: border-box;
+  container-type: inline-size;
+  container-name: tactical;
+}
 .tactical-panel__header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
 
 /* Recommendation Tabs (Top 5 Candidate Switcher) */
@@ -119,6 +125,8 @@
   overflow-x: auto;
   padding-bottom: 4px;
   scrollbar-width: thin;
+  min-width: 0;
+  scroll-snap-type: x mandatory;
 }
 .rec-tab {
   display: inline-flex;
@@ -135,6 +143,7 @@
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
+  scroll-snap-align: start;
   transition: border-color 120ms ease-out, color 120ms ease-out, background-color 120ms ease-out, box-shadow 120ms ease-out;
 }
 .rec-tab:hover {
@@ -231,7 +240,14 @@
 .solver-pick-note strong { color: #f1f8e9; }
 .solver-pick-note .ui-button--text { margin-left: auto; }
 
-.primary-recommendation { border: 1px solid #465a2c; border-radius: var(--radius-lg); background: #192317; padding: 14px; }
+.primary-recommendation {
+  border: 1px solid #465a2c;
+  border-radius: var(--radius-lg);
+  background: #192317;
+  padding: 14px;
+  min-width: 0;
+  box-sizing: border-box;
+}
 .primary-recommendation__identity { display: flex; align-items: center; gap: 12px; }
 .primary-recommendation__identity > .asset-thumbnail { width: 52px; height: 56px; }
 .primary-recommendation h3 { font-size: 1.25rem; font-weight: 750; letter-spacing: -.025em; color: var(--color-text-primary); margin: 1px 0; }
@@ -295,12 +311,22 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
+  min-width: 0;
+}
+@container tactical (max-width: 370px) {
+  .outcome-projection__grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
 }
 .projection-box {
   padding: 9px;
   border-radius: var(--radius-sm);
   font-size: 0.75rem;
   text-align: left;
+  min-width: 0;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 .projection-box--best {
   background: #111f16;
@@ -317,6 +343,13 @@
   margin-bottom: 4px;
   font-size: 0.75rem;
   font-weight: 650;
+  min-width: 0;
+}
+.projection-box__heading > span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 }
 .projection-box--best .projection-box__heading {
   color: #8ae37b;
@@ -575,7 +608,7 @@ dialog.plan-dialog[open] {
 }
 
 @media (min-width: 1200px) {
-  .draft-workspace { display: grid; grid-template-columns: minmax(0, 1fr) minmax(350px, 390px); gap: 24px; align-items: start; }
+  .draft-workspace { display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, 420px); gap: 24px; align-items: start; }
   .draft-workspace > .hero-roster { order: initial; }
   .analysis-sidebar {
     order: initial;
@@ -583,9 +616,12 @@ dialog.plan-dialog[open] {
     top: calc(var(--app-header-height) + 12px);
     max-height: calc(100dvh - var(--app-header-height) - 24px);
     overflow-y: auto;
-    padding: 2px 8px 2px 2px;
-    margin: -2px -8px -2px -2px;
+    overflow-x: hidden;
+    padding: 2px 4px 2px 2px;
+    margin: 0;
     scrollbar-width: thin;
+    min-width: 0;
+    box-sizing: border-box;
   }
   .draft-phases__description { display: inline; color: #90a0b8; font-size: 0.75rem; font-weight: 400; margin-left: auto; }
 }

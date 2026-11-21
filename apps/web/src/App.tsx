@@ -540,6 +540,7 @@ export const App: React.FC = () => {
           side: currentTurn.side,
           isUltimateBattle,
           rankedBanCount,
+          onlyGlobal: onlyGlobalReleased,
           options: {
             maxDepth: 4,
             width: 8,
