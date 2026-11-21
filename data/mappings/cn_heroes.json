@@ -635,5 +635,169 @@
     "suggested_item_sets": [],
     "title": "自在之心",
     "skin_name": "自在之心|太极少年|鹤归松栖"
+  },
+  {
+    "hero_id": 550,
+    "chinese_name": "空空儿",
+    "title": "笑面诡手",
+    "skin_name": "笑面诡手",
+    "skills": [
+      {
+        "type": "Passive",
+        "name": "Empty Hand (Kongkong Ru Ye)",
+        "desc": "Moving continuously accumulates energy. When fully charged, releasing movement triggers a short blink forward and enhances the next basic attack into 'Phantom Hand' (诡手), dealing physical damage and slowing the target. Hitting an enemy hero steals a random item from them for 7 seconds, granting its attributes to Kongkong'er or sharing it with nearby allies while the target loses those stats. Hitting a target with no stealable items returns the stolen gear and deals burst physical damage. Hitting non-hero units grants 1 bonus gold.",
+        "cd": "0",
+        "cost": "0",
+        "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/550/55000.png"
+      },
+      {
+        "type": "Skill 1",
+        "name": "Deceiving Heaven (Man Tian)",
+        "desc": "Casts an illusion clone forward that lasts 5 seconds, dealing physical damage along its path and at the destination while granting health recovery / shield to Kongkong'er and the clone. Recasting swaps positions with the clone instantly and deals damage to surrounding enemies. The clone mimics Kongkong'er's actions and absorbs damage (taking double damage).",
+        "cd": "8",
+        "cost": "50",
+        "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/550/55000.png"
+      },
+      {
+        "type": "Skill 2",
+        "name": "Crossing the Sea (Guo Hai)",
+        "desc": "Leaves an illusion clone at the current location for 5 seconds while Kongkong'er dashes forward, dealing physical damage to enemies along the path and gaining health recovery / shield. Recasting swaps positions with the clone. Allows continuous mind games by alternating swaps between Skill 1 and Skill 2 clones.",
+        "cd": "8",
+        "cost": "50",
+        "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/550/55020.png"
+      },
+      {
+        "type": "Ultimate",
+        "name": "Three Caves of Immortals (San Dong Cang Xian)",
+        "desc": "Spins ancient puppets rapidly, dealing high physical damage, knockback, and continuous pull/traction toward the center. Automatically triggers Skill 1 and Skill 2 to form a triangle of clones that spin together, drastically accelerating passive energy gain and allowing position swaps with any active clone. Enemies trapped in overlapping clone areas take devastating multi-layered damage and crowd control.",
+        "cd": "40",
+        "cost": "100",
+        "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/550/55030.png"
+      }
+    ],
+    "suggested_item_sets": []
+  },
+  {
+    "hero_id": 549,
+    "chinese_name": "心魔六耳",
+    "title": "孙悟空命格",
+    "skin_name": "孙悟空命格",
+    "skills": [
+      {
+        "type": "Passive",
+        "name": "Inner Demon Flame (Xin Mo Xiong Yan)",
+        "desc": "Possesses an innate 20% critical rate. Basic attacks and abilities generate 'Mind Energy' (capped at 60). At maximum energy, attack range and damage increase significantly. After casting any skill, the next basic attack becomes an enhanced 4-strike combo with slide dashes, each strike capable of critically hitting and triggering on-hit effects.",
+        "cd": "0",
+        "cost": "0",
+        "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/549/54900.png"
+      },
+      {
+        "type": "Skill 1",
+        "name": "Mind Barrier (Po Wang Yi Ji)",
+        "desc": "Performs a short dash and enters a parry/block stance. Successfully blocking enemy attacks instantly fills Mind Energy to maximum, granting burst damage and sustain on the counterattack.",
+        "cd": "7",
+        "cost": "45",
+        "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/549/54900.png"
+      },
+      {
+        "type": "Skill 2",
+        "name": "Shadow Levitation (Teng Yun Bi Ri)",
+        "desc": "Charges and levitates into the air to evade incoming ground damage and control. Slams down at the target location, dealing physical damage, stunning enemies, and generating Mind Energy.",
+        "cd": "8",
+        "cost": "50",
+        "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/549/54930.png"
+      },
+      {
+        "type": "Ultimate",
+        "name": "Twin Soul Severance (Shuang Xin Gui Yi)",
+        "desc": "Becomes untargetable (invulnerable) while unleashing chaotic demon illusions, crashing down upon target enemy heroes with massive burst physical damage and knock-up. Essential for diving the enemy backline and dodging lethal ultimates.",
+        "cd": "35",
+        "cost": "100",
+        "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/549/54930.png"
+      }
+    ],
+    "suggested_item_sets": []
+  },
+  {
+    "hero_id": 188,
+    "chinese_name": "大禹",
+    "title": "鼎镇山河",
+    "skin_name": "鼎镇山河",
+    "skills": [
+      {
+        "type": "Passive",
+        "name": "Harmony of Nine Cauldrons (Jiu Ding Qi Ming)",
+        "desc": "Can place sacred Cauldrons (Ding) across the battlefield. Learning the Ultimate converts Da Yu's recall spell into a Teleport when near any Cauldron, allowing him to teleport with iron body (crowd control immunity) to any active Cauldron location. Active Cauldrons grant vision, continuous HP regeneration, and act as global strategic fast-travel beacons.",
+        "cd": "0",
+        "cost": "0",
+        "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/188/18800.png"
+      },
+      {
+        "type": "Skill 1",
+        "name": "Mountain Stabilizer (Sui Shan Ding Shi)",
+        "desc": "Summons a defensive Cauldron at the target spot, unleashing concentric shockwaves that deal physical damage and slow/knock up enemies. Provides vision in bushes and heals passing allies.",
+        "cd": "7",
+        "cost": "40",
+        "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/188/18800.png"
+      },
+      {
+        "type": "Skill 2",
+        "name": "Heaven Hunter Stance (Pi Ming Shou Tian)",
+        "desc": "Enters an empowered hunting stance, gaining movement speed and extending basic attacks into ranged empowered strikes with delay-interrupt mechanics (fast/slow blade timing), dealing physical damage and interrupting enemy dashes while regenerating HP.",
+        "cd": "9",
+        "cost": "50",
+        "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/188/18800.png"
+      },
+      {
+        "type": "Ultimate",
+        "name": "Heaven and Earth as One (Qian Kun Yi Tong)",
+        "desc": "Calls down a colossal Primeval Cauldron from the sky, crashing into the target area with massive area knock-up and chained resonance damage with all nearby Cauldrons. Provides team-wide damage mitigation and sustained territorial dominance.",
+        "cd": "45",
+        "cost": "100",
+        "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/188/18800.png"
+      }
+    ],
+    "suggested_item_sets": []
+  },
+  {
+    "hero_id": 151,
+    "chinese_name": "孙权",
+    "title": "定旌之谋",
+    "skin_name": "定旌之谋",
+    "skills": [
+      {
+        "type": "Passive",
+        "name": "Sovereign of the Southeast (Zuo Duan Dong Nan)",
+        "desc": "Basic attacks and skills apply Marks on enemy heroes, stacking up to 5 times. Each stack reduces the target's damage dealt to Sun Quan by 3% (up to 15%). At 5 stacks, Sun Quan unlocks his Ultimate and enters the 'Formation Breaker' state, significantly enhancing attack power and converting Attack Speed into casting speed.",
+        "cd": "0",
+        "cost": "0",
+        "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/151/15100.png"
+      },
+      {
+        "type": "Skill 1",
+        "name": "Piercing Clouds (Lie Shi Chuan Yun)",
+        "desc": "Ranged Form: Throws military war banners that trigger an arrow rain barrage, dealing physical damage and slow over a designated area. Melee Form: Sweeps the ancient Guding blade in rapid wide slashes.",
+        "cd": "6",
+        "cost": "40",
+        "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/151/15110.png"
+      },
+      {
+        "type": "Skill 2",
+        "name": "Swift Maneuver (You Ren You Yu)",
+        "desc": "Ranged Form: Channels while moving with boosted movement speed, firing continuous mobile shots at up to two locked targets. Melee Form: Unleashes rapid flurry slashes with self-healing sustain.",
+        "cd": "8",
+        "cost": "50",
+        "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/151/15120.png"
+      },
+      {
+        "type": "Ultimate",
+        "name": "Banner Formation Charge (Hui Jing Po Zhen)",
+        "desc": "Unlocked only at 5 passive mark stacks. Sun Quan dashes forward with his war banner, dealing multi-hit physical damage and triggering high-frequency on-hit effects. On the final blow, leaps backward to a safe distance and refreshes Formation Breaker state.",
+        "cd": "30",
+        "cost": "80",
+        "icon_url": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/151/15130.png"
+      }
+    ],
+    "suggested_item_sets": []
   }
 ]

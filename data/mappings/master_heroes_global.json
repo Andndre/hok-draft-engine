@@ -8953,7 +8953,70 @@
       "arcana": []
     },
     "hokfire_counters": null,
-    "abilities": [],
+    "abilities": [
+      {
+        "skill_id": 18800,
+        "type": "Passive",
+        "name": "Harmony of Nine Cauldrons (Jiu Ding Qi Ming)",
+        "desc": "Can place sacred Cauldrons (Ding) across the battlefield. Learning the Ultimate converts Da Yu's recall spell into a Teleport when near any Cauldron, allowing him to teleport with iron body (crowd control immunity) to any active Cauldron location. Active Cauldrons grant vision, continuous HP regeneration, and act as global strategic fast-travel beacons.",
+        "cd": "0",
+        "cost": "0",
+        "tags": [
+          "Teleport",
+          "Global Presence",
+          "Vision",
+          "Regeneration",
+          "Iron Body"
+        ],
+        "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/188/18800.png"
+      },
+      {
+        "skill_id": 18801,
+        "type": "Skill 1",
+        "name": "Mountain Stabilizer (Sui Shan Ding Shi)",
+        "desc": "Summons a defensive Cauldron at the target spot, unleashing concentric shockwaves that deal physical damage and slow/knock up enemies. Provides vision in bushes and heals passing allies.",
+        "cd": "7",
+        "cost": "40",
+        "tags": [
+          "Summon",
+          "Shockwave",
+          "Knockup",
+          "Heal",
+          "Vision"
+        ],
+        "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/188/18800.png"
+      },
+      {
+        "skill_id": 18802,
+        "type": "Skill 2",
+        "name": "Heaven Hunter Stance (Pi Ming Shou Tian)",
+        "desc": "Enters an empowered hunting stance, gaining movement speed and extending basic attacks into ranged empowered strikes with delay-interrupt mechanics (fast/slow blade timing), dealing physical damage and interrupting enemy dashes while regenerating HP.",
+        "cd": "9",
+        "cost": "50",
+        "tags": [
+          "Empowered Attack",
+          "Interrupt",
+          "Slow",
+          "Heal"
+        ],
+        "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/188/18800.png"
+      },
+      {
+        "skill_id": 18803,
+        "type": "Ultimate",
+        "name": "Heaven and Earth as One (Qian Kun Yi Tong)",
+        "desc": "Calls down a colossal Primeval Cauldron from the sky, crashing into the target area with massive area knock-up and chained resonance damage with all nearby Cauldrons. Provides team-wide damage mitigation and sustained territorial dominance.",
+        "cd": "45",
+        "cost": "100",
+        "tags": [
+          "Ultimate",
+          "Area Knockup",
+          "Resonance",
+          "Damage Reduction"
+        ],
+        "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/188/18800.png"
+      }
+    ],
     "kpl_matchup": {
       "total_picks": 68,
       "total_bans": 15,
@@ -9027,18 +9090,61 @@
     "kpl_weighted_matches": 49.9,
     "official_build": {
       "build_1": {
-        "name": "Preset Resmi #1 (Standar)",
-        "items": [],
-        "tips": ""
+        "name": "Preset Resmi #1 (Standard Roam CDR / Aura Tank)",
+        "items": [
+          "Guardian - Radiance",
+          "Boots of Resistance",
+          "Glacial Buckler",
+          "Succubus Cloak",
+          "Ominous Premonition",
+          "Blood Rage"
+        ],
+        "tips": "Maksimalkan Cooldown Reduction untuk penempatan Ding sesering mungkin. Berikan regenerasi dan kontrol area konstan bagi rekan setim."
       },
       "build_2": {
-        "name": "Preset Resmi #2 (Alternatif)",
-        "items": [],
-        "tips": ""
+        "name": "Preset Resmi #2 (Clash Lane Tank / Frontline)",
+        "items": [
+          "Boots of Fortitude",
+          "Blazing Cape",
+          "Glacial Buckler",
+          "Longnight Guardian",
+          "Blood Rage",
+          "Overlord's Might"
+        ],
+        "tips": "Build tank mandiri untuk jalur Clash. Tahan serangan musuh di lane dan lakukan rotasi instan menggunakan teleportasi Ding saat pertempuran naga/tower."
       },
-      "arcana": [],
+      "arcana": [
+        {
+          "id": "1512",
+          "name": "Fate",
+          "color": "red",
+          "attr": "Max HP +337, Physical Defense +23, Attack Speed +10%.",
+          "count": 10,
+          "icon": "/assets/arcana/1512.png"
+        },
+        {
+          "id": "2515",
+          "name": "Harmony",
+          "color": "blue",
+          "attr": "Max HP +450, HP Regen +52, Movement Speed +4%.",
+          "count": 10,
+          "icon": "/assets/arcana/2515.png"
+        },
+        {
+          "id": "3509",
+          "name": "Void",
+          "color": "green",
+          "attr": "Max HP +375, Cooldown Reduction +6%.",
+          "count": 10,
+          "icon": "/assets/arcana/3509.png"
+        }
+      ],
       "spell": "Flash",
-      "core_items": [],
+      "core_items": [
+        "Guardian - Radiance",
+        "Boots of Resistance",
+        "Glacial Buckler"
+      ],
       "situational_items": []
     }
   },
@@ -15706,18 +15812,61 @@
     "kpl_weighted_matches": 0.0,
     "official_build": {
       "build_1": {
-        "name": "Preset Resmi #1 (Standar)",
-        "items": [],
-        "tips": ""
+        "name": "Preset Resmi #1 (Clash Duelist Bruiser)",
+        "items": [
+          "Boots of Resistance",
+          "Axe of Torment",
+          "Frostscar's Embrace",
+          "Pure Sky",
+          "Cuirass of Savagery",
+          "Longnight Guardian"
+        ],
+        "tips": "Build bruiser CDR untuk memfasilitasi kombo bunga tanpa henti. Pure Sky memberikan pengurangan damage masif saat duel di kerumunan tim lawan."
       },
       "build_2": {
-        "name": "Preset Resmi #2 (Alternatif)",
-        "items": [],
-        "tips": ""
+        "name": "Preset Resmi #2 (Damage Assassin / Split-pusher)",
+        "items": [
+          "Boots of Resistance",
+          "Axe of Torment",
+          "Master Sword",
+          "Starbreaker",
+          "Blood Rage",
+          "Destiny"
+        ],
+        "tips": "Penetrasi armor tinggi untuk menghancurkan tank dan carry musuh dalam 1 siklus bunga."
       },
-      "arcana": [],
+      "arcana": [
+        {
+          "id": "1504",
+          "name": "Mutation",
+          "color": "red",
+          "attr": "Physical Attack +20, Physical Pierce +36.",
+          "count": 10,
+          "icon": "/assets/arcana/1504.png"
+        },
+        {
+          "id": "2520",
+          "name": "Hunt",
+          "color": "blue",
+          "attr": "Attack Speed +10%, Movement Speed +10%.",
+          "count": 10,
+          "icon": "/assets/arcana/2520.png"
+        },
+        {
+          "id": "3514",
+          "name": "Eagle Eye",
+          "color": "green",
+          "attr": "Physical Attack +9, Physical Pierce +64.",
+          "count": 10,
+          "icon": "/assets/arcana/3514.png"
+        }
+      ],
       "spell": "Flash",
-      "core_items": [],
+      "core_items": [
+        "Boots of Resistance",
+        "Axe of Torment",
+        "Frostscar's Embrace"
+      ],
       "situational_items": []
     }
   },
@@ -15818,18 +15967,61 @@
     "kpl_weighted_matches": 2.23,
     "official_build": {
       "build_1": {
-        "name": "Preset Resmi #1 (Standar)",
-        "items": [],
-        "tips": ""
+        "name": "Preset Resmi #1 (Jungle Burst Assassin)",
+        "items": [
+          "Rapacious Bite",
+          "Boots of Resistance",
+          "Axe of Torment",
+          "Master Sword",
+          "Pure Sky",
+          "Starbreaker"
+        ],
+        "tips": "Penetrasi fisik dan burst cepat untuk melumpuhkan backline lawan dalam gank cepat."
       },
       "build_2": {
-        "name": "Preset Resmi #2 (Alternatif)",
-        "items": [],
-        "tips": ""
+        "name": "Preset Resmi #2 (Bruiser Skirmisher)",
+        "items": [
+          "Giant's Grip",
+          "Boots of Resistance",
+          "Axe of Torment",
+          "Frostscar's Embrace",
+          "Pure Sky",
+          "Cuirass of Savagery"
+        ],
+        "tips": "Daya tahan tambahan saat menghadapi tim lawan yang sarat burst damage."
       },
-      "arcana": [],
-      "spell": "Flash",
-      "core_items": [],
+      "arcana": [
+        {
+          "id": "1504",
+          "name": "Mutation",
+          "color": "red",
+          "attr": "Physical Attack +20, Physical Pierce +36.",
+          "count": 10,
+          "icon": "/assets/arcana/1504.png"
+        },
+        {
+          "id": "2520",
+          "name": "Hunt",
+          "color": "blue",
+          "attr": "Attack Speed +10%, Movement Speed +10%.",
+          "count": 10,
+          "icon": "/assets/arcana/2520.png"
+        },
+        {
+          "id": "3514",
+          "name": "Eagle Eye",
+          "color": "green",
+          "attr": "Physical Attack +9, Physical Pierce +64.",
+          "count": 10,
+          "icon": "/assets/arcana/3514.png"
+        }
+      ],
+      "spell": "Smite",
+      "core_items": [
+        "Rapacious Bite",
+        "Boots of Resistance",
+        "Axe of Torment"
+      ],
       "situational_items": []
     }
   },
@@ -15990,39 +16182,60 @@
     "kpl_weighted_matches": 11.88,
     "official_build": {
       "build_1": {
-        "name": "Preset Resmi #1 (Standar)",
+        "name": "Preset Resmi #1 (Mid Burst Mage)",
         "items": [
           "Boots of the Arcane",
-          "Sage's Tome",
-          "Frozen Breath",
-          "Blood Clan's Grimoire",
-          "Insatiable Tome",
-          "Nebulon Wood",
-          "Twilight Stream",
-          "Savant's Wrath"
+          "Scepter of Reverberation",
+          "Mask of Agony",
+          "Savant's Wrath",
+          "Void Staff",
+          "Insatiable Tome"
         ],
-        "tips": ""
+        "tips": "Build standar burst AP tinggi untuk rotasi cepat dan pembersihan minion efisien."
       },
       "build_2": {
-        "name": "Preset Resmi #2 (Alternatif)",
+        "name": "Preset Resmi #2 (CDR Poke Sustain)",
         "items": [
-          "Boots of the Arcane",
-          "Sage's Tome",
-          "Frozen Breath",
-          "Blood Clan's Grimoire",
+          "Boots of Tranquility",
           "Insatiable Tome",
-          "Nebulon Wood",
-          "Twilight Stream",
-          "Savant's Wrath"
+          "Mask of Agony",
+          "Savant's Wrath",
+          "Void Staff",
+          "Splendor"
         ],
-        "tips": ""
+        "tips": "Sustain magis dan CD rendah untuk pertempuran objektif berlarut."
       },
-      "arcana": [],
-      "spell": "",
+      "arcana": [
+        {
+          "id": "1501",
+          "name": "Saint",
+          "color": "red",
+          "attr": "High flat magic attack (+53).",
+          "count": 10,
+          "icon": "/assets/arcana/1501.png"
+        },
+        {
+          "id": "2512",
+          "name": "Reincarnation",
+          "color": "blue",
+          "attr": "Magic Attack +24, Magical Lifesteal +10%.",
+          "count": 10,
+          "icon": "/assets/arcana/2512.png"
+        },
+        {
+          "id": "3511",
+          "name": "Tribute",
+          "color": "green",
+          "attr": "Magic Attack +24, Cooldown Reduction +7%.",
+          "count": 10,
+          "icon": "/assets/arcana/3511.png"
+        }
+      ],
+      "spell": "Flash",
       "core_items": [
         "Boots of the Arcane",
-        "Sage's Tome",
-        "Frozen Breath"
+        "Scepter of Reverberation",
+        "Mask of Agony"
       ],
       "situational_items": []
     }
@@ -16660,18 +16873,61 @@
     "kpl_weighted_matches": 59.34,
     "official_build": {
       "build_1": {
-        "name": "Preset Resmi #1 (Standar)",
-        "items": [],
-        "tips": ""
+        "name": "Preset Resmi #1 (Protective Roam Support)",
+        "items": [
+          "Guardian - Radiance",
+          "Boots of Resistance",
+          "Glacial Buckler",
+          "Succubus Cloak",
+          "Ominous Premonition",
+          "Blood Rage"
+        ],
+        "tips": "Aura pelindung tim dan CDR untuk memaksimalkan frekuensi skill proteksi kawan."
       },
       "build_2": {
-        "name": "Preset Resmi #2 (Alternatif)",
-        "items": [],
-        "tips": ""
+        "name": "Preset Resmi #2 (Initiator Tank Roam)",
+        "items": [
+          "Guardian - Redemption",
+          "Boots of Fortitude",
+          "Blazing Cape",
+          "Succubus Cloak",
+          "Overlord's Platemail",
+          "Ominous Premonition"
+        ],
+        "tips": "Fokus pada inisiasi dan absorpsi damage di barisan terdepan."
       },
-      "arcana": [],
+      "arcana": [
+        {
+          "id": "1512",
+          "name": "Fate",
+          "color": "red",
+          "attr": "Max HP +337, Physical Defense +23, Attack Speed +10%.",
+          "count": 10,
+          "icon": "/assets/arcana/1512.png"
+        },
+        {
+          "id": "2515",
+          "name": "Harmony",
+          "color": "blue",
+          "attr": "Max HP +450, HP Regen +52, Movement Speed +4%.",
+          "count": 10,
+          "icon": "/assets/arcana/2515.png"
+        },
+        {
+          "id": "3509",
+          "name": "Void",
+          "color": "green",
+          "attr": "Max HP +375, Cooldown Reduction +6%.",
+          "count": 10,
+          "icon": "/assets/arcana/3509.png"
+        }
+      ],
       "spell": "Flash",
-      "core_items": [],
+      "core_items": [
+        "Guardian - Radiance",
+        "Boots of Resistance",
+        "Glacial Buckler"
+      ],
       "situational_items": []
     }
   },
@@ -16980,7 +17236,7 @@
     "kpl_weighted_matches": 327.44,
     "official_build": {
       "build_1": {
-        "name": "Preset Resmi #1 (Standar)",
+        "name": "Preset Resmi #1 (Clash Tank Frontline)",
         "items": [
           "Giant's Grip",
           "Boots of Resistance",
@@ -16989,26 +17245,51 @@
           "Overlord's Platemail",
           "Glacial Buckler"
         ],
-        "tips": ""
+        "tips": "Preset tank tebal dengan HP masif dan pertahanan tinggi untuk inisiasi tim."
       },
       "build_2": {
-        "name": "Preset Resmi #2 (Alternatif)",
+        "name": "Preset Resmi #2 (Full Armor Defense)",
         "items": [
-          "Giant's Grip",
-          "Boots of Resistance",
+          "Boots of Fortitude",
           "Blazing Cape",
-          "Bloodweeper",
-          "Overlord's Platemail",
-          "Glacial Buckler"
+          "Succubus Cloak",
+          "Glacial Buckler",
+          "Blood Rage",
+          "Ominous Premonition"
         ],
-        "tips": ""
+        "tips": "Ketahanan optimal saat melawan komposisi musuh dengan physical damage tinggi."
       },
-      "arcana": [],
-      "spell": "Flash",
+      "arcana": [
+        {
+          "id": "1512",
+          "name": "Fate",
+          "color": "red",
+          "attr": "Max HP +337, Physical Defense +23, Attack Speed +10%.",
+          "count": 10,
+          "icon": "/assets/arcana/1512.png"
+        },
+        {
+          "id": "2515",
+          "name": "Harmony",
+          "color": "blue",
+          "attr": "Max HP +450, HP Regen +52, Movement Speed +4%.",
+          "count": 10,
+          "icon": "/assets/arcana/2515.png"
+        },
+        {
+          "id": "3509",
+          "name": "Void",
+          "color": "green",
+          "attr": "Max HP +375, Cooldown Reduction +6%.",
+          "count": 10,
+          "icon": "/assets/arcana/3509.png"
+        }
+      ],
+      "spell": "Smite",
       "core_items": [
-        "Blazing Cape",
-        "Bloodweeper",
-        "Overlord's Platemail"
+        "Giant's Grip",
+        "Boots of Resistance",
+        "Blazing Cape"
       ],
       "situational_items": []
     }
@@ -24140,7 +24421,69 @@
       "arcana": []
     },
     "hokfire_counters": null,
-    "abilities": [],
+    "abilities": [
+      {
+        "skill_id": 55000,
+        "type": "Passive",
+        "name": "Empty Hand (Kongkong Ru Ye)",
+        "desc": "Moving continuously accumulates energy. When fully charged, releasing movement triggers a short blink forward and enhances the next basic attack into 'Phantom Hand' (诡手), dealing physical damage and slowing the target. Hitting an enemy hero steals a random item from them for 7 seconds, granting its attributes to Kongkong'er or sharing it with nearby allies while the target loses those stats. Hitting a target with no stealable items returns the stolen gear and deals burst physical damage. Hitting non-hero units grants 1 bonus gold.",
+        "cd": "0",
+        "cost": "0",
+        "tags": [
+          "Mobility",
+          "Blink",
+          "Slow",
+          "Buff",
+          "Debuff"
+        ],
+        "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/550/55000.png"
+      },
+      {
+        "skill_id": 55001,
+        "type": "Skill 1",
+        "name": "Deceiving Heaven (Man Tian)",
+        "desc": "Casts an illusion clone forward that lasts 5 seconds, dealing physical damage along its path and at the destination while granting health recovery / shield to Kongkong'er and the clone. Recasting swaps positions with the clone instantly and deals damage to surrounding enemies. The clone mimics Kongkong'er's actions and absorbs damage (taking double damage).",
+        "cd": "8",
+        "cost": "50",
+        "tags": [
+          "Clone",
+          "Teleport",
+          "Shield",
+          "Damage"
+        ],
+        "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/550/55000.png"
+      },
+      {
+        "skill_id": 55002,
+        "type": "Skill 2",
+        "name": "Crossing the Sea (Guo Hai)",
+        "desc": "Leaves an illusion clone at the current location for 5 seconds while Kongkong'er dashes forward, dealing physical damage to enemies along the path and gaining health recovery / shield. Recasting swaps positions with the clone. Allows continuous mind games by alternating swaps between Skill 1 and Skill 2 clones.",
+        "cd": "8",
+        "cost": "50",
+        "tags": [
+          "Dash",
+          "Clone",
+          "Mobility",
+          "Shield"
+        ],
+        "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/550/55020.png"
+      },
+      {
+        "skill_id": 55003,
+        "type": "Ultimate",
+        "name": "Three Caves of Immortals (San Dong Cang Xian)",
+        "desc": "Spins ancient puppets rapidly, dealing high physical damage, knockback, and continuous pull/traction toward the center. Automatically triggers Skill 1 and Skill 2 to form a triangle of clones that spin together, drastically accelerating passive energy gain and allowing position swaps with any active clone. Enemies trapped in overlapping clone areas take devastating multi-layered damage and crowd control.",
+        "cd": "40",
+        "cost": "100",
+        "tags": [
+          "Crowd Control",
+          "Knockback",
+          "Pull",
+          "Area Damage"
+        ],
+        "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/550/55030.png"
+      }
+    ],
     "kpl_matchup": {
       "total_picks": 388,
       "total_bans": 642,
@@ -24324,18 +24667,61 @@
     "kpl_weighted_matches": 200.4,
     "official_build": {
       "build_1": {
-        "name": "Preset Resmi #1 (Standar)",
-        "items": [],
-        "tips": ""
+        "name": "Preset Resmi #1 (Standar Roam Disruption)",
+        "items": [
+          "Guardian - Radiance",
+          "Boots of Resistance",
+          "Frostscar's Embrace",
+          "Blazing Cape",
+          "Succubus Cloak",
+          "Blood Rage"
+        ],
+        "tips": "Preset Roam semi-tank untuk memaksimalkan disrupsi di team fight. Gunakan pasif untuk mencuri item carry lawan dan klon untuk menyerap skill musuh."
       },
       "build_2": {
-        "name": "Preset Resmi #2 (Alternatif)",
-        "items": [],
-        "tips": ""
+        "name": "Preset Resmi #2 (Full Tank Frontline)",
+        "items": [
+          "Guardian - Redemption",
+          "Boots of Fortitude",
+          "Blazing Cape",
+          "Succubus Cloak",
+          "Overlord's Platemail",
+          "Ominous Premonition"
+        ],
+        "tips": "Preset full armor dan HP untuk menghadapi physical burst musuh. Prioritaskan pelindung untuk rekan setim dan jadilah inisiator garis depan."
       },
-      "arcana": [],
+      "arcana": [
+        {
+          "id": "1512",
+          "name": "Fate",
+          "color": "red",
+          "attr": "Max HP +337, Physical Defense +23, Attack Speed +10%.",
+          "count": 10,
+          "icon": "/assets/arcana/1512.png"
+        },
+        {
+          "id": "2515",
+          "name": "Harmony",
+          "color": "blue",
+          "attr": "Max HP +450, HP Regen +52, Movement Speed +4%.",
+          "count": 10,
+          "icon": "/assets/arcana/2515.png"
+        },
+        {
+          "id": "3509",
+          "name": "Void",
+          "color": "green",
+          "attr": "Max HP +375, Cooldown Reduction +6%.",
+          "count": 10,
+          "icon": "/assets/arcana/3509.png"
+        }
+      ],
       "spell": "Flash",
-      "core_items": [],
+      "core_items": [
+        "Guardian - Radiance",
+        "Boots of Resistance",
+        "Frostscar's Embrace"
+      ],
       "situational_items": []
     }
   },
@@ -32060,7 +32446,68 @@
       "arcana": []
     },
     "hokfire_counters": null,
-    "abilities": [],
+    "abilities": [
+      {
+        "skill_id": 54900,
+        "type": "Passive",
+        "name": "Inner Demon Flame (Xin Mo Xiong Yan)",
+        "desc": "Possesses an innate 20% critical rate. Basic attacks and abilities generate 'Mind Energy' (capped at 60). At maximum energy, attack range and damage increase significantly. After casting any skill, the next basic attack becomes an enhanced 4-strike combo with slide dashes, each strike capable of critically hitting and triggering on-hit effects.",
+        "cd": "0",
+        "cost": "0",
+        "tags": [
+          "Critical",
+          "Burst",
+          "Dash",
+          "Enhanced Attack"
+        ],
+        "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/549/54900.png"
+      },
+      {
+        "skill_id": 54901,
+        "type": "Skill 1",
+        "name": "Mind Barrier (Po Wang Yi Ji)",
+        "desc": "Performs a short dash and enters a parry/block stance. Successfully blocking enemy attacks instantly fills Mind Energy to maximum, granting burst damage and sustain on the counterattack.",
+        "cd": "7",
+        "cost": "45",
+        "tags": [
+          "Dash",
+          "Parry",
+          "Damage Block",
+          "Counter"
+        ],
+        "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/549/54900.png"
+      },
+      {
+        "skill_id": 54902,
+        "type": "Skill 2",
+        "name": "Shadow Levitation (Teng Yun Bi Ri)",
+        "desc": "Charges and levitates into the air to evade incoming ground damage and control. Slams down at the target location, dealing physical damage, stunning enemies, and generating Mind Energy.",
+        "cd": "8",
+        "cost": "50",
+        "tags": [
+          "Invulnerability",
+          "Airborne",
+          "Stun",
+          "AoE"
+        ],
+        "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/549/54930.png"
+      },
+      {
+        "skill_id": 54903,
+        "type": "Ultimate",
+        "name": "Twin Soul Severance (Shuang Xin Gui Yi)",
+        "desc": "Becomes untargetable (invulnerable) while unleashing chaotic demon illusions, crashing down upon target enemy heroes with massive burst physical damage and knock-up. Essential for diving the enemy backline and dodging lethal ultimates.",
+        "cd": "35",
+        "cost": "100",
+        "tags": [
+          "Untargetable",
+          "Burst",
+          "Knockup",
+          "Finisher"
+        ],
+        "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/549/54930.png"
+      }
+    ],
     "kpl_matchup": {
       "total_picks": 35,
       "total_bans": 31,
@@ -32079,18 +32526,61 @@
     "kpl_weighted_matches": 30.7,
     "official_build": {
       "build_1": {
-        "name": "Preset Resmi #1 (Standar)",
-        "items": [],
-        "tips": ""
+        "name": "Preset Resmi #1 (Jungle Burst Assassin)",
+        "items": [
+          "Rapacious Bite",
+          "Boots of Resistance",
+          "Eternity Blade",
+          "Master Sword",
+          "Shadow Ripper",
+          "Starbreaker"
+        ],
+        "tips": "Build burst kritikal untuk mengeksekusi carry musuh dalam satu kombo 4 pukulan pasif. Manfaatkan ultimate untuk menghindari serangan balik fatal."
       },
       "build_2": {
-        "name": "Preset Resmi #2 (Alternatif)",
-        "items": [],
-        "tips": ""
+        "name": "Preset Resmi #2 (Bruiser Jungle Sustained)",
+        "items": [
+          "Giant's Grip",
+          "Boots of Resistance",
+          "Axe of Torment",
+          "Frostscar's Embrace",
+          "Eternity Blade",
+          "Cuirass of Savagery"
+        ],
+        "tips": "Build semi-tank dengan CDR tinggi untuk pertarungan berlarut-larut. Memberikan ketahanan lebih saat menghadapi musuh dengan banyak crowd control."
       },
-      "arcana": [],
-      "spell": "Flash",
-      "core_items": [],
+      "arcana": [
+        {
+          "id": "1519",
+          "name": "Calamity",
+          "color": "red",
+          "attr": "Critical Rate +16% for lethal burst output.",
+          "count": 10,
+          "icon": "/assets/arcana/1519.png"
+        },
+        {
+          "id": "2520",
+          "name": "Hunt",
+          "color": "blue",
+          "attr": "Attack Speed +10%, Movement Speed +10%.",
+          "count": 10,
+          "icon": "/assets/arcana/2520.png"
+        },
+        {
+          "id": "3514",
+          "name": "Eagle Eye",
+          "color": "green",
+          "attr": "Physical Attack +9, Physical Pierce +64.",
+          "count": 10,
+          "icon": "/assets/arcana/3514.png"
+        }
+      ],
+      "spell": "Smite",
+      "core_items": [
+        "Rapacious Bite",
+        "Eternity Blade",
+        "Master Sword"
+      ],
       "situational_items": []
     }
   },
@@ -42681,7 +43171,69 @@
       "arcana": []
     },
     "hokfire_counters": null,
-    "abilities": [],
+    "abilities": [
+      {
+        "skill_id": 15100,
+        "type": "Passive",
+        "name": "Sovereign of the Southeast (Zuo Duan Dong Nan)",
+        "desc": "Basic attacks and skills apply Marks on enemy heroes, stacking up to 5 times. Each stack reduces the target's damage dealt to Sun Quan by 3% (up to 15%). At 5 stacks, Sun Quan unlocks his Ultimate and enters the 'Formation Breaker' state, significantly enhancing attack power and converting Attack Speed into casting speed.",
+        "cd": "0",
+        "cost": "0",
+        "tags": [
+          "Mark",
+          "Damage Reduction",
+          "State Transform",
+          "Attack Speed"
+        ],
+        "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/151/15100.png"
+      },
+      {
+        "skill_id": 15101,
+        "type": "Skill 1",
+        "name": "Piercing Clouds (Lie Shi Chuan Yun)",
+        "desc": "Ranged Form: Throws military war banners that trigger an arrow rain barrage, dealing physical damage and slow over a designated area. Melee Form: Sweeps the ancient Guding blade in rapid wide slashes.",
+        "cd": "6",
+        "cost": "40",
+        "tags": [
+          "AoE",
+          "Slow",
+          "Ranged/Melee Form",
+          "Damage"
+        ],
+        "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/151/15110.png"
+      },
+      {
+        "skill_id": 15102,
+        "type": "Skill 2",
+        "name": "Swift Maneuver (You Ren You Yu)",
+        "desc": "Ranged Form: Channels while moving with boosted movement speed, firing continuous mobile shots at up to two locked targets. Melee Form: Unleashes rapid flurry slashes with self-healing sustain.",
+        "cd": "8",
+        "cost": "50",
+        "tags": [
+          "Mobile Attack",
+          "Movement Speed",
+          "Dual Target",
+          "Heal"
+        ],
+        "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/151/15120.png"
+      },
+      {
+        "skill_id": 15103,
+        "type": "Ultimate",
+        "name": "Banner Formation Charge (Hui Jing Po Zhen)",
+        "desc": "Unlocked only at 5 passive mark stacks. Sun Quan dashes forward with his war banner, dealing multi-hit physical damage and triggering high-frequency on-hit effects. On the final blow, leaps backward to a safe distance and refreshes Formation Breaker state.",
+        "cd": "30",
+        "cost": "80",
+        "tags": [
+          "Ultimate",
+          "Dash",
+          "Multi-hit",
+          "On-hit",
+          "Disengage"
+        ],
+        "icon": "https://game.gtimg.cn/images/yxzj/img201606/heroimg/151/15130.png"
+      }
+    ],
     "kpl_matchup": {
       "total_picks": 161,
       "total_bans": 67,
@@ -42856,18 +43408,61 @@
     "kpl_weighted_matches": 111.69,
     "official_build": {
       "build_1": {
-        "name": "Preset Resmi #1 (Standar)",
-        "items": [],
-        "tips": ""
+        "name": "Preset Resmi #1 (Farm Lane On-Hit / Attack Speed)",
+        "items": [
+          "Doomsday",
+          "Boots of Dexterity",
+          "Sparkforged Dagger",
+          "Master Sword",
+          "Starbreaker",
+          "Blood Rage"
+        ],
+        "tips": "Fokus pada on-hit effect dan attack speed. Kumpulkan 5 tumpukan pasif dari jarak aman, lalu gunakan ultimate untuk menyapu bersih musuh."
       },
       "build_2": {
-        "name": "Preset Resmi #2 (Alternatif)",
-        "items": [],
-        "tips": ""
+        "name": "Preset Resmi #2 (Crit / Mobility Kiting)",
+        "items": [
+          "Boots of Dexterity",
+          "Shadow Ripper",
+          "Eternity Blade",
+          "Daybreaker's Virtue",
+          "Blood Rage",
+          "Cuirass of Savagery"
+        ],
+        "tips": "Gaya bermain kiting dengan mobilitas tinggi. Manfaatkan Skill 2 untuk menembak sambil bergerak menghindari serbuan assassin musuh."
       },
-      "arcana": [],
+      "arcana": [
+        {
+          "id": "1519",
+          "name": "Calamity",
+          "color": "red",
+          "attr": "Critical Rate +16% for consistent DPS scaling.",
+          "count": 10,
+          "icon": "/assets/arcana/1519.png"
+        },
+        {
+          "id": "2520",
+          "name": "Hunt",
+          "color": "blue",
+          "attr": "Attack Speed +7%, Movement Speed +7%, Lifesteal +4.8%.",
+          "count": 10,
+          "icon": "/assets/arcana/2520.png"
+        },
+        {
+          "id": "3514",
+          "name": "Eagle Eye",
+          "color": "green",
+          "attr": "Physical Attack +9, Physical Pierce +64.",
+          "count": 10,
+          "icon": "/assets/arcana/3514.png"
+        }
+      ],
       "spell": "Flash",
-      "core_items": [],
+      "core_items": [
+        "Doomsday",
+        "Boots of Dexterity",
+        "Sparkforged Dagger"
+      ],
       "situational_items": []
     }
   },
@@ -44132,18 +44727,61 @@
     "kpl_weighted_matches": 19.53,
     "official_build": {
       "build_1": {
-        "name": "Preset Resmi #1 (Standar)",
-        "items": [],
-        "tips": ""
+        "name": "Preset Resmi #1 (Mid Burst Mage)",
+        "items": [
+          "Boots of the Arcane",
+          "Scepter of Reverberation",
+          "Mask of Agony",
+          "Savant's Wrath",
+          "Void Staff",
+          "Splendor"
+        ],
+        "tips": "Build burst magis tinggi untuk mendominasi mid-game. Gabungkan Skill 1 dan Skill 2 untuk memicu ledakan area seketika."
       },
       "build_2": {
-        "name": "Preset Resmi #2 (Alternatif)",
-        "items": [],
-        "tips": ""
+        "name": "Preset Resmi #2 (Sustain CDR Poke)",
+        "items": [
+          "Boots of Tranquility",
+          "Insatiable Tome",
+          "Mask of Agony",
+          "Savant's Wrath",
+          "Void Staff",
+          "Splendor"
+        ],
+        "tips": "Fokus pada lifesteal magis dan cooldown rendah untuk terus melancarkan poke jarak jauh dalam team fight berkepanjangan."
       },
-      "arcana": [],
+      "arcana": [
+        {
+          "id": "1501",
+          "name": "Saint",
+          "color": "red",
+          "attr": "High flat magic attack (+53).",
+          "count": 10,
+          "icon": "/assets/arcana/1501.png"
+        },
+        {
+          "id": "2512",
+          "name": "Reincarnation",
+          "color": "blue",
+          "attr": "Magic Attack +24, Magical Lifesteal +10%.",
+          "count": 10,
+          "icon": "/assets/arcana/2512.png"
+        },
+        {
+          "id": "3511",
+          "name": "Tribute",
+          "color": "green",
+          "attr": "Magic Attack +24, Cooldown Reduction +7%.",
+          "count": 10,
+          "icon": "/assets/arcana/3511.png"
+        }
+      ],
       "spell": "Flash",
-      "core_items": [],
+      "core_items": [
+        "Boots of the Arcane",
+        "Scepter of Reverberation",
+        "Mask of Agony"
+      ],
       "situational_items": []
     }
   },
