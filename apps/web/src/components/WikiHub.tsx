@@ -314,22 +314,23 @@ export const WikiHub: React.FC<Props> = ({
 
           {/* CATALOG MODE */}
           {heroViewMode === 'catalog' && (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-2 sm:gap-2.5">
               {filteredHeroes.map((hero) => {
                 const bandColor =
                   hero.popularity_band === 'S'
-                    ? 'border-amber-500/60 bg-amber-950/20 text-amber-300'
+                    ? 'border-amber-500/60 bg-amber-950/50 text-amber-300'
                     : hero.popularity_band === 'A'
-                    ? 'border-purple-500/60 bg-purple-950/20 text-purple-300'
-                    : 'border-slate-700 bg-slate-900/40 text-slate-400';
+                    ? 'border-purple-500/60 bg-purple-950/50 text-purple-300'
+                    : 'border-slate-700 bg-slate-900/60 text-slate-400';
                 return (
                   <button
                     key={hero.hero_id}
                     type="button"
                     onClick={() => onInspectHero(hero)}
-                    className="group relative p-2.5 rounded-xl bg-[#10141E] border border-[#232A38] hover:border-[#B8FF01]/60 hover:bg-[#141A28] text-left transition-all flex flex-col justify-between"
+                    className="group relative p-2 rounded-xl bg-[#10141E] border border-[#232A38] hover:border-[#B8FF01]/60 hover:bg-[#141A28] text-left transition-all flex flex-col justify-between"
                   >
-                    <div className="space-y-2">
+                    <div className="space-y-1.5 w-full">
+                      {/* Avatar Container */}
                       <div className="relative aspect-square w-full rounded-lg overflow-hidden bg-[#0A0D12] border border-[#1F2633]">
                         <img
                           src={hero.portrait_asset || `/assets/heroes/${hero.hero_id}.png`}
@@ -337,32 +338,31 @@ export const WikiHub: React.FC<Props> = ({
                           loading="lazy"
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                         />
-                        <div className="absolute top-1 right-1 flex flex-col gap-1 items-end">
-                          {hero.popularity_band && (
+                        {hero.popularity_band && (
+                          <div className="absolute top-1 right-1">
                             <span
-                              className={`text-xs font-mono font-bold px-1.5 py-0.5 rounded border ${bandColor}`}
+                              className={`text-[10px] font-mono font-bold px-1.5 py-0.2 rounded border backdrop-blur-xs ${bandColor}`}
                               title={`Popularitas HoK Camp: Band ${hero.popularity_band}`}
                             >
-                              Band {hero.popularity_band}
+                              {hero.popularity_band}
                             </span>
-                          )}
-                        </div>
-                        <div className="absolute bottom-1 left-1 bg-black/75 px-1.5 py-0.5 rounded text-xs font-mono text-slate-200">
+                          </div>
+                        )}
+                        <div className="absolute bottom-1 left-1 bg-black/80 px-1.5 py-0.2 rounded text-[10px] font-mono text-slate-200 border border-white/10">
                           {hero.primary_lane}
                         </div>
                       </div>
-                      <div>
-                        <div className="flex items-center justify-between">
-                          <h4 className="text-sm font-bold text-slate-100 truncate group-hover:text-[#B8FF01]">
-                            {hero.name}
-                          </h4>
+
+                      {/* Info */}
+                      <div className="min-w-0">
+                        <h4 className="text-xs sm:text-sm font-bold text-slate-100 truncate group-hover:text-[#B8FF01]">
+                          {hero.name}
+                        </h4>
+                        <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 mt-0.5">
+                          <span>{(hero.win_rate * 100).toFixed(1)}%</span>
+                          <span className="truncate max-w-[60px] text-right text-slate-400">{hero.primary_role}</span>
                         </div>
-                        <p className="text-xs text-slate-400 truncate mt-0.5">{hero.title || hero.chinese_name}</p>
                       </div>
-                    </div>
-                    <div className="pt-2 mt-2 border-t border-[#1C2230] flex items-center justify-between text-xs font-mono text-slate-400">
-                      <span>WR {(hero.win_rate * 100).toFixed(1)}%</span>
-                      <span className="text-slate-400">{hero.primary_role}</span>
                     </div>
                   </button>
                 );
