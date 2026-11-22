@@ -474,9 +474,14 @@ export function PostDraftGamePlanPanel({
                 );
               })}
             </div>
-            <small className="tempo-card__note">
-              Pangsa indeks tempo relatif selalu berjumlah 100% (normalisasi langsung tanpa pembulatan ganda). Skor ini bersifat heuristik, bukan probabilitas kemenangan terkalibrasi.
-            </small>
+            <div className="tempo-card__note">
+              <p>
+                <strong>Catatan Metrik:</strong> Kurva tempo diturunkan dari data empiris durasi match turnamen KPL (&lt;15m, 15–19m, &ge;19m), bukan kurva power rating kit in-game. Angka ini merefleksikan riwayat durasi kemenangan komposisi tim pro (stomp/snowball vs late stall). Hero dengan sampel KPL minim menggunakan estimasi profil peran.
+              </p>
+              <p>
+                Pangsa indeks tempo relatif dinormalisasi menjadi 100% per fase untuk perbandingan kedua tim. Skor ini bersifat heuristik, bukan probabilitas kemenangan terkalibrasi.
+              </p>
+            </div>
             <div className="tempo-hero-badges">
               {plan.tempo.ours.heroes.map((entry) => (
                 <button
