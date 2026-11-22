@@ -112,13 +112,18 @@ export function computeVisionRecommendation(input: VisionRecommendationInput): V
     .filter(entry => (onlyGlobalReleased ? isHeroGlobalReleased(entry.hero) : true))
     .filter(entry => !used.has(entry.hero.hero_id));
   const actingHeroes = input.heroes.filter(hero => ourHeroIds.includes(hero.hero_id));
-  const filteredRecommendations = pickPhaseCandidates(legalRecommendations, actingHeroes, input.synergyDb?.hero_lane_rates);
-  const heroSuggestions = filteredRecommendations.map(entry => entry.hero);
+  const engineCandidates = pickPhaseCandidates(legalRecommendations, actingHeroes, input.synergyDb?.hero_lane_rates);
+  const engineIds = new Set(engineCandidates.map(entry => entry.hero.hero_id));
+  const orderedRecommendations = [
+    ...engineCandidates,
+    ...legalRecommendations.filter(entry => !engineIds.has(entry.hero.hero_id)),
+  ];
+  const heroSuggestions = orderedRecommendations.map(entry => entry.hero);
   return {
     ...base,
     heroIds: heroSuggestions.map(hero => hero.hero_id),
     heroSuggestions,
-    recommendations: filteredRecommendations,
+    recommendations: orderedRecommendations,
     duetPackages: result.duetPackages,
     phaseStrategy: result.phaseStrategy,
     tacticalScores: result.tacticalScores,
