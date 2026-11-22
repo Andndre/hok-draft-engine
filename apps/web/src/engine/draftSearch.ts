@@ -33,6 +33,10 @@ import {
   kplPresenceOf,
   runTournamentInference,
 } from './tournamentInference';
+import {
+  evaluateZeroDisengageExploitation,
+  evaluateDiveCoreTriadEnabler,
+} from './scaleDimensionTactics';
 import type { TournamentRecommendation } from './tournamentInference';
 
 /** Konteks pencarian Minimax untuk AI lawan */
@@ -398,12 +402,25 @@ export function evaluatePosition(
       }
     }
 
+    // 5. Evaluasi Taktis Komposisi Lanjutan (Minimax-Aware):
+    //    a. Eksploitasi Backline Lawan Tanpa Disengage
+    const diveExploit = evaluateZeroDisengageExploitation(null, ourTeam, enemyTeam);
+    if (diveExploit.isApplicable) {
+      totalScore += diveExploit.scoreAdjustment;
+    }
+
+    //    b. Sinergi Triad Dive Core (Sustain AoE / Penalti Fragile Solo Assassin)
+    const triadEnabler = evaluateDiveCoreTriadEnabler(null, ourTeam, enemyTeam);
+    if (triadEnabler.isApplicable) {
+      totalScore += triadEnabler.scoreAdjustment;
+    }
+
     // Jika tim sudah lengkap 5 hero, kembalikan skor langsung
     if (ourTeam.length === 5) {
       return totalScore;
     }
 
-    // 5. Proyeksi potensi follow-up agar posisi pada fase ban awal tetap memiliki bobot terarah
+    // 6. Proyeksi potensi follow-up agar posisi pada fase ban awal tetap memiliki bobot terarah
     const projectedStep = side === 'blue' ? 4 : 5;
     const projectedPosition = { ...position, step: projectedStep };
     let bestPotentialFollowUp = -2.5;

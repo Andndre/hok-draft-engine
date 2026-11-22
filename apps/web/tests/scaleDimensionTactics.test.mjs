@@ -9,6 +9,8 @@ import {
   detectEnemyTempoImpostors,
   evaluateSuicidalDiverTrap,
   evaluateDaQiaoFrontlineSynergy,
+  evaluateZeroDisengageExploitation,
+  evaluateDiveCoreTriadEnabler,
 } from '../src/engine/scaleDimensionTactics.ts';
 
 // Helper mock hero
@@ -164,4 +166,57 @@ test('Da Qiao frontline deficit synergy boosts Bruiser and penalizes Stealth sol
   const gaoSyn = evaluateDaQiaoFrontlineSynergy(gao, ourHeroes);
   assert.ok(gaoSyn.scoreAdjustment < 0);
   assert.ok(gaoSyn.tacticalTag?.includes('Antitesis'));
+});
+
+test('zero-disengage exploitation dynamically rewards heavy divers against unprotected backline', () => {
+  // Musuh: Shouyue (carry rentan) + Dyadia (roamer enchanter tanpa disengage) + Charlotte + Augran
+  const enemyHeroes = [
+    makeMockHero(196, 'Shouyue', 'Marksman', 'Farm', { dive_vulnerable: true }),
+    makeMockHero(577, 'Dyadia', 'Support', 'Roam', { ally_heal: true }),
+    makeMockHero(536, 'Charlotte', 'Fighter', 'Clash', { frontline: true }),
+    makeMockHero(517, 'Augran', 'Fighter', 'Jungle', { mobility: true }),
+  ];
+
+  const lapulapu = makeMockHero(168, 'Lapulapu', 'Tank', 'Roam', { engage: true, cc_knockup: true, frontline: true });
+  const biron = makeMockHero(503, 'Biron', 'Fighter', 'Clash', { engage: true, cc_knockup: true, frontline: true });
+
+  // Lapulapu & Biron harus mendapat dorongan eksploitasi dive
+  const lapuExploit = evaluateZeroDisengageExploitation(lapulapu, [], enemyHeroes);
+  assert.equal(lapuExploit.isApplicable, true);
+  assert.ok(lapuExploit.scoreAdjustment >= 0.25);
+  assert.ok(lapuExploit.tacticalTag?.includes('Eksploitasi Dive'));
+
+  const bironExploit = evaluateZeroDisengageExploitation(biron, [], enemyHeroes);
+  assert.equal(bironExploit.isApplicable, true);
+  assert.ok(bironExploit.scoreAdjustment >= 0.25);
+
+  // Jika musuh memiliki Zhuangzi (disengage murni), eksploitasi tidak berlaku
+  const enemyWithZhuangzi = [
+    ...enemyHeroes.filter((h) => h.hero_id !== 577),
+    makeMockHero(113, 'Zhuangzi', 'Support', 'Roam', { disengage: true, ally_cleanse: true }),
+  ];
+  const lapuVsZhuangzi = evaluateZeroDisengageExploitation(lapulapu, [], enemyWithZhuangzi);
+  assert.equal(lapuVsZhuangzi.isApplicable, false);
+});
+
+test('dive core triad enabler dynamically boosts area sustain mid and penalizes fragile solo assassin', () => {
+  // Tim kita sudah memiliki 2 diver agresif (Pei 502 + Biron 503)
+  const ourHeroes = [
+    makeMockHero(502, 'Pei', 'Assassin', 'Jungle', { mobility: true, engage: true }),
+    makeMockHero(503, 'Biron', 'Fighter', 'Clash', { frontline: true, engage: true, cc_knockup: true }),
+  ];
+
+  // Yuhuan (Mage dengan ally_heal & untargetable) harus mendapat dorongan sinergi triad
+  const yuhuan = makeMockHero(176, 'Yuhuan', 'Mage', 'Mid', { ally_heal: true, cc_slow: true });
+  const triadYuhuan = evaluateDiveCoreTriadEnabler(yuhuan, ourHeroes);
+  assert.equal(triadYuhuan.isApplicable, true);
+  assert.ok(triadYuhuan.scoreAdjustment > 0);
+  assert.ok(triadYuhuan.tacticalTag?.includes('Sinergi Triad'));
+
+  // Mai Shiranui (Mage assassin solo tipis tanpa heal/shield/peel) terkena penalti defisit sustain
+  const mai = makeMockHero(157, 'Mai Shiranui', 'Mage', 'Mid', { mobility: true, dash: true });
+  const triadMai = evaluateDiveCoreTriadEnabler(mai, ourHeroes);
+  assert.equal(triadMai.isApplicable, true);
+  assert.ok(triadMai.scoreAdjustment < 0);
+  assert.ok(triadMai.tacticalTag?.includes('Defisit Sustain'));
 });

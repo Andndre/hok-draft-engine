@@ -711,3 +711,185 @@ export function isLowEscapeHero(hero: Hero | number): boolean {
   return false;
 }
 
+// =============================================================================
+// DYNAMIC TAG-BASED TACTICAL PREDICATES (Zero Hardcoded Hero IDs)
+// =============================================================================
+
+/**
+ * Mendeteksi apakah hero memiliki kapasitas Hard AoE Disengage / Counter-Dive
+ * berdasarkan bukti skill resmi (tag disengage, ally_cleanse, suppress, atau knockback/peel tinggi).
+ */
+export function hasAoEDisengage(hero: Hero): boolean {
+  const tags = hero.tactical_profile?.tags;
+  const dim = getHeroDimensionVector(hero);
+  if (tags?.disengage || tags?.ally_cleanse) return true;
+  if (tags?.peel && (tags?.cc_knockback || tags?.cc_knockup) && dim.peel >= 0.65) return true;
+  if (tags?.suppress) return true;
+  return false;
+}
+
+/**
+ * Mendeteksi apakah hero adalah Heavy Diver / Frontline Aggressor
+ * berdasarkan vektor dive (>= 0.65) atau tag engage yang dipadukan mobilitas/frontline.
+ */
+export function isHeavyDiver(hero: Hero): boolean {
+  if (hero.primary_role === 'Mage' || hero.primary_role === 'Marksman') return false;
+  const tags = hero.tactical_profile?.tags;
+  const dim = getHeroDimensionVector(hero);
+  if (dim.dive >= 0.65) return true;
+  if (tags?.engage && (tags?.mobility || tags?.dash || tags?.leap || tags?.frontline)) return true;
+  return false;
+}
+
+/**
+ * Mendeteksi apakah hero Midlane bertindak sebagai Sustain Enabler / Area Control
+ * (membawa heal tim, shield tim, atau zona crowd control masif seperti freeze/slow/wall).
+ */
+export function isMidlaneSustainEnabler(hero: Hero): boolean {
+  if (hero.primary_role !== 'Mage' && hero.primary_lane !== 'Mid') return false;
+  const tags = hero.tactical_profile?.tags;
+  if (tags?.ally_heal || tags?.ally_shield) return true;
+  if ((tags?.cc_slow || tags?.cc_stun || tags?.cc_root) && (tags?.disengage || tags?.peel || tags?.frontline)) {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Mendeteksi apakah hero adalah Assassin Solo Tipis tanpa utilitas/sustain tim
+ * (dive sangat tinggi >= 0.70 tetapi peel rendah <= 0.15 dan tidak punya heal/shield/frontline tim).
+ */
+export function isFragileSoloAssassin(hero: Hero): boolean {
+  const tags = hero.tactical_profile?.tags;
+  const dim = getHeroDimensionVector(hero);
+  const hasNoTeamUtility = !tags?.frontline && !tags?.ally_heal && !tags?.ally_shield && !tags?.ally_cleanse;
+  return dim.dive >= 0.70 && dim.peel <= 0.15 && hasNoTeamUtility;
+}
+
+export interface ZeroDisengageExploitationResult {
+  isApplicable: boolean;
+  scoreAdjustment: number;
+  tacticalTag?: string;
+}
+
+/**
+ * Mengevaluasi peluang eksploitasi dive terhadap backline musuh yang minim escape
+ * saat musuh TIDAK memiliki roamer dengan hard AoE disengage (Zhuangzi, Dunshan, Zhang Fei).
+ */
+export function evaluateZeroDisengageExploitation(
+  candidate: Hero | null,
+  ourHeroes: Hero[],
+  enemyHeroes: Hero[],
+): ZeroDisengageExploitationResult {
+  const vulnerableEnemyCarry = enemyHeroes.find((eh) => isLowEscapeHero(eh));
+  if (!vulnerableEnemyCarry) {
+    return { isApplicable: false, scoreAdjustment: 0 };
+  }
+
+  // Apakah musuh SUDAH memilih roamer resmi (lane Roam atau role Support)?
+  // Catatan penting: Jangan anggap Tank Clash (seperti Dun/Bai Qi) sebagai roamer!
+  const enemyRoamer = enemyHeroes.find(
+    (eh) => eh.primary_lane === 'Roam' || eh.primary_role === 'Support',
+  );
+
+  // Jika musuh belum memilih roamer dan belum selesai draft (pick < 5), jangan spekulasi.
+  if (!enemyRoamer && enemyHeroes.length < 5) {
+    return { isApplicable: false, scoreAdjustment: 0 };
+  }
+
+  // Jika roamer yang dipilih musuh memiliki AoE Disengage, eksploitasi gagal.
+  if (enemyRoamer && hasAoEDisengage(enemyRoamer)) {
+    return { isApplicable: false, scoreAdjustment: 0 };
+  }
+
+  const baseBonus = 0.25;
+
+  if (candidate) {
+    if (isHeavyDiver(candidate)) {
+      return {
+        isApplicable: true,
+        scoreAdjustment: baseBonus,
+        tacticalTag: `⚡ Eksploitasi Dive: Lawan tanpa Roam Disengage untuk melindungi ${vulnerableEnemyCarry.name}`,
+      };
+    }
+    return { isApplicable: false, scoreAdjustment: 0 };
+  }
+
+  const ourDiverCount = ourHeroes.filter((h) => isHeavyDiver(h)).length;
+
+  if (ourDiverCount > 0) {
+    const teamBonus = Math.min(0.30, ourDiverCount * 0.15);
+    return {
+      isApplicable: true,
+      scoreAdjustment: teamBonus,
+      tacticalTag: `⚡ Eksploitasi Dive: Tim memiliki ${ourDiverCount} diver menembus formasi lawan tanpa Disengage`,
+    };
+  }
+
+  return { isApplicable: false, scoreAdjustment: 0 };
+}
+
+export interface DiveCoreTriadResult {
+  isApplicable: boolean;
+  scoreAdjustment: number;
+  tacticalTag?: string;
+}
+
+/**
+ * Mengevaluasi sinergi paket triad 3-hero: Ketika tim sudah memiliki 2+ diver jarak dekat,
+ * hero Midlane yang membawa Sustain AoE & Kontrol Area (Yuhuan, Zhaojun) mendapat bonus dorongan,
+ * sedangkan assassin solo tipis tanpa sustain (Mai Shiranui) terkena penalti defisit sustain.
+ */
+export function evaluateDiveCoreTriadEnabler(
+  candidate: Hero | null,
+  ourHeroes: Hero[],
+  _enemyHeroes?: Hero[],
+): DiveCoreTriadResult {
+  const ourDiverCount = ourHeroes.filter((h) => isHeavyDiver(h)).length;
+
+  if (ourDiverCount < 2) {
+    return { isApplicable: false, scoreAdjustment: 0 };
+  }
+
+  if (candidate) {
+    if (isMidlaneSustainEnabler(candidate)) {
+      return {
+        isApplicable: true,
+        scoreAdjustment: 0.25,
+        tacticalTag: `🛡️ Sinergi Triad: Sustain AoE & kontrol area melengkapi formasi dive agresif`,
+      };
+    }
+
+    if (isFragileSoloAssassin(candidate)) {
+      return {
+        isApplicable: true,
+        scoreAdjustment: -0.20,
+        tacticalTag: `⚠️ Defisit Sustain: Tim dive memerlukan pelindung/sustain area, bukan assassin solo tipis`,
+      };
+    }
+
+    return { isApplicable: false, scoreAdjustment: 0 };
+  }
+
+  const hasSustainEnabler = ourHeroes.some((h) => isMidlaneSustainEnabler(h));
+  const hasFragileSoloAssassin = ourHeroes.some((h) => isFragileSoloAssassin(h));
+
+  let scoreAdjustment = 0;
+  let tacticalTag: string | undefined;
+
+  if (hasSustainEnabler) {
+    scoreAdjustment += 0.25;
+    tacticalTag = `🛡️ Sinergi Triad: Sustain AoE & kontrol area melengkapi formasi dive agresif`;
+  } else if (hasFragileSoloAssassin) {
+    scoreAdjustment -= 0.20;
+    tacticalTag = `⚠️ Defisit Sustain: Formasi dive kekurangan sustain area`;
+  }
+
+  return {
+    isApplicable: scoreAdjustment !== 0,
+    scoreAdjustment,
+    tacticalTag,
+  };
+}
+
+
