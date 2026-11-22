@@ -1478,6 +1478,37 @@ export function evaluateDuetRecommendations(
           const counterHeroName = aCountersB1 ? heroA.name : heroB.name;
           enemyExploitBadge = enemyExploitBadge ? `${enemyExploitBadge} · ⚔️ Kontra B1 ${blueB1.name}` : `⚔️ Respon Kontra B1 ${blueB1.name} (${counterHeroName})`;
         }
+
+        // Respons terhadap Directional Shield / Projectile Wall (Dunshan, Meng Tian)
+        const enemyHasDirectionalShield = enemyHeroes.some(
+          (e) =>
+            e.hero_id === 509 ||
+            e.hero_id === 527 ||
+            e.abilities?.some((a) => {
+              const d = a.desc?.toLowerCase() || '';
+              return (
+                (d.includes('projectile') && (d.includes('shield') || d.includes('block') || d.includes('knock down'))) ||
+                d.includes('shield wall') ||
+                d.includes('giant shield')
+              );
+            }),
+        );
+
+        if (enemyHasDirectionalShield) {
+          const aPull = heroA.tactical_profile?.tags.cc_pull || heroA.hero_id === 175;
+          const bPull = heroB.tactical_profile?.tags.cc_pull || heroB.hero_id === 175;
+          const aKnockup = heroA.tactical_profile?.tags.cc_knockup || heroA.hero_id === 106;
+          const bKnockup = heroB.tactical_profile?.tags.cc_knockup || heroB.hero_id === 106;
+
+          if ((aPull && bKnockup) || (bPull && aKnockup)) {
+            exploitScore += 0.65;
+            const pullName = aPull ? heroA.name : heroB.name;
+            const knockupName = aKnockup ? heroA.name : heroB.name;
+            enemyExploitBadge = enemyExploitBadge
+              ? `${enemyExploitBadge} · ⚡ Chain CC Tembus Perisai (${pullName}+${knockupName})`
+              : `⚡ Chain CC Tembus Perisai (${pullName}+${knockupName})`;
+          }
+        }
       }
 
       // Respons Khusus Blue Side di Jendela B2+B3 terhadap R1+R2 Red (Hybrid Counter & Complement)
