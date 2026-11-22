@@ -135,8 +135,8 @@
       "tidak_diketahui": 0
     },
     "dive_vulnerable": {
-      "ya": 10,
-      "tidak": 110,
+      "ya": 11,
+      "tidak": 109,
       "tidak_diketahui": 0
     },
     "kite_vulnerable": {
@@ -1274,7 +1274,8 @@
       "review_status": "approved",
       "positive_tags": [
         "cc_silence",
-        "cc_slow"
+        "cc_slow",
+        "dive_vulnerable"
       ]
     },
     {

@@ -57,6 +57,30 @@
       "reason": "Mozi unggul dalam poke dan stun jarak jauh via Skill 2 (Cannon Blast). Pada kit baru Dunshan, Skill 1 (Bastion) murni menempel ke rekan/turret tanpa tameng berjalan, dan satu-satunya penangkal proyektil adalah Ultimate (Allshield) ber-cooldown lama. Dunshan dan kawan yang dilindunginya menjadi target empuk poke tanpa bisa membalas dari jarak aman.",
       "reviewed_by": "Draft engine curation",
       "reviewed_at": "2026-11-18"
+    },
+    {
+      "counter_id": 175,
+      "target_id": 509,
+      "severity": "hard",
+      "reason": "Hook Skill 2 Kui menarik Dunshan keluar dari kuda-kuda perisai frontal (Allshield/Bastion) dan seketika membatalkan channeling perisai, menyeret tubuh Dunshan ke tengah formasi kawan untuk dieliminasi.",
+      "reviewed_by": "Draft engine curation",
+      "reviewed_at": "2026-11-23"
+    },
+    {
+      "counter_id": 106,
+      "target_id": 509,
+      "severity": "hard",
+      "reason": "Skill 2 Sweet Breeze Xiao Qiao meletus langsung dari bawah koordinat tanah dan bukan proyektil horizontal, sehingga menembus perisai Dunshan dan melemparnya ke udara (airborne knockup) untuk membatalkan channeling perisai seketika.",
+      "reviewed_by": "Draft engine curation",
+      "reviewed_at": "2026-11-23"
+    },
+    {
+      "counter_id": 531,
+      "target_id": 508,
+      "severity": "hard",
+      "reason": "Mobilitas domain cermin Jing dan frame invulnerability memungkinkannya melompati garis depan dan mengeksekusi Garo secara instan tanpa bisa dihindari, karena Garo adalah marksman immobile tanpa skill dash/escape aktif.",
+      "reviewed_by": "Draft engine curation",
+      "reviewed_at": "2026-11-23"
     }
   ]
 }

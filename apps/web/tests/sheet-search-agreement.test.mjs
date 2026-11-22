@@ -48,8 +48,13 @@ const synergy = read(manifest.artifacts.synergy.file);
  * Pembaruan 21 Nov 2026: Flowborn Roamer (#585) yang sebelumnya memiliki data skill
  * kosong kini terisi profil taktis resmi dari HoK Camp, mengubah trajektori ban
  * simulasi sehingga angka terukur saat ini adalah 32 dari 41 posisi (78,05%).
+ *
+ * Pembaruan 23 Nov 2026: Kurasi counter relasi mekanis Dunshan (Kui & Xiao Qiao
+ * membatalkan perisai frontal) dan Garo (Jing diver + dive_vulnerable) memperbarui
+ * proyeksi ancaman counter follow-up lawan pada slot R1 (step 5), sehingga angka
+ * terukur saat ini adalah 31 dari 41 posisi (75,61%).
  */
-const MEASURED_SHEET_SEARCH_AGREEMENT = 32 / 41;
+const MEASURED_SHEET_SEARCH_AGREEMENT = 31 / 41;
 const MEASURED_SAMPLE_SIZE = 41;
 
 test('sheet top-1 vs minimax top-1 agreement stays at or above the measured floor', () => {
