@@ -33,6 +33,8 @@ import {
 import {
   evaluateSuicidalDiverTrap,
   evaluateDaQiaoFrontlineSynergy,
+  evaluateZeroDisengageExploitation,
+  evaluateDiveCoreTriadEnabler,
 } from './scaleDimensionTactics';
 
 export type { TournamentPhaseId } from './draftRules';
@@ -2478,6 +2480,24 @@ export function runTournamentInference(
         score += daQiaoSynergy.scoreAdjustment;
         if (daQiaoSynergy.tacticalTag) {
           proComboTag = daQiaoSynergy.tacticalTag;
+        }
+      }
+
+      // Evaluasi Eksploitasi Backline Lawan Tanpa Disengage
+      const diveExploit = evaluateZeroDisengageExploitation(cand, ourHeroes, enemyHeroes);
+      if (diveExploit.isApplicable && diveExploit.scoreAdjustment > 0) {
+        score += diveExploit.scoreAdjustment;
+        if (diveExploit.tacticalTag && !proComboTag) {
+          proComboTag = diveExploit.tacticalTag;
+        }
+      }
+
+      // Evaluasi Sinergi Triad Dive Core
+      const triadEnabler = evaluateDiveCoreTriadEnabler(cand, ourHeroes, enemyHeroes);
+      if (triadEnabler.isApplicable && triadEnabler.scoreAdjustment !== 0) {
+        score += triadEnabler.scoreAdjustment;
+        if (triadEnabler.tacticalTag && !proComboTag) {
+          proComboTag = triadEnabler.tacticalTag;
         }
       }
 
