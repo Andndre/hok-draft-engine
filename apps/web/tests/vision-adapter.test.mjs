@@ -38,6 +38,15 @@ test('our/enemy derivation is mirrored: occupied lanes constrain OUR side only',
   // Our side already occupies Clash/Jungle/Mid/Farm -> top advice must fill Roam.
   assert.equal(asBlue.heroSuggestions[0].primary_lane, 'Roam');
 
+  // For solo queue flexibility: all lanes still retain valid candidates even after our comp picked 4 lanes.
+  const lanes = ['Clash', 'Jungle', 'Mid', 'Farm', 'Roam'];
+  for (const lane of lanes) {
+    const laneCandidates = asBlue.recommendations.filter(
+      r => r.hero.primary_lane === lane || r.hero.lanes.includes(lane)
+    );
+    assert.ok(laneCandidates.length > 0, `must retain candidates for lane ${lane}`);
+  }
+
   // Same board seen from red: the opponent's advice has the same public perspective.
   const asRed = call(pos, 'red');
   assert.equal(asRed.isUserTurn, false);

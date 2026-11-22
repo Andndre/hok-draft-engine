@@ -23,9 +23,9 @@ import {
   UserRound,
   XCircle,
 } from 'lucide-react';
-import type { DraftFormat, Hero, TournamentDataset } from '../types';
+import type { DraftFormat, Hero, Lane, TournamentDataset } from '../types';
 import type { DraftPosition, Side } from '../engine/draftRules';
-import { getDraftSequence, getDraftTurn } from '../engine/draftRules';
+import { ALL_LANES, assignHeroLanes, getDraftSequence, getDraftTurn } from '../engine/draftRules';
 import { OpponentClient } from '../engine/opponentClient';
 import { MAX_ADVISOR_BUDGET_MS } from '../engine/draftSearch';
 import { orderRecommendationsBySolver, type AdvisorDecision } from '../engine/advisorRanking';
@@ -46,7 +46,7 @@ import { unidentifiedBansBreakdownMessage } from '../vision/observer';
 import { visionFormatMismatchReason, type VisionApplyResult } from '../vision/visionMessages';
 import { VisionHeroPickerModal } from './VisionHeroPickerModal';
 import { HeroThumbnail } from './ui/AssetThumbnail';
-import { LaneLabel } from './ui/LaneIcon';
+import { LaneIcon, LaneLabel } from './ui/LaneIcon';
 import { evaluateTacticalScores } from '../engine/tournamentInference';
 import { PostDraftGamePlanPanel } from './PostDraftGamePlanPanel';
 import { buildDefaultLaneAssignments, assignmentToHeroLaneMap } from '../engine/gamePlan';
@@ -412,6 +412,7 @@ export function VisionPanel({
   const [lastObservation, setLastObservation] = useState<DraftObservation | null>(null);
   const [lastResult, setLastResult] = useState<ObserverResult | null>(null);
   const [recommendation, setRecommendation] = useState<VisionRecommendation | null>(null);
+  const [selectedLane, setSelectedLane] = useState<Lane | 'All'>('All');
   const [permissionGranted, setPermissionGranted] = useState<boolean | null>(null);
   const [layoutStatus, setLayoutStatus] = useState<LayoutStatus | null>(null);
   const [sideCheck, setSideCheck] = useState<SideCrossCheck | null>(null);
@@ -1260,6 +1261,31 @@ export function VisionPanel({
     return orderRecommendationsBySolver(entries, solverDecision.decision.rootValues, { lockedPlanHeroId: lockedPlan });
   }, [recommendation, solverDecision, solverKey, side, bluePlanAId, bluePlanBId, redPlanAId, redPlanBId]);
 
+  const actingTeamHeroes = useMemo(() => {
+    if (!lastResult || !recommendation) return [];
+    const heroById = new Map(heroes.map(h => [h.hero_id, h]));
+    const pickIds = lastResult.position.picks[recommendation.actingSide] ?? [];
+    return pickIds.map(id => heroById.get(id)).filter((h): h is Hero => Boolean(h));
+  }, [lastResult, recommendation, heroes]);
+
+  const actingLaneState = useMemo(() => {
+    const kplLaneRates = (synergyData as any)?.hero_lane_rates;
+    return assignHeroLanes(actingTeamHeroes, kplLaneRates);
+  }, [actingTeamHeroes, synergyData]);
+
+  const laneRecommendationsMap = useMemo(() => {
+    const map = new Map<Lane, typeof rankedVisionRecommendations>();
+    for (const lane of ALL_LANES) {
+      map.set(
+        lane,
+        rankedVisionRecommendations.filter(
+          r => r.hero.primary_lane === lane || r.hero.lanes.includes(lane)
+        )
+      );
+    }
+    return map;
+  }, [rankedVisionRecommendations]);
+
   const activeSuggestion = useMemo(() => {
     const frame = pipelineRef.current?.getLastFrame();
     if (!frame || !showOverlay || interactionMode !== 'detect' || status !== 'running' || unresolvedPickSlot !== null || (advisorFormat === 'ranked' && manualConfig.ban.countPerSide !== 3) || !lastResult || lastResult.truncated || !recommendation || !recommendation.isPickPhase || recommendation.step !== lastResult.step || !recommendation.heroSuggestions.length) return null;
@@ -1319,12 +1345,17 @@ export function VisionPanel({
       );
     }
 
-    const primaryRec = rankedVisionRecommendations[0] ?? null;
-    const primaryHero = primaryRec?.hero ?? recommendation.heroSuggestions[0];
-    const alternatives = (rankedVisionRecommendations.length > 1
-      ? rankedVisionRecommendations.slice(1, 5).map(entry => entry.hero)
-      : recommendation.heroSuggestions.slice(1, 5));
-    const reason = primaryRec?.laneTag || primaryRec?.proComboTag || 'Saran berdasarkan posisi draft saat ini';
+    const isFilteredByLane = selectedLane !== 'All';
+    const activeLaneRecs = isFilteredByLane
+      ? (laneRecommendationsMap.get(selectedLane) ?? [])
+      : rankedVisionRecommendations;
+
+    const primaryRec = activeLaneRecs[0] ?? null;
+    const primaryHero = primaryRec?.hero ?? (isFilteredByLane ? null : recommendation.heroSuggestions[0]);
+    const alternatives = activeLaneRecs.length > 1
+      ? activeLaneRecs.slice(1, 5).map(entry => entry.hero)
+      : (isFilteredByLane ? [] : recommendation.heroSuggestions.slice(1, 5));
+    const reason = primaryRec?.laneTag || primaryRec?.proComboTag || (isFilteredByLane ? `Opsi rekomendasi untuk lane ${selectedLane}` : 'Saran berdasarkan posisi draft saat ini');
     const solverText = solverDecision?.key === solverKey
       ? `${rankedVisionRecommendations[0]?.hero.hero_id === solverDecision.decision.heroId ? 'Pilihan solver' : 'Urutan solver'} · ${solverDecision.decision.completedDepth} ply · ${(solverDecision.decision.elapsedMs / 1000).toFixed(1)} dtk`
       : solverState === 'calculating'
@@ -1332,25 +1363,82 @@ export function VisionPanel({
         : 'Solver belum tersedia · saran sementara';
 
     const isOwn = recommendation.isUserTurn;
+    const selectedLaneOccupied = isFilteredByLane && actingLaneState.occupiedLanes.has(selectedLane);
+    const selectedLaneOccupant = isFilteredByLane ? findHero(heroes, actingLaneState.byLane[selectedLane]) : null;
+
+    const lanesFilterOptions: Array<{ id: Lane | 'All'; name: string }> = [
+      { id: 'All', name: 'Semua' },
+      { id: 'Clash', name: 'Clash' },
+      { id: 'Jungle', name: 'Jungle' },
+      { id: 'Mid', name: 'Mid' },
+      { id: 'Farm', name: 'Farm' },
+      { id: 'Roam', name: 'Roam' },
+    ];
+
     return (
       <div className={`vision-recommendation${isOwn ? '' : ' is-enemy'}`}>
         <div className="vision-recommendation__header">
           <span className="section-heading__icon"><Sparkles aria-hidden="true" /></span>
           <div>
-            <h4>{isOwn ? 'Rekomendasi Pick Anda' : `Prediksi Pick Lawan (${recommendation.actingSide.toUpperCase()})`}</h4>
+            <h4>
+              {isOwn
+                ? (isFilteredByLane ? `Rekomendasi Pick ${selectedLane} Anda` : 'Rekomendasi Pick Anda')
+                : (isFilteredByLane ? `Prediksi Pick ${selectedLane} Lawan (${recommendation.actingSide.toUpperCase()})` : `Prediksi Pick Lawan (${recommendation.actingSide.toUpperCase()})`)}
+            </h4>
             <p>Langkah {recommendation.step + 1} · Giliran {recommendation.actingSide === 'blue' ? 'Blue' : 'Red'}</p>
           </div>
         </div>
-        {primaryHero && (
+
+        <div className="vision-lane-tabs" role="tablist" aria-label="Filter rekomendasi per lane">
+          {lanesFilterOptions.map(({ id, name }) => {
+            const isSelected = selectedLane === id;
+            const isOccupied = id !== 'All' && actingLaneState.occupiedLanes.has(id);
+            const occupant = id !== 'All' ? findHero(heroes, actingLaneState.byLane[id]) : null;
+            return (
+              <button
+                key={id}
+                type="button"
+                role="tab"
+                aria-selected={isSelected}
+                className={`vision-lane-tab ${isSelected ? 'is-active' : ''} ${isOccupied ? 'is-occupied' : ''}`}
+                onClick={() => setSelectedLane(id)}
+              >
+                <LaneIcon lane={id} />
+                <span>{name}</span>
+                {isOccupied && (
+                  <span className="vision-lane-tab__badge" title={`Terisi oleh ${occupant?.name ?? 'tim'}`}>
+                    Terisi
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {selectedLaneOccupied && selectedLaneOccupant && (
+          <div className="vision-lane-notice" role="status">
+            <Info aria-hidden="true" />
+            <span>
+              Lane <strong>{selectedLane}</strong> sudah diisi oleh <strong>{selectedLaneOccupant.name}</strong> di tim ini. Rekomendasi di bawah berguna jika bertukar posisi atau mencari opsi cadangan.
+            </span>
+          </div>
+        )}
+
+        {primaryHero ? (
           <div className="vision-recommendation__primary">
             <HeroThumbnail hero={primaryHero} />
             <div>
               <strong>{primaryHero.name}</strong>
-              <span>{primaryHero.primary_lane} · {reason}</span>
+              <span><LaneLabel lane={primaryHero.primary_lane} /> · {reason}</span>
               {solverText && <small className="vision-slot-suggestion__solver" style={{ display: 'block', marginTop: 4 }}>{solverText}</small>}
             </div>
           </div>
+        ) : (
+          <div className="vision-lane-empty">
+            <p>Tidak ada hero yang tersedia untuk lane {selectedLane}.</p>
+          </div>
         )}
+
         {alternatives.length > 0 && (
           <div className="vision-recommendation__alternatives">
             {alternatives.map(hero => (
@@ -1365,6 +1453,60 @@ export function VisionPanel({
                 <span>{hero.name} ({hero.primary_lane})</span>
               </button>
             ))}
+          </div>
+        )}
+
+        {!isFilteredByLane ? (
+          <div className="vision-lane-summary">
+            <div className="vision-lane-summary__title">
+              <strong>Rekomendasi Berdasarkan Lane (Solo Queue)</strong>
+              <small>Pilih lane untuk melihat kandidat spesifik</small>
+            </div>
+            <div className="vision-lane-cards">
+              {ALL_LANES.map(lane => {
+                const laneRecs = laneRecommendationsMap.get(lane) ?? [];
+                const topRec = laneRecs[0];
+                const isOccupied = actingLaneState.occupiedLanes.has(lane);
+                const occupant = findHero(heroes, actingLaneState.byLane[lane]);
+                if (!topRec) return null;
+                return (
+                  <button
+                    key={lane}
+                    type="button"
+                    className={`vision-lane-card ${isOccupied ? 'is-occupied' : 'is-vacant'}`}
+                    onClick={() => setSelectedLane(lane)}
+                    title={`Buka rekomendasi lane ${lane}`}
+                  >
+                    <div className="vision-lane-card__header">
+                      <span className="vision-lane-card__lane">
+                        <LaneIcon lane={lane} />
+                        <span>{lane}</span>
+                      </span>
+                      <span className={`vision-lane-card__badge ${isOccupied ? 'is-occupied' : 'is-needed'}`}>
+                        {isOccupied ? `Terisi (${occupant?.name ?? 'Tim'})` : 'Terbuka'}
+                      </span>
+                    </div>
+                    <div className="vision-lane-card__body">
+                      <HeroThumbnail hero={topRec.hero} />
+                      <div className="vision-lane-card__hero-info">
+                        <strong>{topRec.hero.name}</strong>
+                        <span>{topRec.laneTag || topRec.proComboTag || `${Math.round(topRec.choiceScore)} pts`}</span>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ) : (
+          <div className="vision-lane-reset-row">
+            <button
+              type="button"
+              className="ui-button ui-button--quiet vision-lane-reset-btn"
+              onClick={() => setSelectedLane('All')}
+            >
+              ← Tampilkan Rekomendasi Komposisi Utama (Semua Lane)
+            </button>
           </div>
         )}
       </div>

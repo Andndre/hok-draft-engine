@@ -29,6 +29,7 @@ import {
   VisionDetectedBoard,
   estimateOverlayMetrics,
   planOverlayLabel,
+  VisionPanel,
 } from '../src/components/VisionPanel.tsx';
 import { getDraftSequence } from '../src/engine/draftRules.ts';
 import { resolvePortraitUrl } from '../src/vision/referenceSet.ts';
@@ -575,4 +576,15 @@ test('the unidentified-bans notice copy states estimates and abstentions distinc
     unidentifiedBansBreakdownMessage({ estimatedBans: 3, abstainedBans: 0 }),
     '3 ban teridentifikasi (perkiraan) — semua ban tetap di luar posisi draft',
   );
+});
+
+test('VisionPanel mounts cleanly and exposes lane recommendation layout hooks', () => {
+  const html = renderToStaticMarkup(
+    React.createElement(VisionPanel, {
+      heroes: [],
+      synergyData: {},
+    })
+  );
+  assert.ok(html.includes('class="vision-panel surface-panel"'), 'VisionPanel outer container mounts');
+  assert.ok(html.includes('Live Draft Advisor'), 'VisionPanel title is present');
 });
