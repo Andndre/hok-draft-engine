@@ -35,6 +35,8 @@ import {
   evaluateDaQiaoFrontlineSynergy,
   evaluateZeroDisengageExploitation,
   evaluateDiveCoreTriadEnabler,
+  isHeavyDiver,
+  isLowEscapeHero,
 } from './scaleDimensionTactics';
 
 export type { TournamentPhaseId } from './draftRules';
@@ -1308,12 +1310,11 @@ export function evaluateDuetRecommendations(
   // Deteksi profil kerentanan musuh yang sudah terlihat di papan
   const enemyHasKiteVulnerable = enemyHeroes.some((e) => {
     const profile = e.tactical_profile?.tags;
-    return profile?.mobility === false || [509, 114, 187, 107, 175].includes(e.hero_id); // Dunshan, Dian Wei, Donghuang, Bobo, Kui
+    return profile?.kite_vulnerable === true || profile?.mobility === false || [509, 114, 187, 107, 175].includes(e.hero_id); // Dunshan, Dian Wei, Donghuang, Bobo, Kui
   });
 
   const enemyHasAggressiveDivers = enemyHeroes.some((e) => {
-    const profile = e.tactical_profile?.tags;
-    return profile?.engage === true || [517, 528, 162, 193, 150, 153].includes(e.hero_id); // Augran, Lam, Nakoruru, Kaizer, Han Xin, Gao Changgong
+    return isHeavyDiver(e) || e.tactical_profile?.tags.engage === true || [517, 528, 162, 193, 150, 153].includes(e.hero_id);
   });
 
   // ===========================================================================
@@ -2297,11 +2298,15 @@ export function runTournamentInference(
             score += 0.55 * exposure.synergyMultiplier;
             proComboTag = `⚡ Counter Dunshan: ${cand.name} + ${teammate.name} (${(dData.win_rate_vs_dunshan * 100).toFixed(0)}% WR KPL)`;
           } else if (
+            (cand.tactical_profile?.tags.cc_pull && teammate.tactical_profile?.tags.cc_knockup) ||
+            (cand.tactical_profile?.tags.cc_knockup && teammate.tactical_profile?.tags.cc_pull) ||
             (cand.hero_id === 175 && teammate.hero_id === 106) ||
             (cand.hero_id === 106 && teammate.hero_id === 175)
           ) {
             score += 0.65 * exposure.synergyMultiplier;
-            proComboTag = '⚡ Chain CC: Hook Kui + Knockup S2 Xiao Qiao tembus Dunshan';
+            const pullHero = cand.tactical_profile?.tags.cc_pull || cand.hero_id === 175 ? cand : teammate;
+            const knockupHero = cand.tactical_profile?.tags.cc_knockup || cand.hero_id === 106 ? cand : teammate;
+            proComboTag = `⚡ Chain CC: Hook ${pullHero.name} + Knockup ${knockupHero.name} tembus Dunshan`;
           }
         }
 
@@ -2522,11 +2527,15 @@ export function runTournamentInference(
 
         if (hasEnemyDunshan) {
           if (
+            (cand.tactical_profile?.tags.cc_pull && teammate.tactical_profile?.tags.cc_knockup) ||
+            (cand.tactical_profile?.tags.cc_knockup && teammate.tactical_profile?.tags.cc_pull) ||
             (cand.hero_id === 175 && teammate.hero_id === 106) ||
             (cand.hero_id === 106 && teammate.hero_id === 175)
           ) {
             score += 0.65 * exposure.synergyMultiplier;
-            proComboTag = '⚡ Chain CC: Hook Kui + Knockup S2 Xiao Qiao tembus Dunshan';
+            const pullHero = cand.tactical_profile?.tags.cc_pull || cand.hero_id === 175 ? cand : teammate;
+            const knockupHero = cand.tactical_profile?.tags.cc_knockup || cand.hero_id === 106 ? cand : teammate;
+            proComboTag = `⚡ Chain CC: Hook ${pullHero.name} + Knockup ${knockupHero.name} tembus Dunshan`;
           }
         }
       }
@@ -2670,7 +2679,9 @@ export function runTournamentInference(
       phaseTitle = `FASE PICK 1 — PEMBENTUKAN CORE (${ourVacantArr.join(', ')})`;
       if (isBlueSide && (draftStep === 7 || draftStep === 8)) {
         const isFinisher = (h: Hero) =>
-          [646, 162, 547, 153, 167, 131, 150].includes(h.hero_id) || h.primary_role === 'Assassin';
+          h.primary_role === 'Assassin' ||
+          isHeavyDiver(h) ||
+          [646, 162, 547, 153, 167, 131, 150].includes(h.hero_id);
         const finisherPlan = [planAHero, planBHero].find((h) => h && isFinisher(h));
         const finisherWarning = finisherPlan
           ? ` ⚠️ Timing Alert: Tahan ${finisherPlan.name} untuk Fase 2 (B4/B5) agar terhindar dari counter-ban & kuncian di R3-R5! Kunci pilar respon & fondasi (B2+B3) terlebih dahulu.`
