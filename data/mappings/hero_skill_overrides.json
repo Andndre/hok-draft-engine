@@ -143,7 +143,8 @@
     "646": {
       "hero_name": "Butterfly",
       "variant_assets": [
-        "/assets/heroes/646_v1.webp"
+        "/assets/heroes/646_v1.webp",
+        "/assets/heroes/646_v2.webp"
       ]
     }
   }
