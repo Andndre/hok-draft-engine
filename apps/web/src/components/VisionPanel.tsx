@@ -1293,16 +1293,29 @@ export function VisionPanel({
     const slot = slots.find(item => item.kind === 'pick' && item.side === recommendation.actingSide && !manualState.pickActions.some(a => a.slotIndex === item.index) && !manualState.preSelections.some(a => a.slotIndex === item.index));
     if (!slot) return null;
     const own = recommendation.actingSide === side;
+
+    const isFilteredByLane = selectedLane !== 'All';
+    const activeLaneRecs = isFilteredByLane
+      ? (laneRecommendationsMap.get(selectedLane) ?? [])
+      : rankedVisionRecommendations;
+
+    const primaryRec = activeLaneRecs[0] ?? rankedVisionRecommendations[0] ?? null;
+    const hero = primaryRec?.hero ?? recommendation.heroSuggestions[0];
+    const alternatives = activeLaneRecs.length > 1
+      ? activeLaneRecs.slice(1, 4).map(entry => entry.hero)
+      : rankedVisionRecommendations.slice(1, 4).map(entry => entry.hero);
+    const reason = primaryRec?.laneTag || primaryRec?.proComboTag || (isFilteredByLane ? `Opsi rekomendasi ${selectedLane}` : 'Saran berdasarkan posisi draft saat ini');
+
     return {
       own,
       left: own ? (slot.rect.x + slot.rect.w) / frame.width * 100 : (frame.width - slot.rect.x) / frame.width * 100,
       top: Math.max(2, Math.min(75, slot.rect.y / frame.height * 100)),
-      hero: rankedVisionRecommendations[0]?.hero ?? recommendation.heroSuggestions[0],
-      alternatives: rankedVisionRecommendations.length ? rankedVisionRecommendations.slice(1, 4).map(entry => entry.hero) : recommendation.heroSuggestions.slice(1, 4),
-      reason: rankedVisionRecommendations[0]?.laneTag || rankedVisionRecommendations[0]?.proComboTag || 'Saran berdasarkan posisi draft saat ini',
-      solver: solverDecision?.key === solverKey ? `${rankedVisionRecommendations[0]?.hero.hero_id === solverDecision.decision.heroId ? 'Pilihan solver' : 'Urutan solver'} · ${solverDecision.decision.completedDepth} ply · ${(solverDecision.decision.elapsedMs / 1000).toFixed(1)} dtk` : solverState === 'calculating' ? 'Mesin sedang menghitung…' : 'Solver belum tersedia · saran sementara',
+      hero,
+      alternatives,
+      reason,
+      solver: solverDecision?.key === solverKey ? `${primaryRec?.hero.hero_id === solverDecision.decision.heroId ? 'Pilihan solver' : 'Urutan solver'} · ${solverDecision.decision.completedDepth} ply · ${(solverDecision.decision.elapsedMs / 1000).toFixed(1)} dtk` : solverState === 'calculating' ? 'Mesin sedang menghitung…' : 'Solver belum tersedia · saran sementara',
     };
-  }, [status, showOverlay, interactionMode, lastResult, recommendation, manualConfig, side, manualState, overlayRevision, unresolvedPickSlot, advisorFormat, rankedVisionRecommendations, solverDecision, solverKey, solverState]);
+  }, [status, showOverlay, interactionMode, lastResult, recommendation, manualConfig, side, manualState, overlayRevision, unresolvedPickSlot, advisorFormat, rankedVisionRecommendations, solverDecision, solverKey, solverState, selectedLane, laneRecommendationsMap]);
 
   const renderBoard = () => (
     <VisionDetectedBoard
@@ -1460,9 +1473,9 @@ export function VisionPanel({
           <div className="vision-lane-summary">
             <div className="vision-lane-summary__title">
               <strong>Rekomendasi Berdasarkan Lane (Solo Queue)</strong>
-              <small>Pilih lane untuk melihat kandidat spesifik</small>
+              <small>Klik kartu untuk melihat alternatif spesifik untuk lane tersebut</small>
             </div>
-            <div className="vision-lane-cards">
+            <div className="vision-lane-grid">
               {ALL_LANES.map(lane => {
                 const laneRecs = laneRecommendationsMap.get(lane) ?? [];
                 const topRec = laneRecs[0];
@@ -1473,24 +1486,24 @@ export function VisionPanel({
                   <button
                     key={lane}
                     type="button"
-                    className={`vision-lane-card ${isOccupied ? 'is-occupied' : 'is-vacant'}`}
+                    className="vision-lane-item"
                     onClick={() => setSelectedLane(lane)}
-                    title={`Buka rekomendasi lane ${lane}`}
+                    title={`Lihat alternatif lane ${lane}`}
                   >
-                    <div className="vision-lane-card__header">
-                      <span className="vision-lane-card__lane">
+                    <div className="vision-lane-item__top">
+                      <span className="vision-lane-item__lane">
                         <LaneIcon lane={lane} />
                         <span>{lane}</span>
                       </span>
-                      <span className={`vision-lane-card__badge ${isOccupied ? 'is-occupied' : 'is-needed'}`}>
+                      <span className={`vision-lane-item__badge ${isOccupied ? 'is-occupied' : 'is-open'}`}>
                         {isOccupied ? `Terisi (${occupant?.name ?? 'Tim'})` : 'Terbuka'}
                       </span>
                     </div>
-                    <div className="vision-lane-card__body">
+                    <div className="vision-lane-item__bottom">
                       <HeroThumbnail hero={topRec.hero} />
-                      <div className="vision-lane-card__hero-info">
-                        <strong>{topRec.hero.name}</strong>
-                        <span>{topRec.laneTag || topRec.proComboTag || `${Math.round(topRec.choiceScore)} pts`}</span>
+                      <div className="vision-lane-item__details">
+                        <strong className="vision-lane-item__name">{topRec.hero.name}</strong>
+                        <span className="vision-lane-item__tag">{topRec.laneTag || topRec.proComboTag || `${Math.round(topRec.choiceScore)} pts`}</span>
                       </div>
                     </div>
                   </button>
@@ -1701,14 +1714,105 @@ export function VisionPanel({
                   <span className="sr-only">{paused ? 'Lanjutkan pratinjau' : 'Jeda pratinjau'}</span>
                 </button>
                 {activeSuggestion && (
-                  <section className={`vision-slot-suggestion ${activeSuggestion.own ? 'is-own' : 'is-enemy'}`} style={{ top: `${activeSuggestion.top}%`, ...(activeSuggestion.own ? { left: `${activeSuggestion.left}%` } : { right: `${activeSuggestion.left}%` }) }} tabIndex={0} aria-label={`${activeSuggestion.own ? 'Saran pick' : 'Prediksi pick lawan'}: ${activeSuggestion.hero.name}. Fokus untuk melihat alternatif.`}>
-                    <div className="vision-slot-suggestion__main">
-                      <HeroThumbnail hero={activeSuggestion.hero} />
-                      <div><small>{activeSuggestion.own ? 'Saran pick' : 'Prediksi pick lawan'}</small><strong>{activeSuggestion.hero.name}</strong><span>{activeSuggestion.hero.primary_lane}</span></div>
+                  <section
+                    className={`vision-slot-suggestion ${activeSuggestion.own ? 'is-own' : 'is-enemy'}`}
+                    style={{
+                      top: `${activeSuggestion.top}%`,
+                      ...(activeSuggestion.own ? { left: `${activeSuggestion.left}%` } : { right: `${activeSuggestion.left}%` }),
+                    }}
+                    tabIndex={0}
+                    aria-label={`${activeSuggestion.own ? 'Saran pick' : 'Prediksi pick lawan'}: ${activeSuggestion.hero.name}.`}
+                  >
+                    <div className="vision-slot-suggestion__head">
+                      <span className="vision-slot-suggestion__badge">
+                        {activeSuggestion.own ? 'Saran Pick' : 'Prediksi Lawan'}
+                        {selectedLane !== 'All' ? ` (${selectedLane})` : ''}
+                      </span>
+                      <span className="vision-slot-suggestion__solver-tag">
+                        {activeSuggestion.solver.includes('·') ? activeSuggestion.solver.split('·').slice(1).join('·').trim() : ''}
+                      </span>
                     </div>
-                    <p>{activeSuggestion.reason}</p>
-                    <small className="vision-slot-suggestion__solver">{activeSuggestion.solver}</small>
-                    <div className="vision-slot-suggestion__alternatives">Alternatif: {activeSuggestion.alternatives.map(hero => hero.name).join(' · ') || 'Tidak ada'}</div>
+
+                    <div className="vision-slot-suggestion__lane-bar" role="tablist" aria-label="Pilih lane atau saran utama">
+                      <button
+                        type="button"
+                        className={`vision-slot-lane-btn ${selectedLane === 'All' ? 'is-active' : ''}`}
+                        onClick={(e) => { e.stopPropagation(); setSelectedLane('All'); }}
+                        title={`Saran Utama (Komposisi Tim): ${rankedVisionRecommendations[0]?.hero.name ?? 'Semua'}`}
+                      >
+                        <div className="vision-slot-lane-btn__thumb-wrap">
+                          {rankedVisionRecommendations[0]?.hero ? (
+                            <HeroThumbnail hero={rankedVisionRecommendations[0].hero} width={26} height={26} />
+                          ) : null}
+                          <span className="vision-slot-lane-btn__badge">★</span>
+                        </div>
+                        <span className="vision-slot-lane-btn__label">All</span>
+                      </button>
+                      {ALL_LANES.map(l => {
+                        const topRec = laneRecommendationsMap.get(l)?.[0];
+                        const isOccupied = actingLaneState.occupiedLanes.has(l);
+                        const isSelected = selectedLane === l;
+                        if (!topRec) return null;
+                        return (
+                          <button
+                            key={l}
+                            type="button"
+                            className={`vision-slot-lane-btn ${isSelected ? 'is-active' : ''} ${isOccupied ? 'is-occupied' : ''}`}
+                            onClick={(e) => { e.stopPropagation(); setSelectedLane(l); }}
+                            title={`${l}: ${topRec.hero.name}${isOccupied ? ' (Lane sudah terisi)' : ''}`}
+                          >
+                            <div className="vision-slot-lane-btn__thumb-wrap">
+                              <HeroThumbnail hero={topRec.hero} width={26} height={26} />
+                              <span className="vision-slot-lane-btn__badge">
+                                <LaneIcon lane={l} />
+                              </span>
+                            </div>
+                            <span className="vision-slot-lane-btn__label">{l}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <div className="vision-slot-suggestion__hero-card">
+                      <button
+                        type="button"
+                        className="vision-slot-suggestion__hero-main"
+                        onClick={() => onInspectHero?.(activeSuggestion.hero)}
+                        title={`Klik untuk info & counter ${activeSuggestion.hero.name}`}
+                      >
+                        <HeroThumbnail hero={activeSuggestion.hero} width={38} height={38} />
+                        <div className="vision-slot-suggestion__info">
+                          <div className="vision-slot-suggestion__name-row">
+                            <strong>{activeSuggestion.hero.name}</strong>
+                            <span className="vision-slot-suggestion__lane-pill">
+                              <LaneIcon lane={activeSuggestion.hero.primary_lane} />
+                              {activeSuggestion.hero.primary_lane}
+                            </span>
+                          </div>
+                          <p className="vision-slot-suggestion__reason">{activeSuggestion.reason}</p>
+                        </div>
+                      </button>
+                    </div>
+
+                    {activeSuggestion.alternatives.length > 0 && (
+                      <div className="vision-slot-suggestion__alts">
+                        <span className="vision-slot-suggestion__alts-label">Alternatif:</span>
+                        <div className="vision-slot-suggestion__alts-list">
+                          {activeSuggestion.alternatives.map(alt => (
+                            <button
+                              key={alt.hero_id}
+                              type="button"
+                              className="vision-slot-alt-btn"
+                              onClick={() => onInspectHero?.(alt)}
+                              title={`Alternatif: ${alt.name} (${alt.primary_lane}) · Klik untuk buka info`}
+                            >
+                              <HeroThumbnail hero={alt} width={22} height={22} />
+                              <span className="vision-slot-alt-btn__name">{alt.name}</span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </section>
                 )}
               </div>
