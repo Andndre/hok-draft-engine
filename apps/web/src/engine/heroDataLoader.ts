@@ -79,7 +79,21 @@ export async function decodePackage(pkg: CachedPackage): Promise<TournamentDatas
     if (!Number.isInteger(h.hero_id) || h.hero_id === 511 || !h.name || typeof h.slug !== 'string' || typeof h.chinese_name !== 'string' || !Array.isArray(h.lanes) || !h.lanes.length || !h.lanes.every(l => ['Clash', 'Jungle', 'Mid', 'Farm', 'Roam'].includes(l)) || !Array.isArray(h.counters) || !Array.isArray(h.countered_by) || !Number.isFinite(h.win_rate) || h.win_rate < 0 || h.win_rate > 1 || !Number.isFinite(h.pick_rate) || typeof releases[h.hero_id]?.released !== 'boolean') throw new Error('Metadata hero atau status rilis tidak valid');
   }
   if (releases['511']?.released !== false || releases['511']?.alias_of !== 556) throw new Error('Alias Ata tidak valid');
-  return { version: manifest.dataset_version, manifest, synergy, items, spells, heroes: heroes.map(h => ({ ...h, is_global_released: releases[h.hero_id].released })) };
+  return {
+    version: manifest.dataset_version,
+    manifest,
+    synergy,
+    items,
+    spells,
+    heroes: heroes.map(h => ({
+      ...h,
+      is_global_released: releases[h.hero_id].released,
+      portrait_asset: h.portrait_asset && !h.portrait_asset.includes('?')
+        ? `${h.portrait_asset}?v=${manifest.dataset_version}`
+        : h.portrait_asset,
+      variant_assets: h.variant_assets?.map(va => va && !va.includes('?') ? `${va}?v=${manifest.dataset_version}` : va),
+    })),
+  };
 }
 
 /** Never activate a partial or unverified dataset snapshot. */
