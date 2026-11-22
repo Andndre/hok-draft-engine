@@ -192,9 +192,13 @@ export function evaluateRoamJungleCoherence(roamId: number, jungleId: number): C
   // ---------------------------------------------------------------------------
   // 2. KOMBO TERLARANG (Forbidden Mismatches) -> Penalti Koherensi -0.45 s/d -0.55
   // ---------------------------------------------------------------------------
+  const rVec = ROAMER_VECTORS[roamId];
+  const jProf = JUNGLE_TEMPO_PROFILES[jungleId];
+
   // Mismatch 1: Early Roam Engage Agresif + Jungler Manja Farm Lv 4
-  // Guiguzi (189), Liu Shan (114) vs Luna (146), Li Bai (131), Wukong (167)
-  if ([189, 114].includes(roamId) && [146, 131, 167].includes(jungleId)) {
+  const isEarlyEngageRoam = (rVec?.engage ?? 0) >= 0.8 || [189, 114].includes(roamId);
+  const isLateFarmJungler = (jProf?.tempo === 'late_scaling' && jProf?.level4Dependent) || [146, 131, 167].includes(jungleId);
+  if (isEarlyEngageRoam && isLateFarmJungler) {
     return {
       delta: -0.50,
       badge: '⚠️ Tempo Mismatch: Roam Agresif Menekan Jungler Butuh Farm Level 4',
@@ -203,8 +207,9 @@ export function evaluateRoamJungleCoherence(roamId: number, jungleId: number): C
   }
 
   // Mismatch 2: Roam Pejalan Kaki / Tali Tether + Jungler Lintas Tebing
-  // Ming (501), Cai Yan (184) vs Han Xin (150), Cirrus (506), Jing (531), Li Bai (131)
-  if ([501, 184].includes(roamId) && [150, 506, 531, 131].includes(jungleId)) {
+  const isWalkingTetherRoam = (rVec?.enchanter ?? 0) >= 0.8 || [501, 184].includes(roamId);
+  const isCrossTerrainJungler = jProf?.mobility === 'cross_terrain' || [150, 506, 531, 131].includes(jungleId);
+  if (isWalkingTetherRoam && isCrossTerrainJungler) {
     return {
       delta: -0.55,
       badge: '⚠️ Tempo Mismatch: Tali/Heal Tertinggal di Belakang Jungler Lintas Medan',
@@ -213,8 +218,9 @@ export function evaluateRoamJungleCoherence(roamId: number, jungleId: number): C
   }
 
   // Mismatch 3: Roam Pasif Scaling Lv 1 + Jungler Early Snowball
-  // Sun Bin (118), Yaria (505) vs Pei (502), Ukyo Tachibana (163)
-  if ([118, 505].includes(roamId) && [502, 163].includes(jungleId)) {
+  const isPassiveScalingRoam = ((rVec?.tempo ?? 0) >= 0.3 || (rVec?.enchanter ?? 0) >= 0.8) && [118, 505].includes(roamId);
+  const isEarlySnowballJungler = jProf?.tempo === 'early_invade' || [502, 163].includes(jungleId);
+  if (isPassiveScalingRoam && isEarlySnowballJungler) {
     return {
       delta: -0.45,
       badge: '⚠️ Tempo Mismatch: Roam Pasif Membuang Keunggulan Snowball Early Jungler',

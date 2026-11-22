@@ -376,33 +376,45 @@ export function detectConstraintRemovalSynergies(
   const heroIds = new Set(heroes.map((h) => h.hero_id));
   const heroMap = new Map(heroes.map((h) => [h.hero_id, h]));
 
-  // 1. Sun Bin (118) menghapus batasan mobilitas hero lambat (Kaizer 193, Lu Bu 123)
-  if (heroIds.has(118)) {
-    const sunBin = heroMap.get(118)!;
-    for (const bId of [193, 123]) {
-      if (heroIds.has(bId)) {
-        const beneficiary = heroMap.get(bId)!;
+  // 1. Enabler Akselerasi Gerak (Sun Bin / hero Roam dengan ally_move_speed_buff)
+  // Menghapus batasan mobilitas hero lambat (Kaizer, Lu Bu / hero dengan kite_vulnerable)
+  const speedEnablers = heroes.filter(
+    (h) => h.hero_id === 118 || (h.primary_lane === 'Roam' && h.tactical_profile?.tags.ally_move_speed_buff),
+  );
+  for (const enabler of speedEnablers) {
+    for (const b of heroes) {
+      if (b.hero_id === enabler.hero_id) continue;
+      const isSlowBruiser =
+        [193, 123].includes(b.hero_id) ||
+        (b.tactical_profile?.tags.kite_vulnerable && b.tactical_profile?.tags.frontline);
+      if (isSlowBruiser) {
         pairs.push({
-          enabler: sunBin,
-          beneficiary,
+          enabler,
+          beneficiary: b,
           constraintRemoved: 'Batasan Mobilitas & Kiting',
-          tacticalImpact: `Skill 2 Sun Bin memberikan lonjakan kecepatan gerak & rewind HP sehingga ${beneficiary.name} dapat menerjang target tanpa terkena kiting.`,
+          tacticalImpact: `Akselerasi kecepatan gerak dari ${enabler.name} memungkinkan ${b.name} menerjang target tanpa terkena kiting.`,
         });
       }
     }
   }
 
-  // 2. Yaria (505) menghapus batasan squishy diver (Lam 528, Jing 531, Nakoruru 162)
-  if (heroIds.has(505)) {
-    const yaria = heroMap.get(505)!;
-    for (const bId of [528, 531, 162]) {
-      if (heroIds.has(bId)) {
-        const beneficiary = heroMap.get(bId)!;
+  // 2. Enabler Perisai Tempel / Bodyguard (Yaria / roamer dengan ally_shield)
+  // Menghapus batasan squishy diver (Lam, Jing, Nakoruru / assassin diver)
+  const shieldEnablers = heroes.filter(
+    (h) => h.hero_id === 505 || (h.primary_lane === 'Roam' && h.tactical_profile?.tags.ally_shield),
+  );
+  for (const enabler of shieldEnablers) {
+    for (const b of heroes) {
+      if (b.hero_id === enabler.hero_id) continue;
+      const isSquishyDiver =
+        [528, 531, 162].includes(b.hero_id) ||
+        (isHeavyDiver(b) && b.primary_role === 'Assassin');
+      if (isSquishyDiver) {
         pairs.push({
-          enabler: yaria,
-          beneficiary,
+          enabler,
+          beneficiary: b,
           constraintRemoved: 'Batasan Daya Tahan Squishy Assassin',
-          tacticalImpact: `Perisai pasif Yaria menempel pada ${beneficiary.name}, memungkinkannya bertahan dari burst awal saat melakukan dive ke tengah formasi lawan.`,
+          tacticalImpact: `Perisai dari ${enabler.name} menopang ${b.name}, memungkinkannya bertahan dari burst awal saat melakukan dive ke tengah formasi lawan.`,
         });
       }
     }
@@ -424,9 +436,9 @@ export function detectConstraintRemovalSynergies(
     }
   }
 
-  // 4. Da Qiao (119) menghapus batasan Jarak & Sustain (Pei 502, Ukyo 163, Sun Ce 510)
-  if (heroIds.has(119)) {
-    const daQiao = heroMap.get(119)!;
+  // 4. Da Qiao (191) menghapus batasan Jarak & Sustain (Pei 502, Ukyo 163, Sun Ce 510)
+  const daQiao = heroes.find((h) => h.hero_id === 191 || (h.primary_lane === 'Roam' && h.tactical_profile?.tags.teleport));
+  if (daQiao) {
     for (const bId of [502, 163, 510]) {
       if (heroIds.has(bId)) {
         const beneficiary = heroMap.get(bId)!;
@@ -492,6 +504,30 @@ const SUPPRESSION_HERO_IDS = new Set([156, 187]); // Liang, Donghuang
 const UNTARGETABLE_IFRAME_HERO_IDS = new Set([131, 531, 141, 125]); // Li Bai, Jing, Diaochan, Yuan'ge
 const HEAVY_PEEL_TANK_IDS = new Set([171, 135, 517, 149, 105, 509, 168, 120, 167, 527]);
 
+export function isSuppressionHero(eh: Hero): boolean {
+  return eh.tactical_profile?.tags.suppress === true || SUPPRESSION_HERO_IDS.has(eh.hero_id);
+}
+
+export function isHeavyPeelTank(eh: Hero): boolean {
+  const tags = eh.tactical_profile?.tags;
+  return (
+    HEAVY_PEEL_TANK_IDS.has(eh.hero_id) ||
+    eh.primary_role === 'Tank' ||
+    tags?.frontline === true ||
+    (tags?.peel === true && (tags?.cc_knockback === true || tags?.cc_knockup === true))
+  );
+}
+
+export function isUntargetableIframeHero(h: Hero): boolean {
+  return (
+    UNTARGETABLE_IFRAME_HERO_IDS.has(h.hero_id) ||
+    h.abilities?.some((a) => {
+      const d = a.desc?.toLowerCase() || '';
+      return d.includes('untargetable') || d.includes('invulnerable') || d.includes('kebal');
+    }) === true
+  );
+}
+
 /**
  * Mendeteksi jebakan kuncian mutlak (Suppression Liang/Donghuang + 2+ Heavy Peeler).
  * Assassin squishy tanpa iframe/untargetable (seperti Gao Changgong) tidak boleh
@@ -501,24 +537,19 @@ export function evaluateSuicidalDiverTrap(
   candidate: Hero,
   enemyHeroes: Hero[],
 ): SuicidalTrapAnalysis {
-  const hasSuppression = enemyHeroes.some((eh) => SUPPRESSION_HERO_IDS.has(eh.hero_id));
+  const hasSuppression = enemyHeroes.some(isSuppressionHero);
   if (!hasSuppression) {
     return { isTrapped: false, penalty: 0 };
   }
 
-  const peelerCount = enemyHeroes.filter(
-    (eh) =>
-      HEAVY_PEEL_TANK_IDS.has(eh.hero_id) ||
-      eh.primary_role === 'Tank' ||
-      eh.tactical_profile?.tags.frontline === true,
-  ).length;
+  const peelerCount = enemyHeroes.filter(isHeavyPeelTank).length;
 
   if (peelerCount < 2) {
     return { isTrapped: false, penalty: 0 };
   }
 
   // Jika kandidat memiliki frame untargetable (seperti Li Bai / Jing), ia memiliki peluang outplay
-  if (UNTARGETABLE_IFRAME_HERO_IDS.has(candidate.hero_id)) {
+  if (isUntargetableIframeHero(candidate)) {
     return { isTrapped: false, penalty: 0 };
   }
 
@@ -530,7 +561,7 @@ export function evaluateSuicidalDiverTrap(
       candidate.primary_role !== 'Tank');
 
   if (isSquishyDiver) {
-    const suppressor = enemyHeroes.find((eh) => SUPPRESSION_HERO_IDS.has(eh.hero_id));
+    const suppressor = enemyHeroes.find(isSuppressionHero);
     return {
       isTrapped: true,
       reason: `Jebakan Kuncian Mutlak (${suppressor?.name ?? 'Suppression'} + ${peelerCount} Peeler/Tank Lawan)`,
@@ -583,13 +614,17 @@ export function evaluateDaQiaoFrontlineSynergy(
   candidate: Hero,
   ourHeroes: Hero[],
 ): DaQiaoFrontlineSynergy {
-  const hasDaQiao = ourHeroes.some((h) => h.hero_id === 191);
+  const hasDaQiao = ourHeroes.some(
+    (h) => h.hero_id === 191 || (h.primary_lane === 'Roam' && h.tactical_profile?.tags.teleport),
+  );
   if (!hasDaQiao) {
     return { scoreAdjustment: 0 };
   }
 
-  const vulnerableCarryCount = ourHeroes.filter((h) =>
-    IMMOBILE_VULNERABLE_CARRIES.has(h.hero_id),
+  const vulnerableCarryCount = ourHeroes.filter(
+    (h) =>
+      IMMOBILE_VULNERABLE_CARRIES.has(h.hero_id) ||
+      (isLowEscapeHero(h) && (h.primary_role === 'Mage' || h.primary_role === 'Marksman')),
   ).length;
 
   // Cek apakah tim memiliki setidaknya 2 carry immobile (seperti Zhou Yu + Chano)
@@ -604,14 +639,25 @@ export function evaluateDaQiaoFrontlineSynergy(
 
   if (existingFrontlineCount <= 1) {
     // Tim mengalami Frontline Deficit!
-    if (BRUISER_SUSTAIN_JUNGLERS.has(candidate.hero_id) || candidate.tactical_profile?.tags.frontline === true) {
+    const isBruiser =
+      BRUISER_SUSTAIN_JUNGLERS.has(candidate.hero_id) ||
+      candidate.tactical_profile?.tags.frontline === true ||
+      ((candidate.primary_role === 'Fighter' || candidate.primary_role === 'Tank') &&
+        (candidate.primary_lane === 'Jungle' || candidate.lanes.includes('Jungle')));
+
+    if (isBruiser) {
       return {
         scoreAdjustment: 0.55,
         tacticalTag: '🔗 Sinergi Da Qiao: Mesin Reset Berkelanjutan (Elevator Engine) & Pelindung Backline',
       };
     }
 
-    if (STEALTH_SOLO_ASSASSINS.has(candidate.hero_id)) {
+    const isStealth =
+      STEALTH_SOLO_ASSASSINS.has(candidate.hero_id) ||
+      (candidate.primary_role === 'Assassin' &&
+        candidate.abilities?.some((a) => a.desc?.toLowerCase().includes('stealth') || a.desc?.toLowerCase().includes('invisible')));
+
+    if (isStealth) {
       return {
         scoreAdjustment: -0.85,
         tacticalTag: '⚠️ Antitesis Sistem Da Qiao: Stealth Membuka Diri & Korbankan Backline',

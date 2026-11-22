@@ -62,11 +62,14 @@ export function computeTacticalDeltas(
 
   // Check Pro Tournament chain CC combos
   const hasEnemyDunshan = enemyHeroes.some((e) => e.hero_id === 509 || e.name.toLowerCase() === 'dunshan');
-  const hasTeammateKui = teammateHeroes.some((t) => t.hero_id === 175 || t.name.toLowerCase() === 'kui');
-  const hasTeammateXiaoQiao = teammateHeroes.some((t) => t.hero_id === 106 || t.name.toLowerCase() === 'xiao qiao');
+  const hasTeammatePull = teammateHeroes.some((t) => t.tactical_profile?.tags.cc_pull || t.hero_id === 175 || t.name.toLowerCase() === 'kui');
+  const hasTeammateKnockup = teammateHeroes.some((t) => t.tactical_profile?.tags.cc_knockup || t.hero_id === 106 || t.name.toLowerCase() === 'xiao qiao');
 
   let proComboNote = '';
-  if ((pickedHero.hero_id === 106 && hasTeammateKui) || (pickedHero.hero_id === 175 && hasTeammateXiaoQiao)) {
+  const isPull = pickedHero.tactical_profile?.tags.cc_pull || pickedHero.hero_id === 175;
+  const isKnockup = pickedHero.tactical_profile?.tags.cc_knockup || pickedHero.hero_id === 106;
+
+  if ((isKnockup && hasTeammatePull) || (isPull && hasTeammateKnockup)) {
     if (hasEnemyDunshan) {
       proComboNote = 'KPL Chain CC Combo: Hook Kui membongkar shield Dunshan, langsung dilanjutkan Knockup S2 Xiao Qiao untuk mengunci hero musuh yang menempel di belakangnya!';
     } else {
