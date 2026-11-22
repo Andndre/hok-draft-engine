@@ -826,7 +826,8 @@ export function computeDraftOutcomeProjection(
   draftStep: number = 0,
   bannedHeroIds: number[] = [],
   b1Openers: Record<string, any> = {},
-  format: DraftFormat = 'tournament'
+  format: DraftFormat = 'tournament',
+  hasExplicitUserPlan: boolean = true
 ): DraftOutcomeProjection {
   // Skor dasar draft advantage (skala 0 - 100)
   const baseVector = isPickPhase
@@ -870,12 +871,13 @@ export function computeDraftOutcomeProjection(
     let bestCaseScenario = '';
 
     const isDirectCounterToOpener = Boolean(
+      hasExplicitUserPlan &&
       plannedOpener &&
       (candidate.counters?.some((c) => c.target_id === plannedOpener.hero_id) ||
         plannedOpener.countered_by?.some((c) => c.counter_id === candidate.hero_id))
     );
     const openerPrebans: Array<{ ban_id: number; count: number }> =
-      plannedOpener ? (b1Openers[String(plannedOpener.hero_id)]?.top_prebans || []) : [];
+      (hasExplicitUserPlan && plannedOpener) ? (b1Openers[String(plannedOpener.hero_id)]?.top_prebans || []) : [];
     const openerPrebanMatch = openerPrebans.find((p) => p.ban_id === candidate.hero_id && p.count >= 12);
 
     let enemyComboPartner: Hero | null = null;
@@ -2065,29 +2067,29 @@ export function runTournamentInference(
 
       if (isBlueSide) {
         // SISI BLUE (Keuntungan First-Pick B1):
-        // 1. DILARANG mem-ban hero B1 target kita sendiri (Plan A maupun Plan B eksplisit)!
+        // 1. DILARANG mem-ban hero B1 target kita sendiri (hanya jika Plan A/B eksplisit dikunci pengguna)!
         const isExplicitUserPlanA = Boolean(planAId && cand.hero_id === planAId);
         const isExplicitUserPlanB = Boolean(planBId && cand.hero_id === planBId);
         const isTargetToPreserve = isExplicitUserPlanA || isExplicitUserPlanB || (plannedOpener && cand.hero_id === plannedOpener.hero_id);
 
         if (isTargetToPreserve) {
           score -= 3.0;
-          const planLabel = isExplicitUserPlanA ? 'Plan A' : isExplicitUserPlanB ? 'Plan B' : 'Target B1';
+          const planLabel = isExplicitUserPlanA ? 'Plan A' : 'Plan B';
           laneTag = `Jangan Di-Ban (${planLabel})`;
           proComboTag = `👑 Simpan untuk First-Pick B1 Kita (${planLabel})!`;
-        } else if (plannedOpener) {
+        } else if (hasExplicitUserPlan && plannedOpener) {
+          // --- MODE PROTEKSI PLAN EKSPLISIT USER ---
           const counterCheck = getCounterStrengthAgainst(cand, plannedOpener);
           const openerAdvantage = getOpenerAdvantageAgainst(cand, plannedOpener);
           if (openerAdvantage.countered && !counterCheck.isCounter) {
-            // 2A-0. Opener kita justru meng-counter hero ini: mem-ban-nya membuang slot ban
+            // Opener kita justru meng-counter hero ini: mem-ban-nya membuang slot ban
             // dan menghilangkan matchup yang menguntungkan kita.
             score -= openerAdvantage.severity === 'hard' ? 1.30 : 0.70;
             laneTag = `Bukan Ancaman ${plannedOpener.name}`;
             proComboTag = `🛡️ ${plannedOpener.name} sudah meng-counter ${cand.name} — ban ini sia-sia`;
-          } else if (hasExplicitUserPlan && counterCheck.isCounter) {
-            // 2A. Pengguna mengunci Plan A/B: utamakan ban hard counter terhadap hero tersebut
+          } else if (counterCheck.isCounter) {
+            // Pengguna mengunci Plan A/B: utamakan ban hard counter terhadap hero tersebut
             const prebanBoost = Math.min(0.55, counterCheck.counterWeight / 160);
-            // Bukti KPL terukur hanya menimbang relasi kurasi yang sudah ada (bukan membuat relasi).
             const measuredTerm = measuredCounterTerm(counterCheck, plannedOpener.name);
             score += 1.25 + prebanBoost + measuredTerm.bonus;
             laneTag = `Counter ${plannedOpener.name}`;
@@ -2099,7 +2101,7 @@ export function runTournamentInference(
               proComboTag = `${proComboTag} · ${measuredTerm.note}`;
             }
           } else {
-            // 2B. Prioritaskan ancaman meta R1+R2 Red
+            // Prioritaskan ancaman meta R1+R2 Red
             if (p1BansCount >= 120 || cand.ban_rate >= 0.025 || isCompetitiveSTier) {
               const metaThreatBoost =
                 metaThreatStrengthBonus +
@@ -2123,16 +2125,29 @@ export function runTournamentInference(
               proComboTag = `🚫 Cegah Red ambil ${cand.name} di R1+R2 sbg lawan ${plannedOpener.name}`;
             }
 
-            // POLA BAN PRO (hanya sisi Blue): ketika Blue first-pick {opener}, tim pro
-            // biasanya mem-ban hero ini di fase-1 (mis. 102× Guan Yu di-ban sebelum Blue
-            // first-pick Dunshan). Itu pola draft terukur — BUKAN relasi counter — jadi
-            // bobotnya kecil dan tidak pernah dipakai sebagai alasan "counter".
+            // Pola ban pro saat first-pick opener pilihan user
             if (counterCheck.kplPrebanWeighted >= 8) {
               score += Math.min(0.30, counterCheck.kplPrebanWeighted / 200);
               if (!proComboTag) {
                 proComboTag = `📋 Pola ban pro saat first-pick ${plannedOpener.name} (${counterCheck.kplPrebanCount}× di KPL)`;
               }
             }
+          }
+        } else {
+          // --- DEFAULT MODE (TANPA PLAN EKSPLISIT USER): UNIVERSAL META THREAT & DENY BAN ---
+          // Tidak berasumsi tim akan pick Dunshan atau opener tertentu secara sepihak.
+          // Prioritas ban menyebar ke power picks lintas lane, ban rate ladder, dan KPL Phase-1 contest.
+          const banRateContest = Math.min(0.45, (cand.ban_rate || 0) * 7.0);
+          const p1BanContest = Math.min(0.65, (kplOpenerInfo?.p1BansRecent ?? p1BansCount) / 850);
+          const flexContest = cand.lanes.length > 1 ? 0.15 : 0;
+
+          if (p1BansCount >= 80 || cand.ban_rate >= 0.020 || isCompetitiveSTier || isSolidMeta) {
+            const universalScore = metaThreatStrengthBonus + p1BanContest + banRateContest + flexContest;
+            score += universalScore;
+            laneTag = 'Ancaman Meta Universal';
+            proComboTag = p1BansCount >= 100
+              ? `🚫 Meta Threat R1+R2 (${Math.round(kplOpenerInfo?.p1BansRecent ?? 0)}x Phase-1 Ban · 12 bln)`
+              : `🚫 Kontestasi Tinggi Meta (${(((cand.ban_rate || 0) * 100)).toFixed(1)}% Ban Rate Ladder)`;
           }
         }
       } else {
@@ -2152,19 +2167,19 @@ export function runTournamentInference(
           score += 0.85;
           laneTag = 'Potensi Diambil Blue B1';
           proComboTag = `⚠️ Sarankan Ubah Plan R1: ${cand.name} prioritas First-Pick B1 Blue, pertimbangkan ban`;
-        } else if (isUserPlanA || isUserPlanB || (plannedOpener && cand.hero_id === plannedOpener.hero_id)) {
+        } else if (isUserExplicitPlanned) {
           score -= 2.5;
-          const planLabel = isUserPlanA ? 'Target R1' : isUserPlanB ? 'Target R2' : 'Core R1+R2';
+          const planLabel = isUserPlanA ? 'Target R1' : 'Target R2';
           laneTag = `Simpan utk ${planLabel}`;
           proComboTag = `👑 Simpan untuk Giliran Pick Red (${planLabel})!`;
-        } else if (plannedOpener) {
+        } else if (hasExplicitUserPlan && plannedOpener) {
           const counterCheck = getCounterStrengthAgainst(cand, plannedOpener);
           const openerAdvantage = getOpenerAdvantageAgainst(cand, plannedOpener);
           if (openerAdvantage.countered && !counterCheck.isCounter) {
             score -= openerAdvantage.severity === 'hard' ? 1.30 : 0.70;
             laneTag = `Bukan Ancaman ${plannedOpener.name}`;
             proComboTag = `🛡️ ${plannedOpener.name} sudah meng-counter ${cand.name} — ban ini sia-sia`;
-          } else if (hasExplicitUserPlan && counterCheck.isCounter) {
+          } else if (counterCheck.isCounter) {
             const measuredTerm = measuredCounterTerm(counterCheck, plannedOpener.name);
             score += 1.05 + Math.min(0.40, counterCheck.counterWeight / 180) + measuredTerm.bonus;
             laneTag = `Counter ${plannedOpener.name}`;
@@ -2172,21 +2187,16 @@ export function runTournamentInference(
             if (measuredTerm.note) {
               proComboTag = `${proComboTag} · ${measuredTerm.note}`;
             }
-          } else if (isCompetitiveSTier || (kplOpenerInfo?.b1 ?? 0) >= 160 || p1BansCount >= 500) {
+          }
+        } else {
+          // --- DEFAULT RED MODE (TANPA PLAN EKSPLISIT USER): UNIVERSAL DENY ---
+          if (isCompetitiveSTier || (kplOpenerInfo?.b1 ?? 0) >= 160 || p1BansCount >= 300) {
             score +=
               (isCompetitiveSTier ? 0.55 : 0.25) +
               Math.min(0.45, (kplOpenerInfo?.b1 ?? 0) / 400) +
               Math.min(0.35, p1BansCount / 1200);
             laneTag = 'Ancaman B1 Blue';
             proComboTag = `🚫 Potensi First-Pick B1 Blue (${Math.round(kplOpenerInfo?.b1Recent ?? 0)}x B1 / 12 bln)`;
-          } else if (counterCheck.isCounter) {
-            const measuredTerm = measuredCounterTerm(counterCheck, plannedOpener.name);
-            score += 0.45 + Math.min(0.25, counterCheck.counterWeight / 220) + measuredTerm.bonus;
-            laneTag = `Counter ${plannedOpener.name}`;
-            proComboTag = `🛡️ Amankan R1+R2 ${plannedOpener.name}: Ban Counter Utama`;
-            if (measuredTerm.note) {
-              proComboTag = `${proComboTag} · ${measuredTerm.note}`;
-            }
           }
         }
       }
@@ -2593,7 +2603,8 @@ export function runTournamentInference(
       draftStep,
       bannedHeroIds,
       b1Openers,
-      format
+      format,
+      hasExplicitUserPlan
     );
   }
 
@@ -2608,17 +2619,19 @@ export function runTournamentInference(
       phaseTitle = 'FASE BAN 1 (BLUE FIRST-PICK PREP)';
       if (activePlan === 'PLAN_B' && isPlanABanned) {
         phaseObjective = `⚠️ Plan A (${planAHero?.name}) DI-BAN lawan! AI otomatis pivot ke Plan B: ${planBHero?.name} (${planBHero?.primary_lane}). Fokus ban counter ${planBHero?.name} sekarang!`;
-      } else if (plannedOpener) {
+      } else if (hasExplicitUserPlan && plannedOpener) {
         phaseObjective = `Target First-Pick ${activePlan === 'PLAN_A' ? 'Plan A' : 'Opener'}: ${plannedOpener.name} (${plannedOpener.primary_lane}). Jangan ban hero ini — fokus ban hard counter-nya agar aman di B1! (Cadangan Plan B: ${planBHero?.name || 'Tersedia'})`;
       } else {
-        phaseObjective = 'Amankan jalur untuk First-Pick S-Tier kita dengan mem-ban counter alaminya.';
+        phaseObjective = 'Amankan tempo First-Pick dengan mem-ban hero kontestasi meta tertinggi & deny ancaman respon R1+R2 Red.';
       }
     } else {
       phaseTitle = 'FASE BAN 1 (RED COUNTER-OPENING)';
       if (activePlan === 'PLAN_B' && isPlanABanned) {
         phaseObjective = `⚠️ Plan A Red (${planAHero?.name}) di-ban! AI pivot ke Plan B: ${planBHero?.name}. Deny B1 Blue (${blueB1ThreatHero?.name || 'S-Tier'}) & amankan ${planBHero?.name}.`;
+      } else if (hasExplicitUserPlan && plannedOpener) {
+        phaseObjective = `Blue punya First-Pick B1! Wajib ban hero S-Tier terkuat (${blueB1ThreatHero?.name || 'S-Tier'}) atau ban counter dari rencana R1+R2 kita (${plannedOpener.name}).`;
       } else if (blueB1ThreatHero) {
-        phaseObjective = `Blue punya First-Pick B1! Wajib ban hero S-Tier terkuat (${blueB1ThreatHero.name}) atau ban counter dari rencana R1+R2 kita (${plannedOpener?.name || 'Core'}).`;
+        phaseObjective = `Blue punya First-Pick B1! Pertimbangkan ban ancaman first-pick lawan (${blueB1ThreatHero.name}) atau deny power pick universal.`;
       } else {
         phaseObjective = 'Cegah Blue mendapatkan S-Tier Opener gratis di B1 dan amankan kombo R1+R2 kita.';
       }
