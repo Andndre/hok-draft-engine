@@ -213,12 +213,24 @@ export function PracticeDraft(props: Props) {
     const tag = { sessionId: session.sessionId, revision: session.revision };
     setThinking(true); setError('');
     // Build an explicit public-state request: playerPlan is deliberately excluded.
-    void client.decide(game.position, { fearless: context.fearless, aiPlan: game.aiPlan, format, onlyGlobal }, tag, controller.signal).then(decision => {
+    void client.decide(
+      game.position,
+      {
+        fearless: context.fearless,
+        aiPlan: game.aiPlan,
+        format,
+        onlyGlobal,
+        rankedBanCount: context.rankedBanCount ?? 3,
+      },
+      tag,
+      controller.signal
+    ).then(decision => {
       if (controller.signal.aborted) return;
       setThinking(false);
       if (decision.heroId === null) { setError('AI tidak menemukan aksi legal. Coba lagi atau reset game ini.'); return; }
-      const action = { ...getDraftTurn(game.position.step, format), heroId: decision.heroId };
-      if (applyDraftAction(game.position, action, context, format) === game.position) { setError('Pilihan AI sudah tidak tersedia. Coba lagi.'); return; }
+      const banCount = format === 'ranked' ? (context.rankedBanCount ?? 3) : 4;
+      const action = { ...getDraftTurn(game.position.step, format, false, banCount), heroId: decision.heroId };
+      if (applyDraftAction(game.position, action, context, format, false, banCount) === game.position) { setError('Pilihan AI sudah tidak tersedia. Coba lagi.'); return; }
       setNotice(decision.fallbackReason ?? `AI memilih ${byId.get(decision.heroId)?.name ?? 'hero'}.`);
       setSession(previous => previous ? reducePractice(previous, { type: 'commit', tag, actor: 'ai', heroId: decision.heroId! }, snapshot) : previous);
     }).catch(reason => {

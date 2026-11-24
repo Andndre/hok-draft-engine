@@ -111,3 +111,27 @@ test('duet commit spends both picks as one decision and undo removes both heroes
   const rejectedOnBan = reducePractice(banSession, { type: 'commit-duet', tag: { sessionId: banSession.sessionId, revision: banSession.revision }, actor: 'human', heroIds: [idA, idB] }, dataset);
   assert.equal(rejectedOnBan, banSession, 'commit-duet is rejected outside a pick turn');
 });
+
+test('practice ranked mode with 3, 4, and 5 bans respects custom ban count in turns and transitions', () => {
+  for (const banCount of [3, 4, 5]) {
+    let session = createPracticeSession(`ranked-${banCount}`, { playerSide: 'blue', format: 'ranked', rankedBanCount: banCount }, dataset);
+    assert.equal(session.config.rankedBanCount, banCount);
+    const totalBans = banCount * 2;
+    for (let step = 0; step < totalBans; step++) {
+      const game = session.games[0];
+      const turn = getDraftTurn(game.position.step, 'ranked', false, banCount);
+      assert.equal(turn.action, 'ban');
+      const candidate = rankedCandidates(game.position, { ...practiceContext(session, dataset), synergy: dataset.synergy, aiSide: oppositeSide(session.config.playerSide), aiPlan: game.aiPlan, format: 'ranked' })[0];
+      session = reducePractice(session, {
+        type: 'commit',
+        tag: { sessionId: session.sessionId, revision: session.revision },
+        actor: turn.side === 'blue' ? 'human' : 'ai',
+        heroId: candidate.hero.hero_id,
+      }, dataset);
+      assert.equal(session.games[0].position.step, step + 1);
+    }
+    const nextTurn = getDraftTurn(session.games[0].position.step, 'ranked', false, banCount);
+    assert.equal(nextTurn.action, 'pick');
+  }
+});
+

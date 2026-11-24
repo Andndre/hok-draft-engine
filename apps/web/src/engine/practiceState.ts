@@ -50,12 +50,13 @@ export type PracticeEvent =
   | { type: 'plan'; plan: 'a' | 'b'; heroId: number | null };
 
 function applyPracticeAction(position: DraftPosition, action: DraftAction, context: DraftContext, format: DraftFormat = context.format ?? 'tournament'): DraftPosition {
-  const next = applyDraftAction(position, { side: action.side, action: action.action, heroId: action.heroId }, context, format);
+  const banCount = format === 'ranked' ? (context.rankedBanCount ?? 3) : 4;
+  const next = applyDraftAction(position, { side: action.side, action: action.action, heroId: action.heroId }, context, format, false, banCount);
   if (next === position) return position;
   if (action.secondHeroId === undefined) return next;
-  const turn = getDraftTurn(next.step, format);
+  const turn = getDraftTurn(next.step, format, false, banCount);
   if (turn.action !== 'pick' || turn.side !== action.side) return next;
-  const after = applyDraftAction(next, { side: turn.side, action: turn.action, heroId: action.secondHeroId }, context, format);
+  const after = applyDraftAction(next, { side: turn.side, action: turn.action, heroId: action.secondHeroId }, context, format, false, banCount);
   return after === next ? next : after;
 }
 
@@ -74,7 +75,7 @@ export function reducePractice(session: PracticeSession, event: PracticeEvent, d
     const turn = getDraftTurn(current.position.step, session.config.format, false, session.config.rankedBanCount ?? 3);
     if ((turn.side === session.config.playerSide) !== (event.actor === 'human')) return session;
     const action = { side: turn.side, action: turn.action, heroId: event.heroId };
-    const position = applyDraftAction(current.position, action, context, session.config.format);
+    const position = applyDraftAction(current.position, action, context, session.config.format, false, session.config.rankedBanCount ?? 3);
     if (position === current.position) return session;
     const traces = [...current.traces];
     if (event.actor === 'human') {
@@ -90,11 +91,11 @@ export function reducePractice(session: PracticeSession, event: PracticeEvent, d
     if (turn.action !== 'pick' || turn.side !== session.config.playerSide) return session;
     const [primaryId, secondaryId] = event.heroIds;
     // Atomic: both picks must be legal before anything is applied.
-    const probe = applyDraftAction(current.position, { side: turn.side, action: 'pick', heroId: primaryId }, context, session.config.format);
+    const probe = applyDraftAction(current.position, { side: turn.side, action: 'pick', heroId: primaryId }, context, session.config.format, false, session.config.rankedBanCount ?? 3);
     if (probe === current.position) return session;
     const partnerTurn = getDraftTurn(probe.step, session.config.format, false, session.config.rankedBanCount ?? 3);
     if (partnerTurn.action !== 'pick' || partnerTurn.side !== turn.side) return session;
-    const position = applyDraftAction(probe, { side: partnerTurn.side, action: partnerTurn.action, heroId: secondaryId }, context, session.config.format);
+    const position = applyDraftAction(probe, { side: partnerTurn.side, action: partnerTurn.action, heroId: secondaryId }, context, session.config.format, false, session.config.rankedBanCount ?? 3);
     if (position === probe) return session;
     const options = rankedCandidates(current.position, { ...context, synergy: dataset.synergy, aiSide: session.config.playerSide, aiPlan: current.playerPlan, format: session.config.format });
     const alternatives = options.filter(r => r.hero.hero_id !== primaryId && r.hero.hero_id !== secondaryId).slice(0, 3).map(r => ({ heroId: r.hero.hero_id, reason: r.proComboTag || r.laneTag || 'Prioritas komposisi dan meta' }));
