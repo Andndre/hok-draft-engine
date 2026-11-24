@@ -94,7 +94,8 @@ export function PracticeDraft(props: Props) {
   const game = session?.games[session.gameIndex];
   const position = game?.position ?? emptyPosition();
   const format = session?.config.format ?? setupFormat;
-  const turn = getDraftTurn(position.step, format, false, session?.config.rankedBanCount ?? 3);
+  const activeBanCount: 3 | 4 | 5 = (session?.config.rankedBanCount ?? setupBanCount ?? 3) as 3 | 4 | 5;
+  const turn = getDraftTurn(position.step, format, false, activeBanCount);
   const latest = !!session && session.gameIndex === session.games.length - 1;
   const context = useMemo(() => session ? practiceContext(session, snapshot) : { heroes: snapshot.heroes, onlyGlobal, fearless: { blue: [], red: [] }, format: setupFormat }, [session, snapshot, onlyGlobal, setupFormat]);
   const canAct = !!session && latest && active && !turn.isComplete && turn.side === playerSide;
@@ -251,7 +252,7 @@ export function PracticeDraft(props: Props) {
     finally { setStarting(false); }
   };
   const choose = (hero: Hero) => {
-    if (!canAct || !session || !isLegalHero(position, hero.hero_id, context, format)) return;
+    if (!canAct || !session || !isLegalHero(position, hero.hero_id, context, format, false, activeBanCount)) return;
     send({ type: 'commit', tag: { sessionId: session.sessionId, revision: session.revision }, actor: 'human', heroId: hero.hero_id });
     setWikiHero(null);
   };
@@ -357,10 +358,10 @@ export function PracticeDraft(props: Props) {
   const padded = (ids: number[], count: number) => [...heroList(ids), ...Array(Math.max(0, count - ids.length)).fill(null)];
   const canUndo = latest && game.actions.some(action => action.side === playerSide);
   const unavailablePlans = new Set([...position.picks.blue, ...position.picks.red, ...position.bans.blue, ...position.bans.red, ...context.fearless[playerSide]]);
-  const draftSeq = getDraftSequence(session.config.format);
+  const draftSeq = getDraftSequence(session.config.format, false, activeBanCount);
   const previewStep = draftSeq.findIndex((step, index) => index >= position.step && step.side === playerSide);
   const previewPosition = canAct ? position : { ...position, step: previewStep < 0 ? maxSteps : previewStep };
-  const rosterAction = getDraftTurn(previewPosition.step, session.config.format).action;
+  const rosterAction = getDraftTurn(previewPosition.step, session.config.format, false, activeBanCount).action;
   // Enter in the search field commits the first legal result, so "type a name, press Enter"
   // works without tapping (and without dismissing the mobile keyboard).
   const confirmSearch = () => {
@@ -369,7 +370,7 @@ export function PracticeDraft(props: Props) {
       deferredSearchQuery === props.searchQuery
         ? filtered
         : searchHeroes(baseFiltered.rows, props.searchQuery, baseFiltered.compare);
-    const first = firstSelectableHero(candidates, (hero) => isLegalHero(previewPosition, hero.hero_id, context, format));
+    const first = firstSelectableHero(candidates, (hero) => isLegalHero(previewPosition, hero.hero_id, context, format, false, activeBanCount));
     if (first) chooseFromRoster(first);
   };
   return <section aria-label="Latihan draft aktif" className="practice-session">
@@ -446,7 +447,7 @@ export function PracticeDraft(props: Props) {
     <div className={assistance && !turn.isComplete && latest ? 'draft-workspace' : ''}>
       <section className="hero-roster" aria-label={onlyGlobal ? 'Roster latihan Global' : 'Roster latihan Global & CN'}><HeroRosterToolbar title={onlyGlobal ? 'Roster Global' : 'Roster Global + CN'} count={filtered.length} searchQuery={props.searchQuery} onSearchChange={props.onSearchChange} onConfirmSearch={confirmSearch} selectedLane={props.selectedLane} onLaneChange={props.onLaneChange} sortMode={props.sortMode} onSortChange={props.onSortChange} viewMode={props.viewMode} onViewChange={props.onViewChange} hideAiSort={!assistance} active={active} />
         {!filtered.length ? <div className="empty-state"><SearchX aria-hidden="true" /><h3>Hero tidak ditemukan</h3><p>Ubah pencarian atau bersihkan filter lane yang aktif.</p><button type="button" className={button} onClick={() => { props.onSearchChange(''); props.onLaneChange('All'); }}><FilterX aria-hidden="true" />Bersihkan filter</button></div> : <div className={'hero-grid' + (props.viewMode === 'detailed' ? ' hero-grid--detailed' : '')}>{filtered.map((hero, index) => {
-          const legal = isLegalHero(previewPosition, hero.hero_id, context, format);
+          const legal = isLegalHero(previewPosition, hero.hero_id, context, format, false, activeBanCount);
           const recEntry = recommendationByHeroId.get(hero.hero_id);
           const rec = recEntry?.rec;
           const rank = recEntry?.rank ?? 0;
@@ -483,7 +484,7 @@ export function PracticeDraft(props: Props) {
       </section>
       {assistance && !turn.isComplete && latest && hints && <aside className="analysis-sidebar"><TacticalRadarPanel scores={playerRadar} phaseStrategy={hints.phaseStrategy} recommendations={recommendations} solverStatus={advisorStatus} duetPackages={duetPackages} onSelectDuetPackage={handleSelectDuetPackage} isWaiting={!canAct} onSelectCandidate={choose} onInspectHero={setWikiHero} activeSide={playerSide} isPickPhase={turn.action === 'pick'} onOpenPlanModal={() => setPlanOpen(true)} onSelectQuickPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} /></aside>}
     </div>
-    <HeroWikiDrawer hero={wikiHero} onClose={() => setWikiHero(null)} isFavorite={!!wikiHero && props.favorites.has(wikiHero.hero_id)} onToggleFavorite={props.onToggleFavorite} onPickForDraft={canAct && wikiHero && isLegalHero(position, wikiHero.hero_id, context, format) ? choose : undefined} draftActionLabel={turn.action === 'ban' ? 'Ban hero ini' : 'Pick hero ini'} allHeroes={snapshot.heroes} onSelectRelatedHero={setWikiHero} itemCatalog={snapshot.items} spellCatalog={snapshot.spells} />
+    <HeroWikiDrawer hero={wikiHero} onClose={() => setWikiHero(null)} isFavorite={!!wikiHero && props.favorites.has(wikiHero.hero_id)} onToggleFavorite={props.onToggleFavorite} onPickForDraft={canAct && wikiHero && isLegalHero(position, wikiHero.hero_id, context, format, false, activeBanCount) ? choose : undefined} draftActionLabel={turn.action === 'ban' ? 'Ban hero ini' : 'Pick hero ini'} allHeroes={snapshot.heroes} onSelectRelatedHero={setWikiHero} itemCatalog={snapshot.items} spellCatalog={snapshot.spells} />
     <PlanSelectionModal isOpen={planOpen && latest} onClose={() => setPlanOpen(false)} heroes={snapshot.heroes} currentPlanAId={game.playerPlan.a} currentPlanBId={game.playerPlan.b} onSelectPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} onSelectPlanB={heroId => send({ type: 'plan', plan: 'b', heroId })} activeSide={playerSide} unavailableHeroIds={unavailablePlans} recommendedOpeners={assistance ? hints?.phaseStrategy.candidateOpeners ?? [] : []} onlyGlobalReleased={onlyGlobal} />
   </section>;
 }

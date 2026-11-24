@@ -19,6 +19,7 @@ import {
   getDraftSequence,
   evaluateTeamCompositionIntegrity,
   getDraftTurn,
+  getFirstPickStep,
   isLegalHero,
   isOpenerPickSlot,
   isRiskyOpener,
@@ -167,7 +168,7 @@ export interface SearchOptions {
  * Memprioritaskan hero yang mengisi lane kosong tim untuk mencegah duplikasi role di turnamen.
  */
 export function rankedCandidates(position: DraftPosition, context: SearchContext) {
-  const turn = getDraftTurn(position.step, context.format);
+  const turn = getDraftTurn(position.step, context.format, context.isUltimateBattle, context.rankedBanCount);
   if (turn.isComplete) return [];
 
   const activeBans = (context.format === 'ranked' && turn.action === 'ban')
@@ -194,7 +195,7 @@ export function rankedCandidates(position: DraftPosition, context: SearchContext
   );
 
   const legalCandidates = inferenceResult.recommendations.filter((r) =>
-    isLegalHero(position, r.hero.hero_id, context, context.format)
+    isLegalHero(position, r.hero.hero_id, context, context.format, context.isUltimateBattle, context.rankedBanCount)
   );
 
   // Pada fase ban, seluruh kandidat legal dapat dipertimbangkan
@@ -421,13 +422,14 @@ export function evaluatePosition(
     }
 
     // 6. Proyeksi potensi follow-up agar posisi pada fase ban awal tetap memiliki bobot terarah
-    const projectedStep = side === 'blue' ? 4 : 5;
+    const firstPickStep = getFirstPickStep(context.format, context.isUltimateBattle, context.rankedBanCount);
+    const projectedStep = side === 'blue' ? firstPickStep : firstPickStep + 1;
     const projectedPosition = { ...position, step: projectedStep };
     let bestPotentialFollowUp = -2.5;
 
     for (const hero of context.heroes) {
-      if (!isLegalHero(projectedPosition, hero.hero_id, context)) continue;
-      if (position.step <= 4 && isRiskyOpener(hero)) continue;
+      if (!isLegalHero(projectedPosition, hero.hero_id, context, context.format, context.isUltimateBattle, context.rankedBanCount)) continue;
+      if (position.step < firstPickStep && isRiskyOpener(hero)) continue;
       if (analyzeLaneOccupancy([...ourTeam, hero], kplLaneRates).occupiedLanes.size !== ourTeam.length + 1) continue;
 
       const exposure = evaluateEnemyCounterExposure(hero, enemyTeam, b1Openers);
@@ -470,11 +472,12 @@ export function searchDraft(
   const deadline = startTime + timeBudgetMs;
   const counterWeight = options.counterWeight ?? 1;
 
-  const remainingActions = getDraftSequence(context.format).length - position.step;
+  const sequence = getDraftSequence(context.format, context.isUltimateBattle, context.rankedBanCount);
+  const remainingActions = sequence.length - position.step;
   const maxSearchDepth = Math.min(4, remainingActions, Math.max(1, options.maxDepth ?? 4));
   const branchWidth = Math.min(8, Math.max(1, options.width ?? 8));
 
-  const rootTurn = getDraftTurn(position.step, context.format);
+  const rootTurn = getDraftTurn(position.step, context.format, context.isUltimateBattle, context.rankedBanCount);
   const rootSide = rootTurn.side;
   const allRootCandidates = rankedCandidates(position, context);
   const rootCandidates = allRootCandidates.slice(0, branchWidth);
@@ -542,7 +545,7 @@ export function searchDraft(
     decision.nodes++;
 
     const posKey = buildPositionKey(pos);
-    const currentTurn = getDraftTurn(pos.step, context.format);
+    const currentTurn = getDraftTurn(pos.step, context.format, context.isUltimateBattle, context.rankedBanCount);
 
     // Kondisi terminasi leaf: kedalaman habis atau draft selesai
     if (depth <= 0 || currentTurn.isComplete) {
@@ -585,7 +588,7 @@ export function searchDraft(
         heroId: candidate.hero.hero_id,
       };
 
-      const nextPosition = applyDraftAction(pos, draftAction, context, context.format);
+      const nextPosition = applyDraftAction(pos, draftAction, context, context.format, context.isUltimateBattle, context.rankedBanCount);
       const childResult = visitNode(nextPosition, depth - 1, currentAlpha, currentBeta);
 
       // Rekaman nilai kandidat root (Pass Kepala). Nilai kandidat yang ter-cutoff
@@ -668,7 +671,7 @@ export function searchDraft(
           action: rootTurn.action,
           heroId: candidate.hero.hero_id,
         };
-        const nextPosition = applyDraftAction(position, draftAction, context, context.format);
+        const nextPosition = applyDraftAction(position, draftAction, context, context.format, context.isUltimateBattle, context.rankedBanCount);
         const childResult = visitNode(nextPosition, orderTailDepth, -Infinity, Infinity);
         bestRootValues.push({
           heroId: candidate.hero.hero_id,

@@ -174,3 +174,22 @@ test('at step 3 of ranked draft, a hero banned by blue remains legal and candida
   const augranCand = candidates.find(c => c.hero.hero_id === augran.hero_id);
   assert.ok(augranCand, 'Augran must remain a candidate for Red even if Blue already banned him');
 });
+
+test('searchDraft maintains valid search and depth across late steps in ranked 4 and 5 ban modes', () => {
+  for (const banCount of [4, 5]) {
+    const ctx = { ...rankedContext(), rankedBanCount: banCount };
+    const totalSteps = banCount * 2 + 10;
+    for (let s = totalSteps - 4; s < totalSteps; s++) {
+      const pos = {
+        step: s,
+        picks: { blue: [509, 105, 175], red: [519, 112, 169] },
+        bans: { blue: [521, 524, 525, 513, 140].slice(0, banCount), red: [515, 518, 199, 148, 156].slice(0, banCount) }
+      };
+      const result = searchDraft(pos, ctx, { allowExtendedBudget: true, budgetMs: 8000 });
+      assert.equal(result.engineKind, 'search', `step ${s} in banCount ${banCount} must use minimax search`);
+      assert.ok(result.heroId !== null, `step ${s} must return a legal heroId`);
+      assert.ok(result.completedDepth >= 1, `step ${s} must achieve depth >= 1`);
+    }
+  }
+});
+

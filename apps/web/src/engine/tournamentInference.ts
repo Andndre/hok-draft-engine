@@ -831,7 +831,9 @@ export function computeDraftOutcomeProjection(
   bannedHeroIds: number[] = [],
   b1Openers: Record<string, any> = {},
   format: DraftFormat = 'tournament',
-  hasExplicitUserPlan: boolean = true
+  hasExplicitUserPlan: boolean = true,
+  isUltimateBattle: boolean = false,
+  rankedBanCount: 3 | 4 | 5 = 3
 ): DraftOutcomeProjection {
   // Skor dasar draft advantage (skala 0 - 100)
   const baseVector = isPickPhase
@@ -1055,7 +1057,7 @@ export function computeDraftOutcomeProjection(
     : (draftStep === 5 ? 'R2' : 'Fase 2');
 
   const enemySide = isBlueSide ? 'red' : 'blue';
-  const sequence = getDraftSequence(format);
+  const sequence = getDraftSequence(format, isUltimateBattle, rankedBanCount);
   const remainingEnemyPicks = sequence
     .slice(draftStep + 1)
     .filter((s) => s.side === enemySide && s.action === 'pick').length;
@@ -1270,11 +1272,13 @@ export function evaluateDuetRecommendations(
   enemyHeroes: Hero[],
   synergyDb: Record<string, any>,
   format: DraftFormat,
-  draftStep: number
+  draftStep: number,
+  isUltimateBattle: boolean = false,
+  rankedBanCount: 3 | 4 | 5 = 3
 ): DuetPackageOption[] {
-  const window = getDoublePickWindow(draftStep, format);
+  const window = getDoublePickWindow(draftStep, format, isUltimateBattle, rankedBanCount);
   if (!window.isDoublePickFirst) return [];
-  const isBlueSide = getDraftTurn(draftStep, format).side === 'blue';
+  const isBlueSide = getDraftTurn(draftStep, format, isUltimateBattle, rankedBanCount).side === 'blue';
   const windowLabel = isBlueSide
     ? (ourHeroes.length <= 1 ? 'Jendela B2+B3' : 'Penutup B4+B5')
     : (ourHeroes.length === 0 ? 'Respon R1+R2' : 'Jendela R3+R4');
@@ -2664,7 +2668,9 @@ export function runTournamentInference(
       bannedHeroIds,
       b1Openers,
       format,
-      hasExplicitUserPlan
+      hasExplicitUserPlan,
+      isUltimateBattle,
+      rankedBanCount
     );
   }
 
@@ -2760,7 +2766,9 @@ export function runTournamentInference(
     enemyHeroes,
     synergyDb,
     format,
-    draftStep
+    draftStep,
+    isUltimateBattle,
+    rankedBanCount
   );
 
   const latencyMs = Math.round((performance.now() - t0) * 10) / 10;

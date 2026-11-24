@@ -173,9 +173,10 @@ export function isLegalHero(
   heroId: number,
   context: DraftContext,
   format: DraftFormat = context.format ?? 'tournament',
-  isUltimateBattle: boolean = context.isUltimateBattle ?? false
+  isUltimateBattle: boolean = context.isUltimateBattle ?? false,
+  rankedBanCount: 3 | 4 | 5 = context.rankedBanCount ?? 3
 ): boolean {
-  const turn = getDraftTurn(position.step, format, isUltimateBattle);
+  const turn = getDraftTurn(position.step, format, isUltimateBattle, rankedBanCount);
   const hero = context.heroes.find(h => h.hero_id === heroId);
   if (turn.isComplete || !hero || heroId === 511 || (context.onlyGlobal && !isHeroGlobalReleased(hero))) return false;
 
@@ -220,7 +221,11 @@ export function applyDraftAction(
   rankedBanCount: 3 | 4 | 5 = context.rankedBanCount ?? 3
 ): DraftPosition {
   const turn = getDraftTurn(position.step, format, isUltimateBattle, rankedBanCount);
-  if (turn.side !== action.side || turn.action !== action.action || !isLegalHero(position, action.heroId, context, format, isUltimateBattle)) return position;
+  if (
+    turn.side !== action.side ||
+    turn.action !== action.action ||
+    !isLegalHero(position, action.heroId, context, format, isUltimateBattle, rankedBanCount)
+  ) return position;
   const field = turn.action === 'pick' ? 'picks' : 'bans';
   return { ...position, step: position.step + 1, [field]: { ...position[field], [turn.side]: [...position[field][turn.side], action.heroId] } };
 }
