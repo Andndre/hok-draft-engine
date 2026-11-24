@@ -1,5 +1,5 @@
 import { LaneLabel } from './ui/LaneIcon';
-import React, { useId, useRef, useState, useEffect } from 'react';
+import React, { useId, useRef, useState, useEffect, useMemo } from 'react';
 import { ArrowRight, BookOpen, ChartColumn, CheckCircle2, ChevronDown, Crosshair, Info, LoaderCircle, ShieldAlert, ShieldBan, ShieldCheck, SlidersHorizontal, Sparkles, Swords, Target, TrendingUp } from 'lucide-react';
 import type { Hero, TacticalVector, TacticalDelta, DuetPackageOption } from '../types';
 import type { TournamentPhaseStrategy, TournamentPredictionResult } from '../engine/tournamentInference';
@@ -61,6 +61,21 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
     : -1;
   const solverPickRec = solverPickIndex >= 0 ? recommendations[solverPickIndex] : null;
   const currentIsSolverPick = solverPickIndex >= 0 && solverPickIndex === activeIndex;
+
+  // Alternatif solver terdekat (runner-up berikutnya yang dinilai terbaik oleh Minimax)
+  const solverRunnerUp = useMemo(() => {
+    if (!solverStatus?.rootValues || solverStatus.rootValues.length < 2) return null;
+    const sorted = [...solverStatus.rootValues].sort((a, b) => b.value - a.value);
+    const runnerEntry = sorted.find((e) => e.heroId !== solverStatus.heroId);
+    if (!runnerEntry) return null;
+    const idx = recommendations.findIndex((r) => r.hero.hero_id === runnerEntry.heroId);
+    if (idx < 0) return null;
+    return {
+      rec: recommendations[idx],
+      index: idx,
+      value: runnerEntry.value,
+    };
+  }, [solverStatus?.rootValues, solverStatus?.heroId, recommendations]);
   // Plan A/B yang dikunci user: selalu di posisi pertama pada fase PICK, apa pun jawaban solver.
   const lockedPlanId = isPickPhase ? (planAId ?? planBId ?? solverStatus?.lockedPlanHeroId ?? null) : null;
   const lockedPlanHoldsTop = lockedPlanId !== null && recommendations[0]?.hero.hero_id === lockedPlanId;
@@ -259,6 +274,18 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
           </span>
           <button type="button" className="ui-button ui-button--text" onClick={() => setSelectedIndex(solverPickIndex)}>
             Lihat
+          </button>
+        </p>
+      )}
+
+      {currentIsSolverPick && solverRunnerUp && (
+        <p className="solver-pick-note">
+          <Sparkles aria-hidden="true" />
+          <span>
+            Alternatif solver terdekat: <strong>{solverRunnerUp.rec.hero.name}</strong> (#{solverRunnerUp.index + 1})
+          </span>
+          <button type="button" className="ui-button ui-button--text" onClick={() => setSelectedIndex(solverRunnerUp.index)}>
+            Bandingkan
           </button>
         </p>
       )}

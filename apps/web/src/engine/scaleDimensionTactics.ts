@@ -98,6 +98,7 @@ export const HERO_DIMENSION_VECTORS: Record<number, DimensionVector> = {
   528: { poke: 0.0, dive: 0.8, peel: 0.2 }, // Lam - Hiu menerjang formasi musuh
   531: { poke: 0.0, dive: 0.8, peel: 0.2 }, // Jing - Domain cermin penerobos
   142: { poke: 0.1, dive: 0.8, peel: 0.1 }, // Mulan - Pedang ganda dash ke pedang berat silence (mock 142)
+  153: { poke: 0.0, dive: 0.9, peel: 0.1 }, // Gao Changgong (Prince of Lanling) - Invisible burst diver
   154: { poke: 0.1, dive: 0.8, peel: 0.1 }, // Mulan - ID resmi 154
   199: { poke: 0.4, dive: 0.4, peel: 0.2 }, // Arli - Slippery kite & outplay
   134: { poke: 0.0, dive: 0.8, peel: 0.2 }, // Dharma - Flash kick penabrak dinding
@@ -570,6 +571,60 @@ export function evaluateSuicidalDiverTrap(
   }
 
   return { isTrapped: false, penalty: 0 };
+}
+
+export interface FragileDiverRiskResult {
+  isRisky: boolean;
+  penalty: number;
+  reason?: string;
+}
+
+/**
+ * Mendeteksi risiko memilih assassin / diver tipis tanpa daya tahan atau iframe (misal Gao Changgong, Nakoruru)
+ * saat tim sendiri kekurangan frontline atau di fase awal pick (Fase 1).
+ */
+export function evaluateFragileDiverRisk(
+  candidate: Hero | null,
+  ourHeroes: Hero[],
+  enemyHeroes: Hero[],
+  isEarlyPhase: boolean = false,
+): FragileDiverRiskResult {
+  if (!candidate) return { isRisky: false, penalty: 0 };
+
+  const isFragileDiver = isFragileSoloAssassin(candidate) && !isUntargetableIframeHero(candidate);
+  if (!isFragileDiver) {
+    return { isRisky: false, penalty: 0 };
+  }
+
+  const hasFrontline = ourHeroes.some((h) => isHeavyPeelTank(h) || h.tactical_profile?.tags.frontline);
+  const enemyHasHardControl = enemyHeroes.some(
+    (eh) =>
+      isSuppressionHero(eh) ||
+      isHeavyPeelTank(eh) ||
+      eh.tactical_profile?.tags.cc_stun ||
+      eh.tactical_profile?.tags.cc_knockup ||
+      eh.tactical_profile?.tags.cc_knockback,
+  );
+
+  // 1. Defisit Frontline: Tim belum memiliki tank atau badan depan untuk menahan serangan
+  if (!hasFrontline && ourHeroes.length >= 1) {
+    return {
+      isRisky: true,
+      penalty: 0.40,
+      reason: '⚠️ Defisit Frontline: Mengunci assassin solo tipis tanpa pelindung garis depan',
+    };
+  }
+
+  // 2. Risiko Fase 1: Memilih assassin tipis di fase pembuka rentan di-counter kuncian lawan
+  if (isEarlyPhase && enemyHasHardControl) {
+    return {
+      isRisky: true,
+      penalty: 0.30,
+      reason: '⚠️ Risiko Fase 1: Assassin solo rentan di-counter kuncian lawan',
+    };
+  }
+
+  return { isRisky: false, penalty: 0 };
 }
 
 export interface DaQiaoFrontlineSynergy {

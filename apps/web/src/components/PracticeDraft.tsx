@@ -189,6 +189,7 @@ export function PracticeDraft(props: Props) {
         depth: decision.completedDepth,
         elapsedMs: decision.elapsedMs,
         lockedPlanHeroId: lockedPlanId,
+        rootValues: decision.rootValues,
       });
     }).catch(() => {
       // Dibatalkan / watchdog: urutan cepat tetap tampil.

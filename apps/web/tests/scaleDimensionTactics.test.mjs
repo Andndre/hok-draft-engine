@@ -11,6 +11,7 @@ import {
   evaluateDaQiaoFrontlineSynergy,
   evaluateZeroDisengageExploitation,
   evaluateDiveCoreTriadEnabler,
+  evaluateFragileDiverRisk,
 } from '../src/engine/scaleDimensionTactics.ts';
 
 // Helper mock hero
@@ -219,4 +220,36 @@ test('dive core triad enabler dynamically boosts area sustain mid and penalizes 
   assert.equal(triadMai.isApplicable, true);
   assert.ok(triadMai.scoreAdjustment < 0);
   assert.ok(triadMai.tacticalTag?.includes('Defisit Sustain'));
+});
+
+test('fragile diver risk penalizes Gao Changgong on frontline deficit and early phase exposure', () => {
+  const gaoChanggong = makeMockHero(153, 'Gao Changgong', 'Assassin', 'Jungle', { mobility: true });
+  // Tim kita hanya punya Guan Yu (Fighter tanpa frontline tag resmi)
+  const ourHeroesNoTank = [
+    makeMockHero(140, 'Guan Yu', 'Fighter', 'Clash', { mobility: true }),
+  ];
+  const enemyHeroes = [
+    makeMockHero(157, 'Mai Shiranui', 'Mage', 'Mid', { burst: true }),
+    makeMockHero(134, 'Dharma', 'Fighter', 'Clash', { cc_knockback: true }),
+  ];
+
+  // 1. Defisit frontline check
+  const riskFrontline = evaluateFragileDiverRisk(gaoChanggong, ourHeroesNoTank, enemyHeroes, false);
+  assert.equal(riskFrontline.isRisky, true);
+  assert.ok(riskFrontline.penalty >= 0.35);
+  assert.ok(riskFrontline.reason?.includes('Defisit Frontline'));
+
+  // 2. Early phase check saat musuh punya hard control (Dharma)
+  const ourHeroesWithTank = [
+    makeMockHero(171, 'Zhang Fei', 'Tank', 'Roam', { frontline: true, cc_knockback: true }),
+  ];
+  const riskEarly = evaluateFragileDiverRisk(gaoChanggong, ourHeroesWithTank, enemyHeroes, true);
+  assert.equal(riskEarly.isRisky, true);
+  assert.ok(riskEarly.penalty >= 0.30);
+  assert.ok(riskEarly.reason?.includes('Risiko Fase 1'));
+
+  // 3. Hero tank/bruiser (Kaizer) tidak boleh terkena penalti fragile diver
+  const kaizer = makeMockHero(193, 'Kaizer', 'Fighter', 'Jungle', { frontline: true });
+  const riskKaizer = evaluateFragileDiverRisk(kaizer, ourHeroesNoTank, enemyHeroes, true);
+  assert.equal(riskKaizer.isRisky, false);
 });

@@ -32,6 +32,7 @@ import {
 } from './draftRules';
 import {
   evaluateSuicidalDiverTrap,
+  evaluateFragileDiverRisk,
   evaluateDaQiaoFrontlineSynergy,
   evaluateZeroDisengageExploitation,
   evaluateDiveCoreTriadEnabler,
@@ -2490,11 +2491,21 @@ export function runTournamentInference(
       const counterWeight = isLastPickR5 ? 0.70 : 0.50;
       const counteredEnemies: string[] = [];
 
-      // Evaluasi Jebakan Kuncian Mutlak (Suppression Liang/Donghuang + 2+ Tank/Peeler Lawan)
+      // Evaluasi Jebakan Kuncian Mutlak (Suppression Liang/Donghuang + Peeler/Tank Lawan)
       const suicidalTrap = evaluateSuicidalDiverTrap(cand, enemyHeroes);
       if (suicidalTrap.isTrapped) {
         score -= suicidalTrap.penalty;
         proComboTag = `🚫 ${suicidalTrap.reason}`;
+      }
+
+      // Evaluasi Risiko Diver Fragile di Fase Awal / Defisit Frontline
+      const isEarlyPick = format === 'ranked' ? draftStep <= 9 : draftStep <= 7;
+      const fragileRisk = evaluateFragileDiverRisk(cand, ourHeroes, enemyHeroes, isEarlyPick);
+      if (fragileRisk.isRisky) {
+        score -= fragileRisk.penalty;
+        if (!proComboTag) {
+          proComboTag = fragileRisk.reason;
+        }
       }
 
       for (const eh of enemyHeroes) {

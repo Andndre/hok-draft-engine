@@ -61,6 +61,8 @@ export interface SolverStatus {
   elapsedMs?: number;
   /** Plan A/B yang dikunci user (kalau ada) — tetap didahulukan. */
   lockedPlanHeroId?: number | null;
+  /** Nilai per kandidat root dari solver jika tersedia */
+  rootValues?: RootCandidateValue[];
 }
 
 /**

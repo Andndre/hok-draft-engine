@@ -719,6 +719,7 @@ export const App: React.FC = () => {
           heroId: decision.heroId,
           depth: decision.completedDepth,
           elapsedMs: decision.elapsedMs,
+          rootValues: decision.rootValues,
         });
       })
       .catch(() => {
