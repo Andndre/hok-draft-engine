@@ -4,7 +4,7 @@ import { loadTournamentDataset } from './engine/heroDataLoader';
 import { runTournamentInference, TournamentPredictionResult, TournamentPhaseStrategy } from './engine/tournamentInference';
 import { pickPhaseCandidates, MAX_ADVISOR_BUDGET_MS } from './engine/draftSearch';
 import type { SearchContext } from './engine/draftSearch';
-import { rankRecommendationsByPosition, orderRecommendationsBySolver } from './engine/advisorRanking';
+import { rankRecommendationsByPosition, orderRecommendationsBySolver, enrichDuetPackagesWithMinimax } from './engine/advisorRanking';
 import type { AdvisorDecision, SolverStatus } from './engine/advisorRanking';
 import { OpponentClient } from './engine/opponentClient';
 import { computeTacticalDeltas } from './engine/deltaExplainer';
@@ -712,6 +712,7 @@ export const App: React.FC = () => {
           completedDepth: decision.completedDepth,
           elapsedMs: decision.elapsedMs,
           rootValues: decision.rootValues,
+          principalVariation: decision.principalVariation,
         });
         setAdvisorDecisionKey(key);
         setAdvisorStatus({
@@ -720,6 +721,7 @@ export const App: React.FC = () => {
           depth: decision.completedDepth,
           elapsedMs: decision.elapsedMs,
           rootValues: decision.rootValues,
+          principalVariation: decision.principalVariation,
         });
       })
       .catch(() => {
@@ -764,6 +766,52 @@ export const App: React.FC = () => {
     activeSidePlanAId,
     activeSidePlanBId,
     currentTurn.action,
+  ]);
+
+  // Paket duet yang diperkaya dengan pencarian Minimax (Game Theory) saat giliran ganda.
+  const displayDuetPackages = useMemo(() => {
+    if (duetPackages.length === 0) return [];
+    const heroesMap = new Map<number, Hero>(heroes.map((h) => [h.hero_id, h]));
+    const advisorContext: SearchContext = {
+      heroes,
+      synergy: dataset?.synergy || {},
+      aiSide: currentTurn.side,
+      aiPlan: { a: null, b: null },
+      format: draftFormat,
+      isUltimateBattle,
+      rankedBanCount,
+      onlyGlobal: onlyGlobalReleased,
+      fearless: {
+        blue: [...blueFearlessUnavailableIds],
+        red: [...redFearlessUnavailableIds],
+      },
+    };
+    return enrichDuetPackagesWithMinimax(
+      duetPackages,
+      advisorDecisionKey === advisorSignature ? advisorDecision : null,
+      advisorPosition,
+      advisorContext,
+      heroesMap,
+      dataset?.synergy,
+      draftFormat,
+      isUltimateBattle,
+      rankedBanCount,
+    );
+  }, [
+    duetPackages,
+    heroes,
+    dataset?.synergy,
+    currentTurn.side,
+    draftFormat,
+    isUltimateBattle,
+    rankedBanCount,
+    onlyGlobalReleased,
+    blueFearlessUnavailableIds,
+    redFearlessUnavailableIds,
+    advisorDecision,
+    advisorDecisionKey,
+    advisorSignature,
+    advisorPosition,
   ]);
 
   // Judul "Rekomendasi #1" SELALU mengikuti daftar yang dilihat pengguna. Begitu
@@ -1293,7 +1341,7 @@ export const App: React.FC = () => {
                   return viewMode === 'compact' ? <HeroCardCompact key={hero.hero_id} {...shared} quickBadge={rank > 0 && rank <= 5 ? 'AI #' + rank : undefined} /> : <HeroCardDetailed key={hero.hero_id} {...shared} aiRank={rank > 0 ? rank : undefined} />;
                 })}</div>}
             </section>
-            {activeTab === 'draft' && !loading && <aside className="analysis-sidebar"><TacticalRadarPanel scores={tacticalScores} deltas={deltas} primaryInsight={primaryInsight} phaseStrategy={phaseStrategy} planAId={activeSidePlanAId} planBId={activeSidePlanBId} onOpenPlanModal={() => setIsPlanModalOpen(true)} onSelectQuickPlanA={handleSetPlanA} recommendations={displayRecommendations} solverStatus={advisorStatus} onSelectCandidate={handleSelectHero} onInspectHero={handleInspectHero} activeSide={currentTurn.side} isPickPhase={currentTurn.action === 'pick'} isComplete={currentTurn.isComplete} duetPackages={duetPackages} onSelectDuetPackage={handleSelectDuetPackage} /></aside>}
+            {activeTab === 'draft' && !loading && <aside className="analysis-sidebar"><TacticalRadarPanel scores={tacticalScores} deltas={deltas} primaryInsight={primaryInsight} phaseStrategy={phaseStrategy} planAId={activeSidePlanAId} planBId={activeSidePlanBId} onOpenPlanModal={() => setIsPlanModalOpen(true)} onSelectQuickPlanA={handleSetPlanA} recommendations={displayRecommendations} solverStatus={advisorStatus} onSelectCandidate={handleSelectHero} onInspectHero={handleInspectHero} activeSide={currentTurn.side} isPickPhase={currentTurn.action === 'pick'} isComplete={currentTurn.isComplete} duetPackages={displayDuetPackages} onSelectDuetPackage={handleSelectDuetPackage} /></aside>}
           </div>}
         </>}
       </main>

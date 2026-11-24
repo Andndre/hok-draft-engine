@@ -7,9 +7,9 @@ import { createPracticeSession, practiceContext, reducePractice } from '../engin
 import type { DecisionTrace, PracticeEvent, PracticeSession } from '../engine/practiceState';
 import { OpponentClient } from '../engine/opponentClient';
 import { MAX_ADVISOR_BUDGET_MS } from '../engine/draftSearch';
-import type { RootCandidateValue } from '../engine/draftSearch';
-import { orderRecommendationsBySolver } from '../engine/advisorRanking';
-import type { SolverStatus } from '../engine/advisorRanking';
+import type { RootCandidateValue, SearchContext } from '../engine/draftSearch';
+import { orderRecommendationsBySolver, enrichDuetPackagesWithMinimax } from '../engine/advisorRanking';
+import type { SolverStatus, AdvisorDecision } from '../engine/advisorRanking';
 import { evaluateTacticalScores, runTournamentInference } from '../engine/tournamentInference';
 import { assignmentToHeroLaneMap, buildDefaultLaneAssignments, swapAssignedLanes } from '../engine/gamePlan';
 import { loadTournamentDataset } from '../engine/heroDataLoader';
@@ -145,6 +145,47 @@ export function PracticeDraft(props: Props) {
     });
   }, [assistance, canAct, advisorPick, advisorValues, sheetRecommendations, lockedPlanId]);
   const duetPackages = assistance && canAct ? hints?.duetPackages ?? [] : [];
+  const displayDuetPackages = useMemo(() => {
+    if (!assistance || !canAct || duetPackages.length === 0) return [];
+    const heroesMap = new Map<number, Hero>(snapshot.heroes.map((h) => [h.hero_id, h]));
+    const advisorDecision: AdvisorDecision | null = advisorPick != null ? {
+      heroId: advisorPick,
+      engineKind: 'search',
+      completedDepth: advisorStatus.depth ?? 1,
+      elapsedMs: advisorStatus.elapsedMs ?? 0,
+      rootValues: advisorValues,
+      principalVariation: advisorStatus.principalVariation,
+    } : null;
+    const searchCtx: SearchContext = {
+      ...context,
+      synergy: snapshot.synergy,
+      aiSide: playerSide,
+      aiPlan: { a: null, b: null },
+    };
+    return enrichDuetPackagesWithMinimax(
+      duetPackages,
+      advisorDecision,
+      position,
+      searchCtx,
+      heroesMap,
+      snapshot.synergy,
+      format,
+      false,
+      activeBanCount,
+    );
+  }, [
+    assistance,
+    canAct,
+    duetPackages,
+    snapshot,
+    advisorPick,
+    advisorStatus,
+    advisorValues,
+    position,
+    context,
+    format,
+    activeBanCount,
+  ]);
   useEffect(() => {
     if (!active || !session || !game || !latest || turn.isComplete || turn.side !== playerSide) {
       setAdvisorPick(null);
@@ -190,6 +231,7 @@ export function PracticeDraft(props: Props) {
         elapsedMs: decision.elapsedMs,
         lockedPlanHeroId: lockedPlanId,
         rootValues: decision.rootValues,
+        principalVariation: decision.principalVariation,
       });
     }).catch(() => {
       // Dibatalkan / watchdog: urutan cepat tetap tampil.
@@ -486,7 +528,7 @@ export function PracticeDraft(props: Props) {
           return props.viewMode === 'compact' ? <HeroCardCompact key={hero.hero_id} {...shared} quickBadge={rank > 0 && rank <= 5 ? 'AI #' + rank : undefined} /> : <HeroCardDetailed key={hero.hero_id} {...shared} aiRank={rank > 0 ? rank : undefined} />;
         })}</div>}
       </section>
-      {assistance && !turn.isComplete && latest && hints && <aside className="analysis-sidebar"><TacticalRadarPanel scores={playerRadar} phaseStrategy={hints.phaseStrategy} recommendations={recommendations} solverStatus={advisorStatus} duetPackages={duetPackages} onSelectDuetPackage={handleSelectDuetPackage} isWaiting={!canAct} onSelectCandidate={choose} onInspectHero={setWikiHero} activeSide={playerSide} isPickPhase={turn.action === 'pick'} onOpenPlanModal={() => setPlanOpen(true)} onSelectQuickPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} /></aside>}
+      {assistance && !turn.isComplete && latest && hints && <aside className="analysis-sidebar"><TacticalRadarPanel scores={playerRadar} phaseStrategy={hints.phaseStrategy} recommendations={recommendations} solverStatus={advisorStatus} duetPackages={displayDuetPackages} onSelectDuetPackage={handleSelectDuetPackage} isWaiting={!canAct} onSelectCandidate={choose} onInspectHero={setWikiHero} activeSide={playerSide} isPickPhase={turn.action === 'pick'} onOpenPlanModal={() => setPlanOpen(true)} onSelectQuickPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} /></aside>}
     </div>
     <HeroWikiDrawer hero={wikiHero} onClose={() => setWikiHero(null)} isFavorite={!!wikiHero && props.favorites.has(wikiHero.hero_id)} onToggleFavorite={props.onToggleFavorite} onShareHero={props.onShareHero} onPickForDraft={canAct && wikiHero && isLegalHero(position, wikiHero.hero_id, context, format, false, activeBanCount) ? choose : undefined} draftActionLabel={turn.action === 'ban' ? 'Ban hero ini' : 'Pick hero ini'} allHeroes={snapshot.heroes} onSelectRelatedHero={setWikiHero} itemCatalog={snapshot.items} spellCatalog={snapshot.spells} />
     <PlanSelectionModal isOpen={planOpen && latest} onClose={() => setPlanOpen(false)} heroes={snapshot.heroes} currentPlanAId={game.playerPlan.a} currentPlanBId={game.playerPlan.b} onSelectPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} onSelectPlanB={heroId => send({ type: 'plan', plan: 'b', heroId })} activeSide={playerSide} unavailableHeroIds={unavailablePlans} recommendedOpeners={assistance ? hints?.phaseStrategy.candidateOpeners ?? [] : []} onlyGlobalReleased={onlyGlobal} />

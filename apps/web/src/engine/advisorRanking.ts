@@ -23,9 +23,9 @@
  * - `plannedOpener` hasil tebakan mesin TIDAK dipaksa jadi #1 — diukur, itu
  *   menurunkan kesesuaian dari 63,4% ke 4,9%.
  */
-import type { Hero } from '../types';
-import type { DraftPosition } from './draftRules';
-import { applyDraftAction, getDraftTurn } from './draftRules';
+import type { Hero, DuetPackageOption, DraftFormat } from '../types';
+import type { DraftPosition, DraftAction } from './draftRules';
+import { applyDraftAction, getDraftTurn, getDoublePickWindow, oppositeSide, evaluateTeamCompositionIntegrity } from './draftRules';
 import { evaluatePosition } from './draftSearch';
 import type { SearchContext, RootCandidateValue } from './draftSearch';
 import type { TournamentRecommendation } from './tournamentInference';
@@ -45,6 +45,8 @@ export interface AdvisorDecision {
   elapsedMs: number;
   /** Nilai solver per kandidat — dasar urutan seluruh daftar rekomendasi. */
   rootValues?: RootCandidateValue[];
+  /** Variasi utama aksi (Principal Variation) dari pencarian Minimax */
+  principalVariation?: DraftAction[];
 }
 
 /**
@@ -63,6 +65,8 @@ export interface SolverStatus {
   lockedPlanHeroId?: number | null;
   /** Nilai per kandidat root dari solver jika tersedia */
   rootValues?: RootCandidateValue[];
+  /** Variasi utama aksi (Principal Variation) dari pencarian Minimax */
+  principalVariation?: DraftAction[];
 }
 
 /**
@@ -166,4 +170,138 @@ export function rankRecommendationsByPosition(
   const rankedHead = ordered.map((s) => s.rec);
   const keptIds = new Set(rankedHead.map((rec) => rec.hero.hero_id));
   return [...rankedHead, ...tail, ...head.filter((rec) => !keptIds.has(rec.hero.hero_id))];
+}
+
+/**
+ * Memperkaya dan mengurutkan paket duet menggunakan hasil pencarian Minimax (Game Theory)
+ * ketika tim berada di langkah pertama jendela giliran ganda (R1+R2, B2+B3, B4+B5).
+ *
+ * 1. Jika Minimax memiliki Principal Variation dengan 2 aksi berurutan untuk sisi yang sama (PV[0] + PV[1]),
+ *    pasangan tersebut diangkat sebagai "Paket Duet Utama Minimax" lengkap dengan prediksi respon musuh (PV[2]+PV[3]).
+ * 2. Seluruh paket duet KPL lainnya dievaluasi nilai posisinya dengan `evaluatePosition` 2-ply.
+ * 3. Paket diurutkan: Paket Minimax di urutan #1, diikuti paket berskor posisi tertinggi.
+ */
+export function enrichDuetPackagesWithMinimax(
+  heuristicPackages: DuetPackageOption[],
+  decision: AdvisorDecision | null | undefined,
+  position: DraftPosition,
+  context: SearchContext,
+  heroesById: Map<number, Hero>,
+  synergyDb?: Record<string, any>,
+  format: DraftFormat = 'tournament',
+  isUltimateBattle: boolean = false,
+  rankedBanCount: 3 | 4 | 5 = 3
+): DuetPackageOption[] {
+  const window = getDoublePickWindow(position.step, format, isUltimateBattle, rankedBanCount);
+  if (!window.isDoublePickFirst) return heuristicPackages;
+
+  const turn = getDraftTurn(position.step, format, isUltimateBattle, rankedBanCount);
+  if (!turn || turn.action !== 'pick') return heuristicPackages;
+
+  const proPairs = synergyDb?.pairs || {};
+  const kplLaneRates = synergyDb?.hero_lane_rates || {};
+  const ourHeroes = position.picks[turn.side].map((id) => heroesById.get(id)!).filter(Boolean);
+  const enemySide = oppositeSide(turn.side);
+
+  const enriched: DuetPackageOption[] = [];
+  const processedPairKeys = new Set<string>();
+
+  // 1. Ekstrak Principal Variation Minimax (PV[0] + PV[1]) jika tersedia
+  const pv = decision?.principalVariation;
+  if (pv && pv.length >= 2 && pv[0].side === turn.side && pv[1].side === turn.side && pv[0].heroId !== pv[1].heroId) {
+    const heroA = heroesById.get(pv[0].heroId);
+    const heroB = heroesById.get(pv[1].heroId);
+
+    if (heroA && heroB && !ourHeroes.some((h) => h.hero_id === heroA.hero_id || h.hero_id === heroB.hero_id)) {
+      const integrity = evaluateTeamCompositionIntegrity([...ourHeroes, heroA, heroB], kplLaneRates);
+      const laneA = integrity.laneState.assignments.get(heroA.hero_id);
+      const laneB = integrity.laneState.assignments.get(heroB.hero_id);
+
+      if (laneA && laneB && laneA !== laneB) {
+        // Balasan musuh yang diprediksi Minimax (aksi lawan setelah pick ganda kita)
+        const enemyActions = pv.slice(2).filter((a) => a.side === enemySide);
+        const predictedResponses = enemyActions
+          .map((a) => heroesById.get(a.heroId)!)
+          .filter(Boolean);
+
+        // Evaluasi skor posisi setelah kedua pick Minimax
+        const nextPos1 = applyDraftAction(position, pv[0], context, format, isUltimateBattle, rankedBanCount);
+        const nextPos2 = applyDraftAction(nextPos1, pv[1], context, format, isUltimateBattle, rankedBanCount);
+        const minimaxEval = evaluatePosition(nextPos2, context, turn.side);
+
+        // Cek data sinergi KPL untuk pasangan ini
+        const p1 = Math.min(heroA.hero_id, heroB.hero_id);
+        const p2 = Math.max(heroA.hero_id, heroB.hero_id);
+        const pairKey = `${p1}_${p2}`;
+        processedPairKeys.add(pairKey);
+        const pairData = proPairs[pairKey] || proPairs[`${p1}:${p2}`];
+
+        let kplLabel: string | undefined;
+        if (pairData && (pairData.matches ?? 0) >= 15) {
+          kplLabel = `Sinergi KPL: ${((pairData.win_rate ?? 0.5) * 100).toFixed(0)}% WR (${pairData.matches} match)`;
+        }
+
+        // Tentukan arketipe pasangan
+        const aIsFrontline = heroA.primary_role === 'Tank' || (heroA.primary_role === 'Fighter' && heroA.tactical_profile?.tags.frontline);
+        const bIsFrontline = heroB.primary_role === 'Tank' || (heroB.primary_role === 'Fighter' && heroB.tactical_profile?.tags.frontline);
+        let archetype = 'Pilihan Utama Minimax';
+        if ((aIsFrontline && !bIsFrontline) || (bIsFrontline && !aIsFrontline)) {
+          archetype = 'Frontline Anchor + Core Carry (Minimax)';
+        } else if (heroA.primary_role === 'Support' || heroB.primary_role === 'Support') {
+          archetype = 'Peel & Protection Duo (Minimax)';
+        }
+
+        enriched.push({
+          primaryHero: heroA,
+          secondaryHero: heroB,
+          combinedScore: 99.0, // Prioritas puncak
+          duetWinRate: pairData?.win_rate,
+          kplMatches: pairData?.matches,
+          archetypeBadge: archetype,
+          kplSynergyLabel: kplLabel,
+          primaryLane: laneA,
+          secondaryLane: laneB,
+          windowLabel: heuristicPackages[0]?.windowLabel,
+          isSolverDuet: true,
+          solverScore: minimaxEval,
+          predictedResponses,
+        });
+      }
+    }
+  }
+
+  // 2. Evaluasi seluruh paket duet heuristik yang ada dengan evaluator posisi Minimax
+  for (const pkg of heuristicPackages) {
+    const p1 = Math.min(pkg.primaryHero.hero_id, pkg.secondaryHero.hero_id);
+    const p2 = Math.max(pkg.primaryHero.hero_id, pkg.secondaryHero.hero_id);
+    const pairKey = `${p1}_${p2}`;
+
+    if (processedPairKeys.has(pairKey)) {
+      continue; // Sudah masuk sebagai PV Minimax utama
+    }
+    processedPairKeys.add(pairKey);
+
+    // Hitung posisi papan setelah mengunci kedua hero paket ini
+    const actA: DraftAction = { side: turn.side, action: 'pick', heroId: pkg.primaryHero.hero_id };
+    const actB: DraftAction = { side: turn.side, action: 'pick', heroId: pkg.secondaryHero.hero_id };
+    const posA = applyDraftAction(position, actA, context, format, isUltimateBattle, rankedBanCount);
+    const posB = applyDraftAction(posA, actB, context, format, isUltimateBattle, rankedBanCount);
+    const evalScore = evaluatePosition(posB, context, turn.side);
+
+    enriched.push({
+      ...pkg,
+      solverScore: evalScore,
+    });
+  }
+
+  // 3. Urutkan: Paket Minimax (isSolverDuet) di posisi #1, diikuti solverScore descending
+  enriched.sort((a, b) => {
+    if (a.isSolverDuet && !b.isSolverDuet) return -1;
+    if (!a.isSolverDuet && b.isSolverDuet) return 1;
+    const scoreA = a.solverScore ?? a.combinedScore;
+    const scoreB = b.solverScore ?? b.combinedScore;
+    return scoreB - scoreA;
+  });
+
+  return enriched.slice(0, 3);
 }

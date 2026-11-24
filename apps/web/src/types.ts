@@ -564,6 +564,12 @@ export interface DuetPackageOption {
   primaryLane: Lane;
   secondaryLane: Lane;
   windowLabel?: string;
+  /** Ditandai true jika paket ini berasal dari Principal Variation Minimax */
+  isSolverDuet?: boolean;
+  /** Nilai evaluasi posisi dari sudut pandang tim kita menurut Minimax */
+  solverScore?: number;
+  /** Prediksi hero respon lawan dari lookahead pencarian Minimax */
+  predictedResponses?: Hero[];
 }
 
 export type SortMode = 'az' | 'win' | 'pick' | 'ai';

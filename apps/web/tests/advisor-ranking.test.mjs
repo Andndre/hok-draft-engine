@@ -10,7 +10,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { emptyPosition, getDraftTurn, applyDraftAction } from '../src/engine/draftRules.ts';
 import { pickPhaseCandidates, searchDraft, evaluatePosition } from '../src/engine/draftSearch.ts';
-import { rankRecommendationsByPosition } from '../src/engine/advisorRanking.ts';
+import { rankRecommendationsByPosition, enrichDuetPackagesWithMinimax } from '../src/engine/advisorRanking.ts';
 import { runTournamentInference } from '../src/engine/tournamentInference.ts';
 
 const read = (p) => JSON.parse(readFileSync(new URL('../public/' + p, import.meta.url), 'utf8'));
@@ -117,4 +117,65 @@ test('urutan cepat (1-ply) tetap dipakai sebagai daftar cadangan saat solver bel
 
   assert.equal(ranked.length, laneOrdered.length, 'tidak ada kandidat yang boleh hilang');
   assert.equal(new Set(ranked.map((rec) => rec.hero.hero_id)).size, laneOrdered.length, 'tidak ada duplikat');
+});
+
+test('enrichDuetPackagesWithMinimax integrates Principal Variation and position evaluation', () => {
+  // Step 5 (R1): Red memulai jendela double pick R1+R2
+  const position = {
+    step: 5,
+    picks: { blue: [heroByName("Ao'yin").hero_id], red: [] },
+    bans: { blue: [], red: [] },
+  };
+  const heroesMap = new Map(heroes.map((h) => [h.hero_id, h]));
+  const heroDun = heroByName('Dun');
+  const heroLadySun = heroByName('Lady Sun');
+
+  const heuristicDuet = {
+    primaryHero: heroByName('Augran'),
+    secondaryHero: heroByName('Dunshan'),
+    combinedScore: 2.5,
+    archetypeBadge: 'Frontline Anchor + Core Carry',
+    primaryLane: 'Jungle',
+    secondaryLane: 'Roam',
+    windowLabel: 'Respon R1+R2',
+  };
+
+  const decision = {
+    heroId: heroDun.hero_id,
+    engineKind: 'search',
+    completedDepth: 4,
+    elapsedMs: 250,
+    principalVariation: [
+      { side: 'red', action: 'pick', heroId: heroDun.hero_id },
+      { side: 'red', action: 'pick', heroId: heroLadySun.hero_id },
+      { side: 'blue', action: 'pick', heroId: heroByName('Kaizer').hero_id },
+      { side: 'blue', action: 'pick', heroId: heroByName('Liang').hero_id },
+    ],
+  };
+
+  const enriched = enrichDuetPackagesWithMinimax(
+    [heuristicDuet],
+    decision,
+    position,
+    { ...context, aiSide: 'red' },
+    heroesMap,
+    synergy,
+    'tournament'
+  );
+
+  assert.ok(enriched.length >= 1);
+  // Paket #1 harus berasal dari PV Minimax
+  const topDuet = enriched[0];
+  assert.equal(topDuet.isSolverDuet, true, 'paket #1 harus ditandai sebagai pilihan Minimax');
+  assert.equal(topDuet.primaryHero.hero_id, heroDun.hero_id);
+  assert.equal(topDuet.secondaryHero.hero_id, heroLadySun.hero_id);
+  assert.ok(topDuet.solverScore != null, 'harus memiliki nilai evaluasi posisi solver');
+  assert.ok(topDuet.predictedResponses.length >= 1, 'harus memiliki prediksi respon lawan');
+  assert.equal(topDuet.predictedResponses[0].hero_id, heroByName('Kaizer').hero_id);
+
+  // Paket heuristik Augran + Dunshan juga harus mendapatkan solverScore
+  const secondDuet = enriched.find((d) => d.primaryHero.name === 'Augran');
+  if (secondDuet) {
+    assert.ok(secondDuet.solverScore != null, 'paket kedua harus dievaluasi solverScore');
+  }
 });

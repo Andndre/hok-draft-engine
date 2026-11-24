@@ -138,6 +138,12 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
             <span className="duet-package-card__title">
               💡 PAKET DUET
             </span>
+            {activeDuet.isSolverDuet && (
+              <span className="duet-solver-badge" title="Pasangan ini dihitung langsung oleh Minimax Alpha-Beta 4-ply">
+                <Sparkles aria-hidden="true" />
+                Pilihan Minimax
+              </span>
+            )}
             {activeDuet.windowLabel && (
               <span className="duet-package-card__window" data-side={activeSide}>
                 {activeDuet.windowLabel}
@@ -183,6 +189,16 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
         </div>
 
         <div className="duet-package-card__badges">
+          {activeDuet.isSolverDuet && (
+            <span className="duet-badge duet-badge--solver">
+              ◆ Rekomendasi Minimax
+            </span>
+          )}
+          {activeDuet.solverScore != null && (
+            <span className="duet-badge duet-badge--solver-score" title="Nilai evaluasi posisi dari Minimax">
+              Posisi {activeDuet.solverScore > 0 ? '+' : ''}{activeDuet.solverScore.toFixed(2)}
+            </span>
+          )}
           <span className="duet-badge">
             {activeDuet.archetypeBadge}
           </span>
@@ -197,6 +213,23 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
             </span>
           )}
         </div>
+
+        {activeDuet.predictedResponses && activeDuet.predictedResponses.length > 0 && (
+          <div className="duet-predicted-box">
+            <span className="duet-predicted-box__title">
+              <Target aria-hidden="true" />
+              Prediksi Respon Lawan:
+            </span>
+            <div className="duet-predicted-box__list">
+              {activeDuet.predictedResponses.map((enemyHero) => (
+                <span key={enemyHero.hero_id} className="duet-predicted-item">
+                  <HeroThumbnail hero={enemyHero} />
+                  <span>{enemyHero.name}</span>
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
 
         {onSelectDuetPackage && (
           <button
