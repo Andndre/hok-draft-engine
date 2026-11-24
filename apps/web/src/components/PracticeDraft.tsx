@@ -44,6 +44,8 @@ interface Props {
   onlyGlobalReleased?: boolean;
   initialSharedSession?: PracticeSession | null;
   onShareSession?: (session: PracticeSession) => void;
+  onShareHero?: (hero: Hero) => void;
+  onClearShare?: () => void;
 }
 const button = 'ui-button ui-button--quiet';
 const axes = [
@@ -197,6 +199,7 @@ export function PracticeDraft(props: Props) {
 
   const send = (event: PracticeEvent) => {
     client.cancel(); setError(''); setNotice(''); setThinking(false);
+    props.onClearShare?.();
     if (gameKey && (event.type === 'undo' || event.type === 'reset')) {
       setLaneOverridesByKey(prev => {
         if (!prev[gameKey]) return prev;
@@ -484,7 +487,7 @@ export function PracticeDraft(props: Props) {
       </section>
       {assistance && !turn.isComplete && latest && hints && <aside className="analysis-sidebar"><TacticalRadarPanel scores={playerRadar} phaseStrategy={hints.phaseStrategy} recommendations={recommendations} solverStatus={advisorStatus} duetPackages={duetPackages} onSelectDuetPackage={handleSelectDuetPackage} isWaiting={!canAct} onSelectCandidate={choose} onInspectHero={setWikiHero} activeSide={playerSide} isPickPhase={turn.action === 'pick'} onOpenPlanModal={() => setPlanOpen(true)} onSelectQuickPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} /></aside>}
     </div>
-    <HeroWikiDrawer hero={wikiHero} onClose={() => setWikiHero(null)} isFavorite={!!wikiHero && props.favorites.has(wikiHero.hero_id)} onToggleFavorite={props.onToggleFavorite} onPickForDraft={canAct && wikiHero && isLegalHero(position, wikiHero.hero_id, context, format, false, activeBanCount) ? choose : undefined} draftActionLabel={turn.action === 'ban' ? 'Ban hero ini' : 'Pick hero ini'} allHeroes={snapshot.heroes} onSelectRelatedHero={setWikiHero} itemCatalog={snapshot.items} spellCatalog={snapshot.spells} />
+    <HeroWikiDrawer hero={wikiHero} onClose={() => setWikiHero(null)} isFavorite={!!wikiHero && props.favorites.has(wikiHero.hero_id)} onToggleFavorite={props.onToggleFavorite} onShareHero={props.onShareHero} onPickForDraft={canAct && wikiHero && isLegalHero(position, wikiHero.hero_id, context, format, false, activeBanCount) ? choose : undefined} draftActionLabel={turn.action === 'ban' ? 'Ban hero ini' : 'Pick hero ini'} allHeroes={snapshot.heroes} onSelectRelatedHero={setWikiHero} itemCatalog={snapshot.items} spellCatalog={snapshot.spells} />
     <PlanSelectionModal isOpen={planOpen && latest} onClose={() => setPlanOpen(false)} heroes={snapshot.heroes} currentPlanAId={game.playerPlan.a} currentPlanBId={game.playerPlan.b} onSelectPlanA={heroId => send({ type: 'plan', plan: 'a', heroId })} onSelectPlanB={heroId => send({ type: 'plan', plan: 'b', heroId })} activeSide={playerSide} unavailableHeroIds={unavailablePlans} recommendedOpeners={assistance ? hints?.phaseStrategy.candidateOpeners ?? [] : []} onlyGlobalReleased={onlyGlobal} />
   </section>;
 }

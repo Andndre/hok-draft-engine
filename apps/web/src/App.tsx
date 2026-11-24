@@ -51,8 +51,10 @@ export const App: React.FC = () => {
     navigate,
     openHeroModal,
     closeHeroModal,
+    clearShareData,
     getShareDraftUrl,
     getSharePracticeUrl,
+    getHeroShareUrl,
   } = useAppRouter();
 
   const activeTab = route.activeTab;
@@ -221,7 +223,7 @@ export const App: React.FC = () => {
         setTeamBName(decoded.teamBName);
         setGamesData(decoded.gamesData);
         setDraftFormat('tournament');
-        navigate({ activeTab: 'draft', draftMode: 'simulator' }, { replace: true });
+        navigate({ activeTab: 'draft', draftMode: 'simulator', shareData: route.shareData }, { replace: true });
         setSharedDraftNotice(`Simulasi turnamen ${decoded.teamAName} vs ${decoded.teamBName} (${decoded.seriesFormat}) berhasil dimuat!`);
       } else if (decoded.kind === 'ranked') {
         setDraftFormat('ranked');
@@ -231,12 +233,12 @@ export const App: React.FC = () => {
           ...prev,
           1: decoded.game,
         }));
-        navigate({ activeTab: 'draft', draftMode: 'simulator' }, { replace: true });
+        navigate({ activeTab: 'draft', draftMode: 'simulator', shareData: route.shareData }, { replace: true });
         setSharedDraftNotice(`Draft Ranked (${decoded.rankedBanCount} Ban) berhasil dimuat!`);
       } else if (decoded.kind === 'practice') {
         setSharedPracticeSession(decoded.session);
         setPracticeAssistance(decoded.assistance);
-        navigate({ activeTab: 'draft', draftMode: 'practice' }, { replace: true });
+        navigate({ activeTab: 'draft', draftMode: 'practice', shareData: route.shareData }, { replace: true });
         setSharedDraftNotice(`Sesi Latihan vs AI (${decoded.playerSide.toUpperCase()}, ${decoded.format === 'ranked' ? 'Ranked' : 'Tournament'}) berhasil dimuat!`);
       }
       hasHydratedShareRef.current = route.shareData;
@@ -262,6 +264,8 @@ export const App: React.FC = () => {
       });
     }
     const fullUrl = getShareDraftUrl(shareCode);
+    hasHydratedShareRef.current = shareCode;
+    navigate({ activeTab: 'draft', draftMode: 'simulator', shareData: shareCode }, { replace: true });
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
       navigator.clipboard.writeText(fullUrl).then(() => {
         const label = draftFormat === 'ranked' ? 'Tautan draft ranked' : 'Tautan simulasi turnamen';
@@ -269,18 +273,32 @@ export const App: React.FC = () => {
         setTimeout(() => setToastMessage(null), 3500);
       });
     }
-  }, [draftFormat, rankedBanCount, currentGame, seriesFormat, fearlessEnabled, gameNumber, teamAName, teamBName, gamesData, getShareDraftUrl]);
+  }, [draftFormat, rankedBanCount, currentGame, seriesFormat, fearlessEnabled, gameNumber, teamAName, teamBName, gamesData, getShareDraftUrl, navigate]);
 
   const handleSharePracticeSession = useCallback((practiceSession: PracticeSession) => {
     const shareCode = encodePracticeSession(practiceSession, practiceAssistance);
     const fullUrl = getSharePracticeUrl(shareCode);
+    hasHydratedShareRef.current = shareCode;
+    navigate({ activeTab: 'draft', draftMode: 'practice', shareData: shareCode }, { replace: true });
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
       navigator.clipboard.writeText(fullUrl).then(() => {
         setToastMessage('Tautan sesi latihan vs AI berhasil disalin ke clipboard!');
         setTimeout(() => setToastMessage(null), 3500);
       });
     }
-  }, [practiceAssistance, getSharePracticeUrl]);
+  }, [practiceAssistance, getSharePracticeUrl, navigate]);
+
+  const handleShareHero = useCallback((hero: Hero) => {
+    const slugOrId = hero.slug || hero.hero_id;
+    const fullUrl = getHeroShareUrl(slugOrId);
+    navigate({ heroIdOrSlug: String(slugOrId) }, { replace: true });
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(fullUrl).then(() => {
+        setToastMessage(`Tautan hero ${hero.name} berhasil disalin ke clipboard!`);
+        setTimeout(() => setToastMessage(null), 3500);
+      });
+    }
+  }, [getHeroShareUrl, navigate]);
 
   // Save favorites to localStorage
   const handleToggleFavorite = (id: number) => {
@@ -791,6 +809,7 @@ export const App: React.FC = () => {
   const handleSelectHero = (hero: Hero) => {
     if (currentTurn.isComplete || currentDraftUnavailableIds.has(hero.hero_id) || (onlyGlobalReleased && !isHeroGlobalReleased(hero))) return;
 
+    if (route.shareData) clearShareData();
     setPreviousScores(tacticalScores);
 
     updateCurrentDraft((prev) => applyGameHero(prev, hero, { heroes, onlyGlobal: onlyGlobalReleased, fearless: { blue: [...blueFearlessUnavailableIds], red: [...redFearlessUnavailableIds] }, format: draftFormat }, draftFormat));
@@ -810,6 +829,7 @@ export const App: React.FC = () => {
   // Handle two-hero core package selection on double-pick turns
   const handleSelectDuetPackage = (duet: DuetPackageOption) => {
     if (currentTurn.isComplete) return;
+    if (route.shareData) clearShareData();
     setPreviousScores(tacticalScores);
 
     updateCurrentDraft((prev) => {
@@ -828,6 +848,7 @@ export const App: React.FC = () => {
 
   // Reset Current Game Draft ONLY (preserves other games!)
   const handleResetDraft = () => {
+    if (route.shareData) clearShareData();
     updateCurrentDraft(() => createInitialGameDraft(draftFormat, 'A', false, draftFormat === 'ranked' ? rankedBanCount : 3));
     setLaneOverridesByGame((prev) => ({ ...prev, [gameNumber]: {} }));
     setPreviousScores(null);
@@ -838,6 +859,7 @@ export const App: React.FC = () => {
   // Undo Step in Current Game
   const handleUndoStep = () => {
     if (draftStep === 0) return;
+    if (route.shareData) clearShareData();
     setLaneOverridesByGame((prev) => ({ ...prev, [gameNumber]: {} }));
     const prevStepIndex = draftStep - 1;
     const prevTurn = getDraftTurn(prevStepIndex, draftFormat, isUltimateBattle, rankedBanCount);
@@ -1137,7 +1159,7 @@ export const App: React.FC = () => {
         {loadError && <section role="alert" className="empty-state"><AlertTriangle aria-hidden="true" /><h2>Data hero belum dapat dimuat</h2><p>{loadError}</p><button type="button" className="ui-button ui-button--primary" onClick={() => void loadData()}><RefreshCw aria-hidden="true" />Coba lagi</button></section>}
         {dataset && (practiceActive || hasVisitedPractice) && (
           <Suspense fallback={<div className="surface-panel p-6 text-sm text-slate-400" role="status">Memuat ruang latihan…</div>}>
-            <div hidden={!practiceActive}><PracticeDraft dataset={dataset} active={practiceActive} onlyGlobalReleased={onlyGlobalReleased} assistance={practiceAssistance} onAssistanceChange={setPracticeAssistance} selectedLane={selectedLane} onLaneChange={setSelectedLane} searchQuery={searchQuery} onSearchChange={setSearchQuery} sortMode={sortMode} onSortChange={setSortMode} viewMode={viewMode} onViewChange={setViewMode} favorites={favorites} onToggleFavorite={handleToggleFavorite} initialSharedSession={sharedPracticeSession} onShareSession={handleSharePracticeSession} /></div>
+            <div hidden={!practiceActive}><PracticeDraft dataset={dataset} active={practiceActive} onlyGlobalReleased={onlyGlobalReleased} assistance={practiceAssistance} onAssistanceChange={setPracticeAssistance} selectedLane={selectedLane} onLaneChange={setSelectedLane} searchQuery={searchQuery} onSearchChange={setSearchQuery} sortMode={sortMode} onSortChange={setSortMode} viewMode={viewMode} onViewChange={setViewMode} favorites={favorites} onToggleFavorite={handleToggleFavorite} initialSharedSession={sharedPracticeSession} onShareSession={handleSharePracticeSession} onShareHero={handleShareHero} onClearShare={clearShareData} /></div>
           </Suspense>
         )}
         {!practiceActive && <>
@@ -1277,7 +1299,7 @@ export const App: React.FC = () => {
       <BottomCommandDock activeTab={activeTab} onTabChange={handleTabChange} favoriteCount={favorites.size} />
       {wikiHero && (
         <Suspense fallback={null}>
-          <HeroWikiDrawer hero={wikiHero} onClose={handleCloseWikiDrawer} isFavorite={favorites.has(wikiHero.hero_id)} onToggleFavorite={handleToggleFavorite} onPickForDraft={activeTab === 'draft' && draftMode === 'simulator' && !currentTurn.isComplete && !currentDraftUnavailableIds.has(wikiHero.hero_id) ? handleSelectHero : undefined} draftActionLabel={currentTurn.action === 'ban' ? 'Ban hero ini' : 'Pick hero ini'} initialTab={activeTab === 'counter' ? 'counters' : 'build'} allHeroes={heroes} onSelectRelatedHero={handleInspectHero} itemCatalog={dataset?.items} spellCatalog={dataset?.spells} />
+          <HeroWikiDrawer hero={wikiHero} onClose={handleCloseWikiDrawer} isFavorite={favorites.has(wikiHero.hero_id)} onToggleFavorite={handleToggleFavorite} onShareHero={handleShareHero} onPickForDraft={activeTab === 'draft' && draftMode === 'simulator' && !currentTurn.isComplete && !currentDraftUnavailableIds.has(wikiHero.hero_id) ? handleSelectHero : undefined} draftActionLabel={currentTurn.action === 'ban' ? 'Ban hero ini' : 'Pick hero ini'} initialTab={activeTab === 'counter' ? 'counters' : 'build'} allHeroes={heroes} onSelectRelatedHero={handleInspectHero} itemCatalog={dataset?.items} spellCatalog={dataset?.spells} />
         </Suspense>
       )}
       <PlanSelectionModal isOpen={isPlanModalOpen} onClose={() => setIsPlanModalOpen(false)} heroes={heroes} currentPlanAId={activeSidePlanAId} currentPlanBId={activeSidePlanBId} onSelectPlanA={handleSetPlanA} onSelectPlanB={handleSetPlanB} activeSide={currentTurn.side} unavailableHeroIds={currentDraftUnavailableIds} recommendedOpeners={phaseStrategy?.candidateOpeners || []} onlyGlobalReleased={onlyGlobalReleased} />
