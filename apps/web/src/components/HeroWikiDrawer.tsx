@@ -2,7 +2,7 @@ import { RoleLabel } from './ui/RoleIcon';
 import { LaneLabel } from './ui/LaneIcon';
 import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Hero, ItemCatalogEntry, SpellCatalogEntry, TacticalTag } from '../types';
-import { X, Star, Swords, Shield, Lightbulb, BookOpen, Zap, Sparkles, ArrowRight, CheckCircle2, AlertCircle, Wrench, ShieldBan, Link2, Info } from 'lucide-react';
+import { X, Star, Swords, Shield, Lightbulb, BookOpen, Zap, Sparkles, ArrowRight, CheckCircle2, AlertCircle, Wrench, ShieldBan, Link2, Info, Share2, Check } from 'lucide-react';
 import { AssetThumbnail } from './ui/AssetThumbnail';
 import { displayCopy } from './ui/presentation';
 import { useNativeModalDialog } from './ui/useNativeModalDialog';
@@ -21,6 +21,7 @@ interface HeroWikiDrawerProps {
   initialTab?: 'build' | 'counters' | 'abilities' | 'tactics';
   allHeroes: Hero[];
   onSelectRelatedHero: (hero: Hero) => void;
+  onShareHero?: (hero: Hero) => void;
   itemCatalog?: ItemCatalogEntry[];
   spellCatalog?: SpellCatalogEntry[];
 }
@@ -497,6 +498,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
   initialTab = 'build',
   allHeroes,
   onSelectRelatedHero,
+  onShareHero,
   itemCatalog = [],
   spellCatalog = [],
 }) => {
@@ -532,6 +534,19 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
   const abilities = hero.abilities || [];
   const stances = useMemo(() => detectHeroSkillStances(hero), [hero]);
   const [activeStanceId, setActiveStanceId] = useState<string>(stances[0]?.id || 'default');
+  const [copiedLink, setCopiedLink] = useState(false);
+
+  const handleShareHero = () => {
+    if (onShareHero) {
+      onShareHero(hero);
+    } else if (typeof window !== 'undefined' && navigator.clipboard) {
+      const slug = hero.slug || hero.hero_id;
+      const url = window.location.origin + window.location.pathname + `#/hero/${slug}`;
+      void navigator.clipboard.writeText(url);
+    }
+    setCopiedLink(true);
+    setTimeout(() => setCopiedLink(false), 2000);
+  };
 
   useEffect(() => {
     setActiveStanceId(stances[0]?.id || 'default');
@@ -651,6 +666,16 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
             >
               <Star className="w-3.5 h-3.5" fill={isFavorite ? 'currentColor' : 'none'} aria-hidden="true" />
               <span>{isFavorite ? 'Tersimpan di Favorit' : 'Simpan ke Favorit'}</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleShareHero}
+              title="Salin tautan langsung ke hero ini"
+              className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl text-xs font-bold bg-[#1A202C] text-slate-300 border border-[#232A38] hover:text-white transition-colors"
+            >
+              {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-400" aria-hidden="true" /> : <Share2 className="w-3.5 h-3.5" aria-hidden="true" />}
+              <span>{copiedLink ? 'Tersalin' : 'Bagikan'}</span>
             </button>
 
             {onPickForDraft && (

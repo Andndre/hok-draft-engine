@@ -9,7 +9,9 @@ import type { AdvisorDecision, SolverStatus } from './engine/advisorRanking';
 import { OpponentClient } from './engine/opponentClient';
 import { computeTacticalDeltas } from './engine/deltaExplainer';
 import { assignmentToHeroLaneMap, buildDefaultLaneAssignments, swapAssignedLanes } from './engine/gamePlan';
-import { AlertTriangle, BookOpen, FilterX, Gamepad2, RefreshCw, Scan, SearchX, SlidersHorizontal, Star } from 'lucide-react';
+import { AlertTriangle, BookOpen, CheckCircle2, FilterX, Gamepad2, RefreshCw, Scan, SearchX, Share2, SlidersHorizontal, Star } from 'lucide-react';
+import { useAppRouter } from './navigation/useAppRouter';
+import { encodeTournamentSeries, decodeTournamentSeries } from './engine/draftShareCodec';
 import { HeroRosterToolbar } from './components/HeroRosterToolbar';
 import { focusHeroSearch } from './components/ui/presentation';
 import { searchHeroes, firstSelectableHero } from './heroSearch';
@@ -42,9 +44,26 @@ export const App: React.FC = () => {
   const [heroes, setHeroes] = useState<Hero[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Navigation & Filtering
-  const [activeTab, setActiveTab] = useState<ActiveTab>('draft');
-  const [draftMode, setDraftMode] = useState<'simulator' | 'practice' | 'vision'>('simulator');
+  // Navigation & Routing (Hash Deep Linking & URL Sync)
+  const {
+    route,
+    navigate,
+    openHeroModal,
+    closeHeroModal,
+    getShareDraftUrl,
+  } = useAppRouter();
+
+  const activeTab = route.activeTab;
+  const draftMode = route.draftMode;
+
+  const handleTabChange = useCallback((newTab: ActiveTab) => {
+    navigate({ activeTab: newTab });
+  }, [navigate]);
+
+  const handleDraftModeChange = useCallback((newMode: 'simulator' | 'practice' | 'vision') => {
+    navigate({ activeTab: 'draft', draftMode: newMode });
+  }, [navigate]);
+
   const [draftFormat, setDraftFormat] = useState<DraftFormat>('tournament');
   const [rankedBanCount, setRankedBanCount] = useState<3 | 4 | 5>(3);
   const [practiceAssistance, setPracticeAssistance] = useState(true);
@@ -88,9 +107,22 @@ export const App: React.FC = () => {
     }
   });
 
-  // Drawer modal & Strategic Plan Modal
+  // Drawer modal, Strategic Plan Modal & Toast notifications
   const [wikiHero, setWikiHero] = useState<Hero | null>(null);
   const [isPlanModalOpen, setIsPlanModalOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [sharedDraftNotice, setSharedDraftNotice] = useState<string | null>(null);
+  const hasHydratedShareRef = useRef<string | null>(null);
+
+  const handleInspectHero = useCallback((hero: Hero) => {
+    setWikiHero(hero);
+    openHeroModal(hero.slug || hero.hero_id);
+  }, [openHeroModal]);
+
+  const handleCloseWikiDrawer = useCallback(() => {
+    setWikiHero(null);
+    closeHeroModal();
+  }, [closeHeroModal]);
 
   // Fearless Draft (Global BP) State & Multi-Game Match Storage
   const [fearlessEnabled, setFearlessEnabled] = useState(true);
@@ -153,6 +185,61 @@ export const App: React.FC = () => {
     finally { setLoading(false); }
   }, []);
   useEffect(() => { void loadData(); }, [loadData]);
+
+  // Synchronize route.heroIdOrSlug with wikiHero
+  useEffect(() => {
+    if (route.heroIdOrSlug && heroes.length > 0) {
+      const found = heroes.find(
+        (h) =>
+          String(h.hero_id) === route.heroIdOrSlug ||
+          (h.slug && h.slug.toLowerCase() === route.heroIdOrSlug?.toLowerCase())
+      );
+      if (found) {
+        setWikiHero(found);
+      }
+    } else if (!route.heroIdOrSlug && wikiHero) {
+      setWikiHero(null);
+    }
+  }, [route.heroIdOrSlug, heroes]);
+
+  // Synchronize route.shareData to restore full tournament state
+  useEffect(() => {
+    if (!route.shareData || !dataset || heroes.length === 0) return;
+    if (hasHydratedShareRef.current === route.shareData) return;
+
+    const decoded = decodeTournamentSeries(route.shareData, heroes);
+    if (decoded) {
+      setSeriesFormat(decoded.seriesFormat);
+      setFearlessEnabled(decoded.fearlessEnabled);
+      setGameNumber(decoded.gameNumber);
+      setTeamAName(decoded.teamAName);
+      setTeamBName(decoded.teamBName);
+      setGamesData(decoded.gamesData);
+      setDraftFormat('tournament');
+      navigate({ activeTab: 'draft', draftMode: 'simulator' }, { replace: true });
+      setSharedDraftNotice(`Simulasi turnamen ${decoded.teamAName} vs ${decoded.teamBName} (${decoded.seriesFormat}) berhasil dimuat!`);
+      hasHydratedShareRef.current = route.shareData;
+      setTimeout(() => setSharedDraftNotice(null), 4000);
+    }
+  }, [route.shareData, dataset, heroes, navigate]);
+
+  const handleShareTournamentSeries = useCallback(() => {
+    const shareCode = encodeTournamentSeries({
+      seriesFormat,
+      fearlessEnabled,
+      gameNumber,
+      teamAName,
+      teamBName,
+      gamesData,
+    });
+    const fullUrl = getShareDraftUrl(shareCode);
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(fullUrl).then(() => {
+        setToastMessage('Tautan simulasi turnamen berhasil disalin ke clipboard!');
+        setTimeout(() => setToastMessage(null), 3500);
+      });
+    }
+  }, [seriesFormat, fearlessEnabled, gameNumber, teamAName, teamBName, gamesData, getShareDraftUrl]);
 
   // Save favorites to localStorage
   const handleToggleFavorite = (id: number) => {
@@ -779,8 +866,8 @@ export const App: React.FC = () => {
 
   // Switch from Live Advisor back to the simulator view so the user can see the applied board.
   const handleSwitchToSimulator = useCallback(() => {
-    setDraftMode('simulator');
-  }, []);
+    handleDraftModeChange('simulator');
+  }, [handleDraftModeChange]);
 
   // Record winner of current game
   const handleRecordWinner = (winnerSide: 'blue' | 'red') => {
@@ -1001,10 +1088,10 @@ export const App: React.FC = () => {
   return (
     <div className="app-shell">
       <a href="#main-content" className="skip-link">Lewati ke konten utama</a>
-      <HeaderSortBar activeTab={activeTab} onTabChange={setActiveTab} engineReady={engineReady} globalLocked={false} onlyGlobalReleased={onlyGlobalReleased} onToggleGlobalReleased={() => setOnlyGlobalReleased(value => !value)} favoriteCount={favorites.size} />
+      <HeaderSortBar activeTab={activeTab} onTabChange={handleTabChange} engineReady={engineReady} globalLocked={false} onlyGlobalReleased={onlyGlobalReleased} onToggleGlobalReleased={() => setOnlyGlobalReleased(value => !value)} favoriteCount={favorites.size} />
       <main className="app-main" id="main-content" tabIndex={-1}>
         <div className="page-heading"><div><h1>{activeTab === 'draft' ? 'Ruang draft' : activeTab === 'favorites' ? 'Hero favorit' : 'Wiki & Ensiklopedia'}</h1><p>{activeTab === 'draft' ? (draftMode === 'practice' ? 'Pilih sisi, susun strategi, lalu uji keputusanmu melawan AI.' : draftMode === 'vision' ? 'Pantau layar draft secara langsung dan lihat rekomendasi read-only.' : 'Atur kedua tim dan cari pilihan terbaik untuk setiap giliran.') : activeTab === 'favorites' ? 'Simpan hero dari wiki untuk mengaksesnya kembali dengan cepat.' : 'Ensiklopedia lengkap Honor of Kings: Hero & Matrix Counter, Item Equipment, Arcana Level 5, dan Battle Spell.'}</p></div>
-          {activeTab === 'draft' && <div className="mode-switch" role="group" aria-label="Mode draft"><button type="button" aria-pressed={draftMode === 'simulator'} onClick={() => setDraftMode('simulator')}><SlidersHorizontal aria-hidden="true" />Simulator</button><button type="button" aria-pressed={draftMode === 'practice'} onClick={() => setDraftMode('practice')}><Gamepad2 aria-hidden="true" />Latihan vs AI</button><button type="button" aria-pressed={draftMode === 'vision'} onClick={() => setDraftMode('vision')}><Scan aria-hidden="true" />Live Advisor <span className="beta-badge">Beta</span></button></div>}
+          {activeTab === 'draft' && <div className="mode-switch" role="group" aria-label="Mode draft"><button type="button" aria-pressed={draftMode === 'simulator'} onClick={() => handleDraftModeChange('simulator')}><SlidersHorizontal aria-hidden="true" />Simulator</button><button type="button" aria-pressed={draftMode === 'practice'} onClick={() => handleDraftModeChange('practice')}><Gamepad2 aria-hidden="true" />Latihan vs AI</button><button type="button" aria-pressed={draftMode === 'vision'} onClick={() => handleDraftModeChange('vision')}><Scan aria-hidden="true" />Live Advisor <span className="beta-badge">Beta</span></button></div>}
         </div>
         {loadError && <section role="alert" className="empty-state"><AlertTriangle aria-hidden="true" /><h2>Data hero belum dapat dimuat</h2><p>{loadError}</p><button type="button" className="ui-button ui-button--primary" onClick={() => void loadData()}><RefreshCw aria-hidden="true" />Coba lagi</button></section>}
         {dataset && (practiceActive || hasVisitedPractice) && (
@@ -1032,10 +1119,11 @@ export const App: React.FC = () => {
               onUndoStep={handleUndoStep}
               blueFearlessUsedHeroes={blueFearlessUsedHeroes}
               redFearlessUsedHeroes={redFearlessUsedHeroes}
-              onInspectHero={setWikiHero}
+              onInspectHero={handleInspectHero}
               onRequestHero={!loading ? () => focusHeroSearch({ select: true }) : undefined}
               seriesFormat={seriesFormat}
               onSeriesFormatChange={setSeriesFormat}
+              onShareSeries={handleShareTournamentSeries}
               blueTeamName={blueTeam === 'A' ? teamAName : teamBName}
               redTeamName={blueTeam === 'A' ? teamBName : teamAName}
               onSwapSides={handleSwapSides}
@@ -1068,7 +1156,7 @@ export const App: React.FC = () => {
                 currentGamePosition={toPosition(currentGame)}
                 onApplyToSimulator={handleApplyVisionToSimulator}
                 onSwitchToSimulator={handleSwitchToSimulator}
-                onInspectHero={setWikiHero}
+                onInspectHero={handleInspectHero}
               />
             </Suspense>
           )}
@@ -1085,7 +1173,7 @@ export const App: React.FC = () => {
                 hasCustomAssignments={Boolean(gameLaneOverrides?.blue || gameLaneOverrides?.red)}
                 onSwapLane={handleSwapSimulatorLane}
                 onResetLanes={handleResetSimulatorLanes}
-                onInspectHero={setWikiHero}
+                onInspectHero={handleInspectHero}
               />
             </Suspense>
           )}
@@ -1095,9 +1183,10 @@ export const App: React.FC = () => {
                 heroes={heroes}
                 items={dataset?.items}
                 spells={dataset?.spells}
-                onInspectHero={setWikiHero}
+                onInspectHero={handleInspectHero}
                 onlyGlobalReleased={onlyGlobalReleased}
-                initialSubTab="hero"
+                initialSubTab={route.wikiSubTab}
+                onSubTabChange={(subTab) => navigate({ activeTab: 'wiki', wikiSubTab: subTab })}
                 initialTargetHeroId={activeTab === 'counter' ? heroes[0]?.hero_id : undefined}
               />
             </Suspense>
@@ -1106,7 +1195,7 @@ export const App: React.FC = () => {
             <section className="hero-roster" id="hero-roster" aria-label="Katalog hero" aria-busy={loading}>
               <HeroRosterToolbar title={activeTab === 'favorites' ? 'Hero favorit' : activeTab === 'draft' ? 'Pilih hero untuk ' + (currentTurn.action === 'ban' ? 'ban' : 'pick') : 'Jelajahi hero'} count={filteredAndSortedHeroes.length} searchQuery={searchQuery} onSearchChange={setSearchQuery} onConfirmSearch={handleConfirmHeroSearch} selectedLane={selectedLane} onLaneChange={setSelectedLane} sortMode={sortMode} onSortChange={setSortMode} viewMode={viewMode} onViewChange={setViewMode} hideAiSort={activeTab !== 'draft'} />
               {loading ? <div className="hero-grid" role="status" aria-label="Memuat katalog hero"><span className="sr-only">Memuat database hero…</span>{Array.from({ length: 12 }, (_, index) => <div key={index} className="roster-skeleton" aria-hidden="true" />)}</div>
-                : !filteredAndSortedHeroes.length ? <div className="empty-state">{activeTab === 'favorites' && !favorites.size ? <Star aria-hidden="true" /> : <SearchX aria-hidden="true" />}<h3>{activeTab === 'favorites' && !favorites.size ? 'Belum ada hero favorit' : 'Hero tidak ditemukan'}</h3><p>{activeTab === 'favorites' && !favorites.size ? 'Buka wiki hero, lalu simpan ke favorit.' : 'Coba nama lain atau hapus filter lane yang aktif.'}</p><button type="button" className="ui-button ui-button--quiet" onClick={() => { setSearchQuery(''); setSelectedLane('All'); if (activeTab === 'favorites' && !favorites.size) setActiveTab('wiki'); }}>{activeTab === 'favorites' && !favorites.size ? <BookOpen aria-hidden="true" /> : <FilterX aria-hidden="true" />}{activeTab === 'favorites' && !favorites.size ? 'Jelajahi hero' : 'Bersihkan filter'}</button></div>
+                : !filteredAndSortedHeroes.length ? <div className="empty-state">{activeTab === 'favorites' && !favorites.size ? <Star aria-hidden="true" /> : <SearchX aria-hidden="true" />}<h3>{activeTab === 'favorites' && !favorites.size ? 'Belum ada hero favorit' : 'Hero tidak ditemukan'}</h3><p>{activeTab === 'favorites' && !favorites.size ? 'Buka wiki hero, lalu simpan ke favorit.' : 'Coba nama lain atau hapus filter lane yang aktif.'}</p><button type="button" className="ui-button ui-button--quiet" onClick={() => { setSearchQuery(''); setSelectedLane('All'); if (activeTab === 'favorites' && !favorites.size) handleTabChange('wiki'); }}>{activeTab === 'favorites' && !favorites.size ? <BookOpen aria-hidden="true" /> : <FilterX aria-hidden="true" />}{activeTab === 'favorites' && !favorites.size ? 'Jelajahi hero' : 'Bersihkan filter'}</button></div>
                 : <div className={'hero-grid' + (viewMode === 'detailed' ? ' hero-grid--detailed' : '')}>{filteredAndSortedHeroes.map((hero, index) => {
                   const isUnavailable = activeTab === 'draft' && currentDraftUnavailableIds.has(hero.hero_id);
                   let unavailableLabel: string | undefined = undefined;
@@ -1128,7 +1217,7 @@ export const App: React.FC = () => {
                     hero,
                     isUnavailable,
                     unavailableLabel,
-                    onClick: setWikiHero,
+                    onClick: handleInspectHero,
                     onSelect: activeTab === 'draft' ? handleRosterSelectHero : undefined,
                     selectionDisabled: currentTurn.isComplete,
                     action: currentTurn.action,
@@ -1140,17 +1229,27 @@ export const App: React.FC = () => {
                   return viewMode === 'compact' ? <HeroCardCompact key={hero.hero_id} {...shared} quickBadge={rank > 0 && rank <= 5 ? 'AI #' + rank : undefined} /> : <HeroCardDetailed key={hero.hero_id} {...shared} aiRank={rank > 0 ? rank : undefined} />;
                 })}</div>}
             </section>
-            {activeTab === 'draft' && !loading && <aside className="analysis-sidebar"><TacticalRadarPanel scores={tacticalScores} deltas={deltas} primaryInsight={primaryInsight} phaseStrategy={phaseStrategy} planAId={activeSidePlanAId} planBId={activeSidePlanBId} onOpenPlanModal={() => setIsPlanModalOpen(true)} onSelectQuickPlanA={handleSetPlanA} recommendations={displayRecommendations} solverStatus={advisorStatus} onSelectCandidate={handleSelectHero} onInspectHero={setWikiHero} activeSide={currentTurn.side} isPickPhase={currentTurn.action === 'pick'} isComplete={currentTurn.isComplete} duetPackages={duetPackages} onSelectDuetPackage={handleSelectDuetPackage} /></aside>}
+            {activeTab === 'draft' && !loading && <aside className="analysis-sidebar"><TacticalRadarPanel scores={tacticalScores} deltas={deltas} primaryInsight={primaryInsight} phaseStrategy={phaseStrategy} planAId={activeSidePlanAId} planBId={activeSidePlanBId} onOpenPlanModal={() => setIsPlanModalOpen(true)} onSelectQuickPlanA={handleSetPlanA} recommendations={displayRecommendations} solverStatus={advisorStatus} onSelectCandidate={handleSelectHero} onInspectHero={handleInspectHero} activeSide={currentTurn.side} isPickPhase={currentTurn.action === 'pick'} isComplete={currentTurn.isComplete} duetPackages={duetPackages} onSelectDuetPackage={handleSelectDuetPackage} /></aside>}
           </div>}
         </>}
       </main>
-      <BottomCommandDock activeTab={activeTab} onTabChange={setActiveTab} favoriteCount={favorites.size} />
+      <BottomCommandDock activeTab={activeTab} onTabChange={handleTabChange} favoriteCount={favorites.size} />
       {wikiHero && (
         <Suspense fallback={null}>
-          <HeroWikiDrawer hero={wikiHero} onClose={() => setWikiHero(null)} isFavorite={favorites.has(wikiHero.hero_id)} onToggleFavorite={handleToggleFavorite} onPickForDraft={activeTab === 'draft' && draftMode === 'simulator' && !currentTurn.isComplete && !currentDraftUnavailableIds.has(wikiHero.hero_id) ? handleSelectHero : undefined} draftActionLabel={currentTurn.action === 'ban' ? 'Ban hero ini' : 'Pick hero ini'} initialTab={activeTab === 'counter' ? 'counters' : 'build'} allHeroes={heroes} onSelectRelatedHero={setWikiHero} itemCatalog={dataset?.items} spellCatalog={dataset?.spells} />
+          <HeroWikiDrawer hero={wikiHero} onClose={handleCloseWikiDrawer} isFavorite={favorites.has(wikiHero.hero_id)} onToggleFavorite={handleToggleFavorite} onPickForDraft={activeTab === 'draft' && draftMode === 'simulator' && !currentTurn.isComplete && !currentDraftUnavailableIds.has(wikiHero.hero_id) ? handleSelectHero : undefined} draftActionLabel={currentTurn.action === 'ban' ? 'Ban hero ini' : 'Pick hero ini'} initialTab={activeTab === 'counter' ? 'counters' : 'build'} allHeroes={heroes} onSelectRelatedHero={handleInspectHero} itemCatalog={dataset?.items} spellCatalog={dataset?.spells} />
         </Suspense>
       )}
       <PlanSelectionModal isOpen={isPlanModalOpen} onClose={() => setIsPlanModalOpen(false)} heroes={heroes} currentPlanAId={activeSidePlanAId} currentPlanBId={activeSidePlanBId} onSelectPlanA={handleSetPlanA} onSelectPlanB={handleSetPlanB} activeSide={currentTurn.side} unavailableHeroIds={currentDraftUnavailableIds} recommendedOpeners={phaseStrategy?.candidateOpeners || []} onlyGlobalReleased={onlyGlobalReleased} />
+      {(toastMessage || sharedDraftNotice) && (
+        <aside
+          role="status"
+          aria-live="polite"
+          className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900/95 text-white border border-emerald-500/40 shadow-xl backdrop-blur-md text-xs sm:text-sm font-medium animate-in fade-in slide-in-from-bottom-2 duration-200"
+        >
+          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" aria-hidden="true" />
+          <span>{toastMessage || sharedDraftNotice}</span>
+        </aside>
+      )}
     </div>
   );
 };

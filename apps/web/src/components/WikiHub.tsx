@@ -23,6 +23,7 @@ interface Props {
   onInspectHero: (hero: Hero) => void;
   onlyGlobalReleased: boolean;
   initialSubTab?: WikiSubTab;
+  onSubTabChange?: (subTab: WikiSubTab) => void;
   initialTargetHeroId?: number;
 }
 
@@ -33,9 +34,21 @@ export const WikiHub: React.FC<Props> = ({
   onInspectHero,
   onlyGlobalReleased,
   initialSubTab = 'hero',
+  onSubTabChange,
   initialTargetHeroId,
 }) => {
   const [subTab, setSubTab] = useState<WikiSubTab>(initialSubTab);
+
+  React.useEffect(() => {
+    if (initialSubTab && initialSubTab !== subTab) {
+      setSubTab(initialSubTab);
+    }
+  }, [initialSubTab]);
+
+  const changeSubTab = (newTab: WikiSubTab) => {
+    setSubTab(newTab);
+    onSubTabChange?.(newTab);
+  };
 
   // --- HERO & COUNTER SUBTAB STATE ---
   const [heroViewMode, setHeroViewMode] = useState<'catalog' | 'counter'>(initialTargetHeroId ? 'counter' : 'catalog');
@@ -163,7 +176,7 @@ export const WikiHub: React.FC<Props> = ({
           <div className="flex items-center gap-1.5 p-1 bg-[#10141E] rounded-xl border border-[#232A38] w-max">
             <button
               type="button"
-              onClick={() => setSubTab('hero')}
+              onClick={() => changeSubTab('hero')}
               className={`shrink-0 whitespace-nowrap flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
                 subTab === 'hero'
                   ? 'bg-[#B8FF01] text-slate-950 shadow-sm'
@@ -178,7 +191,7 @@ export const WikiHub: React.FC<Props> = ({
             </button>
             <button
               type="button"
-              onClick={() => setSubTab('item')}
+              onClick={() => changeSubTab('item')}
               className={`shrink-0 whitespace-nowrap flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
                 subTab === 'item'
                   ? 'bg-[#B8FF01] text-slate-950 shadow-sm'
@@ -193,7 +206,7 @@ export const WikiHub: React.FC<Props> = ({
             </button>
             <button
               type="button"
-              onClick={() => setSubTab('arcana')}
+              onClick={() => changeSubTab('arcana')}
               className={`shrink-0 whitespace-nowrap flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
                 subTab === 'arcana'
                   ? 'bg-[#B8FF01] text-slate-950 shadow-sm'
@@ -206,7 +219,7 @@ export const WikiHub: React.FC<Props> = ({
             </button>
             <button
               type="button"
-              onClick={() => setSubTab('spell')}
+              onClick={() => changeSubTab('spell')}
               className={`shrink-0 whitespace-nowrap flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
                 subTab === 'spell'
                   ? 'bg-[#B8FF01] text-slate-950 shadow-sm'

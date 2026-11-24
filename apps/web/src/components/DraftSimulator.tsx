@@ -1,7 +1,7 @@
 import { LaneLabel } from './ui/LaneIcon';
 import { DropdownSelect } from './ui/DropdownSelect';
 import React from 'react';
-import { ArrowDown, Check, CheckCircle2, ChevronDown, History, Layers, LockKeyhole, RotateCcw, ShieldBan, ShieldCheck, Swords, Undo2, UserRound } from 'lucide-react';
+import { ArrowDown, Check, CheckCircle2, ChevronDown, History, Layers, LockKeyhole, RotateCcw, Share2, ShieldBan, ShieldCheck, Swords, Undo2, UserRound } from 'lucide-react';
 import type { DraftFormat, Hero, Lane } from '../types';
 import { getDraftPhases, getDoublePickWindow } from '../engine/draftRules';
 import type { Side } from '../engine/draftRules';
@@ -32,6 +32,7 @@ interface DraftSimulatorProps {
   onRequestHero?: () => void;
   seriesFormat?: 'BO3' | 'BO5' | 'BO7';
   onSeriesFormatChange?: (sf: 'BO3' | 'BO5' | 'BO7') => void;
+  onShareSeries?: () => void;
   blueTeamName?: string;
   redTeamName?: string;
   onSwapSides?: () => void;
@@ -70,6 +71,7 @@ export function DraftSimulator({
   onRequestHero,
   seriesFormat = 'BO5',
   onSeriesFormatChange,
+  onShareSeries,
   blueTeamName = 'Tim A',
   redTeamName = 'Tim B',
   onSwapSides,
@@ -199,6 +201,17 @@ export function DraftSimulator({
                 options={gameOptions}
               />
             )}
+            {format !== 'ranked' && onShareSeries && (
+              <button
+                type="button"
+                className="ui-icon-button"
+                aria-label="Bagikan simulasi turnamen"
+                title="Salin link seri turnamen ini ke clipboard"
+                onClick={onShareSeries}
+              >
+                <Share2 aria-hidden="true" />
+              </button>
+            )}
             <button
               type="button"
               className="ui-icon-button"
@@ -298,6 +311,17 @@ export function DraftSimulator({
               <span className="muted-copy winner-selection-bar__note">
                 (Pemenang tercatat: {currentGameWinner === 'blue' ? blueTeamName : redTeamName})
               </span>
+            )}
+            {onShareSeries && (
+              <button
+                type="button"
+                className="ui-button ui-button--small ui-button--quiet"
+                onClick={onShareSeries}
+                title="Salin tautan seluruh seri turnamen ini"
+              >
+                <Share2 aria-hidden="true" />
+                <span>Bagikan Seri</span>
+              </button>
             )}
           </div>
         )}
