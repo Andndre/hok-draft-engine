@@ -36,6 +36,7 @@ import {
   evaluateDaQiaoFrontlineSynergy,
   evaluateZeroDisengageExploitation,
   evaluateDiveCoreTriadEnabler,
+  evaluateMidJungleRoamTriad,
   isHeavyDiver,
   isLowEscapeHero,
 } from './scaleDimensionTactics';
@@ -2298,11 +2299,12 @@ export function runTournamentInference(
       const counteredEnemyNames: string[] = [];
       for (const eh of enemyHeroes) {
         if (cand.counters.some((c) => c.target_id === eh.hero_id)) {
-          score += 0.55;
           counteredEnemyNames.push(eh.name);
         }
       }
       if (counteredEnemyNames.length > 0) {
+        const countBonus = counteredEnemyNames.length === 1 ? 0.30 : 0.45;
+        score += countBonus;
         proComboTag = `⚔️ Respon Counter Pick: Menangkal ${counteredEnemyNames.join(', ')}`;
       }
 
@@ -2353,6 +2355,49 @@ export function runTournamentInference(
           if (!proComboTag && exposure.counterCount < 2) {
             proComboTag = `✨ Sinergi Duet HOKFIRE: Duet ideal bersama ${teammate.name}`;
           }
+        }
+      }
+
+      // Evaluasi Jebakan Kuncian Mutlak (Suppression Liang/Donghuang + Peeler/Tank Lawan)
+      const suicidalTrap = evaluateSuicidalDiverTrap(cand, enemyHeroes);
+      if (suicidalTrap.isTrapped) {
+        score -= suicidalTrap.penalty;
+        proComboTag = `🚫 ${suicidalTrap.reason}`;
+      }
+
+      // Evaluasi Risiko Diver Fragile di Fase Awal / Defisit Frontline
+      const fragileRisk = evaluateFragileDiverRisk(cand, ourHeroes, enemyHeroes, true);
+      if (fragileRisk.isRisky) {
+        score -= fragileRisk.penalty;
+        if (!proComboTag) {
+          proComboTag = fragileRisk.reason;
+        }
+      }
+
+      // Evaluasi Sinergi Trio Mid (中野辅 - Zhong-Ye-Fu Triad: Bunker Roam + Artillery Mid)
+      const midTriad = evaluateMidJungleRoamTriad(cand, ourHeroes, enemyHeroes);
+      if (midTriad.isApplicable && midTriad.scoreAdjustment !== 0) {
+        score += midTriad.scoreAdjustment;
+        if (midTriad.tacticalTag && !proComboTag) {
+          proComboTag = midTriad.tacticalTag;
+        }
+      }
+
+      // Evaluasi Sinergi Triad Dive Core
+      const triadEnabler = evaluateDiveCoreTriadEnabler(cand, ourHeroes, enemyHeroes);
+      if (triadEnabler.isApplicable && triadEnabler.scoreAdjustment !== 0) {
+        score += triadEnabler.scoreAdjustment;
+        if (triadEnabler.tacticalTag && !proComboTag) {
+          proComboTag = triadEnabler.tacticalTag;
+        }
+      }
+
+      // Evaluasi Eksploitasi Backline Lawan Tanpa Disengage
+      const diveExploit = evaluateZeroDisengageExploitation(cand, ourHeroes, enemyHeroes);
+      if (diveExploit.isApplicable && diveExploit.scoreAdjustment > 0) {
+        score += diveExploit.scoreAdjustment;
+        if (diveExploit.tacticalTag && !proComboTag) {
+          proComboTag = diveExploit.tacticalTag;
         }
       }
     }
@@ -2514,12 +2559,15 @@ export function runTournamentInference(
           if (suicidalTrap.isTrapped && (eh.primary_role === 'Marksman' || eh.primary_role === 'Mage')) {
             continue;
           }
-          score += counterWeight;
           counteredEnemies.push(eh.name);
         }
       }
 
       if (counteredEnemies.length > 0 && !suicidalTrap.isTrapped) {
+        // Redam bias naif: plafon per hero dan diminishing return
+        const perHero = isLastPickR5 ? 0.35 : 0.25;
+        const totalBonus = Math.min(isLastPickR5 ? 0.60 : 0.45, counteredEnemies.length * perHero);
+        score += totalBonus;
         proComboTag = isLastPickR5
           ? `🔥 Last-Pick Counter (R5): Menangkal ${counteredEnemies.join(', ')}`
           : `⚔️ Counter Pick Fase 2: Menangkal ${counteredEnemies.join(', ')}`;
@@ -2531,6 +2579,15 @@ export function runTournamentInference(
         score += daQiaoSynergy.scoreAdjustment;
         if (daQiaoSynergy.tacticalTag) {
           proComboTag = daQiaoSynergy.tacticalTag;
+        }
+      }
+
+      // Evaluasi Sinergi Trio Mid (中野辅 - Zhong-Ye-Fu Triad: Bunker Roam + Artillery Mid)
+      const midTriad = evaluateMidJungleRoamTriad(cand, ourHeroes, enemyHeroes);
+      if (midTriad.isApplicable && midTriad.scoreAdjustment !== 0) {
+        score += midTriad.scoreAdjustment;
+        if (midTriad.tacticalTag && !proComboTag) {
+          proComboTag = midTriad.tacticalTag;
         }
       }
 

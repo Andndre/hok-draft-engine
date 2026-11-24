@@ -37,6 +37,7 @@ import {
 import {
   evaluateZeroDisengageExploitation,
   evaluateDiveCoreTriadEnabler,
+  evaluateMidJungleRoamTriad,
 } from './scaleDimensionTactics';
 import type { TournamentRecommendation } from './tournamentInference';
 
@@ -283,6 +284,10 @@ function pairBonus(heroA: Hero, heroB: Hero, context: SearchContext): number {
 
 /**
  * Menghitung akumulasi bonus counter langsung terhadap formasi musuh.
+ * Meredam bias seleksi editorial (data sparsity):
+ * Alih-alih bonus linear +0.50 tanpa batas yang menggelembungkan hero dengan list counter panjang
+ * (seperti Gao Changgong), bonus dibatasi dengan diminishing return:
+ * Hero pertama di-counter +0.20, hero kedua+ +0.10, cap maksimum +0.30 per hero kita.
  */
 function counterBonus(ourTeam: Hero[], enemyTeam: Hero[]): number {
   return ourTeam.reduce((sum, ourHero) => {
@@ -291,7 +296,9 @@ function counterBonus(ourTeam: Hero[], enemyTeam: Hero[]): number {
         ourHero.counters.some((c) => c.target_id === enemyHero.hero_id) ||
         enemyHero.countered_by.some((c) => c.counter_id === ourHero.hero_id)
     ).length;
-    return sum + countersCount * 0.5;
+    if (countersCount <= 0) return sum;
+    const heroCounterBonus = countersCount === 1 ? 0.20 : 0.30;
+    return sum + heroCounterBonus;
   }, 0);
 }
 
@@ -414,6 +421,12 @@ export function evaluatePosition(
     const triadEnabler = evaluateDiveCoreTriadEnabler(null, ourTeam, enemyTeam);
     if (triadEnabler.isApplicable) {
       totalScore += triadEnabler.scoreAdjustment;
+    }
+
+    //    c. Sinergi Trio Mid (中野辅 - Zhong-Ye-Fu Triad: Bunker Roam + Artillery Mid)
+    const midTriad = evaluateMidJungleRoamTriad(null, ourTeam, enemyTeam);
+    if (midTriad.isApplicable) {
+      totalScore += midTriad.scoreAdjustment;
     }
 
     // Jika tim sudah lengkap 5 hero, kembalikan skor langsung

@@ -993,4 +993,119 @@ export function evaluateDiveCoreTriadEnabler(
   };
 }
 
+export interface MidJungleRoamTriadResult {
+  isApplicable: boolean;
+  scoreAdjustment: number;
+  tacticalTag?: string;
+}
+
+/**
+ * Mendeteksi apakah hero Roam bertindak sebagai Bunker / Zone Control Tank.
+ * Membawa perisai/dinding, peel, disengage, atau heavy AoE knockup/frontline.
+ * Contoh: Dunshan (509), Zhang Fei (171), Lian Po (105), Donghuang (187), Liu Shan (145), Niu Mo (168).
+ */
+export function isBunkerRoam(hero: Hero): boolean {
+  if (hero.primary_lane !== 'Roam' && hero.primary_role !== 'Support' && hero.primary_role !== 'Tank') return false;
+  if ([509, 171, 105, 187, 145, 168].includes(hero.hero_id)) return true;
+  const tags = hero.tactical_profile?.tags;
+  return !!(tags?.frontline && (tags?.peel || tags?.disengage || tags?.ally_shield || tags?.cc_knockback));
+}
+
+/**
+ * Mendeteksi apakah hero Mid bertindak sebagai Artillery Poke / Control Mage Jarak Jauh.
+ * Contoh: Garuda (110), Gan & Mo (182), Lady Zhen (127), Yixing (197), Mozi (108), Nuwa (152), Jiang Ziya (148), Xiao Qiao (106).
+ */
+export function isArtilleryPokeMid(hero: Hero): boolean {
+  if (hero.primary_lane !== 'Mid' && hero.primary_role !== 'Mage') return false;
+  if ([110, 182, 127, 197, 108, 152, 148, 106].includes(hero.hero_id)) return true;
+  const dim = getHeroDimensionVector(hero);
+  const tags = hero.tactical_profile?.tags;
+  if (dim.poke >= 0.50) return true;
+  if ((tags?.cc_slow || tags?.cc_stun) && dim.dive <= 0.35 && !tags?.frontline) return true;
+  return false;
+}
+
+/**
+ * Mendeteksi apakah hero adalah Sustain Bruiser / Frontline Anchor
+ * (bisa mengisi Jungle atau Clash sebagai penahan formasi di perimeter bunker).
+ * Contoh: Fatih/Cao Cao (128), Kaizer (193), Augran (517), Dun (126), Pei (502), Lam (528),
+ * Charlotte (536), Meng Tian (527), Bai Qi (120), Zilong (107), Dian Wei (129), Yang Jian (118).
+ */
+export function isSustainBruiser(hero: Hero): boolean {
+  if (hero.primary_role !== 'Fighter' && hero.primary_role !== 'Tank' && hero.primary_lane !== 'Jungle' && hero.primary_lane !== 'Clash') {
+    return false;
+  }
+  const tags = hero.tactical_profile?.tags;
+  const scale = HERO_SCALE_VECTORS[hero.hero_id];
+  if ([128, 193, 517, 126, 502, 528, 536, 527, 120, 107, 129, 118].includes(hero.hero_id)) return true;
+  if (tags?.frontline) return true;
+  if (scale && (scale.duel >= 0.5 || scale.skirmish >= 0.5) && (tags?.cc_slow || tags?.cc_knockup || tags?.engage)) return true;
+  return false;
+}
+
+/**
+ * Mengevaluasi sinergi trio Midlane - Jungle - Roam (中野辅 - Zhong-Ye-Fu Triad):
+ *
+ * Kasus Bunker-Artillery Core:
+ * Ketika tim memiliki Roamer Bunker (Dunshan, Zhang Fei, Lian Po) dan Midlane Artillery Poke (Garuda, Gan & Mo, Zhen):
+ * - Sustain Bruiser (Fatih/Cao Cao, Kaizer, Augran, Dun, Pei) mendapat BOOST sinergi (+0.35)
+ *   karena mampu bertarung di perimeter bunker, menyerap agresi, dan memberi ruang bagi Mid untuk menembak.
+ * - Fragile Solo Stealth Assassin (Gao Changgong, Nakoruru) mendapat PENALTI disonansi (-0.35)
+ *   karena tidak bisa memanfaatkan shield/wall bunker dan memaksa tim 4v5 saat ia diving sendirian.
+ */
+export function evaluateMidJungleRoamTriad(
+  candidate: Hero | null,
+  ourHeroes: Hero[],
+  _enemyHeroes?: Hero[],
+): MidJungleRoamTriadResult {
+  const hasBunker = ourHeroes.some((h) => isBunkerRoam(h));
+  const hasArtillery = ourHeroes.some((h) => isArtilleryPokeMid(h));
+
+  // Jika formasi Roam Bunker + Mid Artillery belum/tidak terbentuk
+  if (!hasBunker || !hasArtillery) {
+    return { isApplicable: false, scoreAdjustment: 0 };
+  }
+
+  // Jika kandidat dievaluasi
+  if (candidate) {
+    if (isSustainBruiser(candidate)) {
+      return {
+        isApplicable: true,
+        scoreAdjustment: 0.35,
+        tacticalTag: `🛡️ Sinergi Trio Mid (中野辅): Bruiser sustain melengkapi formasi bunker Roam + Mid`,
+      };
+    }
+    if (isFragileSoloAssassin(candidate)) {
+      return {
+        isApplicable: true,
+        scoreAdjustment: -0.35,
+        tacticalTag: `⚠️ Disonansi Trio Mid (中野辅): Solo stealth assassin bertabrakan dengan formasi bunker teamfight`,
+      };
+    }
+    return { isApplicable: false, scoreAdjustment: 0 };
+  }
+
+  // Evaluasi level tim (misal di evaluatePosition draftSearch)
+  const hasBruiser = ourHeroes.some((h) => isSustainBruiser(h));
+  const hasFragileSolo = ourHeroes.some((h) => isFragileSoloAssassin(h));
+
+  if (hasBruiser) {
+    return {
+      isApplicable: true,
+      scoreAdjustment: 0.35,
+      tacticalTag: `🛡️ Sinergi Trio Mid (中野辅): Bruiser sustain melengkapi formasi bunker Roam + Mid`,
+    };
+  }
+  if (hasFragileSolo) {
+    return {
+      isApplicable: true,
+      scoreAdjustment: -0.35,
+      tacticalTag: `⚠️ Disonansi Trio Mid (中野辅): Solo stealth assassin bertabrakan dengan formasi bunker teamfight`,
+    };
+  }
+
+  return { isApplicable: false, scoreAdjustment: 0 };
+}
+
+
 

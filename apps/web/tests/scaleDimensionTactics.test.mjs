@@ -12,6 +12,7 @@ import {
   evaluateZeroDisengageExploitation,
   evaluateDiveCoreTriadEnabler,
   evaluateFragileDiverRisk,
+  evaluateMidJungleRoamTriad,
 } from '../src/engine/scaleDimensionTactics.ts';
 
 // Helper mock hero
@@ -253,3 +254,26 @@ test('fragile diver risk penalizes Gao Changgong on frontline deficit and early 
   const riskKaizer = evaluateFragileDiverRisk(kaizer, ourHeroesNoTank, enemyHeroes, true);
   assert.equal(riskKaizer.isRisky, false);
 });
+
+test('mid jungle roam triad (zhong-ye-fu) boosts sustain bruiser and penalizes solo fragile assassin in bunker formation', () => {
+  // Formasi tim: Roam Dunshan (509) + Mid Garuda (110)
+  const ourHeroes = [
+    makeMockHero(509, 'Dunshan', 'Support', 'Roam', { frontline: true, peel: true, disengage: true, ally_shield: true }),
+    makeMockHero(110, 'Garuda', 'Mage', 'Mid', { cc_slow: true }),
+  ];
+
+  // Fatih / Cao Cao (128) - Sustain Bruiser
+  const fatih = makeMockHero(128, 'Fatih', 'Fighter', 'Clash', { frontline: true, engage: true });
+  const triadFatih = evaluateMidJungleRoamTriad(fatih, ourHeroes);
+  assert.equal(triadFatih.isApplicable, true);
+  assert.ok(triadFatih.scoreAdjustment > 0);
+  assert.ok(triadFatih.tacticalTag?.includes('Sinergi Trio Mid'));
+
+  // Gao Changgong (153) - Fragile Solo Stealth Assassin
+  const gaoChanggong = makeMockHero(153, 'Gao Changgong', 'Assassin', 'Jungle', { mobility: true });
+  const triadGao = evaluateMidJungleRoamTriad(gaoChanggong, ourHeroes);
+  assert.equal(triadGao.isApplicable, true);
+  assert.ok(triadGao.scoreAdjustment < 0);
+  assert.ok(triadGao.tacticalTag?.includes('Disonansi Trio Mid'));
+});
+
