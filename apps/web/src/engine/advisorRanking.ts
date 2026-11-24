@@ -24,9 +24,9 @@
  *   menurunkan kesesuaian dari 63,4% ke 4,9%.
  */
 import type { Hero, DuetPackageOption, DraftFormat } from '../types';
-import type { DraftPosition, DraftAction } from './draftRules';
-import { applyDraftAction, getDraftTurn, getDoublePickWindow, oppositeSide, evaluateTeamCompositionIntegrity } from './draftRules';
-import { evaluatePosition } from './draftSearch';
+import type { DraftPosition, DraftAction, Side } from './draftRules';
+import { applyDraftAction, getDraftTurn, getDoublePickWindow, getDraftSequence, oppositeSide, evaluateTeamCompositionIntegrity } from './draftRules';
+import { evaluatePosition, rankedCandidates } from './draftSearch';
 import type { SearchContext, RootCandidateValue } from './draftSearch';
 import type { TournamentRecommendation } from './tournamentInference';
 
@@ -173,12 +173,67 @@ export function rankRecommendationsByPosition(
 }
 
 /**
+ * Memprediksi hero balasan yang akan diambil musuh setelah tim kita mengunci paket duet.
+ */
+function predictEnemyResponsesForPosition(
+  posAfterDuet: DraftPosition,
+  context: SearchContext,
+  enemySide: Side,
+): Hero[] {
+  const sequence = getDraftSequence(context.format, context.isUltimateBattle, context.rankedBanCount);
+  let targetStep = posAfterDuet.step;
+
+  // Cari langkah pick musuh pertama sesudah posisi ini
+  while (targetStep < sequence.length) {
+    const s = sequence[targetStep];
+    if (s && s.side === enemySide && s.action === 'pick') {
+      break;
+    }
+    targetStep++;
+  }
+
+  if (targetStep >= sequence.length) return [];
+
+  const enemyContext: SearchContext = {
+    ...context,
+    aiSide: enemySide,
+  };
+  const projectedPos: DraftPosition = { ...posAfterDuet, step: targetStep };
+
+  // Ambil kandidat respon terbaik musuh di langkah tersebut
+  const candidates = rankedCandidates(projectedPos, enemyContext);
+  if (candidates.length === 0) return [];
+
+  const resp1 = candidates[0].hero;
+
+  // Cek apakah langkah berikutnya sesudah pick musuh ini juga giliran musuh (double-pick musuh)
+  const nextStep = targetStep + 1;
+  const isEnemyDoublePick = sequence[nextStep]?.side === enemySide && sequence[nextStep]?.action === 'pick';
+
+  if (isEnemyDoublePick) {
+    const posAfterResp1 = applyDraftAction(
+      projectedPos,
+      { side: enemySide, action: 'pick', heroId: resp1.hero_id },
+      context,
+      context.format,
+      context.isUltimateBattle,
+      context.rankedBanCount,
+    );
+    const secondCandidates = rankedCandidates(posAfterResp1, enemyContext);
+    const resp2 = secondCandidates[0]?.hero;
+    return [resp1, resp2].filter((h): h is Hero => Boolean(h) && h.hero_id !== resp1.hero_id);
+  }
+
+  return [resp1];
+}
+
+/**
  * Memperkaya dan mengurutkan paket duet menggunakan hasil pencarian Minimax (Game Theory)
  * ketika tim berada di langkah pertama jendela giliran ganda (R1+R2, B2+B3, B4+B5).
  *
  * 1. Jika Minimax memiliki Principal Variation dengan 2 aksi berurutan untuk sisi yang sama (PV[0] + PV[1]),
  *    pasangan tersebut diangkat sebagai "Paket Duet Utama Minimax" lengkap dengan prediksi respon musuh (PV[2]+PV[3]).
- * 2. Seluruh paket duet KPL lainnya dievaluasi nilai posisinya dengan `evaluatePosition` 2-ply.
+ * 2. Seluruh paket duet KPL lainnya dievaluasi nilai posisinya dengan `evaluatePosition` 2-ply dan diprediksi respon musuhnya.
  * 3. Paket diurutkan: Paket Minimax di urutan #1, diikuti paket berskor posisi tertinggi.
  */
 export function enrichDuetPackagesWithMinimax(
@@ -288,9 +343,13 @@ export function enrichDuetPackagesWithMinimax(
     const posB = applyDraftAction(posA, actB, context, format, isUltimateBattle, rankedBanCount);
     const evalScore = evaluatePosition(posB, context, turn.side);
 
+    // Prediksi respon lawan terhadap paket duet alternatif ini
+    const predictedResponses = predictEnemyResponsesForPosition(posB, context, enemySide);
+
     enriched.push({
       ...pkg,
       solverScore: evalScore,
+      predictedResponses,
     });
   }
 

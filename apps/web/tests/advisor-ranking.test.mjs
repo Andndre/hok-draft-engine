@@ -173,9 +173,11 @@ test('enrichDuetPackagesWithMinimax integrates Principal Variation and position 
   assert.ok(topDuet.predictedResponses.length >= 1, 'harus memiliki prediksi respon lawan');
   assert.equal(topDuet.predictedResponses[0].hero_id, heroByName('Kaizer').hero_id);
 
-  // Paket heuristik Augran + Dunshan juga harus mendapatkan solverScore
+  // Paket heuristik Augran + Dunshan juga harus mendapatkan solverScore dan predictedResponses
   const secondDuet = enriched.find((d) => d.primaryHero.name === 'Augran');
   if (secondDuet) {
     assert.ok(secondDuet.solverScore != null, 'paket kedua harus dievaluasi solverScore');
+    assert.ok(Array.isArray(secondDuet.predictedResponses), 'paket kedua harus memiliki array predictedResponses');
+    assert.ok(secondDuet.predictedResponses.length >= 1, 'paket kedua harus memiliki prediksi respon lawan');
   }
 });
