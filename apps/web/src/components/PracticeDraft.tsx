@@ -13,7 +13,7 @@ import type { SolverStatus } from '../engine/advisorRanking';
 import { evaluateTacticalScores, runTournamentInference } from '../engine/tournamentInference';
 import { assignmentToHeroLaneMap, buildDefaultLaneAssignments, swapAssignedLanes } from '../engine/gamePlan';
 import { loadTournamentDataset } from '../engine/heroDataLoader';
-import { AlertTriangle, ArrowRight, BookOpen, ChartColumn, CheckCircle2, ChevronDown, FilterX, Gamepad2, History, Info, Layers, Lightbulb, LoaderCircle, Play, RefreshCw, RotateCcw, SearchX, Settings2, Shield, ShieldCheck, SlidersHorizontal, Swords, Undo2 } from 'lucide-react';
+import { AlertTriangle, ArrowRight, BookOpen, ChartColumn, CheckCircle2, ChevronDown, FilterX, Gamepad2, History, Info, Layers, Lightbulb, LoaderCircle, Play, RefreshCw, RotateCcw, SearchX, Settings2, Share2, Shield, ShieldCheck, SlidersHorizontal, Swords, Undo2 } from 'lucide-react';
 import { HeroRosterToolbar } from './HeroRosterToolbar';
 import { TacticalRadarPanel } from './TacticalRadarPanel';
 import { HeroThumbnail } from './ui/AssetThumbnail';
@@ -42,6 +42,8 @@ interface Props {
   favorites: Set<number>;
   onToggleFavorite: (id: number) => void;
   onlyGlobalReleased?: boolean;
+  initialSharedSession?: PracticeSession | null;
+  onShareSession?: (session: PracticeSession) => void;
 }
 const button = 'ui-button ui-button--quiet';
 const axes = [
@@ -51,13 +53,25 @@ const axes = [
 ] as const;
 
 export function PracticeDraft(props: Props) {
-  const { active, assistance, onAssistanceChange } = props;
+  const { active, assistance, onAssistanceChange, initialSharedSession, onShareSession } = props;
   const [snapshot, setSnapshot] = useState(props.dataset);
   const [setupSide, setSetupSide] = useState<Side>('blue');
   const [setupFormat, setSetupFormat] = useState<DraftFormat>('tournament');
   const [setupFearless, setSetupFearless] = useState(true);
   const [setupBanCount, setSetupBanCount] = useState<3 | 4 | 5>(3);
-  const [session, setSession] = useState<PracticeSession | null>(null);
+  const [session, setSession] = useState<PracticeSession | null>(initialSharedSession ?? null);
+
+  useEffect(() => {
+    if (initialSharedSession) {
+      setSession(initialSharedSession);
+      setSetupSide(initialSharedSession.config.playerSide);
+      setSetupFormat(initialSharedSession.config.format ?? 'tournament');
+      setSetupFearless(initialSharedSession.config.fearless);
+      if (initialSharedSession.config.rankedBanCount) {
+        setSetupBanCount(initialSharedSession.config.rankedBanCount);
+      }
+    }
+  }, [initialSharedSession]);
   const [starting, setStarting] = useState(false);
   const [thinking, setThinking] = useState(false);
   const [notice, setNotice] = useState('');
@@ -352,6 +366,17 @@ export function PracticeDraft(props: Props) {
         <button type="button" className={button} onClick={() => send({ type: 'undo' })} disabled={!canUndo}><Undo2 aria-hidden="true" />Urungkan</button>
         <button type="button" className={button} onClick={() => send({ type: 'reset' })} disabled={!latest}><RotateCcw aria-hidden="true" />Reset game</button>
         <button type="button" className={button} onClick={() => { client.cancel(); setSession(null); setLaneOverridesByKey({}); setNotice(''); setError(''); }}><Settings2 aria-hidden="true" />Sesi baru</button>
+        {onShareSession && (
+          <button
+            type="button"
+            className={button}
+            onClick={() => onShareSession(session)}
+            title="Salin tautan sesi latihan ini ke clipboard"
+          >
+            <Share2 aria-hidden="true" />
+            Bagikan
+          </button>
+        )}
         {!turn.isComplete && latest && (
           <button type="button" className={button} onClick={() => setPlanOpen(true)}>
             {playerSide === 'blue' ? (
@@ -391,7 +416,20 @@ export function PracticeDraft(props: Props) {
     {turn.isComplete && <section aria-label="Evaluasi draft heuristik" className="practice-review surface-panel"><div className="section-heading"><span className="section-heading__icon"><ChartColumn aria-hidden="true" /></span><div><h2>Evaluasi draft heuristik</h2><p>Komposisi dan alternatif taktis, tanpa menetapkan pemenang pertandingan.</p></div></div>
       <div className="practice-review__teams">{[{ title: 'Tim Anda', radar: playerRadar }, { title: 'Tim AI', radar: enemyRadar }].map(({ title, radar }) => <div key={title}><h3>{title}</h3><dl>{axes.map(([key, label]) => <div key={key}><dt>{label}</dt><dd>{Math.round(radar[key] * 100)}/100{radar[key] < 0.48 && <span>Perlu perhatian</span>}</dd></div>)}</dl></div>)}</div>
       <details className="panel-disclosure"><summary><History aria-hidden="true" /><span>Tinjau {game.traces.length} keputusan Anda</span><ChevronDown aria-hidden="true" /></summary><ol className="decision-review">{game.traces.map(renderTrace)}</ol></details>
-      {latest && session.games.length < 5 && <button type="button" className="ui-button ui-button--primary" onClick={() => send({ type: 'next' })}><Layers aria-hidden="true" />Lanjut game {session.games.length + 1}<ArrowRight aria-hidden="true" /></button>}
+      <div className="practice-review__footer flex items-center gap-2 mt-4">
+        {latest && session.games.length < 5 && <button type="button" className="ui-button ui-button--primary" onClick={() => send({ type: 'next' })}><Layers aria-hidden="true" />Lanjut game {session.games.length + 1}<ArrowRight aria-hidden="true" /></button>}
+        {onShareSession && (
+          <button
+            type="button"
+            className="ui-button ui-button--quiet flex items-center gap-1.5"
+            onClick={() => onShareSession(session)}
+            title="Salin tautan hasil sesi latihan ini"
+          >
+            <Share2 className="w-3.5 h-3.5" aria-hidden="true" />
+            <span>Bagikan Hasil Latihan</span>
+          </button>
+        )}
+      </div>
     </section>}
     <div className={assistance && !turn.isComplete && latest ? 'draft-workspace' : ''}>
       <section className="hero-roster" aria-label={onlyGlobal ? 'Roster latihan Global' : 'Roster latihan Global & CN'}><HeroRosterToolbar title={onlyGlobal ? 'Roster Global' : 'Roster Global + CN'} count={filtered.length} searchQuery={props.searchQuery} onSearchChange={props.onSearchChange} onConfirmSearch={confirmSearch} selectedLane={props.selectedLane} onLaneChange={props.onLaneChange} sortMode={props.sortMode} onSortChange={props.onSortChange} viewMode={props.viewMode} onViewChange={props.onViewChange} hideAiSort={!assistance} active={active} />

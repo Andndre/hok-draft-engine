@@ -136,6 +136,9 @@ export function buildRouteHash(state: Partial<RouteState>): string {
 
   // ActiveTab === 'draft' (or default)
   if (state.draftMode === 'practice') {
+    if (state.shareData) {
+      return `#/draft/practice?share=${encodeURIComponent(state.shareData)}`;
+    }
     return '#/draft/practice';
   }
   if (state.draftMode === 'vision') {

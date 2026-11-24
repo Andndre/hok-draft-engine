@@ -14,6 +14,7 @@ export interface UseAppRouterReturn {
   closeHeroModal: () => void;
   clearShareData: () => void;
   getShareDraftUrl: (shareCode: string) => string;
+  getSharePracticeUrl: (shareCode: string) => string;
   getHeroShareUrl: (heroIdOrSlug: string | number) => string;
 }
 
@@ -111,6 +112,11 @@ export function useAppRouter(): UseAppRouterReturn {
     return formatShareUrl(hash);
   }, []);
 
+  const getSharePracticeUrl = useCallback((shareCode: string): string => {
+    const hash = buildRouteHash({ activeTab: 'draft', draftMode: 'practice', shareData: shareCode });
+    return formatShareUrl(hash);
+  }, []);
+
   const getHeroShareUrl = useCallback((heroIdOrSlug: string | number): string => {
     const hash = buildRouteHash({ heroIdOrSlug: String(heroIdOrSlug) });
     return formatShareUrl(hash);
@@ -123,6 +129,7 @@ export function useAppRouter(): UseAppRouterReturn {
     closeHeroModal,
     clearShareData,
     getShareDraftUrl,
+    getSharePracticeUrl,
     getHeroShareUrl,
   };
 }

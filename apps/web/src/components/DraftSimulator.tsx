@@ -201,12 +201,12 @@ export function DraftSimulator({
                 options={gameOptions}
               />
             )}
-            {format !== 'ranked' && onShareSeries && (
+            {onShareSeries && (
               <button
                 type="button"
                 className="ui-icon-button"
-                aria-label="Bagikan simulasi turnamen"
-                title="Salin link seri turnamen ini ke clipboard"
+                aria-label={format === 'ranked' ? 'Bagikan draft ranked' : 'Bagikan simulasi turnamen'}
+                title={format === 'ranked' ? 'Salin tautan draft ranked ini ke clipboard' : 'Salin tautan seri turnamen ini ke clipboard'}
                 onClick={onShareSeries}
               >
                 <Share2 aria-hidden="true" />
@@ -312,17 +312,19 @@ export function DraftSimulator({
                 (Pemenang tercatat: {currentGameWinner === 'blue' ? blueTeamName : redTeamName})
               </span>
             )}
-            {onShareSeries && (
-              <button
-                type="button"
-                className="ui-button ui-button--small ui-button--quiet"
-                onClick={onShareSeries}
-                title="Salin tautan seluruh seri turnamen ini"
-              >
-                <Share2 aria-hidden="true" />
-                <span>Bagikan Seri</span>
-              </button>
-            )}
+          </div>
+        )}
+        {onShareSeries && (
+          <div className="board-complete-share mt-2">
+            <button
+              type="button"
+              className="ui-button ui-button--small ui-button--quiet flex items-center gap-1.5"
+              onClick={onShareSeries}
+              title={format === 'ranked' ? 'Salin tautan hasil draft ranked ini' : 'Salin tautan seluruh seri turnamen ini'}
+            >
+              <Share2 className="w-3.5 h-3.5" aria-hidden="true" />
+              <span>{format === 'ranked' ? 'Bagikan Draft Ranked' : 'Bagikan Seri'}</span>
+            </button>
           </div>
         )}
       </div>

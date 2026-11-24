@@ -4,6 +4,9 @@ import { readFileSync } from 'node:fs';
 import {
   encodeTournamentSeries,
   decodeTournamentSeries,
+  encodeRankedDraft,
+  encodePracticeSession,
+  decodeAnyDraftShare,
   encodeBase64Url,
   decodeBase64Url,
 } from '../src/engine/draftShareCodec.ts';
@@ -220,6 +223,111 @@ test('full BO7 series with 7 games roundtrips faithfully under 1000 chars', () =
   assert.equal(decoded.gameNumber, 7);
   assert.equal(decoded.gamesData[7].isUltimateBattle, true);
   assert.equal(decoded.gamesData[7].bluePicks[0]?.hero_id, 106);
+});
+
+test('ranked draft encodes and decodes accurately for 3, 4, and 5 ban counts', () => {
+  const heroMap = new Map(heroes.map((h) => [h.hero_id, h]));
+  const p1 = heroMap.get(106) || null;
+  const p2 = heroMap.get(519) || null;
+  const p3 = heroMap.get(556) || null;
+  const p4 = heroMap.get(112) || null;
+  const p5 = heroMap.get(193) || null;
+
+  const b1 = heroMap.get(142) || null;
+  const b2 = heroMap.get(109) || null;
+  const b3 = heroMap.get(169) || null;
+  const b4 = heroMap.get(504) || null;
+  const b5 = heroMap.get(199) || null;
+
+  for (const banCount of [3, 4, 5]) {
+    const game = {
+      blueTeam: 'A',
+      winner: 'blue',
+      bluePicks: [p1, p2, p3, p4, p5],
+      redPicks: [p5, p4, p3, p2, p1],
+      blueBans: [b1, b2, b3, b4, b5].slice(0, banCount),
+      redBans: [b5, b4, b3, b2, b1].slice(0, banCount),
+      draftStep: 10 + banCount * 2,
+      isUltimateBattle: false,
+      bluePlanAId: 106,
+      bluePlanBId: null,
+      redPlanAId: 142,
+      redPlanBId: null,
+    };
+
+    const encoded = encodeRankedDraft({ rankedBanCount: banCount, game });
+    assert.ok(encoded.length < 300, `Ranked draft string should be <300 chars, got ${encoded.length}`);
+
+    const decoded = decodeAnyDraftShare(encoded, heroes);
+    assert.ok(decoded);
+    assert.equal(decoded.kind, 'ranked');
+    if (decoded.kind === 'ranked') {
+      assert.equal(decoded.rankedBanCount, banCount);
+      assert.equal(decoded.game.winner, 'blue');
+      assert.equal(decoded.game.blueBans.length, banCount);
+      assert.equal(decoded.game.redBans.length, banCount);
+      assert.equal(decoded.game.bluePicks[0]?.hero_id, 106);
+      assert.equal(decoded.game.bluePlanAId, 106);
+      assert.equal(decoded.game.redPlanAId, 142);
+    }
+  }
+});
+
+test('practice draft vs AI encodes and decodes session with multi-game history and settings', () => {
+  const session = {
+    sessionId: 'session-test-123',
+    revision: 1,
+    config: {
+      playerSide: 'red',
+      fearless: true,
+      format: 'tournament',
+      onlyGlobal: true,
+      rankedBanCount: 3,
+    },
+    gameIndex: 1,
+    games: [
+      {
+        position: {
+          step: 20,
+          picks: { blue: [106, 519, 556, 112, 193], red: [142, 109, 169, 504, 199] },
+          bans: { blue: [525, 508, 131, 155], red: [511, 115, 128, 140] },
+        },
+        actions: [],
+        traces: [],
+        playerPlan: { a: 142, b: 109 },
+        aiPlan: { a: 106, b: 519 },
+      },
+      {
+        position: {
+          step: 6,
+          picks: { blue: [106], red: [142] },
+          bans: { blue: [525, 508], red: [511, 115] },
+        },
+        actions: [],
+        traces: [],
+        playerPlan: { a: 142, b: null },
+        aiPlan: { a: 106, b: null },
+      },
+    ],
+  };
+
+  const encoded = encodePracticeSession(session, true);
+  assert.ok(encoded.length < 500, `Practice session string should be <500 chars, got ${encoded.length}`);
+
+  const decoded = decodeAnyDraftShare(encoded, heroes);
+  assert.ok(decoded);
+  assert.equal(decoded.kind, 'practice');
+  if (decoded.kind === 'practice') {
+    assert.equal(decoded.playerSide, 'red');
+    assert.equal(decoded.format, 'tournament');
+    assert.equal(decoded.fearless, true);
+    assert.equal(decoded.assistance, true);
+    assert.equal(decoded.session.gameIndex, 1);
+    assert.equal(decoded.session.games.length, 2);
+    assert.deepEqual(decoded.session.games[0].position.picks.blue, [106, 519, 556, 112, 193]);
+    assert.equal(decoded.session.games[0].playerPlan.a, 142);
+    assert.deepEqual(decoded.session.games[1].position.picks.red, [142]);
+  }
 });
 
 test('corrupted or invalid share string returns null safely without throwing', () => {

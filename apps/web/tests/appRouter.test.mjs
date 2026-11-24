@@ -95,6 +95,7 @@ test('buildRouteHash generates expected canonical hashes', () => {
   assert.equal(buildRouteHash({ activeTab: 'favorites' }), '#/favorites');
   assert.equal(buildRouteHash({ heroIdOrSlug: 'liang' }), '#/hero/liang');
   assert.equal(buildRouteHash({ shareData: 'mockData' }), '#/draft?share=mockData');
+  assert.equal(buildRouteHash({ activeTab: 'draft', draftMode: 'practice', shareData: 'mockPractice' }), '#/draft/practice?share=mockPractice');
 });
 
 test('formatShareUrl cleanly joins origin and hash', () => {

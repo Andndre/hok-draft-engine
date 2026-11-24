@@ -11,7 +11,8 @@ import { computeTacticalDeltas } from './engine/deltaExplainer';
 import { assignmentToHeroLaneMap, buildDefaultLaneAssignments, swapAssignedLanes } from './engine/gamePlan';
 import { AlertTriangle, BookOpen, CheckCircle2, FilterX, Gamepad2, RefreshCw, Scan, SearchX, Share2, SlidersHorizontal, Star } from 'lucide-react';
 import { useAppRouter } from './navigation/useAppRouter';
-import { encodeTournamentSeries, decodeTournamentSeries } from './engine/draftShareCodec';
+import { encodeTournamentSeries, encodeRankedDraft, encodePracticeSession, decodeAnyDraftShare } from './engine/draftShareCodec';
+import type { PracticeSession } from './engine/practiceState';
 import { HeroRosterToolbar } from './components/HeroRosterToolbar';
 import { focusHeroSearch } from './components/ui/presentation';
 import { searchHeroes, firstSelectableHero } from './heroSearch';
@@ -51,6 +52,7 @@ export const App: React.FC = () => {
     openHeroModal,
     closeHeroModal,
     getShareDraftUrl,
+    getSharePracticeUrl,
   } = useAppRouter();
 
   const activeTab = route.activeTab;
@@ -123,6 +125,8 @@ export const App: React.FC = () => {
     setWikiHero(null);
     closeHeroModal();
   }, [closeHeroModal]);
+
+  const [sharedPracticeSession, setSharedPracticeSession] = useState<PracticeSession | null>(null);
 
   // Fearless Draft (Global BP) State & Multi-Game Match Storage
   const [fearlessEnabled, setFearlessEnabled] = useState(true);
@@ -202,44 +206,81 @@ export const App: React.FC = () => {
     }
   }, [route.heroIdOrSlug, heroes]);
 
-  // Synchronize route.shareData to restore full tournament state
+  // Synchronize route.shareData to restore tournament, ranked, or practice draft state
   useEffect(() => {
     if (!route.shareData || !dataset || heroes.length === 0) return;
     if (hasHydratedShareRef.current === route.shareData) return;
 
-    const decoded = decodeTournamentSeries(route.shareData, heroes);
+    const decoded = decodeAnyDraftShare(route.shareData, heroes);
     if (decoded) {
-      setSeriesFormat(decoded.seriesFormat);
-      setFearlessEnabled(decoded.fearlessEnabled);
-      setGameNumber(decoded.gameNumber);
-      setTeamAName(decoded.teamAName);
-      setTeamBName(decoded.teamBName);
-      setGamesData(decoded.gamesData);
-      setDraftFormat('tournament');
-      navigate({ activeTab: 'draft', draftMode: 'simulator' }, { replace: true });
-      setSharedDraftNotice(`Simulasi turnamen ${decoded.teamAName} vs ${decoded.teamBName} (${decoded.seriesFormat}) berhasil dimuat!`);
+      if (decoded.kind === 'tournament') {
+        setSeriesFormat(decoded.seriesFormat);
+        setFearlessEnabled(decoded.fearlessEnabled);
+        setGameNumber(decoded.gameNumber);
+        setTeamAName(decoded.teamAName);
+        setTeamBName(decoded.teamBName);
+        setGamesData(decoded.gamesData);
+        setDraftFormat('tournament');
+        navigate({ activeTab: 'draft', draftMode: 'simulator' }, { replace: true });
+        setSharedDraftNotice(`Simulasi turnamen ${decoded.teamAName} vs ${decoded.teamBName} (${decoded.seriesFormat}) berhasil dimuat!`);
+      } else if (decoded.kind === 'ranked') {
+        setDraftFormat('ranked');
+        setRankedBanCount(decoded.rankedBanCount);
+        setGameNumber(1);
+        setGamesData((prev) => ({
+          ...prev,
+          1: decoded.game,
+        }));
+        navigate({ activeTab: 'draft', draftMode: 'simulator' }, { replace: true });
+        setSharedDraftNotice(`Draft Ranked (${decoded.rankedBanCount} Ban) berhasil dimuat!`);
+      } else if (decoded.kind === 'practice') {
+        setSharedPracticeSession(decoded.session);
+        setPracticeAssistance(decoded.assistance);
+        navigate({ activeTab: 'draft', draftMode: 'practice' }, { replace: true });
+        setSharedDraftNotice(`Sesi Latihan vs AI (${decoded.playerSide.toUpperCase()}, ${decoded.format === 'ranked' ? 'Ranked' : 'Tournament'}) berhasil dimuat!`);
+      }
       hasHydratedShareRef.current = route.shareData;
       setTimeout(() => setSharedDraftNotice(null), 4000);
     }
   }, [route.shareData, dataset, heroes, navigate]);
 
-  const handleShareTournamentSeries = useCallback(() => {
-    const shareCode = encodeTournamentSeries({
-      seriesFormat,
-      fearlessEnabled,
-      gameNumber,
-      teamAName,
-      teamBName,
-      gamesData,
-    });
+  const handleShareSimulatorDraft = useCallback(() => {
+    let shareCode: string;
+    if (draftFormat === 'ranked') {
+      shareCode = encodeRankedDraft({
+        rankedBanCount,
+        game: currentGame,
+      });
+    } else {
+      shareCode = encodeTournamentSeries({
+        seriesFormat,
+        fearlessEnabled,
+        gameNumber,
+        teamAName,
+        teamBName,
+        gamesData,
+      });
+    }
     const fullUrl = getShareDraftUrl(shareCode);
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
       navigator.clipboard.writeText(fullUrl).then(() => {
-        setToastMessage('Tautan simulasi turnamen berhasil disalin ke clipboard!');
+        const label = draftFormat === 'ranked' ? 'Tautan draft ranked' : 'Tautan simulasi turnamen';
+        setToastMessage(`${label} berhasil disalin ke clipboard!`);
         setTimeout(() => setToastMessage(null), 3500);
       });
     }
-  }, [seriesFormat, fearlessEnabled, gameNumber, teamAName, teamBName, gamesData, getShareDraftUrl]);
+  }, [draftFormat, rankedBanCount, currentGame, seriesFormat, fearlessEnabled, gameNumber, teamAName, teamBName, gamesData, getShareDraftUrl]);
+
+  const handleSharePracticeSession = useCallback((practiceSession: PracticeSession) => {
+    const shareCode = encodePracticeSession(practiceSession, practiceAssistance);
+    const fullUrl = getSharePracticeUrl(shareCode);
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(fullUrl).then(() => {
+        setToastMessage('Tautan sesi latihan vs AI berhasil disalin ke clipboard!');
+        setTimeout(() => setToastMessage(null), 3500);
+      });
+    }
+  }, [practiceAssistance, getSharePracticeUrl]);
 
   // Save favorites to localStorage
   const handleToggleFavorite = (id: number) => {
@@ -1096,7 +1137,7 @@ export const App: React.FC = () => {
         {loadError && <section role="alert" className="empty-state"><AlertTriangle aria-hidden="true" /><h2>Data hero belum dapat dimuat</h2><p>{loadError}</p><button type="button" className="ui-button ui-button--primary" onClick={() => void loadData()}><RefreshCw aria-hidden="true" />Coba lagi</button></section>}
         {dataset && (practiceActive || hasVisitedPractice) && (
           <Suspense fallback={<div className="surface-panel p-6 text-sm text-slate-400" role="status">Memuat ruang latihan…</div>}>
-            <div hidden={!practiceActive}><PracticeDraft dataset={dataset} active={practiceActive} onlyGlobalReleased={onlyGlobalReleased} assistance={practiceAssistance} onAssistanceChange={setPracticeAssistance} selectedLane={selectedLane} onLaneChange={setSelectedLane} searchQuery={searchQuery} onSearchChange={setSearchQuery} sortMode={sortMode} onSortChange={setSortMode} viewMode={viewMode} onViewChange={setViewMode} favorites={favorites} onToggleFavorite={handleToggleFavorite} /></div>
+            <div hidden={!practiceActive}><PracticeDraft dataset={dataset} active={practiceActive} onlyGlobalReleased={onlyGlobalReleased} assistance={practiceAssistance} onAssistanceChange={setPracticeAssistance} selectedLane={selectedLane} onLaneChange={setSelectedLane} searchQuery={searchQuery} onSearchChange={setSearchQuery} sortMode={sortMode} onSortChange={setSortMode} viewMode={viewMode} onViewChange={setViewMode} favorites={favorites} onToggleFavorite={handleToggleFavorite} initialSharedSession={sharedPracticeSession} onShareSession={handleSharePracticeSession} /></div>
           </Suspense>
         )}
         {!practiceActive && <>
@@ -1123,7 +1164,7 @@ export const App: React.FC = () => {
               onRequestHero={!loading ? () => focusHeroSearch({ select: true }) : undefined}
               seriesFormat={seriesFormat}
               onSeriesFormatChange={setSeriesFormat}
-              onShareSeries={handleShareTournamentSeries}
+              onShareSeries={handleShareSimulatorDraft}
               blueTeamName={blueTeam === 'A' ? teamAName : teamBName}
               redTeamName={blueTeam === 'A' ? teamBName : teamAName}
               onSwapSides={handleSwapSides}
