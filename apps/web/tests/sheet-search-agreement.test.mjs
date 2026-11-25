@@ -53,8 +53,13 @@ const synergy = read(manifest.artifacts.synergy.file);
  * membatalkan perisai frontal) dan Garo (Jing diver + dive_vulnerable) memperbarui
  * proyeksi ancaman counter follow-up lawan pada slot R1 (step 5), sehingga angka
  * terukur saat ini adalah 31 dari 41 posisi (75,61%).
+ *
+ * Pembaruan 25 Nov 2026: Koreksi relasi mekanis Arli vs Zhang Fei (menolak klaim keliru
+ * HoKStats bahwa Zhang Fei counter Arli, mengesahkan relasi kurasi Arli counter Zhang Fei)
+ * memperbarui proyeksi counter-pick slot R1 solver saat musuh B1 mengamankan Zhang Fei,
+ * sehingga angka terukur saat ini adalah 29 dari 41 posisi (70,73%).
  */
-const MEASURED_SHEET_SEARCH_AGREEMENT = 31 / 41;
+const MEASURED_SHEET_SEARCH_AGREEMENT = 29 / 41;
 const MEASURED_SAMPLE_SIZE = 41;
 
 test('sheet top-1 vs minimax top-1 agreement stays at or above the measured floor', () => {

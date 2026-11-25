@@ -316,8 +316,24 @@ export const TACTICAL_TAGS = [
   'dash', 'blink', 'leap', 'teleport', 'cc_knockup', 'cc_knockback', 'cc_pull', 'cc_stun', 'cc_root', 'cc_silence', 'cc_taunt', 'cc_slow',
   'ally_shield', 'ally_heal', 'ally_move_speed_buff', 'ally_attack_speed_buff', 'ally_damage_buff', 'ally_cleanse', 'ally_cc_immunity',
   'peel', 'kite_vulnerable', 'low_damage', 'weak_early',
+  'terrain_creation', 'projectile_blocking', 'disarm', 'shieldbreak', 'true_sight', 'stealth', 'tether_dependent', 'anti_dive_zone',
 ] as const;
 export type TacticalTag = typeof TACTICAL_TAGS[number];
+
+export interface MechanicInteractionBadge {
+  type: 'advantage' | 'disadvantage';
+  targetHeroId: number;
+  targetHeroName: string;
+  icon: string;
+  title: string;
+  description: string;
+  scoreDelta: number;
+}
+export interface HeroMechanicEvaluation {
+  netScore: number;
+  badges: MechanicInteractionBadge[];
+  narratives: string[];
+}
 export interface TacticalProfile {
   tags: Partial<Record<TacticalTag, boolean>>;
   source_hash: string;

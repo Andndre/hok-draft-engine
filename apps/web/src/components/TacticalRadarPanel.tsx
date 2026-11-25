@@ -328,6 +328,33 @@ export function TacticalRadarPanel({ scores, deltas = [], primaryInsight, phaseS
         <span>{plainText(currentRec.proComboTag || currentRec.laneTag || 'Melengkapi komposisi dan merespons pilihan lawan.')}</span>
       </p>
 
+      {currentRec.mechanicBadges && currentRec.mechanicBadges.length > 0 && (
+        <div className="mechanic-badges" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.375rem', marginTop: '0.5rem', marginBottom: '0.5rem' }}>
+          {currentRec.mechanicBadges.slice(0, 4).map((badge, idx) => (
+            <span
+              key={idx}
+              title={badge.description}
+              className={`mechanic-pill ${badge.type === 'advantage' ? 'mechanic-pill--advantage' : 'mechanic-pill--disadvantage'}`}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.25rem',
+                fontSize: '0.72rem',
+                padding: '0.15rem 0.45rem',
+                borderRadius: '9999px',
+                border: badge.type === 'advantage' ? '1px solid rgba(52, 211, 153, 0.4)' : '1px solid rgba(248, 113, 113, 0.4)',
+                background: badge.type === 'advantage' ? 'rgba(16, 185, 129, 0.12)' : 'rgba(239, 68, 68, 0.12)',
+                color: badge.type === 'advantage' ? '#6ee7b7' : '#fca5a5',
+              }}
+            >
+              <span>{badge.icon}</span>
+              <strong style={{ fontWeight: 600 }}>{badge.title}</strong>
+              {badge.targetHeroId > 0 && <span style={{ opacity: 0.8 }}>({badge.targetHeroName})</span>}
+            </span>
+          ))}
+        </div>
+      )}
+
       {currentRec.projection && (
         <section className="outcome-projection" aria-labelledby={projTitleId}>
           <div className="outcome-projection__header">

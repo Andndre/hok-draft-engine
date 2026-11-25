@@ -39,6 +39,7 @@ import {
   evaluateDiveCoreTriadEnabler,
   evaluateMidJungleRoamTriad,
 } from './scaleDimensionTactics';
+import { evaluateHeroMechanicInteractions } from './mechanicInteractions';
 import type { TournamentRecommendation } from './tournamentInference';
 
 /** Konteks pencarian Minimax untuk AI lawan */
@@ -283,22 +284,24 @@ function pairBonus(heroA: Hero, heroB: Hero, context: SearchContext): number {
 }
 
 /**
- * Menghitung akumulasi bonus counter langsung terhadap formasi musuh.
+ * Menghitung akumulasi bonus counter komposit (relasi statis kurasi + interaksi mekanik mikro)
+ * terhadap formasi musuh.
  * Meredam bias seleksi editorial (data sparsity):
- * Alih-alih bonus linear +0.50 tanpa batas yang menggelembungkan hero dengan list counter panjang
- * (seperti Gao Changgong), bonus dibatasi dengan diminishing return:
- * Hero pertama di-counter +0.20, hero kedua+ +0.10, cap maksimum +0.30 per hero kita.
+ * Alih-alih bonus linear tanpa batas yang menggelembungkan hero dengan list counter panjang,
+ * bonus dibatasi dengan diminishing return: plafon maksimum +0.55 per hero kita.
  */
 function counterBonus(ourTeam: Hero[], enemyTeam: Hero[]): number {
+  if (enemyTeam.length === 0) return 0;
   return ourTeam.reduce((sum, ourHero) => {
     const countersCount = enemyTeam.filter(
       (enemyHero) =>
         ourHero.counters.some((c) => c.target_id === enemyHero.hero_id) ||
         enemyHero.countered_by.some((c) => c.counter_id === ourHero.hero_id)
     ).length;
-    if (countersCount <= 0) return sum;
-    const heroCounterBonus = countersCount === 1 ? 0.20 : 0.30;
-    return sum + heroCounterBonus;
+    const staticBonus = countersCount === 1 ? 0.20 : (countersCount > 1 ? 0.30 : 0);
+    const mechanicEval = evaluateHeroMechanicInteractions(ourHero, enemyTeam, ourTeam);
+    const combinedHeroBonus = Math.max(-0.55, Math.min(0.55, staticBonus + mechanicEval.netScore));
+    return sum + combinedHeroBonus;
   }, 0);
 }
 

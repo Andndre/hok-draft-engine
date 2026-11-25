@@ -12,8 +12,9 @@
  *    dan peredam sinergi (100% / 55% / 10% / 0%) agar hero tidak direkomendasikan jika sudah di-counter 2-3 musuh.
  */
 
-import type { Hero, TacticalVector, Lane, DraftFormat, DuetPackageOption } from '../types';
+import type { Hero, TacticalVector, Lane, DraftFormat, DuetPackageOption, MechanicInteractionBadge } from '../types';
 import { isHeroGlobalReleased } from '../data/heroReleaseStatus';
+import { evaluateHeroMechanicInteractions } from './mechanicInteractions';
 import {
   assignHeroLanes,
   getTournamentPhase,
@@ -797,6 +798,8 @@ export interface TournamentPredictionResult {
     proComboTag?: string;
     laneTag?: string;
     projection?: DraftOutcomeProjection;
+    mechanicBadges?: MechanicInteractionBadge[];
+    mechanicScore?: number;
   }>;
   phaseStrategy: TournamentPhaseStrategy;
   latencyMs: number;
@@ -2060,6 +2063,8 @@ export function runTournamentInference(
     finalScore: number;
     proComboTag?: string;
     laneTag?: string;
+    mechanicBadges?: MechanicInteractionBadge[];
+    mechanicScore?: number;
   }> = [];
 
   const hasEnemyDunshan = enemyHeroes.some((e) => e.hero_id === 509 || e.name.toLowerCase() === 'dunshan');
@@ -2681,12 +2686,71 @@ export function runTournamentInference(
       }
     }
 
+    // -------------------------------------------------------------------------
+    // EVALUASI INTERAKSI MEKANIK MIKRO DINAMIS (5 Pilar Primitif Taktis)
+    // -------------------------------------------------------------------------
+    const targetOpponents = isPickPhase ? enemyHeroes : ourHeroes;
+    const candidateAllies = isPickPhase ? ourHeroes : enemyHeroes;
+    const rawMechanicEval = evaluateHeroMechanicInteractions(cand, targetOpponents, candidateAllies);
+
+    let mechanicBadges: MechanicInteractionBadge[] = [];
+    let mechanicScoreDelta = 0;
+
+    if (isPickPhase) {
+      // Skenario PICK: cand adalah hero pilihan kita melawan targetOpponents (musuh)
+      mechanicScoreDelta = rawMechanicEval.netScore;
+      mechanicBadges = rawMechanicEval.badges;
+      if (!proComboTag && mechanicBadges.length > 0) {
+        const topAdvantage = mechanicBadges.find((b) => b.type === 'advantage');
+        if (topAdvantage) {
+          proComboTag = `${topAdvantage.icon} ${topAdvantage.title}: ${topAdvantage.targetHeroName}`;
+        }
+      }
+    } else {
+      // Skenario BAN: cand adalah calon pilihan musuh yang menghadapi targetOpponents (tim kita)
+      // - rawMechanicEval.netScore > 0: cand memiliki keunggulan atas tim kita -> ANCAMAN BESAR (+ prioritas ban)
+      // - rawMechanicEval.netScore < 0: tim kita sudah meng-counter cand -> SUDAH DITANGKAL (- prioritas ban / wasted ban)
+      mechanicScoreDelta = rawMechanicEval.netScore;
+
+      // Konversi badge ke perspektif rekomendasi BAN:
+      mechanicBadges = rawMechanicEval.badges.map((b) => {
+        if (b.type === 'advantage') {
+          // cand unggul atas tim kita -> Ancaman berbahaya bagi tim kita
+          return {
+            ...b,
+            icon: '⚠️',
+            title: `Ancaman: ${b.title}`,
+            description: b.targetHeroId > 0
+              ? `Bila dipilih musuh, ${cand.name} menjadi ancaman mekanik bagi ${b.targetHeroName} (${b.description}).`
+              : `Bila dipilih musuh, ${cand.name} mengancam formasi tim kita: ${b.description}`,
+            type: 'disadvantage', // pill merah/warning
+          };
+        } else {
+          // tim kita sudah meng-counter cand -> Kurang bernilai untuk di-ban
+          const cleanTitle = b.title.replace(/^Terhalang\s+/i, '').replace(/^Terancam\s+/i, '');
+          return {
+            ...b,
+            icon: '🛡️',
+            title: `Ditangkal: ${cleanTitle}`,
+            description: b.targetHeroId > 0
+              ? `Tim kita (${b.targetHeroName}) sudah memiliki counter mekanik (${cleanTitle}) terhadap ${cand.name}. Mem-ban hero ini kurang efektif.`
+              : `Formasi tim kita sudah memiliki mekanisme untuk menangkal ${cand.name}.`,
+            type: 'advantage', // pill hijau/aman
+          };
+        }
+      });
+    }
+
+    score += mechanicScoreDelta;
+
     scoredCandidates.push({
       hero: cand,
       baseScore: cand.win_rate,
       finalScore: score,
       proComboTag,
       laneTag,
+      mechanicBadges,
+      mechanicScore: mechanicScoreDelta,
     });
   }
 
@@ -2708,6 +2772,8 @@ export function runTournamentInference(
     choiceScore: c.finalScore,
     proComboTag: c.proComboTag,
     laneTag: c.laneTag,
+    mechanicBadges: c.mechanicBadges,
+    mechanicScore: c.mechanicScore,
   }));
 
   recommendations.sort((a, b) => b.rankingWeight - a.rankingWeight);

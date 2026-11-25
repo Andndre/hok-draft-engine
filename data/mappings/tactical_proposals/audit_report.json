@@ -3,164 +3,229 @@
   "reviewer": "HoK-Evidence-Auditor",
   "auto_approve": true,
   "summary": {
-    "total_global_heroes": 120,
-    "audited": 120,
-    "approved": 120,
+    "total_global_heroes": 137,
+    "audited": 137,
+    "approved": 137,
     "pending_manual_review": 0
   },
   "tag_distribution": {
     "mobility": {
-      "ya": 75,
-      "tidak": 45,
+      "ya": 82,
+      "tidak": 55,
       "tidak_diketahui": 0
     },
     "dash": {
-      "ya": 58,
-      "tidak": 62,
+      "ya": 63,
+      "tidak": 74,
       "tidak_diketahui": 0
     },
     "blink": {
-      "ya": 5,
-      "tidak": 115,
+      "ya": 6,
+      "tidak": 131,
       "tidak_diketahui": 0
     },
     "leap": {
-      "ya": 24,
-      "tidak": 96,
+      "ya": 27,
+      "tidak": 110,
       "tidak_diketahui": 0
     },
     "teleport": {
       "ya": 4,
-      "tidak": 116,
+      "tidak": 133,
       "tidak_diketahui": 0
     },
     "suppress": {
-      "ya": 2,
-      "tidak": 118,
+      "ya": 3,
+      "tidak": 134,
       "tidak_diketahui": 0
     },
     "cc_knockup": {
-      "ya": 40,
-      "tidak": 80,
+      "ya": 43,
+      "tidak": 94,
       "tidak_diketahui": 0
     },
     "cc_knockback": {
-      "ya": 33,
-      "tidak": 87,
+      "ya": 39,
+      "tidak": 98,
       "tidak_diketahui": 0
     },
     "cc_pull": {
-      "ya": 8,
-      "tidak": 112,
+      "ya": 11,
+      "tidak": 126,
       "tidak_diketahui": 0
     },
     "cc_stun": {
-      "ya": 34,
-      "tidak": 86,
+      "ya": 40,
+      "tidak": 97,
       "tidak_diketahui": 0
     },
     "cc_root": {
       "ya": 3,
-      "tidak": 117,
+      "tidak": 134,
       "tidak_diketahui": 0
     },
     "cc_silence": {
       "ya": 5,
-      "tidak": 115,
+      "tidak": 132,
       "tidak_diketahui": 0
     },
     "cc_taunt": {
       "ya": 1,
-      "tidak": 119,
+      "tidak": 136,
       "tidak_diketahui": 0
     },
     "cc_slow": {
-      "ya": 81,
-      "tidak": 39,
+      "ya": 85,
+      "tidak": 52,
       "tidak_diketahui": 0
     },
     "engage": {
-      "ya": 51,
-      "tidak": 69,
+      "ya": 57,
+      "tidak": 80,
       "tidak_diketahui": 0
     },
     "disengage": {
-      "ya": 28,
-      "tidak": 92,
+      "ya": 34,
+      "tidak": 103,
       "tidak_diketahui": 0
     },
     "frontline": {
-      "ya": 24,
-      "tidak": 96,
+      "ya": 27,
+      "tidak": 110,
       "tidak_diketahui": 0
     },
     "peel": {
-      "ya": 39,
-      "tidak": 81,
+      "ya": 46,
+      "tidak": 91,
       "tidak_diketahui": 0
     },
     "ally_shield": {
-      "ya": 10,
-      "tidak": 110,
+      "ya": 11,
+      "tidak": 126,
       "tidak_diketahui": 0
     },
     "ally_heal": {
-      "ya": 10,
-      "tidak": 110,
+      "ya": 11,
+      "tidak": 126,
       "tidak_diketahui": 0
     },
     "ally_move_speed_buff": {
-      "ya": 6,
-      "tidak": 114,
+      "ya": 7,
+      "tidak": 130,
       "tidak_diketahui": 0
     },
     "ally_attack_speed_buff": {
       "ya": 1,
-      "tidak": 119,
+      "tidak": 136,
       "tidak_diketahui": 0
     },
     "ally_damage_buff": {
       "ya": 1,
-      "tidak": 119,
+      "tidak": 136,
       "tidak_diketahui": 0
     },
     "ally_cleanse": {
       "ya": 1,
-      "tidak": 119,
+      "tidak": 136,
       "tidak_diketahui": 0
     },
     "ally_cc_immunity": {
       "ya": 2,
-      "tidak": 118,
+      "tidak": 135,
       "tidak_diketahui": 0
     },
     "dive_vulnerable": {
       "ya": 11,
-      "tidak": 109,
+      "tidak": 126,
       "tidak_diketahui": 0
     },
     "kite_vulnerable": {
       "ya": 14,
-      "tidak": 106,
+      "tidak": 123,
       "tidak_diketahui": 0
     },
     "low_damage": {
       "ya": 13,
-      "tidak": 107,
+      "tidak": 124,
       "tidak_diketahui": 0
     },
     "weak_early": {
       "ya": 25,
-      "tidak": 95,
+      "tidak": 112,
+      "tidak_diketahui": 0
+    },
+    "terrain_creation": {
+      "ya": 2,
+      "tidak": 135,
+      "tidak_diketahui": 0
+    },
+    "projectile_blocking": {
+      "ya": 4,
+      "tidak": 133,
+      "tidak_diketahui": 0
+    },
+    "disarm": {
+      "ya": 1,
+      "tidak": 136,
+      "tidak_diketahui": 0
+    },
+    "shieldbreak": {
+      "ya": 1,
+      "tidak": 136,
+      "tidak_diketahui": 0
+    },
+    "true_sight": {
+      "ya": 4,
+      "tidak": 133,
+      "tidak_diketahui": 0
+    },
+    "stealth": {
+      "ya": 4,
+      "tidak": 133,
+      "tidak_diketahui": 0
+    },
+    "tether_dependent": {
+      "ya": 4,
+      "tidak": 133,
+      "tidak_diketahui": 0
+    },
+    "anti_dive_zone": {
+      "ya": 7,
+      "tidak": 130,
       "tidak_diketahui": 0
     }
   },
   "ambiguous_for_manual_review": [],
   "heroes": [
     {
-      "hero_id": 105,
-      "hero_name": "Lian Po",
-      "file": "105-2c778fe0e39e.json",
+      "hero_id": 533,
+      "hero_name": "Agudo",
+      "file": "533-96b1e045f6f1.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockup",
+        "dash",
+        "leap",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 545,
+      "hero_name": "Alessio",
+      "file": "545-deeaa98ad793.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "anti_dive_zone",
+        "cc_knockup",
+        "leap",
+        "mobility",
+        "stealth"
+      ]
+    },
+    {
+      "hero_id": 514,
+      "hero_name": "Allain",
+      "file": "514-817bd0c037de.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -168,135 +233,48 @@
         "dash",
         "engage",
         "frontline",
-        "kite_vulnerable",
-        "leap",
-        "low_damage",
-        "mobility",
-        "peel"
-      ]
-    },
-    {
-      "hero_id": 106,
-      "hero_name": "Xiao Qiao",
-      "file": "106-c6dc11f5b5db.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockup",
-        "dive_vulnerable",
-        "weak_early"
-      ]
-    },
-    {
-      "hero_id": 107,
-      "hero_name": "Zilong",
-      "file": "107-357c75cb8104.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockup",
-        "dash",
-        "engage",
         "leap",
         "mobility"
       ]
     },
     {
-      "hero_id": 108,
-      "hero_name": "Mozi",
-      "file": "108-4a79279ad546.json",
+      "hero_id": 142,
+      "hero_name": "Angela",
+      "file": "142-ecd5be76fceb.json",
       "review_status": "approved",
       "positive_tags": [
-        "cc_knockback",
-        "cc_stun",
-        "dash",
-        "disengage",
-        "engage",
-        "mobility",
-        "peel",
-        "weak_early"
-      ]
-    },
-    {
-      "hero_id": 109,
-      "hero_name": "Daji",
-      "file": "109-cf6ca6fceaf1.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_stun",
-        "dive_vulnerable",
-        "weak_early"
-      ]
-    },
-    {
-      "hero_id": 110,
-      "hero_name": "Garuda",
-      "file": "110-41f1c011dea7.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_slow"
-      ]
-    },
-    {
-      "hero_id": 111,
-      "hero_name": "Lady Sun",
-      "file": "111-054f8c365916.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "dash",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 112,
-      "hero_name": "Luban No.7",
-      "file": "112-3498f15b73d6.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockback",
         "cc_slow",
-        "dive_vulnerable",
-        "weak_early"
+        "cc_stun",
+        "dive_vulnerable"
       ]
     },
     {
-      "hero_id": 113,
-      "hero_name": "Zhuangzi",
-      "file": "113-f11dd0b9f2b4.json",
+      "hero_id": 640,
+      "hero_name": "Annette",
+      "file": "640-980f8910c4af.json",
       "review_status": "approved",
       "positive_tags": [
         "ally_cc_immunity",
-        "ally_cleanse",
         "ally_move_speed_buff",
         "ally_shield",
+        "cc_knockback",
         "cc_slow",
+        "cc_stun",
         "disengage",
         "low_damage",
         "peel"
       ]
     },
     {
-      "hero_id": 114,
-      "hero_name": "Liu Shan",
-      "file": "114-b2a0dd3172cf.json",
+      "hero_id": 519,
+      "hero_name": "Ao'yin",
+      "file": "519-c4f41a926267.json",
       "review_status": "approved",
       "positive_tags": [
+        "cc_knockback",
         "cc_slow",
-        "cc_stun",
-        "engage",
-        "frontline",
-        "low_damage",
-        "peel"
-      ]
-    },
-    {
-      "hero_id": 115,
-      "hero_name": "Gao",
-      "file": "115-3cc01c7fa2b0.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_slow",
-        "dash",
-        "mobility",
-        "weak_early"
+        "leap",
+        "mobility"
       ]
     },
     {
@@ -307,51 +285,78 @@
       "positive_tags": [
         "cc_slow",
         "dash",
-        "mobility"
+        "mobility",
+        "stealth"
       ]
     },
     {
-      "hero_id": 117,
-      "hero_name": "Wuyan",
-      "file": "117-77d4d9a52dec.json",
+      "hero_id": 199,
+      "hero_name": "Arli",
+      "file": "199-bb81c76fd70d.json",
       "review_status": "approved",
       "positive_tags": [
-        "cc_slow",
-        "cc_stun",
+        "cc_knockback",
+        "projectile_blocking"
+      ]
+    },
+    {
+      "hero_id": 166,
+      "hero_name": "Arthur",
+      "file": "166-97a656a397dc.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockup",
+        "cc_silence",
         "dash",
         "engage",
         "frontline",
+        "kite_vulnerable",
+        "leap",
         "mobility",
         "peel"
       ]
     },
     {
-      "hero_id": 118,
-      "hero_name": "Sun Bin",
-      "file": "118-65f239324d54.json",
+      "hero_id": 556,
+      "hero_name": "Ata",
+      "file": "556-08c29fdfb967.json",
       "review_status": "approved",
       "positive_tags": [
-        "ally_heal",
-        "ally_move_speed_buff",
-        "cc_silence",
+        "cc_knockback",
+        "cc_knockup",
         "cc_slow",
         "disengage",
         "engage",
-        "low_damage",
-        "peel"
+        "frontline",
+        "kite_vulnerable",
+        "leap",
+        "mobility",
+        "peel",
+        "terrain_creation"
       ]
     },
     {
-      "hero_id": 119,
-      "hero_name": "Dr Bian",
-      "file": "119-444126b50d0c.json",
+      "hero_id": 183,
+      "hero_name": "Athena",
+      "file": "183-54b23aa60996.json",
       "review_status": "approved",
       "positive_tags": [
-        "ally_heal",
+        "ally_shield",
+        "cc_knockback",
         "cc_knockup",
-        "cc_slow",
-        "dive_vulnerable",
-        "weak_early"
+        "dash",
+        "engage",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 517,
+      "hero_name": "Augran",
+      "file": "517-9d28528a367c.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockback",
+        "cc_slow"
       ]
     },
     {
@@ -372,128 +377,107 @@
       ]
     },
     {
-      "hero_id": 121,
-      "hero_name": "Mi Yue",
-      "file": "121-505552136a50.json",
+      "hero_id": 503,
+      "hero_name": "Biron",
+      "file": "503-99f687ff4e87.json",
       "review_status": "approved",
       "positive_tags": [
-        "cc_slow"
+        "cc_knockup",
+        "cc_slow",
+        "dash",
+        "engage",
+        "frontline",
+        "kite_vulnerable",
+        "mobility"
       ]
     },
     {
-      "hero_id": 123,
-      "hero_name": "Lu Bu",
-      "file": "123-dd72d434bd27.json",
+      "hero_id": 646,
+      "hero_name": "Butterfly",
+      "file": "646-720a0bb72209.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_slow",
-        "frontline",
-        "kite_vulnerable",
         "leap",
         "mobility"
       ]
     },
     {
-      "hero_id": 124,
-      "hero_name": "Zhou Yu",
-      "file": "124-15cba141216d.json",
+      "hero_id": 184,
+      "hero_name": "Cai Yan",
+      "file": "184-b6254b8e6c57.json",
       "review_status": "approved",
       "positive_tags": [
-        "ally_move_speed_buff",
+        "ally_heal",
+        "cc_stun",
+        "low_damage",
+        "peel"
+      ]
+    },
+    {
+      "hero_id": 515,
+      "hero_name": "Chang'e",
+      "file": "515-5ef91d7e1c24.json",
+      "review_status": "approved",
+      "positive_tags": []
+    },
+    {
+      "hero_id": 177,
+      "hero_name": "Chano",
+      "file": "177-b349ac594925.json",
+      "review_status": "approved",
+      "positive_tags": [
         "cc_knockback",
-        "cc_slow",
-        "cc_stun",
-        "disengage",
-        "peel"
-      ]
-    },
-    {
-      "hero_id": 125,
-      "hero_name": "Yango",
-      "file": "125-fe48fab9e28a.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "blink",
         "cc_knockup",
-        "cc_slow",
-        "cc_stun",
-        "dash",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 126,
-      "hero_name": "Dun",
-      "file": "126-fb21811732c8.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockup",
-        "cc_pull",
-        "cc_slow",
-        "cc_stun",
-        "engage",
-        "frontline",
-        "kite_vulnerable",
-        "peel"
-      ]
-    },
-    {
-      "hero_id": 127,
-      "hero_name": "Lady Zhen",
-      "file": "127-f5a977ba89f3.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockup",
-        "cc_slow",
-        "dive_vulnerable",
-        "peel",
-        "weak_early"
-      ]
-    },
-    {
-      "hero_id": 128,
-      "hero_name": "Fatih",
-      "file": "128-254c6712fb17.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockup",
-        "cc_slow",
-        "dash",
-        "engage",
-        "frontline",
-        "kite_vulnerable",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 129,
-      "hero_name": "Dian Wei",
-      "file": "129-12e6a193b95c.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_slow",
-        "kite_vulnerable",
         "leap",
         "mobility"
       ]
     },
     {
-      "hero_id": 130,
-      "hero_name": "Musashi",
-      "file": "130-4597294c2325.json",
+      "hero_id": 536,
+      "hero_name": "Charlotte",
+      "file": "536-3cb1be788fd4.json",
       "review_status": "approved",
       "positive_tags": [
+        "cc_knockup",
         "cc_slow",
         "dash",
+        "engage",
+        "frontline",
         "mobility"
       ]
     },
     {
-      "hero_id": 131,
-      "hero_name": "Li Bai",
-      "file": "131-4c3cdfcf28f8.json",
+      "hero_id": 144,
+      "hero_name": "Cheng Yaojin",
+      "file": "144-5b6a77c4e52a.json",
       "review_status": "approved",
       "positive_tags": [
+        "frontline"
+      ]
+    },
+    {
+      "hero_id": 172,
+      "hero_name": "Chicha",
+      "file": "172-67667860119a.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockback",
+        "cc_knockup",
+        "dash",
+        "disengage",
+        "engage",
+        "frontline",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 506,
+      "hero_name": "Cirrus",
+      "file": "506-76c62f481a36.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockup",
         "cc_slow",
         "cc_stun",
         "dash",
@@ -501,23 +485,70 @@
       ]
     },
     {
-      "hero_id": 132,
-      "hero_name": "Marco Polo",
-      "file": "132-6033e11264bc.json",
+      "hero_id": 174,
+      "hero_name": "Consort Yu",
+      "file": "174-1f00469207eb.json",
       "review_status": "approved",
       "positive_tags": [
-        "blink",
+        "cc_slow",
+        "cc_stun"
+      ]
+    },
+    {
+      "hero_id": 191,
+      "hero_name": "Da Qiao",
+      "file": "191-f9687df09e69.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "ally_shield",
+        "cc_knockup",
+        "disengage",
+        "engage",
+        "low_damage",
         "mobility",
+        "peel",
+        "teleport"
+      ]
+    },
+    {
+      "hero_id": 188,
+      "hero_name": "Da Yu",
+      "file": "188-1bd7723da983.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "ally_heal",
+        "cc_knockup",
+        "cc_slow",
+        "dash",
+        "engage",
+        "frontline",
+        "mobility",
+        "peel"
+      ]
+    },
+    {
+      "hero_id": 109,
+      "hero_name": "Daji",
+      "file": "109-cf6ca6fceaf1.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_stun",
+        "dive_vulnerable",
         "weak_early"
       ]
     },
     {
-      "hero_id": 133,
-      "hero_name": "Di Renjie",
-      "file": "133-9f2d4e3ffe3b.json",
+      "hero_id": 537,
+      "hero_name": "Devara",
+      "file": "537-1e026f2d9750.json",
       "review_status": "approved",
       "positive_tags": [
-        "cc_stun"
+        "cc_knockback",
+        "dash",
+        "disengage",
+        "engage",
+        "kite_vulnerable",
+        "mobility"
       ]
     },
     {
@@ -538,67 +569,22 @@
       ]
     },
     {
-      "hero_id": 135,
-      "hero_name": "Xiang Yu",
-      "file": "135-9a8ae77297e4.json",
+      "hero_id": 133,
+      "hero_name": "Di Renjie",
+      "file": "133-9f2d4e3ffe3b.json",
       "review_status": "approved",
       "positive_tags": [
-        "cc_knockback",
-        "cc_knockup",
+        "cc_stun"
+      ]
+    },
+    {
+      "hero_id": 129,
+      "hero_name": "Dian Wei",
+      "file": "129-12e6a193b95c.json",
+      "review_status": "approved",
+      "positive_tags": [
         "cc_slow",
-        "cc_stun",
-        "dash",
-        "disengage",
-        "engage",
-        "frontline",
-        "mobility",
-        "peel"
-      ]
-    },
-    {
-      "hero_id": 137,
-      "hero_name": "Sima Yi",
-      "file": "137-95267dcac46b.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_silence"
-      ]
-    },
-    {
-      "hero_id": 138,
-      "hero_name": "Wang Wei",
-      "file": "138-96e97f7b3aa9.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockback",
-        "cc_slow",
-        "disengage",
-        "peel"
-      ]
-    },
-    {
-      "hero_id": 139,
-      "hero_name": "Fuzi",
-      "file": "139-019942d72e23.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_pull",
-        "cc_slow",
-        "dash",
-        "engage",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 140,
-      "hero_name": "Guan Yu",
-      "file": "140-71821457ddbd.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockback",
-        "dash",
-        "disengage",
-        "engage",
+        "kite_vulnerable",
         "leap",
         "mobility"
       ]
@@ -609,146 +595,6 @@
       "file": "141-c4385cb1f977.json",
       "review_status": "approved",
       "positive_tags": [
-        "cc_slow",
-        "dash",
-        "mobility",
-        "weak_early"
-      ]
-    },
-    {
-      "hero_id": 142,
-      "hero_name": "Angela",
-      "file": "142-ecd5be76fceb.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_slow",
-        "cc_stun",
-        "dive_vulnerable"
-      ]
-    },
-    {
-      "hero_id": 146,
-      "hero_name": "Luna",
-      "file": "146-84c9b14aa350.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_pull",
-        "cc_slow",
-        "cc_stun",
-        "dash",
-        "engage",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 148,
-      "hero_name": "Ziya",
-      "file": "148-262b9eba5961.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockup",
-        "cc_slow",
-        "weak_early"
-      ]
-    },
-    {
-      "hero_id": 149,
-      "hero_name": "Liu Bang",
-      "file": "149-810858b6d0e5.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "ally_shield",
-        "cc_stun",
-        "dash",
-        "engage",
-        "frontline",
-        "mobility",
-        "peel",
-        "teleport"
-      ]
-    },
-    {
-      "hero_id": 150,
-      "hero_name": "Han Xin",
-      "file": "150-f150be9695d4.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockup",
-        "dash",
-        "leap",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 152,
-      "hero_name": "Wang Zhaojun",
-      "file": "152-236fced271fb.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_slow",
-        "cc_stun",
-        "engage",
-        "weak_early"
-      ]
-    },
-    {
-      "hero_id": 153,
-      "hero_name": "Gao Changgong",
-      "file": "153-5e5c14fe4f55.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_slow",
-        "cc_stun",
-        "dash",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 154,
-      "hero_name": "Mulan",
-      "file": "154-2af524e5d8b2.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockback",
-        "cc_knockup",
-        "cc_silence",
-        "cc_slow",
-        "dash",
-        "disengage",
-        "engage",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 155,
-      "hero_name": "Erin",
-      "file": "155-5dd72674ddd0.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_slow",
-        "dive_vulnerable"
-      ]
-    },
-    {
-      "hero_id": 156,
-      "hero_name": "Liang",
-      "file": "156-c260492a2197.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_slow",
-        "cc_stun",
-        "engage",
-        "peel",
-        "suppress"
-      ]
-    },
-    {
-      "hero_id": 157,
-      "hero_name": "Mai Shiranui",
-      "file": "157-8ff09ed5064c.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockback",
         "cc_slow",
         "dash",
         "mobility",
@@ -770,128 +616,94 @@
       ]
     },
     {
-      "hero_id": 162,
-      "hero_name": "Nakoruru",
-      "file": "162-814cb6408f18.json",
+      "hero_id": 187,
+      "hero_name": "Donghuang",
+      "file": "187-6d0091410e7e.json",
       "review_status": "approved",
       "positive_tags": [
-        "cc_slow",
-        "dash",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 163,
-      "hero_name": "Ukyo Tachibana",
-      "file": "163-3b2bc5be0104.json",
-      "review_status": "approved",
-      "positive_tags": [
+        "anti_dive_zone",
         "cc_slow",
         "cc_stun",
-        "leap",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 166,
-      "hero_name": "Arthur",
-      "file": "166-97a656a397dc.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockup",
-        "cc_silence",
-        "dash",
         "engage",
         "frontline",
-        "kite_vulnerable",
-        "leap",
-        "mobility",
-        "peel"
+        "peel",
+        "suppress"
       ]
     },
     {
-      "hero_id": 167,
-      "hero_name": "Wukong",
-      "file": "167-cee54c6f5249.json",
+      "hero_id": 119,
+      "hero_name": "Dr Bian",
+      "file": "119-444126b50d0c.json",
       "review_status": "approved",
       "positive_tags": [
-        "cc_knockup",
-        "dash",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 168,
-      "hero_name": "Lapulapu",
-      "file": "168-ffee861d64a3.json",
-      "review_status": "approved",
-      "positive_tags": [
+        "ally_heal",
         "cc_knockup",
         "cc_slow",
-        "dash",
-        "engage",
-        "low_damage",
-        "mobility",
-        "peel"
-      ]
-    },
-    {
-      "hero_id": 169,
-      "hero_name": "Hou Yi",
-      "file": "169-6e717c23e545.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_slow",
-        "cc_stun",
         "dive_vulnerable",
         "weak_early"
       ]
     },
     {
-      "hero_id": 170,
-      "hero_name": "Liu Bei",
-      "file": "170-67aa7000bf52.json",
+      "hero_id": 126,
+      "hero_name": "Dun",
+      "file": "126-fb21811732c8.json",
       "review_status": "approved",
       "positive_tags": [
-        "cc_knockback",
-        "dash",
-        "disengage",
-        "engage",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 171,
-      "hero_name": "Zhang Fei",
-      "file": "171-08cab3634651.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "ally_shield",
-        "cc_knockback",
         "cc_knockup",
+        "cc_pull",
+        "cc_slow",
         "cc_stun",
-        "disengage",
         "engage",
         "frontline",
-        "leap",
-        "low_damage",
-        "mobility",
+        "kite_vulnerable",
         "peel"
       ]
     },
     {
-      "hero_id": 172,
-      "hero_name": "Chicha",
-      "file": "172-67667860119a.json",
+      "hero_id": 509,
+      "hero_name": "Dunshan",
+      "file": "509-e58a431e2b43.json",
       "review_status": "approved",
       "positive_tags": [
+        "ally_shield",
+        "anti_dive_zone",
         "cc_knockback",
-        "cc_knockup",
+        "cc_slow",
+        "cc_stun",
         "dash",
         "disengage",
         "engage",
-        "frontline",
-        "mobility"
+        "mobility",
+        "peel",
+        "projectile_blocking"
+      ]
+    },
+    {
+      "hero_id": 577,
+      "hero_name": "Dyadia",
+      "file": "577-5a6422cf45dd.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "ally_heal",
+        "ally_move_speed_buff",
+        "cc_knockback",
+        "cc_root",
+        "dash",
+        "disengage",
+        "engage",
+        "mobility",
+        "peel",
+        "tether_dependent"
+      ]
+    },
+    {
+      "hero_id": 155,
+      "hero_name": "Erin",
+      "file": "155-5dd72674ddd0.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_slow",
+        "dive_vulnerable"
       ]
     },
     {
@@ -902,213 +714,14 @@
       "positive_tags": [
         "cc_slow",
         "dash",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 174,
-      "hero_name": "Consort Yu",
-      "file": "174-1f00469207eb.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_slow",
-        "cc_stun"
-      ]
-    },
-    {
-      "hero_id": 175,
-      "hero_name": "Kui",
-      "file": "175-9b54542dcae9.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_slow",
-        "cc_stun",
-        "engage",
-        "peel"
-      ]
-    },
-    {
-      "hero_id": 176,
-      "hero_name": "Yuhuan",
-      "file": "176-246c90e7d29f.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "ally_heal",
-        "cc_slow",
-        "cc_stun",
-        "weak_early"
-      ]
-    },
-    {
-      "hero_id": 177,
-      "hero_name": "Chano",
-      "file": "177-b349ac594925.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockback",
-        "cc_knockup",
-        "leap",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 178,
-      "hero_name": "Yang Jian",
-      "file": "178-44ce4b4c94dd.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_slow",
-        "cc_stun",
-        "engage",
-        "kite_vulnerable",
-        "leap",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 179,
-      "hero_name": "Nuwa",
-      "file": "179-f0f7888c7d57.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockback",
-        "cc_slow",
-        "disengage",
-        "engage",
-        "leap",
         "mobility",
-        "peel",
-        "teleport",
-        "weak_early"
+        "true_sight"
       ]
     },
     {
-      "hero_id": 180,
-      "hero_name": "Nezha",
-      "file": "180-6708df8cbbc8.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockback",
-        "disengage",
-        "engage",
-        "frontline",
-        "leap",
-        "mobility",
-        "teleport"
-      ]
-    },
-    {
-      "hero_id": 182,
-      "hero_name": "Gan & Mo",
-      "file": "182-811f3f95611c.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockback",
-        "disengage",
-        "peel",
-        "weak_early"
-      ]
-    },
-    {
-      "hero_id": 183,
-      "hero_name": "Athena",
-      "file": "183-54b23aa60996.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "ally_shield",
-        "cc_knockback",
-        "cc_knockup",
-        "dash",
-        "engage",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 184,
-      "hero_name": "Cai Yan",
-      "file": "184-b6254b8e6c57.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "ally_heal",
-        "cc_stun",
-        "low_damage",
-        "peel"
-      ]
-    },
-    {
-      "hero_id": 187,
-      "hero_name": "Donghuang",
-      "file": "187-6d0091410e7e.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_slow",
-        "cc_stun",
-        "engage",
-        "frontline",
-        "peel",
-        "suppress"
-      ]
-    },
-    {
-      "hero_id": 189,
-      "hero_name": "Guiguzi",
-      "file": "189-da40a47f47ab.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "ally_move_speed_buff",
-        "ally_shield",
-        "cc_slow",
-        "cc_stun",
-        "disengage",
-        "engage",
-        "low_damage",
-        "peel"
-      ]
-    },
-    {
-      "hero_id": 190,
-      "hero_name": "Kongming",
-      "file": "190-d43d05a71972.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "blink",
-        "mobility",
-        "weak_early"
-      ]
-    },
-    {
-      "hero_id": 191,
-      "hero_name": "Da Qiao",
-      "file": "191-f9687df09e69.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "ally_shield",
-        "cc_knockup",
-        "disengage",
-        "engage",
-        "low_damage",
-        "mobility",
-        "peel",
-        "teleport"
-      ]
-    },
-    {
-      "hero_id": 192,
-      "hero_name": "Huang Zhong",
-      "file": "192-9e5749d2b7d2.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_slow",
-        "dash",
-        "dive_vulnerable",
-        "mobility",
-        "weak_early"
-      ]
-    },
-    {
-      "hero_id": 193,
-      "hero_name": "Kaizer",
-      "file": "193-f4bc2c79f2a1.json",
+      "hero_id": 128,
+      "hero_name": "Fatih",
+      "file": "128-254c6712fb17.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockup",
@@ -1117,375 +730,6 @@
         "engage",
         "frontline",
         "kite_vulnerable",
-        "mobility",
-        "weak_early"
-      ]
-    },
-    {
-      "hero_id": 195,
-      "hero_name": "Xuance",
-      "file": "195-01a2e5c2b416.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_pull",
-        "cc_root",
-        "cc_slow",
-        "dash",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 196,
-      "hero_name": "Shouyue",
-      "file": "196-2dde16e7087f.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_slow",
-        "leap",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 197,
-      "hero_name": "Yixing",
-      "file": "197-61630b10829e.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockup",
-        "cc_pull",
-        "cc_slow",
-        "engage",
-        "weak_early"
-      ]
-    },
-    {
-      "hero_id": 198,
-      "hero_name": "Menki",
-      "file": "198-d41319d7755e.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockup",
-        "cc_slow",
-        "engage"
-      ]
-    },
-    {
-      "hero_id": 199,
-      "hero_name": "Arli",
-      "file": "199-bb81c76fd70d.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockback"
-      ]
-    },
-    {
-      "hero_id": 501,
-      "hero_name": "Ming",
-      "file": "501-39d62745bf44.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "ally_attack_speed_buff",
-        "ally_damage_buff",
-        "ally_heal",
-        "peel"
-      ]
-    },
-    {
-      "hero_id": 502,
-      "hero_name": "Pei",
-      "file": "502-b6d9193d2a88.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_slow",
-        "dash",
-        "leap",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 503,
-      "hero_name": "Biron",
-      "file": "503-99f687ff4e87.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockup",
-        "cc_slow",
-        "dash",
-        "engage",
-        "frontline",
-        "kite_vulnerable",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 504,
-      "hero_name": "Milady",
-      "file": "504-aa93957ac87b.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_slow",
-        "cc_stun",
-        "dive_vulnerable"
-      ]
-    },
-    {
-      "hero_id": 505,
-      "hero_name": "Yaria",
-      "file": "505-db14fc13a05b.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "ally_shield",
-        "cc_knockup",
-        "peel"
-      ]
-    },
-    {
-      "hero_id": 506,
-      "hero_name": "Cirrus",
-      "file": "506-76c62f481a36.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockup",
-        "cc_slow",
-        "cc_stun",
-        "dash",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 507,
-      "hero_name": "Li Xin",
-      "file": "507-d8f9ebf60473.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockup",
-        "cc_slow",
-        "dash",
-        "engage",
-        "frontline",
-        "mobility",
-        "peel"
-      ]
-    },
-    {
-      "hero_id": 508,
-      "hero_name": "Garo",
-      "file": "508-16ad27affb39.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_silence",
-        "cc_slow",
-        "dive_vulnerable"
-      ]
-    },
-    {
-      "hero_id": 509,
-      "hero_name": "Dunshan",
-      "file": "509-e58a431e2b43.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "ally_shield",
-        "cc_knockback",
-        "cc_slow",
-        "cc_stun",
-        "dash",
-        "disengage",
-        "engage",
-        "mobility",
-        "peel"
-      ]
-    },
-    {
-      "hero_id": 510,
-      "hero_name": "Sun Ce",
-      "file": "510-81fbcbee9295.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockup",
-        "cc_slow",
-        "dash",
-        "engage",
-        "frontline",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 513,
-      "hero_name": "Shangguan",
-      "file": "513-59e8cb4ecebc.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_slow",
-        "dash",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 514,
-      "hero_name": "Allain",
-      "file": "514-817bd0c037de.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockup",
-        "cc_slow",
-        "dash",
-        "engage",
-        "frontline",
-        "leap",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 517,
-      "hero_name": "Augran",
-      "file": "517-9d28528a367c.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockback",
-        "cc_slow"
-      ]
-    },
-    {
-      "hero_id": 519,
-      "hero_name": "Ao'yin",
-      "file": "519-c4f41a926267.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockback",
-        "cc_slow",
-        "leap",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 521,
-      "hero_name": "Haya",
-      "file": "521-b2549534b1b4.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_slow",
-        "cc_stun"
-      ]
-    },
-    {
-      "hero_id": 522,
-      "hero_name": "Yao",
-      "file": "522-7be2afad7c3f.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "blink",
-        "cc_knockup",
-        "cc_slow",
-        "dash",
-        "engage",
-        "frontline",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 523,
-      "hero_name": "Shi",
-      "file": "523-d54b187fc950.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_pull",
-        "cc_slow",
-        "peel",
-        "weak_early"
-      ]
-    },
-    {
-      "hero_id": 524,
-      "hero_name": "Meng Ya",
-      "file": "524-c919acc510dd.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_slow"
-      ]
-    },
-    {
-      "hero_id": 528,
-      "hero_name": "Lam",
-      "file": "528-7b966dfb9bcb.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "dash",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 531,
-      "hero_name": "Jing",
-      "file": "531-dc5c65af494f.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_pull",
-        "cc_root",
-        "cc_slow",
-        "dash",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 533,
-      "hero_name": "Agudo",
-      "file": "533-96b1e045f6f1.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockup",
-        "dash",
-        "leap",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 534,
-      "hero_name": "Sakeer",
-      "file": "534-88f431b6d15b.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "ally_heal",
-        "cc_knockup",
-        "engage",
-        "peel"
-      ]
-    },
-    {
-      "hero_id": 536,
-      "hero_name": "Charlotte",
-      "file": "536-3cb1be788fd4.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockup",
-        "cc_slow",
-        "dash",
-        "engage",
-        "frontline",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 537,
-      "hero_name": "Devara",
-      "file": "537-1e026f2d9750.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockback",
-        "dash",
-        "disengage",
-        "engage",
-        "kite_vulnerable",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 538,
-      "hero_name": "Ying",
-      "file": "538-c0bd66f4e2b4.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_slow",
-        "dash",
         "mobility"
       ]
     },
@@ -1501,101 +745,66 @@
       ]
     },
     {
-      "hero_id": 545,
-      "hero_name": "Alessio",
-      "file": "545-deeaa98ad793.json",
+      "hero_id": 631,
+      "hero_name": "Florentino",
+      "file": "631-d83a883e6ae3.json",
       "review_status": "approved",
       "positive_tags": [
-        "cc_knockup",
-        "leap",
+        "cc_stun",
+        "dash",
+        "engage",
         "mobility"
       ]
     },
     {
-      "hero_id": 547,
-      "hero_name": "Luara",
-      "file": "547-bb2a84e8c1d7.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockup",
-        "cc_slow",
-        "weak_early"
-      ]
-    },
-    {
-      "hero_id": 556,
-      "hero_name": "Ata",
-      "file": "556-08c29fdfb967.json",
+      "hero_id": 583,
+      "hero_name": "Flowborn (Assassin)",
+      "file": "583-150096ab0e63.json",
       "review_status": "approved",
       "positive_tags": [
         "cc_knockback",
-        "cc_knockup",
-        "cc_slow",
-        "disengage",
-        "engage",
-        "frontline",
-        "kite_vulnerable",
-        "leap",
-        "mobility",
-        "peel"
-      ]
-    },
-    {
-      "hero_id": 558,
-      "hero_name": "Umbrosa",
-      "file": "558-58ffa9e3f721.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockback",
-        "cc_slow",
         "dash",
-        "disengage",
-        "engage",
-        "kite_vulnerable",
         "mobility"
       ]
     },
     {
-      "hero_id": 563,
-      "hero_name": "Heino",
-      "file": "563-b944f77bbae9.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_slow",
-        "dash",
-        "mobility",
-        "weak_early"
-      ]
-    },
-    {
-      "hero_id": 564,
-      "hero_name": "Mayene",
-      "file": "564-2c50e6e71a92.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "blink",
-        "cc_knockback",
-        "cc_knockup",
-        "cc_pull",
-        "cc_slow",
-        "dash",
-        "disengage",
-        "engage",
-        "leap",
-        "mobility",
-        "peel"
-      ]
-    },
-    {
-      "hero_id": 577,
-      "hero_name": "Dyadia",
-      "file": "577-5a6422cf45dd.json",
+      "hero_id": 582,
+      "hero_name": "Flowborn (Mage)",
+      "file": "582-c6f7d95dccec.json",
       "review_status": "approved",
       "positive_tags": [
         "ally_heal",
-        "ally_move_speed_buff",
         "cc_knockback",
-        "cc_root",
+        "cc_slow",
+        "cc_stun",
+        "disengage",
+        "engage",
+        "peel",
+        "weak_early"
+      ]
+    },
+    {
+      "hero_id": 584,
+      "hero_name": "Flowborn (Marksman)",
+      "file": "584-25e81ba0e5be.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockback",
+        "dash",
+        "mobility",
+        "weak_early"
+      ]
+    },
+    {
+      "hero_id": 585,
+      "hero_name": "Flowborn (Roamer)",
+      "file": "585-4f532e7726f5.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "ally_heal",
+        "ally_shield",
+        "anti_dive_zone",
+        "cc_knockback",
         "dash",
         "disengage",
         "engage",
@@ -1623,53 +832,223 @@
       ]
     },
     {
-      "hero_id": 582,
-      "hero_name": "Flowborn (Mage)",
-      "file": "582-c6f7d95dccec.json",
+      "hero_id": 139,
+      "hero_name": "Fuzi",
+      "file": "139-019942d72e23.json",
       "review_status": "approved",
       "positive_tags": [
-        "ally_heal",
-        "cc_knockback",
+        "cc_pull",
         "cc_slow",
-        "cc_stun",
-        "disengage",
+        "dash",
         "engage",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 182,
+      "hero_name": "Gan & Mo",
+      "file": "182-811f3f95611c.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockback",
+        "disengage",
         "peel",
         "weak_early"
       ]
     },
     {
-      "hero_id": 583,
-      "hero_name": "Flowborn (Assassin)",
-      "file": "583-150096ab0e63.json",
+      "hero_id": 115,
+      "hero_name": "Gao",
+      "file": "115-3cc01c7fa2b0.json",
       "review_status": "approved",
       "positive_tags": [
-        "cc_knockback",
-        "dash",
-        "mobility"
-      ]
-    },
-    {
-      "hero_id": 584,
-      "hero_name": "Flowborn (Marksman)",
-      "file": "584-25e81ba0e5be.json",
-      "review_status": "approved",
-      "positive_tags": [
-        "cc_knockback",
+        "cc_slow",
         "dash",
         "mobility",
         "weak_early"
       ]
     },
     {
-      "hero_id": 585,
-      "hero_name": "Flowborn (Roamer)",
-      "file": "585-4f532e7726f5.json",
+      "hero_id": 153,
+      "hero_name": "Gao Changgong",
+      "file": "153-5e5c14fe4f55.json",
       "review_status": "approved",
       "positive_tags": [
-        "ally_heal",
-        "ally_shield",
+        "cc_slow",
+        "cc_stun",
+        "dash",
+        "mobility",
+        "stealth"
+      ]
+    },
+    {
+      "hero_id": 508,
+      "hero_name": "Garo",
+      "file": "508-16ad27affb39.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_silence",
+        "cc_slow",
+        "dive_vulnerable",
+        "shieldbreak"
+      ]
+    },
+    {
+      "hero_id": 110,
+      "hero_name": "Garuda",
+      "file": "110-41f1c011dea7.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_slow"
+      ]
+    },
+    {
+      "hero_id": 548,
+      "hero_name": "Geya",
+      "file": "548-2ec197a64d54.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_pull"
+      ]
+    },
+    {
+      "hero_id": 140,
+      "hero_name": "Guan Yu",
+      "file": "140-71821457ddbd.json",
+      "review_status": "approved",
+      "positive_tags": [
         "cc_knockback",
+        "dash",
+        "disengage",
+        "engage",
+        "leap",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 189,
+      "hero_name": "Guiguzi",
+      "file": "189-da40a47f47ab.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "ally_move_speed_buff",
+        "ally_shield",
+        "cc_slow",
+        "cc_stun",
+        "disengage",
+        "engage",
+        "low_damage",
+        "peel",
+        "stealth",
+        "true_sight"
+      ]
+    },
+    {
+      "hero_id": 150,
+      "hero_name": "Han Xin",
+      "file": "150-f150be9695d4.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockup",
+        "dash",
+        "leap",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 521,
+      "hero_name": "Haya",
+      "file": "521-b2549534b1b4.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_slow",
+        "cc_stun"
+      ]
+    },
+    {
+      "hero_id": 563,
+      "hero_name": "Heino",
+      "file": "563-b944f77bbae9.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_slow",
+        "dash",
+        "mobility",
+        "weak_early"
+      ]
+    },
+    {
+      "hero_id": 169,
+      "hero_name": "Hou Yi",
+      "file": "169-6e717c23e545.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_slow",
+        "cc_stun",
+        "dive_vulnerable",
+        "weak_early"
+      ]
+    },
+    {
+      "hero_id": 192,
+      "hero_name": "Huang Zhong",
+      "file": "192-9e5749d2b7d2.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "anti_dive_zone",
+        "cc_slow",
+        "dash",
+        "dive_vulnerable",
+        "mobility",
+        "weak_early"
+      ]
+    },
+    {
+      "hero_id": 540,
+      "hero_name": "Jin Chan",
+      "file": "540-2720cc9f863e.json",
+      "review_status": "approved",
+      "positive_tags": []
+    },
+    {
+      "hero_id": 531,
+      "hero_name": "Jing",
+      "file": "531-dc5c65af494f.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_pull",
+        "cc_root",
+        "cc_slow",
+        "dash",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 193,
+      "hero_name": "Kaizer",
+      "file": "193-f4bc2c79f2a1.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockup",
+        "cc_slow",
+        "dash",
+        "engage",
+        "frontline",
+        "kite_vulnerable",
+        "mobility",
+        "weak_early"
+      ]
+    },
+    {
+      "hero_id": 550,
+      "hero_name": "Kongkong'er",
+      "file": "550-873ea98f2d73.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "blink",
+        "cc_knockback",
+        "cc_pull",
+        "cc_slow",
         "dash",
         "disengage",
         "engage",
@@ -1678,15 +1057,176 @@
       ]
     },
     {
-      "hero_id": 631,
-      "hero_name": "Florentino",
-      "file": "631-d83a883e6ae3.json",
+      "hero_id": 190,
+      "hero_name": "Kongming",
+      "file": "190-d43d05a71972.json",
       "review_status": "approved",
       "positive_tags": [
+        "blink",
+        "mobility",
+        "weak_early"
+      ]
+    },
+    {
+      "hero_id": 175,
+      "hero_name": "Kui",
+      "file": "175-9b54542dcae9.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_slow",
+        "cc_stun",
+        "engage",
+        "peel"
+      ]
+    },
+    {
+      "hero_id": 111,
+      "hero_name": "Lady Sun",
+      "file": "111-054f8c365916.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "dash",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 127,
+      "hero_name": "Lady Zhen",
+      "file": "127-f5a977ba89f3.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockup",
+        "cc_slow",
+        "dive_vulnerable",
+        "peel",
+        "weak_early"
+      ]
+    },
+    {
+      "hero_id": 528,
+      "hero_name": "Lam",
+      "file": "528-7b966dfb9bcb.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "dash",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 168,
+      "hero_name": "Lapulapu",
+      "file": "168-ffee861d64a3.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockup",
+        "cc_slow",
+        "dash",
+        "engage",
+        "low_damage",
+        "mobility",
+        "peel"
+      ]
+    },
+    {
+      "hero_id": 131,
+      "hero_name": "Li Bai",
+      "file": "131-4c3cdfcf28f8.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_slow",
+        "cc_stun",
+        "dash",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 507,
+      "hero_name": "Li Xin",
+      "file": "507-d8f9ebf60473.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockup",
+        "cc_slow",
+        "dash",
+        "engage",
+        "frontline",
+        "mobility",
+        "peel"
+      ]
+    },
+    {
+      "hero_id": 105,
+      "hero_name": "Lian Po",
+      "file": "105-2c778fe0e39e.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockup",
+        "cc_slow",
+        "dash",
+        "engage",
+        "frontline",
+        "kite_vulnerable",
+        "leap",
+        "low_damage",
+        "mobility",
+        "peel"
+      ]
+    },
+    {
+      "hero_id": 156,
+      "hero_name": "Liang",
+      "file": "156-c260492a2197.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "anti_dive_zone",
+        "cc_slow",
+        "cc_stun",
+        "engage",
+        "peel",
+        "suppress"
+      ]
+    },
+    {
+      "hero_id": 149,
+      "hero_name": "Liu Bang",
+      "file": "149-810858b6d0e5.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "ally_shield",
         "cc_stun",
         "dash",
         "engage",
+        "frontline",
+        "mobility",
+        "peel",
+        "teleport"
+      ]
+    },
+    {
+      "hero_id": 170,
+      "hero_name": "Liu Bei",
+      "file": "170-67aa7000bf52.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockback",
+        "dash",
+        "disengage",
+        "engage",
         "mobility"
+      ]
+    },
+    {
+      "hero_id": 114,
+      "hero_name": "Liu Shan",
+      "file": "114-b2a0dd3172cf.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_slow",
+        "cc_stun",
+        "engage",
+        "frontline",
+        "low_damage",
+        "peel"
       ]
     },
     {
@@ -1699,31 +1239,755 @@
       ]
     },
     {
-      "hero_id": 640,
-      "hero_name": "Annette",
-      "file": "640-980f8910c4af.json",
+      "hero_id": 123,
+      "hero_name": "Lu Bu",
+      "file": "123-dd72d434bd27.json",
       "review_status": "approved",
       "positive_tags": [
-        "ally_cc_immunity",
-        "ally_move_speed_buff",
+        "cc_slow",
+        "frontline",
+        "kite_vulnerable",
+        "leap",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 547,
+      "hero_name": "Luara",
+      "file": "547-bb2a84e8c1d7.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockup",
+        "cc_slow",
+        "weak_early"
+      ]
+    },
+    {
+      "hero_id": 525,
+      "hero_name": "Luban Master",
+      "file": "525-c3582567f488.json",
+      "review_status": "approved",
+      "positive_tags": [
         "ally_shield",
+        "cc_knockup",
+        "engage",
+        "leap",
+        "mobility",
+        "peel"
+      ]
+    },
+    {
+      "hero_id": 112,
+      "hero_name": "Luban No.7",
+      "file": "112-3498f15b73d6.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockback",
+        "cc_slow",
+        "dive_vulnerable",
+        "weak_early"
+      ]
+    },
+    {
+      "hero_id": 146,
+      "hero_name": "Luna",
+      "file": "146-84c9b14aa350.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_pull",
+        "cc_slow",
+        "cc_stun",
+        "dash",
+        "engage",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 518,
+      "hero_name": "Ma Chao",
+      "file": "518-b38623931157.json",
+      "review_status": "approved",
+      "positive_tags": []
+    },
+    {
+      "hero_id": 549,
+      "hero_name": "Macaque",
+      "file": "549-82f70eb5af36.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockup",
+        "cc_stun",
+        "dash",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 157,
+      "hero_name": "Mai Shiranui",
+      "file": "157-8ff09ed5064c.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockback",
+        "cc_slow",
+        "dash",
+        "mobility",
+        "weak_early"
+      ]
+    },
+    {
+      "hero_id": 132,
+      "hero_name": "Marco Polo",
+      "file": "132-6033e11264bc.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "blink",
+        "mobility",
+        "weak_early"
+      ]
+    },
+    {
+      "hero_id": 564,
+      "hero_name": "Mayene",
+      "file": "564-2c50e6e71a92.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "blink",
+        "cc_knockback",
+        "cc_knockup",
+        "cc_pull",
+        "cc_slow",
+        "dash",
+        "disengage",
+        "engage",
+        "leap",
+        "mobility",
+        "peel"
+      ]
+    },
+    {
+      "hero_id": 527,
+      "hero_name": "Meng Tian",
+      "file": "527-a09e59774fac.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockback",
+        "cc_slow",
+        "disengage"
+      ]
+    },
+    {
+      "hero_id": 524,
+      "hero_name": "Meng Ya",
+      "file": "524-c919acc510dd.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_slow"
+      ]
+    },
+    {
+      "hero_id": 198,
+      "hero_name": "Menki",
+      "file": "198-d41319d7755e.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockup",
+        "cc_slow",
+        "engage"
+      ]
+    },
+    {
+      "hero_id": 121,
+      "hero_name": "Mi Yue",
+      "file": "121-505552136a50.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_slow",
+        "tether_dependent"
+      ]
+    },
+    {
+      "hero_id": 504,
+      "hero_name": "Milady",
+      "file": "504-aa93957ac87b.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_slow",
+        "cc_stun",
+        "dive_vulnerable"
+      ]
+    },
+    {
+      "hero_id": 501,
+      "hero_name": "Ming",
+      "file": "501-39d62745bf44.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "ally_attack_speed_buff",
+        "ally_damage_buff",
+        "ally_heal",
+        "peel",
+        "tether_dependent"
+      ]
+    },
+    {
+      "hero_id": 108,
+      "hero_name": "Mozi",
+      "file": "108-4a79279ad546.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockback",
+        "cc_stun",
+        "dash",
+        "disengage",
+        "engage",
+        "mobility",
+        "peel",
+        "weak_early"
+      ]
+    },
+    {
+      "hero_id": 154,
+      "hero_name": "Mulan",
+      "file": "154-2af524e5d8b2.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockback",
+        "cc_knockup",
+        "cc_silence",
+        "cc_slow",
+        "dash",
+        "disengage",
+        "engage",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 130,
+      "hero_name": "Musashi",
+      "file": "130-4597294c2325.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_slow",
+        "dash",
+        "mobility",
+        "projectile_blocking"
+      ]
+    },
+    {
+      "hero_id": 162,
+      "hero_name": "Nakoruru",
+      "file": "162-814cb6408f18.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_slow",
+        "dash",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 180,
+      "hero_name": "Nezha",
+      "file": "180-6708df8cbbc8.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockback",
+        "disengage",
+        "engage",
+        "frontline",
+        "leap",
+        "mobility",
+        "teleport"
+      ]
+    },
+    {
+      "hero_id": 179,
+      "hero_name": "Nuwa",
+      "file": "179-f0f7888c7d57.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "anti_dive_zone",
+        "cc_knockback",
+        "cc_slow",
+        "disengage",
+        "engage",
+        "leap",
+        "mobility",
+        "peel",
+        "teleport",
+        "terrain_creation",
+        "weak_early"
+      ]
+    },
+    {
+      "hero_id": 529,
+      "hero_name": "Pangu",
+      "file": "529-a90140c89328.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockback",
+        "disarm",
+        "disengage",
+        "engage",
+        "leap",
+        "mobility",
+        "peel",
+        "suppress"
+      ]
+    },
+    {
+      "hero_id": 502,
+      "hero_name": "Pei",
+      "file": "502-b6d9193d2a88.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_slow",
+        "dash",
+        "leap",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 534,
+      "hero_name": "Sakeer",
+      "file": "534-88f431b6d15b.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "ally_heal",
+        "cc_knockup",
+        "engage",
+        "peel"
+      ]
+    },
+    {
+      "hero_id": 513,
+      "hero_name": "Shangguan",
+      "file": "513-59e8cb4ecebc.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_slow",
+        "dash",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 312,
+      "hero_name": "Shen Mengxi",
+      "file": "312-e30f4b3eb309.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_stun"
+      ]
+    },
+    {
+      "hero_id": 523,
+      "hero_name": "Shi",
+      "file": "523-d54b187fc950.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_pull",
+        "cc_slow",
+        "peel",
+        "weak_early"
+      ]
+    },
+    {
+      "hero_id": 196,
+      "hero_name": "Shouyue",
+      "file": "196-2dde16e7087f.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_slow",
+        "leap",
+        "mobility",
+        "true_sight"
+      ]
+    },
+    {
+      "hero_id": 137,
+      "hero_name": "Sima Yi",
+      "file": "137-95267dcac46b.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_silence",
+        "true_sight"
+      ]
+    },
+    {
+      "hero_id": 194,
+      "hero_name": "Su Lie",
+      "file": "194-9108f25facab.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "ally_move_speed_buff",
+        "cc_knockback",
+        "cc_stun",
+        "dash",
+        "disengage",
+        "engage",
+        "frontline",
+        "mobility",
+        "peel"
+      ]
+    },
+    {
+      "hero_id": 118,
+      "hero_name": "Sun Bin",
+      "file": "118-65f239324d54.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "ally_heal",
+        "ally_move_speed_buff",
+        "cc_silence",
+        "cc_slow",
+        "disengage",
+        "engage",
+        "low_damage",
+        "peel"
+      ]
+    },
+    {
+      "hero_id": 510,
+      "hero_name": "Sun Ce",
+      "file": "510-81fbcbee9295.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockup",
+        "cc_slow",
+        "dash",
+        "engage",
+        "frontline",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 151,
+      "hero_name": "Sun Quan",
+      "file": "151-cc16b5510987.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_slow",
+        "dash",
+        "leap",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 186,
+      "hero_name": "Taiyi Zhenren",
+      "file": "186-483860856de9.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_pull",
+        "cc_stun",
+        "engage",
+        "peel"
+      ]
+    },
+    {
+      "hero_id": 163,
+      "hero_name": "Ukyo Tachibana",
+      "file": "163-3b2bc5be0104.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_slow",
+        "cc_stun",
+        "leap",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 558,
+      "hero_name": "Umbrosa",
+      "file": "558-58ffa9e3f721.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockback",
+        "cc_slow",
+        "dash",
+        "disengage",
+        "engage",
+        "kite_vulnerable",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 138,
+      "hero_name": "Wang Wei",
+      "file": "138-96e97f7b3aa9.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockback",
+        "cc_slow",
+        "disengage",
+        "peel"
+      ]
+    },
+    {
+      "hero_id": 152,
+      "hero_name": "Wang Zhaojun",
+      "file": "152-236fced271fb.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_slow",
+        "cc_stun",
+        "engage",
+        "weak_early"
+      ]
+    },
+    {
+      "hero_id": 136,
+      "hero_name": "Wu Zetian",
+      "file": "136-9c40aea26b30.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockback",
+        "cc_stun",
+        "disengage",
+        "peel"
+      ]
+    },
+    {
+      "hero_id": 167,
+      "hero_name": "Wukong",
+      "file": "167-cee54c6f5249.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockup",
+        "dash",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 117,
+      "hero_name": "Wuyan",
+      "file": "117-77d4d9a52dec.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_slow",
+        "cc_stun",
+        "dash",
+        "engage",
+        "frontline",
+        "mobility",
+        "peel"
+      ]
+    },
+    {
+      "hero_id": 135,
+      "hero_name": "Xiang Yu",
+      "file": "135-9a8ae77297e4.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockback",
+        "cc_knockup",
+        "cc_slow",
+        "cc_stun",
+        "dash",
+        "disengage",
+        "engage",
+        "frontline",
+        "mobility",
+        "peel"
+      ]
+    },
+    {
+      "hero_id": 106,
+      "hero_name": "Xiao Qiao",
+      "file": "106-c6dc11f5b5db.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockup",
+        "dive_vulnerable",
+        "weak_early"
+      ]
+    },
+    {
+      "hero_id": 195,
+      "hero_name": "Xuance",
+      "file": "195-01a2e5c2b416.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_pull",
+        "cc_root",
+        "cc_slow",
+        "dash",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 178,
+      "hero_name": "Yang Jian",
+      "file": "178-44ce4b4c94dd.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_slow",
+        "cc_stun",
+        "engage",
+        "kite_vulnerable",
+        "leap",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 125,
+      "hero_name": "Yango",
+      "file": "125-fe48fab9e28a.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "blink",
+        "cc_knockup",
+        "cc_slow",
+        "cc_stun",
+        "dash",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 522,
+      "hero_name": "Yao",
+      "file": "522-7be2afad7c3f.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "blink",
+        "cc_knockup",
+        "cc_slow",
+        "dash",
+        "engage",
+        "frontline",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 505,
+      "hero_name": "Yaria",
+      "file": "505-db14fc13a05b.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "ally_shield",
+        "cc_knockup",
+        "peel",
+        "tether_dependent"
+      ]
+    },
+    {
+      "hero_id": 538,
+      "hero_name": "Ying",
+      "file": "538-c0bd66f4e2b4.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_slow",
+        "dash",
+        "mobility"
+      ]
+    },
+    {
+      "hero_id": 197,
+      "hero_name": "Yixing",
+      "file": "197-61630b10829e.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockup",
+        "cc_pull",
+        "cc_slow",
+        "engage",
+        "weak_early"
+      ]
+    },
+    {
+      "hero_id": 176,
+      "hero_name": "Yuhuan",
+      "file": "176-246c90e7d29f.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "ally_heal",
+        "cc_slow",
+        "cc_stun",
+        "weak_early"
+      ]
+    },
+    {
+      "hero_id": 171,
+      "hero_name": "Zhang Fei",
+      "file": "171-08cab3634651.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "ally_shield",
+        "cc_knockback",
+        "cc_knockup",
+        "cc_stun",
+        "disengage",
+        "engage",
+        "frontline",
+        "leap",
+        "low_damage",
+        "mobility",
+        "peel"
+      ]
+    },
+    {
+      "hero_id": 544,
+      "hero_name": "Zhao Huaizhen",
+      "file": "544-04d2c59f3122.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockback",
+        "cc_stun",
+        "disengage",
+        "projectile_blocking"
+      ]
+    },
+    {
+      "hero_id": 124,
+      "hero_name": "Zhou Yu",
+      "file": "124-15cba141216d.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "ally_move_speed_buff",
         "cc_knockback",
         "cc_slow",
         "cc_stun",
+        "disengage",
+        "peel"
+      ]
+    },
+    {
+      "hero_id": 113,
+      "hero_name": "Zhuangzi",
+      "file": "113-f11dd0b9f2b4.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "ally_cc_immunity",
+        "ally_cleanse",
+        "ally_move_speed_buff",
+        "ally_shield",
+        "cc_slow",
         "disengage",
         "low_damage",
         "peel"
       ]
     },
     {
-      "hero_id": 646,
-      "hero_name": "Butterfly",
-      "file": "646-720a0bb72209.json",
+      "hero_id": 107,
+      "hero_name": "Zilong",
+      "file": "107-357c75cb8104.json",
       "review_status": "approved",
       "positive_tags": [
-        "cc_slow",
+        "cc_knockup",
+        "dash",
+        "engage",
         "leap",
         "mobility"
+      ]
+    },
+    {
+      "hero_id": 148,
+      "hero_name": "Ziya",
+      "file": "148-262b9eba5961.json",
+      "review_status": "approved",
+      "positive_tags": [
+        "cc_knockup",
+        "cc_slow",
+        "weak_early"
       ]
     }
   ]

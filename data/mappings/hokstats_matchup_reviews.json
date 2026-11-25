@@ -340,7 +340,7 @@
     "relation": "countered_by",
     "target_id": 171,
     "source_hash": "d3e92f25cfc3b6877b82297a965bb9f35f1cb7fe2d72352bb8d1d9b4ce16fcf4",
-    "status": "approved",
+    "status": "rejected",
     "reviewed_by": "Project owner"
   },
   {
@@ -6292,7 +6292,7 @@
     "relation": "strong_against",
     "target_id": 199,
     "source_hash": "22998df525c7477b2d0263aca38d6416862d29a388a3391b3d6f4e67ee2c3577",
-    "status": "approved",
+    "status": "rejected",
     "reviewed_by": "Project owner"
   },
   {

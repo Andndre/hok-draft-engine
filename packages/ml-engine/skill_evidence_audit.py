@@ -464,6 +464,58 @@ def evaluate_hero_evidence(hero: dict[str, Any]) -> dict[str, dict[str, Any]]:
         weak_early_reason = weak_early_ev[0] if weak_early_ev and hero_id not in (192, 193) else "Hyper-carry late game yang sangat bergantung pada scaling item."
     set_tag("weak_early", "ya" if is_weak_early else "tidak", weak_early_reason, True, 0.84 if is_weak_early else 0.82)
 
+    # 6. Mechanics & Counter Primitives
+    abilities_list = hero.get("abilities") or []
+    raw_ab_tags = [str(t).strip().lower() for ab in abilities_list for t in ab.get("tags") or []]
+
+    # 6.1 Terrain Creation
+    terrain_ev = _match_positive(skills, r"\b(?:creates?\s+(?:a\s+)?(?:wall|terrain|obstacle)|constructs?\s+(?:a\s+)?wall)\b")
+    has_terrain = (hero_id in (179, 556)) or ("terrain" in raw_ab_tags and hero_id not in (547,)) or bool(terrain_ev)
+    terrain_reason = terrain_ev[0] if terrain_ev else ("Dapat menciptakan dinding atau rintangan medan perang yang menghalangi gerak musuh." if has_terrain else "Tidak dapat menciptakan dinding atau struktur terrain buatan.")
+    set_tag("terrain_creation", "ya" if has_terrain else "tidak", terrain_reason, True, 0.94 if has_terrain else 0.90)
+
+    # 6.2 Projectile Blocking
+    proj_ev = _match_positive(skills, r"\b(?:blocks?|absorbs?|neutraliz(?:es?|ing)|knocks?\s+(?:back|away|down)|intercepts?)\s+(?:(?:incoming|nearby|flying)\s+)?(?:projectiles?|flying\s+objects?|missiles?)\b")
+    has_proj = (hero_id in (509, 544, 199, 130)) or any(t in raw_ab_tags for t in ("absorb projectiles", "shelter")) or bool(proj_ev)
+    proj_reason = proj_ev[0] if proj_ev else ("Memiliki skill untuk memblokir, menetralkan, atau menyerap proyektil musuh." if has_proj else "Tidak memiliki mekanisme blokir atau netralisasi proyektil.")
+    set_tag("projectile_blocking", "ya" if has_proj else "tidak", proj_reason, True, 0.93 if has_proj else 0.89)
+
+    # 6.3 Disarm
+    disarm_ev = _match_positive(skills, r"\bdisarm(?:s|ed|ing)?\b")
+    has_disarm = (hero_id in (529,)) or ("disarm" in raw_ab_tags) or bool(disarm_ev)
+    disarm_reason = disarm_ev[0] if disarm_ev else ("Dapat melucuti musuh sehingga tidak dapat melancarkan basic attack." if has_disarm else "Tidak memiliki mekanisme disarm pada skill.")
+    set_tag("disarm", "ya" if has_disarm else "tidak", disarm_reason, True, 0.95 if has_disarm else 0.92)
+
+    # 6.4 Shieldbreaker
+    shieldbreak_ev = _match_positive(skills, r"\b(?:shieldbreaker|deals?\s+(?:additional|extra|bonus)\s+damage\s+to\s+shields?|damages?\s+shields?\s+first)\b")
+    has_shieldbreak = (hero_id in (508,)) or ("shieldbreaker" in raw_ab_tags) or bool(shieldbreak_ev)
+    shieldbreak_reason = shieldbreak_ev[0] if shieldbreak_ev else ("Menghancurkan atau memberikan bonus damage masif terhadap shield target." if has_shieldbreak else "Tidak memiliki mekanisme bonus perusak shield khusus.")
+    set_tag("shieldbreak", "ya" if has_shieldbreak else "tidak", shieldbreak_reason, True, 0.95 if has_shieldbreak else 0.92)
+
+    # 6.5 True Sight
+    truesight_ev = _match_positive(skills, r"\b(?:true\s+sight|reveals?\s+(?:the\s+vision|invisible|stealthed|camouflaged|nearby\s+stealth)|detects?\s+stealth)\b")
+    has_truesight = (hero_id in (173, 196, 189, 137)) or bool(truesight_ev)
+    truesight_reason = truesight_ev[0] if truesight_ev else ("Dapat mendeteksi dan membuka visi musuh dalam kondisi stealth atau kamuflase." if has_truesight else "Tidak memiliki kemampuan pendeteksi stealth/true sight.")
+    set_tag("true_sight", "ya" if has_truesight else "tidak", truesight_reason, True, 0.92 if has_truesight else 0.88)
+
+    # 6.6 Stealth / Camouflage
+    stealth_ev = _match_positive(skills, r"\b(?:becomes\s+(?:invisible|stealthed)|stealth\s+state|camouflaged?\s+state)\b")
+    has_stealth = (hero_id in (153, 116, 545, 189)) or any(t in raw_ab_tags for t in ("stealth", "camouflage")) or bool(stealth_ev)
+    stealth_reason = stealth_ev[0] if stealth_ev else ("Dapat memasuki kondisi tak terlihat (stealth atau camouflage)." if has_stealth else "Tidak memiliki skill kamuflase atau stealth aktif.")
+    set_tag("stealth", "ya" if has_stealth else "tidak", stealth_reason, True, 0.93 if has_stealth else 0.89)
+
+    # 6.7 Tether Dependent
+    tether_ev = _match_positive(skills, r"\b(?:attaches?\s+herself\s+to\s+a\s+teammate|links?\s+it\s+to\s+a\s+teammate|links?\s+with\s+a\s+teammate|releases?\s+a\s+tether)\b")
+    has_tether = (hero_id in (501, 505, 577, 121)) or bool(tether_ev)
+    tether_reason = tether_ev[0] if tether_ev else ("Mekanik bertarung sangat bergantung pada tether, link, atau menempel pada sekutu/musuh." if has_tether else "Tidak mengandalkan mekanisme tether atau attach berkelanjutan.")
+    set_tag("tether_dependent", "ya" if has_tether else "tidak", tether_reason, True, 0.92 if has_tether else 0.88)
+
+    # 6.8 Anti Dive Zone
+    antidive_ev = _match_positive(skills, r"\b(?:bring\s+out\s+the\s+artillery|artillery|suppress(?:es|ed|ing)?\s+the\s+target|dense\s+smoke\s+cloud|surrounds?\s+themselves\s+with\s+a\s+barrier)\b")
+    has_antidive = (hero_id in (192, 545, 156, 187, 179)) or any(t in raw_ab_tags for t in ("turret", "casting platform")) or bool(antidive_ev)
+    antidive_reason = antidive_ev[0] if antidive_ev else ("Mampu menciptakan zona ancaman tinggi atau pertahanan instan saat musuh melakukan dive." if has_antidive else "Tidak memiliki zona anti-dive statis atau suppress defensif.")
+    set_tag("anti_dive_zone", "ya" if has_antidive else "tidak", antidive_reason, True, 0.90 if has_antidive else 0.86)
+
     return results
 
 

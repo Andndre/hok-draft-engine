@@ -10,6 +10,7 @@ import { useFocusgroup } from './ui/useFocusgroup';
 import { getItemMeta } from '../data/itemsMap';
 import { ColoredText } from './ColoredText';
 import { detectHeroSkillStances } from '../engine/skillStanceDetector';
+import { evaluateHeroMechanicInteractions } from '../engine/mechanicInteractions';
 
 interface HeroWikiDrawerProps {
   hero: Hero | null;
@@ -140,6 +141,17 @@ const TACTICAL_VULNERABILITY_TAGS: ReadonlyArray<readonly [TacticalTag, string, 
   ['kite_vulnerable', 'Rentan Kite', 'Mudah dipermainkan dari jarak jauh karena jangkauan serangan atau mobilitas terbatas.'],
   ['weak_early', 'Lemah Early Game', 'Ketahanan dan damage pada fase awal relatif rendah, memerlukan farming atau item core.'],
   ['low_damage', 'Damage Rendah', 'Bukan penghasil damage utama, fokus pada utilitas tim, durabilitas, atau kontrol.'],
+];
+
+const TACTICAL_MECHANIC_PRIMITIVE_TAGS: ReadonlyArray<readonly [TacticalTag, string, string]> = [
+  ['terrain_creation', 'Pembuat Tembok / Medan', 'Dapat menciptakan dinding atau rintangan medan perang buatan yang mengurung hero non-dash.'],
+  ['projectile_blocking', 'Penangkal Proyektil', 'Dapat memblokir, menyerap, atau menetralkan serangan proyektil skill maupun basic attack musuh.'],
+  ['disarm', 'Disarm Serangan Dasar', 'Dapat melucuti musuh sehingga tidak dapat melancarkan basic attack selama durasi tertentu.'],
+  ['shieldbreak', 'Perusak Perisai (Shieldbreaker)', 'Memberikan bonus damage masif dan melipatgandakan penghancuran perisai/shield lawan.'],
+  ['true_sight', 'Pendeteksi True Sight', 'Mampu mendeteksi dan membuka visi hero lawan yang berada dalam mode stealth atau kamuflase.'],
+  ['stealth', 'Infiltrator Stealth / Kamuflase', 'Dapat memasuki kondisi tak terlihat untuk melancarkan serangan kejutan atau meloloskan diri.'],
+  ['tether_dependent', 'Tether / Link Dependent', 'Gaya bertarung sangat bergantung pada ikatan tali (link/tether) atau menempel pada host sekutu.'],
+  ['anti_dive_zone', 'Zona Benteng Anti-Dive', 'Mampu membentuk zona pertahanan atau suppress mutlak di sekitarnya saat diserbu lawan.'],
 ];
 
 function TagToggletip({
@@ -334,6 +346,10 @@ const MatchupPanel: React.FC<MatchupPanelProps> = ({ hero, allHeroes, onSelectRe
   ];
   const hasRows = groups.some((group) => group.rows.size > 0) || measuredOnly.size > 0;
 
+  const mechanicEval = useMemo(() => {
+    return evaluateHeroMechanicInteractions(hero, allHeroes);
+  }, [hero, allHeroes]);
+
   return (
     <section className="rounded-xl border border-[#263142] bg-[#121824] p-4 space-y-4">
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-[#263142] pb-3">
@@ -352,6 +368,51 @@ const MatchupPanel: React.FC<MatchupPanelProps> = ({ hero, allHeroes, onSelectRe
           </div>
         )}
       </header>
+
+      {mechanicEval.badges.length > 0 && (
+        <section className="space-y-2.5 rounded-lg border border-[#1E293B] bg-[#0F172A]/70 p-3.5">
+          <div className="flex items-center gap-2 text-[#B8FF01]">
+            <Sparkles className="h-4 w-4" aria-hidden="true" />
+            <h4 className="text-xs font-bold uppercase tracking-wide">Interaksi Mekanik Dinamis (5 Pilar Primitif)</h4>
+          </div>
+          <p className="text-xs leading-relaxed text-slate-400">
+            Dihitung deterministik dari mekanik skill in-game (Disarm, Blokir Proyektil, True Sight, Tembok Terrain, Shieldbreaker, Suppress).
+          </p>
+          <div className="flex flex-wrap gap-1.5 pt-1">
+            {mechanicEval.badges.slice(0, 10).map((badge, idx) => (
+              <span
+                key={idx}
+                title={badge.description}
+                className="inline-flex items-center gap-1.5 rounded-lg border px-2 py-1 text-xs"
+                style={{
+                  borderColor: badge.type === 'advantage' ? 'rgba(52, 211, 153, 0.4)' : 'rgba(248, 113, 113, 0.4)',
+                  background: badge.type === 'advantage' ? 'rgba(16, 185, 129, 0.12)' : 'rgba(239, 68, 68, 0.12)',
+                  color: badge.type === 'advantage' ? '#6ee7b7' : '#fca5a5',
+                }}
+              >
+                {badge.type === 'advantage' ? (
+                  <Swords className="h-3 w-3 text-emerald-400" aria-hidden="true" />
+                ) : (
+                  <ShieldBan className="h-3 w-3 text-rose-400" aria-hidden="true" />
+                )}
+                <span className="font-semibold">{badge.title}</span>
+                {badge.targetHeroId > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const tgt = idMap.get(badge.targetHeroId);
+                      if (tgt) onSelectRelatedHero(tgt);
+                    }}
+                    className="underline opacity-80 hover:opacity-100"
+                  >
+                    vs {badge.targetHeroName}
+                  </button>
+                )}
+              </span>
+            ))}
+          </div>
+        </section>
+      )}
 
       {hasRows ? groups.map((group) => {
         if (!group.rows.size) return null;
@@ -588,6 +649,10 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
 
   const tacticalVulnerabilityMatches = heroTags
     ? TACTICAL_VULNERABILITY_TAGS.filter(([tag]) => heroTags[tag] === true)
+    : [];
+
+  const tacticalMechanicMatches = heroTags
+    ? TACTICAL_MECHANIC_PRIMITIVE_TAGS.filter(([tag]) => heroTags[tag] === true)
     : [];
 
   return (
@@ -1216,7 +1281,7 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
           {activeWikiTab === 'tactics' && (
             <div className="space-y-4">
               {/* Karakteristik & Peran Taktis */}
-              {(tacticalRoleMatches.length > 0 || tacticalVulnerabilityMatches.length > 0) && (
+              {(tacticalRoleMatches.length > 0 || tacticalVulnerabilityMatches.length > 0 || tacticalMechanicMatches.length > 0) && (
                 <div className="rounded-xl border border-[#232A38] bg-[#12161F] p-3.5 space-y-3">
                   <div className="flex items-center justify-between">
                     <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200">
@@ -1224,6 +1289,22 @@ export const HeroWikiDrawer: React.FC<HeroWikiDrawerProps> = ({
                     </h3>
                     <span className="text-xs text-slate-400">Audit Taktis Terverifikasi</span>
                   </div>
+
+                  {tacticalMechanicMatches.length > 0 && (
+                    <div className="space-y-1.5">
+                      <span className="text-xs font-semibold text-emerald-300">Primitif Mekanik Mikro (5 Pilar Taktis):</span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {tacticalMechanicMatches.map(([tag, label, tooltip]) => (
+                          <TagToggletip
+                            key={tag}
+                            label={label}
+                            description={tooltip}
+                            className="toggletip-tag inline-flex cursor-help items-center rounded border border-emerald-800/60 bg-emerald-950/30 px-2 py-0.5 text-xs font-medium text-emerald-200 transition-colors hover:brightness-125"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
                   {tacticalRoleMatches.length > 0 && (
                     <div className="space-y-1.5">

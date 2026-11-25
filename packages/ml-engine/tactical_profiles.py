@@ -39,6 +39,14 @@ TAGS = {
     "kite_vulnerable": "Mudah di-kite berdasarkan keterbatasan engage atau mobilitas.",
     "low_damage": "Sumber menyatakan output damage rendah.",
     "weak_early": "Sumber menyatakan hero lemah pada fase awal.",
+    "terrain_creation": "Dapat menciptakan dinding atau rintangan medan perang yang menghalangi pergerakan unit non-dash.",
+    "projectile_blocking": "Dapat memblokir, menyerap, atau menetralkan proyektil skill maupun basic attack musuh.",
+    "disarm": "Dapat melucuti musuh sehingga tidak dapat melancarkan basic attack.",
+    "shieldbreak": "Dapat menghancurkan atau memberikan bonus damage masif terhadap shield target.",
+    "true_sight": "Dapat mendeteksi dan membuka visi musuh yang berada dalam kondisi kamuflase atau stealth.",
+    "stealth": "Dapat memasuki kondisi tak terlihat (stealth atau camouflage) untuk mendekati atau kabur dari lawan.",
+    "tether_dependent": "Mekanik hero sangat bergantung pada link, tether, atau menempel pada sekutu/musuh.",
+    "anti_dive_zone": "Mampu membentuk zona pertahanan atau ancaman instan di area sekitarnya saat di-dive lawan.",
 }
 
 
@@ -216,12 +224,12 @@ def approved_profiles(directory, heroes):
 
 
 def audit_batch_proposals(heroes, releases, output_dir, reviewer="HoK-Evidence-Auditor", auto_approve=True, report_path=None):
-    """Audit and populate proposals for all 120 Global released heroes using verified skill & guide evidence."""
+    """Audit and populate proposals for all heroes (excluding inactive alias 511) using verified skill & guide evidence."""
     from skill_evidence_audit import build_evidence_response
 
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
-    targets = global_released_heroes(heroes, releases)
+    targets = [hero for hero in heroes if hero["hero_id"] != 511]
     tag_summary = {tag: {"ya": 0, "tidak": 0, "tidak_diketahui": 0} for tag in TAGS}
     audited = []
     ambiguous = []

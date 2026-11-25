@@ -81,6 +81,14 @@
       "reason": "Mobilitas domain cermin Jing dan frame invulnerability memungkinkannya melompati garis depan dan mengeksekusi Garo secara instan tanpa bisa dihindari, karena Garo adalah marksman immobile tanpa skill dash/escape aktif.",
       "reviewed_by": "Draft engine curation",
       "reviewed_at": "2026-11-23"
+    },
+    {
+      "counter_id": 199,
+      "target_id": 171,
+      "severity": "hard",
+      "reason": "Arli memiliki mobilitas tiga tahap teleportasi parasol yang leluasa keluar-masuk jarak serangan Zhang Fei tanpa pernah tersentuh. Skill 2 Arli memblokir proyektil, sementara pasif ledakan maple leaf magic damage-nya melumat HP pool tebal Zhang Fei dari jarak aman, menjadikan Zhang Fei sekadar sasaran empuk pengumpul pasif damage.",
+      "reviewed_by": "Draft engine curation",
+      "reviewed_at": "2026-11-25"
     }
   ]
 }
